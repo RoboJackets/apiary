@@ -32,11 +32,6 @@ class CreateFasetResponsesTable extends Migration
      */
     public function down()
     {
-        Schema::table('faset_responses', function (Blueprint $table) {
-            $table->dropForeign(['faset_visit_id']);
-            $table->dropForeign(['faset_survey_id']);
-        });
-
         Schema::dropIfExists('faset_responses');
     }
 }
