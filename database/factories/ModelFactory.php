@@ -12,13 +12,12 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\FasetVisit::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'faset_name' => $faker->name,
+        'faset_email' => $faker->safeEmail,
+        'visit_token' => $faker->asciify('********************')
     ];
 });
