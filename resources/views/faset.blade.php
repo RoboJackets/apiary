@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
   <body>
     <div class="ph6-l ph5-m pa4">
-      <div class="normal black-60 ph4-ns pt4-ns red">All fields are required.</div>
       <form id="form" class="pa4-ns near-black" v-on:submit.prevent="submit">
+        <div class="normal mb4"><span class="red">All fields are required.</span> @{{ queued }}</div>
         <label for="name" class="f6 b db mb2">Name</label>
         <input name="faset-name" id="name" class="input-reset ba b--black-20 pa2 mb2 db w-100 mb4" type="text" aria-describedby="name-desc" required>
         <label for="email" class="f6 b db mb2">Email</label>
@@ -58,55 +58,6 @@
       </form>
     </div>
     <script src="https://unpkg.com/vue"></script>
-    <script type="text/javascript">
-      var ajax = new Vue({
-        el: 'form',
-        data: {
-          isChecked: false
-        },
-        computed: {
-          isRequired: function () {
-            return this.isChecked;
-          }
-        },
-        methods: {
-
-              submit: function() {
-          var handleError = (function(err) {
-              alert(err);
-          }).bind(this);
-
-          var handleFinish = (function(data) {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              alert("Your form response has been saved. Thanks for stopping by!");
-              document.getElementById("form").reset();
-            }
-          }).bind(this);
-
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", "api/v1/faset", true);
-          xhr.responseType = 'json';
-
-          xhr.addEventListener('readystatechange', handleFinish);
-          xhr.addEventListener('error', handleError);
-          xhr.addEventListener('abort', handleError);
-          xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-          var formData = new FormData(event.target);
-          result = {};
-          result['faset-email'] = formData.get('faset-email');
-          result['faset-name'] = formData.get('faset-name');
-          result['faset-questions'] = [];
-          values = formData.getAll('heardfrom');
-          if (values.includes('other')) {
-            values.splice(values.indexOf('other'), 1);
-            values.push(formData.get('other'));
-          }
-          result['faset-questions'][0] = {"1" : values}
-          xhr.send(JSON.stringify(result));
-        }
-      }
-      })
-    </script>
+    <script src="/js/faset/vue.js"></script>
   </body>
 </html>
