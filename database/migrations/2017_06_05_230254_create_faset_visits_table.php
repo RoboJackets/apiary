@@ -17,8 +17,8 @@ class CreateFasetVisitsTable extends Migration
             $table->increments('id');
             $table->string('faset_name');
             $table->string('faset_email');
-            $table->char('visit_token', 20);
-            $table->unsignedInteger('user_id')->nullable;
+            $table->char('visit_token', 20)->unique();
+            $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

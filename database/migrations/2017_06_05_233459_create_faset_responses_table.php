@@ -14,7 +14,6 @@ class CreateFasetResponsesTable extends Migration
     public function up()
     {
         Schema::create('faset_responses', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('response')->nullable();
             $table->unsignedInteger('faset_survey_id');
             $table->unsignedInteger('faset_visit_id');
