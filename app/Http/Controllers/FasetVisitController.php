@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\Controller;
 use App\FasetVisit;
 use App\fasetResponse;
 
@@ -13,11 +13,16 @@ class FasetVisitController extends Controller
 {
     public function visit(Request $request)
     {
+        $this->validate($request, [
+            'faset_email' => 'required|email|max:255',
+            'faset_name' => 'required|max:255'
+        ]);
+
         try {
             DB::beginTransaction();
             $personInfo = $request->only(['faset_email', 'faset_name']);
             $visit = FasetVisit::create($personInfo);
-            7/0;
+            
             $fasetResponses = $request->only('faset_responses')['faset_responses'];
 
             foreach ($fasetResponses as $question) {
