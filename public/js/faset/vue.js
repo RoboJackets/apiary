@@ -19,14 +19,14 @@ var form = new Vue({
         submit: function () {
             'use strict';
             var formData = new FormData(event.target), values = formData.getAll('heardfrom'), result = {};
-            result['faset-email'] = formData.get('faset-email');
-            result['faset-name'] = formData.get('faset-name');
-            result['faset-questions'] = [];
+            result['faset_email'] = formData.get('faset-email');
+            result['faset_name'] = formData.get('faset-name');
+            result['faset_responses'] = [];
             if (values.includes('other')) {
                 values.splice(values.indexOf('other'), 1);
                 values.push(formData.get('other'));
             }
-            result['faset-questions'][0] = {"1" : values};
+            result['faset_responses'][0] = {"1" : values};
             worker.postMessage(JSON.stringify(result));
             alert("Your form response has been saved. Thanks for stopping by!");
             document.getElementById("form").reset();
