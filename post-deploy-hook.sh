@@ -2,5 +2,5 @@
 
 cd /var/www/apiary
 
-composer install
+composer install --no-interaction
 php artisan migrate --no-interaction
