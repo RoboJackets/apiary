@@ -1,8 +1,6 @@
 /*jslint browser:true devel:true*/
 /*global self, Promise, resolve*/
 
-var queueLength = 0;
-
 function upload(data) {
     "use strict";
     var xhr = new XMLHttpRequest();
