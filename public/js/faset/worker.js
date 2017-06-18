@@ -13,8 +13,12 @@ function upload(data) {
         xhr.timeout = 5000;
         try {
             xhr.send(data);
-        } catch (ignore) {
-
+            if (xhr.status >= 400) {
+                self.postMessage("There was a permanent error uploading a response.")
+                return;
+            }
+        } catch (e) {
+            self.postMessage("There was a temporary error uploading a response. Retrying...");
         }
     }
     self.postMessage("");
