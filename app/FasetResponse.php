@@ -21,4 +21,6 @@ class FasetResponse extends Model
     {
         return $this->belongsTo('App\FasetSurvey');
     }
+
+    protected $fillable = ['faset_survey_id', 'response'];
 }
