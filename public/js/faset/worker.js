@@ -27,6 +27,6 @@ function upload(data) {
 self.addEventListener('message', function (e) {
     'use strict';
     queueLength += 1;
-    self.postMessage("Some submissions are being uploaded.");
+    self.postMessage("Some submissions are still being uploaded.");
     upload(e.data);
 }, false);
