@@ -13,7 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('/', function (Request $request) {
-    //sleep(10);
-    return $request->all();
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::group(['prefix' => 'v1/'], function () {
+    Route::post('faset', 'FasetVisitController@visit');
 });
