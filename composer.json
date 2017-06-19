@@ -7,7 +7,9 @@
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "spatie/laravel-permission": "^2.1",
+        "subfission/cas": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
