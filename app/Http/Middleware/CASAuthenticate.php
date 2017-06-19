@@ -31,8 +31,7 @@ class CASAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if( $this->cas->isAuthenticated() )
-        {
+        if ($this->cas->isAuthenticated()) {
             // Store the user credentials in a Laravel managed session
             session()->put('cas_user', $this->cas->user());
         } else {
