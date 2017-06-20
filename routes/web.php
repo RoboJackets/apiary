@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'cas.auth'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('faset', function () {
+        return view('faset');
+    });
 });
 
-Route::get('faset', function () {
-    return view('faset');
+Route::get('logout', function () {
+    cas()->logout(config("app.url"));
 });
