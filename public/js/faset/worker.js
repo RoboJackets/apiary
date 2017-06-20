@@ -12,7 +12,7 @@ function upload(data) {
         try {
             xhr.send(data);
             if (xhr.status >= 400) {
-                self.postMessage("There was a permanent error uploading a response.")
+                self.postMessage("There was a permanent error uploading a response.");
                 return;
             }
         } catch (e) {
@@ -24,7 +24,6 @@ function upload(data) {
 
 self.addEventListener('message', function (e) {
     'use strict';
-    queueLength += 1;
     self.postMessage("Some submissions are still being uploaded.");
     upload(e.data);
 }, false);
