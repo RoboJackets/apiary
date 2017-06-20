@@ -1,63 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
   <title>FASET Form | MyRoboJackets</title>
-  <style>
-  body {
-    font-family: sans-serif;
-  }
-  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+  <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+  </head>
   <body>
-    <div class="ph6-l ph5-m pa4">
-      <form id="form" class="pa4-ns near-black" v-on:submit.prevent="submit">
-        <div class="normal mb4"><span class="red">All fields are required.</span> @{{ queued }}</div>
-        <label for="name" class="f6 b db mb2">Name</label>
-        <input name="faset-name" id="name" class="input-reset ba b--black-20 pa2 mb2 db w-100 mb4" type="text" aria-describedby="name-desc" required>
-        <label for="email" class="f6 b db mb2">Email</label>
-        <input name="faset-email" id="email" class="input-reset ba b--black-20 pa2 mb2 db w-100 mb4" type="email" aria-describedby="email" required>
-        <legend class="fw7 mb2">How did you hear about us?</legend>
-        <div class="flex items-center mb2">
-          <input id="faset" class="mr2" type="checkbox" name="heardfrom" value="faset">
-          <label for="faset" class="lh-copy">FASET</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="tour" class="mr2" type="checkbox" name="heardfrom" value="tour">
-          <label for="tour" class="lh-copy">Campus tour</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="member" class="mr2" type="checkbox" name="heardfrom" value="member">
-          <label for="member" class="lh-copy">Current RoboJackets member</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="social" class="mr2" type="checkbox" name="heardfrom" value="social">
-          <label for="social" class="lh-copy">Social media</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="web" class="mr2" type="checkbox" name="heardfrom" value="web">
-          <label for="web" class="lh-copy">RoboJackets.org</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="frc" class="mr2" type="checkbox" name="heardfrom" value="frc">
-          <label for="frc" class="lh-copy">FRC event</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="ftc" class="mr2" type="checkbox" name="heardfrom" value="ftc">
-          <label for="ftc" class="lh-copy">FTC event</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="vex" class="mr2" type="checkbox" name="heardfrom" value="vex">
-          <label for="vex" class="lh-copy">VEX event</label>
-        </div>
-        <div id="otherdiv" class="flex items-center mb4">
-          <input id="other" class="mr2" type="checkbox" name="heardfrom" value="other" v-model="isChecked">
-          <label for="other" class="lh-copy">Other: &nbsp</label>
-          <input name="other" class="mr2" type="text" value="" v-bind:required="isRequired">
-        </div>
-        <input class="b ph3 pv2 input-reset ba b--black bg-transparent dim pointer f6 dib" type="submit" value="Submit">
-      </form>
+    <div class="container">
+    <div>
+      <h1>I'm interested in RoboJackets!</h1>
     </div>
-    <script src="https://unpkg.com/vue"></script>
-    <script src="/js/faset/vue.js"></script>
+    <form>
+      <div class="form-group row">
+        <label for="faset-name" class="col-sm-2 col-form-label">Name:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="faset-name" name="faset-name" placeholder="George Burdell">
+          <small class="form-text text-muted">First and last name</small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="faset-email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control form-control-warning" id="inputHorizontalWarning" placeholder="example@gatech.edu">
+        </div>
+      </div>
+
+      <fieldset class="form-group row">
+        <legend class="col-form-legend col-sm-12">How did you hear about RoboJackets?</legend>
+        <div class="offset-sm-2 col-sm-10">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="heardfrom" value="faset">
+              FASET
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="heardfrom" value="option2">
+              Option two can be something else and selecting it will deselect option one
+            </label>
+          </div>
+          <div class="form-check disabled">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="heardfrom" value="option3">
+              Option three is disabled
+            </label>
+          </div>
+        </div>
+      </fieldset>
+      
+    </form>
+  </div>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="/js/faset/vue.js"></script>
+  <script src="{{ mix('/js/app.js') }}"></script>
   </body>
 </html>
+
