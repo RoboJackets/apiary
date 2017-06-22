@@ -25,7 +25,7 @@
         <div class="form-group row">
           <label for="faset-email" class="offset-sm-2 col-sm-2 col-form-label">Email</label>
           <div class="col-sm-6">
-            <input type="email" class="form-control form-control-warning" id="inputHorizontalWarning" placeholder="example@gatech.edu">
+            <input type="email" name="faset-email" class="form-control form-control-warning" id="inputHorizontalWarning" placeholder="example@gatech.edu">
           </div>
         </div>
 
