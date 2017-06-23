@@ -7,9 +7,9 @@
   </head>
   <body>
     <div class="container">
-      <div class="row">
-        <div class="offset-sm-2 col-sm-8">
-          <h1>I'm interested in RoboJackets!</h1>
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <img class="img-fluid" src="{{ asset('img/faset_form_header.svg') }}">
         </div>
       </div>
 
@@ -25,7 +25,7 @@
         <div class="form-group row">
           <label for="faset-email" class="offset-sm-2 col-sm-2 col-form-label">Email</label>
           <div class="col-sm-6">
-            <input type="email" name="faset-email" class="form-control form-control-warning" id="inputHorizontalWarning" placeholder="example@gatech.edu">
+            <input type="email" class="form-control form-control-warning" id="faset-email" name="faset-email" placeholder="example@gatech.edu">
           </div>
         </div>
 
