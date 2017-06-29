@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
   </head>
-  <body>
+  <body id="faset">
     <div class="container">
       <div class="jumbotron jumbotron-fluid">
         <div class="container">
-          <img class="img-fluid" src="{{ asset('img/faset_form_header.svg') }}">
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <img class="img-fluid" src="{{ asset('img/faset_form_header.svg') }}">
+            </div>
+          </div>
         </div>
       </div>
 
       <form id="form" v-on:submit.prevent="submit">
         <div class="form-group row">
-          <label for="faset-name" class="offset-sm-2 col-sm-2 col-form-label">Name:</label>
+          <label for="faset-name" class="offset-sm-2 col-sm-2 col-form-label">Name</label>
           <div class="col-sm-6">
             <input type="text" class="form-control" id="faset-name" name="faset-name" placeholder="George Burdell">
             <small class="form-text text-muted">First and last name</small>
