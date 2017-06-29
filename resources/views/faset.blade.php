@@ -21,7 +21,7 @@
         <div class="form-group row">
           <label for="faset-name" class="offset-sm-2 col-sm-2 col-form-label">Name</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" id="faset-name" name="faset-name" placeholder="George Burdell">
+            <input type="text" class="form-control" id="faset-name" name="faset-name" placeholder="George Burdell" autocomplete="off">
             <small class="form-text text-muted">First and last name</small>
           </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group row">
           <label for="faset-email" class="offset-sm-2 col-sm-2 col-form-label">Email</label>
           <div class="col-sm-6">
-            <input type="email" class="form-control form-control-warning" id="faset-email" name="faset-email" placeholder="example@gatech.edu">
+            <input type="email" class="form-control form-control-warning" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="off">
           </div>
         </div>
 
