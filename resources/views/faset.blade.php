@@ -20,17 +20,17 @@
       <form id="form" class="col-sm-8 offset-sm-2" v-on:submit.prevent="submit">
         <div class="form-group">
           <label for="faset-name">Name</label>
-          <input type="text" class="form-control" id="faset-name" name="faset-name" placeholder="George Burdell" autocomplete="off">
+          <input type="text" class="form-control" id="faset-name" name="faset-name" autofocus placeholder="George Burdell" autocomplete="off" required>
           <small class="form-text text-muted">First and last name</small>
         </div>
 
         <div class="form-group">
           <label for="faset-email">Email</label>
-          <input type="email" class="form-control form-control-warning" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="off">
+          <input type="email" class="form-control form-control-warning" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="off" required>
         </div>
 
         <fieldset class="form-group">
-          <legend>How did you hear about RoboJackets?</legend>
+          <label for="heardfrom">How did you hear about RoboJackets?</label>
           <div class="custom-controls-stacked">
             <label class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" name="heardfrom" value="faset">
@@ -101,9 +101,21 @@
         </div>
       </form>
     </div>
+
+    <div class="modal fade" id="successModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img id="fasetSuccess" src="{{ asset('img/tempCheck.svg') }}">
+            <h4 class="text-center modal-title">Thanks for stopping by!</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://unpkg.com/vue"></script>
-    <script src="/js/faset/vue.js"></script>
     <script src="{{ mix('/js/app.js') }}"></script>
+    <script src="/js/faset/vue.js"></script>
   </body>
 </html>
 
