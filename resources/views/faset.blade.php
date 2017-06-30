@@ -7,13 +7,10 @@
   </head>
   <body id="faset">
     <div class="container">
-      <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8 offset-md-2">
-              <img class="img-fluid" src="{{ asset('img/faset_form_header.svg') }}">
-            </div>
-          </div>
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <img class="mt-2 px-5 img-fluid" src="{{ asset('img/faset_form_header.svg') }}">
+          <hr class="my-4">
         </div>
       </div>
 
