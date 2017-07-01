@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="pattern-0" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse" viewBox="0 0 100 100">
+      <path d="M 0 0 L 50 0 L 50 100 L 0 100 Z" style="fill: black;"/>
+    </pattern>
+  </defs>
+  <ellipse cx="250" cy="250" rx="220" ry="220" style="paint-order: stroke; fill-opacity: 0; stroke: rgb(86, 182, 67); stroke-width: 40;"/>
+  <polyline points="117.117 266.892 202.703 354.73 376.126 157.658" style="fill: rgb(216, 216, 216); stroke: rgb(86, 182, 67); stroke-width: 40; fill-opacity: 0;"/>
+</svg>
