@@ -110,7 +110,6 @@
       </div>
     </div>
 
-    <script src="https://unpkg.com/vue"></script>
     <script src="{{ mix('/js/app.js') }}"></script>
     <script src="/js/faset/vue.js"></script>
   </body>
