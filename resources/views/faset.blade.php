@@ -99,18 +99,6 @@
       </form>
     </div>
 
-    <div class="modal fade" id="successModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img id="fasetSuccess" src="{{ asset('img/tempCheck.svg') }}">
-            <h4 class="text-center modal-title">Thanks for stopping by!</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="https://unpkg.com/vue"></script>
     <script src="{{ mix('/js/app.js') }}"></script>
     <script src="/js/faset/vue.js"></script>
   </body>
