@@ -29,7 +29,13 @@ var form = new Vue({
       result['faset_responses'][0] = {"1" : values};
       worker.postMessage(JSON.stringify(result));
 
-      $('#successModal').modal('show');
+        swal({
+            title: "Success!",
+            text: "Thanks for stopping by!",
+            type: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
 
       document.getElementById("form").reset();
     },
