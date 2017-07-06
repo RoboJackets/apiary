@@ -46,13 +46,8 @@ class FasetVisitController extends Controller
     
     public function list(Request $request)
     {
-        $visits = FasetVisit::all();
+        $visits = FasetVisit::all()->select('id','visit_token','created_at');
 
         return response()->json($visits);
-        /*
-        foreach ($visits as $visit) {
-            echo $visits->faset_name;
-        }
-        */
     }
 }
