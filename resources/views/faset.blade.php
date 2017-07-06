@@ -1,63 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <title>FASET Form | MyRoboJackets</title>
-  <style>
-  body {
-    font-family: sans-serif;
-  }
-  </style>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
-  <body>
-    <div class="ph6-l ph5-m pa4">
-      <form id="form" class="pa4-ns near-black" v-on:submit.prevent="submit">
-        <div class="normal mb4"><span class="red">All fields are required.</span> @{{ queued }}</div>
-        <label for="name" class="f6 b db mb2">Name</label>
-        <input name="faset-name" id="name" class="input-reset ba b--black-20 pa2 mb2 db w-100 mb4" type="text" aria-describedby="name-desc" required>
-        <label for="email" class="f6 b db mb2">Email</label>
-        <input name="faset-email" id="email" class="input-reset ba b--black-20 pa2 mb2 db w-100 mb4" type="email" aria-describedby="email" required>
-        <legend class="fw7 mb2">How did you hear about us?</legend>
-        <div class="flex items-center mb2">
-          <input id="faset" class="mr2" type="checkbox" name="heardfrom" value="faset">
-          <label for="faset" class="lh-copy">FASET</label>
+  <head>
+    <title>FASET Form | MyRoboJackets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+  </head>
+  <body id="faset">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <img class="mt-2 px-5 img-fluid" src="{{ asset('img/faset_form_header.svg') }}">
+          <hr class="my-4">
         </div>
-        <div class="flex items-center mb2">
-          <input id="tour" class="mr2" type="checkbox" name="heardfrom" value="tour">
-          <label for="tour" class="lh-copy">Campus tour</label>
+      </div>
+
+      <form id="form" class="col-sm-8 offset-sm-2" v-on:submit.prevent="submit">
+        <div class="form-group">
+          <label for="faset-name">Name</label>
+          <input type="text" class="form-control" id="faset-name" name="faset-name" autofocus placeholder="George Burdell" autocomplete="off" required>
+          <small class="form-text text-muted">First and last name</small>
         </div>
-        <div class="flex items-center mb2">
-          <input id="member" class="mr2" type="checkbox" name="heardfrom" value="member">
-          <label for="member" class="lh-copy">Current RoboJackets member</label>
+
+        <div class="form-group">
+          <label for="faset-email">Email</label>
+          <input type="email" class="form-control form-control-warning" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="off" required>
         </div>
-        <div class="flex items-center mb2">
-          <input id="social" class="mr2" type="checkbox" name="heardfrom" value="social">
-          <label for="social" class="lh-copy">Social media</label>
+
+        <fieldset class="form-group">
+          <label for="heardfrom">How did you hear about RoboJackets?</label>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="faset">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">FASET</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="tour">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Campus tour</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="member">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">From another member</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="nonmember">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">From a friend not in RoboJackets</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="social_media">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Social Media (Facebook, Twitter, Youtube, etc.)</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="website">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Website (RoboJackets.org)</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="frc">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">FRC Event</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="ftc">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">FTC Event</span>
+            </label>
+          </div>
+          <div class="custom-controls-stacked">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="heardfrom" value="vex">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Vex Event</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-        <div class="flex items-center mb2">
-          <input id="web" class="mr2" type="checkbox" name="heardfrom" value="web">
-          <label for="web" class="lh-copy">RoboJackets.org</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="frc" class="mr2" type="checkbox" name="heardfrom" value="frc">
-          <label for="frc" class="lh-copy">FRC event</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="ftc" class="mr2" type="checkbox" name="heardfrom" value="ftc">
-          <label for="ftc" class="lh-copy">FTC event</label>
-        </div>
-        <div class="flex items-center mb2">
-          <input id="vex" class="mr2" type="checkbox" name="heardfrom" value="vex">
-          <label for="vex" class="lh-copy">VEX event</label>
-        </div>
-        <div id="otherdiv" class="flex items-center mb4">
-          <input id="other" class="mr2" type="checkbox" name="heardfrom" value="other" v-model="isChecked">
-          <label for="other" class="lh-copy">Other: &nbsp</label>
-          <input name="other" class="mr2" type="text" value="" v-bind:required="isRequired">
-        </div>
-        <input class="b ph3 pv2 input-reset ba b--black bg-transparent dim pointer f6 dib" type="submit" value="Submit">
       </form>
     </div>
-    <script src="https://unpkg.com/vue"></script>
+
+    <script src="{{ mix('/js/app.js') }}"></script>
     <script src="/js/faset/vue.js"></script>
   </body>
 </html>
+

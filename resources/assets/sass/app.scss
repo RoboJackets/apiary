@@ -1,9 +1,14 @@
 
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-// Variables
-@import "node_modules/bootstrap/scss/_variables.scss";
+// Boostrap overrides
+@import "custom";
 
 // Bootstrap
-@import "node_modules/bootstrap/scss/bootstrap.scss";
+@import "node_modules/bootstrap/scss/bootstrap";
+// SweetAlert
+@import "node_modules/sweetalert/dist/sweetalert";
+
+// Custom Stylesheets
+@import "user";
