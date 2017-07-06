@@ -43,4 +43,16 @@ class FasetVisitController extends Controller
             return response()->json(array("status" => "error"))->setStatusCode(500);
         }
     }
+    
+    public function list(Request $request)
+    {
+        $visits = FasetVisit::all();
+
+        return response()->json($visits);
+        /*
+        foreach ($visits as $visit) {
+            echo $visits->faset_name;
+        }
+        */
+    }
 }
