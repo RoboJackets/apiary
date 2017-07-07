@@ -1,9 +1,7 @@
-#faset {
-	background-color: $jumbotron-bg;
+body {
+	background-color: $gray-lighter;
 }
 
-#fasetSuccess {
-	max-width: 60%;
-	display: block;
-	margin: 1rem auto;
+::placeholder {
+    opacity: 0.4 !important;
 }
