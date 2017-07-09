@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1/'], function () {
     Route::post('faset', 'FasetVisitController@visit');
     Route::get('faset', 'FasetVisitController@list');
+    Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
 });
