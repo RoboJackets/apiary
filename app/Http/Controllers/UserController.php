@@ -107,7 +107,7 @@ class UserController extends Controller
                 'polo_size' => 'in:s,m,l,xl,xxl,xxxl',
             ]);
             User::updateOrCreate($request->all());
-        } else if ($request->method() == "PATCH") {
+        } elseif ($request->method() == "PATCH") {
             //Update only included fields
             $this->validate($request, [
                 'uid' => 'unique:users|max:127',
