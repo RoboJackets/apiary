@@ -13,9 +13,9 @@ class UpdateUserNameConcat extends Migration
      */
     public function up()
     {
-        DB::transaction(function() {
-           DB::statement("ALTER TABLE `users` CHANGE COLUMN `name` `name` VARCHAR(255) GENERATED ALWAYS AS (concat_ws(' ',`first_name`,`last_name`)) VIRTUAL;");
-           DB::statement("ALTER TABLE `users` CHANGE COLUMN `full_name` `full_name` VARCHAR(255) GENERATED ALWAYS AS (concat_ws(' ',`first_name`,`middle_name`,`last_name`)) VIRTUAL");
+        DB::transaction(function () {
+            DB::statement("ALTER TABLE `users` CHANGE COLUMN `name` `name` VARCHAR(255) GENERATED ALWAYS AS (concat_ws(' ',`first_name`,`last_name`)) VIRTUAL;");
+            DB::statement("ALTER TABLE `users` CHANGE COLUMN `full_name` `full_name` VARCHAR(255) GENERATED ALWAYS AS (concat_ws(' ',`first_name`,`middle_name`,`last_name`)) VIRTUAL");
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateUserNameConcat extends Migration
      */
     public function down()
     {
-        DB::transaction(function() {
+        DB::transaction(function () {
             DB::statement("ALTER TABLE `users` CHANGE COLUMN `name` `name` VARCHAR(255) GENERATED ALWAYS AS (CONCAT(first_name,' ',last_name)) VIRTUAL;");
             DB::statement("ALTER TABLE `users` CHANGE COLUMN `full_name` `full_name` VARCHAR(255) GENERATED ALWAYS AS (CONCAT(first_name,' ',middle_name,' ',last_name)) VIRTUAL");
         });
