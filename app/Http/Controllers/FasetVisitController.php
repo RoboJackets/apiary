@@ -43,4 +43,11 @@ class FasetVisitController extends Controller
             return response()->json(array("status" => "error"))->setStatusCode(500);
         }
     }
+    
+    public function list(Request $request)
+    {
+        $visits = FasetVisit::select('id', 'visit_token', 'created_at')->get();
+
+        return response()->json($visits);
+    }
 }
