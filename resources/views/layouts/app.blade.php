@@ -6,6 +6,7 @@
   
   <body>
     <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+      @inject('request', 'Illuminate\Http\Request')
       <div class="container">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleContainer" aria-controls="navbarsExampleContainer" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -14,11 +15,11 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleContainer">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Profile <span class="sr-only">(current)</span></a>
+            <li class="nav-item {{ $request->is('profile*') ? 'active' : '' }}">
+              <a class="nav-link" href="/profile">Profile</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+            <li class="nav-item {{ $request->is('faset*') ? 'active' : '' }}">
+              <a class="nav-link" href="/faset/admin">FASET</a>
             </li>
           </ul>
           @if (true)

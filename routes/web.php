@@ -19,6 +19,10 @@ Route::group(['middleware' => 'cas.auth'], function () {
     Route::get('faset', function () {
         return view('faset');
     });
+
+    Route::get('faset/admin', function () {
+        return view('fasetadmin');
+    });
 });
 
 Route::get('logout', function () {
