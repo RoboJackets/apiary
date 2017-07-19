@@ -6,7 +6,9 @@ FASET Admin | {{ env('APP_NAME') }}
 
 @section('content')
 
-<h1> Hello World! </h1>
+<h1> FASET Admin </h1>
+
+<datatable></datatable>
 
 
 @endsection

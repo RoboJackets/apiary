@@ -35,10 +35,11 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="app">
       @yield('content')
     </div>
 
     @include('layouts/footer')
   </body>
+  <script src="{{ mix('/js/app.js') }}"></script>
 </html>
