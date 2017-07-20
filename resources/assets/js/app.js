@@ -6,8 +6,9 @@
  */
 
 require('./bootstrap');
-var dt = require('../../../node_modules/datatables.net/js/jquery.dataTables');
-//var bs = require('../../../node_modules/datatables.net-bs/js/dataTables.bootstrap');
+var axios = require('axios')
+var dt = require('datatables.net/js/jquery.dataTables');
+//var bs = require('datatables.net-bs/js/dataTables.bootstrap');
     
 
 window.Vue = require('vue');
