@@ -8,6 +8,7 @@ FASET Admin | {{ env('APP_NAME') }}
 
 <h1> FASET Admin </h1>
 
+
 <datatable 
   data-url="/api/v1/faset"
   :columns="['id','faset_name', 'faset_email']">

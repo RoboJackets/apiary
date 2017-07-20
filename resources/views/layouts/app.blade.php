@@ -42,4 +42,5 @@
     @include('layouts/footer')
   </body>
   <script src="{{ mix('/js/app.js') }}"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 </html>
