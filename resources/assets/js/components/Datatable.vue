@@ -31,6 +31,7 @@
           this.tableData = response.data;
 
           $('#DataTable').DataTable({
+            stateSave: true,
             data: this.tableData,
             columns: this.columns,
             pageLength: 100,
