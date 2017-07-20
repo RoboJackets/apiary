@@ -5,13 +5,16 @@ FASET Admin | {{ env('APP_NAME') }}
 @endsection
 
 @section('content')
-
-<h1> FASET Admin </h1>
-
-
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="my-4"> FASET Admin </h1>
+    </div>
+  </div>
+</div>
 <datatable 
   data-url="/api/v1/faset"
-  :columns="['id','faset_name', 'faset_email']">
+  :columns="[{'title': 'ID', 'data':'id'}, {'title': 'Timestamp', 'data':'created_at'}, {'title': 'Name', 'data':'faset_name'}, {'title': 'Email', 'data':'faset_email'}]">
           
 </datatable>
 

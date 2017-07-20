@@ -47,7 +47,6 @@ class FasetVisitController extends Controller
     public function list(Request $request)
     {
         $visits = FasetVisit::all();
-
         return response()->json($visits);
     }
 }
