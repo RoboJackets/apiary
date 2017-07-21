@@ -1,5 +1,8 @@
 body {
 	background-color: $jumbotron-bg;
+  ::placeholder {
+    opacity: 0.4 !important;
+  }
 }
 
 #fasetSuccess {
@@ -29,5 +32,3 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 80px;
 }
-
-// End Sticky Footer styles
