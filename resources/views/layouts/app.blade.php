@@ -18,7 +18,7 @@
             <li class="nav-item {{ $request->is('profile*') ? 'active' : '' }}">
               <a class="nav-link" href="/profile">Profile</a>
             </li>
-            <li class="nav-item {{ $request->is('faset*') ? 'active' : '' }}">
+            <li class="nav-item {{ $request->is('*faset') ? 'active' : '' }}">
               <a class="nav-link" href="{{route('fasetAdmin')}}">FASET</a>
             </li>
           </ul>
