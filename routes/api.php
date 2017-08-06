@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('jwt.auth')->get('v1/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1/'], function () {
+Route::group(['prefix' => 'v1/', 'middleware' => 'jwt.auth'], function () {
     Route::post('faset', 'FasetVisitController@visit');
     Route::get('faset', 'FasetVisitController@list');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);

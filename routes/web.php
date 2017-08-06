@@ -19,6 +19,8 @@ Route::group(['middleware' => 'cas.auth'], function () {
     Route::get('faset', function () {
         return view('faset');
     });
+
+    Route::get('api/v1/getToken', 'Auth\APITokenController@getToken');
 });
 
 Route::get('logout', function () {
