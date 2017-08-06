@@ -1,11 +1,9 @@
 <template>
-  <div class="container">
   <div class="row">
     <div class="col-12">
       <table id="DataTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
       </table>
     </div>
-  </div>
   </div>
 </template>
 
@@ -43,8 +41,6 @@
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
 
-
-      
     }
   }
 </script>

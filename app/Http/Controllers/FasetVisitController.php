@@ -43,6 +43,24 @@ class FasetVisitController extends Controller
             return response()->json(array("status" => "error"))->setStatusCode(500);
         }
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id FasetVisit ID Number
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id, Request $request)
+    {
+        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+
+        if ($visit) {
+            $visit['status'] = "success";
+            return response()->json($visit);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
+        }
+    }
     
     public function list(Request $request)
     {

@@ -17,12 +17,16 @@ Route::group(['middleware' => 'cas.auth'], function () {
     });
 
     Route::get('faset', function () {
-        return view('faset');
+        return view('faset/faset');
     });
 
     Route::get('admin/faset', function () {
-        return view('fasetadmin');
+        return view('faset/fasetadmin');
     })->name('fasetAdmin');
+
+    Route::get('admin/faset/{id}', function ($id) {
+        return view('faset/fasetedit', ['id' => $id]);
+    })->name('fasetEdit');
 });
 
 Route::get('logout', function () {
