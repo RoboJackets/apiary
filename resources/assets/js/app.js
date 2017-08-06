@@ -6,6 +6,10 @@
  */
 
 require('./bootstrap');
+var axios = require('axios')
+var dt = require('datatables.net/js/jquery.dataTables');
+//var bs = require('datatables.net-bs/js/dataTables.bootstrap');
+
 
 window.Vue = require('vue');
 
@@ -15,7 +19,8 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.component('datatable', require('./components/Datatable.vue'));
+
 
 const app = new Vue({
     el: '#app'

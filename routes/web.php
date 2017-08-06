@@ -20,6 +20,10 @@ Route::group(['middleware' => 'cas.auth'], function () {
         return view('faset');
     });
 
+    Route::get('admin/faset', function () {
+        return view('fasetadmin');
+    })->name('fasetAdmin');
+  
     Route::get('api/v1/getToken', 'Auth\APITokenController@getToken');
 });
 
