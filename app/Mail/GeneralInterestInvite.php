@@ -33,8 +33,8 @@ class GeneralInterestInvite extends Mailable
              ->markdown('mail.generalinterest.invite');
 
         $this->withSwiftMessage(function ($message) {
-        $message->getHeaders()
-                ->addTextHeader('Reply-To', 'RoboJackets Support <support@robojackets.org>');
+            $message->getHeaders()
+                    ->addTextHeader('Reply-To', 'RoboJackets Support <support@robojackets.org>');
         });
     }
 }
