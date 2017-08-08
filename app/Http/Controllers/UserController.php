@@ -15,9 +15,6 @@ class UserController extends Controller
      *
      * @api {get} /users/ List all users
      * @apiGroup Users
-     *
-     * @apiSuccess {String} first_name First name of the User.
-     * @apiSuccess {String} last_name Last name of the User.
      */
     public function index()
     {
