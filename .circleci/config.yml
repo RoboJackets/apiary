@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run: git config --global user.name "$GIT_USERNAME" && git config --global user.email "$GIT_EMAIL"
       - run: cd .. && git clone "$CIRCLE_REPOSITORY_URL" gh-pages && cd gh-pages && git checkout gh-pages && rm -r * && cd ..
-      - run: npm install apidoc -g
+      - run: sudo npm install apidoc -g
       - run: apidoc -i master -o gh-pages
       - run: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
