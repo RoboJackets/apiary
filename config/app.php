@@ -232,4 +232,6 @@ return [
 
     ],
 
+    'ga-ua' => env('GA_UA', 'UA-XXXXX-Y'),
+
 ];
