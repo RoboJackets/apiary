@@ -1,6 +1,6 @@
 {
   "name": "Apiary",
-  "version": "1.0",
+  "version": "v1.0",
   "description": "A tool for managing organizations that actually do things",
   "url" : "https://my.robojackets.org/api/v1",
   "title" : "Apiary API Documetation",
