@@ -2,7 +2,7 @@
   "name": "Apiary",
   "version": "1.0",
   "description": "A tool for managing organizations that actually do things",
-  "url" : "https://my.robojackets.org/api/v1/",
+  "url" : "https://my.robojackets.org/api/v1",
   "title" : "Apiary API Documetation",
   "footer": {
     "filename": "apidoc.footer.md"
