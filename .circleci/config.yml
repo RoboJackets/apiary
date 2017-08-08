@@ -14,5 +14,5 @@ jobs:
       - run: cd .. && apidoc -i master -o gh-pages
       - run: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            cd gh-pages && git add -A && git commit -m "Update API documentation" || true && git push https://$GH_TOKEN@github.com/RoboJackets/apiary gh-pages || true
+            cd ../gh-pages && git add -A && git commit -m "Update API documentation" || true && git push https://$GH_TOKEN@github.com/RoboJackets/apiary gh-pages || true
             fi
