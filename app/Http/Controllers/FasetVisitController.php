@@ -61,6 +61,38 @@ class FasetVisitController extends Controller
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id FasetVisit Id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //Update only included fields
+        $this->validate($request, [
+            'faset_name' => 'max:127',
+            'faset_email' => 'email|max:127'
+        ]);
+
+        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+        if (!$visit) {
+            return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
+        }
+
+        $visit->update($request->all());
+
+        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+
+        if ($visit) {
+            $visit['status'] = "success";
+            return response()->json($visit);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
+        }
+    }
     
     public function list(Request $request)
     {
