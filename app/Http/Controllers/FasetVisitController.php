@@ -55,8 +55,7 @@ class FasetVisitController extends Controller
         $visit = FasetVisit::with(['fasetResponses'])->find($id);
 
         if ($visit) {
-            $visit['status'] = "success";
-            return response()->json($visit);
+            return response()->json(['status' => 'success', 'visit' => $visit]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
@@ -87,8 +86,7 @@ class FasetVisitController extends Controller
         $visit = FasetVisit::with(['fasetResponses'])->find($id);
 
         if ($visit) {
-            $visit['status'] = "success";
-            return response()->json($visit);
+            return response()->json(['status' => 'success', 'visit' => $visit]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
@@ -97,6 +95,6 @@ class FasetVisitController extends Controller
     public function list(Request $request)
     {
         $visits = FasetVisit::all();
-        return response()->json($visits);
+        return response()->json(['status' => 'success', 'visits' => $visits]);
     }
 }
