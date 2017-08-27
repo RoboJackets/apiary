@@ -77,7 +77,7 @@ class FasetVisitController extends Controller
             'faset_email' => 'email|max:127'
         ]);
 
-        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+        $visit = FasetVisit::find($id);
         if (!$visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }

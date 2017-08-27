@@ -120,7 +120,6 @@
     },
     methods: {
       submit () {
-        var updated = this.fasetVisit;
         axios.put(this.dataUrl, this.fasetVisit)
           .then(response => {
             console.log("success");
