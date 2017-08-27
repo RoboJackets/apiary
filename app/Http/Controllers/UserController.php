@@ -12,6 +12,9 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @api {get} /users/ List all users
+     * @apiGroup Users
      */
     public function index()
     {
