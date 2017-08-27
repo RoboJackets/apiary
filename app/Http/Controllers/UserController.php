@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json(['status' => 'success', 'data' => ['users' => $users]]);
+        return response()->json(['status' => 'success', 'users' => $users]);
     }
 
     /**
@@ -55,7 +55,7 @@ class UserController extends Controller
 
         if (is_numeric($user->id)) {
             $dbUser = User::findOrFail($user->id);
-            return response()->json(['status' => 'success', 'data' => ['user' => $dbUser]], 201);
+            return response()->json(['status' => 'success', 'user' => $dbUser], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -71,7 +71,7 @@ class UserController extends Controller
     {
         $user = $this->getUserByIdentifier($id);
         if ($user) {
-            return response()->json(['status' => 'success', 'data' => ['user' => $user]]);
+            return response()->json(['status' => 'success', 'user' => $user]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
@@ -110,7 +110,7 @@ class UserController extends Controller
 
         $user = User::find($user->id);
         if ($user) {
-            return response()->json(['status' => 'success', 'data' => ['user' => $user]]);
+            return response()->json(['status' => 'success', 'user' => $user]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -129,7 +129,8 @@ class UserController extends Controller
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         } else {
-            return response()->json(['status' => 'error', 'message' => 'User does not exist or was previously deleted.'], 422);
+            return response()->json(['status' => 'error',
+                'message' => 'User does not exist or was previously deleted.'], 422);
         }
     }
 
