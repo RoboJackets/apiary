@@ -110,10 +110,10 @@
       this.dataUrl = this.baseFasetUrl + this.fasetVisitId;
       axios.get(this.dataUrl)
         .then(response => {
-          var data = response.data;
-          var survey = data.faset_responses.map(function(a) {return a.response;});
-          data.faset_responses = survey;
-          this.fasetVisit = data;
+          var visit = response.data.visit;
+          var survey = visit.faset_responses.map(function(a) {return a.response;});
+          visit.faset_responses = survey;
+          this.fasetVisit = visit;
 
         })
         .catch(response => {

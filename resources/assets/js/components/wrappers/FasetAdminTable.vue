@@ -1,7 +1,8 @@
 <template>
   <datatable id="faset-admin-table"
     data-url="/api/v1/faset"
-    :columns="tableConfig"> 
+    data-path="visits"
+    :columns="tableConfig">
   </datatable>
 </template>
 
