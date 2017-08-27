@@ -86,6 +86,7 @@
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
+          <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
         </div>
 
       </form>
@@ -99,6 +100,8 @@
     data() {
       return {
         fasetVisit: {},
+        feedback: '',
+        hasError: false,
         dataUrl: '',
         baseFasetUrl: "/api/v1/faset/"
       }
@@ -122,9 +125,13 @@
       submit () {
         axios.put(this.dataUrl, this.fasetVisit)
           .then(response => {
+            this.hasError = false;
+            this.feedback = "Saved!"
             console.log("success");
           })
           .catch(response => {
+            this.hasError = true;
+            this.feedback = "";
             console.log(response);
             sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
