@@ -18,25 +18,11 @@
     },
     props: {
       term: {
-        type: String
+        type: String,
+        default: ''
       }
-    },
-    data() {
-      return {
-        semester: '',
-        year: ''
-      }
-    },
-    mounted() {
-      this.parseTerm();
     },
     methods: {
-      parseTerm: function () {
-        var term = this.term;
-        console.log("Term: " + typeof(this.term) + this.term);
-        this.semester = '08';
-        this.year = '2013';
-      },
       updateYear: function (year) {
         // Ensure that we return a String
         var term = this.semester + "" + year;
@@ -48,6 +34,14 @@
         var term = semester + "" + this.year;
         this.semester = semester;
         this.$emit('input', term)
+      }
+    },
+    computed: {
+      semester: function () {
+        return this.term.slice(0, 2);
+      },
+      year: function () {
+        return this.term.slice(2, 6);
       }
     }
   }
