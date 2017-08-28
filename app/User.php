@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\Authenticatable;
 
-class User extends Model
+class User extends Model implements Authenticatable
 {
     use SoftDeletes;
 
@@ -39,5 +40,35 @@ class User extends Model
     public function teams()
     {
         return $this->belongsToMany('App\Team');
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return "uid";
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->uid;
+    }
+
+    public function getAuthPassword()
+    {
+        throw new \BadMethodCallException("Not implemented");
+    }
+
+    public function getRememberToken()
+    {
+        throw new \BadMethodCallException("Not implemented");
+    }
+
+    public function setRememberToken($value)
+    {
+        throw new \BadMethodCallException("Not implemented");
+    }
+
+    public function getRememberTokenName()
+    {
+        throw new \BadMethodCallException("Not implemented");
     }
 }
