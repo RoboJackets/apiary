@@ -20,13 +20,24 @@ Route::group(['middleware' => 'cas.auth'], function () {
         return view('faset/faset');
     });
 
-    Route::get('admin/faset', function () {
-        return view('faset/fasetadmin');
-    })->name('fasetAdmin');
+    Route::prefix('admin')->group(function () {
 
-    Route::get('admin/faset/{id}', function ($id) {
-        return view('faset/fasetedit', ['id' => $id]);
-    })->name('fasetEdit');
+        Route::prefix('faset')->group(function () {
+            Route::get('/', function () {
+                return view('faset/fasetadmin');
+            })->name('fasetAdmin');
+
+            Route::get('{id}', function ($id) {
+                return view('faset/fasetedit', ['id' => $id]);
+            })->name('fasetEdit');
+        });
+
+        Route::prefix('users')->group(function () {
+            Route::get('/', function () {
+                return view('users/useradmin');
+            })->name('usersAdmin');
+        });
+    });
 });
 
 Route::get('logout', function () {

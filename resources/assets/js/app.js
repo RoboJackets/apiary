@@ -22,7 +22,7 @@ window.Vue = require('vue');
 Vue.component('datatable', require('./components/Datatable.vue'));
 Vue.component('faset-admin-table', require('./components/wrappers/FasetAdminTable.vue'))
 Vue.component('faset-edit-form', require('./components/FasetEditForm.vue'));
-
+Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue'))
 
 const app = new Vue({
     el: '#app'
