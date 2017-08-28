@@ -36,6 +36,10 @@ Route::group(['middleware' => 'cas.auth'], function () {
             Route::get('/', function () {
                 return view('users/useradmin');
             })->name('usersAdmin');
+
+            Route::get('{id}', function ($id) {
+                return view('users/useredit');
+            })->name('userEdit');
         });
     });
 });
