@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Apiary'),
 
     /*
     |--------------------------------------------------------------------------
@@ -234,5 +234,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
 
     ],
+
+    'ga-ua' => env('GA_UA', 'UA-XXXXX-Y'),
 
 ];

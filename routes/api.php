@@ -20,5 +20,7 @@ Route::middleware('jwt.auth')->get('v1/user', function (Request $request) {
 Route::group(['prefix' => 'v1/', 'middleware' => 'jwt.auth'], function () {
     Route::post('faset', 'FasetVisitController@visit');
     Route::get('faset', 'FasetVisitController@list');
+    Route::get('faset/{id}', 'FasetVisitController@show');
+    Route::put('faset/{id}', 'FasetVisitController@update');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
 });

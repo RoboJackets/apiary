@@ -25,7 +25,7 @@
 
         <div class="form-group">
           <label for="faset-email">Email</label>
-          <input type="email" class="form-control form-control-warning" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="off" required>
+          <input type="email" class="form-control" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="off" required>
         </div>
 
         <fieldset class="form-group">
