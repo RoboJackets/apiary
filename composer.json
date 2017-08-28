@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
+      "predis/predis": "~1.0",
         "spatie/laravel-permission": "^2.1",
         "subfission/cas": "^2.0"
     },
