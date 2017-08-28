@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Model
 {
     use SoftDeletes;
+    use Notifiable;
 
     /**
      * The attributes that should be mutated to dates.
@@ -39,5 +41,16 @@ class User extends Model
     public function teams()
     {
         return $this->belongsToMany('App\Team');
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     * Send to GT email when present and fall back to personal email if not
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return (isset($this->gt_email)) ? $this->gt_email : $this->personal_email;
     }
 }
