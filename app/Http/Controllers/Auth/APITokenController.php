@@ -14,10 +14,7 @@ class APITokenController extends Controller
     public function getToken(Request $request)
     {
         try {
-            $customClaims = ['iat' => time(), 'exp' => time() + 60, 'nbf' => time() - 60, 'sub' => cas()->user()];
-            $payload = JWTFactory::make($customClaims);
-            $token = JWTAuth::encode($payload)->get();
-            return response()->json(compact('token'));
+            return response()->json(JWTAuth::fromUser(Auth::user()));
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
