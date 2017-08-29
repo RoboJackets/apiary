@@ -3,7 +3,7 @@
     <select v-bind:value="semester" v-on:input="updateSemester($event.target.value)" class="custom-select">
       <option value="" style="display:none;"></option>
       <option value="08">Fall</option>
-      <option value="01">Spring</option>
+      <option value="02">Spring</option>
       <option value="05">Summer</option>
     </select>
     <input v-bind:value="year" v-on:input="updateYear($event.target.value)" class="form-control" size="4" type="text" min="2000" max="3000">
@@ -38,10 +38,10 @@
     },
     computed: {
       semester: function () {
-        return this.term.slice(0, 2);
+        return this.term.slice(4, 6);
       },
       year: function () {
-        return this.term.slice(2, 6);
+        return this.term.slice(0, 4);
       }
     }
   }
