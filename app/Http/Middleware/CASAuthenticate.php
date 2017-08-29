@@ -10,6 +10,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class CASAuthenticate
 {
@@ -32,8 +34,18 @@ class CASAuthenticate
     public function handle($request, Closure $next)
     {
         if ($this->cas->isAuthenticated()) {
-            // Store the user credentials in a Laravel managed session
-            session()->put('cas_user', $this->cas->user());
+            $user = User::where('uid','=',$this->cas->user())->first();
+            if (!$user || $user == null) {
+                $user = new User();
+                $user->uid = $this->cas->user();
+                $user->gtid = $this->cas->getAttribute("gtGTID");
+                $user->gt_email = $this->cas->getAttribute("email_primary");
+                $user->first_name = $this->cas->getAttribute("givenName");
+                $user->last_name = $this->cas->getAttribute("sn");
+                $user->save();
+            }
+            Auth::login($user);
+            return $next($request);
         } else {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized', 401);
