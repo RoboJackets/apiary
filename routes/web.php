@@ -21,7 +21,6 @@ Route::group(['middleware' => 'cas.auth'], function () {
     });
 
     Route::prefix('admin')->group(function () {
-
         Route::prefix('faset')->group(function () {
             Route::get('/', function () {
                 return view('faset/fasetadmin');
