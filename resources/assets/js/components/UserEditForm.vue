@@ -79,26 +79,26 @@
         </div>
 
         <div class="form-group row">
-          <label for="user-polozie" class="col-sm-2 col-form-label">Polo Size</label>
+          <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
           <div class="col-sm-10 col-lg-4">
             <div class="btn-group" id="user-polosize" data-toggle="buttons">
               <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='s' }">
-                <input v-model="user.polo_size" type="radio" name="shirt_size" value="s" autocomplete="off"> S
+                <input v-model="user.polo_size" type="radio" name="polo_size" value="s" autocomplete="off"> S
               </label>
               <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='m' }">
-                <input v-model="user.polo_size" type="radio" name="shirt_size" value="m" autocomplete="off"> M
+                <input v-model="user.polo_size" type="radio" name="polo_size" value="m" autocomplete="off"> M
               </label>
               <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='l' }">
-                <input v-model="user.polo_size" type="radio" name="shirt_size" value="l" autocomplete="off"> L
+                <input v-model="user.polo_size" type="radio" name="polo_size" value="l" autocomplete="off"> L
               </label>
               <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xl' }">
-                <input v-model="user.polo_size" type="radio" name="shirt_size" value="xl" autocomplete="off"> XL
+                <input v-model="user.polo_size" type="radio" name="polo_size" value="xl" autocomplete="off"> XL
               </label>
               <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xxl' }">
-                <input v-model="user.polo_size" type="radio" name="shirt_size" value="xxl" autocomplete="off"> XXL
+                <input v-model="user.polo_size" type="radio" name="polo_size" value="xxl" autocomplete="off"> XXL
               </label>
               <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xxxl' }">
-                <input v-model="user.polo_size" type="radio" name="shirt_size" value="xxxl" autocomplete="off"> XXXL
+                <input v-model="user.polo_size" type="radio" name="polo_size" value="xxxl" autocomplete="off"> XXXL
               </label>
             </div>
           </div>

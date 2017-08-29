@@ -25,23 +25,23 @@
     methods: {
       updateYear: function (year) {
         // Ensure that we return a String
-        var term = this.semester + "" + year;
+        var term = year + "" + this.semester;
         this.year = year;
         this.$emit('input', term)
       },
       updateSemester: function (semester) {
         // Ensure that we return a String
-        var term = semester + "" + this.year;
+        var term = this.year + "" + semester;
         this.semester = semester;
         this.$emit('input', term)
       }
     },
     computed: {
       semester: function () {
-        return this.term.slice(4, 6);
+        return this.term.slice(-2);
       },
       year: function () {
-        return this.term.slice(0, 4);
+        return this.term.slice(0, -2);
       }
     }
   }
