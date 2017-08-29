@@ -8,24 +8,24 @@
         <div class="form-group row">
           <label for="user-name" class="col-sm-2 col-form-label">Full Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.name" type="text" readonly class="form-control-plaintext" id="user-name">
+            <input v-model="user.full_name" type="text" readonly class="form-control" id="user-name">
           </div>
 
           <label for="user-uid" class="col-sm-2 col-form-label">GT Username</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.uid" type="text" readonly class="form-control-plaintext" id="user-uid">
+            <input v-model="user.uid" type="text" readonly class="form-control" id="user-uid">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="user-gtemail" class="col-sm-2 col-form-label">GT Email</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.gt_email" type="text" readonly class="form-control-plaintext" id="user-gtemail">
+            <input v-model="user.gt_email" type="text" readonly class="form-control" id="user-gtemail">
           </div>
 
           <label for="user-gtid" class="col-sm-2 col-form-label">GTID</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.gtid" type="text" readonly class="form-control-plaintext" id="user-gtid">
+            <input v-model="user.gtid" type="text" readonly class="form-control" id="user-gtid">
           </div>
         </div>
 
@@ -112,6 +112,13 @@
           <label for="user-joinsemester" class="col-sm-2 col-form-label">Join Semester</label>
           <div class="col-sm-10 col-lg-4">
             <term-input v-model="user.join_semester" id="user-joinsemester"></term-input>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="user-graduationsemester" class="col-sm-2 col-form-label">Graduation Semester</label>
+          <div class="col-sm-10 col-lg-4">
+            <term-input v-model="user.graduation_semester" id="user-graduationsemester"></term-input>
           </div>
         </div>
 
