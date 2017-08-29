@@ -39,7 +39,8 @@ class JWTAuthenticate
             return response()->json(['token_expired'], $e->getStatusCode());
         } catch (TokenInvalidException $e) {
             return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (JWTException $e) {}
+        } catch (JWTException $e) {
+        }
         return $next($request);
     }
 }
