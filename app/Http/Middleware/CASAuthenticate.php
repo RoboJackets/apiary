@@ -34,7 +34,7 @@ class CASAuthenticate
     public function handle($request, Closure $next)
     {
         if ($this->cas->isAuthenticated()) {
-            $user = User::where('uid','=',$this->cas->user())->first();
+            $user = User::where('uid', '=', $this->cas->user())->first();
             if (!$user || $user == null) {
                 $user = new User();
                 $user->uid = $this->cas->user();
