@@ -27,6 +27,8 @@ Route::group(['middleware' => 'cas.auth'], function () {
     Route::get('admin/faset/{id}', function ($id) {
         return view('faset/fasetedit', ['id' => $id]);
     })->name('fasetEdit');
+  
+    Route::get('api/v1/getToken', 'Auth\APITokenController@getToken');
 });
 
 Route::get('logout', function () {
