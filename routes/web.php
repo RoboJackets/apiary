@@ -41,6 +41,9 @@ Route::group(['middleware' => 'cas.auth'], function () {
             })->name('userEdit');
         });
     });
+  
+    // Use cookie auth to get first token
+    Route::get('api/v1/getToken', 'Auth\APITokenController@getToken');
 });
 
 Route::get('logout', function () {
