@@ -40,7 +40,6 @@ class JWTAuthenticate
         } catch (TokenInvalidException $e) {
             return response()->json(['token_invalid'], $e->getStatusCode());
         } catch (JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
         }
         return $next($request);
     }
