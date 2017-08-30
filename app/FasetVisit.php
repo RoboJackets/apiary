@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class FasetVisit extends Model
 {
+    use Notifiable;
+
     /**
      *  Get the FASET Responses associated with this FASET Visit
      */
@@ -34,6 +37,16 @@ class FasetVisit extends Model
             $this->visit_token = strtr(base64_encode(random_bytes(15)), "+/=", "-_.");
         }
         return parent::save($options);
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->faset_email;
     }
 
     protected $fillable = ['faset_email', 'faset_name'];
