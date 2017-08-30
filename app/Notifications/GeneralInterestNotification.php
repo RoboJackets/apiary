@@ -15,12 +15,11 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param \App\FasetVisit $visit
      * @return void
      */
     public function __construct()
     {
-        
+        //
     }
 
     /**
