@@ -17,11 +17,11 @@ class Rsvp extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function event()
     {
-        return $this->hasOne('App\Event');
+        return $this->belongsTo('App\Event');
     }
 }

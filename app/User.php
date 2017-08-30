@@ -49,7 +49,7 @@ class User extends Model implements Authenticatable
 
     public function rsvps()
     {
-        return $this->belongsToMany('App\Rsvp');
+        return $this->hasMany('App\Rsvp');
     }
 
     public function getAuthIdentifierName()

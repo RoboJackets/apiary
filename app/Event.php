@@ -23,6 +23,6 @@ class Event extends Model
 
     public function rsvp()
     {
-        return $this->belongsTo('App\Rsvp');
+        return $this->hasMany('App\Rsvp');
     }
 }
