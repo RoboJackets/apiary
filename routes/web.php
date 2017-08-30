@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::group(['middleware' => 'cas.auth'], function () {
     Route::get('/', function () {
         return view('welcome');
@@ -45,6 +46,8 @@ Route::group(['middleware' => 'cas.auth'], function () {
     // Use cookie auth to get first token
     Route::get('api/v1/getToken', 'Auth\APITokenController@getToken');
 });
+
+Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('cas.check');
 
 Route::get('logout', function () {
     cas()->logout(config("app.url"));
