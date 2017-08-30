@@ -13,7 +13,7 @@ use Illuminate\Contracts\Auth\Guard;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class CASAuthenticate
+class CASCheck
 {
     protected $auth;
     protected $cas;
@@ -50,7 +50,6 @@ class CASAuthenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized', 401);
             }
-            $this->cas->authenticate();
         }
         return $next($request);
     }
