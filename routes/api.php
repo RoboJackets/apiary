@@ -17,7 +17,7 @@ Route::middleware('jwt.auth')->get('v1/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1/', 'middleware' => 'jwt.auth'], function () {
+Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], function () {
     Route::post('faset', 'FasetVisitController@visit');
     Route::get('faset', 'FasetVisitController@list');
     Route::get('faset/{id}', 'FasetVisitController@show');
