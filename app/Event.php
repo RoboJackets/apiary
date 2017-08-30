@@ -21,7 +21,7 @@ class Event extends Model
         return $this->hasOne('App\User');
     }
 
-    public function rsvp()
+    public function rsvps()
     {
         return $this->hasMany('App\Rsvp');
     }
