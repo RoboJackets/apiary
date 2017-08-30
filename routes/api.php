@@ -23,4 +23,5 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], func
     Route::get('faset/{id}', 'FasetVisitController@show');
     Route::put('faset/{id}', 'FasetVisitController@update');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
+    Route::resource('events', 'EventController', ['except' => ['create', 'edit']]);
 });

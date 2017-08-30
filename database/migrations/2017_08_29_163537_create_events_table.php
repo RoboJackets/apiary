@@ -20,7 +20,7 @@ class CreateEventsTable extends Migration
             $table->float('price', 8, 2)->default(0);
             $table->boolean('allow_anonymous_rsvp')->default(false);
             $table->unsignedInteger('organizer')->comment('user_id of the organizer');
-            $table->string('location')->nullable();
+            $table->string('location', 255)->nullable();
             $table->dateTime('start_time')->nullable();
             $table->dateTime('end_time')->nullable();
             $table->timestamps();
