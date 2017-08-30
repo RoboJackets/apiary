@@ -31,7 +31,7 @@ class FasetVisit extends Model
     {
         if (empty($this->visit_token)) {
             // Store 20 char secure random token
-            $this->visit_token = base64_encode(random_bytes(15));
+            $this->visit_token = strtr(base64_encode(random_bytes(15), "+/=", "-_.");
         }
         return parent::save($options);
     }
