@@ -13,7 +13,7 @@ use Illuminate\Contracts\Auth\Guard;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class CASAuthenticate
+class CASCheck
 {
     protected $auth;
     protected $cas;
