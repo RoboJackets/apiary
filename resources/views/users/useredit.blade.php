@@ -11,6 +11,6 @@ User Admin | {{ env('APP_NAME') }}
 
 <a href="{{route('usersAdmin')}}">Back to List</a>
 
-<user-edit-form user-uid="rstrat6"></user-edit-form>
+<user-edit-form user-uid="{{$id}}"></user-edit-form>
 
 @endsection
