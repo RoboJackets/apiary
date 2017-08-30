@@ -1,18 +1,32 @@
 @component('mail::message')
-# Calling all future RoboJackets!
+Hello Future RoboJackets,
 
-RoboJackets builds robots and is active in the Atlanta robotics community to promote robotics, educate its members, and advance robotics. Competing in five competitions annually, RoboJackets is the largest robotics student organization at Georgia Tech.
+First, if you are one of the new freshmen starting your journey at Georgia Tech, RoboJackets would like to welcome you to the GT family. Your time here will be full of excitement and challenge, and we hope RoboJackets will be a part of that experience.
 
-We are holding our General Interest Meetings on **Tuesday, September 6 in Howey L3** and **Wednesday, September 7 in Howey L4**. Any student interested in joining RoboJackets should attend one of the two meetings, which will feature the same content. This is the meeting where we’ll tell interested students all about our different teams, the projects we’ll be working on this year, and when we’ll be meeting this semester. All skill levels are welcome. If you can’t make it, don’t worry! We’ll be sending out all of the information to our general mailing list, which you can join [here](https://lists.gatech.edu/sympa/subscribe/robojackets-general).
+If you are receiving this email, you expressed interest in joining RoboJackets, the competitive robotics club at Georgia Tech.
 
-Pizza and drinks will be provided. Click a day below to RSVP.
+# How to Join
+RoboJackets will be holding two General Interest (GI) meetings that will give you the details of our teams’ activities and how to join. The two meetings cover the same content, and you should only attend one of the two.
 
-@component('mail::button', ['url' => 'https://not-a-real-domain.robojackets.org/clicked-button-one'])
+# General Interest Meetings
+The meetings will be held on Wednesday the 6th of September and Thursday the 7th of September. Both meetings are located in the [Howey Lecture Hall, L2](https://goo.gl/fJGRNe). There will be free pizza.
+
+# RSVP
+Please RSVP to the meeting you want to attend using the link below.
+
+@component('mail::button', ['url' => $app_url . "/events/1/rsvp?source=" . $visit_token])
 RSVP for Tuesday, September 6
 @endcomponent
 
-@component('mail::button', ['url' => 'https://not-a-real-domain.robojackets.org/clicked-button-two'])
+@component('mail::button', ['url' => $app_url . "/events/2/rsvp?source=" . $visit_token])
 RSVP for Wednesday, September 7
 @endcomponent
+
+I look forward to seeing you all next week. If you have any questions in the interim, feel free to reach out to [info@robojackets.org](mailto:info@robojackets.org).
+
+Best,
+
+Will Stuckey  
+President, RoboJackets
 
 @endcomponent

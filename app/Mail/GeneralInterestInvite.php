@@ -11,14 +11,18 @@ class GeneralInterestInvite extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $app_url;
+    public $visit_token;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($vist_token)
     {
-        //
+        $this->app_url = url('/');
+        $this->visit_token = $vist_token;
     }
 
     /**
@@ -34,7 +38,7 @@ class GeneralInterestInvite extends Mailable
 
         $this->withSwiftMessage(function ($message) {
             $message->getHeaders()
-                    ->addTextHeader('Reply-To', 'RoboJackets Support <support@robojackets.org>');
+                    ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');
         });
     }
 }
