@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\User;
@@ -89,13 +90,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = $this->getUserByIdentifier($id);
         //Update only included fields
         $this->validate($request, [
-            'uid' => 'unique:users|max:127',
-            'gtid' => 'unique:users|max:10',
-            'slack_id' => 'unique:users|max:21',
-            'gt_email' => 'unique:users|max:255',
-            'personal_email' => 'unique:users|max:255',
+            'uid' => ['max:127', Rule::unique('users')->ignore($user->id)],
+            'gtid' => ['max:10', Rule::unique('users')->ignore($user->id)],
+            'slack_id' => ['max:21', Rule::unique('users')->ignore($user->id)],
+            'gt_email' => ['max:255', Rule::unique('users')->ignore($user->id)],
+            'personal_email' => ['max:255', Rule::unique('users')->ignore($user->id)],
             'first_name' => 'max:127',
             'middle_name' => 'max:127',
             'last_name' => 'max:127',
@@ -108,7 +110,7 @@ class UserController extends Controller
             'shirt_size' => 'in:s,m,l,xl,xxl,xxxl',
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl',
         ]);
-        $user = $this->getUserByIdentifier($id);
+
         $user->update($request->all());
 
         $user = User::find($user->id);
@@ -143,7 +145,7 @@ class UserController extends Controller
      * @param $id string Identifier for user (DB ID, GTID, UID)
      * @return mixed
      */
-    protected function getUserByIdentifier($id)
+    public static function getUserByIdentifier($id)
     {
         if (is_numeric($id) && strlen($id) == 9 && $id[0] == 9) {
             return User::where('gtid', $id)->first();

@@ -19,9 +19,19 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// Form Fields
+Vue.component('term-input', require('./components/fields/TermInput.vue'));
+
+
+// Large Scale Components
+
 Vue.component('datatable', require('./components/Datatable.vue'));
 Vue.component('faset-admin-table', require('./components/wrappers/FasetAdminTable.vue'))
 Vue.component('faset-edit-form', require('./components/FasetEditForm.vue'));
+Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue'))
+Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
+
+
 
 
 const app = new Vue({
