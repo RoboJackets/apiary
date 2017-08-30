@@ -42,6 +42,16 @@ class User extends Model implements Authenticatable
         return $this->belongsToMany('App\Team');
     }
 
+    public function organizes()
+    {
+        return $this->belongsToMany('App\Event');
+    }
+
+    public function rsvps()
+    {
+        return $this->hasMany('App\Rsvp');
+    }
+
     public function getAuthIdentifierName()
     {
         return "uid";
