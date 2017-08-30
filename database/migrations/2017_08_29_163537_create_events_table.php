@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvent extends Migration
+class CreateEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,11 @@ class CreateEvent extends Migration
     public function up()
     {
 
-        Schema::create('event', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->float('price', 8, 2)->default(0);
+            $table->boolean('allow_anonymous_rsvp')->default(false);
             $table->unsignedInteger('organizer')->comment('user_id of the organizer');
             $table->string('location')->nullable();
             $table->dateTime('start_time')->nullable();
@@ -35,6 +36,6 @@ class CreateEvent extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event');
+        Schema::dropIfExists('events');
     }
 }

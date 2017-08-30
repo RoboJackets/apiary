@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Rsvp extends Migration
+class CreateRsvpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Rsvp extends Migration
      */
     public function up()
     {
-        Schema::create('rsvp', function (Blueprint $table) {
+        Schema::create('rsvps', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('event_id');
@@ -22,6 +22,7 @@ class Rsvp extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('event_id')->references('id')->on('events');
         });
     }
 
@@ -32,6 +33,6 @@ class Rsvp extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rsvp');
+        Schema::dropIfExists('rsvps');
     }
 }
