@@ -12,7 +12,7 @@
       return {
         tableConfig: [
           {'title': 'GT Username', 'data':'uid', 'render': function (data, type, row) {
-            var link = "<a href='" + data + "'>" + data + "</a>";
+            var link = "<a href='/admin/users/" + data + "'>" + data + "</a>";
             return type === "display" ? link : data;
           }}, 
           {'title': 'GTID', 'data': 'gtid'},
