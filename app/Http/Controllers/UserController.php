@@ -145,7 +145,7 @@ class UserController extends Controller
      * @param $id string Identifier for user (DB ID, GTID, UID)
      * @return mixed
      */
-    protected function getUserByIdentifier($id)
+    public static function getUserByIdentifier($id)
     {
         if (is_numeric($id) && strlen($id) == 9 && $id[0] == 9) {
             return User::where('gtid', $id)->first();
