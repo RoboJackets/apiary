@@ -22,6 +22,7 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], func
     Route::get('faset', 'FasetVisitController@list')->middleware('can:administer');
     Route::get('faset/{id}', 'FasetVisitController@show')->middleware('can:administer');
     Route::put('faset/{id}', 'FasetVisitController@update')->middleware('can:administer');
+    Route::get('faset/dedup', 'FasetVisitController@dedup')->middleware('can:administer');
     Route::get('notification/send', 'NotificationController@sendNotification')->middleware('can:administer');
     Route::middleware('can:administer')->resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::middleware('can:administer')->resource('events', 'EventController', ['except' => ['create', 'edit']]);
