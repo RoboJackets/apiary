@@ -43,11 +43,58 @@ class FasetVisitController extends Controller
             return response()->json(array("status" => "error"))->setStatusCode(500);
         }
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id FasetVisit ID Number
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id, Request $request)
+    {
+        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+
+        if ($visit) {
+            return response()->json(['status' => 'success', 'visit' => $visit]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id FasetVisit Id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //Update only included fields
+        $this->validate($request, [
+            'faset_name' => 'max:127',
+            'faset_email' => 'email|max:127'
+        ]);
+
+        $visit = FasetVisit::find($id);
+        if (!$visit) {
+            return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
+        }
+
+        $visit->update($request->all());
+
+        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+
+        if ($visit) {
+            return response()->json(['status' => 'success', 'visit' => $visit]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
+        }
+    }
     
     public function list(Request $request)
     {
-        $visits = FasetVisit::select('id', 'visit_token', 'created_at')->get();
-
-        return response()->json($visits);
+        $visits = FasetVisit::all();
+        return response()->json(['status' => 'success', 'visits' => $visits]);
     }
 }
