@@ -15,11 +15,11 @@ The meetings will be held on Wednesday the 6th of September and Thursday the 7th
 Please RSVP to the meeting you want to attend using the link below.
 
 @component('mail::button', ['url' => $app_url . "/events/1/rsvp?source=" . $visit_token])
-RSVP for Tuesday, September 6
+RSVP for Wednesday, September 6
 @endcomponent
 
 @component('mail::button', ['url' => $app_url . "/events/2/rsvp?source=" . $visit_token])
-RSVP for Wednesday, September 7
+RSVP for Thursday, September 7
 @endcomponent
 
 I look forward to seeing you all next week. If you have any questions in the interim, feel free to reach out to [info@robojackets.org](mailto:info@robojackets.org).
