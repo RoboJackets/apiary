@@ -57,7 +57,7 @@ class User extends Model implements Authenticatable
 
     public function organizes()
     {
-        return $this->belongsToMany('App\Event');
+        return $this->hasMany('App\Event');
     }
 
     public function rsvps()

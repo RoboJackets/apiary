@@ -25,4 +25,5 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], func
     Route::get('notification/send', 'NotificationController@sendNotification')->middleware('can:administer');
     Route::middleware('can:administer')->resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::middleware('can:administer')->resource('events', 'EventController', ['except' => ['create', 'edit']]);
+    Route::middleware('can:administer')->resource('rsvps', 'RsvpController', ['except' => ['create', 'edit']]);
 });

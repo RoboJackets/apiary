@@ -10,7 +10,54 @@ use App\User;
 
 class RsvpController extends Controller
 {
-    // TODO: Implement RSVP Controller REST API
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     *
+     * @api {get} /events/ List all events
+     * @apiGroup Users
+     */
+    public function index()
+    {
+        $rsvps = Rsvp::all();
+        return response()->json(['status' => 'success', 'rsvps' => $rsvps]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return  response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        return  response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
+    }
+
+    public function destroy($id)
+    {
+        $rsvp = Rsvp::find();
+        $deleted = $rsvp->delete();
+        if ($deleted) {
+            return response()->json(['status' => 'success', 'message' => 'event_deleted']);
+        } else {
+            return response()->json(['status' => 'error',
+                'message' => 'event_not_found'], 422);
+        }
+    }
 
     public function oneClickCreate(\App\Event $event, Request $request)
     {
