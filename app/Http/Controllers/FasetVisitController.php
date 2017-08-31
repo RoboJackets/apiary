@@ -97,4 +97,24 @@ class FasetVisitController extends Controller
         $visits = FasetVisit::all();
         return response()->json(['status' => 'success', 'visits' => $visits]);
     }
+
+    public function dedup() {
+        $visits = FasetVisit::all();
+        $emails = [];
+        foreach ($visits as $visit) {
+            echo "Processing Visit $visit->id<br/>\n";
+            if (!in_array($visit->faset_email, $emails)) {
+                $emails[] = $visit->faset_email;
+            } else {
+                echo "Deleting Visit $visit->id<br/>\n";
+                $count = FasetResponse::where('faset_visit_id', $visit->id)->count();
+                echo "Deleting $count Responses for Visit $visit->id<br/>\n";
+                foreach ($visit->fasetResponses as $response) {
+                    echo "Deleting Response $response->response<br/>\n";
+                    $deletedRows = FasetResponse::where('faset_visit_id', $visit->id)->delete();
+                }
+                $visit->delete();
+            }
+        }
+    }
 }
