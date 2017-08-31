@@ -18,10 +18,10 @@ class Event extends Model
 
     public function organizer()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsTo('App\User');
     }
 
-    public function rsvp()
+    public function rsvps()
     {
         return $this->hasMany('App\Rsvp');
     }

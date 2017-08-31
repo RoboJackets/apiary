@@ -41,6 +41,16 @@ Route::group(['middleware' => 'cas.auth'], function () {
                 return view('users/useredit', ['id' => $id]);
             })->name('userEdit');
         });
+
+        Route::prefix('events')->group(function () {
+            Route::get('/', function () {
+                return view('events/eventadmin');
+            })->name('eventsAdmin');
+
+            Route::get('{id}', function ($id) {
+                return view('events/eventedit', ['id' => $id]);
+            })->name('eventEdit');
+        });
     });
   
     // Use cookie auth to get first token
