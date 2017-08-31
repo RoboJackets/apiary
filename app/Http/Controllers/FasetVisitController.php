@@ -98,7 +98,8 @@ class FasetVisitController extends Controller
         return response()->json(['status' => 'success', 'visits' => $visits]);
     }
 
-    public function dedup() {
+    public function dedup()
+    {
         $visits = FasetVisit::all();
         $emails = [];
         foreach ($visits as $visit) {
