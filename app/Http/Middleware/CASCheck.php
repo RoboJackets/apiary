@@ -12,6 +12,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use phpCAS;
 
 class CASCheck
 {
@@ -33,7 +34,7 @@ class CASCheck
      */
     public function handle($request, Closure $next)
     {
-        $this->cas->checkAuthentication();
+        phpCAS::checkAuthentication();
         if ($this->cas->isAuthenticated()) {
             $user = User::where('uid', '=', $this->cas->user())->first();
             if (!$user || $user == null) {
