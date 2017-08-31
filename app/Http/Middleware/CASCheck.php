@@ -33,6 +33,7 @@ class CASCheck
      */
     public function handle($request, Closure $next)
     {
+        $this->cas->checkAuthentication();
         if ($this->cas->isAuthenticated()) {
             $user = User::where('uid', '=', $this->cas->user())->first();
             if (!$user || $user == null) {
