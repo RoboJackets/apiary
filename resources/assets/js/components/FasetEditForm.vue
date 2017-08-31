@@ -2,6 +2,29 @@
   <div class="row">
     <div class="col-12">
       <form id="fasetEditForm" v-on:submit.prevent="submit">
+        <h3>Visit Metadata</h3>
+        <div class="form-group row">
+          <label for="faset-created" class="col-sm-2 col-form-label">Created at</label>
+          <div class="col-sm-10 col-lg-4">
+            <input v-model="fasetVisit.created_at" type="text" readonly class="form-control" id="faset-created">
+          </div>
+
+          <label for="faset-updated" class="col-sm-2 col-form-label">Last Updated</label>
+          <div class="col-sm-10 col-lg-4">
+            <input v-model="fasetVisit.updated_at" type="text" readonly class="form-control" id="faset-updated">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="faset-token" class="col-sm-2 col-form-label">Visit Token</label>
+          <div class="col-sm-10 col-lg-4">
+            <input v-model="fasetVisit.visit_token" type="text" readonly class="form-control" id="faset-token">
+          </div>
+
+        </div>
+
+        <h3>Visit Information</h3>
+
         <div class="form-group">
           <label for="faset-name">Name</label>
           <input v-model="fasetVisit.faset_name" type="text" class="form-control" id="faset-name" name="faset-name" autocomplete="off">
@@ -12,6 +35,8 @@
           <label for="faset-email">Email</label>
           <input v-model="fasetVisit.faset_email" type="email" class="form-control" id="faset-email" name="faset-email" autocomplete="off">
         </div>
+
+
 
         <!--- Commenting out survey data because it is hard 
 

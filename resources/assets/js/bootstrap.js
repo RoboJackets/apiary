@@ -51,3 +51,9 @@ if (token) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+
+/**
+ *  Import DataTables for Bootstrap4 module
+ */
+require( 'datatables.net-bs4');
