@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\FasetVisit;
-use App\fasetResponse;
+use App\FasetResponse;
 
 class FasetVisitController extends Controller
 {
