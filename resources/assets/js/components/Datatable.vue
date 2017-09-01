@@ -14,30 +14,39 @@
    * @props dataPath: the top level key that holds the data
    */
   export default {
-    props: ['columns', 'dataUrl', 'dataPath'],
+    props: ['columns', 'dataUrl', 'tableData', 'dataPath'],
     data() {
       return {
-        tableData: {},
         columnsDatatables: []
       }
     },
-    mounted() {
-      axios.get(this.dataUrl)
-        .then(response => {
-          this.tableData = response.data;
+    mounted() {  
+      if (typeof(this.dataUrl) !== 'undefined') {
+        axios.get(this.dataUrl)
+          .then(response => {
+            this.tableData = response.data;
 
-          $('#DataTable').DataTable({
-            stateSave: true,
-            data: this.tableData[this.dataPath],
-            columns: this.columns,
-            pageLength: 100,
-            lengthMenu: [20, 50, 100, 200, 500, 5000]
+            $('#DataTable').DataTable({
+              stateSave: true,
+              data: this.tableData[this.dataPath],
+              columns: this.columns,
+              pageLength: 100,
+              lengthMenu: [20, 50, 100, 200, 500, 5000]
+            });
+          })
+          .catch(response => {
+            console.log(response);
+            sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
           });
-        })
-        .catch(response => {
-          console.log(response);
-          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+      } else {
+        $('#DataTable').DataTable({
+          stateSave: true,
+          data: this.tableData[this.dataPath],
+          columns: this.columns,
+          pageLength: 100,
+          lengthMenu: [20, 50, 100, 200, 500, 5000]
         });
+  }
 
     }
   }

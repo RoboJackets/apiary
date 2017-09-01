@@ -30,7 +30,8 @@ Vue.component('faset-admin-table', require('./components/wrappers/FasetAdminTabl
 Vue.component('faset-edit-form', require('./components/FasetEditForm.vue'));
 Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue'))
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
-
+Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
+Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
 
 
 
