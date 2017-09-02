@@ -6,6 +6,7 @@ use App\FasetVisit;
 use App\Notifications\GeneralInterestNotification;
 use Carbon\Carbon;
 use Notification;
+use Mail;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -32,7 +33,9 @@ class NotificationController extends Controller
         $chunks = array_chunk($emails, 30);
         foreach ($chunks as $chunk) {
             $when = Carbon::now()->addHours($hours);
-            Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
+            foreach ($chunk as $address) {
+                Mail::to($address)->later($when, new GeneralInterestNotification());
+            }
             $hours++;
         }
         return response()->json(['status' => 'success', 'count' => count($emails)]);
