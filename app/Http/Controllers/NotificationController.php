@@ -6,7 +6,6 @@ use App\FasetVisit;
 use App\Notifications\GeneralInterestNotification;
 use Carbon\Carbon;
 use Notification;
-use Mail;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
