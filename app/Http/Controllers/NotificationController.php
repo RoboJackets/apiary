@@ -28,13 +28,27 @@ class NotificationController extends Controller
         }
         
         $hours = 0;
+        $found = [];
+        $notfound = [];
         $emails = $request->input('emails');
         $chunks = array_chunk($emails, 30);
         foreach ($chunks as $chunk) {
             $when = Carbon::now()->addHours($hours);
-            Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
+            foreach ($chunk as $address) {
+                $visit = FasetVisit::where('faset_email', $address)->first();
+                if (isset($visit->id)) {
+                    Notification::send($visit, (new GeneralInterestNotification())->delay($when));
+                    $found[] = $visit->faset_email;
+                } else {
+                    $notfound[] = $address;
+                }
+            }
             $hours++;
         }
-        return response()->json(['status' => 'success', 'count' => count($emails)]);
+        return response()->json([
+            'status' => 'success',
+            'found' => ['count' => count($found), 'emails' => $found],
+            'notfound' => ['count' => count($notfound), 'emails' => $notfound]
+        ]);
     }
 }
