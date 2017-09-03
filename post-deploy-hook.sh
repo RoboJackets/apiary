@@ -10,3 +10,4 @@ php artisan route:clear --no-interaction
 npm install
 npm run production
 php artisan up
+php artisan queue:restart
