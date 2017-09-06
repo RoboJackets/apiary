@@ -13,19 +13,33 @@
 
           <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="event.organizer" type="text" class="form-control" id="user-organizer" readonly placeholder="None on record">
+            <input v-model="event.organizer" type="text" class="form-control" id="user-organizer" placeholder="None on record">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="event-starttime" class="col-sm-2 col-form-label">Start Time</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="event.start_time" type="datetime-local" class="form-control" id="event-starttime" placeholder="None on record">
+            <flat-pickr
+              id="event-starttime"
+              v-model="event.start_time"
+              placeholder="Select start time"
+              :required="true"
+              :config="dateTimeConfig"
+              input-class="form-control">
+            </flat-pickr>
           </div>
 
           <label for="event-endtime" class="col-sm-2 col-form-label">End Time</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="event.end_time" type="datetime-local" class="form-control" id="user-endtime" placeholder="None on record">
+            <flat-pickr
+              id="event-endtime"
+              v-model="event.start_time"
+              placeholder="Select start time"
+              :required="true"
+              :config="dateTimeConfig"
+              input-class="form-control">
+            </flat-pickr>
           </div>
         </div>
 
@@ -33,6 +47,17 @@
           <label for="event-location" class="col-sm-2 col-form-label">Location</label>
           <div class="col-sm-10 col-lg-4">
             <input v-model="event.location" type="text" class="form-control" id="event-location" placeholder="None on record">
+          </div>
+          <label for="event-anonymousrsvp" class="col-sm-2 col-form-label">Allow Anonymous RSVP</label>
+          <div class="col-sm-10 col-lg-4">
+            <div class="btn-group" id="user-shirtsize" data-toggle="buttons">
+              <label class="btn btn-secondary" v-bind:class="{ active: event.allow_anonymous_rsvp==false }" @click.left="updateRadio">
+                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="false" autocomplete="off"> No (default)
+              </label>
+              <label class="btn btn-secondary" v-bind:class="{ active: event.allow_anonymous_rsvp==true }"  @click.left="updateRadio">
+                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="true" autocomplete="off"> Yes
+              </label>
+            </div>
           </div>
         </div>
 
@@ -57,6 +82,7 @@
 
 <script>
   export default {
+    name: "editEventForm",
     props: ['eventId'],
     data() {
       return {
@@ -71,7 +97,12 @@
           {'title': 'Response', 'data': 'response'},
           {'title': 'Source', 'data': 'source'},
           {'title': 'Time', 'data': 'created_at'}
-        ]
+        ],
+        dateTimeConfig: {
+          dateFormat: "Y-m-d h:i:s",
+          enableTime:true,
+          altInput: true
+        }
       }
     },
     mounted() {
@@ -88,7 +119,10 @@
     },
     methods: {
       submit () {
-        axios.put(this.dataUrl, this.event)
+        var updatedEvent = this.event;
+        delete updatedEvent.rsvps;
+
+        axios.put(this.dataUrl, updatedEvent)
           .then(response => {
             this.hasError = false;
             this.feedback = "Saved!"
@@ -98,8 +132,11 @@
             this.hasError = true;
             this.feedback = "";
             console.log(response);
-            sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+            sweetAlert("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
+      },
+      updateRadio (event) {
+        this.event.allow_anonymous_rsvp = event.target.firstChild.value == 'true';
       }
     }
   }

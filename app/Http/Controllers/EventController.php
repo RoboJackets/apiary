@@ -90,7 +90,37 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return  response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
+        $event = Event::find($id);
+
+        if (isset($request->organizer)) {
+            $organizer = UserController::getUserByIdentifier($request->organizer);
+            $request['organizer'] = $organizer->id;
+        }
+
+        
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'price' => 'numeric',
+            'allow_anonymous_rsvp' => 'required|boolean',
+            'organizer' => 'required',
+            'location' => 'max:255',
+            'start_time' => 'date',
+            'end_time' => 'date'
+        ]);
+
+        try {
+            $event->update($request->all());
+        } catch (QueryException $e) {
+            $errorMessage = $e->errorInfo[2];
+            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
+        }
+
+        $event = Event::find($id);
+        if ($event->id) {
+            return response()->json(['status' => 'success', 'event' => $event], 201);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
+        };
     }
 
     public function destroy($id)

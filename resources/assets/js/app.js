@@ -13,9 +13,11 @@ var dt = require('datatables.net/js/jquery.dataTables');
  */
 require( 'datatables.net-bs4');
 
-
 window.Vue = require('vue');
 
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
+Vue.use(flatPickr);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -36,8 +38,6 @@ Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTabl
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
 Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
-
-
 
 const app = new Vue({
     el: '#app'
