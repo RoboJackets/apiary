@@ -54,10 +54,13 @@
     },
     watch: {
       dataObject: function(newDataObject) {
-        this.tableData = newDataObject;
+        if (newDataObject) {
 
-        this.table.clear();
-        this.table.rows.add(this.tableData).draw();
+          this.tableData = newDataObject;
+
+          this.table.clear();
+          this.table.rows.add(this.tableData).draw();
+        }
       }
     }
   }

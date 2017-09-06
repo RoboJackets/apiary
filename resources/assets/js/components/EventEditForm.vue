@@ -99,7 +99,7 @@
           {'title': 'Time', 'data': 'created_at'}
         ],
         dateTimeConfig: {
-          dateFormat: "Y-m-d h:i:s",
+          dateFormat: "Y-m-d H:i:s",
           enableTime:true,
           altInput: true
         }
@@ -110,7 +110,6 @@
       axios.get(this.dataUrl)
         .then(response => {
           this.event = response.data.event;
-          this.rows = response.data.event.rsvps;
         })
         .catch(response => {
           console.log(response);

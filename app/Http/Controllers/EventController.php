@@ -73,7 +73,8 @@ class EventController extends Controller
      */
     public function show($id, Request $request)
     {
-        $event = Event::with(['rsvps', 'organizer'])->find($id);
+        $event = Event::with(['rsvps'])->find($id);
+
         if ($event) {
             return response()->json(['status' => 'success', 'event' => $event]);
         } else {
