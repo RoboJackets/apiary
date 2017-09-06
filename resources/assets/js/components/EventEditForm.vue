@@ -34,7 +34,7 @@
           <div class="col-sm-10 col-lg-4">
             <flat-pickr
               id="event-endtime"
-              v-model="event.start_time"
+              v-model="event.end_time"
               placeholder="Select start time"
               :required="true"
               :config="dateTimeConfig"
