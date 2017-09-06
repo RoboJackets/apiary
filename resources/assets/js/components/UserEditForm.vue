@@ -57,7 +57,8 @@
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
               v-model="user.shirt_size"
-              :options="shirtSizeOptions">
+              :options="shirtSizeOptions"
+              id="user-shirtsize">
             </custom-radio-buttons>
           </div>
         </div>
@@ -67,7 +68,8 @@
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
               v-model="user.polo_size"
-              :options="shirtSizeOptions">
+              :options="shirtSizeOptions"
+              id="user-polosize">
             </custom-radio-buttons>
           </div>
         </div>
