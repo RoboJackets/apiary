@@ -8,10 +8,14 @@
 require('./bootstrap');
 var axios = require('axios')
 var dt = require('datatables.net/js/jquery.dataTables');
-//var bs = require('datatables.net-bs/js/dataTables.bootstrap');
+/**
+ *  Import DataTables for Bootstrap4 module
+ */
+require( 'datatables.net-bs4');
 
 
 window.Vue = require('vue');
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

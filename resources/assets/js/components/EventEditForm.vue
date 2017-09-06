@@ -45,11 +45,12 @@
 
       <h3>RSVPs</h3>
 
+     
       <datatable id="rsvp-admin-table"
-        :table-data="event"
-        data-path="rsvps"
+        :data-object="event.rsvps"
         :columns="rsvpTableConfig">
       </datatable>
+      
     </div>
   </div>
 </template>
@@ -78,6 +79,7 @@
       axios.get(this.dataUrl)
         .then(response => {
           this.event = response.data.event;
+          this.rows = response.data.event.rsvps;
         })
         .catch(response => {
           console.log(response);
