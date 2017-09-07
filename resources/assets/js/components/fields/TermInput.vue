@@ -16,7 +16,7 @@
  * @emits input - 6-digit Banner term format (YYYYMM) on update
  */
   export default {
-    model:{
+    model: {
       prop: 'term',
       event: 'input'
     },
