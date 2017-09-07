@@ -11,6 +11,10 @@
 </template>
 
 <script>
+/*
+ * @prop term - 6-digit Banner term format (YYYYMM)
+ * @emits input - 6-digit Banner term format (YYYYMM) on update
+ */
   export default {
     model:{
       prop: 'term',
@@ -33,7 +37,6 @@
         },
         set: function (newSemester) {
           var term = this.year + "" + newSemester;
-          //this.semester = newSemester;
           this.$emit('input', term)
         }
       },
@@ -47,7 +50,6 @@
         },
         set: function (newYear) {
           var term = newYear + "" + this.semester;
-          //this.year = newYear;
           this.$emit('input', term)
         }
       }
