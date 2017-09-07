@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    model:{
+    model: {
       prop: 'term',
       event: 'input'
     },

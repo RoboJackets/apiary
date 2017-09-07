@@ -55,52 +55,22 @@
         <div class="form-group row">
           <label for="user-shirtsize" class="col-sm-2 col-form-label">Shirt Size</label>
           <div class="col-sm-10 col-lg-4">
-            <div class="btn-group" id="user-shirtsize" data-toggle="buttons">
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='s' }">
-                <input v-model="user.shirt_size" type="radio" name="shirt_size" value="s" autocomplete="off"> S
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='m' }">
-                <input v-model="user.shirt_size" type="radio" name="shirt_size" value="m" autocomplete="off"> M
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='l' }">
-                <input v-model="user.shirt_size" type="radio" name="shirt_size" value="l" autocomplete="off"> L
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xl' }">
-                <input v-model="user.shirt_size" type="radio" name="shirt_size" value="xl" autocomplete="off"> XL
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xxl' }">
-                <input v-model="user.shirt_size" type="radio" name="shirt_size" value="xxl" autocomplete="off"> XXL
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xxxl' }">
-                <input v-model="user.shirt_size" type="radio" name="shirt_size" value="xxxl" autocomplete="off"> XXXL
-              </label>
-            </div>
+            <custom-radio-buttons
+              v-model="user.shirt_size"
+              :options="shirtSizeOptions"
+              id="user-shirtsize">
+            </custom-radio-buttons>
           </div>
         </div>
 
         <div class="form-group row">
           <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
           <div class="col-sm-10 col-lg-4">
-            <div class="btn-group" id="user-polosize" data-toggle="buttons">
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='s' }">
-                <input v-model="user.polo_size" type="radio" name="polo_size" value="s" autocomplete="off"> S
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='m' }">
-                <input v-model="user.polo_size" type="radio" name="polo_size" value="m" autocomplete="off"> M
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='l' }">
-                <input v-model="user.polo_size" type="radio" name="polo_size" value="l" autocomplete="off"> L
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xl' }">
-                <input v-model="user.polo_size" type="radio" name="polo_size" value="xl" autocomplete="off"> XL
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xxl' }">
-                <input v-model="user.polo_size" type="radio" name="polo_size" value="xxl" autocomplete="off"> XXL
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: user.shirt_size=='xxxl' }">
-                <input v-model="user.polo_size" type="radio" name="polo_size" value="xxxl" autocomplete="off"> XXXL
-              </label>
-            </div>
+            <custom-radio-buttons
+              v-model="user.polo_size"
+              :options="shirtSizeOptions"
+              id="user-polosize">
+            </custom-radio-buttons>
           </div>
         </div>
 
@@ -159,7 +129,15 @@
         feedback: '',
         hasError: false,
         dataUrl: '',
-        baseUrl: "/api/v1/users/"
+        baseUrl: "/api/v1/users/",
+        shirtSizeOptions: [
+          {value: "s", text: "S"},
+          {value: "m", text: "M"},
+          {value: "l", text: "L"},
+          {value: "xl", text: "XL"},
+          {value: "xxl", text: "XXL"},
+          {value: "xxxl", text: "XXXL"},
+        ]
       }
     },
     mounted() {
