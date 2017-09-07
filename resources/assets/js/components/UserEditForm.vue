@@ -6,9 +6,9 @@
         <p>Information obtained via GT Single Sign-On. Update at <a href="https://passport.gatech.edu">Passport</a>.</p>
 
         <div class="form-group row">
-          <label for="user-name" class="col-sm-2 col-form-label">Full Name</label>
+          <label for="user-name" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.full_name" type="text" readonly class="form-control" id="user-name">
+            <input v-model="user.name" type="text" readonly class="form-control" id="user-name">
           </div>
 
           <label for="user-uid" class="col-sm-2 col-form-label">GT Username</label>
