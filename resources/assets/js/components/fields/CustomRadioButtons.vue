@@ -11,7 +11,7 @@
   /*
    *  @props options: An array of Objects in the format {value: "value", text: "text"} such that value is the Form Value and Text is the text displayed to the user
    *  @props value: value to set the currently selected option. Best used with v-model
-   * @props id: id of the ButtonGroup
+   *  @props id: id of the ButtonGroup
    */
 
   export default {
@@ -31,7 +31,6 @@
     },
     methods: {
       update: function (event) {
-        //this.value = event.target.firstChild.value;
         this.$emit('input', event.target.firstChild.value);
       }
     }
