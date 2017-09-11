@@ -21,7 +21,8 @@ class CreateDuesTable extends Migration
             $table->boolean('received_polo')->default(false);
             $table->timestamp('effective_start');
             $table->timestamp('effective_end');
-            $table->unsignedInteger('payment_id');
+            $table->unsignedInteger('payment_id')->nullable();
+            $table->timestamps();
 
             $table->foreign('payment_id')->references('id')->on('payments');
         });
