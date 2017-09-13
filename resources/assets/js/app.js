@@ -38,6 +38,8 @@ Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTabl
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
 Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
+Vue.component('dues-required-info', require('./components/DuesRequiredInfo.vue'));
+
 
 const app = new Vue({
     el: '#app'
