@@ -34,7 +34,7 @@ class EventController extends Controller
     {
         // Default to currently logged-in user
         if (isset($request->organizer)) {
-            $organizer = UserController::getUserByIdentifier($request->organizer);
+            $organizer = User::findByIdentifier($request->organizer)->first();
         } else {
             $organizer = auth()->user();
         }
@@ -94,19 +94,19 @@ class EventController extends Controller
         $event = Event::find($id);
 
         if (isset($request->organizer)) {
-            $organizer = UserController::getUserByIdentifier($request->organizer);
+            $organizer = User::findByIdentifier($request->organizer)->first();
             $request['organizer'] = $organizer->id;
         }
 
         
         $this->validate($request, [
             'name' => 'required|max:255',
-            'price' => 'numeric',
+            'price' => 'numeric|nullable',
             'allow_anonymous_rsvp' => 'required|boolean',
             'organizer' => 'required',
-            'location' => 'max:255',
-            'start_time' => 'date',
-            'end_time' => 'date'
+            'location' => 'max:255|nullable',
+            'start_time' => 'date|nullable',
+            'end_time' => 'date|nullable'
         ]);
 
         try {
