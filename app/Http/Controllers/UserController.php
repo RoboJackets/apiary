@@ -73,7 +73,7 @@ class UserController extends Controller
      */
     public function show($id, Request $request)
     {
-        $user = $this->getUserByIdentifier($id);
+        $user = User::findByIdentifier($id)->first();
         if ($user) {
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
@@ -90,7 +90,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->getUserByIdentifier($id);
+        $user = User::findByIdentifier($id)->first();
         //Update only included fields
         $this->validate($request, [
             'uid' => ['max:127', Rule::unique('users')->ignore($user->id)],
@@ -129,32 +129,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->getUserByIdentifier($id);
+        $user = User::findByIdentifier($id)->first();
         $deleted = $user->delete();
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         } else {
             return response()->json(['status' => 'error',
                 'message' => 'User does not exist or was previously deleted.'], 422);
-        }
-    }
-
-    /**
-     * Retrieves a user model based upon a given identifier
-     *
-     * @param $id string Identifier for user (DB ID, GTID, UID)
-     * @return mixed
-     */
-    public static function getUserByIdentifier($id)
-    {
-        if (is_numeric($id) && strlen($id) == 9 && $id[0] == 9) {
-            return User::where('gtid', $id)->first();
-        } elseif (is_numeric($id)) {
-            return User::find($id);
-        } elseif (!is_numeric($id)) {
-            return User::where('uid', $id)->first();
-        } else {
-            return null;
         }
     }
 }
