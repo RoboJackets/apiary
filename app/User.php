@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Model implements Authenticatable
 {
     use SoftDeletes;
+    use Notifiable;
 
     /**
      * The attributes that should be mutated to dates.
@@ -39,5 +42,56 @@ class User extends Model
     public function teams()
     {
         return $this->belongsToMany('App\Team');
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     * Send to GT email when present and fall back to personal email if not
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return (isset($this->gt_email)) ? $this->gt_email : $this->personal_email;
+    }
+
+    public function organizes()
+    {
+        return $this->hasMany('App\Event');
+    }
+
+    public function rsvps()
+    {
+        return $this->hasMany('App\Rsvp');
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return "uid";
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->uid;
+    }
+
+    public function getAuthPassword()
+    {
+        throw new \BadMethodCallException("Not implemented");
+    }
+
+    public function getRememberToken()
+    {
+        throw new \BadMethodCallException("Not implemented");
+    }
+
+    public function setRememberToken($value)
+    {
+        throw new \BadMethodCallException("Not implemented");
+    }
+
+    public function getRememberTokenName()
+    {
+        throw new \BadMethodCallException("Not implemented");
     }
 }
