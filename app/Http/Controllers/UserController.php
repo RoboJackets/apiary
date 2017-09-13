@@ -34,9 +34,9 @@ class UserController extends Controller
         $this->validate($request, [
             'uid' => 'required|unique:users|max:127',
             'gtid' => 'required|unique:users|max:10',
-            'slack_id' => 'unique:users|max:21',
+            'slack_id' => 'unique:users|max:21|nullable',
             'gt_email' => 'required|unique:users|max:255',
-            'personal_email' => 'unique:users|max:255',
+            'personal_email' => 'unique:users|max:255|nullable',
             'first_name' => 'required|max:127',
             'middle_name' => 'max:127',
             'last_name' => 'required|max:127',
@@ -46,8 +46,8 @@ class UserController extends Controller
             'emergency_contact_phone' => 'max:15',
             'join_semester' => 'max:6',
             'graduation_semester' => 'max:6',
-            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl',
-            'polo_size' => 'in:s,m,l,xl,xxl,xxxl',
+            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
+            'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
         ]);
 
         try {
@@ -73,7 +73,7 @@ class UserController extends Controller
      */
     public function show($id, Request $request)
     {
-        $user = $this->getUserByIdentifier($id);
+        $user = User::findByIdentifier($id)->first();
         if ($user) {
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
@@ -90,14 +90,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->getUserByIdentifier($id);
+        $user = User::findByIdentifier($id)->first();
         //Update only included fields
         $this->validate($request, [
             'uid' => ['max:127', Rule::unique('users')->ignore($user->id)],
             'gtid' => ['max:10', Rule::unique('users')->ignore($user->id)],
-            'slack_id' => ['max:21', Rule::unique('users')->ignore($user->id)],
+            'slack_id' => ['max:21', 'nullable', Rule::unique('users')->ignore($user->id)],
             'gt_email' => ['max:255', Rule::unique('users')->ignore($user->id)],
-            'personal_email' => ['max:255', Rule::unique('users')->ignore($user->id)],
+            'personal_email' => ['max:255', 'nullable', Rule::unique('users')->ignore($user->id)],
             'first_name' => 'max:127',
             'middle_name' => 'max:127',
             'last_name' => 'max:127',
@@ -107,8 +107,8 @@ class UserController extends Controller
             'emergency_contact_phone' => 'max:15',
             'join_semester' => 'max:6',
             'graduation_semester' => 'max:6',
-            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl',
-            'polo_size' => 'in:s,m,l,xl,xxl,xxxl',
+            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
+            'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
         ]);
 
         $user->update($request->all());
@@ -129,32 +129,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->getUserByIdentifier($id);
+        $user = User::findByIdentifier($id)->first();
         $deleted = $user->delete();
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         } else {
             return response()->json(['status' => 'error',
                 'message' => 'User does not exist or was previously deleted.'], 422);
-        }
-    }
-
-    /**
-     * Retrieves a user model based upon a given identifier
-     *
-     * @param $id string Identifier for user (DB ID, GTID, UID)
-     * @return mixed
-     */
-    public static function getUserByIdentifier($id)
-    {
-        if (is_numeric($id) && strlen($id) == 9 && $id[0] == 9) {
-            return User::where('gtid', $id)->first();
-        } elseif (is_numeric($id)) {
-            return User::find($id);
-        } elseif (!is_numeric($id)) {
-            return User::where('uid', $id)->first();
-        } else {
-            return null;
         }
     }
 }

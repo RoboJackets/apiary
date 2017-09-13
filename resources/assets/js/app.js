@@ -27,7 +27,7 @@ Vue.use(flatPickr);
 
 // Form Fields
 Vue.component('term-input', require('./components/fields/TermInput.vue'));
-
+Vue.component('custom-radio-buttons', require('./components/fields/CustomRadioButtons.vue'));
 
 // Large Scale Components
 
