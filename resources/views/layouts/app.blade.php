@@ -19,14 +19,25 @@
             <li class="nav-item {{ $request->is('profile*') ? 'active' : '' }}">
               <a class="nav-link" href="/profile">Profile</a>
             </li>
-            <li class="nav-item {{ $request->is('*faset') ? 'active' : '' }}">
-              <a class="nav-link" href="{{route('fasetAdmin')}}">FASET</a>
+
+            @if (auth()->user()->is_admin)
+            <li class="nav-item dropdown {{ $request->is('admin*') ? 'active' : '' }}">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarAdminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Admin
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarAdminDropdown">
+                <a class="dropdown-item" href="/admin/users">Users</a>
+                <a class="dropdown-item" href="/admin/events">Events</a>
+                <a class="dropdown-item" href="/admin/faset">Faset</a>
+              </div>
             </li>
+            @endif
+
           </ul>
 
-          @if (true)
+          @if (auth()->user())
           <span class="navbar-text">
-            <span class="font-italic">Logged in as </span> {{'Ryan Strat'}}
+            <span class="font-italic">Logged in as </span> {{auth()->user()->name}}
           </span>
           @else
           <span class="navbar-text">
