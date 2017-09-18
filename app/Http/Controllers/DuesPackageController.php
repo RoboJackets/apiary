@@ -15,7 +15,7 @@ class DuesPackageController extends Controller
     public function index()
     {
         $packages = DuesPackage::all();
-        return response()->json(['status' => 'success', 'packages' => $packages]);
+        return response()->json(['status' => 'success', 'dues_packages' => $packages]);
     }
 
     /**
@@ -44,7 +44,7 @@ class DuesPackageController extends Controller
 
         if (is_numeric($package->id)) {
             $dbPackage = DuesPackage::findOrFail($package->id);
-            return response()->json(['status' => 'success', 'package' => $dbPackage], 201);
+            return response()->json(['status' => 'success', 'dues_package' => $dbPackage], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -60,7 +60,7 @@ class DuesPackageController extends Controller
     {
         $package = DuesPackage::find($id);
         if ($package) {
-            return response()->json(['status' => 'success', 'package' => $package]);
+            return response()->json(['status' => 'success', 'dues_package' => $package]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
         }
@@ -90,7 +90,7 @@ class DuesPackageController extends Controller
 
         $package = DuesPackage::find($package->id);
         if ($package) {
-            return response()->json(['status' => 'success', 'package' => $package]);
+            return response()->json(['status' => 'success', 'dues_package' => $package]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }

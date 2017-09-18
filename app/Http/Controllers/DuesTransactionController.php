@@ -15,7 +15,7 @@ class DuesTransactionController extends Controller
     public function index()
     {
         $transact = DuesTransaction::all();
-        return response()->json(['status' => 'success', 'transactions' => $transact]);
+        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
     /**
@@ -43,7 +43,7 @@ class DuesTransactionController extends Controller
 
         if (is_numeric($transact->id)) {
             $dbTransact = DuesTransaction::findOrFail($transact->id);
-            return response()->json(['status' => 'success', 'transaction' => $dbTransact], 201);
+            return response()->json(['status' => 'success', 'dues_transaction' => $dbTransact], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -59,7 +59,7 @@ class DuesTransactionController extends Controller
     {
         $transact = DuesTransaction::find($id);
         if ($transact) {
-            return response()->json(['status' => 'success', 'transaction' => $transact]);
+            return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
         }
@@ -88,7 +88,7 @@ class DuesTransactionController extends Controller
 
         $transact = DuesTransaction::find($transact->id);
         if ($transact) {
-            return response()->json(['status' => 'success', 'transaction' => $transact]);
+            return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
