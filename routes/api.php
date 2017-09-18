@@ -28,4 +28,7 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], func
     Route::middleware('can:administer')->resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::middleware('can:administer')->resource('events', 'EventController', ['except' => ['create', 'edit']]);
     Route::middleware('can:administer')->resource('rsvps', 'RsvpController', ['except' => ['create', 'edit']]);
+    Route::middleware('can:administer')->resource('payments', 'PaymentController', ['except' => ['create', 'edit']]);
+    Route::middleware('can:administer')->resource('dues/packages', 'DuesPackageController', ['except' => ['create', 'edit']]);
+    Route::middleware('can:administer')->resource('dues/transactions', 'DuesTransactionController', ['except' => ['create', 'edit']]);
 });
