@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class DuesTransaction extends Model
 {
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id'];
+
+    /**
      * Get the Payment associated with the DuesTransaction model.
      */
     public function payment()
