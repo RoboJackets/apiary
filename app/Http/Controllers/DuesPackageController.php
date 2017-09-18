@@ -86,7 +86,11 @@ class DuesPackageController extends Controller
         ]);
 
         $package = DuesPackage::find($id);
-        $package->update($request->all());
+        if ($package) {
+            $package->update($request->all());
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);
+        }
 
         $package = DuesPackage::find($package->id);
         if ($package) {

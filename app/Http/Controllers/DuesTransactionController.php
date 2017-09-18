@@ -75,7 +75,6 @@ class DuesTransactionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'id' => 'required|exists:dues_transactions',
             'received_polo' => 'boolean',
             'received_shirt' => 'boolean',
             'dues_package_id' => 'exists:dues_packages,id',
@@ -84,7 +83,11 @@ class DuesTransactionController extends Controller
         ]);
 
         $transact = DuesTransaction::find($id);
-        $transact->update($request->all());
+        if ($transact) {
+            $transact->update($request->all());
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
+        }
 
         $transact = DuesTransaction::find($transact->id);
         if ($transact) {
