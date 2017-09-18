@@ -28,7 +28,7 @@ class PaymentController extends Controller
     {
         $this->validate($request, [
             'amount' => 'required|numeric',
-            'payment_method' => 'required|string',
+            'method' => 'required|string',
             'recorded_by' => 'required|numeric|exists:users,id'
         ]);
 
@@ -75,7 +75,7 @@ class PaymentController extends Controller
         $this->validate($request, [
             'id' => 'required|exists:payments',
             'amount' => 'required|numeric',
-            'payment_method' => 'required|string',
+            'method' => 'required|string',
             'recorded_by' => 'required|numeric|exists:users,id'
         ]);
 
