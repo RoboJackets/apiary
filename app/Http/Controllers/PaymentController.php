@@ -73,14 +73,17 @@ class PaymentController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'id' => 'required|exists:payments',
-            'amount' => 'required|numeric',
-            'method' => 'required|string',
-            'recorded_by' => 'required|numeric|exists:users,id'
+            'amount' => 'numeric',
+            'method' => 'string',
+            'recorded_by' => 'numeric|exists:users,id'
         ]);
 
         $payment = Payment::find($id);
-        $payment->update($request->all());
+        if ($payment) {
+            $payment->update($request->all());
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
+        }
 
         $payment = Payment::find($payment->id);
         if ($payment) {
