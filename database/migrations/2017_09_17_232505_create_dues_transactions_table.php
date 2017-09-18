@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDuesTable extends Migration
+class CreateDuesTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateDuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dues', function (Blueprint $table) {
+        Schema::create('dues_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('eligible_for_shirt')->default(false);
-            $table->boolean('eligible_for_polo')->default(false);
-            $table->boolean('received_shirt')->default(false);
             $table->boolean('received_polo')->default(false);
-            $table->timestamp('effective_start');
-            $table->timestamp('effective_end');
+            $table->boolean('received_shirt')->default(false);
+            $table->unsignedInteger('dues_package_id');
             $table->unsignedInteger('payment_id')->nullable();
+            $table->unsignedInteger('user_id');
             $table->timestamps();
 
+            $table->foreign('dues_package_id')->references('id')->on('dues_packages');
             $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -35,6 +35,6 @@ class CreateDuesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('dues');
+        Schema::drop('dues_transactions');
     }
 }
