@@ -28,5 +28,4 @@ class Payment extends Model
     {
         return $this->hasOne('App\DuesTransaction');
     }
-
 }
