@@ -11,7 +11,7 @@ var dt = require('datatables.net/js/jquery.dataTables');
 /**
  *  Import DataTables for Bootstrap4 module
  */
-require( 'datatables.net-bs4');
+require('datatables.net-bs4');
 
 window.Vue = require('vue');
 
@@ -38,8 +38,10 @@ Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTabl
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
 Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
-Vue.component('dues-required-info', require('./components/DuesRequiredInfo.vue'));
 
+Vue.component('dues-sequence', require('./components/wrappers/DuesSequence.vue'));
+Vue.component('dues-required-info', require('./components/DuesRequiredInfo.vue'));
+Vue.component('safety-agreement', require('./components/SafetyAgreement.vue'));
 
 const app = new Vue({
     el: '#app'

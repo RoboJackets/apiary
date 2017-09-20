@@ -1,0 +1,69 @@
+<template>
+  <div>
+    <h3>SCC Safety Agreement</h3>
+
+    <fieldset class="form-group">
+      <label class ="lead" for="heardfrom">As a member of the Student Competition Center (SCC), I agree to abide by the following rules. Failure to adhere to these rules may lead to temporary or permanent suspension from the SCC and/or sanctions from the Office of Student Integrity.</label>
+      <div v-for="rule in rules" class="custom-controls-stacked">
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="rule-agreement custom-control-input" name="heardfrom">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">{{rule}}</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="row">
+      <div class="col-12">
+        <button @click="selectAll" type="button" class="btn btn-secondary float-left">Check All</button>
+        <button type="submit" class="btn btn-primary float-right">Continue</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ['userUid'],
+    data() {
+      return {
+        rules: [
+          "You, and all members of Student Competition Center teams, are assumed to be in control of your faculties and will be held responsible for your actions and your enablement of other's actions around you including guests. Every safety precaution must be followed appropriate to the situation at hand even if it is not included on this list. Horsing around will not be tolerated.",
+          "All use of machine tools must be logged through the provided means prior to every use. You must have a \“buddy\” capable of and trained to safely shut down any power equipment you might be using. At least one other person must be within talking distance when any powered, sharp, or impact tools are being used.",
+          "Active use of the Common Machining Area, and active noise-generating fabrication activities in team spaces, should not occur during the scheduled interval of sponsor visits to the SCC. Such activities may resume after the end of the scheduled visit, even if the sponsor is still present. All safety precautions must be applied with sponsors if they enter active work areas.",
+          "Safety glasses are to be worn by everyone in the work area anytime that powered, sharp, or impact tools are being used. Respirators must be worn while cutting, sanding, or painting with materials prone to cause lung damage. Ear protection must be worn during times when the noise level is especially high or prolonged.",
+          "Sandals, or other open toe shoes, are not allowed on the work floor of the shop at any time. Sandals may be worn while working in the offices and on a reasonable path from the door to the offices only.",
+          "Flammables must be in sealed, correctly labeled containers and inside a marked flammables cabinet. Containers capable of holding in excess of 1 gallon of fuel must be stored in the flammables out-building when not being used to fill a vehicle.",
+          "Machine tools are to be used properly by trained individuals. Leaving the machine clean is a part of using the machine properly. Any malfunctions or damage to the machines must be noted in the log and immediately reported by email to scc@me.gatech.edu.",
+          "All participants have the responsibility to keep both the common areas and the teams’ areas clean so that the school will not be embarrassed by bringing campus visitors into the building at any time. This includes the days just before a competition and anytime that the team is not fully active such as during summer break. Beverage cans, food boxes, oily rags, and other general garbage may not be left around any area of the building including inside the individual teams’ work areas or offices."
+        ]
+      }
+    },
+    methods: {
+      selectAll: function() {
+        $(".rule-agreement").prop('checked', true);
+      },
+      submit: function() {
+        axios.put(this.dataUrl, this.user)
+          .then(response => {
+            this.hasError = false;
+            this.feedback = "Saved!"
+            console.log("success");
+
+            this.$emit("next");
+          })
+          .catch(response => {
+            this.hasError = true;
+            this.feedback = "";
+            console.log(response);
+            sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+          })
+      }
+    },
+    watch: {
+      allChecked: function () {
+        return $(".rule-agreement:checked").length == $(".rule-agreement").length;
+      }
+    }
+  }
+</script>

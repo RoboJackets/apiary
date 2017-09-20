@@ -1,0 +1,79 @@
+<template>
+  <div>
+    <div v-if="currentStepName == 'dues-required-info'">
+      <dues-required-info :user.sync="user" @next="next">
+      </dues-required-info>
+    </div>
+
+    <div v-if="currentStepName == 'safety-agreement'">
+      <safety-agreement :user-uid="user.uid"></safety-agreement>
+    </div>
+
+    <div v-if="currentStepName == 'dues-additional-info'">
+      <dues-additional-info :user.sync="user"></dues-additional-info>
+    </div>
+
+    <div v-if="currentStepName == 'dues-demographics-info'">
+      <p>Section 4</p>
+    </div>
+  </div>
+</template>
+
+
+<script type="text/javascript">
+  /*
+   *  @props 
+   */
+
+
+  export default {
+    props: ['userUid'],
+    data() {
+      return {
+        steps: [
+          'dues-required-info',
+          'safety-agreement',
+          'dues-additional-info',
+          'dues-demographics-info',
+          'dues-payment-instructions'
+          ],
+        currentStep: 0,
+        user: {},
+        dataUrl: '',
+        baseUrl: "/api/v1/users/",
+      }
+    },
+    mounted() {
+      this.dataUrl = this.baseUrl + this.userUid;
+      axios.get(this.dataUrl)
+        .then(response => {
+          this.user = response.data.user;
+        })
+        .catch(response => {
+          console.log(response);
+          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+        });
+    },
+    methods: {
+      next: function() {
+        if (this.currentStep < this.steps.length) {
+          console.log("transition")
+          //transition
+          this.currentStep = this.currentStep + 1;
+        } else {
+          warn("No more steps");
+        }
+      }
+    },
+    computed: {
+      currentStepName: function() {
+        try {
+          return this.steps[this.currentStep];
+        } catch (e) {
+          return "";
+        }
+      }
+    }
+  }
+    
+</script>

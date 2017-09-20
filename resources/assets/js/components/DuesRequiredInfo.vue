@@ -8,21 +8,21 @@
         <div class="form-group row">
           <label for="user-name" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.name" type="text" readonly class="form-control" id="user-name">
+            <input v-model="localUser.name" type="text" readonly class="form-control" id="user-name">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="user-uid" class="col-sm-2 col-form-label">GT Username</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.uid" type="text" readonly class="form-control" id="user-uid">
+            <input v-model="localUser.uid" type="text" readonly class="form-control" id="user-uid">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="user-gtemail" class="col-sm-2 col-form-label">GT Email</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="user.gt_email" type="text" readonly class="form-control" id="user-gtemail">
+            <input v-model="localUser.gt_email" type="text" readonly class="form-control" id="user-gtemail">
           </div>
         </div>
 
@@ -32,7 +32,7 @@
           <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
-              v-model="user.shirt_size"
+              v-model="localUser.shirt_size"
               :options="shirtSizeOptions"
               id="user-shirtsize">
             </custom-radio-buttons>
@@ -43,7 +43,7 @@
           <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
-              v-model="user.polo_size"
+              v-model="localUser.polo_size"
               :options="shirtSizeOptions"
               id="user-polosize">
             </custom-radio-buttons>
@@ -62,11 +62,10 @@
           </div>
         </div>
 
-        
-
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Continue</button>
-          <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <button type="submit" class="btn btn-primary float-right">Continue</button>
+          </div>
         </div>
 
       </form>
@@ -76,14 +75,9 @@
 
 <script>
   export default {
-    props: ['userUid'],
+    props: ['user'],
     data() {
       return {
-        user: {},
-        feedback: '',
-        hasError: false,
-        dataUrl: '',
-        baseUrl: "/api/v1/users/",
         shirtSizeOptions: [
           {value: "s", text: "S"},
           {value: "m", text: "M"},
@@ -96,34 +90,44 @@
           {value: "1", name: "Full Year (2017-2018)"},
           {value: "2", name: "Fall 2017"},
           {value: "3", name: "Spring 2018"},
-        ]
+        ],
+        
       }
     },
     mounted() {
-      this.dataUrl = this.baseUrl + this.userUid;
+      /*
+      var dataUrl = this.baseUrl + this.userUid;
       axios.get(this.dataUrl)
         .then(response => {
-          this.user = response.data.user;
+          this.localUser = response.data.user;
         })
         .catch(response => {
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
+        */
     },
     methods: {
       submit () {
-        axios.put(this.dataUrl, this.user)
+        var baseUrl = "/api/v1/users/";
+
+        var dataUrl = baseUrl + this.localUser.uid;
+        axios.put(dataUrl, this.localUser)
           .then(response => {
-            this.hasError = false;
-            this.feedback = "Saved!"
             console.log("success");
+
+            this.$emit('update:user', this.localUser);
+            this.$emit("next");
           })
           .catch(response => {
-            this.hasError = true;
-            this.feedback = "";
             console.log(response);
             sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
+      }
+    },
+    computed: {
+      localUser: function () {
+        return this.user;
       }
     }
   }

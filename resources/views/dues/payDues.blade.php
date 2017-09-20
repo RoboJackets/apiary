@@ -9,6 +9,6 @@ Dues | {{ env('APP_NAME') }}
   Pay Dues
 @endcomponent
 
-<dues-required-info user-uid="{{auth()->user()->uid}}"></dues-required-info>
+<dues-sequence user-uid="{{auth()->user()->uid}}"></dues-sequence>
 
 @endsection
