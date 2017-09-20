@@ -17,7 +17,12 @@ class User extends Model implements Authenticatable
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'accept_safety_agreement'
+    ];
 
     /**
      * The attributes that are not mass assignable.

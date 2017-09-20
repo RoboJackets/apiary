@@ -57,7 +57,6 @@
     methods: {
       next: function() {
         if (this.currentStep < this.steps.length) {
-          console.log("transition")
           //transition
           this.currentStep = this.currentStep + 1;
         } else {

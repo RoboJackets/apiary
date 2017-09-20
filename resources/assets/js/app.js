@@ -39,9 +39,11 @@ Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
 Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
 
-Vue.component('dues-sequence', require('./components/wrappers/DuesSequence.vue'));
-Vue.component('dues-required-info', require('./components/DuesRequiredInfo.vue'));
-Vue.component('safety-agreement', require('./components/SafetyAgreement.vue'));
+// Dues
+
+Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue'));
+Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue'));
+Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue'));
 
 const app = new Vue({
     el: '#app'

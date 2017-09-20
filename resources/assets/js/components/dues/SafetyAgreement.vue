@@ -3,10 +3,10 @@
     <h3>SCC Safety Agreement</h3>
 
     <fieldset class="form-group">
-      <label class ="lead" for="heardfrom">As a member of the Student Competition Center (SCC), I agree to abide by the following rules. Failure to adhere to these rules may lead to temporary or permanent suspension from the SCC and/or sanctions from the Office of Student Integrity.</label>
-      <div v-for="rule in rules" class="custom-controls-stacked">
+      <label class ="lead" for="safety">As a member of the Student Competition Center (SCC), I agree to abide by the following rules. Additionally, I understand that failure to adhere to these rules may lead to temporary or permanent suspension from the SCC and/or sanctions from the Office of Student Integrity.</label>
+      <div v-for="(rule,index) in rules" class="custom-controls-stacked">
         <label class="custom-control custom-checkbox">
-          <input type="checkbox" class="rule-agreement custom-control-input" name="heardfrom">
+          <input v-model="checks" type="checkbox" class="rule-agreement custom-control-input" :value="index" name="safety">
           <span class="custom-control-indicator"></span>
           <span class="custom-control-description">{{rule}}</span>
         </label>
@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-12">
         <button @click="selectAll" type="button" class="btn btn-secondary float-left">Check All</button>
-        <button type="submit" class="btn btn-primary float-right">Continue</button>
+        <button @click="submit" type="submit" class="btn btn-primary float-right">Continue</button>
       </div>
     </div>
   </div>
@@ -27,6 +27,7 @@
     props: ['userUid'],
     data() {
       return {
+        checks: [],
         rules: [
           "You, and all members of Student Competition Center teams, are assumed to be in control of your faculties and will be held responsible for your actions and your enablement of other's actions around you including guests. Every safety precaution must be followed appropriate to the situation at hand even if it is not included on this list. Horsing around will not be tolerated.",
           "All use of machine tools must be logged through the provided means prior to every use. You must have a \“buddy\” capable of and trained to safely shut down any power equipment you might be using. At least one other person must be within talking distance when any powered, sharp, or impact tools are being used.",
@@ -44,12 +45,18 @@
         $(".rule-agreement").prop('checked', true);
       },
       submit: function() {
-        axios.put(this.dataUrl, this.user)
-          .then(response => {
-            this.hasError = false;
-            this.feedback = "Saved!"
-            console.log("success");
+        var currentTimestamp = Math.round(Date.now()/1000);
 
+        var payload = {
+          uid: this.userUid,
+          accept_safety_agreement: currentTimestamp
+        }
+
+        var baseUrl = "/api/v1/users/";
+        var dataUrl = baseUrl + this.userUid;
+
+        axios.put(dataUrl, payload)
+          .then(response => {
             this.$emit("next");
           })
           .catch(response => {
@@ -58,11 +65,6 @@
             console.log(response);
             sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
-      }
-    },
-    watch: {
-      allChecked: function () {
-        return $(".rule-agreement:checked").length == $(".rule-agreement").length;
       }
     }
   }

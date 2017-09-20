@@ -56,8 +56,8 @@
           <label for="user-polosize" class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
             <select  class="custom-select">
-              <option value="" style="display:none;"></option>
-              <option v-for="duesOption in duesOptions" :value="duesOption.value">{{duesOption.name}}</option>
+              <option value="" style="display:none;">Select One</option>
+              <option v-for="duesPackage in duesPackages" :value="duesPackage.value">{{duesPackage.name}}</option>
             </select>
           </div>
         </div>
@@ -86,7 +86,7 @@
           {value: "xxl", text: "XXL"},
           {value: "xxxl", text: "XXXL"},
         ],
-        duesOptions: [ //TODO: Make these options dynamically populated
+        duesPackages: [ //TODO: Make these options dynamically populated
           {value: "1", name: "Full Year (2017-2018)"},
           {value: "2", name: "Fall 2017"},
           {value: "3", name: "Spring 2018"},
@@ -95,7 +95,7 @@
       }
     },
     mounted() {
-      /*
+      /* TODO: Hit API for DuesPackages
       var dataUrl = this.baseUrl + this.userUid;
       axios.get(this.dataUrl)
         .then(response => {
@@ -110,13 +110,10 @@
     methods: {
       submit () {
         var baseUrl = "/api/v1/users/";
-
         var dataUrl = baseUrl + this.localUser.uid;
+        
         axios.put(dataUrl, this.localUser)
           .then(response => {
-            console.log("success");
-
-            this.$emit('update:user', this.localUser);
             this.$emit("next");
           })
           .catch(response => {
