@@ -44,6 +44,7 @@ Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
 Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue'));
 Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue'));
 Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue'));
+Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue'));
 
 const app = new Vue({
     el: '#app'

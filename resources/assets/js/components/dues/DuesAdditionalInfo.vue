@@ -2,69 +2,43 @@
   <div class="row">
     <div class="col-12">
       <form id="DuesRequiredInfoForm" v-on:submit.prevent="submit">
-        <h3>GT Directory Info</h3>
-        <p>Information obtained via GT Single Sign-On. Update at <a href="https://passport.gatech.edu">Passport</a>.</p>
+        <h4>Additional Information</h4>
+        <p>Providing RoboJackets with this optional information enables the RoboJackets leadership to better serve you.</p>
 
         <div class="form-group row">
-          <label for="user-name" class="col-sm-2 col-form-label">Name</label>
+          <label for="user-personalemail" class="col-sm-2 col-form-label">Personal Email</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.name" type="text" readonly class="form-control" id="user-name">
+            <input v-model="localUser.personal_email" type="email" class="form-control" id="user-personalemail">
           </div>
         </div>
 
         <div class="form-group row">
-          <label for="user-uid" class="col-sm-2 col-form-label">GT Username</label>
+          <label for="user-uid" class="col-sm-2 col-form-label">Phone Number</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.uid" type="text" readonly class="form-control" id="user-uid">
+            <input v-model="localUser.phone" type="tel" class="form-control" id="user-uid" maxlength="15">
           </div>
         </div>
 
+        <h4>Emergency Contact Information</h4>
+        <p>Optional, but needed to generate Institute Approved Absence forms</p>
+
         <div class="form-group row">
-          <label for="user-gtemail" class="col-sm-2 col-form-label">GT Email</label>
+          <label for="user-emergencycontactname" class="col-sm-2 col-form-label">Contact Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.gt_email" type="text" readonly class="form-control" id="user-gtemail">
+            <input v-model="localUser.emergency_contact_name" type="text" class="form-control" id="user-emergencycontactname">
           </div>
         </div>
-
-        <h3>Information for Apparel</h3>
-
         <div class="form-group row">
-          <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
+          <label for="user-emergencycontactphone" class="col-sm-2 col-form-label">Contact Phone Number</label>
           <div class="col-sm-10 col-lg-4">
-            <custom-radio-buttons
-              v-model="localUser.shirt_size"
-              :options="shirtSizeOptions"
-              id="user-shirtsize">
-            </custom-radio-buttons>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
-          <div class="col-sm-10 col-lg-4">
-            <custom-radio-buttons
-              v-model="localUser.polo_size"
-              :options="shirtSizeOptions"
-              id="user-polosize">
-            </custom-radio-buttons>
-          </div>
-        </div>      
-
-        <h3>Membership Information</h3>
-
-        <div class="form-group row">
-          <label for="user-polosize" class="col-sm-2 col-form-label">Dues Term</label>
-          <div class="col-sm-10 col-lg-4">
-            <select  class="custom-select">
-              <option value="" style="display:none;"></option>
-              <option v-for="duesPackage in duesPackages" :value="duesOption.value">{{duesPackage.name}}</option>
-            </select>
+            <input v-model="localUser.emergency_contact_phone" type="tel" class="form-control" id="user-emergencycontactphone" maxlength="15">
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-6 col-12">
             <button type="submit" class="btn btn-primary float-right">Continue</button>
+            <button type="submit" class="btn btn-secondary float-right mx-2">Skip</button>
           </div>
         </div>
 
@@ -110,8 +84,8 @@
     methods: {
       submit () {
         var baseUrl = "/api/v1/users/";
-
         var dataUrl = baseUrl + this.localUser.uid;
+        
         axios.put(dataUrl, this.localUser)
           .then(response => {
             this.$emit("next");

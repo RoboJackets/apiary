@@ -6,11 +6,11 @@
     </div>
 
     <div v-if="currentStepName == 'safety-agreement'">
-      <safety-agreement :user-uid="user.uid"></safety-agreement>
+      <safety-agreement :user-uid="user.uid" @next="next"></safety-agreement>
     </div>
 
     <div v-if="currentStepName == 'dues-additional-info'">
-      <dues-additional-info :user.sync="user"></dues-additional-info>
+      <dues-additional-info :user.sync="user" @next="next"></dues-additional-info>
     </div>
 
     <div v-if="currentStepName == 'dues-demographics-info'">
@@ -37,7 +37,7 @@
           'dues-demographics-info',
           'dues-payment-instructions'
           ],
-        currentStep: 0,
+        currentStep: 2,
         user: {},
         dataUrl: '',
         baseUrl: "/api/v1/users/",
