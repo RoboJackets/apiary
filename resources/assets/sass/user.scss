@@ -32,3 +32,8 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 80px;
 }
+
+// FlatPickr Style Overrides
+.flatpickr-input[readonly] {
+  background-color: white;
+}

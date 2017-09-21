@@ -72,7 +72,7 @@ class User extends Model implements Authenticatable
 
     public function organizes()
     {
-        return $this->hasMany('App\Event');
+        return $this->hasMany('App\Event', 'organizer');
     }
 
     public function rsvps()
@@ -121,5 +121,25 @@ class User extends Model implements Authenticatable
         $madePayment = ($lastDuesTransaction->payment_id != null);
         $pkgIsActive = $lastDuesTransaction->package->is_active;
         return ($madePayment && $pkgIsActive);
+    }
+
+    /**
+     * Scope a query to automatically determine user identifier
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFindByIdentifier($query, $id)
+    {
+        if (is_numeric($id) && strlen($id) == 9 && $id[0] == 9) {
+            return $query->where('gtid', $id);
+        } elseif (is_numeric($id)) {
+            return $query->find($id);
+        } elseif (!is_numeric($id)) {
+            return $query->where('uid', $id);
+        } else {
+            return $query;
+        }
     }
 }
