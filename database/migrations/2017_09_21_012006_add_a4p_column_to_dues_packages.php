@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddActiveColumnToDuesPackages extends Migration
+class AddA4PColumnToDuesPackages extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddActiveColumnToDuesPackages extends Migration
     public function up()
     {
         Schema::table('dues_packages', function (Blueprint $table) {
-            $table->boolean('active')->after('cost')->default(true);
+            $table->boolean('available_for_purchase')->after('cost')->default(true);
         });
     }
 
@@ -26,7 +26,7 @@ class AddActiveColumnToDuesPackages extends Migration
     public function down()
     {
         Schema::table('dues_packages', function (Blueprint $table) {
-            $table->dropColumn('active');
+            $table->dropColumn('available_for_purchase');
         });
     }
 }
