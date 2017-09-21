@@ -19,6 +19,16 @@ class DuesPackageController extends Controller
     }
 
     /**
+     *
+     */
+    public function indexActive()
+    {
+        $activePackages = DuesPackage::active()->get();
+        return response()->json(['status' => 'success', 'dues_packages' => $activePackages]);
+
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request

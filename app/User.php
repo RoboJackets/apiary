@@ -29,6 +29,13 @@ class User extends Model implements Authenticatable
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['is_active'];
+
+    /**
      *  Get the FASET visits associated with this user
      */
     public function fasetVisits()
@@ -42,6 +49,14 @@ class User extends Model implements Authenticatable
     public function teams()
     {
         return $this->belongsToMany('App\Team');
+    }
+
+    /**
+     * Get the DuesTransactions belonging to the User
+     */
+    public function dues()
+    {
+        return $this->hasMany('App\DuesTransaction');
     }
 
     /**
@@ -93,5 +108,18 @@ class User extends Model implements Authenticatable
     public function getRememberTokenName()
     {
         throw new \BadMethodCallException("Not implemented");
+    }
+
+    /**
+     * Get the is_active flag for the User.
+     *
+     * @return bool
+     */
+    public function getIsActiveAttribute()
+    {
+        $lastDuesTransaction = $this->dues->last();
+        $madePayment = ($lastDuesTransaction->payment_id != null);
+        $pkgIsActive = $lastDuesTransaction->package->is_active;
+        return ($madePayment && $pkgIsActive);
     }
 }
