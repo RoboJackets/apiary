@@ -76,7 +76,6 @@ class DuesPackageController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'id' => 'required|exists:dues_packages',
             'name' => 'string',
             'eligible_for_shirt' => 'boolean',
             'eligible_for_polo' => 'boolean',
