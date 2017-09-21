@@ -20,4 +20,15 @@ class DuesPackage extends Model
     {
         return $this->hasMany('App\DuesTransaction');
     }
+
+    /**
+     * Scope a query to only include active DuesPackages.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 }
