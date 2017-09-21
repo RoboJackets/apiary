@@ -19,7 +19,7 @@ class DuesPackageController extends Controller
     }
 
     /**
-     *
+     * Display a listing of active DuesPackages
      */
     public function indexActive()
     {
