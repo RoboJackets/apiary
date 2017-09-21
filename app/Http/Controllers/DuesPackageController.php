@@ -25,7 +25,6 @@ class DuesPackageController extends Controller
     {
         $activePackages = DuesPackage::active()->get();
         return response()->json(['status' => 'success', 'dues_packages' => $activePackages]);
-
     }
 
     /**
