@@ -56,7 +56,8 @@ class User extends Model implements Authenticatable
      */
     public function getNameAttribute()
     {
-        return implode(" ", [$this->first_name, $this->last_name]);
+        $first = ($this->preferred_name) ?: $this->first_name;
+        return implode(" ", [$first, $this->last_name]);
     }
     
     /**
