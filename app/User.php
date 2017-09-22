@@ -25,7 +25,7 @@ class User extends Model implements Authenticatable
      * @var array
      */
     protected $guarded = [
-        'name', 'full_name', 'id', 'deleted_at', 'created_at', 'updated_at'
+        'id', 'deleted_at', 'created_at', 'updated_at'
     ];
 
     /**
