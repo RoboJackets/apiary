@@ -60,6 +60,22 @@ class User extends Model implements Authenticatable
     }
 
     /**
+     * Get the events organized by the User
+     */
+    public function organizes()
+    {
+        return $this->hasMany('App\Event', 'organizer');
+    }
+
+    /**
+     * Get the RSVPs belonging to the User
+     */
+    public function rsvps()
+    {
+        return $this->hasMany('App\Rsvp');
+    }
+
+    /**
      * Route notifications for the mail channel.
      * Send to GT email when present and fall back to personal email if not
      *
@@ -68,16 +84,6 @@ class User extends Model implements Authenticatable
     public function routeNotificationForMail()
     {
         return (isset($this->gt_email)) ? $this->gt_email : $this->personal_email;
-    }
-
-    public function organizes()
-    {
-        return $this->hasMany('App\Event', 'organizer');
-    }
-
-    public function rsvps()
-    {
-        return $this->hasMany('App\Rsvp');
     }
 
     public function getAuthIdentifierName()
@@ -141,5 +147,24 @@ class User extends Model implements Authenticatable
         } else {
             return $query;
         }
+    }
+
+    /**
+     * Scope a query to automatically include only active members
+     * Active: Has paid dues for a currently ongoing term
+     *         or, has a payment for an active DuesPackage
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereHas('dues', function ($q) {
+            $q->whereNotNull('payment_id');
+            $q->whereHas('package', function ($q) {
+                $q->active();
+            });
+        });
     }
 }
