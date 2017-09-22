@@ -153,7 +153,6 @@ class User extends Model implements Authenticatable
      * Scope a query to automatically include only active members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a payment for an active DuesPackage
-     * 
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param mixed $type
      * @return \Illuminate\Database\Eloquent\Builder
