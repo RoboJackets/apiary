@@ -28,6 +28,15 @@ class DuesPackageController extends Controller
     }
 
     /**
+     * Display a listing of DuesPackages that are available for purchase
+     */
+    public function indexAvailable()
+    {
+        $activePackages = DuesPackage::availableForPurchase()->get();
+        return response()->json(['status' => 'success', 'dues_packages' => $activePackages]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request

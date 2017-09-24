@@ -57,7 +57,7 @@
           <div class="col-sm-10 col-lg-4">
             <select  class="custom-select">
               <option value="" style="display:none;">Select One</option>
-              <option v-for="duesPackage in duesPackages" :value="duesPackage.value">{{duesPackage.name}}</option>
+              <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}}</option>
             </select>
           </div>
         </div>
@@ -86,32 +86,26 @@
           {value: "xxl", text: "XXL"},
           {value: "xxxl", text: "XXXL"},
         ],
-        duesPackages: [ //TODO: Make these options dynamically populated
-          {value: "1", name: "Full Year (2017-2018)"},
-          {value: "2", name: "Fall 2017"},
-          {value: "3", name: "Spring 2018"},
-        ],
+        duesPackages: [],
         
       }
     },
     mounted() {
-      /* TODO: Hit API for DuesPackages
-      var dataUrl = this.baseUrl + this.userUid;
-      axios.get(this.dataUrl)
+      var dataUrl = "/api/v1/dues/packages/available";
+      axios.get(dataUrl)
         .then(response => {
-          this.localUser = response.data.user;
+          this.duesPackages = response.data.dues_packages;
         })
         .catch(response => {
           console.log(response);
-          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+          sweetAlert("Connection Error", "Unable to dues packages. Check your internet connection or try refreshing the page.", "error");
         });
-        */
     },
     methods: {
       submit () {
         var baseUrl = "/api/v1/users/";
         var dataUrl = baseUrl + this.localUser.uid;
-        
+
         axios.put(dataUrl, this.localUser)
           .then(response => {
             this.$emit("next");
