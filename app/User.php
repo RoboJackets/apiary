@@ -74,7 +74,8 @@ class User extends Model implements Authenticatable
     {
         return implode(" ", array_filter([$this->first_name, $this->middle_name, $this->last_name]));
     }
-
+    
+    /*
      * Get the DuesTransactions belonging to the User
      */
     public function dues()
