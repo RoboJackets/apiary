@@ -17,7 +17,7 @@ class User extends Model implements Authenticatable
      *
      * @var array
      */
-    protected $appends = ['name', 'full_name'];
+    protected $appends = ['name', 'full_name', 'is_active'];
     
     /**
      * The attributes that should be mutated to dates.
@@ -34,13 +34,6 @@ class User extends Model implements Authenticatable
     protected $guarded = [
         'id', 'deleted_at', 'created_at', 'updated_at'
     ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['is_active'];
 
     /**
      *  Get the FASET visits associated with this user
