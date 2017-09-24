@@ -140,10 +140,14 @@ class User extends Model implements Authenticatable
      */
     public function getIsActiveAttribute()
     {
-        $lastDuesTransaction = $this->dues->last();
-        $madePayment = ($lastDuesTransaction->payment_id != null);
-        $pkgIsActive = $lastDuesTransaction->package->is_active;
-        return ($madePayment && $pkgIsActive);
+        if ($this->dues->first() != null) {
+            $lastDuesTransaction = $this->dues->last();
+            $madePayment = ($lastDuesTransaction->payment_id != null);
+            $pkgIsActive = $lastDuesTransaction->package->is_active;
+            return ($madePayment && $pkgIsActive);
+        } else {
+            return false;
+        }
     }
 
     /**
