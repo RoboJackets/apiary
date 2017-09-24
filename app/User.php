@@ -13,6 +13,13 @@ class User extends Model implements Authenticatable
     use Notifiable;
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['name', 'full_name'];
+    
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -42,6 +49,23 @@ class User extends Model implements Authenticatable
     public function teams()
     {
         return $this->belongsToMany('App\Team');
+    }
+
+    /**
+     * Get the name associated with the User
+     */
+    public function getNameAttribute()
+    {
+        $first = ($this->preferred_name) ?: $this->first_name;
+        return implode(" ", [$first, $this->last_name]);
+    }
+    
+    /**
+     * Get the full name associated with the User
+     */
+    public function getFullNameAttribute()
+    {
+        return implode(" ", array_filter([$this->first_name, $this->middle_name, $this->last_name]));
     }
 
     /**
