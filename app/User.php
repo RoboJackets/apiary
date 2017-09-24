@@ -32,8 +32,15 @@ class User extends Model implements Authenticatable
      * @var array
      */
     protected $guarded = [
-        'name', 'full_name', 'id', 'deleted_at', 'created_at', 'updated_at'
+        'id', 'deleted_at', 'created_at', 'updated_at'
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['is_active'];
 
     /**
      *  Get the FASET visits associated with this user
@@ -67,6 +74,30 @@ class User extends Model implements Authenticatable
     {
         return implode(" ", array_filter([$this->first_name, $this->middle_name, $this->last_name]));
     }
+    
+    /*
+     * Get the DuesTransactions belonging to the User
+     */
+    public function dues()
+    {
+        return $this->hasMany('App\DuesTransaction');
+    }
+
+    /**
+     * Get the events organized by the User
+     */
+    public function organizes()
+    {
+        return $this->hasMany('App\Event', 'organizer');
+    }
+
+    /**
+     * Get the RSVPs belonging to the User
+     */
+    public function rsvps()
+    {
+        return $this->hasMany('App\Rsvp');
+    }
 
     /**
      * Route notifications for the mail channel.
@@ -77,16 +108,6 @@ class User extends Model implements Authenticatable
     public function routeNotificationForMail()
     {
         return (isset($this->gt_email)) ? $this->gt_email : $this->personal_email;
-    }
-
-    public function organizes()
-    {
-        return $this->hasMany('App\Event', 'organizer');
-    }
-
-    public function rsvps()
-    {
-        return $this->hasMany('App\Rsvp');
     }
 
     public function getAuthIdentifierName()
@@ -120,6 +141,19 @@ class User extends Model implements Authenticatable
     }
 
     /**
+     * Get the is_active flag for the User.
+     *
+     * @return bool
+     */
+    public function getIsActiveAttribute()
+    {
+        $lastDuesTransaction = $this->dues->last();
+        $madePayment = ($lastDuesTransaction->payment_id != null);
+        $pkgIsActive = $lastDuesTransaction->package->is_active;
+        return ($madePayment && $pkgIsActive);
+    }
+
+    /**
      * Scope a query to automatically determine user identifier
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -137,5 +171,23 @@ class User extends Model implements Authenticatable
         } else {
             return $query;
         }
+    }
+
+    /**
+     * Scope a query to automatically include only active members
+     * Active: Has paid dues for a currently ongoing term
+     *         or, has a payment for an active DuesPackage
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereHas('dues', function ($q) {
+            $q->whereNotNull('payment_id');
+            $q->whereHas('package', function ($q) {
+                $q->active();
+            });
+        });
     }
 }
