@@ -14,7 +14,7 @@
     </div>
 
     <div v-if="currentStepName == 'dues-demographics-info'">
-      <p>Section 4</p>
+      <demographics :user.sync="user" @next="next"></demographics>
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@
           'dues-demographics-info',
           'dues-payment-instructions'
           ],
-        currentStep: 2,
+        currentStep: 3,
         user: {},
         dataUrl: '',
         baseUrl: "/api/v1/users/",

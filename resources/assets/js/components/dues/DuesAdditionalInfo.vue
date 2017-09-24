@@ -50,25 +50,7 @@
 <script>
   export default {
     props: ['user'],
-    data() {
-      return {
-        shirtSizeOptions: [
-          {value: "s", text: "S"},
-          {value: "m", text: "M"},
-          {value: "l", text: "L"},
-          {value: "xl", text: "XL"},
-          {value: "xxl", text: "XXL"},
-          {value: "xxxl", text: "XXXL"},
-        ],
-        duesPackages: [ //TODO: Make these options dynamically populated
-          {value: "1", name: "Full Year (2017-2018)"},
-          {value: "2", name: "Fall 2017"},
-          {value: "3", name: "Spring 2018"},
-        ],
-        
-      }
-    },
-    mounted() {
+      mounted() {
       /* TODO: Hit API for DuesPackages
       var dataUrl = this.baseUrl + this.userUid;
       axios.get(this.dataUrl)
