@@ -32,5 +32,5 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], func
     Route::middleware('can:administer')->get('dues/packages/active', 'DuesPackageController@indexActive');
     Route::get('dues/packages/available', 'DuesPackageController@indexAvailable');
     Route::middleware('can:administer')->resource('dues/packages', 'DuesPackageController', ['except' => ['create', 'edit']]);
-    Route::middleware('can:administer')->resource('dues/transactions', 'DuesTransactionController', ['except' => ['create', 'edit']]);
+    Route::resource('dues/transactions', 'DuesTransactionController', ['except' => ['create', 'edit']]);
 });

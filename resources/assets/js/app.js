@@ -15,6 +15,13 @@ require('datatables.net-bs4');
 
 window.Vue = require('vue');
 
+//Import the Vuelidate validation plugin
+
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+// Import the FlatPickr Date Component
+
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 Vue.use(flatPickr);

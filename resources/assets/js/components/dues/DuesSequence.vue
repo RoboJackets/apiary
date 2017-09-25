@@ -25,7 +25,6 @@
    *  @props 
    */
 
-
   export default {
     props: ['userUid'],
     data() {

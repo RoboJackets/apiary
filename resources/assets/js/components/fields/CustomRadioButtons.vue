@@ -1,6 +1,6 @@
 <template>
   <div class="btn-group" :id="id" data-toggle="buttons">
-    <label v-for="option in options" class="btn btn-secondary" v-bind:class="{ active: option.value == value}" @click.left="update">
+    <label v-for="option in options" class="btn btn-secondary" v-bind:class="{ active: option.value == value, 'btn-danger': isError}" @click.left="update">
       <input v-model="value" type="radio" :value="option.value" autocomplete="off"> {{option.text}}
     </label>
   </div>
@@ -12,6 +12,7 @@
    *  @props options: An array of Objects in the format {value: "value", text: "text"} such that value is the Form Value and Text is the text displayed to the user
    *  @props value: value to set the currently selected option. Best used with v-model
    *  @props id: id of the ButtonGroup
+   *  @props is-error: Boolean, defines whether error styles should be displayed
    */
 
   export default {
@@ -27,6 +28,10 @@
       id: {
         type: String,
         default: ''
+      },
+      isError: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {

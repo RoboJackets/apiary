@@ -6,6 +6,13 @@
         <p>Providing RoboJackets with this optional information enables the RoboJackets leadership to better serve you.</p>
 
         <div class="form-group row">
+          <label for="user-preferredname" class="col-sm-2 col-form-label">Preferred Name</label>
+          <div class="col-sm-10 col-lg-4">
+            <input v-model="localUser.preferred_name" type="text" class="form-control" id="user-preferredname">
+          </div>
+        </div>
+
+        <div class="form-group row">
           <label for="user-personalemail" class="col-sm-2 col-form-label">Personal Email</label>
           <div class="col-sm-10 col-lg-4">
             <input v-model="localUser.personal_email" type="email" class="form-control" id="user-personalemail">

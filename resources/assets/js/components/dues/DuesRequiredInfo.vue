@@ -6,9 +6,9 @@
         <p>Information obtained via GT Single Sign-On. Update at <a href="https://passport.gatech.edu">Passport</a>.</p>
 
         <div class="form-group row">
-          <label for="user-name" class="col-sm-2 col-form-label">Name</label>
+          <label for="user-name" class="col-sm-2 col-form-label">Full Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.name" type="text" readonly class="form-control" id="user-name">
+            <input v-model="localUser.full_name" type="text" readonly class="form-control" id="user-name">
           </div>
         </div>
 
@@ -34,7 +34,9 @@
             <custom-radio-buttons
               v-model="localUser.shirt_size"
               :options="shirtSizeOptions"
-              id="user-shirtsize">
+              id="user-shirtsize"
+              :is-error="$v.localUser.shirt_size.$error"
+              @input="$v.localUser.shirt_size.$touch()">
             </custom-radio-buttons>
           </div>
         </div>
@@ -45,7 +47,9 @@
             <custom-radio-buttons
               v-model="localUser.polo_size"
               :options="shirtSizeOptions"
-              id="user-polosize">
+              id="user-polosize"
+              :is-error="$v.localUser.polo_size.$error"
+              @input="$v.localUser.polo_size.$touch()">
             </custom-radio-buttons>
           </div>
         </div>      
@@ -53,12 +57,15 @@
         <h3>Membership Information</h3>
 
         <div class="form-group row">
-          <label for="user-polosize" class="col-sm-2 col-form-label">Dues Term</label>
+          <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
-            <select  class="custom-select">
-              <option value="" style="display:none;">Select One</option>
+            <select id="duesPackage" v-model="duesPackageChoice" class="custom-select" :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
+              <option value="" style="">Select One</option>
               <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}}</option>
             </select>
+            <div class="invalid-feedback">
+              Please select a dues package.
+            </div>
           </div>
         </div>
 
@@ -74,6 +81,9 @@
 </template>
 
 <script>
+
+  import { required, numeric } from 'vuelidate/lib/validators'
+
   export default {
     props: ['user'],
     data() {
@@ -87,7 +97,7 @@
           {value: "xxxl", text: "XXXL"},
         ],
         duesPackages: [],
-        
+        duesPackageChoice: ''
       }
     },
     mounted() {
@@ -103,10 +113,16 @@
     },
     methods: {
       submit () {
-        var baseUrl = "/api/v1/users/";
-        var dataUrl = baseUrl + this.localUser.uid;
+        //Perform form Validation
+        if (this.$v.$invalid) {
+          this.$v.$touch();
+          return;
+        }
 
-        axios.put(dataUrl, this.localUser)
+        var baseUserUrl = "/api/v1/users/";
+        var dataUserUrl = baseUserUrl + this.localUser.uid;
+
+        axios.put(dataUserUrl, this.localUser)
           .then(response => {
             this.$emit("next");
           })
@@ -114,11 +130,34 @@
             console.log(response);
             sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
+
+        var duesRequest = {
+          user_id: this.localUser.id,
+          dues_package_id: this.duesPackageChoice
+        };
+        var duesTransactionsUrl = "/api/v1/dues/transactions";
+
+        axios.put(duesTransactionsUrl, duesRequest);
+        //TODO: That Axios thing where you wait for multiple requests to finish
       }
     },
     computed: {
       localUser: function () {
         return this.user;
+      }
+    },
+    validations: {
+      localUser: {
+        shirt_size: {
+          required
+        },
+        polo_size: {
+          required
+        }
+      },
+      duesPackageChoice: {
+        required,
+        numeric
       }
     }
   }
