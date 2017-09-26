@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Model implements Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
+    use HasRoles;
 
     /**
      * The accessors to append to the model's array form.
