@@ -60,7 +60,7 @@
           <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
             <select id="duesPackage" v-model="duesPackageChoice" class="custom-select" :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
-              <option value="" style="">Select One</option>
+              <option value="" style="display:none">Select One</option>
               <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}}</option>
             </select>
             <div class="invalid-feedback">
@@ -82,7 +82,7 @@
 
 <script>
 
-  import { required, numeric } from 'vuelidate/lib/validators'
+  import { required, numeric } from 'vuelidate/lib/validators';
 
   export default {
     props: ['user'],
@@ -119,10 +119,9 @@
           return;
         }
 
-        var baseUserUrl = "/api/v1/users/";
-        var dataUserUrl = baseUserUrl + this.localUser.uid;
-
-        axios.put(dataUserUrl, this.localUser)
+        Promise.all([
+          this.saveUserUpdates(this.localUser), 
+          this.createDuesRequest(this.localUser.id, this.duesPackageChoice)])
           .then(response => {
             this.$emit("next");
           })
@@ -130,15 +129,23 @@
             console.log(response);
             sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
+      },
+      saveUserUpdates: function (user) {
+        var baseUserUrl = "/api/v1/users/";
+        var dataUserUrl = baseUserUrl + user.id;
 
+        delete this.localUser.dues;
+
+        return axios.put(dataUserUrl, this.localUser);
+      },
+      createDuesRequest: function (userId, duesPackageId) {
         var duesRequest = {
-          user_id: this.localUser.id,
-          dues_package_id: this.duesPackageChoice
+          user_id: userId,
+          dues_package_id: duesPackageId
         };
         var duesTransactionsUrl = "/api/v1/dues/transactions";
 
-        axios.put(duesTransactionsUrl, duesRequest);
-        //TODO: That Axios thing where you wait for multiple requests to finish
+        return axios.post(duesTransactionsUrl, duesRequest);
       }
     },
     computed: {

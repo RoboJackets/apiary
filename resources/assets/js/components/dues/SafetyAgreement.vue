@@ -6,7 +6,13 @@
       <label class ="lead" for="safety">As a member of the Student Competition Center (SCC), I agree to abide by the following rules. Additionally, I understand that failure to adhere to these rules may lead to temporary or permanent suspension from the SCC and/or sanctions from the Office of Student Integrity.</label>
       <div v-for="(rule,index) in rules" class="custom-controls-stacked">
         <label class="custom-control custom-checkbox">
-          <input v-model="checks" type="checkbox" class="rule-agreement custom-control-input" :value="index" name="safety">
+          <input
+            v-model="checks"
+            type="checkbox"
+            class="rule-agreement custom-control-input"
+            :class="{ 'is-invalid': $v.$error && !checks.includes(index)}"
+            :value="index"
+            name="safety">
           <span class="custom-control-indicator"></span>
           <span class="custom-control-description">{{rule}}</span>
         </label>
@@ -23,6 +29,8 @@
 </template>
 
 <script>
+  import { minLength } from 'vuelidate/lib/validators';
+
   export default {
     props: ['userUid'],
     data() {
@@ -42,9 +50,15 @@
     },
     methods: {
       selectAll: function() {
-        $(".rule-agreement").prop('checked', true);
+        //$(".rule-agreement").prop('checked', true);
+        this.checks = [...Array(this.rules.length).keys()];
       },
       submit: function() {
+        if (this.$v.$invalid) {
+          this.$v.$touch();
+          return;
+        }
+
         var currentTimestamp = Math.round(Date.now()/1000);
 
         var payload = {
@@ -57,14 +71,20 @@
 
         axios.put(dataUrl, payload)
           .then(response => {
+            console.log(response);
             this.$emit("next");
           })
           .catch(response => {
-            this.hasError = true;
-            this.feedback = "";
             console.log(response);
             sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
+      }
+    },
+    validations: {
+      checks: {
+        minLength: function (checks) {
+          return checks.length >= this.rules.length;
+        }
       }
     }
   }

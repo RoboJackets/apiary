@@ -36,7 +36,7 @@
           'dues-demographics-info',
           'dues-payment-instructions'
           ],
-        currentStep: 0,
+        currentStep: 1,
         user: {},
         dataUrl: '',
         baseUrl: "/api/v1/users/",

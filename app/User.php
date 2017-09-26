@@ -17,7 +17,10 @@ class User extends Model implements Authenticatable
      *
      * @var array
      */
-    protected $appends = ['name', 'full_name', 'is_active'];
+    protected $appends = [
+        'name',
+        'full_name',
+        'is_active'];
     
     /**
      * The attributes that should be mutated to dates.
@@ -37,7 +40,13 @@ class User extends Model implements Authenticatable
      * @var array
      */
     protected $guarded = [
-        'id', 'deleted_at', 'created_at', 'updated_at'
+        'id',
+        'name',
+        'full_name',
+        'is_active',
+        'deleted_at',
+        'created_at',
+        'updated_at'
     ];
 
     /**

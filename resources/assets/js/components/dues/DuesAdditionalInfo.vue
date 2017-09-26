@@ -8,37 +8,69 @@
         <div class="form-group row">
           <label for="user-preferredname" class="col-sm-2 col-form-label">Preferred Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.preferred_name" type="text" class="form-control" id="user-preferredname">
+            <input
+              v-model="localUser.preferred_name"
+              type="text"
+              class="form-control" 
+              id="user-preferredname"
+              :class="{ 'is-invalid': $v.localUser.preferred_name.$error }"
+              @input="$v.localUser.preferred_name.$touch()">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="user-personalemail" class="col-sm-2 col-form-label">Personal Email</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.personal_email" type="email" class="form-control" id="user-personalemail">
+            <input
+              v-model="localUser.personal_email"
+              type="email"
+              class="form-control"
+              id="user-personalemail"
+              :class="{ 'is-invalid': $v.localUser.personal_email.$error }"
+              @input="$v.localUser.personal_email.$touch()">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="user-uid" class="col-sm-2 col-form-label">Phone Number</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.phone" type="tel" class="form-control" id="user-uid" maxlength="15">
+            <input
+              v-model="localUser.phone"
+              type="tel"
+              class="form-control"
+              id="user-uid"
+              maxlength="15"
+              :class="{ 'is-invalid': $v.localUser.phone.$error }"
+              @input="$v.localUser.phone.$touch()">
           </div>
         </div>
 
         <h4>Emergency Contact Information</h4>
-        <p>Optional, but needed to generate Institute Approved Absence forms</p>
+        <p>You may optionally provide information on who to contact in the event of an emergency. This information is required should you go on any RoboJackets trips.</p>
 
         <div class="form-group row">
           <label for="user-emergencycontactname" class="col-sm-2 col-form-label">Contact Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.emergency_contact_name" type="text" class="form-control" id="user-emergencycontactname">
+            <input
+              v-model="localUser.emergency_contact_name"
+              type="text"
+              class="form-control"
+              id="user-emergencycontactname"
+              :class="{ 'is-invalid': $v.localUser.emergency_contact_name.$error }"
+              @input="$v.localUser.emergency_contact_name.$touch()">
           </div>
         </div>
         <div class="form-group row">
           <label for="user-emergencycontactphone" class="col-sm-2 col-form-label">Contact Phone Number</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="localUser.emergency_contact_phone" type="tel" class="form-control" id="user-emergencycontactphone" maxlength="15">
+            <input
+              v-model="localUser.emergency_contact_phone"
+              type="tel"
+              class="form-control"
+              id="user-emergencycontactphone"
+              maxlength="15"
+              :class="{ 'is-invalid': $v.localUser.emergency_contact_phone.$error }"
+              @input="$v.localUser.emergency_contact_phone.$touch()">
           </div>
         </div>
 
@@ -55,23 +87,18 @@
 </template>
 
 <script>
+
+  import { alpha, email, maxLength } from 'vuelidate/lib/validators';
+
   export default {
     props: ['user'],
-      mounted() {
-      /* TODO: Hit API for DuesPackages
-      var dataUrl = this.baseUrl + this.userUid;
-      axios.get(this.dataUrl)
-        .then(response => {
-          this.localUser = response.data.user;
-        })
-        .catch(response => {
-          console.log(response);
-          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
-        });
-        */
-    },
     methods: {
       submit () {
+        if (this.$v.$invalid) {
+          this.$v.$touch();
+          return;
+        }
+
         var baseUrl = "/api/v1/users/";
         var dataUrl = baseUrl + this.localUser.uid;
         
@@ -88,6 +115,15 @@
     computed: {
       localUser: function () {
         return this.user;
+      }
+    },
+    validations: {
+      localUser: {
+        personal_email: {email},
+        phone: {maxLength: maxLength(15)},
+        preferred_name: {alpha},
+        //emergency_contact_name: {alpha},
+        emergency_contact_phone: {maxLength: maxLength(15)}
       }
     }
   }
