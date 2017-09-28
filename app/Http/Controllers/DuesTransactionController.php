@@ -31,8 +31,27 @@ class DuesTransactionController extends Controller
             'received_shirt' => 'boolean',
             'dues_package_id' => 'required|exists:dues_packages,id',
             'payment_id' => 'exists:payments,id',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'exists:users,id'
         ]);
+        
+        $user = $request->user();
+        $user_id = $request->input('user_id');
+        
+        //Make sure that the user is actually allowed to create this transaction
+        if ($request->has('user_id') && $user_id != $user->id && (!$user->is_admin)) {
+            return response()->json(['status' => 'error',
+                'message' => 'You may not create a DuesTransaction for another user.'], 403);
+        } elseif (!$request->has('user_id')) {
+            $request->merge(['user_id' => $user->id]);
+        }
+        
+        //Check to make sure there isn't already an existing package for the target user
+        $existingTransaction = DuesTransaction::where('dues_package_id', $request->input('dues_package_id'))
+            ->where('user_id', $request->input('user_id'))->first();
+        if ($existingTransaction) {
+            return response()->json(['status' => 'error',
+                'message' => 'There is already a pending Dues Transaction for this user'], 400);
+        }
 
         try {
             $transact = DuesTransaction::create($request->all());
