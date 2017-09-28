@@ -82,10 +82,10 @@ return [
     |
     | Specify a unique property of the user that will be added as the 'sub'
     | claim of the token payload.
-    |
+    |`
     */
 
-    'identifier' => 'id',
+    'identifier' => 'uid',
 
     /*
     |--------------------------------------------------------------------------
