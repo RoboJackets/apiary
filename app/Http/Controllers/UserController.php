@@ -9,6 +9,16 @@ use App\User;
 
 class UserController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('permission:read-users', ['only' => ['index']]);
+        $this->middleware('permission:create-users', ['only' => ['store']]);
+        $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
+        $this->middleware('permission:update-users|update-users-own', ['only' => ['update']]);
+        $this->middleware('permission:delete-users', ['only' => ['destroy']]);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -73,6 +83,14 @@ class UserController extends Controller
      */
     public function show($id, Request $request)
     {
+        $requestingUser = $request->user();
+        $requestedUser = User::findByIdentifier($id)->first();
+        //Enforce users only viewing themselves (read-users-own)
+        if (!$requestingUser->hasPermissionTo('read-users') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'You do not have permission to view this User.', 403]);
+        }
+        
         $user = User::findByIdentifier($id)->first();
         if ($user) {
             return response()->json(['status' => 'success', 'user' => $user]);
@@ -90,6 +108,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $requestingUser = $request->user();
+        $requestedUser = User::findByIdentifier($id)->first();
+        //Enforce users only updating themselves (update-users-own)
+        if (!$requestingUser->can('update-users') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'You do not have permission to update this User.', 403]);
+        }
+        
         $user = User::findByIdentifier($id)->first();
         //Update only included fields
         $this->validate($request, [
