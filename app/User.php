@@ -163,7 +163,7 @@ class User extends Authenticatable
         if (is_numeric($id) && strlen($id) == 9 && $id[0] == 9) {
             return $query->where('gtid', $id);
         } elseif (is_numeric($id)) {
-            return $query->find($id);
+            return $query->where('id', $id);
         } elseif (!is_numeric($id)) {
             return $query->where('uid', $id);
         } else {
