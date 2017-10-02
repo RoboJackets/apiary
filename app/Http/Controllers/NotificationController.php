@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:send-notifications']);
+    }
+    
     public function sendNotification()
     {
         $hours = 0;

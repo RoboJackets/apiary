@@ -18,7 +18,7 @@ class DuesTransaction extends Model
      */
     public function payment()
     {
-        return $this->belongsTo('App\Payment');
+        return $this->morphMany('App\Payment', 'payable');
     }
 
     /**

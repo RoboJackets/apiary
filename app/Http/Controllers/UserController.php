@@ -6,9 +6,19 @@ use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\User;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:read-users', ['only' => ['index']]);
+        $this->middleware('permission:create-users', ['only' => ['store']]);
+        $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
+        $this->middleware('permission:update-users|update-users-own', ['only' => ['update']]);
+        $this->middleware('permission:delete-users', ['only' => ['destroy']]);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -58,6 +68,13 @@ class UserController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
+        if ($request->has('roles')) {
+            foreach ($request->input('roles') as $role) {
+                $requestedRole = Role::where('id', $role)->firstOrFail();
+                $user->assignRole($requestedRole);
+            }
+        }
+
         if (is_numeric($user->id)) {
             $dbUser = User::findOrFail($user->id);
             return response()->json(['status' => 'success', 'user' => $dbUser], 201);
@@ -70,12 +87,19 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
     {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
+            $requestingUser = $request->user();
+            //Enforce users only viewing themselves (read-users-own)
+            if ($requestingUser->cant('read-users') && $requestingUser->id != $user->id) {
+                return response()->json(['status' => 'error',
+                    'message' => 'Forbidden - You do not have permission to view this User.'], 403);
+            }
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
@@ -89,9 +113,20 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
+        $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
+        }
+
+        //Enforce users only updating themselves (update-users-own)
+        if ($requestingUser->cant('update-users') && $requestingUser->id != $user->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You do not have permission to update this User.'], 403);
+        }
+
         //Update only included fields
         $this->validate($request, [
             'uid' => ['max:127', Rule::unique('users')->ignore($user->id)],
@@ -115,7 +150,12 @@ class UserController extends Controller
 
         $user->update($request->all());
 
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->input('roles'));
+        }
+
         $user = User::find($user->id);
+
         if ($user) {
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
