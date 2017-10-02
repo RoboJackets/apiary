@@ -55,6 +55,13 @@ Route::group(['middleware' => 'cas.auth'], function () {
                 return view('events/eventedit', ['id' => $id]);
             })->name('eventEdit');
         });
+
+        Route::prefix('dues')->group(function () {
+            Route::get('/', function () {
+                return view('dues/duesadmin');
+            })->name('duesAdmin');
+
+        });
     });
   
     // Use cookie auth to get first token

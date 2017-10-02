@@ -55,6 +55,8 @@ Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue
 Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue'));
 Vue.component('demographics', require('./components/dues/Demographics.vue'));
 
+Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.vue'));
+
 const app = new Vue({
     el: '#app'
 });
