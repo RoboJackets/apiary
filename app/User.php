@@ -2,15 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Model implements Authenticatable
+class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
+    use HasRoles;
 
     /**
      * The accessors to append to the model's array form.
@@ -162,7 +163,7 @@ class User extends Model implements Authenticatable
         if (is_numeric($id) && strlen($id) == 9 && $id[0] == 9) {
             return $query->where('gtid', $id);
         } elseif (is_numeric($id)) {
-            return $query->find($id);
+            return $query->where('id', $id);
         } elseif (!is_numeric($id)) {
             return $query->where('uid', $id);
         } else {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d5d79f485c95f5d868f3c0115cca494",
+    "content-hash": "df5e564a8109e63dc966bfec3a687576",
     "packages": [
         {
             "name": "bugsnag/bugsnag",
@@ -2028,29 +2028,29 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.4.2",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "0c260f9fac3674a1c7e7c4cd78fd68a1df8adbff"
+                "reference": "bf7bdc0ba53ab334c7c9ae20ac08b51df9afe3bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/0c260f9fac3674a1c7e7c4cd78fd68a1df8adbff",
-                "reference": "0c260f9fac3674a1c7e7c4cd78fd68a1df8adbff",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/bf7bdc0ba53ab334c7c9ae20ac08b51df9afe3bd",
+                "reference": "bf7bdc0ba53ab334c7c9ae20ac08b51df9afe3bd",
                 "shasum": ""
             },
             "require": {
-                "illuminate/auth": "~5.4.0",
-                "illuminate/container": "~5.4.0",
-                "illuminate/contracts": "~5.4.0",
-                "illuminate/database": "~5.4.0",
+                "illuminate/auth": "~5.4.0|~5.5.0",
+                "illuminate/container": "~5.4.0|~5.5.0",
+                "illuminate/contracts": "~5.4.0|~5.5.0",
+                "illuminate/database": "~5.4.0|~5.5.0",
                 "php": ">=7.0"
             },
             "require-dev": {
                 "monolog/monolog": "^1.22",
-                "orchestra/testbench": "~3.4.2",
-                "phpunit/phpunit": "^6.0"
+                "orchestra/testbench": "~3.4.2|~3.5.0",
+                "phpunit/phpunit": "^5.7|6.2"
             },
             "type": "library",
             "extra": {
@@ -2089,7 +2089,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2017-08-11T10:32:18+00:00"
+            "time": "2017-09-10T15:14:15+00:00"
         },
         {
             "name": "subfission/cas",

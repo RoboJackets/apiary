@@ -10,6 +10,15 @@ use App\User;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:read-events', ['only' => ['index']]);
+        $this->middleware('permission:create-events', ['only' => ['store']]);
+        $this->middleware('permission:read-events', ['only' => ['show']]);
+        $this->middleware('permission:update-events|update-events-own', ['only' => ['update']]);
+        $this->middleware('permission:delete-events', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -91,14 +100,24 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $requestingUser = $request->user();
         $event = Event::find($id);
+        if (!$event) {
+            return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
+        }
+
+        $requestedUser = $event->organizer;
+        //Enforce users only viewing themselves (read-users-own)
+        if ($requestingUser->cant('update-events') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You do not have permission to update this Event.'], 403);
+        }
 
         if (isset($request->organizer)) {
             $organizer = User::findByIdentifier($request->organizer)->first();
             $request['organizer'] = $organizer->id;
         }
 
-        
         $this->validate($request, [
             'name' => 'required|max:255',
             'price' => 'numeric|nullable',
@@ -121,7 +140,7 @@ class EventController extends Controller
             return response()->json(['status' => 'success', 'event' => $event], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
-        };
+        }
     }
 
     public function destroy($id)

@@ -10,6 +10,15 @@ use App\User;
 
 class RsvpController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:read-rsvps', ['only' => ['index']]);
+        $this->middleware('permission:create-rsvps|create-rsvps-own', ['only' => ['store']]);
+        $this->middleware('permission:read-rsvps|read-rsvps-own', ['only' => ['show']]);
+        $this->middleware('permission:update-rsvps|update-rsvps-own', ['only' => ['update']]);
+        $this->middleware('permission:delete-rsvps|delete-rsvps-own', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,6 +41,14 @@ class RsvpController extends Controller
      */
     public function store(Request $request)
     {
+        $requestingUser = $request->user();
+        $requestedUser = User::findByIdentifier($request->input('user_id'))->first();
+        //Enforce users only creating RSVPs for themselves (create-rsvps-own)
+        if ($requestingUser->cant('create-rsvps') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You may not create an RSVP for another user.'], 403);
+        }
+
         return  response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
     }
 
@@ -44,12 +61,37 @@ class RsvpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return  response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
+        $requestingUser = $request->user();
+        $rsvp = Rsvp::find($id);
+        if (!$rsvp) {
+            return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
+        }
+
+        //Enforce users only updating RSVPs for themselves (update-rsvps-own)
+        $requestedUser = $rsvp->user;
+        if ($requestingUser->cant('update-rsvps') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You may not update an RSVP for another user.'], 403);
+        }
+
+        return response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $rsvp = Rsvp::find();
+        $requestingUser = $request->user();
+        $rsvp = Rsvp::find($id);
+        if (!$rsvp) {
+            return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
+        }
+
+        //Enforce users only deleting RSVPs for themselves (update-rsvps-own)
+        $requestedUser = $rsvp->user;
+        if ($requestingUser->cant('delete-rsvps') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You may not delete an RSVP for another user.'], 403);
+        }
+
         $deleted = $rsvp->delete();
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);

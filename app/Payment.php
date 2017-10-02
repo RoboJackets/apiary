@@ -14,6 +14,14 @@ class Payment extends Model
     protected $guarded = ['id'];
 
     /**
+     * Get all of the owning payable models
+     */
+    public function payable()
+    {
+        return $this->morphTo();
+    }
+
+    /**
      * Get the User associated with the Payment model.
      */
     public function user()
