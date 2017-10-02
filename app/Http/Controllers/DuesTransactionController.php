@@ -36,7 +36,7 @@ class DuesTransactionController extends Controller
      */
     public function indexPending()
     {
-        $transact = DuesTransaction::pending()->get();
+        $transact = DuesTransaction::pending()->with(['user', 'package'])->get();
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 

@@ -1,6 +1,6 @@
 <template>
   <datatable id="dues-admin-table"
-    data-url="/api/v1/dues"
+    data-url="/api/v1/dues/transactions/pending"
     data-path="dues_transactions"
     :columns="tableConfig">
   </datatable>
@@ -15,8 +15,9 @@
             var link = "<a href='/admin/dues/" + data + "'>" + data + "</a>";
             return type === "display" ? link : data;
           }}, 
-          {'title': 'Name', 'data':'name'}, 
-          {'title': 'Dues Package', 'data':'organizer'}
+          {'title': 'Timestamp', 'data':'updated_at'},
+          {'title': 'Name', 'data':'user.name'},  
+          {'title': 'Dues Package', 'data':'package.name'}, 
         ]
       }
     }
