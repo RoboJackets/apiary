@@ -7,7 +7,6 @@ use App\DuesPackage;
 
 class DuesPackageController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:read-dues-packages', ['only' => ['index', 'indexActive', 'show']]);

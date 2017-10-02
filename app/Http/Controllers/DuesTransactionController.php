@@ -8,7 +8,6 @@ use App\User;
 
 class DuesTransactionController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:read-dues-transactions', ['only' => ['index']]);

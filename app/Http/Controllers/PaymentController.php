@@ -7,7 +7,6 @@ use App\Payment;
 
 class PaymentController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:read-payments', ['only' => ['index']]);

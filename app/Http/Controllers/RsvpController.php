@@ -10,7 +10,6 @@ use App\User;
 
 class RsvpController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:read-rsvps', ['only' => ['index']]);

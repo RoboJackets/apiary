@@ -11,7 +11,6 @@ use App\FasetResponse;
 
 class FasetVisitController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:read-faset-visits', ['only' => ['index']]);

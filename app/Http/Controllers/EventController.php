@@ -10,7 +10,6 @@ use App\User;
 
 class EventController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:read-events', ['only' => ['index']]);
