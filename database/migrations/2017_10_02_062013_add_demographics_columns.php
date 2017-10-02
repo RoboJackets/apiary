@@ -14,8 +14,8 @@ class AddDemographicsColumns extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('gender')->nullable();
-            $table->text('ethnicity')->nullable();
+            $table->text('gender')->nullable()->after('polo_size');
+            $table->text('ethnicity')->nullable()->after('gender');
         });
     }
 

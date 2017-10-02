@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('title')
-User Admin | {{ env('APP_NAME') }}
+User Admin | {{ config('app.name') }}
 @endsection
 
 @section('content')

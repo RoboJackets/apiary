@@ -108,7 +108,7 @@
         })
         .catch(response => {
           console.log(response);
-          sweetAlert("Connection Error", "Unable to dues packages. Check your internet connection or try refreshing the page.", "error");
+          sweetAlert("Connection Error", "Unable to load dues packages. Check your internet connection or try refreshing the page.", "error");
         });
     },
     methods: {

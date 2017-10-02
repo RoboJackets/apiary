@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('title')
-Dues | {{ env('APP_NAME') }}
+Dues | {{ config('app.name') }}
 @endsection
 
 @section('content')

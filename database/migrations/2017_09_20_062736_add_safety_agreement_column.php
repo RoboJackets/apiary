@@ -14,7 +14,7 @@ class AddSafetyAgreementColumn extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('accept_safety_agreement')->nullable();
+            $table->timestamp('accept_safety_agreement')->nullable()->after('polo_size');
         });
     }
 

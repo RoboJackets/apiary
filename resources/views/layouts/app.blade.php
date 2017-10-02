@@ -12,7 +12,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a class="navbar-brand" href="/">{{ env('APP_NAME') }}</a>
+        <a class="navbar-brand" href="/">{{ config('app.name') }}</a>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav mr-auto">

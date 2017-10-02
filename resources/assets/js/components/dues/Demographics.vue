@@ -69,6 +69,8 @@
     mounted() {
       if (!this.localUser.ethnicity) {
         this.localUser.ethnicity = [];
+      } else {
+        this.localUser.ethnicity = this.localUser.ethnicity.split(",");
       }
     },
     methods: {
