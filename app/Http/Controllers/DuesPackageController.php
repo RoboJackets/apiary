@@ -7,6 +7,15 @@ use App\DuesPackage;
 
 class DuesPackageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:read-dues-packages', ['only' => ['index', 'indexActive', 'show']]);
+        $this->middleware('permission:create-dues-packages', ['only' => ['store']]);
+        $this->middleware('permission:update-dues-packages', ['only' => ['update']]);
+        $this->middleware('permission:delete-dues-packages', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

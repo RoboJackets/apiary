@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\DuesTransaction;
+use App\User;
 
 class DuesTransactionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:read-dues-transactions', ['only' => ['index']]);
+        $this->middleware('permission:create-dues-transactions', ['only' => ['store']]);
+        $this->middleware('permission:read-dues-transactions|read-dues-transactions-own',
+            ['only' => ['show']]);
+        $this->middleware('permission:update-dues-transactions', ['only' => ['update']]);
+        $this->middleware('permission:delete-dues-transactions', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -72,16 +84,25 @@ class DuesTransactionController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        $requestingUser = $request->user();
         $transact = DuesTransaction::find($id);
-        if ($transact) {
-            return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
+        if (!$transact) {
+            return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
+
+        $requestedUser = $transact->user;
+        //Enforce users only viewing their own DuesTransactions (read-dues-transactions-own)
+        if ($requestingUser->cant('read-dues-transactions') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You do not have permission to view this DuesTransaction.'], 403);
+        }
+
+        return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
     }
 
     /**

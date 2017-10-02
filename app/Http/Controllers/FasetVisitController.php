@@ -11,7 +11,17 @@ use App\FasetResponse;
 
 class FasetVisitController extends Controller
 {
-    public function visit(Request $request)
+
+    public function __construct()
+    {
+        $this->middleware('permission:read-faset-visits', ['only' => ['index']]);
+        $this->middleware('permission:create-faset-visits', ['only' => ['store']]);
+        $this->middleware('permission:read-faset-visits|read-faset-visits-own', ['only' => ['show']]);
+        $this->middleware('permission:update-faset-visits|update-faset-visits-own', ['only' => ['update']]);
+        $this->middleware('permission:update-faset-visits', ['only' => ['dedup']]);
+    }
+
+    public function store(Request $request)
     {
         $this->validate($request, [
             'faset_email' => 'required|email|max:255',
@@ -52,13 +62,20 @@ class FasetVisitController extends Controller
      */
     public function show($id, Request $request)
     {
+        $requestingUser = $request->user();
         $visit = FasetVisit::with(['fasetResponses'])->find($id);
-
-        if ($visit) {
-            return response()->json(['status' => 'success', 'visit' => $visit]);
-        } else {
+        if (!$visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
+
+        $requestedUser = $visit->user;
+        //Enforce users only viewing their own FasetVisit (read-faset-visits-own)
+        if ($requestingUser->cant('read-faset-visits') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You do not have permission to view this FasetVisit.'], 403);
+        }
+
+        return response()->json(['status' => 'success', 'visit' => $visit]);
     }
 
     /**
@@ -81,6 +98,14 @@ class FasetVisitController extends Controller
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
 
+        $requestingUser = $request->user();
+        $requestedUser = $visit->user;
+        //Enforce users only updating themselves (update-users-own)
+        if ($requestingUser->cant('update-faset-visits') && $requestingUser->id != $requestedUser->id) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You do not have permission to update this FasetVisit.'], 403);
+        }
+
         $visit->update($request->all());
 
         $visit = FasetVisit::with(['fasetResponses'])->find($id);
@@ -91,8 +116,8 @@ class FasetVisitController extends Controller
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
     }
-    
-    public function list(Request $request)
+
+    public function index(Request $request)
     {
         $visits = FasetVisit::all();
         return response()->json(['status' => 'success', 'visits' => $visits]);

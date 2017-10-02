@@ -7,6 +7,16 @@ use App\Payment;
 
 class PaymentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:read-payments', ['only' => ['index']]);
+        $this->middleware('permission:create-payments|create-payments-own', ['only' => ['store']]);
+        $this->middleware('permission:read-payments|read-payments-own', ['only' => ['show']]);
+        $this->middleware('permission:update-payments', ['only' => ['update']]);
+        $this->middleware('permission:delete-payments', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
