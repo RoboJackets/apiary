@@ -1,12 +1,32 @@
 @extends('layouts/app')
 
 @section('title')
-{{ env('APP_NAME') }}
+{{ config('app.name') }}
 @endsection
 
 @section('content')
 
-<h1> Hello World! </h1>
+@component('layouts/title')
+  Dashboard
+@endcomponent
+
+<div class="row">
+  @if(true)
+  <div class="col-sm-6 col-md-3 col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">
+          Pay Dues
+        </h4>
+        <p class="card-text">
+          To continue your membership in RoboJackets, we need you to update your information and pay dues.
+        </p>
+        <a href="/dues">Pay Dues Now</a>
+      </div>
+    </div>
+  </div>
+  @endif
+</div>
 
 
 @endsection

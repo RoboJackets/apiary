@@ -1,15 +1,14 @@
 @extends('layouts/app')
 
 @section('title')
-Event Admin | {{ config('app.name') }}
+Dues | {{ config('app.name') }}
 @endsection
 
 @section('content')
 @component('layouts/title')
-  Event Admin
+  Pay Dues
 @endcomponent
 
-<events-admin-table>
-</events-admin-table>
+<dues-sequence user-uid="{{auth()->user()->uid}}"></dues-sequence>
 
 @endsection

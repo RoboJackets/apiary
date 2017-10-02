@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('title')
-Event Admin | {{ env('APP_NAME') }}
+Event Admin | {{ config('app.name') }}
 @endsection
 
 @section('content')

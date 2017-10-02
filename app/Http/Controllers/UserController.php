@@ -58,6 +58,7 @@ class UserController extends Controller
             'graduation_semester' => 'max:6',
             'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
+            'accept_safety_agreement => date|nullable',
         ]);
 
         try {
@@ -144,6 +145,7 @@ class UserController extends Controller
             'graduation_semester' => 'max:6',
             'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
+            'accept_safety_agreement => date|nullable',
         ]);
 
         $user->update($request->all());

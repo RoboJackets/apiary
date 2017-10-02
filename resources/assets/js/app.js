@@ -11,9 +11,16 @@ var dt = require('datatables.net/js/jquery.dataTables');
 /**
  *  Import DataTables for Bootstrap4 module
  */
-require( 'datatables.net-bs4');
+require('datatables.net-bs4');
 
 window.Vue = require('vue');
+
+//Import the Vuelidate validation plugin
+
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+// Import the FlatPickr Date Component
 
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
@@ -38,6 +45,15 @@ Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTabl
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
 Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
+Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));
+
+// Dues
+
+Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue'));
+Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue'));
+Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue'));
+Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue'));
+Vue.component('demographics', require('./components/dues/Demographics.vue'));
 
 const app = new Vue({
     el: '#app'
