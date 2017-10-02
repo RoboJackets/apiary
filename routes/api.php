@@ -32,6 +32,6 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], func
     Route::get('dues/packages/active', 'DuesPackageController@indexActive');
     Route::get('dues/packages/available', 'DuesPackageController@indexAvailable');
     Route::resource('dues/packages', 'DuesPackageController', ['except' => ['create', 'edit']]);
-    Route::get('dues/transactions/pending', 'DuesPackageController@indexPending');
+    Route::get('dues/transactions/pending', 'DuesTransactionController@indexPending');
     Route::resource('dues/transactions', 'DuesTransactionController', ['except' => ['create', 'edit']]);
 });
