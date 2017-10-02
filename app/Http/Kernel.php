@@ -60,6 +60,6 @@ class Kernel extends HttpKernel
         'cas.check'  => \App\Http\Middleware\CASCheck::class,
         'jwt.auth' => \App\Http\Middleware\JWTAuthenticate::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'permission' => \App\Http\Middleware\PermissionMiddleware::class,
     ];
 }
