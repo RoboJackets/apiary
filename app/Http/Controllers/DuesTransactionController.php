@@ -10,7 +10,7 @@ class DuesTransactionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-dues-transactions', ['only' => ['index']]);
+        $this->middleware('permission:read-dues-transactions', ['only' => ['index', 'indexPending']]);
         $this->middleware('permission:create-dues-transactions', ['only' => ['store']]);
         $this->middleware('permission:read-dues-transactions|read-dues-transactions-own',
             ['only' => ['show']]);
@@ -26,6 +26,17 @@ class DuesTransactionController extends Controller
     public function index()
     {
         $transact = DuesTransaction::all();
+        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+    }
+
+    /**
+     * Display a listing of pending resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexPending()
+    {
+        $transact = DuesTransaction::pending()->get();
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
