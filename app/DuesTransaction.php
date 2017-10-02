@@ -36,4 +36,15 @@ class DuesTransaction extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    /**
+     * Scope a query to only include pending transactions.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePending($query)
+    {
+        return $query->doesntHave('payment');
+    }
 }
