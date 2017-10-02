@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="currentStepName == 'dues-required-info'">
-      <dues-required-info :user.sync="user" @next="next">
+      <dues-required-info :user="user" @next="next">
       </dues-required-info>
     </div>
 
@@ -10,11 +10,11 @@
     </div>
 
     <div v-if="currentStepName == 'dues-additional-info'">
-      <dues-additional-info :user.sync="user" @next="next"></dues-additional-info>
+      <dues-additional-info :user="user" @next="next"></dues-additional-info>
     </div>
 
     <div v-if="currentStepName == 'dues-demographics-info'">
-      <demographics :user.sync="user" @next="next"></demographics>
+      <demographics :user="user" @next="next"></demographics>
     </div>
   </div>
 </template>
@@ -36,7 +36,7 @@
           'dues-demographics-info',
           'dues-payment-instructions'
           ],
-        currentStep: 1,
+        currentStep: 0,
         user: {},
         dataUrl: '',
         baseUrl: "/api/v1/users/",

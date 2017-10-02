@@ -3,7 +3,7 @@
     <h3>SCC Safety Agreement</h3>
 
     <fieldset class="form-group">
-      <label class ="lead" for="safety">As a member of the Student Competition Center (SCC), I agree to abide by the following rules. Additionally, I understand that failure to adhere to these rules may lead to temporary or permanent suspension from the SCC and/or sanctions from the Office of Student Integrity.</label>
+      <label class="lead" for="safety">As a member of the Student Competition Center (SCC), I agree to abide by the following rules. Additionally, I understand that failure to adhere to these rules may lead to temporary or permanent suspension from the SCC and/or sanctions from the Office of Student Integrity.</label>
       <div v-for="(rule,index) in rules" class="custom-controls-stacked">
         <label class="custom-control custom-checkbox">
           <input
@@ -71,7 +71,6 @@
 
         axios.put(dataUrl, payload)
           .then(response => {
-            console.log(response);
             this.$emit("next");
           })
           .catch(response => {

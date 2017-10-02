@@ -88,7 +88,7 @@
 
 <script>
 
-  import { alpha, email, maxLength } from 'vuelidate/lib/validators';
+  import { alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
 
   export default {
     props: ['user'],
@@ -101,6 +101,8 @@
 
         var baseUrl = "/api/v1/users/";
         var dataUrl = baseUrl + this.localUser.uid;
+
+        delete this.localUser.dues;
         
         axios.put(dataUrl, this.localUser)
           .then(response => {
@@ -110,6 +112,7 @@
             console.log(response);
             sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
+          
       }
     },
     computed: {
@@ -122,7 +125,7 @@
         personal_email: {email},
         phone: {maxLength: maxLength(15)},
         preferred_name: {alpha},
-        //emergency_contact_name: {alpha},
+        emergency_contact_name: {},
         emergency_contact_phone: {maxLength: maxLength(15)}
       }
     }

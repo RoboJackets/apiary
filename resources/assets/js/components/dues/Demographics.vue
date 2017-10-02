@@ -17,10 +17,15 @@
         </fieldset>
 
         <fieldset class="form-group">
-          <label class ="lead" for="ethnicity">What is your ethnicity/race? (Check all that Apply)</label>
+          <label class="lead" for="ethnicity">What is your ethnicity/race? (Check all that Apply)</label>
           <div v-for="option in ethnicityOptions" class="custom-controls-stacked">
             <label class="custom-control custom-checkbox">
-              <input v-model="localUser.ethnicity" type="checkbox" class="custom-control-input" :value="option.value" name="ethnicity">
+              <input 
+                v-model="localUser.ethnicity"
+                type="checkbox"
+                class="custom-control-input"
+                :value="option.value"
+                name="ethnicity">
               <span class="custom-control-indicator"></span>
               <span class="custom-control-description">{{option.text}}</span>
             </label>
@@ -62,22 +67,18 @@
       }
     },
     mounted() {
-      /* TODO: Hit API for DuesPackages
-      var dataUrl = this.baseUrl + this.userUid;
-      axios.get(this.dataUrl)
-        .then(response => {
-          this.localUser = response.data.user;
-        })
-        .catch(response => {
-          console.log(response);
-          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
-        });
-        */
+      if (!this.localUser.ethnicity) {
+        this.localUser.ethnicity = [];
+      }
     },
     methods: {
       submit () {
         var baseUrl = "/api/v1/users/";
         var dataUrl = baseUrl + this.localUser.uid;
+
+        delete this.localUser.dues;
+        
+        this.localUser.ethnicity = this.localUser.ethnicity.toString();
         
         axios.put(dataUrl, this.localUser)
           .then(response => {
