@@ -40,19 +40,19 @@ class RoleController extends Controller
         $role = new Role();
         $role->name = $request->input('name');
         $role->save();
-        $dbRole = Role::find($role->id);
         
         if ($request->has('permissions')) {
             foreach ($request->input('permissions') as $permission) {
                 $dbPerm = Permission::find($permission);
                 if ($dbPerm) {
-                    $dbRole->givePermissionTo($dbPerm);
+                    $role->givePermissionTo($dbPerm);
                 } else {
                     return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 422);
                 }
             }
         }
         
+        $dbRole = Role::where('id', $role->id)->with('permissions')->first();
         return response()->json(['status' => 'success', 'role' => $dbRole]);
     }
 
@@ -64,8 +64,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
-        if (!$id) {
+        $role = Role::where('id', $id)->with('permissions')->first();
+        if (!$role) {
             return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
         }
         return response()->json(['status' => 'success', 'role' => $role]);
@@ -98,7 +98,8 @@ class RoleController extends Controller
             $role->syncPermissions($request->input('permissions'));
         }
         
-        return response()->json(['status' => 'success', 'role' => $role]);
+        $dbRole = Role::where('id', $id)->with('permissions')->first();
+        return response()->json(['status' => 'success', 'role' => $dbRole]);
     }
 
     /**
@@ -111,7 +112,7 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         if (!$role) {
-            return response()->json(['status' => 'error', 'Role not found.'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
         }
         
         $role->delete();
