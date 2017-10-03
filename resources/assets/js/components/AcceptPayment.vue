@@ -128,6 +128,19 @@
           {value: "swipe", text: "Swiped Card"},
           {value: "squarecash", text: "SquareCash"},
         ],
+        baseUrl: "/api/v1/payments",
+      }
+    },
+    methods: {
+      submit: function() {
+        axios.post(this.baseUrl, this.payment)
+          .then(response => {
+            window.location.href = "/admin/dues"
+          })
+          .catch(response => {
+            console.log(response);
+            sweetAlert("Connection Error", "Unable to record payment. Check your internet connection or try refreshing the page.", "error");
+          })
       }
     },
     computed: {

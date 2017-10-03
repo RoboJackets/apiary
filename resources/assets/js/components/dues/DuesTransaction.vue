@@ -67,24 +67,6 @@
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
-    },
-    methods: {
-      submit () {
-        /*
-        axios.put(this.dataUrl, this.user)
-          .then(response => {
-            this.hasError = false;
-            this.feedback = "Saved!"
-            console.log("success");
-          })
-          .catch(response => {
-            this.hasError = true;
-            this.feedback = "";
-            console.log(response);
-            sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-          })
-          */
-      }
     }
   }
 </script>
