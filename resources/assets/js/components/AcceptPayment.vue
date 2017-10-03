@@ -96,6 +96,7 @@
    *  @props transactionType: Morph of the Transaction model to attach the payment
    *  @props transactionID: ID of the specific morph of a given Transaction Model
    *  @props amount: The amount of currency in this payment
+   *  @emit done: Event emitted after a payment is recorded successfully
    */
 
   import { numeric, required, sameAs } from 'vuelidate/lib/validators';
@@ -111,7 +112,7 @@
         required: true
       },
       amount: {
-        required:true
+        required: true
       }
     },
     data() {
@@ -135,7 +136,7 @@
       submit: function() {
         axios.post(this.baseUrl, this.payment)
           .then(response => {
-            window.location.href = "/admin/dues"
+            this.$emit('done');
           })
           .catch(response => {
             console.log(response);

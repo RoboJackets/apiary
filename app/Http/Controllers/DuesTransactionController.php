@@ -26,6 +26,7 @@ class DuesTransactionController extends Controller
     public function index()
     {
         $transact = DuesTransaction::all();
+        $transact->load(['user','package', 'payment']);
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 

@@ -1,15 +1,15 @@
 @extends('layouts/app')
 
 @section('title')
-Dues Admin | config('app.name') }}
+Pending Dues Transactions | config('app.name') }}
 @endsection
 
 @section('content')
 @component('layouts/title')
-  Dues Admin
+  Pending Dues Transactions
 @endcomponent
 
-<dues-admin-table>
-</dues-admin-table>
+<pending-dues-table>
+</pending-dues-table>
 
 @endsection

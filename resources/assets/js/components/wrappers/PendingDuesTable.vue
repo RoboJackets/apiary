@@ -1,6 +1,6 @@
 <template>
   <datatable id="dues-admin-table"
-    data-url="/api/v1/dues/transactions"
+    data-url="/api/v1/dues/transactions/pending"
     data-path="dues_transactions"
     :columns="tableConfig">
   </datatable>
@@ -15,12 +15,9 @@
             var link = "<a href='/admin/dues/" + data + "'>" + data + "</a>";
             return type === "display" ? link : data;
           }}, 
-          {'title': 'Timestamp', 'data':'created_at'},
+          {'title': 'Timestamp', 'data':'updated_at'},
           {'title': 'Name', 'data':'user.name'},  
-          {'title': 'Dues Package', 'data':'package.name'},
-          {'title': 'Status', 'data':'status'},
-          {'title': 'Amount Paid', 'data':'payment[0].amount'},
-          {'title': 'Date Paid', 'data':'payment[0].created_at'},
+          {'title': 'Dues Package', 'data':'package.name'}, 
         ]
       }
     }

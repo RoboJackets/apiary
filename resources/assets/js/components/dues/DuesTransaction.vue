@@ -34,7 +34,8 @@
     <accept-payment
       transaction-type="DuesTransaction"
       :transaction-id="parseInt(duesTransactionId)"
-      :amount="package.cost">
+      :amount="package.cost"
+      @done="paymentSubmitted">
     </accept-payment>
   </div>
 </template>
@@ -67,6 +68,11 @@
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
+    },
+    methods: {
+      paymentSubmitted: function () {
+        window.location.href= "/admin/dues/pending";
+      }
     }
   }
 </script>
