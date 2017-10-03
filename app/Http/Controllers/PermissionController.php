@@ -66,9 +66,9 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        $permission = Permission::find($id);
+        $permission = Permission::where('id', $id)->with('roles')->first();
         if (!$permission) {
-            return response()->json(['status' => 'error', 'Permission not found.'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 404);
         }
         return response()->json(['status' => 'success', 'permission' => $permission]);
     }
@@ -82,16 +82,15 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name'=>'required|max:40',
-        ]);
-        
         $permission = Permission::find($id);
         if (!$permission) {
-            return response()->json(['status' => 'error', 'Permission not found.'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 404);
         }
-        $input = $request->all();
-        $permission->fill($input)->save();
+        $permission->name = $request->input('name');
+        $permission->save();
+        
+        $dbPermission = Permission::find($id);
+        return response()->json(['status' => 'success', 'permission' => $dbPermission]);
     }
 
     /**
@@ -104,7 +103,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
         if (!$permission) {
-            return response()->json(['status' => 'error', 'Permission not found.'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 404);
         }
         
         $permission->delete();
