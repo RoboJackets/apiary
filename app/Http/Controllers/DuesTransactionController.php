@@ -106,7 +106,7 @@ class DuesTransactionController extends Controller
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
 
-        $transact->load('user', 'package');
+        $transact->load('user', 'package', 'payment');
 
         $requestedUser = $transact->user;
         //Enforce users only viewing their own DuesTransactions (read-dues-transactions-own)

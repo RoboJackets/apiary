@@ -6,7 +6,7 @@ Dues Transaction | {{ config('app.name') }}
 
 @section('content')
 @component('layouts/title')
-  Complete Dues Transaction
+  Dues Transaction
 @endcomponent
 
 <dues-transaction

@@ -29,6 +29,7 @@
                 <a class="dropdown-item" href="/admin/users">Users</a>
                 <a class="dropdown-item" href="/admin/events">Events</a>
                 <a class="dropdown-item" href="/admin/faset">Faset</a>
+                <a class="dropdown-item" href="/admin/dues/pending">Accept Dues</a>
                 <a class="dropdown-item" href="/admin/dues">Dues</a>
               </div>
             </li>

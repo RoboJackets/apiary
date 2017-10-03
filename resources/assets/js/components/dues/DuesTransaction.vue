@@ -27,16 +27,17 @@
         </div>
       </div>
     </div>
-
-    <h3>
-      Record Payment
-    </h3>
-    <accept-payment
-      transaction-type="DuesTransaction"
-      :transaction-id="parseInt(duesTransactionId)"
-      :amount="package.cost"
-      @done="paymentSubmitted">
-    </accept-payment>
+    <template v-if="duesTransaction.payment.length == 0">
+      <h3>
+        Record Payment
+      </h3>
+      <accept-payment
+        transaction-type="DuesTransaction"
+        :transaction-id="parseInt(duesTransactionId)"
+        :amount="package.cost"
+        @done="paymentSubmitted">
+      </accept-payment>
+    </template>
   </div>
 </template>
 
