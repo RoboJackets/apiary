@@ -34,6 +34,6 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], func
     Route::resource('dues/packages', 'DuesPackageController', ['except' => ['create', 'edit']]);
     Route::get('dues/transactions/pending', 'DuesTransactionController@indexPending');
     Route::resource('dues/transactions', 'DuesTransactionController', ['except' => ['create', 'edit']]);
-    Route::resource('roles', 'RolesController', ['except' => 'create', 'edit']);
-    Route::resource('permissions', 'PermissionsController', ['except' => 'create', 'edit']);
+    Route::resource('roles', 'RoleController', ['except' => 'create', 'edit']);
+    Route::resource('permissions', 'PermissionController', ['except' => 'create', 'edit']);
 });
