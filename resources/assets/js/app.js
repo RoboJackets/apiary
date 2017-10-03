@@ -46,6 +46,7 @@ Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
 Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
 Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));
+Vue.component('accept-payment', require('./components/AcceptPayment.vue'));
 
 // Dues
 
@@ -56,6 +57,8 @@ Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalI
 Vue.component('demographics', require('./components/dues/Demographics.vue'));
 
 Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.vue'));
+Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue'));
+
 
 const app = new Vue({
     el: '#app'

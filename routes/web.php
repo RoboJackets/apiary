@@ -61,6 +61,9 @@ Route::group(['middleware' => 'cas.auth'], function () {
                 return view('dues/duesadmin');
             })->name('duesAdmin');
 
+            Route::get('{id}', function ($id) {
+                return view('dues/duestransaction', ['id' => $id]);
+            })->name('duesTransaction');
         });
     });
   
