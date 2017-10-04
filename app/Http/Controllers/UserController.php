@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\UserTransformer;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Fractalistic\Fractal;
 
 class UserController extends Controller
 {
@@ -30,7 +32,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json(['status' => 'success', 'users' => $users]);
+        $response = Fractal::create()
+            ->collection($users)
+            ->transformWith(new UserTransformer())
+            ->parseIncludes(['fasetvisits'])
+            ->toArray();
+        return response()->json(['status' => 'success', 'users' => $response]);
     }
 
     /**
