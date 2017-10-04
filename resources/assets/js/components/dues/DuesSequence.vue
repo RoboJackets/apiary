@@ -66,6 +66,7 @@
         if (this.currentStep < this.steps.length) {
           //transition
           this.currentStep = this.currentStep + 1;
+          $("html, body").animate({ scrollTop: 0 }, "slow");
         } else {
           warn("No more steps");
         }
