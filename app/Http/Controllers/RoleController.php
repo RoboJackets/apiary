@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -117,5 +118,32 @@ class RoleController extends Controller
         
         $role->delete();
         return response()->json(['status' => 'success', 'message' => 'Role deleted.'], 200);
+    }
+
+    /**
+     * Assigns roles to users
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function assign($id, Request $request)
+    {
+        $role = Role::find($id);
+        if (!$role) {
+            return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
+        }
+        
+        if (!$request->has('users')) {
+            return response()->json(['status' => 'error',
+                'message' => 'You must specify users to assign to a role.'], 422);
+        }
+        
+        foreach ($request->input('users') as $user) {
+            $dbUser = User::findByIdentifier($user)->first();
+            $dbUser->assignRole($role);
+        }
+        
+        return response()->json(['status' => 'success']);
     }
 }
