@@ -46,7 +46,7 @@ class RoleController extends Controller
             try {
                 $role->givePermissionTo($request->input('permissions'));
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
-                return response()->json(['status' => 'error', 
+                return response()->json(['status' => 'error',
                     'message' => $e->getMessage()], 422);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
