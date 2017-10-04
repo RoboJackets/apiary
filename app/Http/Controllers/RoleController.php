@@ -43,13 +43,13 @@ class RoleController extends Controller
         $role->save();
         
         if ($request->has('permissions')) {
-            foreach ($request->input('permissions') as $permission) {
-                $dbPerm = Permission::find($permission);
-                if ($dbPerm) {
-                    $role->givePermissionTo($dbPerm);
-                } else {
-                    return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 422);
-                }
+            try {
+                $role->givePermissionTo($request->input('permissions'));
+            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+                return response()->json(['status' => 'error', 
+                    'message' => $e->getMessage()], 422);
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
             }
         }
         
@@ -60,15 +60,19 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
-        $role = Role::where('id', $id)->with('permissions')->first();
-        if (!$role) {
-            return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
+        try {
+            $role = Role::findByName($name)->with('permissions')->first();
+        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
+        
         return response()->json(['status' => 'success', 'role' => $role]);
     }
 
@@ -76,18 +80,21 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $name)
     {
-        $role = Role::find($id);
-        if (!$role) {
-            return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
+        try {
+            $role = Role::findByName($name);
+        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
         $this->validate($request, [
-            'name' => Rule::unique('roles')->ignore($id),
+            'name' => Rule::unique('roles')->ignore($role->id),
         ]);
         
         if ($request->has('name')) {
@@ -96,24 +103,33 @@ class RoleController extends Controller
         }
         
         if ($request->has('permissions')) {
-            $role->syncPermissions($request->input('permissions'));
+            try {
+                $role->syncPermissions($request->input('permissions'));
+            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+                return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
+            }
         }
         
-        $dbRole = Role::where('id', $id)->with('permissions')->first();
+        $dbRole = Role::where('id', $role->id)->with('permissions')->first();
         return response()->json(['status' => 'success', 'role' => $dbRole]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($name)
     {
-        $role = Role::find($id);
-        if (!$role) {
+        try {
+            $role = Role::findByName($name);
+        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
             return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
         $role->delete();
@@ -123,15 +139,18 @@ class RoleController extends Controller
     /**
      * Assigns roles to users
      *
-     * @param $id
+     * @param string $name
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function assign($id, Request $request)
+    public function assign($name, Request $request)
     {
-        $role = Role::find($id);
-        if (!$role) {
+        try {
+            $role = Role::findByName($name);
+        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
             return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
         if (!$request->has('users')) {
@@ -141,7 +160,11 @@ class RoleController extends Controller
         
         foreach ($request->input('users') as $user) {
             $dbUser = User::findByIdentifier($user)->first();
-            $dbUser->assignRole($role);
+            if ($dbUser) {
+                $dbUser->assignRole($role);
+            } else {
+                return response()->json(['status' => 'error', 'message' => "User '$user' not found."], 422);
+            }
         }
         
         return response()->json(['status' => 'success']);

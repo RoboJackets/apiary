@@ -33,7 +33,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name'=>'required|unique:permissions',
         ]);
 
         $name = $request->input('name');
@@ -44,13 +44,14 @@ class PermissionController extends Controller
         $roles = $request->input('roles');
         if (!empty($roles)) {
             foreach ($roles as $role) {
-                $dbRole = Role::where('id', '=', $role)->first();
-                if ($dbRole) {
-                    $dbPerm = Permission::find($permission->id);
-                    $dbRole->givePermissionTo($dbPerm);
-                } else {
-                    return response()->json(['status' => 'error', 'message' => "Role $role not found."], 422);
+                try {
+                    $dbRole = Role::findByName($role);
+                } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+                    return response()->json(['status' => 'error', 'message' => "Role '$role' not found."], 404);
+                } catch (\Exception $e) {
+                    return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
                 }
+                $dbRole->givePermissionTo($permission->name);
             }
         }
         
@@ -61,15 +62,20 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
-        $permission = Permission::where('id', $id)->with('roles')->first();
-        if (!$permission) {
-            return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 404);
+        try {
+            $permission = Permission::findByName($name)->with('roles')->first();
+        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+            return response()->json(['status' => 'error',
+                'message' => "Permission '$name' not found."], 404);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
+        
         return response()->json(['status' => 'success', 'permission' => $permission]);
     }
 
@@ -77,36 +83,44 @@ class PermissionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $name)
     {
-        $permission = Permission::find($id);
-        if (!$permission) {
-            return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 404);
+        try {
+            $permission = Permission::findByName($name);
+            $permission->name = $request->input('name');
+            $permission->save();
+        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+            return response()->json(['status' => 'error',
+                'message' => "Permission '$name' not found."], 404);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
-        $permission->name = $request->input('name');
-        $permission->save();
         
-        $dbPermission = Permission::find($id);
+        $dbPermission = Permission::find($permission->id);
         return response()->json(['status' => 'success', 'permission' => $dbPermission]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $name
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($name)
     {
-        $permission = Permission::find($id);
-        if (!$permission) {
-            return response()->json(['status' => 'error', 'message' => 'Permission not found.'], 404);
+        try {
+            $permission = Permission::findByName($name);
+            $permission->delete();
+        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+            return response()->json(['status' => 'error',
+                'message' => "Permission '$name' not found."], 404);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
-        $permission->delete();
         return response()->json(['status' => 'success', 'message' => 'Permission deleted.'], 200);
     }
 }
