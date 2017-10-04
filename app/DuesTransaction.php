@@ -7,11 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class DuesTransaction extends Model
 {
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['status'];
+    
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guarded = [
+        'id',
+        'status'
+    ];
 
     /**
      * Get the Payment associated with the DuesTransaction model.
@@ -35,6 +46,21 @@ class DuesTransaction extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+
+    /**
+     * Get the status flag for the Transaction.
+     *
+     * @return bool
+     */
+    public function getStatusAttribute()
+    {
+        if ($this->payment->count() > 0) {
+            return "paid";
+        } else {
+            return "pending";
+        }
     }
 
     /**
