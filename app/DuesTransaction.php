@@ -56,10 +56,10 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute()
     {
-        if ($this->payment->first() != null) {
-            return "Paid";
+        if ($this->payment->count() > 0) {
+            return "paid";
         } else {
-            return "Pending";
+            return "pending";
         }
     }
 

@@ -134,6 +134,12 @@
     },
     methods: {
       submit: function() {
+        //Perform form Validation
+        if (this.$v.$invalid) {
+          this.$v.$touch();
+          return;
+        }
+
         axios.post(this.baseUrl, this.payment)
           .then(response => {
             this.$emit('done');

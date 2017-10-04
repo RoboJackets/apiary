@@ -155,9 +155,9 @@ class User extends Authenticatable
      */
     public function getIsActiveAttribute()
     {
-        if ($this->dues->first() != null) {
+        if ($this->dues->count() > 0) {
             $lastDuesTransaction = $this->dues->last();
-            $madePayment = ($lastDuesTransaction->payment_id != null);
+            $madePayment = ($lastDuesTransaction->payment->count() > 0);
             $pkgIsActive = $lastDuesTransaction->package->is_active;
             return ($madePayment && $pkgIsActive);
         } else {
