@@ -125,10 +125,15 @@
           .then(response => {
             this.$emit("next");
           })
-          .catch(response => {
-            console.log(response);
-            sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-          })
+          .catch(error => {
+            console.log(error.response.status);
+            if (error.response.status == 400) {
+              sweetAlert("Not Again!", "You've already submitted a dues request. Go ahead see an officer or project manager to submit payment.", "info");
+            } else {
+              console.log(error);
+              sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+            }
+          });
       },
       saveUserUpdates: function (user) {
         var baseUserUrl = "/api/v1/users/";

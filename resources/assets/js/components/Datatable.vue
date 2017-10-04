@@ -13,9 +13,15 @@
    *  @props dataObject: The data object that will be used to populate the table if no dataUrl is supplied
    *  @props columns: Columns config data for DataTables, API: https://datatables.net/reference/option/
    *  @props dataPath: the top level key that holds the data
+   *  @props delete: boolean value indicating if there should be delete buttons on each row
    */
   export default {
-    props: ['columns', 'dataUrl', 'dataObject', 'dataPath'],
+    props: {
+      columns: Array,
+      dataUrl: String,
+      dataObject: Array,
+      dataPath: String,
+    },
     data() {
       return {
         tableData: [],

@@ -11,7 +11,8 @@
 @endcomponent
 
 <div class="row">
-  @if(true)
+  @if(!auth()->user()->is_active)
+  <!-- Above line is only OK for the first year -->
   <div class="col-sm-6 col-md-3 col-lg-4">
     <div class="card">
       <div class="card-body">

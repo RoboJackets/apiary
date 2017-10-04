@@ -10,7 +10,7 @@ class DuesTransactionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-dues-transactions', ['only' => ['index']]);
+        $this->middleware('permission:read-dues-transactions', ['only' => ['index', 'indexPending']]);
         $this->middleware('permission:create-dues-transactions', ['only' => ['store']]);
         $this->middleware('permission:read-dues-transactions|read-dues-transactions-own',
             ['only' => ['show']]);
@@ -26,6 +26,18 @@ class DuesTransactionController extends Controller
     public function index()
     {
         $transact = DuesTransaction::all();
+        $transact->load(['user','package', 'payment']);
+        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+    }
+
+    /**
+     * Display a listing of pending resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexPending()
+    {
+        $transact = DuesTransaction::pending()->with(['user', 'package'])->get();
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -93,6 +105,8 @@ class DuesTransactionController extends Controller
         if (!$transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
+
+        $transact->load('user', 'package', 'payment');
 
         $requestedUser = $transact->user;
         //Enforce users only viewing their own DuesTransactions (read-dues-transactions-own)
