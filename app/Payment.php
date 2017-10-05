@@ -28,12 +28,4 @@ class Payment extends Model
     {
         return $this->belongsTo('App\User', 'recorded_by');
     }
-
-    /**
-     * Get the DuesTransaction
-     */
-    public function duesTransaction()
-    {
-        return $this->hasOne('App\DuesTransaction');
-    }
 }

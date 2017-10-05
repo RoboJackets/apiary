@@ -15,6 +15,9 @@
               id="user-preferredname"
               :class="{ 'is-invalid': $v.localUser.preferred_name.$error }"
               @input="$v.localUser.preferred_name.$touch()">
+            <small id="iser-preferredname-help" class="form-text text-muted">
+              Only if different from your first name on file with Georgia Tech
+            </small>
           </div>
         </div>
 
