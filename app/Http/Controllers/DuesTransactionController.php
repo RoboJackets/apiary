@@ -26,6 +26,7 @@ class DuesTransactionController extends Controller
     public function index()
     {
         $transact = DuesTransaction::all();
+        $transact->load(['user','package', 'payment']);
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -36,7 +37,7 @@ class DuesTransactionController extends Controller
      */
     public function indexPending()
     {
-        $transact = DuesTransaction::pending()->get();
+        $transact = DuesTransaction::pending()->with(['user', 'package'])->get();
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -104,6 +105,8 @@ class DuesTransactionController extends Controller
         if (!$transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
+
+        $transact->load('user', 'package', 'payment');
 
         $requestedUser = $transact->user;
         //Enforce users only viewing their own DuesTransactions (read-dues-transactions-own)

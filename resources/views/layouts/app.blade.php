@@ -20,7 +20,7 @@
               <a class="nav-link" href="/profile">Profile</a>
             </li>
 
-            @if (auth()->user()->is_admin)
+            @role('admin')
             <li class="nav-item dropdown {{ $request->is('admin*') ? 'active' : '' }}">
               <a class="nav-link dropdown-toggle" href="#" id="navbarAdminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Admin
@@ -29,9 +29,11 @@
                 <a class="dropdown-item" href="/admin/users">Users</a>
                 <a class="dropdown-item" href="/admin/events">Events</a>
                 <a class="dropdown-item" href="/admin/faset">Faset</a>
+                <a class="dropdown-item" href="/admin/dues/pending">Accept Dues</a>
+                <a class="dropdown-item" href="/admin/dues">Dues</a>
               </div>
             </li>
-            @endif
+            @endrole
 
           </ul>
 

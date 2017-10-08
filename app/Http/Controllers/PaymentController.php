@@ -35,10 +35,19 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        $currentUser = auth()->user();
+
+        if (!$request->has('recorded_by') ||
+            $currentUser->cant('update-payments')) {
+            $request['recorded_by'] = $currentUser->id;
+        }
+
         $this->validate($request, [
             'amount' => 'required|numeric',
             'method' => 'required|string',
-            'recorded_by' => 'required|numeric|exists:users,id'
+            'recorded_by' => 'numeric|exists:users,id',
+            'payable_type' => 'required|string',
+            'payable_id' => 'required|numeric'
         ]);
 
         try {

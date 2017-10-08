@@ -21,6 +21,10 @@ Route::group(['middleware' => 'cas.auth'], function () {
         return view('faset/faset');
     });
 
+    Route::get('profile', function () {
+        return view('users/userprofile', ['id' => auth()->user()->id]);
+    });
+
     Route::get('dues', function () {
         return view('dues/payDues');
     });
@@ -54,6 +58,20 @@ Route::group(['middleware' => 'cas.auth'], function () {
             Route::get('{id}', function ($id) {
                 return view('events/eventedit', ['id' => $id]);
             })->name('eventEdit');
+        });
+
+        Route::prefix('dues')->group(function () {
+            Route::get('/', function () {
+                return view('dues/duesadmin');
+            })->name('duesAdmin');
+
+            Route::get('/pending', function () {
+                return view('dues/pendingduesadmin');
+            })->name('pendingDuesAdmin');
+
+            Route::get('{id}', function ($id) {
+                return view('dues/duestransaction', ['id' => $id]);
+            })->name('duesTransaction');
         });
     });
   
