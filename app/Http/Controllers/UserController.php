@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\User;
+use Spatie\Fractalistic\ArraySerializer;
 use Spatie\Permission\Models\Role;
 use Spatie\Fractalistic\Fractal;
 
@@ -29,13 +30,14 @@ class UserController extends Controller
      * @api {get} /users/ List all users
      * @apiGroup Users
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::all();
         $response = Fractal::create()
             ->collection($users)
             ->transformWith(new UserTransformer())
-            ->parseIncludes(['fasetvisits'])
+            ->serializeWith(new ArraySerializer())
+            ->parseIncludes($request->input('include'))
             ->toArray();
         return response()->json(['status' => 'success', 'users' => $response]);
     }
