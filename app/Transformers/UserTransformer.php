@@ -18,7 +18,8 @@ class UserTransformer extends TransformerAbstract
         'events',
         'rsvps',
         'roles',
-        'permissions'
+        'permissions',
+        'emergency_contact'
     ];
     
     /**
@@ -30,12 +31,28 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             "id" => (int) $user->id,
-            "name" => $user->name,
+            "uid" => $user->uid,
+            "gt_email" => $user->gt_email,
+            "personal_email" => $user->personal_email,
+            "first_name" => $user->first_name,
+            "middle_name" => $user->middle_name,
+            "last_name" => $user->last_name,
+            "preferred_name" => $user->preferred_name,
+            "phone" => $user->phone,
         ];
     }
 
-    public function includeFasetVisits(User $user)
+    public function includeRoles(User $user)
     {
-        return $this->collection($user->fasetVisits, null);
+        return $this->collection($user->roles, new RoleTransformer());
+    }
+    
+    public function includeEmergencyContact(User $user)
+    {
+        if ($user->hasRole('member')) {
+            return $this->item($user, new EmergencyContactTransformer());
+        } else {
+            return null;
+        }
     }
 }
