@@ -21,6 +21,10 @@ Route::group(['middleware' => 'cas.auth'], function () {
         return view('faset/faset');
     });
 
+    Route::get('profile', function () {
+        return view('users/userprofile', ['id' => auth()->user()->id]);
+    });
+
     Route::get('dues', function () {
         return view('dues/payDues');
     });
