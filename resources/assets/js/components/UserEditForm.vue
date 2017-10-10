@@ -39,13 +39,6 @@
         </div>
 
         <div class="form-group row">
-          <label for="user-slackid" class="col-sm-2 col-form-label">Slack Username</label>
-          <div class="col-sm-10 col-lg-4">
-            <input v-model="user.slack_id" type="text" class="form-control" id="user-slackid" placeholder="None on record">
-          </div>
-        </div>
-
-        <div class="form-group row">
           <label for="user-phone" class="col-sm-2 col-form-label">Phone Number</label>
           <div class="col-sm-10 col-lg-4">
             <input v-model="user.phone" type="tel" class="form-control" id="user-phone" placeholder="None on record">
@@ -75,25 +68,6 @@
         </div>
 
         
-
-        <h3>Membership Information</h3>
-
-        <div class="form-group row">
-          <label for="user-joinsemester" class="col-sm-2 col-form-label">Join Semester</label>
-          <div class="col-sm-10 col-lg-4">
-            <term-input v-model="user.join_semester" id="user-joinsemester"></term-input>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="user-graduationsemester" class="col-sm-2 col-form-label">Graduation Semester</label>
-          <div class="col-sm-10 col-lg-4">
-            <term-input v-model="user.graduation_semester" id="user-graduationsemester"></term-input>
-          </div>
-        </div>
-
-        
-
         <h3>Emergency Contacts</h3>
 
         <div class="form-group row">
