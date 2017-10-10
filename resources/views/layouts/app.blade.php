@@ -12,21 +12,38 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a class="navbar-brand" href="/">{{ env('APP_NAME') }}</a>
+        <a class="navbar-brand" href="/">{{ config('app.name') }}</a>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item {{ $request->is('profile*') ? 'active' : '' }}">
               <a class="nav-link" href="/profile">Profile</a>
             </li>
-            <li class="nav-item {{ $request->is('*faset') ? 'active' : '' }}">
-              <a class="nav-link" href="{{route('fasetAdmin')}}">FASET</a>
+
+            @hasanyrole('admin|officer-i|officer-ii')
+            <li class="nav-item dropdown {{ $request->is('admin*') ? 'active' : '' }}">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarAdminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Admin
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarAdminDropdown">
+                @hasanyrole('admin|officer-i')
+                <a class="dropdown-item" href="/admin/users">Users</a>
+                <a class="dropdown-item" href="/admin/events">Events</a>
+                <a class="dropdown-item" href="/admin/faset">Faset</a>
+                @endhasanyrole
+                @hasanyrole('admin|officer-i|officer-ii')
+                <a class="dropdown-item" href="/admin/dues/pending">Accept Dues</a>
+                <a class="dropdown-item" href="/admin/dues">Dues</a>
+                @endhasanyrole
+              </div>
             </li>
+            @endhasanyrole
+
           </ul>
 
-          @if (true)
+          @if (auth()->user())
           <span class="navbar-text">
-            <span class="font-italic">Logged in as </span> {{'Ryan Strat'}}
+            <span class="font-italic">Logged in as </span> {{auth()->user()->name}}
           </span>
           @else
           <span class="navbar-text">

@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'start_time',
+        'end_time'
+    ];
     /**
      * The attributes that are not mass assignable.
      *
@@ -18,7 +23,7 @@ class Event extends Model
 
     public function organizer()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'organizer');
     }
 
     public function rsvps()

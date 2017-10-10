@@ -9,7 +9,7 @@ window._ = require('lodash');
 
 try {
     window.$ = window.jQuery = require('jquery');
-
+    window.Popper = require('popper.js').default;
     require('bootstrap');
 } catch (e) {}
 
@@ -53,7 +53,3 @@ if (token) {
 // });
 
 
-/**
- *  Import DataTables for Bootstrap4 module
- */
-require( 'datatables.net-bs4');

@@ -8,10 +8,23 @@
 require('./bootstrap');
 var axios = require('axios')
 var dt = require('datatables.net/js/jquery.dataTables');
-//var bs = require('datatables.net-bs/js/dataTables.bootstrap');
-
+/**
+ *  Import DataTables for Bootstrap4 module
+ */
+require('datatables.net-bs4');
 
 window.Vue = require('vue');
+
+//Import the Vuelidate validation plugin
+
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+// Import the FlatPickr Date Component
+
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
+Vue.use(flatPickr);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -21,7 +34,7 @@ window.Vue = require('vue');
 
 // Form Fields
 Vue.component('term-input', require('./components/fields/TermInput.vue'));
-
+Vue.component('custom-radio-buttons', require('./components/fields/CustomRadioButtons.vue'));
 
 // Large Scale Components
 
@@ -32,7 +45,20 @@ Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTabl
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
 Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
+Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));
+Vue.component('accept-payment', require('./components/AcceptPayment.vue'));
 
+// Dues
+
+Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue'));
+Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue'));
+Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue'));
+Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue'));
+Vue.component('demographics', require('./components/dues/Demographics.vue'));
+
+Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.vue'));
+Vue.component('pending-dues-table', require('./components/wrappers/PendingDuesTable.vue'));
+Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue'));
 
 
 const app = new Vue({
