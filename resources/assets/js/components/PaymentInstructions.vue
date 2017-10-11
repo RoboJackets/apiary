@@ -11,7 +11,7 @@
               Online (Debit)
             </h4>
             <p class="card-text">
-              Pay with your debit card online via SquareCash to $robojackets.
+              Pay with your debit card online via SquareCash to $robojackets. Please put your GT username (e.g. gburdell3) in the notes.
             </p>
             <a href="https://cash.me/$RoboJackets" class="card-link" target="_blank">Pay Now at SquareCash</a>
           </div>
