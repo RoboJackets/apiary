@@ -27,7 +27,7 @@ Route::group(['middleware' => 'cas.auth'], function () {
 
     Route::get('dues', function () {
         return view('dues/payDues');
-    });
+    })->name('payDues');
 
     Route::prefix('admin')->group(function () {
         Route::prefix('faset')->group(function () {
