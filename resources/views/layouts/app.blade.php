@@ -42,12 +42,16 @@
           </ul>
 
           @if (auth()->user())
+          
           <span class="navbar-text">
             <span class="font-italic">Logged in as </span> {{auth()->user()->name}}
           </span>
+          <span class="navbar-item">
+            <a class="nav-link text-muted" href="{{route('logout')}}">Logout</a>
+          </span>
           @else
-          <span class="navbar-text">
-            <a href="">Login</a>
+          <span class="navbar-item">
+            <a class="nav-link text-muted" href="{{'https://login.gatech.edu/cas/login?service=' . $request->fullUrl()}}">Login</a>
           </span>
           @endif
         </div>
