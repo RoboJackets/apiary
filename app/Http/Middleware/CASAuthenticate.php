@@ -37,6 +37,23 @@ class CASAuthenticate
     {
         if ($this->cas->isAuthenticated()) {
             if (!Auth::check()) {
+                $attrs = ["gtGTID", "email_primary", "givenName", "sn"];
+                if ($this->cas->isMasquerading()) {
+                    $masq_attrs = [];
+                    foreach ($attrs as $attr) {
+                        $masq_attrs[$attr] = config("cas.cas_masquerade_" . $attr);
+                    }
+                    $this->cas->setAttributes($masq_attrs);
+                }
+
+                foreach ($attrs as $attr) {
+                    if (!$this->cas->hasAttribute($attr) || $this->cas->getAttribute($attr) == null) {
+                        return response(view('errors.generic',
+                            ['error_code' => 500,
+                                'error_message' => 'Missing/invalid attributes from CAS']), 500);
+                    }
+                }
+
                 //User is starting a new session, so let's update data from CAS
                 $user = User::updateOrCreate(
                     [
