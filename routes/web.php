@@ -27,7 +27,7 @@ Route::group(['middleware' => 'cas.auth'], function () {
 
     Route::get('dues', function () {
         return view('dues/payDues');
-    });
+    })->name('payDues');
 
     Route::get('login', function () {
         return redirect('https://login.gatech.edu/cas/logout?service=' . config('app.url'));

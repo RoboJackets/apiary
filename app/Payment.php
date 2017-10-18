@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['method_presentation'];
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
@@ -27,5 +34,28 @@ class Payment extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'recorded_by');
+    }
+
+    /**
+     * Get the presentation-ready format of a Payment Method
+     *
+     * @return String
+     */
+    public function getMethodPresentationAttribute()
+    {
+        $valueMap = array(
+            'cash' => 'Cash',
+            'squarecash' => 'Square Cash',
+            'check' => 'Check',
+            'swipe' => 'Swiped Card'
+        );
+
+        $method = $this->method;
+
+        if (array_key_exists($method, $valueMap)) {
+            return $valueMap[$this->method];
+        } else {
+            return null;
+        }
     }
 }
