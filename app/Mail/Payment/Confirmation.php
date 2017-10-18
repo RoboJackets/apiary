@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Mail\Dues;
+namespace App\Mail\Payment;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\DuesPackage;
+use App\Payment;
 
-class RequestComplete extends Mailable
+class Confirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $uid;
-    public $duesPackage;
+    public $payment;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($uid, $duesPackage)
+    public function __construct($uid, $payment)
     {
         $this->uid = $uid;
-        $this->duesPackage = $duesPackage;
+        $this->payment = $payment;
     }
 
     /**
@@ -34,8 +34,8 @@ class RequestComplete extends Mailable
     public function build()
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
-                    ->markdown('mail.dues.requestcomplete')
+                    ->subject('[RoboJackets] Payment Processed')
+                    ->markdown('mail.payment.confirmation')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
                             ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');

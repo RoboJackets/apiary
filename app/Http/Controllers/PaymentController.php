@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Payment;
+use App\Notifications\Payment\ConfirmationNotification as Confirm;
 
 class PaymentController extends Controller
 {
@@ -59,6 +60,9 @@ class PaymentController extends Controller
 
         if (is_numeric($payment->id)) {
             $dbPayment = Payment::findOrFail($payment->id);
+
+            $dbPayment->payable->user->notify(new Confirm($dbPayment));
+
             return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);

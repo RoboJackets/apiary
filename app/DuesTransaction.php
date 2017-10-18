@@ -48,6 +48,14 @@ class DuesTransaction extends Model
         return $this->belongsTo('App\User');
     }
 
+    /**
+     * Alias the generalize form of the Transaction for Polymorphic Reasons
+     */
+    public function for()
+    {
+        return $this->package();
+    }
+
 
     /**
      * Get the status flag for the Transaction.
