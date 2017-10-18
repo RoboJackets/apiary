@@ -38,7 +38,7 @@ class Confirmation extends Mailable
                     ->markdown('mail.payment.confirmation')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
-                            ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');
+                            ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
                     });
     }
 }

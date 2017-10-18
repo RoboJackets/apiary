@@ -38,7 +38,7 @@ class RequestComplete extends Mailable
                     ->markdown('mail.dues.requestcomplete')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
-                            ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');
+                            ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
                     });
     }
 }
