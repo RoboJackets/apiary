@@ -129,14 +129,9 @@ class UserController extends Controller
 
         //Update only included fields
         $this->validate($request, [
-            'uid' => ['max:127', Rule::unique('users')->ignore($user->id)],
-            'gtid' => ['max:10', Rule::unique('users')->ignore($user->id)],
             'slack_id' => ['max:21', 'nullable', Rule::unique('users')->ignore($user->id)],
-            'gt_email' => ['max:255', Rule::unique('users')->ignore($user->id)],
             'personal_email' => ['max:255', 'nullable', Rule::unique('users')->ignore($user->id)],
-            'first_name' => 'max:127',
             'middle_name' => 'max:127',
-            'last_name' => 'max:127',
             'preferred_name' => 'max:127',
             'phone' => 'max:15',
             'emergency_contact_name' => 'max:255',
