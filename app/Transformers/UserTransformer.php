@@ -19,7 +19,8 @@ class UserTransformer extends TransformerAbstract
         'rsvps',
         'roles',
         'permissions',
-        'emergency_contact'
+        'emergency_contact',
+        'demographics'
     ];
     
     /**
@@ -39,12 +40,21 @@ class UserTransformer extends TransformerAbstract
             "last_name" => $user->last_name,
             "preferred_name" => $user->preferred_name,
             "phone" => $user->phone,
+            "join_semester" => $user->join_semester,
+            "graduation_semester" => $user->graduation_semester,
+            "shirt_size" => $user->shirt_size,
+            "polo_size" => $user->polo_size,
         ];
     }
 
     public function includeRoles(User $user)
     {
         return $this->collection($user->roles, new RoleTransformer());
+    }
+
+    public function includeDemographics(User $user)
+    {
+        return $this->item($user, new UserDemographicsTransformer());
     }
     
     public function includeEmergencyContact(User $user)
