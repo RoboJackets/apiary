@@ -32,11 +32,21 @@ class FasetResponseTransformer extends TransformerAbstract
 
     public function includeSurvey(FasetResponse $response)
     {
-        return $this->item($response->fasetSurvey(), new FasetSurveyTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-faset-XXXX')) {
+            return $this->item($response->fasetSurvey, new FasetSurveyTransformer());
+        } else {
+            return null;
+        }
     }
     
     public function includeVisit(FasetResponse $response)
     {
-        return $this->item($response->fasetVisit(), new FasetVisitTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-faset-XXXX')) {
+            return $this->item($response->fasetVisit, new FasetVisitTransformer());
+        } else {
+            return null;
+        }
     }
 }

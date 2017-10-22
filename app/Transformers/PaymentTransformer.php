@@ -35,9 +35,10 @@ class PaymentTransformer extends TransformerAbstract
 
     public function includePayable(Payment $payment)
     {
-        if (is_a($payment->payable, "DuesTransaction")) {
+        $authUser = Auth::user();
+        if (is_a($payment->payable, "DuesTransaction") && $authUser->can('read-dues-transactions')) {
             return $this->item($payment->payable, new DuesTransactionTransformer());
-        } elseif (is_a($payment->payable, "Event")) {
+        } elseif (is_a($payment->payable, "Event") && $authUser->can('read-events')) {
             return $this->item($payment->payable, new EventTransformer());
         } else {
             return null;
@@ -46,6 +47,11 @@ class PaymentTransformer extends TransformerAbstract
 
     public function includeUser(Payment $payment)
     {
-        return $this->item($payment->user, new UserTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-users')) {
+            return $this->item($payment->user, new UserTransformer());
+        } else {
+            return null;
+        }
     }
 }

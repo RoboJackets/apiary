@@ -32,6 +32,11 @@ class TeamTransformer extends TransformerAbstract
 
     public function includeUsers(Team $team)
     {
-        return $this->collection($team->users, new UserTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-users')) {
+            return $this->collection($team->users, new UserTransformer());
+        } else {
+            return null;
+        }
     }
 }

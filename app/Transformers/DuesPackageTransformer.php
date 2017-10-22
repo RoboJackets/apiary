@@ -37,7 +37,12 @@ class DuesPackageTransformer extends TransformerAbstract
 
     public function includeTransactions(DuesPackage $package)
     {
-        return $this->collection($package->transactions, new DuesTransactionTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-dues-transactions')) {
+            return $this->collection($package->transactions, new DuesTransactionTransformer());
+        } else {
+            return null;
+        }
     }
 
 }

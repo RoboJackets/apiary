@@ -2,6 +2,7 @@
 
 namespace App\Transformers;
 
+use Auth;
 use App\User;
 use League\Fractal\TransformerAbstract;
 
@@ -54,12 +55,18 @@ class UserTransformer extends TransformerAbstract
 
     public function includeDemographics(User $user)
     {
-        return $this->item($user, new UserDemographicsTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-users-demographics')) {
+            return $this->item($user, new UserDemographicsTransformer());
+        } else {
+            return null;
+        }
     }
     
     public function includeEmergencyContact(User $user)
     {
-        if ($user->hasRole('member')) {
+        $authUser = Auth::user();
+        if ($authUser->can('read-users-emergency-contact')) {
             return $this->item($user, new EmergencyContactTransformer());
         } else {
             return null;

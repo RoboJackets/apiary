@@ -34,11 +34,21 @@ class RsvpTransformer extends TransformerAbstract
 
     public function includeUser(Rsvp $rsvp)
     {
-        return $this->item($rsvp->user, new UserTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-users')) {
+            return $this->item($rsvp->user, new UserTransformer());
+        } else {
+            return null;
+        }
     }
 
     public function includeEvent(Rsvp $rsvp)
     {
-        return $this->item($rsvp->event, new EventTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-events')) {
+            return $this->item($rsvp->event, new EventTransformer());
+        } else {
+            return null;
+        }
     }
 }

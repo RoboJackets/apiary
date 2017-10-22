@@ -34,11 +34,21 @@ class FasetVisitTransformer extends TransformerAbstract
 
     public function includeUser(FasetVisit $visit)
     {
-        return $this->item($visit->user, new UserTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-users')) {
+            return $this->item($visit->user, new UserTransformer());
+        } else {
+            return null;
+        }
     }
 
     public function includeResponses(FasetVisit $visit)
     {
-        return $this->collection($visit->fasetResponses, new FasetResponseTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-faset-XXXX')) {
+            return $this->collection($visit->fasetResponses, new FasetResponseTransformer());
+        } else {
+            return null;
+        }
     }
 }

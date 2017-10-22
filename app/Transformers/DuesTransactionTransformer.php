@@ -36,16 +36,31 @@ class DuesTransactionTransformer extends TransformerAbstract
 
     public function includePayment(DuesTransaction $transact)
     {
-        return $this->item($transact->payment, new PaymentTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-payments')) {
+            return $this->item($transact->payment, new PaymentTransformer());
+        } else {
+            return null;
+        }
     }
     
     public function includePackage(DuesTransaction $transact)
     {
-        return $this->item($transact->package, new DuesTransactionTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-dues-packages')) {
+            return $this->item($transact->package, new DuesPackageTransformer());
+        } else {
+            return null;
+        }
     }
     
     public function includeUser(DuesTransaction $transact)
     {
-        return $this->item($transact->user, new UserTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-users')) {
+            return $this->item($transact->user, new UserTransformer());
+        } else {
+            return null;
+        }
     }
 }

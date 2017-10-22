@@ -36,6 +36,12 @@ class EventTransformer extends TransformerAbstract
 
     public function includeOrganizer(Event $event)
     {
-        return $this->item($event->organizer, new UserTransformer());
+        $authUser = Auth::user();
+        if ($authUser->can('read-users')) {
+            return $this->item($event->organizer, new UserTransformer());
+        } else {
+            return null;
+        }
+        
     }
 }
