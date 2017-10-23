@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\DuesTransactionTransformer;
 use Illuminate\Http\Request;
 use App\DuesTransaction;
-use App\User;
+use App\Traits\FractalResponse;
 
 class DuesTransactionController extends Controller
 {
+    use FractalResponse;
+    
     public function __construct()
     {
         $this->middleware('permission:read-dues-transactions', ['only' => ['index', 'indexPending']]);
@@ -23,11 +26,12 @@ class DuesTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $transact = DuesTransaction::all();
         $transact->load(['user','package', 'payment']);
-        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+        $fr = $this->fractalResponse($transact, new DuesTransactionTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'dues_transactions' => $fr]);
     }
 
     /**
@@ -35,10 +39,11 @@ class DuesTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexPending()
+    public function indexPending(Request $request)
     {
         $transact = DuesTransaction::pending()->with(['user', 'package'])->get();
-        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+        $fr = $this->fractalResponse($transact, new DuesTransactionTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'dues_transactions' => $fr]);
     }
 
     /**
@@ -85,7 +90,8 @@ class DuesTransactionController extends Controller
 
         if (is_numeric($transact->id)) {
             $dbTransact = DuesTransaction::findOrFail($transact->id);
-            return response()->json(['status' => 'success', 'dues_transaction' => $dbTransact], 201);
+            $fr = $this->fractalResponse($dbTransact, new DuesTransactionTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'dues_transaction' => $fr], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -115,7 +121,8 @@ class DuesTransactionController extends Controller
                 'message' => 'Forbidden - You do not have permission to view this DuesTransaction.'], 403);
         }
 
-        return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
+        $fr = $this->fractalResponse($transact, new DuesTransactionTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'dues_transaction' => $fr]);
     }
 
     /**
@@ -144,7 +151,8 @@ class DuesTransactionController extends Controller
 
         $transact = DuesTransaction::find($transact->id);
         if ($transact) {
-            return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
+            $fr = $this->fractalResponse($transact, new DuesTransactionTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'dues_transaction' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }

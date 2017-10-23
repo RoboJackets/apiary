@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\FasetVisitTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\FasetVisit;
 use App\FasetResponse;
+use App\Traits\FractalResponse;
 
 class FasetVisitController extends Controller
 {
+    use FractalResponse;
+    
     public function __construct()
     {
         $this->middleware('permission:read-faset-visits', ['only' => ['index']]);
@@ -74,7 +78,8 @@ class FasetVisitController extends Controller
                 'message' => 'Forbidden - You do not have permission to view this FasetVisit.'], 403);
         }
 
-        return response()->json(['status' => 'success', 'visit' => $visit]);
+        $fr = $this->fractalResponse($visit, new FasetVisitTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'visit' => $fr]);
     }
 
     /**
@@ -110,7 +115,8 @@ class FasetVisitController extends Controller
         $visit = FasetVisit::with(['fasetResponses'])->find($id);
 
         if ($visit) {
-            return response()->json(['status' => 'success', 'visit' => $visit]);
+            $fr = $this->fractalResponse($visit, new FasetVisitTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'visit' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
@@ -119,7 +125,8 @@ class FasetVisitController extends Controller
     public function index(Request $request)
     {
         $visits = FasetVisit::all();
-        return response()->json(['status' => 'success', 'visits' => $visits]);
+        $fr = $this->fractalResponse($visits, new FasetVisitTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'visits' => $fr]);
     }
 
     public function dedup()

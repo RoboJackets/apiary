@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\PaymentTransformer;
 use Illuminate\Http\Request;
 use App\Payment;
 
@@ -21,10 +22,11 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $payments = Payment::all();
-        return response()->json(['status' => 'success', 'payments' => $payments]);
+        $fr = $this->fractalResponse($payments, new PaymentTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'payments' => $fr]);
     }
 
     /**
@@ -59,7 +61,8 @@ class PaymentController extends Controller
 
         if (is_numeric($payment->id)) {
             $dbPayment = Payment::findOrFail($payment->id);
-            return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
+            $fr = $this->fractalResponse($dbPayment, new PaymentTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'payment' => $fr], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -71,11 +74,12 @@ class PaymentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $payment = Payment::find($id);
         if ($payment) {
-            return response()->json(['status' => 'success', 'payment' => $payment]);
+            $fr = $this->fractalResponse($payment, new PaymentTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'payment' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
         }
@@ -105,7 +109,8 @@ class PaymentController extends Controller
 
         $payment = Payment::find($payment->id);
         if ($payment) {
-            return response()->json(['status' => 'success', 'payment' => $payment]);
+            $fr = $this->fractalResponse($payment, new PaymentTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'payment' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }

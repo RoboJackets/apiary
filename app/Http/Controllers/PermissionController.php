@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\PermissionTransformer;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Traits\FractalResponse;
 
 class PermissionController extends Controller
 {
+    use FractalResponse;
+    
     public function __construct()
     {
         $this->middleware('role:admin');
@@ -18,10 +22,11 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $permissions = Permission::all();
-        return response()->json(['status' => 'success', 'permissions' => $permissions]);
+        $fr = $this->fractalResponse($permissions, new PermissionTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'permissions' => $fr]);
     }
 
     /**
@@ -56,7 +61,8 @@ class PermissionController extends Controller
         }
         
         $dbPermission = Permission::find($permission->id);
-        return response()->json(['status' => 'success', 'permission' => $dbPermission]);
+        $fr = $this->fractalResponse($dbPermission, new PermissionTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'permission' => $fr]);
     }
 
     /**
@@ -65,7 +71,7 @@ class PermissionController extends Controller
      * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function show($name)
+    public function show($name, Request $request)
     {
         try {
             $permission = Permission::findByName($name)->with('roles')->first();
@@ -75,8 +81,9 @@ class PermissionController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
-        
-        return response()->json(['status' => 'success', 'permission' => $permission]);
+
+        $fr = $this->fractalResponse($permission, new PermissionTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'permission' => $fr]);
     }
 
     /**
@@ -100,7 +107,8 @@ class PermissionController extends Controller
         }
         
         $dbPermission = Permission::find($permission->id);
-        return response()->json(['status' => 'success', 'permission' => $dbPermission]);
+        $fr = $this->fractalResponse($dbPermission, new PermissionTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'permission' => $fr]);
     }
 
     /**

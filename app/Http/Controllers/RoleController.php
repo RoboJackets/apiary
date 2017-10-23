@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\RoleTransformer;
 use App\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Traits\FractalResponse;
 
 class RoleController extends Controller
 {
+    use FractalResponse;
+    
     public function __construct()
     {
         $this->middleware('role:admin');
@@ -20,10 +23,11 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $roles = Role::all();
-        return response()->json(['status' => 'success', 'roles' => $roles]);
+        $fr = $this->fractalResponse($roles, new RoleTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'roles' => $fr]);
     }
 
     /**
@@ -54,7 +58,8 @@ class RoleController extends Controller
         }
         
         $dbRole = Role::where('id', $role->id)->with('permissions')->first();
-        return response()->json(['status' => 'success', 'role' => $dbRole]);
+        $fr = $this->fractalResponse($dbRole, new RoleTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'role' => $fr]);
     }
 
     /**
@@ -63,7 +68,7 @@ class RoleController extends Controller
      * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function show($name)
+    public function show($name, Request $request)
     {
         try {
             $role = Role::findByName($name)->with('permissions')->first();
@@ -72,8 +77,9 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
-        
-        return response()->json(['status' => 'success', 'role' => $role]);
+
+        $fr = $this->fractalResponse($role, new RoleTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'role' => $fr]);
     }
 
     /**
@@ -113,7 +119,8 @@ class RoleController extends Controller
         }
         
         $dbRole = Role::where('id', $role->id)->with('permissions')->first();
-        return response()->json(['status' => 'success', 'role' => $dbRole]);
+        $fr = $this->fractalResponse($dbRole, new RoleTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'role' => $fr]);
     }
 
     /**

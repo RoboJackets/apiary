@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\RsvpTransformer;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Rsvp;
@@ -27,10 +28,11 @@ class RsvpController extends Controller
      * @api {get} /events/ List all events
      * @apiGroup Users
      */
-    public function index()
+    public function index(Request $request)
     {
         $rsvps = Rsvp::all();
-        return response()->json(['status' => 'success', 'rsvps' => $rsvps]);
+        $fr = $this->fractalResponse($rsvps, new RsvpTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'rsvps' => $fr]);
     }
 
     /**
@@ -48,7 +50,7 @@ class RsvpController extends Controller
             return response()->json(['status' => 'error',
                 'message' => 'Forbidden - You may not create an RSVP for another user.'], 403);
         }
-
+        
         return  response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
     }
 
