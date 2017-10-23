@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\DuesTransaction;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class DuesTransactionTransformer extends TransformerAbstract
 {
@@ -38,7 +39,7 @@ class DuesTransactionTransformer extends TransformerAbstract
     {
         $authUser = Auth::user();
         if ($authUser->can('read-payments')) {
-            return $this->item($transact->payment, new PaymentTransformer());
+            return $this->collection($transact->payment, new PaymentTransformer());
         } else {
             return null;
         }
