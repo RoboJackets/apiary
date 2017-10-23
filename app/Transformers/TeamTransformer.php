@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Team;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class TeamTransformer extends TransformerAbstract
 {

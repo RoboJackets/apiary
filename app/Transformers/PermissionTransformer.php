@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use Spatie\Permission\Models\Permission;
+use Auth;
 
 class PermissionTransformer extends TransformerAbstract
 {

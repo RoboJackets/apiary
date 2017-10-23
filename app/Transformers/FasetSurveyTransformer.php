@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\FasetSurvey;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class FasetSurveyTransformer extends TransformerAbstract
 {

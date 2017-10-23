@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Rsvp;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class RsvpTransformer extends TransformerAbstract
 {

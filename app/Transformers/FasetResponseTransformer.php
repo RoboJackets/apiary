@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\FasetResponse;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class FasetResponseTransformer extends TransformerAbstract
 {

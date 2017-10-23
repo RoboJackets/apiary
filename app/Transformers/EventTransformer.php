@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Event;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class EventTransformer extends TransformerAbstract
 {
@@ -42,6 +43,5 @@ class EventTransformer extends TransformerAbstract
         } else {
             return null;
         }
-        
     }
 }

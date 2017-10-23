@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\FasetVisit;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class FasetVisitTransformer extends TransformerAbstract
 {

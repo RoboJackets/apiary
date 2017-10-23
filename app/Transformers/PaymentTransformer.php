@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Payment;
 use League\Fractal\TransformerAbstract;
+use Auth;
 
 class PaymentTransformer extends TransformerAbstract
 {
