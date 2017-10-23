@@ -23,7 +23,7 @@ class Event extends Model
 
     public function organizer()
     {
-        return $this->belongsTo('App\User', 'organizer');
+        return $this->belongsTo('App\User', 'organizer_id');
     }
 
     public function rsvps()
