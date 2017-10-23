@@ -31,7 +31,7 @@ class FasetSurveyTransformer extends TransformerAbstract
     public function includeResponses(FasetSurvey $survey)
     {
         $authUser = Auth::user();
-        if ($authUser->can('read-faset-XXXX')) {
+        if ($authUser->can('read-faset-visits')) {
             return $this->collection($survey->fasetResponses, new FasetResponseTransformer());
         } else {
             return null;

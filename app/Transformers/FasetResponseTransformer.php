@@ -33,7 +33,7 @@ class FasetResponseTransformer extends TransformerAbstract
     public function includeSurvey(FasetResponse $response)
     {
         $authUser = Auth::user();
-        if ($authUser->can('read-faset-XXXX')) {
+        if ($authUser->can('read-faset-visits')) {
             return $this->item($response->fasetSurvey, new FasetSurveyTransformer());
         } else {
             return null;
@@ -43,7 +43,7 @@ class FasetResponseTransformer extends TransformerAbstract
     public function includeVisit(FasetResponse $response)
     {
         $authUser = Auth::user();
-        if ($authUser->can('read-faset-XXXX')) {
+        if ($authUser->can('read-faset-visits')) {
             return $this->item($response->fasetVisit, new FasetVisitTransformer());
         } else {
             return null;

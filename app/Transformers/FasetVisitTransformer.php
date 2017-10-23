@@ -45,7 +45,7 @@ class FasetVisitTransformer extends TransformerAbstract
     public function includeResponses(FasetVisit $visit)
     {
         $authUser = Auth::user();
-        if ($authUser->can('read-faset-XXXX')) {
+        if ($authUser->can('read-faset-visits')) {
             return $this->collection($visit->fasetResponses, new FasetResponseTransformer());
         } else {
             return null;
