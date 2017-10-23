@@ -7,12 +7,13 @@ use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\User;
-use Spatie\Fractalistic\ArraySerializer;
 use Spatie\Permission\Models\Role;
-use Spatie\Fractalistic\Fractal;
+use App\Traits\FractalResponse;
 
 class UserController extends Controller
 {
+    use FractalResponse;
+    
     public function __construct()
     {
         $this->middleware('permission:read-users', ['only' => ['index']]);
@@ -33,13 +34,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::all();
-        $response = Fractal::create()
-            ->collection($users)
-            ->transformWith(new UserTransformer())
-            ->serializeWith(new ArraySerializer())
-            ->parseIncludes($request->input('include'))
-            ->toArray();
-        return response()->json(['status' => 'success', 'users' => $response]);
+        $fr = $this->fractalResponse($users, new UserTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'users' => $fr]);
     }
 
     /**
@@ -86,7 +82,8 @@ class UserController extends Controller
 
         if (is_numeric($user->id)) {
             $dbUser = User::findOrFail($user->id);
-            return response()->json(['status' => 'success', 'user' => $dbUser], 201);
+            $fr = $this->fractalResponse($dbUser, new UserTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'user' => $fr], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -109,7 +106,8 @@ class UserController extends Controller
                 return response()->json(['status' => 'error',
                     'message' => 'Forbidden - You do not have permission to view this User.'], 403);
             }
-            return response()->json(['status' => 'success', 'user' => $user]);
+            $fr = $this->fractalResponse($user, new UserTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'user' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
@@ -164,9 +162,10 @@ class UserController extends Controller
         }
 
         $user = User::find($user->id);
+        $fr = $this->fractalResponse($user, new UserTransformer(), $request->input('include'));
 
         if ($user) {
-            return response()->json(['status' => 'success', 'user' => $user]);
+            return response()->json(['status' => 'success', 'user' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
