@@ -27,9 +27,13 @@ Route::group(['middleware' => 'cas.auth'], function () {
 
     Route::get('dues', function () {
         return view('dues/payDues');
-    });
+    })->name('payDues');
 
-    Route::prefix('admin')->middleware('can:administer')->group(function () {
+    Route::get('login', function () {
+        return redirect('https://login.gatech.edu/cas/logout?service=' . config('app.url'));
+    })->name('logout');
+
+    Route::prefix('admin')->group(function () {
         Route::prefix('faset')->group(function () {
             Route::get('/', function () {
                 return view('faset/fasetadmin');
@@ -82,5 +86,6 @@ Route::group(['middleware' => 'cas.auth'], function () {
 Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('cas.check');
 
 Route::get('logout', function () {
+    Session::flush();
     cas()->logout(config("app.url"));
-});
+})->name('logout');

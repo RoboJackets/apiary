@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Transformers\PaymentTransformer;
 use Illuminate\Http\Request;
 use App\Payment;
+use App\Notifications\Payment\ConfirmationNotification as Confirm;
 
 class PaymentController extends Controller
 {
@@ -61,6 +62,7 @@ class PaymentController extends Controller
 
         if (is_numeric($payment->id)) {
             $dbPayment = Payment::findOrFail($payment->id);
+            $dbPayment->payable->user->notify(new Confirm($dbPayment));
             $fr = $this->fractalResponse($dbPayment, new PaymentTransformer(), $request->input('include'));
             return response()->json(['status' => 'success', 'payment' => $fr], 201);
         } else {

@@ -94,25 +94,6 @@
         </div>
 
         
-
-        <h3>Membership Information</h3>
-
-        <div class="form-group row">
-          <label for="user-joinsemester" class="col-sm-2 col-form-label">Join Semester</label>
-          <div class="col-sm-10 col-lg-4">
-            <term-input v-model="user.join_semester" id="user-joinsemester"></term-input>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="user-graduationsemester" class="col-sm-2 col-form-label">Graduation Semester</label>
-          <div class="col-sm-10 col-lg-4">
-            <term-input v-model="user.graduation_semester" id="user-graduationsemester"></term-input>
-          </div>
-        </div>
-
-        
-
         <h3>Emergency Contacts</h3>
 
         <div class="form-group row">

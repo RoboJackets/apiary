@@ -155,8 +155,12 @@ return [
     /*
     |--------------------------------------------------------------------------
     | This will cause CAS to skip authentication and assume this user id.
-    | This should only be used for developmental purposes.  getAttributes()
-    | will return null in this condition.
+    | This should only be used for developmental purposes. Attributes that would
+    | normally be sent by CAS can be set manually in .env as needed.
      */
-    'cas_masquerade'      => env('CAS_MASQUERADE', '')
+    'cas_masquerade' => env('CAS_MASQUERADE', null),
+    'cas_masquerade_gtGTID' => env('CAS_MASQUERADE_gtGTID', null),
+    'cas_masquerade_email_primary' => env('CAS_MASQUERADE_email_primary', null),
+    'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName', null),
+    'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null)
 ];

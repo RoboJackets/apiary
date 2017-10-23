@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Dues;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\DuesPackage;
 
-class GeneralInterestInvite extends Mailable
+class RequestComplete extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $app_url;
-    public $visit_token;
+    public $uid;
+    public $duesPackage;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($vist_token)
+    public function __construct($uid, $duesPackage)
     {
-        $this->app_url = url('/');
-        $this->visit_token = $vist_token;
+        $this->uid = $uid;
+        $this->duesPackage = $duesPackage;
     }
 
     /**
@@ -33,11 +34,11 @@ class GeneralInterestInvite extends Mailable
     public function build()
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->subject('RoboJackets General Interest Meeting - RSVP Requested')
-                    ->markdown('mail.generalinterest.invite')
+                    ->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
+                    ->markdown('mail.dues.requestcomplete')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
-                            ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');
+                            ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
                     });
     }
 }

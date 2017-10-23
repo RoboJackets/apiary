@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Transformers\DuesTransactionTransformer;
 use Illuminate\Http\Request;
 use App\DuesTransaction;
+use App\User;
+use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\FractalResponse;
 
 class DuesTransactionController extends Controller
@@ -90,6 +92,7 @@ class DuesTransactionController extends Controller
 
         if (is_numeric($transact->id)) {
             $dbTransact = DuesTransaction::findOrFail($transact->id);
+            $user->notify(new Confirm($dbTransact->package));
             $fr = $this->fractalResponse($dbTransact, new DuesTransactionTransformer(), $request->input('include'));
             return response()->json(['status' => 'success', 'dues_transaction' => $fr], 201);
         } else {
