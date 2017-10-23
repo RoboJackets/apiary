@@ -48,11 +48,6 @@ class UserTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeRoles(User $user)
-    {
-        return $this->collection($user->roles, new RoleTransformer());
-    }
-
     public function includeDemographics(User $user)
     {
         $authUser = Auth::user();
@@ -68,6 +63,76 @@ class UserTransformer extends TransformerAbstract
         $authUser = Auth::user();
         if ($authUser->can('read-users-emergency-contact')) {
             return $this->item($user, new EmergencyContactTransformer());
+        } else {
+            return null;
+        }
+    }
+
+    public function includePermissions(User $user)
+    {
+        $authUser = Auth::user();
+        if ($authUser->can('read-permissions')) {
+            return $this->collection($user->permissions, new PermissionTransformer());
+        } else {
+            return null;
+        }
+    }
+    
+    public function includeRoles(User $user)
+    {
+        $authUser = Auth::user();
+        if ($authUser->can('read-roles')) {
+            return $this->collection($user->roles, new RoleTransformer());
+        } else {
+            return null;
+        }
+    }
+    
+    public function includeRvsps(User $user)
+    {
+        $authUser = Auth::user();
+        if ($authUser->can('read-rsvps')) {
+            return $this->collection($user->rsvps, new RsvpTransformer());
+        } else {
+            return null;
+        }
+    }
+    
+    public function includeEvents(User $user)
+    {
+        $authUser = Auth::user();
+        if ($authUser->can('read-events')) {
+            return $this->collection($user->events, new RsvpTransformer());
+        } else {
+            return null;
+        }
+    }
+    
+    public function includeDues(User $user)
+    {
+        $authUser = Auth::user();
+        if ($authUser->can('read-dues')) {
+            return $this->collection($user->dues, new DuesTransactionTransformer());
+        } else {
+            return null;
+        }
+    }
+    
+    public function includeTeams(User $user)
+    {
+        $authUser = Auth::user();
+        if ($authUser->can('read-teams')) {
+            return $this->collection($user->teams, new TeamTransformer());
+        } else {
+            return null;
+        }
+    }
+    
+    public function includeFasetVisits(User $user)
+    {
+        $authUser = Auth::user();
+        if ($authUser->can('read-faset-visits')) {
+            return $this->collection($user->fasetVisits, new FasetVisitTransformer());
         } else {
             return null;
         }
