@@ -55,18 +55,18 @@ class CASAuthenticate
                 }
 
                 //User is starting a new session, so let's update data from CAS
-                $user = User::updateOrCreate(
-                    [
-                        'uid' => $this->cas->user()
-                    ],
-                    [
-                        'uid' => $this->cas->user(),
-                        'gtid' => $this->cas->getAttribute("gtGTID"),
-                        'gt_email' => $this->cas->getAttribute("email_primary"),
-                        'first_name' => $this->cas->getAttribute("givenName"),
-                        'last_name' => $this->cas->getAttribute("sn")
-                    ]
-                );
+                //Sadly we can't use updateOrCreate here because of $guarded in the User model
+                $user = User::where('uid', $this->cas->user())->first();
+                if ($user == null) {
+                    $user = new User();
+                }
+                $user->uid =$this->cas->user();
+                $user->gtid = $this->cas->getAttribute("gtGTID");
+                $user->gt_email = $this->cas->getAttribute("email_primary");
+                $user->first_name = $this->cas->getAttribute("givenName");
+                $user->last_name = $this->cas->getAttribute("sn");
+                $user->save();
+
                 if ($user->wasRecentlyCreated || $user->roles->count() == 0) {
                     $role = Role::where('name', 'non-member')->first();
                     if ($role) {
