@@ -44,5 +44,4 @@ class DuesPackageTransformer extends TransformerAbstract
             return null;
         }
     }
-
 }
