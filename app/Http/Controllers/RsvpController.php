@@ -7,6 +7,7 @@ use App\Event;
 use App\Rsvp;
 use App\FasetVisit;
 use App\User;
+use Auth;
 
 class RsvpController extends Controller
 {
@@ -105,8 +106,8 @@ class RsvpController extends Controller
     {
         $user = auth()->user();
 
-        if (!$event->allow_anonymous_rsvp) {
-            //TODO: Force CAS
+        if (!$event->allow_anonymous_rsvp && !Auth::check()) {
+            cas()->authenticate();
         }
 
 
