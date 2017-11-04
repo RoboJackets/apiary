@@ -18,9 +18,10 @@ class CreateAttendanceTable extends Migration
             $table->string('attendable_type');
             $table->unsignedInteger('attendable_id');
             $table->integer('gtid')->length(9)->nullable();
-            $table->string('source');
+            $table->string('source')->nullable();
             $table->unsignedInteger('recorded_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             
             $table->foreign('recorded_by')->references('id')->on('users');
         });
