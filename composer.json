@@ -12,6 +12,7 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "predis/predis": "~1.0",
+        "spatie/laravel-fractal": "^4.0",
         "spatie/laravel-permission": "^2.6",
         "subfission/cas": "^2.0",
         "tymon/jwt-auth": "^0.5.12"

@@ -194,6 +194,7 @@ return [
 
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Spatie\Fractal\FractalServiceProvider::class,
 
     ],
 
@@ -246,6 +247,7 @@ return [
         'Cas' => Subfission\Cas\Facades\Cas::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'Fractal' => Spatie\Fractal\FractalFacade::class,
 
     ],
 

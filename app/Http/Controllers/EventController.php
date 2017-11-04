@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\EventTransformer;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Event;
 use App\User;
+use App\Traits\FractalResponse;
 
 class EventController extends Controller
 {
+    use FractalResponse;
+    
     public function __construct()
     {
         $this->middleware('permission:read-events', ['only' => ['index']]);
@@ -27,10 +31,11 @@ class EventController extends Controller
      * @api {get} /events/ List all events
      * @apiGroup Users
      */
-    public function index()
+    public function index(Request $request)
     {
         $events = Event::all();
-        return response()->json(['status' => 'success', 'events' => $events]);
+        $fr = $this->fractalResponse($events, new EventTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'events' => $fr]);
     }
 
     /**
@@ -68,7 +73,8 @@ class EventController extends Controller
 
         if (is_numeric($event->id)) {
             $dbEvent = Event::findOrFail($event->id);
-            return response()->json(['status' => 'success', 'event' => $dbEvent], 201);
+            $fr = $this->fractalResponse($dbEvent, new EventTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'event' => $fr], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
@@ -85,7 +91,8 @@ class EventController extends Controller
         $event = Event::with(['rsvps'])->find($id);
 
         if ($event) {
-            return response()->json(['status' => 'success', 'event' => $event]);
+            $fr = $this->fractalResponse($event, new EventTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'event' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
         }
@@ -137,7 +144,8 @@ class EventController extends Controller
 
         $event = Event::find($id);
         if ($event->id) {
-            return response()->json(['status' => 'success', 'event' => $event], 201);
+            $fr = $this->fractalResponse($event, new EventTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'event' => $fr], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
@@ -145,7 +153,7 @@ class EventController extends Controller
 
     public function destroy($id)
     {
-        $event = Event::find();
+        $event = Event::find($id);
         $deleted = $event->delete();
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);

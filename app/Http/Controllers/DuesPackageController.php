@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\DuesPackageTransformer;
 use Illuminate\Http\Request;
 use App\DuesPackage;
+use App\Traits\FractalResponse;
 
 class DuesPackageController extends Controller
 {
+    use FractalResponse;
+    
     public function __construct()
     {
-        $this->middleware('permission:read-dues-packages', ['only' => ['index', 'indexActive', 'indexAvailable', 'show']]);
+        $this->middleware('permission:read-dues-packages',
+            ['only' => ['index', 'indexActive', 'indexAvailable', 'show']]);
         $this->middleware('permission:create-dues-packages', ['only' => ['store']]);
         $this->middleware('permission:update-dues-packages', ['only' => ['update']]);
         $this->middleware('permission:delete-dues-packages', ['only' => ['destroy']]);
@@ -20,28 +25,31 @@ class DuesPackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $packages = DuesPackage::all();
-        return response()->json(['status' => 'success', 'dues_packages' => $packages]);
+        $fr = $this->fractalResponse($packages, new DuesPackageTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'dues_packages' => $fr]);
     }
 
     /**
      * Display a listing of active DuesPackages
      */
-    public function indexActive()
+    public function indexActive(Request $request)
     {
         $activePackages = DuesPackage::active()->get();
-        return response()->json(['status' => 'success', 'dues_packages' => $activePackages]);
+        $fr = $this->fractalResponse($activePackages, new DuesPackageTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'dues_packages' => $fr]);
     }
 
     /**
      * Display a listing of DuesPackages that are available for purchase
      */
-    public function indexAvailable()
+    public function indexAvailable(Request $request)
     {
         $activePackages = DuesPackage::availableForPurchase()->get();
-        return response()->json(['status' => 'success', 'dues_packages' => $activePackages]);
+        $fr = $this->fractalResponse($activePackages, new DuesPackageTransformer(), $request->input('include'));
+        return response()->json(['status' => 'success', 'dues_packages' => $fr]);
     }
 
     /**
@@ -70,7 +78,8 @@ class DuesPackageController extends Controller
 
         if (is_numeric($package->id)) {
             $dbPackage = DuesPackage::findOrFail($package->id);
-            return response()->json(['status' => 'success', 'dues_package' => $dbPackage], 201);
+            $fr = $this->fractalResponse($dbPackage, new DuesPackageTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'dues_package' => $fr], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -82,11 +91,12 @@ class DuesPackageController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $package = DuesPackage::find($id);
         if ($package) {
-            return response()->json(['status' => 'success', 'dues_package' => $package]);
+            $fr = $this->fractalResponse($package, new DuesPackageTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'dues_package' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
         }
@@ -119,7 +129,8 @@ class DuesPackageController extends Controller
 
         $package = DuesPackage::find($package->id);
         if ($package) {
-            return response()->json(['status' => 'success', 'dues_package' => $package]);
+            $fr = $this->fractalResponse($package, new DuesPackageTransformer(), $request->input('include'));
+            return response()->json(['status' => 'success', 'dues_package' => $fr]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
