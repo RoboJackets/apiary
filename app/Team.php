@@ -13,4 +13,12 @@ class Team extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    /**
+     * Get all of the team's attendance.
+     */
+    public function attendance()
+    {
+        return $this->morphMany('App\Attendance', 'attendable');
+    }
 }
