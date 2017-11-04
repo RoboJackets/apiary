@@ -61,10 +61,10 @@ class CreateAttendanceRolesPermissions extends Migration
      */
     public function down()
     {
-        Permission::where('name','create-attendance')->delete();
-        Permission::where('name','read-attendance')->delete();
-        Permission::where('name','read-attendance-own')->delete();
-        Permission::where('name','update-attendance')->delete();
-        Permission::where('name','delete-attendance')->delete();
+        Permission::where('name', 'create-attendance')->delete();
+        Permission::where('name', 'read-attendance')->delete();
+        Permission::where('name', 'read-attendance-own')->delete();
+        Permission::where('name', 'update-attendance')->delete();
+        Permission::where('name', 'delete-attendance')->delete();
     }
 }
