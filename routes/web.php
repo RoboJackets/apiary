@@ -87,7 +87,6 @@ Route::group(['middleware' => 'cas.auth'], function () {
                 return view('dues/duestransaction', ['id' => $id]);
             })->name('duesTransaction');
         });
-        
     });
   
     // Use cookie auth to get first token
