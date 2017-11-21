@@ -15,7 +15,6 @@
         "spatie/laravel-permission": "^2.6",
         "square/connect": "^2.5",
         "subfission/cas": "^2.0",
-        "tymon/jwt-auth": "^0.5.12"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

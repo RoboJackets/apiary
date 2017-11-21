@@ -48,6 +48,7 @@ class User extends Authenticatable
         'gt_email',
         'name',
         'gtid',
+        'api_token',
         'full_name',
         'is_active',
         'deleted_at',
