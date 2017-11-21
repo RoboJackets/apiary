@@ -191,8 +191,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        
         Spatie\Permission\PermissionServiceProvider::class,
 
     ],
@@ -245,7 +244,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
 
     ],
 

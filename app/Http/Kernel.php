@@ -58,7 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'cas.auth'  => \App\Http\Middleware\CASAuthenticate::class,
         'cas.check'  => \App\Http\Middleware\CASCheck::class,
-        'jwt.auth' => \App\Http\Middleware\JWTAuthenticate::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
     ];
