@@ -71,7 +71,7 @@
               </ol>
             </template>
               <template v-else-if="payment.method == 'square'">
-              <p class="font-weight-bold">Only use this payment method if you were specifically told to do so.</p>
+              <p class="font-weight-bold">Square will usually automatically enter a payment. Only use this if you've confirmed that a payment went through in the Square dashboard but didn't update here.</p>
               <ul>
                   <li>Square transactions incur a $3 processing fee. Add $3 to payment amount.</li>
                   <li>This is <em>not</em> the same as SquareCash.</li>
