@@ -70,6 +70,13 @@
                 <li>It is not required to provide a paper receipt for swiped card transactions.</li>
               </ol>
             </template>
+              <template v-else-if="payment.method == 'square'">
+              <p class="font-weight-bold">Square will usually automatically enter a payment. Only use this if you've confirmed that a payment went through in the Square dashboard but didn't update here.</p>
+              <ul>
+                  <li>Square transactions incur a $3 processing fee. Add $3 to payment amount.</li>
+                  <li>This is <em>not</em> the same as SquareCash.</li>
+              </ul>
+            </template>
             <template v-else-if="payment.method == 'squarecash'">
               <p class="font-weight-bold">Check with the treasurer before marking SquareCash payments as complete.</p>
               <ol>
@@ -127,6 +134,7 @@
           {value: "cash", text: "Cash"},
           {value: "check", text: "Check"},
           {value: "swipe", text: "Swiped Card"},
+          {value: "square", text: "Square (Online)"},
           {value: "squarecash", text: "SquareCash"},
         ],
         baseUrl: "/api/v1/payments",
