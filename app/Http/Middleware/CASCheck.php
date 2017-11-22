@@ -38,8 +38,8 @@ class CASCheck
     public function handle($request, Closure $next)
     {
         phpCAS::checkAuthentication();
-        if ($this->cas->isAuthenticated()) {
-            if (!Auth::check()) {
+        if (!Auth::check()) {
+            if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser($request);
                 if (is_a($user, "App\User")) {
                     Auth::login($user);
@@ -47,17 +47,18 @@ class CASCheck
                     return $user;
                 } else {
                     return response(view('errors.generic',
-                        ['error_code' => 500,
-                            'error_message' => 'Unknown error authenticating with CAS']), 500);
+                        [
+                            'error_code' => 500,
+                            'error_message' => 'Unknown error authenticating with CAS'
+                        ]), 500);
+                }
+            } else {
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response('Unauthorized', 401);
                 }
             }
-            //User is authenticated, no update needed or already updated
-            return $next($request);
-        } else {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized', 401);
-            }
         }
+        //User is authenticated, no update needed or already updated
         return $next($request);
     }
 }
