@@ -39,24 +39,21 @@ class AttendanceController extends Controller
         $this->validate($request, [
             'attendable_type' => 'required|string',
             'attendable_id' => 'required|numeric',
-            'gtid' => 'numeric|max:9|exists:users',
+            'gtid' => 'required|numeric',
             'source' => 'required|string',
-            'recorded_by' => 'required|numeric|exists:users,id'
+            'recorded_by' => 'required|numeric|exists:users,id',
+            'created_at' => 'date'
         ]);
 
         try {
-            $att = Attendance::create($request->all());
+            $att = Attendance::firstOrCreate($request->all());
         } catch (QueryException $e) {
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($att->id)) {
-            $dbAtt = Attendance::findOrFail($att->id);
-            return response()->json(['status' => 'success', 'attendance' => $dbAtt], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
-        }
+        $code = ($att->wasRecentlyCreated) ? 201 : 200;
+        return response()->json(['status' => 'success', 'attendance' => $att], $code);
     }
 
     /**
@@ -96,16 +93,15 @@ class AttendanceController extends Controller
 
         $att = Attendance::find($id);
         if ($att) {
-            $att->update($request->all());
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
-        }
-
-        $att = Attendance::find($att->id);
-        if ($att) {
+            try {
+                $att->update($request->all());
+            } catch (QueryException $e) {
+                $errorMessage = $e->errorInfo[2];
+                return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
+            }
             return response()->json(['status' => 'success', 'attendance' => $att]);
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
         }
     }
 
