@@ -7,6 +7,7 @@ use App\Event;
 use App\Rsvp;
 use App\FasetVisit;
 use App\User;
+use Auth;
 
 class RsvpController extends Controller
 {
@@ -101,14 +102,12 @@ class RsvpController extends Controller
         }
     }
 
-    public function oneClickCreate(\App\Event $event, Request $request)
+    public function oneClickCreate(Event $event, Request $request)
     {
         $user = auth()->user();
-
-        if (!$event->allow_anonymous_rsvp) {
-            //TODO: Force CAS
+        if (!$event->allow_anonymous_rsvp && !Auth::check()) {
+            cas()->authenticate();
         }
-
 
         if (isset($request->source)) {
             $source = $request->source;

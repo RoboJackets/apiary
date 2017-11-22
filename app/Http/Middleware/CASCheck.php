@@ -13,9 +13,12 @@ use Illuminate\Contracts\Auth\Guard;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use phpCAS;
+use App\Traits\CreateOrUpdateCASUser;
 
 class CASCheck
 {
+    use CreateOrUpdateCASUser;
+    
     protected $auth;
     protected $cas;
 
@@ -35,24 +38,27 @@ class CASCheck
     public function handle($request, Closure $next)
     {
         phpCAS::checkAuthentication();
-        if ($this->cas->isAuthenticated()) {
-            $user = User::where('uid', '=', $this->cas->user())->first();
-            if (!$user || $user == null) {
-                $user = new User();
-                $user->uid = $this->cas->user();
-                $user->gtid = $this->cas->getAttribute("gtGTID");
-                $user->gt_email = $this->cas->getAttribute("email_primary");
-                $user->first_name = $this->cas->getAttribute("givenName");
-                $user->last_name = $this->cas->getAttribute("sn");
-                $user->save();
-            }
-            Auth::login($user);
-            return $next($request);
-        } else {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized', 401);
+        if (!Auth::check()) {
+            if ($this->cas->isAuthenticated()) {
+                $user = $this->createOrUpdateCASUser($request);
+                if (is_a($user, "App\User")) {
+                    Auth::login($user);
+                } elseif (is_a($user, "Illuminate\Http\Response")) {
+                    return $user;
+                } else {
+                    return response(view('errors.generic',
+                        [
+                            'error_code' => 500,
+                            'error_message' => 'Unknown error authenticating with CAS'
+                        ]), 500);
+                }
+            } else {
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response('Unauthorized', 401);
+                }
             }
         }
+        //User is authenticated, no update needed or already updated
         return $next($request);
     }
 }

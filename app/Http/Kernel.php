@@ -56,10 +56,10 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'cas.auth'  => \App\Http\Middleware\CASAuthenticate::class,
-        'cas.check'  => \App\Http\Middleware\CASCheck::class,
-        'jwt.auth' => \App\Http\Middleware\JWTAuthenticate::class,
+        'auth.cas.force'  => \App\Http\Middleware\CASAuthenticate::class,
+        'auth.cas.check'  => \App\Http\Middleware\CASCheck::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
+        'auth.token' => \App\Http\Middleware\APITokenAuthenticate::class
     ];
 }

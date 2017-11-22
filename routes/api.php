@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('jwt.auth')->get('v1/user', function (Request $request) {
+Route::middleware('auth:api')->get('v1/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1/', 'middleware' => ['jwt.auth', 'cas.auth']], function () {
+Route::group(['prefix' => 'v1/', 'middleware' => ['auth.token', 'auth.cas.force']], function () {
     Route::post('faset', 'FasetVisitController@store');
     Route::get('faset', 'FasetVisitController@index');
     Route::get('faset/dedup', 'FasetVisitController@dedup');

@@ -12,7 +12,7 @@
 */
 
 
-Route::group(['middleware' => 'cas.auth'], function () {
+Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::get('/', function () {
         return view('welcome');
     });
@@ -25,9 +25,19 @@ Route::group(['middleware' => 'cas.auth'], function () {
         return view('users/userprofile', ['id' => auth()->user()->id]);
     });
 
-    Route::get('dues', function () {
-        return view('dues/payDues');
-    })->name('payDues');
+    Route::prefix('dues')->group(function () {
+        Route::get('/', function () {
+            return view('dues/payDues');
+        })->name('payDues');
+        
+        Route::get('/pay', 'PaymentController@storeUser')->name('dues.payOne');
+        Route::post('/pay', 'PaymentController@storeUser')->name('dues.pay');
+    });
+
+    Route::prefix('payments')->group(function () {
+        Route::get('/complete', 'PaymentController@handleSquareResponse')
+            ->name('payments.complete');
+    });
 
     Route::get('login', function () {
         return redirect('https://login.gatech.edu/cas/logout?service=' . config('app.url'));
@@ -78,12 +88,13 @@ Route::group(['middleware' => 'cas.auth'], function () {
             })->name('duesTransaction');
         });
     });
-  
-    // Use cookie auth to get first token
-    Route::get('api/v1/getToken', 'Auth\APITokenController@getToken');
 });
 
-Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('cas.check');
+Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('auth.cas.check');
+
+Route::get('login', function () {
+    return redirect()->intended();
+})->name('login')->middleware('auth.cas.force');
 
 Route::get('logout', function () {
     Session::flush();
