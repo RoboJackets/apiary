@@ -30,4 +30,12 @@ class Event extends Model
     {
         return $this->hasMany('App\Rsvp');
     }
+
+    /**
+     * Get all of the event's attendance.
+     */
+    public function attendance()
+    {
+        return $this->morphMany('App\Attendance', 'attendable');
+    }
 }
