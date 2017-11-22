@@ -85,7 +85,7 @@ class UserController extends Controller
                 $user->assignRole($requestedRole);
             }
         }
-        
+
         if (is_numeric($user->id)) {
             $dbUser = User::findOrFail($user->id)->makeVisible('api_token');
             return response()->json(['status' => 'success', 'user' => $dbUser], 201);
