@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validations = [
             'uid' => 'required|unique:users|max:127',
             'gtid' => 'required|unique:users|max:10',
             'slack_id' => 'unique:users|max:21|nullable',
@@ -58,11 +58,22 @@ class UserController extends Controller
             'graduation_semester' => 'max:6',
             'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'accept_safety_agreement => date|nullable',
-        ]);
+            'accept_safety_agreement' => 'date|nullable',
+            'generateToken' => 'boolean'
+        ];
+        $this->validate($request, $validations);
+        
+        $user = new User();
+        if ($request->input('generateToken')) {
+            $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
+            unset($validations['generateToken']);
+        }
+        foreach ($validations as $key => $value) {
+            $user->$key = $request->input($key);
+        }
 
         try {
-            $user = User::create($request->all());
+            $user->save();
         } catch (QueryException $e) {
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
@@ -76,7 +87,7 @@ class UserController extends Controller
         }
 
         if (is_numeric($user->id)) {
-            $dbUser = User::findOrFail($user->id);
+            $dbUser = User::findOrFail($user->id)->makeVisible('api_token');
             return response()->json(['status' => 'success', 'user' => $dbUser], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
@@ -100,6 +111,12 @@ class UserController extends Controller
                 return response()->json(['status' => 'error',
                     'message' => 'Forbidden - You do not have permission to view this User.'], 403);
             }
+
+            //Show API tokens only to admins and the users themselves
+            if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
+                $user = $user->makeVisible('api_token');
+            }
+            
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
@@ -141,8 +158,20 @@ class UserController extends Controller
             'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'accept_safety_agreement => date|nullable',
+            'generateToken' => 'boolean'
         ]);
 
+        //Generate an API token for the user if requested *AND* the requesting user is self or admin
+        //This is deliberately doing a separate update/save of the user model because `api_token` MUST
+        //be prevented from mass assignment, otherwise weird things will happen when you `PUT` a User
+        //while authenticating with an API token.
+        if ($request->input('generateToken') &&
+            ($requestingUser->hasRole('admin') || $requestingUser->id == $user->id)) {
+            $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
+            $user->save();
+        }
+        unset($request['generateToken']);
+        
         $user->update($request->all());
 
         if ($request->has('roles')) {
@@ -150,7 +179,12 @@ class UserController extends Controller
         }
 
         $user = User::find($user->id);
-
+        
+        //Show API tokens only to admins and the users themselves
+        if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
+            $user = $user->makeVisible('api_token');
+        }
+        
         if ($user) {
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
