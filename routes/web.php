@@ -12,7 +12,7 @@
 */
 
 
-Route::group(['middleware' => 'cas.auth'], function () {
+Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::get('/', function () {
         return view('welcome');
     });
@@ -88,12 +88,13 @@ Route::group(['middleware' => 'cas.auth'], function () {
             })->name('duesTransaction');
         });
     });
-  
-    // Use cookie auth to get first token
-    Route::get('api/v1/getToken', 'Auth\APITokenController@getToken');
 });
 
-Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('cas.check');
+Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('auth.cas.check');
+
+Route::get('login', function () {
+    return redirect()->intended();
+})->name('login')->middleware('auth.cas.force');
 
 Route::get('logout', function () {
     Session::flush();
