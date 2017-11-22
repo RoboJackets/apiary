@@ -57,6 +57,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['api_token'];
+
+    /**
      *  Get the FASET visits associated with this user
      */
     public function fasetVisits()
