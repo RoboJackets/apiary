@@ -75,6 +75,7 @@
         :data-object="event.rsvps"
         :columns="rsvpTableConfig">
       </datatable>
+
       
     </div>
   </div>
@@ -99,7 +100,7 @@
           {'title': 'Time', 'data': 'created_at'}
         ],
         dateTimeConfig: {
-          dateFormat: "Y-m-d H:i:s",
+          dateFormat: "Y-m-d H:i:S",
           enableTime:true,
           altInput: true
         }
