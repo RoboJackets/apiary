@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <table id="DataTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <table :id="id" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
       </table>
     </div>
   </div>
@@ -21,6 +21,10 @@
       dataUrl: String,
       dataObject: Array,
       dataPath: String,
+      id: {
+        type: String,
+        default: "DataTable"
+      }
     },
     data() {
       return {
@@ -34,7 +38,7 @@
           .then(response => {
             this.tableData = response.data[this.dataPath];
 
-            this.table = $('#DataTable').DataTable({
+            this.table = $('#' + this.id).DataTable({
               stateSave: true,
               data: this.tableData,
               columns: this.columns,
@@ -49,7 +53,7 @@
       } else {
         this.tableData = this.dataObject;
 
-        this.table = $('#DataTable').DataTable({
+        this.table = $('#' + this.id).DataTable({
           stateSave: true,
           data: this.tableData,
           columns: this.columns,
