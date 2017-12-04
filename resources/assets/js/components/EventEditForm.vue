@@ -68,14 +68,35 @@
 
       </form>
 
-      <h3>RSVPs</h3>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" id="rsvp-tab" data-toggle="tab" href="#rsvps">RSVPs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="rsvp-tab" data-toggle="tab" href="#attendance">Attendance</a>
+        </li>
+      </ul>
 
-     
-      <datatable id="rsvp-admin-table"
-        :data-object="event.rsvps"
-        :columns="rsvpTableConfig">
-      </datatable>
-      
+      <div class="tab-content">
+        <div class="tab-pane show active"  id="rsvps">
+          <h3>RSVPs</h3>
+           
+          <datatable id="rsvp-admin-table"
+            :data-object="event.rsvps"
+            :columns="rsvpTableConfig">
+          </datatable>
+        </div>
+
+        <div class="tab-pane" id="attendance">
+          <h3>Attendance</h3>
+
+          <datatable id="attendance-view-table"
+            :data-object="attendance"
+            :columns="attendanceTableConfig">
+          </datatable>
+        </div>
+        
+      </div>
     </div>
   </div>
 </template>
@@ -98,8 +119,20 @@
           {'title': 'Source', 'data': 'source'},
           {'title': 'Time', 'data': 'created_at'}
         ],
+        attendance: [],
+        attendanceUrl: '',
+        attendanceTableConfig: [
+          {'title': 'Name', 'data': null, 'render': function (data, type, row) {
+            try {
+              return data.attendee.name;
+            } catch (e) {
+              return "Non-member";
+            }
+          }},
+          {'title': 'Time', 'data': 'created_at'}
+        ],
         dateTimeConfig: {
-          dateFormat: "Y-m-d H:i:s",
+          dateFormat: "Y-m-d H:i:S",
           enableTime:true,
           altInput: true
         }
@@ -115,6 +148,17 @@
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
+
+      this.attendanceUrl = "/api/v1/attendance?attendable_type=App\\Event&attendable_id=" + this.eventId;
+      axios.get(this.attendanceUrl)
+        .then(response => {
+          this.attendance = response.data.attendance;
+        })
+        .catch(response => {
+          console.log(response);
+          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+        });
+
     },
     methods: {
       submit () {

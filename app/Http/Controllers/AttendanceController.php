@@ -22,9 +22,27 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attendance = Attendance::all();
+        $this->validate($request, [
+            'attendable_type' => 'string',
+            'attendable_id' => 'numeric'
+        ]);
+
+        $attendable_type = $request->attendable_type;
+        $attendable_id = $request->attendable_id;
+
+        if (empty($attendable_type) || empty($attendable_id)) {
+            $attendance = Attendance::with('attendee')->get();
+        } else {
+            $attendance = Attendance
+                ::where('attendable_type', $attendable_type)
+                ->where('attendable_id', $attendable_id)
+                ->with('attendee')
+                ->get();
+        }
+
+        
         return response()->json(['status' => 'success', 'attendance' => $attendance]);
     }
 
@@ -41,9 +59,10 @@ class AttendanceController extends Controller
             'attendable_id' => 'required|numeric',
             'gtid' => 'required|numeric',
             'source' => 'required|string',
-            'recorded_by' => 'required|numeric|exists:users,id',
             'created_at' => 'date'
         ]);
+
+        $request['recorded_by'] = $request->user()->id;
 
         try {
             $att = Attendance::firstOrCreate($request->all());
