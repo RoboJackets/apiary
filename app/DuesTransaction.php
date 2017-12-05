@@ -84,4 +84,12 @@ class DuesTransaction extends Model
     {
         return $query->doesntHave('payment');
     }
+
+    /**
+     * Get the Payable amount
+     */
+    public function getPayableAmount()
+    {
+        return ($this->package->cost) ?: null;
+    }
 }
