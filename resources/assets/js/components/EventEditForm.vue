@@ -159,6 +159,8 @@
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
 
+      setInterval(this.updateAttendance, 5000);
+
     },
     methods: {
       submit () {
@@ -180,7 +182,18 @@
       },
       updateRadio (event) {
         this.event.allow_anonymous_rsvp = event.target.firstChild.value == 'true';
+      },
+      updateAttendance () {
+        axios.get(this.attendanceUrl)
+        .then(response => {
+          this.attendance = response.data.attendance;
+        })
+        .catch(response => {
+          console.log(response);
+          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+        });
       }
+
     }
   }
 </script>
