@@ -11,7 +11,7 @@ class AttendanceController extends Controller
     public function __construct()
     {
         $this->middleware('permission:read-attendance', ['only' => ['index']]);
-        $this->middleware('permission:create-attendance', ['only' => ['store']]);
+        //$this->middleware('permission:create-attendance', ['only' => ['store']]);
         $this->middleware('permission:read-attendance|read-attendance-own', ['only' => ['show']]);
         $this->middleware('permission:update-attendance', ['only' => ['update']]);
         $this->middleware('permission:delete-attendance', ['only' => ['destroy']]);
@@ -62,7 +62,7 @@ class AttendanceController extends Controller
             'created_at' => 'date'
         ]);
 
-        $request['recorded_by'] = $request->user()->id;
+        //$request['recorded_by'] = $request->user()->id;
 
         try {
             $att = Attendance::firstOrCreate($request->all());
