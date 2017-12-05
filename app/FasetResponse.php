@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FasetResponse extends Model
 {
+    use SoftDeletes;
+    
     /**
      *  Get the FASET visit associated with this FASET response
      */
