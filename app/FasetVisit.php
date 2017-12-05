@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class FasetVisit extends Model
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      *  Get the FASET Responses associated with this FASET Visit
