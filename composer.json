@@ -14,7 +14,8 @@
         "predis/predis": "~1.0",
         "spatie/laravel-permission": "^2.6",
         "square/connect": "^2.5",
-        "subfission/cas": "^2.0"
+        "subfission/cas": "^2.0",
+        "uxweb/sweet-alert": "^1.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
