@@ -282,7 +282,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param Request $request
+     * Processes Square redirect after completec checkout transaction
      */
     public function handleSquareResponse(Request $request)
     {
@@ -295,7 +295,7 @@ class PaymentController extends Controller
 
         //If we don't, something fishy is going on.
         if ($validator->fails()) {
-            Log::warning(get_class() . " - Missing parameter in Square response\n");
+            Log::warning(get_class() . " - Missing parameter in Square response");
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
@@ -347,7 +347,7 @@ class PaymentController extends Controller
             $square_txn = $txnClient->retrieveTransaction($location, $server_txn_id);
         } catch (\Exception $e) {
             $error = $e->getMessage();
-            Log::error(get_class() . " - Error querying Square transaction\n$error");
+            Log::error(get_class() . " - Error querying Square transaction", $error);
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
@@ -359,17 +359,17 @@ class PaymentController extends Controller
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
         $created_at = $square_txn->getTransaction()->getCreatedAt();
-        Log::debug(get_class() . " - Square Transaction Details for '$server_txn_id'\n" .
-            "Amount: $amount | Txn Date: $created_at");
+        Log::debug(get_class() . " - Square Transaction Details for '$server_txn_id'",
+            ["Amount" => $amount, "Txn Date" => $created_at]);
         
         //Compare received payment amount to expected payment amount
         $payable = $payment->payable;
         $expected_amount = $payable->getPayableAmount();
         $difference = $amount - $expected_amount;
         if ($difference != 3) {
-            $message = "Payment Discrepancy Found for ID $payment->id\n" .
-                "Expected: $expected_amount | Actual: $amount | Server Txn ID: $server_txn_id";
-            Log::error(get_class() . " - " . $message);
+            $message = "Payment Discrepancy Found for ID $payment->id";
+            $data = ["Expected" => $expected_amount, "Actual" => $amount, "Server Txn ID" => $server_txn_id];
+            Log::error(get_class() . " - " . $message, $data);
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
