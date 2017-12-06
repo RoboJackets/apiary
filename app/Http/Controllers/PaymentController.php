@@ -298,7 +298,7 @@ class PaymentController extends Controller
             Log::warning(get_class() . " - Missing parameter in Square response");
             return response(view('errors.generic',
                 [
-                    'error_code' => 500,
+                    'error_code' => 400,
                     'error_message' => 'Missing parameter in Square response.'
                 ]), 500);
         }
@@ -314,7 +314,7 @@ class PaymentController extends Controller
             Log::error(get_class() . " - Invalid Payment ID in Square response '$payment_id'");
             return response(view('errors.generic',
                 [
-                    'error_code' => 500,
+                    'error_code' => 422,
                     'error_message' => 'Invalid Payment ID in Square response.'
                 ]), 500);
         }
@@ -325,11 +325,21 @@ class PaymentController extends Controller
             Log::warning(get_class() . " - Error locating Payment '$payment_id'");
             return response(view('errors.generic',
                 [
-                    'error_code' => 500,
+                    'error_code' => 404,
                     'error_message' => 'Unable to locate payment.'
                 ]), 500);
         }
         Log::debug(get_class() . " - Found Payment '$payment_id'");
+        
+        //Check if the payment has already been processed
+        if ($payment->amount != 0 || $payment->checkout_id != null) {
+            Log::warning(get_class() . " - Payment Already Processed '$payment_id'");
+            return response(view('errors.generic',
+                [
+                    'error_code' => 409,
+                    'error_message' => 'Payment already processed.'
+                ]), 500);
+        }
         
         //Prepare Square API Call
         $txnClient = new TransactionsApi();
@@ -372,7 +382,7 @@ class PaymentController extends Controller
             Log::error(get_class() . " - " . $message, $data);
             return response(view('errors.generic',
                 [
-                    'error_code' => 500,
+                    'error_code' => 409,
                     'error_message' => 'Payment discrepancy found. Please contact the Treasurer for assistance.'
                 ]), 500);
         }
@@ -385,5 +395,8 @@ class PaymentController extends Controller
         $payment->save();
         
         Log::debug(get_class() . "Payment $payment->id Updated Successfully");
+        
+        alert()->success("We've received your payment", "Success!");
+        return redirect('/');
     }
 }
