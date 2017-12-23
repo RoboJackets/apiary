@@ -182,6 +182,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Subfission\Cas\CasServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -244,6 +245,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
 
     ],
 

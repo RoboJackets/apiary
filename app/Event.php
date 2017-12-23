@@ -41,4 +41,12 @@ class Event extends Model
     {
         return $this->morphMany('App\Attendance', 'attendable');
     }
+
+    /**
+     * Get the Payable amount
+     */
+    public function getPayableAmount()
+    {
+        return ($this->price) ?: null;
+    }
 }

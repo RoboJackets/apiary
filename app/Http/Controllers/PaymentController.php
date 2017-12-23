@@ -7,10 +7,13 @@ use App\Payment;
 use App\Event;
 use App\DuesTransaction;
 use SquareConnect\Api\CheckoutApi;
+use SquareConnect\Api\TransactionsApi;
 use SquareConnect\Configuration;
 use SquareConnect\Model\CreateCheckoutRequest;
 use SquareConnect\Model\CreateOrderRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
+use Validator;
+use Log;
 
 class PaymentController extends Controller
 {
@@ -261,7 +264,7 @@ class PaymentController extends Controller
             "order" => $order,
             "merchant_support_email" => "treasurer@robojackets.org",
             "pre_populate_buyer_email" => $email,
-//            "redirect_url" => route('payments.complete')
+            "redirect_url" => route('payments.complete')
         ]);
 
         try {
@@ -279,10 +282,121 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param Request $request
+     * Processes Square redirect after completec checkout transaction
      */
     public function handleSquareResponse(Request $request)
     {
-        //
+        //Make sure we have all of the necessary parameters from Square
+        $validator = Validator::make($request->all(), [
+            'checkoutId' => 'required',
+            'transactionId' => 'required',
+            'referenceId' => 'required'
+        ]);
+
+        //If we don't, something fishy is going on.
+        if ($validator->fails()) {
+            Log::warning(get_class() . " - Missing parameter in Square response");
+            return response(view('errors.generic',
+                [
+                    'error_code' => 400,
+                    'error_message' => 'Missing parameter in Square response.'
+                ]), 500);
+        }
+        
+        $checkout_id = $request->input('checkoutId');
+        $server_txn_id = $request->input('transactionId');
+        $client_txn_id = $request->input('referenceId');
+        
+        //Check to make sure the reference ID is "PMTXXXX"
+        $payment_id = substr($client_txn_id, 3);
+        Log::debug(get_class() . " - Stripping Reference ID '$client_txn_id' to '$payment_id'");
+        if (!is_numeric($payment_id) || substr($client_txn_id, 0, 3) != "PMT") {
+            Log::error(get_class() . " - Invalid Payment ID in Square response '$payment_id'");
+            return response(view('errors.generic',
+                [
+                    'error_code' => 422,
+                    'error_message' => 'Invalid Payment ID in Square response.'
+                ]), 500);
+        }
+        
+        //Find the payment
+        $payment = Payment::find($payment_id);
+        if (!$payment) {
+            Log::warning(get_class() . " - Error locating Payment '$payment_id'");
+            return response(view('errors.generic',
+                [
+                    'error_code' => 404,
+                    'error_message' => 'Unable to locate payment.'
+                ]), 500);
+        }
+        Log::debug(get_class() . " - Found Payment '$payment_id'");
+        
+        //Check if the payment has already been processed
+        if ($payment->amount != 0 || $payment->checkout_id != null) {
+            Log::warning(get_class() . " - Payment Already Processed '$payment_id'");
+            return response(view('errors.generic',
+                [
+                    'error_code' => 409,
+                    'error_message' => 'Payment already processed.'
+                ]), 500);
+        }
+        
+        //Prepare Square API Call
+        $txnClient = new TransactionsApi();
+        $location = (\App::environment('production')) ?
+            config('payment.square.location_id') :
+            config('payment.square.location_id_test');
+        $token = (\App::environment('production')) ?
+            config('payment.square.token') :
+            config('payment.square.token_test');
+        Configuration::getDefaultConfiguration()->setAccessToken($token);
+        
+        //Query Square API to get authoritative data
+        try {
+            Log::debug(get_class() . " - Querying Square for Transaction '$server_txn_id'");
+            $square_txn = $txnClient->retrieveTransaction($location, $server_txn_id);
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            Log::error(get_class() . " - Error querying Square transaction", $error);
+            return response(view('errors.generic',
+                [
+                    'error_code' => 500,
+                    'error_message' => 'Error querying Square transaction'
+                ]), 500);
+        }
+        Log::debug(get_class() . " - Retrieved Square Transaction '$server_txn_id'");
+        
+        $tenders = $square_txn->getTransaction()->getTenders();
+        $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
+        $created_at = $square_txn->getTransaction()->getCreatedAt();
+        Log::debug(get_class() . " - Square Transaction Details for '$server_txn_id'",
+            ["Amount" => $amount, "Txn Date" => $created_at]);
+        
+        //Compare received payment amount to expected payment amount
+        $payable = $payment->payable;
+        $expected_amount = $payable->getPayableAmount();
+        $difference = $amount - $expected_amount;
+        if ($difference != 3) {
+            $message = "Payment Discrepancy Found for ID $payment->id";
+            $data = ["Expected" => $expected_amount, "Actual" => $amount, "Server Txn ID" => $server_txn_id];
+            Log::error(get_class() . " - " . $message, $data);
+            return response(view('errors.generic',
+                [
+                    'error_code' => 409,
+                    'error_message' => 'Payment discrepancy found. Please contact the Treasurer for assistance.'
+                ]), 500);
+        }
+        
+        $payment->amount = $amount;
+        $payment->checkout_id = $checkout_id;
+        $payment->server_txn_id = $server_txn_id;
+        $payment->client_txn_id = $client_txn_id;
+        $payment->notes = "";
+        $payment->save();
+        
+        Log::debug(get_class() . "Payment $payment->id Updated Successfully");
+        
+        alert()->success("We've received your payment", "Success!");
+        return redirect('/');
     }
 }
