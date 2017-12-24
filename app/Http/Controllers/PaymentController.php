@@ -224,12 +224,8 @@ class PaymentController extends Controller
     public function createSquareCheckout($name, $amount, $email, $payment, $addFee)
     {
         $api = new CheckoutApi();
-        $location = (\App::environment('production')) ?
-            config('payment.square.location_id') :
-            config('payment.square.location_id_test');
-        $token = (\App::environment('production')) ?
-            config('payment.square.token') :
-            config('payment.square.token_test');
+        $location = config('payment.square.location_id');
+        $token = config('payment.square.token');
 
         $line_items = [
             [
@@ -343,12 +339,8 @@ class PaymentController extends Controller
         
         //Prepare Square API Call
         $txnClient = new TransactionsApi();
-        $location = (\App::environment('production')) ?
-            config('payment.square.location_id') :
-            config('payment.square.location_id_test');
-        $token = (\App::environment('production')) ?
-            config('payment.square.token') :
-            config('payment.square.token_test');
+        $location = config('payment.square.location_id');
+        $token = config('payment.square.token');
         Configuration::getDefaultConfiguration()->setAccessToken($token);
         
         //Query Square API to get authoritative data
