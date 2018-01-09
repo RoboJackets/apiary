@@ -102,12 +102,32 @@ class PaymentController extends Controller
             $payable_id = $request->input('payable_id');
         } else {
             //Assuming DuesTransaction for now
-            $payable = DuesTransaction::doesntHave('payment')->where('user_id', $user->id)->first();
-            if (!$payable) {
+
+            //Find DuesTransactions without payment attempts
+            $transactWithoutPmt = DuesTransaction::doesntHave('payment')
+                ->where('user_id', $user->id)->first();
+
+            //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
+            // and that have not passed the effective end
+            $transactZeroPmt = DuesTransaction::where('user_id', $user->id)
+                ->whereHas('package', function ($q) {
+                    $q->whereDate('effective_end', '>=', date('Y-m-d'));
+                })
+                ->whereHas('payment', function ($q) {
+                    $q->where('amount', 0.00);
+            })->first();
+
+            if ($transactZeroPmt) {
+                $payable = $transactZeroPmt;
+            } elseif ($transactWithoutPmt) {
+                $payable = $transactWithoutPmt;
+            } else {
+                //No transactions found without payment
                 return response(view('errors.generic',
                     ['error_code' => 400,
                         'error_message' => 'No eligible Dues Transaction found for payment.']), 400);
             }
+
             $amount = $payable->package->cost;
             $name = "Dues - " . $payable->package->name;
             $email = $user->gt_email;
@@ -129,13 +149,19 @@ class PaymentController extends Controller
             }
         }
 
-        $payment = new Payment();
-        $payment->amount = 0.00;
-        $payment->method = "square";
-        $payment->recorded_by = $user->id;
-        $payment->unique_id = bin2hex(openssl_random_pseudo_bytes(10));
-        $payment->notes = "Pending Square Payment";
-        $payable->payment()->save($payment);
+        if ($transactZeroPmt) {
+            $payment = $transactZeroPmt->payment[0];
+            $payment->unique_id = bin2hex(openssl_random_pseudo_bytes(10));
+            $payment->save();
+        } else {
+            $payment = new Payment();
+            $payment->amount = 0.00;
+            $payment->method = "square";
+            $payment->recorded_by = $user->id;
+            $payment->unique_id = bin2hex(openssl_random_pseudo_bytes(10));
+            $payment->notes = "Pending Square Payment";
+            $payable->payment()->save($payment);
+        }
         
         $squareResult = $this->createSquareCheckout($name, $amount, $email, $payment, true);
         if (is_a($squareResult, "Illuminate\Http\RedirectResponse")) {
