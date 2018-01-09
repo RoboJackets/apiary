@@ -40,4 +40,5 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['auth.token', 'auth.cas.force'
     Route::post('roles/{id}/assign', 'RoleController@assign');
     Route::resource('roles', 'RoleController', ['except' => 'create', 'edit']);
     Route::resource('permissions', 'PermissionController', ['except' => 'create', 'edit']);
+    Route::resource('teams', 'TeamController', ['except' => 'create', 'edit']);
 });
