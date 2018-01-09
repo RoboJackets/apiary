@@ -115,7 +115,7 @@ class PaymentController extends Controller
                 })
                 ->whereHas('payment', function ($q) {
                     $q->where('amount', 0.00);
-            })->first();
+                })->first();
 
             if ($transactZeroPmt) {
                 $payable = $transactZeroPmt;
