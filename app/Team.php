@@ -8,7 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Team extends Model
 {
     use SoftDeletes;
-    
+
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'deleted_at',
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      *  Get the Users that are members of this Team
      */
