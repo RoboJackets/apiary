@@ -170,9 +170,10 @@ class User extends Authenticatable
     {
         if ($this->dues->count() > 0) {
             $lastDuesTransaction = $this->dues->last();
-            $madePayment = ($lastDuesTransaction->payment->count() > 0);
+            $madeNonZeroPayment = ($lastDuesTransaction->payment->count() > 0 
+                & $lastDuesTransaction->payment->first()->amount != 0);
             $pkgIsActive = $lastDuesTransaction->package->is_active;
-            return ($madePayment && $pkgIsActive);
+            return ($madeNonZeroPayment && $pkgIsActive);
         } else {
             return false;
         }
