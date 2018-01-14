@@ -67,22 +67,28 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute()
     {
-        if ($this->payment->count() > 0) {
-            return "paid";
-        } else {
+        if ($this->payment->count() == 0) {
             return "pending";
+        } elseif ($this->payment->first()->amount == 0) {
+            return "pending";
+        } else {
+            return "paid";
         }
     }
 
     /**
      * Scope a query to only include pending transactions.
+     * Pending defined as no or $0 payment
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePending($query)
     {
-        return $query->doesntHave('payment');
+        return $query->doesntHave('payment')
+            ->orWhereHas('payment', function ($q) {
+                $q->where('amount', '=', 0);
+            });
     }
 
     /**
