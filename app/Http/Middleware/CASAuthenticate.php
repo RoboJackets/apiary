@@ -36,7 +36,8 @@ class CASAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
+        //Check to ensure the request isn't already authenticated through the API guard
+        if (!Auth::guard('api')->check()) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser($request);
                 if (is_a($user, "App\User")) {
