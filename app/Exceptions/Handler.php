@@ -49,14 +49,12 @@ class Handler extends ExceptionHandler
                 ['error_code' => $exception->getCode(),
                     'error_message' => $exception->getMessage()]), 500);
         } elseif ($exception instanceof \Exception) {
-//            $trace = $exception->getTrace();
-//            $class = $trace[0]['class'];
-//            $function = $trace[0]['function'];
             return response(view('errors.generic',
                 ['error_code' => $exception->getCode(),
                     'error_message' => $exception->getMessage()]), $exception->getCode());
+        } else {
+            return parent::render($request, $exception);
         }
-        return parent::render($request, $exception);
     }
 
     /**
