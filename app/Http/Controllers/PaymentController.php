@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Bugsnag;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Event;
@@ -123,9 +125,7 @@ class PaymentController extends Controller
                 $payable = $transactWithoutPmt;
             } else {
                 //No transactions found without payment
-                return response(view('errors.generic',
-                    ['error_code' => 400,
-                        'error_message' => 'No eligible Dues Transaction found for payment.']), 400);
+                throw new ModelNotFoundException("No eligible Dues Transaction found for payment.", 404);
             }
 
             $amount = $payable->package->cost;
@@ -293,6 +293,7 @@ class PaymentController extends Controller
             Configuration::getDefaultConfiguration()->setAccessToken($token);
             $checkout = $api->createCheckout($location, $checkout_request);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             $message = $e->getMessage();
             return $message;
         }
