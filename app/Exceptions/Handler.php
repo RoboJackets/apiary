@@ -44,6 +44,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \SquareConnect\ApiException) {
+            return response(view('errors.generic',
+                ['error_code' => $exception->getCode(),
+                    'error_message' => $exception->getMessage()]), 500);
+        } elseif ($exception instanceof \Exception) {
+//            $trace = $exception->getTrace();
+//            $class = $trace[0]['class'];
+//            $function = $trace[0]['function'];
+            return response(view('errors.generic',
+                ['error_code' => $exception->getCode(),
+                    'error_message' => $exception->getMessage()]), $exception->getCode());
+        }
         return parent::render($request, $exception);
     }
 
