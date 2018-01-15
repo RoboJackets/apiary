@@ -47,6 +47,7 @@ class FasetVisitController extends Controller
 
             return response()->json(array("status" => "success"));
         } catch (Exception $e) {
+            Bugsnag::notifyException($e);
             DB::rollback();
             Log::error('New FASET visit save failed', ['error' => $e->getMessage()]);
             return response()->json(array("status" => "error"))->setStatusCode(500);
