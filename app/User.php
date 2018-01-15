@@ -21,7 +21,8 @@ class User extends Authenticatable
     protected $appends = [
         'name',
         'full_name',
-        'is_active'];
+        'is_active',
+        'needs_payment'];
     
     /**
      * The attributes that should be mutated to dates.
@@ -51,6 +52,7 @@ class User extends Authenticatable
         'api_token',
         'full_name',
         'is_active',
+        'needs_payment',
         'deleted_at',
         'created_at',
         'updated_at'
@@ -174,9 +176,31 @@ class User extends Authenticatable
             $hasPayment = ($lastDuesTransaction->payment()->exists());
             if ($hasPayment) {
                 $finishedPayment = ($lastDuesTransaction->payment->first()->amount != 0);
-                return ($finishedPayment & $pkgIsActive);
+                return ($finishedPayment && $pkgIsActive);
             } else {
                 return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get the needs_payment flag for the User.
+     *
+     * @return bool
+     */
+    public function getNeedsPaymentAttribute()
+    {
+        if ($this->dues->count() > 0) {
+            $lastDuesTransaction = $this->dues->last();
+            $pkgIsActive = $lastDuesTransaction->package->is_active;
+            $hasPayment = ($lastDuesTransaction->payment()->exists());
+            if ($hasPayment) {
+                $finishedPayment = ($lastDuesTransaction->payment->first()->amount != 0);
+                return !($finishedPayment && $pkgIsActive);
+            } else {
+                return true;
             }
         } else {
             return false;

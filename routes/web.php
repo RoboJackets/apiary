@@ -13,9 +13,7 @@
 
 
 Route::group(['middleware' => 'auth.cas.force'], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', 'DashboardController@index')->name('home');
 
     Route::get('faset', function () {
         return view('faset/faset');
