@@ -197,8 +197,8 @@ class User extends Authenticatable
             $pkgIsActive = $lastDuesTransaction->package->is_active;
             $hasPayment = ($lastDuesTransaction->payment()->exists());
             if ($hasPayment) {
-                $finishedPayment = ($lastDuesTransaction->payment->first()->amount != 0);
-                return !($finishedPayment && $pkgIsActive);
+                $unfinishedPayment = ($lastDuesTransaction->payment->first()->amount == 0);
+                return ($unfinishedPayment && $pkgIsActive);
             } else {
                 return true;
             }
