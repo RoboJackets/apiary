@@ -32,9 +32,11 @@
         </div>
     </div>
     <div class="row">
+        @if(cas()->checkAuthentication())
         <div class="col-md-3">
             <b>User:</b> {{ cas()->user() }}
         </div>
+        @endif
         <div class="col-md-3">
             <b>Time:</b> {{ time() }}
         </div>
