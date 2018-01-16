@@ -69,7 +69,7 @@ class DuesTransaction extends Model
     {
         if ($this->payment->count() == 0) {
             return "pending";
-        } elseif ($this->payment->first()->amount == 0) {
+        } elseif ($this->payment->sum('amount') < $this->getPayableAmount()) {
             return "pending";
         } else {
             return "paid";
@@ -78,7 +78,7 @@ class DuesTransaction extends Model
 
     /**
      * Scope a query to only include pending transactions.
-     * Pending defined as no or $0 payment
+     * Pending defined as no payments, or payments that do not sum to payable amount
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
