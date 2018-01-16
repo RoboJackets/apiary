@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <template v-if="duesTransaction.payment.length == 0">
+    <template v-if="duesTransaction.status == 'pending'">
       <h3>
         Record Payment
       </h3>
