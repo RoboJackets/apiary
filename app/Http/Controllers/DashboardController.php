@@ -19,8 +19,7 @@ class DashboardController extends Controller
         $user = $request->user();
         $transactionsQuery = DuesTransaction::where('user_id', $user->id)
             ->whereHas('package', function ($q) {
-                $q->whereDate('effective_start', '<=', date('Y-m-d'))
-                    ->whereDate('effective_end', '>=', date('Y-m-d'));
+                $q->active();
             });
         $needsTransaction = (count($transactionsQuery->get()) == 0);
         
