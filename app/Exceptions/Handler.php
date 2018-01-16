@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,7 +45,34 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        $message = "Internal Server Error";
+        $statusCode = 500;
+        if ($exception instanceof HttpException) {
+            $class = get_class($exception);
+            $statusCode = $exception->getStatusCode();
+            $statusMap = ["500" => "Internal Server Error", "404" => "Not Found",
+                "403" => "Forbidden", "401" => "Unauthorized", "400" => "Bad Request"];
+            if (array_key_exists($exception->getStatusCode(), $statusMap)) {
+                $message = $statusMap[$exception->getStatusCode()];
+            } else {
+                $message = substr($class, strrpos($class, '\\') + 1);
+            }
+        } elseif ($exception instanceof \SquareConnect\ApiException) {
+            $message = $exception->getResponseBody()->errors[0]->detail;
+        } elseif ($exception instanceof \Exception) {
+            $message = $exception->getMessage();
+        } else {
+            return parent::render($request, $exception);
+        }
+        
+        if ($request->wantsJson()) {
+            return response()->json(['status' => 'error', 'error' => $message], $statusCode);
+        } elseif (config('app.debug') == false) {
+            return response(view('errors.generic',
+                ['error_code' => $statusCode, 'error_message' => $message]), $statusCode);
+        } else {
+            return parent::render($request, $exception);
+        }
     }
 
     /**

@@ -67,6 +67,7 @@ class AttendanceController extends Controller
         try {
             $att = Attendance::firstOrCreate($request->all());
         } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
@@ -115,6 +116,7 @@ class AttendanceController extends Controller
             try {
                 $att->update($request->all());
             } catch (QueryException $e) {
+                Bugsnag::notifyException($e);
                 $errorMessage = $e->errorInfo[2];
                 return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
             }

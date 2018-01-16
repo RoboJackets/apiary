@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Bugsnag;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Event;
 use App\DuesTransaction;
 use SquareConnect\Api\CheckoutApi;
 use SquareConnect\Api\TransactionsApi;
+use SquareConnect\ApiException;
 use SquareConnect\Configuration;
 use SquareConnect\Model\CreateCheckoutRequest;
 use SquareConnect\Model\CreateOrderRequest;
@@ -63,6 +65,7 @@ class PaymentController extends Controller
         try {
             $payment = Payment::create($request->all());
         } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
@@ -123,6 +126,7 @@ class PaymentController extends Controller
                 $payable = $transactWithoutPmt;
             } else {
                 //No transactions found without payment
+                Log::warning(get_class() . ": No eligible Dues Transaction found for payment.");
                 return response(view('errors.generic',
                     ['error_code' => 400,
                         'error_message' => 'No eligible Dues Transaction found for payment.']), 400);
@@ -292,9 +296,13 @@ class PaymentController extends Controller
         try {
             Configuration::getDefaultConfiguration()->setAccessToken($token);
             $checkout = $api->createCheckout($location, $checkout_request);
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
+        } catch (ApiException $e) {
+            Bugsnag::notifyException($e);
+            $message = $e->getResponseBody()->errors[0]->detail;
             return $message;
+        } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
+            return $e->getMessage();
         }
         
         if ($checkout) {
@@ -374,6 +382,7 @@ class PaymentController extends Controller
             Log::debug(get_class() . " - Querying Square for Transaction '$server_txn_id'");
             $square_txn = $txnClient->retrieveTransaction($location, $server_txn_id);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             $error = $e->getMessage();
             Log::error(get_class() . " - Error querying Square transaction", $error);
             return response(view('errors.generic',

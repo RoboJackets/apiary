@@ -45,6 +45,7 @@ class TeamController extends Controller
         try {
             $team = Team::create($request->all());
         } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
@@ -96,6 +97,7 @@ class TeamController extends Controller
         try {
             $team->update($request->all());
         } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
