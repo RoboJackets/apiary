@@ -67,7 +67,9 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute()
     {
-        if ($this->payment->count() == 0) {
+        if (!$this->package->is_active) {
+            return "expired";
+        } elseif ($this->payment->count() == 0) {
             return "pending";
         } elseif ($this->payment->sum('amount') < $this->getPayableAmount()) {
             return "pending";
@@ -89,6 +91,33 @@ class DuesTransaction extends Model
             ->orWhereHas('payment', function ($q) {
                 $q->where('amount', '=', 0);
             });
+    }
+
+    /**
+     * Scope a query to only include paid transactions
+     * Paid defined as one or more payments whose total is equal to the payable amount
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePaid($query)
+    {
+        return $query->whereHas('payment', function ($q) {
+            $q->where($q->sum('amount'), '<', 20.00);
+        });
+    }
+
+    /**
+     * Scope a query to only include current transactions.
+     * Current defined as belonging to an active DuesPackage
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCurrent($query)
+    {
+        return $query->whereHas('package', function ($q) {
+            $q->active();
+        });
     }
 
     /**
