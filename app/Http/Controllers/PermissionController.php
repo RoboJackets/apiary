@@ -47,8 +47,10 @@ class PermissionController extends Controller
                 try {
                     $dbRole = Role::findByName($role);
                 } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+                    Bugsnag::notifyException($e);
                     return response()->json(['status' => 'error', 'message' => "Role '$role' not found."], 404);
                 } catch (\Exception $e) {
+                    Bugsnag::notifyException($e);
                     return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
                 }
                 $dbRole->givePermissionTo($permission->name);
@@ -70,9 +72,11 @@ class PermissionController extends Controller
         try {
             $permission = Permission::findByName($name)->with('roles')->first();
         } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error',
                 'message' => "Permission '$name' not found."], 404);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
@@ -93,9 +97,11 @@ class PermissionController extends Controller
             $permission->name = $request->input('name');
             $permission->save();
         } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error',
                 'message' => "Permission '$name' not found."], 404);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
@@ -115,9 +121,11 @@ class PermissionController extends Controller
             $permission = Permission::findByName($name);
             $permission->delete();
         } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error',
                 'message' => "Permission '$name' not found."], 404);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         

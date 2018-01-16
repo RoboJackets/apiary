@@ -64,6 +64,7 @@ class DuesPackageController extends Controller
         try {
             $package = DuesPackage::create($request->all());
         } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }

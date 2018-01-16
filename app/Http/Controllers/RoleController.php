@@ -46,9 +46,11 @@ class RoleController extends Controller
             try {
                 $role->givePermissionTo($request->input('permissions'));
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+                Bugsnag::notifyException($e);
                 return response()->json(['status' => 'error',
                     'message' => $e->getMessage()], 422);
             } catch (\Exception $e) {
+                Bugsnag::notifyException($e);
                 return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
             }
         }
@@ -68,8 +70,10 @@ class RoleController extends Controller
         try {
             $role = Role::findByName($name)->with('permissions')->first();
         } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
@@ -88,8 +92,10 @@ class RoleController extends Controller
         try {
             $role = Role::findByName($name);
         } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
@@ -106,8 +112,10 @@ class RoleController extends Controller
             try {
                 $role->syncPermissions($request->input('permissions'));
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+                Bugsnag::notifyException($e);
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
             } catch (\Exception $e) {
+                Bugsnag::notifyException($e);
                 return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
             }
         }
@@ -127,8 +135,10 @@ class RoleController extends Controller
         try {
             $role = Role::findByName($name);
         } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         
@@ -148,8 +158,10 @@ class RoleController extends Controller
         try {
             $role = Role::findByName($name);
         } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
         } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
         

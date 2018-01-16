@@ -62,6 +62,7 @@ class EventController extends Controller
         try {
             $event = Event::create($request->all());
         } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
@@ -131,6 +132,7 @@ class EventController extends Controller
         try {
             $event->update($request->all());
         } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
