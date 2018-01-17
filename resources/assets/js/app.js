@@ -63,6 +63,8 @@ Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue
 // Swag
 
 Vue.component('swag-pending-table', require('./components/wrappers/SwagPendingTable.vue'));
+Vue.component('swag-transaction', require('./components/swag/SwagTransaction.vue'));
+Vue.component('distribute-swag', require('./components/swag/DistributeSwag.vue'));
 
 
 const app = new Vue({
