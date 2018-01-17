@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 class DuesTransaction extends Model
 {
@@ -102,9 +103,38 @@ class DuesTransaction extends Model
      */
     public function scopePaid($query)
     {
-        return $query->whereHas('payment', function ($q) {
-            $q->where($q->sum('amount'), '<', 20.00);
-        });
+        $query = $query->select("dues_transactions.*",
+            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'"))
+            ->leftJoin('payments', function ($j) {
+                $j->on('payments.payable_id', '=', 'dues_transactions.id')
+                    ->where('payments.payable_type', '=', "App\\DuesTransaction")
+                    ->where('payments.deleted_at', '=', null);
+            })
+            ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
+            ->groupBy("dues_transactions.id", "dues_transactions.dues_package_id", "dues_packages.cost")
+            ->havingRaw("amountPaid >= dues_packages.cost");
+        return $query;
+    }
+
+    /**
+     * Scope a query to only include unpaid transactions
+     * Unpaid defined as zero or more payments that are less than the payable amount
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUnpaid($query)
+    {
+        return $query->select("dues_transactions.*",
+                DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'"))
+            ->leftJoin('payments', function ($j) {
+                $j->on('payments.payable_id', '=', 'dues_transactions.id')
+                    ->where('payments.payable_type', '=', "App\\DuesTransaction")
+                    ->where('payments.deleted_at', '=', null);
+            })
+            ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
+            ->groupBy("dues_transactions.id", "dues_transactions.dues_package_id", "dues_packages.cost")
+            ->havingRaw("amountPaid < dues_packages.cost");
     }
 
     /**
