@@ -107,10 +107,10 @@ class DuesTransaction extends Model
                 $j->on('dues_transactions.dues_package_id', '=', 'dues_packages.id')
                 ->where(function ($q) {
                     $q->where('dues_packages.eligible_for_shirt', '=', true)
-                        ->where('dues_transactions.received_shirt', '=', false)
+                        ->where('dues_transactions.swag_shirt_provided', '=', null)
                         ->orWhere(function ($q) {
                             $q->where('dues_packages.eligible_for_polo', '=', true)
-                                ->where('dues_transactions.received_polo', '=', false);
+                                ->where('dues_transactions.swag_polo_provided', '=', null);
                         });
                 });
             });
