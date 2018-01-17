@@ -82,16 +82,14 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include pending transactions.
      * Pending defined as no payments, or payments that do not sum to payable amount
+     * for a currently active DuesPackage
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePending($query)
     {
-        return $query->doesntHave('payment')
-            ->orWhereHas('payment', function ($q) {
-                $q->where('amount', '=', 0);
-            });
+        return $query->current()->unpaid();
     }
 
     /**
