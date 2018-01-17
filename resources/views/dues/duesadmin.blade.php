@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('title')
-Dues Admin | config('app.name') }}
+Dues Admin | {{ config('app.name') }}
 @endsection
 
 @section('content')

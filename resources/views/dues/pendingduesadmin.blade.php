@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('title')
-Pending Dues Transactions | config('app.name') }}
+Pending Dues Transactions | {{ config('app.name') }}
 @endsection
 
 @section('content')
