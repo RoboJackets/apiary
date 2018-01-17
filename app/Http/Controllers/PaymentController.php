@@ -424,6 +424,9 @@ class PaymentController extends Controller
         $payment->notes = "";
         $payment->save();
         
+        //Notify user of successful payment
+        $payment->payable->user->notify(new Confirm($payment));
+        
         Log::debug(get_class() . "Payment $payment->id Updated Successfully");
         
         alert()->success("We've received your payment", "Success!");
