@@ -60,6 +60,10 @@ Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.
 Vue.component('pending-dues-table', require('./components/wrappers/PendingDuesTable.vue'));
 Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue'));
 
+// Swag
+
+Vue.component('swag-pending-table', require('./components/wrappers/SwagPendingTable.vue'));
+
 
 const app = new Vue({
     el: '#app'
