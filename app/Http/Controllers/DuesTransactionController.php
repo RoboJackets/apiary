@@ -41,6 +41,17 @@ class DuesTransactionController extends Controller
         $transact = DuesTransaction::pending()->with(['user', 'package'])->get();
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
+    
+    /**
+     * Display a listing of swag pending resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexPendingSwag()
+    {
+        $transact = DuesTransaction::pendingSwag()->with(['user', 'package'])->get();
+        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+    }
 
     /**
      * Store a newly created resource in storage.
