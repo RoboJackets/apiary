@@ -17,8 +17,8 @@
           }},
           {'title': 'Name', 'data':'user.name'},
           {'title': 'Dues Package', 'data':'package.name'},
-          {'title': 'Shirt', 'data':'shirt_status'},
-          {'title': 'Polo', 'data':'polo_status'},
+          {'title': 'Shirt', 'data':'swag_shirt_status'},
+          {'title': 'Polo', 'data':'swag_polo_status'},
         ]
       }
     }
