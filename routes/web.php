@@ -90,6 +90,9 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
             Route::get('/', function () {
                 return view('swag.swagPending');
             })->name('swagPending');
+            Route::get('{id}', function ($id) {
+                return view('swag.swagTransaction', ['id' => $id]);
+            })->name('swagTransaction');
         });
     });
 });
