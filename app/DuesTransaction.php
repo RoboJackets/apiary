@@ -91,6 +91,30 @@ class DuesTransaction extends Model
     {
         return $query->current()->unpaid();
     }
+    
+    /**
+     * Scope a query to only include swag-pending transactions.
+     * Swag-pending defined as a transaction that has not provided shirt/polo
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePendingSwag($query)
+    {
+        return $query->select("dues_transactions.*", "dues_packages.eligible_for_shirt",
+            "dues_packages.eligible_for_polo")
+            ->join('dues_packages', function ($j) {
+                $j->on('dues_transactions.dues_package_id', '=', 'dues_packages.id')
+                ->where(function ($q) {
+                    $q->where('dues_packages.eligible_for_shirt', '=', true)
+                        ->where('dues_transactions.received_shirt', '=', false)
+                        ->orWhere(function ($q) {
+                            $q->where('dues_packages.eligible_for_polo', '=', true)
+                                ->where('dues_transactions.received_polo', '=', false);
+                        });
+                });
+            });
+    }
 
     /**
      * Scope a query to only include paid transactions
