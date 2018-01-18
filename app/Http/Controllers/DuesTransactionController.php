@@ -86,9 +86,12 @@ class DuesTransactionController extends Controller
         foreach ($swagItems as $item) {
             if ($request->has($item)) {
                 $provided = $request->input($item);
-                if ($provided != null && ($provided == true || $provided == "on")) {
+                if ($provided !== null && $provided == true) {
                     $now = date("Y-m-d H:i:s");
-                    $request->merge([$item => $now, $item . "By" => $user->id]);
+                    $request->merge([$item => $now, $item . "By" => $request->user()->id]);
+                } else {
+                    //Remove the parameter from the request to avoid overwriting existing data
+                    unset($request[$item]);
                 }
             }
         }
@@ -170,9 +173,12 @@ class DuesTransactionController extends Controller
         foreach ($swagItems as $item) {
             if ($request->has($item)) {
                 $provided = $request->input($item);
-                if ($provided != null && ($provided == true || $provided == "on")) {
+                if ($provided !== null && $provided == true) {
                     $now = date("Y-m-d H:i:s");
                     $request->merge([$item => $now, $item . "By" => $request->user()->id]);
+                } else {
+                    //Remove the parameter from the request to avoid overwriting existing data
+                    unset($request[$item]);
                 }
             }
         }
