@@ -9,14 +9,13 @@
                                     v-model="duesTransaction.swag_shirt_provided"
                                     type="checkbox"
                                     class="custom-control-input"
-                                    id="shirt_check"
+                                    id="shirt-check"
                                     :disabled="this.swag_shirt_provided != null">
                             <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">
-                                Shirt
-                                <span id="shirt_description">
+                            <span class="custom-control-description">Shirt
+                                <span id="shirt-description">
                                     <small v-if="this.swag_shirt_provided != null">
-                                    (Picked Up {{ this.swag_shirt_provided }})
+                                        (Picked up {{ this.swag_shirt_provided | moment("from") }})
                                     </small>
                                 </span>
                             </span>
@@ -28,14 +27,13 @@
                                     v-model="duesTransaction.swag_polo_provided"
                                     type="checkbox"
                                     class="custom-control-input"
-                                    id="polo_check"
+                                    id="polo-check"
                                     :disabled="this.swag_polo_provided != null">
                             <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">
-                                Polo
-                                <span id="polo_description">
+                            <span class="custom-control-description">Polo
+                                <span id="polo-description">
                                     <small v-if="this.swag_polo_provided != null">
-                                    (Picked Up {{ this.swag_polo_provided }})
+                                        (Picked up {{ this.swag_polo_provided | moment("from") }})
                                     </small>
                                 </span>
                             </span>
@@ -88,7 +86,7 @@
                     swag_shirt_provided: null,
                     swag_polo_provided: null
                 },
-                baseUrl: "/api/v1/dues/transactions/"
+                baseUrl: "/api/v1/dues/transactions/",
             }
         },
         methods: {
