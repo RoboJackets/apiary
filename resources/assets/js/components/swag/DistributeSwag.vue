@@ -3,26 +3,42 @@
         <div class="col-12">
             <form id="DistributeSwagForm" v-on:submit.prevent="submit">
                 <fieldset class="form-group">
-                    <div v-if="swag_shirt_status == 'Not Picked Up'" class="custom-controls-stacked">
+                    <div class="custom-controls-stacked">
                         <label class="custom-control custom-checkbox">
                             <input
                                     v-model="duesTransaction.swag_shirt_provided"
                                     type="checkbox"
                                     class="custom-control-input"
-                                    id="shirt_check">
+                                    id="shirt_check"
+                                    :disabled="this.swag_shirt_provided != null">
                             <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">Shirt</span>
+                            <span class="custom-control-description">
+                                Shirt
+                                <span id="shirt_description">
+                                    <small v-if="this.swag_shirt_provided != null">
+                                    (Picked Up {{ this.swag_shirt_provided }})
+                                    </small>
+                                </span>
+                            </span>
                         </label>
                     </div>
-                    <div v-if="swag_polo_status == 'Not Picked Up'" class="custom-controls-stacked">
+                    <div class="custom-controls-stacked">
                         <label class="custom-control custom-checkbox">
                             <input
                                     v-model="duesTransaction.swag_polo_provided"
                                     type="checkbox"
                                     class="custom-control-input"
-                                    id="polo_check">
+                                    id="polo_check"
+                                    :disabled="this.swag_polo_provided != null">
                             <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">Polo</span>
+                            <span class="custom-control-description">
+                                Polo
+                                <span id="polo_description">
+                                    <small v-if="this.swag_polo_provided != null">
+                                    (Picked Up {{ this.swag_polo_provided }})
+                                    </small>
+                                </span>
+                            </span>
                         </label>
                     </div>
                 </fieldset>
@@ -59,10 +75,10 @@
                 type: Number,
                 required: true
             },
-            swag_polo_status: {
+            swag_polo_provided: {
                 required: true
             },
-            swag_shirt_status: {
+            swag_shirt_provided: {
                 required: true
             }
         },
