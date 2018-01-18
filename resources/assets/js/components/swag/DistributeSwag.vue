@@ -10,12 +10,16 @@
                                     type="checkbox"
                                     class="custom-control-input"
                                     id="shirt-check"
-                                    :disabled="this.swag_shirt_provided != null">
+                                    :disabled="this.swag_shirt_provided != null ||
+                                    this.swag_shirt_status == 'Not Eligible'">
                             <span class="custom-control-indicator"></span>
                             <span class="custom-control-description">Shirt
                                 <span id="shirt-description">
                                     <small v-if="this.swag_shirt_provided != null">
                                         (Picked up {{ this.swag_shirt_provided | moment("from") }})
+                                    </small>
+                                    <small v-else-if="this.swag_shirt_status == 'Not Eligible'">
+                                        (Not Eligible)
                                     </small>
                                 </span>
                             </span>
@@ -28,12 +32,16 @@
                                     type="checkbox"
                                     class="custom-control-input"
                                     id="polo-check"
-                                    :disabled="this.swag_polo_provided != null">
+                                    :disabled="this.swag_polo_provided != null ||
+                                    this.swag_polo_status == 'Not Eligible'">
                             <span class="custom-control-indicator"></span>
                             <span class="custom-control-description">Polo
                                 <span id="polo-description">
                                     <small v-if="this.swag_polo_provided != null">
                                         (Picked up {{ this.swag_polo_provided | moment("from") }})
+                                    </small>
+                                    <small v-else-if="this.swag_polo_status == 'Not Eligible'">
+                                        (Not Eligible)
                                     </small>
                                 </span>
                             </span>
@@ -78,13 +86,19 @@
             },
             swag_shirt_provided: {
                 required: true
+            },
+            swag_polo_status: {
+                required: true
+            },
+            swag_shirt_status: {
+                required: true
             }
         },
         data() {
             return {
                 duesTransaction: {
-                    swag_shirt_provided: null,
-                    swag_polo_provided: null
+                    swag_shirt_provided: false,
+                    swag_polo_provided: false
                 },
                 baseUrl: "/api/v1/dues/transactions/",
             }
