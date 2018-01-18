@@ -88,11 +88,14 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
 
         Route::prefix('swag')->group(function () {
             Route::get('/', function () {
+                return view('swag.swagIndex');
+            })->name('swag.index');
+            Route::get('pending', function () {
                 return view('swag.swagPending');
-            })->name('swagPending');
+            })->name('swag.pending');
             Route::get('{id}', function ($id) {
                 return view('swag.swagTransaction', ['id' => $id]);
-            })->name('swagTransaction');
+            })->name('swag.transaction');
         });
     });
 });
