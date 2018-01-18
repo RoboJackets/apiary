@@ -2,28 +2,30 @@
     <div class="row">
         <div class="col-12">
             <form id="DistributeSwagForm" v-on:submit.prevent="submit">
-                <div class="form-group row">
-                    <div class="col-sm-10 col-lg-2" v-if="swag_shirt_status == 'Not Picked Up'">
-                        <label for="shirt">Shirt</label>
-                        <div class="input-group">
+                <fieldset class="form-group">
+                    <div v-if="swag_shirt_status == 'Not Picked Up'" class="custom-controls-stacked">
+                        <label class="custom-control custom-checkbox">
                             <input
                                     v-model="duesTransaction.swag_shirt_provided"
                                     type="checkbox"
-                                    class="form-control"
-                                    id="shirt">
-                        </div>
+                                    class="custom-control-input"
+                                    id="shirt_check">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Shirt</span>
+                        </label>
                     </div>
-                        <div class="col-sm-10 col-lg-2" v-if="swag_polo_status == 'Not Picked Up'">
-                            <label for="polo">Polo</label>
-                            <div class="input-group">
-                                <input
-                                        v-model="duesTransaction.swag_polo_provided"
-                                        type="checkbox"
-                                        class="form-control"
-                                        id="polo">
-                            </div>
-                        </div>
-                </div>
+                    <div v-if="swag_polo_status == 'Not Picked Up'" class="custom-controls-stacked">
+                        <label class="custom-control custom-checkbox">
+                            <input
+                                    v-model="duesTransaction.swag_polo_provided"
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="polo_check">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Polo</span>
+                        </label>
+                    </div>
+                </fieldset>
                 
                 <div class="row">
                     <div class="col-12 col-md-6">
