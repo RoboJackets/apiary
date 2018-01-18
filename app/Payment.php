@@ -50,7 +50,8 @@ class Payment extends Model
             'cash' => 'Cash',
             'squarecash' => 'Square Cash',
             'check' => 'Check',
-            'swipe' => 'Swiped Card'
+            'swipe' => 'Swiped Card',
+            'square' => 'Square'
         );
 
         $method = $this->method;
