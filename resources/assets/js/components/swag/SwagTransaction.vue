@@ -38,6 +38,8 @@
         :transaction-id="parseInt(duesTransactionId)"
         :swag_polo_provided="duesTransaction.swag_polo_provided"
         :swag_shirt_provided="duesTransaction.swag_shirt_provided"
+        :swag_polo_status="duesTransaction.swag_polo_status"
+        :swag_shirt_status="duesTransaction.swag_shirt_status"
         @done="swagDistributed">
       </distribute-swag>
     </template>
