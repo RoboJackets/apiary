@@ -51,7 +51,8 @@
                 
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <button type="submit" class="btn btn-primary float-left">Submit</button>
+                        <button type="submit" class="btn btn-primary float-left">Submit</button>&nbsp;
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
                     </div>
                 </div>
 
