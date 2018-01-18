@@ -84,7 +84,7 @@ class DuesTransactionController extends Controller
         //Also set "providedBy" for each swag item to the submitting user
         $swagItems = ["swag_shirt_provided", "swag_polo_provided"];
         foreach ($swagItems as $item) {
-            if ($request->has($item)) {
+            if ($request->exists($item)) {
                 $provided = $request->input($item);
                 if ($provided !== null && $provided == true) {
                     $now = date("Y-m-d H:i:s");
@@ -171,7 +171,7 @@ class DuesTransactionController extends Controller
         //Also set "providedBy" for each swag item to the submitting user
         $swagItems = ["swag_shirt_provided", "swag_polo_provided"];
         foreach ($swagItems as $item) {
-            if ($request->has($item)) {
+            if ($request->exists($item)) {
                 $provided = $request->input($item);
                 if ($provided !== null && $provided == true) {
                     $now = date("Y-m-d H:i:s");
