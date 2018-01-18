@@ -34,6 +34,7 @@
                 @hasanyrole('admin|officer-i|officer-ii')
                 <a class="dropdown-item" href="/admin/dues/pending">Accept Dues</a>
                 <a class="dropdown-item" href="/admin/dues">Dues</a>
+                <a class="dropdown-item" href="/admin/swag">Swag</a>
                 @endhasanyrole
               </div>
             </li>
