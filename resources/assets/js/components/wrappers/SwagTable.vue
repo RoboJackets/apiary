@@ -1,13 +1,25 @@
 <template>
-  <datatable id="swag-pending-table"
-    data-url="/api/v1/dues/transactions/pendingSwag"
-    data-path="dues_transactions"
-    :columns="tableConfig">
+  <datatable v-if="this.tableFilter == 'index'"
+             id="swag-index-table" 
+             data-url="/api/v1/dues/transactions/paid" 
+             data-path="dues_transactions" 
+             :columns="tableConfig">
+  </datatable>
+  <datatable v-else-if="this.tableFilter == 'pending'"
+             id="swag-pending-table"
+             data-url="/api/v1/dues/transactions/pendingSwag"
+             data-path="dues_transactions"
+             :columns="tableConfig">
   </datatable>
 </template>
 
 <script>
   export default {
+    props: {
+        tableFilter: {
+            required:true
+        }
+    },
     data() {
       return {
         tableConfig: [

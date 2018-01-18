@@ -32,6 +32,17 @@ class DuesTransactionController extends Controller
     }
 
     /**
+     * Display a listing of paid resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexPaid()
+    {
+        $transact = DuesTransaction::paid()->with(['user', 'package'])->get();
+        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+    }
+
+    /**
      * Display a listing of pending resources
      *
      * @return \Illuminate\Http\Response

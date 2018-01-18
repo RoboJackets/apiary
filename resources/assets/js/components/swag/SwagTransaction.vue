@@ -28,8 +28,7 @@
         </div>
       </div>
     </div>
-    <template v-if="duesTransaction.swag_polo_status == 'Not Picked Up' ||
-    duesTransaction.swag_shirt_status == 'Not Picked Up'">
+    <template>
       <h3>
         Record Distribution
       </h3>
