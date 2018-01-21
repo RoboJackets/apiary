@@ -26,6 +26,9 @@ import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 Vue.use(flatPickr);
 
+//Import Moment for friendly timestamps
+Vue.use(require('vue-moment'));
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -59,6 +62,12 @@ Vue.component('demographics', require('./components/dues/Demographics.vue'));
 Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.vue'));
 Vue.component('pending-dues-table', require('./components/wrappers/PendingDuesTable.vue'));
 Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue'));
+
+// Swag
+
+Vue.component('swag-table', require('./components/wrappers/SwagTable.vue'));
+Vue.component('swag-transaction', require('./components/swag/SwagTransaction.vue'));
+Vue.component('distribute-swag', require('./components/swag/DistributeSwag.vue'));
 
 
 const app = new Vue({

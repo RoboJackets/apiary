@@ -32,6 +32,17 @@ class DuesTransactionController extends Controller
     }
 
     /**
+     * Display a listing of paid resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexPaid()
+    {
+        $transact = DuesTransaction::paid()->with(['user', 'package'])->get();
+        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+    }
+
+    /**
      * Display a listing of pending resources
      *
      * @return \Illuminate\Http\Response
@@ -39,6 +50,17 @@ class DuesTransactionController extends Controller
     public function indexPending()
     {
         $transact = DuesTransaction::pending()->with(['user', 'package'])->get();
+        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
+    }
+    
+    /**
+     * Display a listing of swag pending resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexPendingSwag()
+    {
+        $transact = DuesTransaction::pendingSwag()->with(['user', 'package'])->get();
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -51,8 +73,8 @@ class DuesTransactionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'received_polo' => 'boolean',
-            'received_shirt' => 'boolean',
+            'swag_shirt_provided' => 'boolean|nullable',
+            'swag_polo_provided' => 'boolean|nullable',
             'dues_package_id' => 'required|exists:dues_packages,id',
             'payment_id' => 'exists:payments,id',
             'user_id' => 'exists:users,id'
@@ -67,6 +89,22 @@ class DuesTransactionController extends Controller
                 'message' => 'You may not create a DuesTransaction for another user.'], 403);
         } elseif (!$request->has('user_id')) {
             $request->merge(['user_id' => $user->id]);
+        }
+        
+        //Translate boolean from client to time/date stamp for DB
+        //Also set "providedBy" for each swag item to the submitting user
+        $swagItems = ["swag_shirt_provided", "swag_polo_provided"];
+        foreach ($swagItems as $item) {
+            if ($request->exists($item)) {
+                $provided = $request->input($item);
+                if ($provided !== null && $provided == true) {
+                    $now = date("Y-m-d H:i:s");
+                    $request->merge([$item => $now, $item . "By" => $request->user()->id]);
+                } else {
+                    //Remove the parameter from the request to avoid overwriting existing data
+                    unset($request[$item]);
+                }
+            }
         }
         
         //Check to make sure there isn't already an existing package for the target user
@@ -133,12 +171,28 @@ class DuesTransactionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'received_polo' => 'boolean',
-            'received_shirt' => 'boolean',
+            'swag_shirt_provided' => 'boolean|nullable',
+            'swag_polo_provided' => 'boolean|nullable',
             'dues_package_id' => 'exists:dues_packages,id',
             'payment_id' => 'exists:payments,id',
             'user_id' => 'exists:users,id'
         ]);
+
+        //Translate boolean from client to time/date stamp for DB
+        //Also set "providedBy" for each swag item to the submitting user
+        $swagItems = ["swag_shirt_provided", "swag_polo_provided"];
+        foreach ($swagItems as $item) {
+            if ($request->exists($item)) {
+                $provided = $request->input($item);
+                if ($provided !== null && $provided == true) {
+                    $now = date("Y-m-d H:i:s");
+                    $request->merge([$item => $now, $item . "By" => $request->user()->id]);
+                } else {
+                    //Remove the parameter from the request to avoid overwriting existing data
+                    unset($request[$item]);
+                }
+            }
+        }
 
         $transact = DuesTransaction::find($id);
         if ($transact) {

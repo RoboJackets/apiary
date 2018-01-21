@@ -35,7 +35,9 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['auth.token', 'auth.cas.force'
     Route::get('dues/packages/active', 'DuesPackageController@indexActive');
     Route::get('dues/packages/available', 'DuesPackageController@indexAvailable');
     Route::resource('dues/packages', 'DuesPackageController', ['except' => ['create', 'edit']]);
+    Route::get('dues/transactions/paid', 'DuesTransactionController@indexPaid');
     Route::get('dues/transactions/pending', 'DuesTransactionController@indexPending');
+    Route::get('dues/transactions/pendingSwag', 'DuesTransactionController@indexPendingSwag');
     Route::resource('dues/transactions', 'DuesTransactionController', ['except' => ['create', 'edit']]);
     Route::post('roles/{id}/assign', 'RoleController@assign');
     Route::resource('roles', 'RoleController', ['except' => 'create', 'edit']);
