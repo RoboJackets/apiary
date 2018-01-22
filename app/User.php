@@ -184,7 +184,7 @@ class User extends Authenticatable
             $pkgIsActive = $lastDuesTransaction->package->is_active;
             $hasPayment = ($lastDuesTransaction->payment()->exists());
             if ($hasPayment) {
-                $paidTotal = ($lastDuesTransaction->payment->sum('amount') == $lastDuesTransaction->getPayableAmount());
+                $paidTotal = ($lastDuesTransaction->payment->sum('amount') >= $lastDuesTransaction->getPayableAmount());
                 return ($paidTotal && $pkgIsActive);
             } else {
                 return false;
@@ -225,12 +225,7 @@ class User extends Authenticatable
     public function scopeActive($query)
     {
         return $query->whereHas('dues', function ($q) {
-            $q->whereHas('package', function ($q) {
-                $q->active();
-            });
-            $q->whereHas('payment', function ($q) {
-                $q->where('amount', '!=', 0);
-            });
+            $q->paid()->current();
         });
     }
 }
