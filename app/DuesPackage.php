@@ -61,7 +61,9 @@ class DuesPackage extends Model
      */
     public function getIsActiveAttribute()
     {
-        return ($this->attributes['effective_start'] <= date('Y-m-d') &&
-                $this->attributes['effective_end'] >= date('Y-m-d'));
+        $now  = new \DateTime();
+        $start = new \DateTime($this->effective_start);
+        $end = new \DateTime($this->effective_end);
+        return (($start <= $now) && ($end >= $now));
     }
 }
