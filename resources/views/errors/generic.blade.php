@@ -41,7 +41,7 @@
         </div>
         @endif
         <div class="col-md-3">
-            <b>Time:</b> {{ time() }}
+            <b>Time:</b> {{ date("D M j Y G:i:s T") }}
         </div>
     </div>
 
