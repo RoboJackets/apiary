@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('title')
-FASET Admin | config('app.name') }}
+FASET Admin | {{ config('app.name') }}
 @endsection
 
 @section('content')
