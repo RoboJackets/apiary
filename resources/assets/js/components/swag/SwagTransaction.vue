@@ -76,7 +76,7 @@
     },
     methods: {
       swagDistributed: function () {
-        window.location.href= "/admin/swag";
+        window.location.href= (document.referrer) ? document.referrer : "/admin/swag";
       }
     }
     }
