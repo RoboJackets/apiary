@@ -1,0 +1,147 @@
+<template>
+    <div class="row">
+        <div class="col-12">
+            <form id="eventCreateForm" v-on:submit.prevent="submit">
+
+                <h3>Event Details</h3>
+
+                <div class="form-group row">
+                    <label for="event-name" class="col-sm-2 col-form-label">Event Name<span style="color:red">*</span></label>
+                    <div class="col-sm-10 col-lg-4">
+                        <input
+                                v-model="event.name"
+                                type="text"
+                                class="form-control"
+                                :class="{ 'is-invalid': $v.event.name.$error }"
+                                id="event-name"
+                                @blur="$v.event.name.$touch()">
+                    </div>
+
+                    <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
+                    <div class="col-sm-10 col-lg-4">
+                        <input v-model="event.organizer" type="text" class="form-control" id="event-organizer" placeholder="Defaults to you">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="event-starttime" class="col-sm-2 col-form-label">Start Time</label>
+                    <div class="col-sm-10 col-lg-4">
+                        <flat-pickr
+                                id="event-starttime"
+                                v-model="event.start_time"
+                                placeholder="Select start time"
+                                :required="true"
+                                :config="dateTimeConfig"
+                                input-class="form-control">
+                        </flat-pickr>
+                    </div>
+
+                    <label for="event-endtime" class="col-sm-2 col-form-label">End Time</label>
+                    <div class="col-sm-10 col-lg-4">
+                        <flat-pickr
+                                id="event-endtime"
+                                v-model="event.end_time"
+                                placeholder="Select start time"
+                                :required="true"
+                                :config="dateTimeConfig"
+                                input-class="form-control">
+                        </flat-pickr>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="event-location" class="col-sm-2 col-form-label">Location</label>
+                    <div class="col-sm-10 col-lg-4">
+                        <input v-model="event.location" type="text" class="form-control" id="event-location">
+                    </div>
+                    <label for="event-anonymousrsvp" class="col-sm-2 col-form-label">Allow Anonymous RSVP<span style="color:red">*</span></label>
+                    <div class="col-sm-10 col-lg-4">
+                        <div class="btn-group" id="event-anonymousrsvp-buttons" data-toggle="buttons">
+                            <label class="btn btn-secondary form-control" :class="{ active: event.allow_anonymous_rsvp==false }" @click.left="updateRadio">
+                                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="false" autocomplete="off"> No
+                            </label>
+                            <label class="btn btn-secondary form-control" :class="{ active: event.allow_anonymous_rsvp==true }" @click.left="updateRadio">
+                                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="true" autocomplete="off"> Yes
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="event-cost" class="col-sm-2 col-form-label">Cost</label>
+                    <div class="col-sm-10 col-lg-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="prepend-dollar">$</span>
+                            <input
+                                    v-model="event.cost"
+                                    type="text"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': $v.event.cost.$error }"
+                                    id="event-cost"
+                                    placeholder="Enter a decimal (10.00)"
+                                    aria-describedby="prepend-dollar"
+                                    @blur="$v.event.cost.$touch()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a class="btn btn-secondary" href="/admin/events">Cancel</a>
+                    <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</template>
+
+<script>
+    import { required, numeric } from 'vuelidate/lib/validators'
+    export default {
+        name: "createEventForm",
+        data() {
+            return {
+                event: {},
+                feedback: '',
+                hasError: false,
+                baseUrl: "/api/v1/events",
+                dateTimeConfig: {
+                    dateFormat: "Y-m-d H:i:S",
+                    enableTime:true,
+                    altInput: true
+                }
+            }
+        },
+        validations: {
+            event: {
+                name: {required},
+                cost: {numeric},
+            }
+        },
+        methods: {
+            submit () {
+                if (this.$v.$invalid) {
+                    this.$v.$touch();
+                    return;
+                }
+                axios.post(this.baseUrl, this.event)
+                    .then(response => {
+                        this.hasError = false;
+                        this.feedback = "Saved!";
+                        console.log("success");
+                        window.location.href= "/admin/events/" + response.data.id;
+                    })
+                    .catch(response => {
+                        this.hasError = true;
+                        this.feedback = "";
+                        console.log(response);
+                        sweetAlert("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+                    })
+            },
+            updateRadio(event) {
+                this.event.allow_anonymous_rsvp = event.target.firstChild.value == 'true';
+            },
+        }
+    }
+</script>
