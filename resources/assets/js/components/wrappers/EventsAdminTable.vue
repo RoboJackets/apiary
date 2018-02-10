@@ -1,5 +1,5 @@
 <template>
-  <datatable id="faset-admin-table"
+  <datatable id="events-admin-table"
     data-url="/api/v1/events"
     data-path="events"
     :columns="tableConfig">
