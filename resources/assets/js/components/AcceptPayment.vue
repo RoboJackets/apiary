@@ -160,7 +160,7 @@
     },
     computed: {
       expectedAmount: function() {
-        if (this.payment.method == 'swipe') {
+        if (this.payment.method == 'swipe' || this.payment.method == 'square') {
           return parseFloat(this.amount) + 3;
         } else {
           return parseFloat(this.amount);
