@@ -15,6 +15,7 @@ class Event extends Model
         'start_time',
         'end_time'
     ];
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -24,9 +25,18 @@ class Event extends Model
         'id', 'created_at', 'updated_at'
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'organizer_name'
+    ];
+
     public function organizer()
     {
-        return $this->belongsTo('App\User', 'organizer');
+        return $this->belongsTo('App\User', 'organizer_id');
     }
 
     public function rsvps()
@@ -48,5 +58,13 @@ class Event extends Model
     public function getPayableAmount()
     {
         return ($this->price) ?: null;
+    }
+
+    /**
+     * Get the organizer_name attribute for the model
+     */
+    public function getOrganizerNameAttribute()
+    {
+        return $this->organizer->name;
     }
 }

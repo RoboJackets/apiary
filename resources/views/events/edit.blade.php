@@ -6,10 +6,9 @@ Event Admin | {{ config('app.name') }}
 
 @section('content')
 @component('layouts/title')
-  Event Admin
+  Edit Event Data
 @endcomponent
 
-<events-admin-table>
-</events-admin-table>
+<event-edit-form event-id="{{$id}}"></event-edit-form>
 
 @endsection

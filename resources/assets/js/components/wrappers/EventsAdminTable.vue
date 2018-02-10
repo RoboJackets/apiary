@@ -1,5 +1,5 @@
 <template>
-  <datatable id="faset-admin-table"
+  <datatable id="events-admin-table"
     data-url="/api/v1/events"
     data-path="events"
     :columns="tableConfig">
@@ -16,7 +16,7 @@
             return type === "display" ? link : data;
           }}, 
           {'title': 'Name', 'data':'name'}, 
-          {'title': 'Organizer', 'data':'organizer'}
+          {'title': 'Organizer', 'data':'organizer_name'}
         ]
       }
     }

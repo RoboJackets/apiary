@@ -42,14 +42,17 @@ Vue.component('custom-radio-buttons', require('./components/fields/CustomRadioBu
 // Large Scale Components
 
 Vue.component('datatable', require('./components/Datatable.vue'));
-Vue.component('faset-admin-table', require('./components/wrappers/FasetAdminTable.vue'))
+Vue.component('faset-admin-table', require('./components/wrappers/FasetAdminTable.vue'));
 Vue.component('faset-edit-form', require('./components/FasetEditForm.vue'));
-Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue'))
+Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue'));
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
-Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'))
-Vue.component('event-edit-form', require('./components/EventEditForm.vue'));
 Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));
 Vue.component('accept-payment', require('./components/AcceptPayment.vue'));
+
+// Events
+Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'));
+Vue.component('event-edit-form', require('./components/events/EventEditForm.vue'));
+Vue.component('event-create-form', require('./components/events/EventCreateForm.vue'));
 
 // Dues
 
