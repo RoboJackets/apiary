@@ -8,13 +8,7 @@
                 <div class="form-group row">
                     <label for="event-name" class="col-sm-2 col-form-label">Event Name<span style="color:red">*</span></label>
                     <div class="col-sm-10 col-lg-4">
-                        <input
-                                v-model="event.name"
-                                type="text"
-                                class="form-control"
-                                :class="{ 'is-invalid': $v.event.name.$error }"
-                                id="event-name"
-                                @blur="$v.event.name.$touch()">
+                        <input v-model="event.name" type="text" class="form-control" :class="{ 'is-invalid': $v.event.name.$error }" id="event-name" @blur="$v.event.name.$touch()">
                     </div>
 
                     <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
@@ -54,16 +48,16 @@
                     <div class="col-sm-10 col-lg-4">
                         <input v-model="event.location" type="text" class="form-control" id="event-location">
                     </div>
-                    <label for="event-anonymousrsvp" class="col-sm-2 col-form-label">Allow Anonymous RSVP<span style="color:red">*</span></label>
+
+                    <label for="event-anonymousrsvp-buttons" class="col-sm-2 col-form-label">Anonymous RSVP<span style="color:red">*</span></label>
                     <div class="col-sm-10 col-lg-4">
-                        <div class="btn-group" id="event-anonymousrsvp-buttons" data-toggle="buttons">
-                            <label class="btn btn-secondary form-control" :class="{ active: event.allow_anonymous_rsvp==false }" @click.left="updateRadio">
-                                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="false" autocomplete="off"> No
-                            </label>
-                            <label class="btn btn-secondary form-control" :class="{ active: event.allow_anonymous_rsvp==true }" @click.left="updateRadio">
-                                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="true" autocomplete="off"> Yes
-                            </label>
-                        </div>
+                        <custom-radio-buttons
+                                v-model="event.allow_anonymous_rsvp"
+                                :options="rsvpOptions"
+                                id="event-anonymousrsvp-buttons"
+                                :is-error="$v.event.allow_anonymous_rsvp.$error"
+                                @input="$v.event.allow_anonymous_rsvp.$touch()">
+                        </custom-radio-buttons>
                     </div>
                 </div>
 
@@ -110,13 +104,18 @@
                     dateFormat: "Y-m-d H:i:S",
                     enableTime:true,
                     altInput: true
-                }
+                },
+                rsvpOptions: [
+                    {value: "0", text: "No"},
+                    {value: "1", text: "Yes"},
+                ],
             }
         },
         validations: {
             event: {
                 name: {required},
                 cost: {numeric},
+                allow_anonymous_rsvp: {required}
             }
         },
         methods: {
@@ -138,9 +137,6 @@
                         console.log(response);
                         sweetAlert("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
                     })
-            },
-            updateRadio(event) {
-                this.event.allow_anonymous_rsvp = event.target.firstChild.value == 'true';
             },
         }
     }
