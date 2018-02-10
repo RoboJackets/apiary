@@ -63,6 +63,7 @@
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
+          <a class="btn btn-secondary" href="/admin/events">Cancel</a>
           <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
         </div>
 
