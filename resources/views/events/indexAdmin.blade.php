@@ -10,10 +10,9 @@ Event Admin | {{ config('app.name') }}
 @endcomponent
 <div class="row">
     <div class="col-sm-12 col-md-3">
-        <a href="{{ route('events.create') }}" class="btn btn-primary" role="button">New Event</a>
+        <a href="{{ route('events.create') }}" class="btn btn-primary btn-above-table" role="button">New Event</a>
     </div>
 </div>
-<events-admin-table>
-</events-admin-table>
+<events-admin-table></events-admin-table>
 
 @endsection
