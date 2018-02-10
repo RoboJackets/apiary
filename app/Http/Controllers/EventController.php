@@ -23,9 +23,6 @@ class EventController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     *
-     * @api {get} /events/ List all events
-     * @apiGroup Users
      */
     public function index()
     {
@@ -52,7 +49,7 @@ class EventController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:255',
-            'price' => 'numeric',
+            'cost' => 'numeric',
             'allow_anonymous_rsvp' => 'required|boolean',
             'location' => 'max:255',
             'start_time' => 'date',
@@ -68,8 +65,7 @@ class EventController extends Controller
         }
 
         if (is_numeric($event->id)) {
-            $dbEvent = Event::findOrFail($event->id);
-            return response()->json(['status' => 'success', 'event' => $dbEvent], 201);
+            return response()->json(['status' => 'success', 'event' => $event], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
@@ -147,7 +143,7 @@ class EventController extends Controller
 
     public function destroy($id)
     {
-        $event = Event::find();
+        $event = Event::find($id);
         $deleted = $event->delete();
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
