@@ -8,7 +8,11 @@ Event Admin | {{ config('app.name') }}
 @component('layouts/title')
   Event Admin
 @endcomponent
-
+<div class="row">
+    <div class="col-sm-12 col-md-3">
+        <a href="{{ route('events.create') }}" class="btn btn-primary" role="button">New Event</a>
+    </div>
+</div>
 <events-admin-table>
 </events-admin-table>
 

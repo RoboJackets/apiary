@@ -64,12 +64,16 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
 
         Route::prefix('events')->group(function () {
             Route::get('/', function () {
-                return view('events/eventadmin');
-            })->name('eventsAdmin');
+                return view('events.indexAdmin');
+            })->name('events.indexAdmin');
+
+            Route::get('new', function () {
+                return view('events.create');
+            })->name('events.create');
 
             Route::get('{id}', function ($id) {
-                return view('events/eventedit', ['id' => $id]);
-            })->name('eventEdit');
+                return view('events.edit', ['id' => $id]);
+            })->name('events.edit');
         });
 
         Route::prefix('dues')->group(function () {
