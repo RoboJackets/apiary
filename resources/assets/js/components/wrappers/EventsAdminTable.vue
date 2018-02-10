@@ -16,7 +16,7 @@
             return type === "display" ? link : data;
           }}, 
           {'title': 'Name', 'data':'name'}, 
-          {'title': 'Organizer', 'data':'organizer'}
+          {'title': 'Organizer', 'data':'organizer_name'}
         ]
       }
     }
