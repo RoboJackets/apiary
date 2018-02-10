@@ -129,7 +129,7 @@
                         this.hasError = false;
                         this.feedback = "Saved!";
                         console.log("success");
-                        window.location.href= "/admin/events/" + response.data.id;
+                        window.location.href= "/admin/events/" + response.data.event.id;
                     })
                     .catch(response => {
                         this.hasError = true;
