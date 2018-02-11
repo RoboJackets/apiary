@@ -13,7 +13,8 @@
 
                     <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
                     <div class="col-sm-10 col-lg-4">
-                        <input v-model="event.organizer" type="text" class="form-control" id="event-organizer" placeholder="Defaults to you">
+                        <user-lookup></user-lookup>
+                        <!--<input v-model="event.organizer" type="text" class="form-control" id="event-organizer" placeholder="Defaults to you">-->
                     </div>
                 </div>
 
