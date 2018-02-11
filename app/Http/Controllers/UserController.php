@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-users', ['only' => ['index']]);
+        $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
         $this->middleware('permission:create-users', ['only' => ['store']]);
         $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
         $this->middleware('permission:update-users|update-users-own', ['only' => ['update']]);
@@ -31,6 +31,21 @@ class UserController extends Controller
     {
         $users = User::all();
         return response()->json(['status' => 'success', 'users' => $users]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        if (!$request->has('keyword')) {
+            return response()->json(['status' => 'error', 'error' => 'Missing keyword'], 422);
+        }
+        $keyword = "%" . $request->input('keyword') . "%";
+        $results = User::where('uid', 'LIKE', $keyword)
+            ->orWhere('first_name', 'LIKE', $keyword)->get();
+        return response()->json(['status' => 'success', 'users' => $results]);
     }
 
     /**
