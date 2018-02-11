@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Bugsnag;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -40,12 +41,12 @@ class EventController extends Controller
     {
         // Default to currently logged-in user
         if (isset($request->organizer)) {
-            $organizer = User::findByIdentifier($request->organizer)->first();
+            $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
+            unset($request['organizer']);
         } else {
-            $organizer = auth()->user();
+            $request['organizer_id'] = auth()->user()->id;
         }
 
-        $request['organizer'] = $organizer->id;
 
         $this->validate($request, [
             'name' => 'required|max:255',
