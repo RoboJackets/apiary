@@ -11,6 +11,20 @@ body {
 	margin: 1rem auto;
 }
 
+// Typeahead (v-select component) Styles
+.v-select.open .dropdown-toggle {
+   border-color: #5cb3fd;
+   border-radius: 0;
+ }
+
+.v-select .dropdown-toggle {
+  border-radius: 0 !important;
+}
+
+.v-select {
+  background: #fff;
+}
+
 // Button above datatable (indented)
 .btn-above-table {
   margin-left: 15px;
