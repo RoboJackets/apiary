@@ -13,8 +13,7 @@
 
                     <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
                     <div class="col-sm-10 col-lg-4">
-                        <user-lookup></user-lookup>
-                        <!--<input v-model="event.organizer" type="text" class="form-control" id="event-organizer" placeholder="Defaults to you">-->
+                        <user-lookup v-model="event.organizer"></user-lookup>
                     </div>
                 </div>
 
@@ -126,7 +125,12 @@
                     this.$v.$touch();
                     return;
                 }
-                axios.post(this.baseUrl, this.event)
+
+                //Set organizer_id to the id from the selected object
+                let newEvent = this.event;
+                newEvent.organizer_id = newEvent.organizer.id;
+
+                axios.post(this.baseUrl, newEvent)
                     .then(response => {
                         this.hasError = false;
                         this.feedback = "Saved!";
