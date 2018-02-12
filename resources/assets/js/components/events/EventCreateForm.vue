@@ -128,7 +128,9 @@
 
                 //Set organizer_id to the id from the selected object
                 let newEvent = this.event;
-                newEvent.organizer_id = newEvent.organizer.id;
+                if (newEvent.organizer instanceof Object) {
+                    newEvent.organizer_id = newEvent.organizer.id;
+                }
 
                 axios.post(this.baseUrl, newEvent)
                     .then(response => {
