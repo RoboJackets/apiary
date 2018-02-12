@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -34,6 +35,10 @@ class UserController extends Controller
     }
 
     /**
+     * Searches for a resource based upon a keyword
+     * Accepts GTID, First/Preferred Name, and Username (uid)
+     * GTID returns first result, others return all matching (wildcard)
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -42,9 +47,16 @@ class UserController extends Controller
         if (!$request->has('keyword')) {
             return response()->json(['status' => 'error', 'error' => 'Missing keyword'], 422);
         }
-        $keyword = "%" . $request->input('keyword') . "%";
-        $results = User::where('uid', 'LIKE', $keyword)
-            ->orWhere('first_name', 'LIKE', $keyword)->get();
+        $keyword = $request->input('keyword');
+        if (is_numeric($keyword)) {
+            $results = User::where('gtid', $keyword)->get();
+        } else {
+            $keyword = "%" . $request->input('keyword') . "%";
+            $results = User::where('uid', 'LIKE', $keyword)
+                ->orWhere('first_name', 'LIKE', $keyword)
+                ->orWhere('preferred_name', 'LIKE', $keyword)
+                ->get();
+        }
         return response()->json(['status' => 'success', 'users' => $results]);
     }
 
