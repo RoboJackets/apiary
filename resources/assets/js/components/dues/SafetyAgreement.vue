@@ -4,18 +4,16 @@
 
     <fieldset class="form-group">
       <label class="lead" for="safety">As a member of the Student Competition Center (SCC), I agree to abide by the following rules. Additionally, I understand that failure to adhere to these rules may lead to temporary or permanent suspension from the SCC and/or sanctions from the Office of Student Integrity.</label>
-      <div v-for="(rule,index) in rules" class="custom-controls-stacked">
-        <label class="custom-control custom-checkbox">
-          <input
-            v-model="checks"
-            type="checkbox"
-            class="rule-agreement custom-control-input"
-            :class="{ 'is-invalid': $v.$error && !checks.includes(index)}"
-            :value="index"
-            name="safety">
-          <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">{{rule}}</span>
-        </label>
+      <div v-for="(rule,index) in rules" class="custom-control custom-checkbox">
+        <input
+          v-model="checks"
+          type="checkbox"
+          class="rule-agreement custom-control-input"
+          :class="{ 'is-invalid': $v.$error && !checks.includes(index)}"
+          :value="index"
+          name="safety"
+          :id="'safety'+index">
+        <label class="custom-control-label" :for="'safety'+index">{{rule}}</label>
       </div>
     </fieldset>
 

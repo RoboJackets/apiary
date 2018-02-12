@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-group" :id="id" data-toggle="buttons">
+  <div class="btn-group btn-group-toggle" role="group" :id="id">
     <label v-for="option in options" class="btn btn-secondary" v-bind:class="{ active: option.value == value, 'btn-danger': isError}" @click.left="update">
       <input v-model="value" type="radio" :value="option.value" autocomplete="off"> {{option.text}}
     </label>
@@ -22,7 +22,7 @@
         required: true
       },
       value: {
-        type: String,
+        type: [String, Number],
         default: ''
       },
       id: {

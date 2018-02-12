@@ -31,68 +31,41 @@
 
           <fieldset class="form-group">
             <label for="heardfrom">How did you hear about RoboJackets?</label>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="faset">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">FASET</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-faset" name="heardfrom" value="faset">
+              <label class="custom-control-label" for="heardfrom-faset">FASET</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="tour">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Campus tour</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-tour" name="heardfrom" value="tour">
+              <label class="custom-control-label" for="heardfrom-tour">Campus tour</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="member">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">From another member</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-member" name="heardfrom" value="member">
+              <label class="custom-control-label" for="heardfrom-member">From another member</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="nonmember">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">From a friend not in RoboJackets</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-nonmember" name="heardfrom" value="nonmember">
+              <label class="custom-control-label" for="heardfrom-nonmember">From a friend not in RoboJackets</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="social_media">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Social Media (Facebook, Twitter, Youtube, etc.)</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-social_media" name="heardfrom" value="social_media">
+              <label class="custom-control-label" for="heardfrom-social_media">Social Media (Facebook, Twitter, Youtube, etc.)</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="website">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Website (RoboJackets.org)</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-website" name="heardfrom" value="website">
+              <label class="custom-control-label" for="heardfrom-website">Website (RoboJackets.org)</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="frc">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">FRC Event</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-frc" name="heardfrom" value="frc">
+              <label class="custom-control-label" for="heardfrom-frc">FRC Event</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="ftc">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">FTC Event</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-ftc" name="heardfrom" value="ftc">
+              <label class="custom-control-label" for="heardfrom-ftc">FTC Event</label>
             </div>
-            <div class="custom-controls-stacked">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="heardfrom" value="vex">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Vex Event</span>
-              </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-vex" name="heardfrom" value="vex">
+              <label class="custom-control-label" for="heardfrom-vex">Vex Event</label>
             </div>
           </fieldset>
 

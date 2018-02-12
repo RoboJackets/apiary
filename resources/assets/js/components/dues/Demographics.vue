@@ -7,28 +7,17 @@
 
         <fieldset class="form-group">
           <label class ="lead" for="gender">What is your gender?</label>
-          <div v-for="option in genderOptions" class="custom-controls-stacked">
-            <label class="custom-control custom-radio">
-              <input v-model="localUser.gender" type="radio" class="custom-control-input" :value="option.value" name="gender">
-              <span class="custom-control-indicator"></span>
-              <span class="custom-control-description">{{option.text}}</span>
-            </label>
+          <div v-for="option in genderOptions" class="custom-control custom-radio">
+            <input v-model="localUser.gender" type="radio" class="custom-control-input" :value="option.value" name="gender" :id="'gender-'+option.value">
+            <label class="custom-control-label" :for="'gender-'+option.value">{{option.text}}</label>
           </div>
         </fieldset>
 
         <fieldset class="form-group">
           <label class="lead" for="ethnicity">What is your ethnicity/race? (Check all that Apply)</label>
-          <div v-for="option in ethnicityOptions" class="custom-controls-stacked">
-            <label class="custom-control custom-checkbox">
-              <input 
-                v-model="localUser.ethnicity"
-                type="checkbox"
-                class="custom-control-input"
-                :value="option.value"
-                name="ethnicity">
-              <span class="custom-control-indicator"></span>
-              <span class="custom-control-description">{{option.text}}</span>
-            </label>
+          <div v-for="option in ethnicityOptions" class="custom-control custom-checkbox">
+            <input v-model="localUser.ethnicity" type="checkbox" class="custom-control-input" :value="option.value" :id="'ethnicity-'+option.value" name="ethnicity">
+            <label class="custom-control-label" :for="'ethnicity-'+option.value">{{option.text}}</label>
           </div>
         </fieldset>
 
