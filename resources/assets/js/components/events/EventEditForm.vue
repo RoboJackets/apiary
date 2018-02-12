@@ -13,7 +13,7 @@
 
           <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="event.organizer" type="text" class="form-control" id="user-organizer" placeholder="None on record">
+            <user-lookup :value="event.organizer" v-model="event.organizer"></user-lookup>
           </div>
         </div>
 
@@ -178,8 +178,14 @@
             return;
         }
 
-        var updatedEvent = this.event;
+        let updatedEvent = this.event;
         delete updatedEvent.rsvps;
+
+        //Delete these as they're computed by Eloquent
+        delete updatedEvent.organizer_id;
+        delete updatedEvent.organizer_name;
+        //Set organizer_id to the id from the selected object
+        updatedEvent.organizer_id = updatedEvent.organizer.id;
 
         axios.put(this.dataUrl, updatedEvent)
           .then(response => {
