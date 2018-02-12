@@ -48,16 +48,15 @@
           <div class="col-sm-10 col-lg-4">
             <input v-model="event.location" type="text" class="form-control" id="event-location" placeholder="None on record">
           </div>
-          <label for="event-anonymousrsvp" class="col-sm-2 col-form-label">Allow Anonymous RSVP</label>
+          <label for="event-anonymousrsvp-buttons" class="col-sm-2 col-form-label">Anonymous RSVP<span style="color:red">*</span></label>
           <div class="col-sm-10 col-lg-4">
-            <div class="btn-group" id="user-shirtsize" data-toggle="buttons">
-              <label class="btn btn-secondary" v-bind:class="{ active: event.allow_anonymous_rsvp==false }" @click.left="updateRadio">
-                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="false" autocomplete="off"> No (default)
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: event.allow_anonymous_rsvp==true }"  @click.left="updateRadio">
-                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="true" autocomplete="off"> Yes
-              </label>
-            </div>
+            <custom-radio-buttons
+                    v-model="event.allow_anonymous_rsvp"
+                    :options="rsvpOptions"
+                    id="event-anonymousrsvp-buttons"
+                    :is-error="$v.event.allow_anonymous_rsvp.$error"
+                    @input="$v.event.allow_anonymous_rsvp.$touch()">
+            </custom-radio-buttons>
           </div>
         </div>
 
@@ -103,6 +102,7 @@
 </template>
 
 <script>
+  import { required, numeric } from 'vuelidate/lib/validators'
   export default {
     name: "editEventForm",
     props: ['eventId'],
@@ -136,8 +136,19 @@
           dateFormat: "Y-m-d H:i:S",
           enableTime:true,
           altInput: true
-        }
+        },
+        rsvpOptions: [
+            {value: "0", text: "No"},
+            {value: "1", text: "Yes"},
+        ],
       }
+    },
+    validations: {
+        event: {
+            name: {required},
+            cost: {numeric},
+            allow_anonymous_rsvp: {required}
+        }
     },
     mounted() {
       this.dataUrl = this.baseUrl + this.eventId;
@@ -159,19 +170,21 @@
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
-
-      setInterval(this.updateAttendance, 5000);
-
     },
     methods: {
       submit () {
+        if (this.$v.$invalid) {
+            this.$v.$touch();
+            return;
+        }
+
         var updatedEvent = this.event;
         delete updatedEvent.rsvps;
 
         axios.put(this.dataUrl, updatedEvent)
           .then(response => {
             this.hasError = false;
-            this.feedback = "Saved!"
+            this.feedback = "Saved!";
             console.log("success");
           })
           .catch(response => {
@@ -180,9 +193,6 @@
             console.log(response);
             sweetAlert("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
-      },
-      updateRadio (event) {
-        this.event.allow_anonymous_rsvp = event.target.firstChild.value == 'true';
       },
       updateAttendance () {
         axios.get(this.attendanceUrl)
