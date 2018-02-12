@@ -40,18 +40,18 @@ class EventController extends Controller
     public function store(Request $request)
     {
         // Default to currently logged-in user
-        if (isset($request->organizer)) {
+        if (isset($request->organizer) && !$request->has('organizer_id')) {
             $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
             unset($request['organizer']);
-        } else {
+        } elseif (!$request->has('organizer_id')) {
             $request['organizer_id'] = auth()->user()->id;
         }
-
 
         $this->validate($request, [
             'name' => 'required|max:255',
             'cost' => 'numeric',
             'allow_anonymous_rsvp' => 'required|boolean',
+            'organizer_id' => 'exists:users,id',
             'location' => 'max:255',
             'start_time' => 'date',
             'end_time' => 'date'
@@ -111,16 +111,18 @@ class EventController extends Controller
                 'message' => 'Forbidden - You do not have permission to update this Event.'], 403);
         }
 
-        if (isset($request->organizer)) {
-            $organizer = User::findByIdentifier($request->organizer)->first();
-            $request['organizer'] = $organizer->id;
+        if ($request->has('organizer') && !$request->has('organizer_id')) {
+            $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
+            unset($request['organizer']);
+        } elseif (!$request->has('organizer_id')) {
+            $request['organizer_id'] = auth()->user()->id;
         }
 
         $this->validate($request, [
             'name' => 'required|max:255',
             'price' => 'numeric|nullable',
             'allow_anonymous_rsvp' => 'required|boolean',
-            'organizer' => 'required',
+            'organizer_id' => 'required|exists:users,id',
             'location' => 'max:255|nullable',
             'start_time' => 'date|nullable',
             'end_time' => 'date|nullable'
