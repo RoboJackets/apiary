@@ -14,6 +14,7 @@ use SquareConnect\Configuration;
 use SquareConnect\Model\CreateCheckoutRequest;
 use SquareConnect\Model\CreateOrderRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
+use SquareConnect\Model\Transaction;
 use Validator;
 use Log;
 
@@ -379,20 +380,30 @@ class PaymentController extends Controller
         Configuration::getDefaultConfiguration()->setAccessToken($token);
         
         //Query Square API to get authoritative data
-        try {
-            Log::debug(get_class() . " - Querying Square for Transaction '$server_txn_id'");
-            $square_txn = $txnClient->retrieveTransaction($location, $server_txn_id);
-        } catch (\Exception $e) {
-            Bugsnag::notifyException($e);
-            $error = $e->getMessage();
-            Log::error(get_class() . " - Error querying Square transaction", $error);
+        $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
+        if ($square_txn instanceof ApiException && $square_txn->getCode() == 404) {
+            $counter = 0;
+            while ($counter <= 2) {
+                sleep(0.3);
+                $counter++;
+                $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
+                if ($square_txn instanceof Transaction) {
+                    $counter = 3;
+                } elseif ($square_txn instanceof ApiException && $counter == 2) {
+                    return response(view('errors.generic',
+                        [
+                            'error_code' => 500,
+                            'error_message' => 'Error querying Square transaction (not-found)'
+                        ]), 500);
+                }
+            }
+        } elseif (!$square_txn instanceof Transaction) {
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
-                    'error_message' => 'Error querying Square transaction'
+                    'error_message' => 'Unknown error querying Square transaction'
                 ]), 500);
         }
-        Log::debug(get_class() . " - Retrieved Square Transaction '$server_txn_id'");
         
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
@@ -431,5 +442,28 @@ class PaymentController extends Controller
         
         alert()->success("We've received your payment", "Success!");
         return redirect('/');
+    }
+
+    /**
+     * Queries Square Transaction API for transaction details
+     *
+     * @param TransactionsApi $client
+     * @param string $location
+     * @param string $server_txn_id
+     * @return \Exception|\SquareConnect\Model\RetrieveTransactionResponse
+     */
+    protected function getSquareTransaction(TransactionsApi $client, $location, $server_txn_id)
+    {
+        try {
+            Log::debug(get_class() . " - Querying Square for Transaction '$server_txn_id'");
+            $square_txn = $client->retrieveTransaction($location, $server_txn_id);
+        } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
+            $error = $e->getMessage();
+            Log::error(get_class() . " - Error querying Square transaction", $error);
+            return $e;
+        }
+        Log::debug(get_class() . " - Retrieved Square Transaction '$server_txn_id'");
+        return $square_txn;
     }
 }
