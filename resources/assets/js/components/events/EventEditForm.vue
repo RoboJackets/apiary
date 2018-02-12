@@ -63,6 +63,7 @@
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <a class="btn btn-secondary" href="/admin/events">Cancel</a>
+          <button type="button" class="btn btn-danger" @click="deletePrompt">Delete</button>
           <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
         </div>
 
@@ -209,8 +210,46 @@
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
+      },
+      deletePrompt() {
+          let self = this;
+          swal({
+              title: "Are you sure?",
+              text: "Once deleted, you will not be able to recover this event!",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes, delete it!",
+              closeOnConfirm: false
+          }, function(){
+              self.deleteEvent();
+          });
+      },
+      deleteEvent() {
+          axios.delete(this.dataUrl)
+              .then(response => {
+                this.hasError = false;
+                swal({
+                    title: "Deleted!",
+                    text: "The event has been deleted.",
+                    type: "success"
+                }, function() {
+                    window.location.href = "/admin/events";
+                });
+              })
+              .catch(error => {
+                  this.hasError = true;
+                  this.feedback = "";
+                  if(error.response.status == 403) {
+                      swal({
+                          title: "Whoops!",
+                          text: "You don't have permission to perform that action.",
+                          type: "error"
+                      });
+                  } else {
+                      sweetAlert("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                  }
+              });
       }
-
     }
   }
 </script>
