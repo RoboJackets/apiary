@@ -18,10 +18,6 @@ window.Vue = require('vue');
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate);
 
-// Import the TypeAhead plugin
-// import TypeAhead from 'vue2-typeahead'
-// Vue.use(TypeAhead);
-// Vue.component('vueTypeahead', require('vuejs-autocomplete'));
 import vSelect from 'vue-select'
 Vue.component('v-select', vSelect);
 
