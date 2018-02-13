@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Bugsnag;
+use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -11,7 +13,7 @@ class AttendanceController extends Controller
     public function __construct()
     {
         $this->middleware('permission:read-attendance', ['only' => ['index']]);
-        //$this->middleware('permission:create-attendance', ['only' => ['store']]);
+        $this->middleware('permission:create-attendance', ['only' => ['store']]);
         $this->middleware('permission:read-attendance|read-attendance-own', ['only' => ['show']]);
         $this->middleware('permission:update-attendance', ['only' => ['update']]);
         $this->middleware('permission:delete-attendance', ['only' => ['destroy']]);
@@ -35,8 +37,7 @@ class AttendanceController extends Controller
         if (empty($attendable_type) || empty($attendable_id)) {
             $attendance = Attendance::with('attendee')->get();
         } else {
-            $attendance = Attendance
-                ::where('attendable_type', $attendable_type)
+            $attendance = Attendance::where('attendable_type', $attendable_type)
                 ->where('attendable_id', $attendable_id)
                 ->with('attendee')
                 ->get();
@@ -51,6 +52,7 @@ class AttendanceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      */
     public function store(Request $request)
     {
@@ -62,17 +64,27 @@ class AttendanceController extends Controller
             'created_at' => 'date'
         ]);
 
-        //$request['recorded_by'] = $request->user()->id;
+        $wantsName = ($request->has('includeName'));
+        $request['recorded_by'] = $request->user()->id;
+        unset($request['includeName']);
 
         try {
             $att = Attendance::firstOrCreate($request->all());
+            $code = ($att->wasRecentlyCreated) ? 201 : 200;
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        $code = ($att->wasRecentlyCreated) ? 201 : 200;
+        //Return user's name, if found and if requested
+        //This array merge is only okay until Fractal is implemented
+        if ($wantsName) {
+            $user = User::where('gtid', '=', $request->input('gtid'))->first();
+            $name = ($user) ? ["name" => $user->name] : ["name" => "Non-Member"];
+            $att = array_merge($att->toArray(), $name);
+        }
+
         return response()->json(['status' => 'success', 'attendance' => $att], $code);
     }
 
