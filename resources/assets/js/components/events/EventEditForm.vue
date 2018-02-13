@@ -13,7 +13,7 @@
 
           <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="event.organizer" type="text" class="form-control" id="user-organizer" placeholder="None on record">
+            <user-lookup :value="event.organizer" v-model="event.organizer"></user-lookup>
           </div>
         </div>
 
@@ -48,22 +48,22 @@
           <div class="col-sm-10 col-lg-4">
             <input v-model="event.location" type="text" class="form-control" id="event-location" placeholder="None on record">
           </div>
-          <label for="event-anonymousrsvp" class="col-sm-2 col-form-label">Allow Anonymous RSVP</label>
+          <label for="event-anonymousrsvp-buttons" class="col-sm-2 col-form-label">Anonymous RSVP<span style="color:red">*</span></label>
           <div class="col-sm-10 col-lg-4">
-            <div class="btn-group" id="user-shirtsize" data-toggle="buttons">
-              <label class="btn btn-secondary" v-bind:class="{ active: event.allow_anonymous_rsvp==false }" @click.left="updateRadio">
-                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="false" autocomplete="off"> No (default)
-              </label>
-              <label class="btn btn-secondary" v-bind:class="{ active: event.allow_anonymous_rsvp==true }"  @click.left="updateRadio">
-                <input v-model="event.allow_anonymous_rsvp" type="radio" name="shirt_size" value="true" autocomplete="off"> Yes
-              </label>
-            </div>
+            <custom-radio-buttons
+                    v-model="event.allow_anonymous_rsvp"
+                    :options="rsvpOptions"
+                    id="event-anonymousrsvp-buttons"
+                    :is-error="$v.event.allow_anonymous_rsvp.$error"
+                    @input="$v.event.allow_anonymous_rsvp.$touch()">
+            </custom-radio-buttons>
           </div>
         </div>
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <a class="btn btn-secondary" href="/admin/events">Cancel</a>
+          <button type="button" class="btn btn-danger" @click="deletePrompt">Delete</button>
           <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
         </div>
 
@@ -103,6 +103,7 @@
 </template>
 
 <script>
+  import { required, numeric } from 'vuelidate/lib/validators'
   export default {
     name: "editEventForm",
     props: ['eventId'],
@@ -136,8 +137,19 @@
           dateFormat: "Y-m-d H:i:S",
           enableTime:true,
           altInput: true
-        }
+        },
+        rsvpOptions: [
+            {value: "0", text: "No"},
+            {value: "1", text: "Yes"},
+        ],
       }
+    },
+    validations: {
+        event: {
+            name: {required},
+            cost: {numeric},
+            allow_anonymous_rsvp: {required}
+        }
     },
     mounted() {
       this.dataUrl = this.baseUrl + this.eventId;
@@ -159,19 +171,27 @@
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
-
-      setInterval(this.updateAttendance, 5000);
-
     },
     methods: {
       submit () {
-        var updatedEvent = this.event;
+        if (this.$v.$invalid) {
+            this.$v.$touch();
+            return;
+        }
+
+        let updatedEvent = this.event;
         delete updatedEvent.rsvps;
+
+        //Delete these as they're computed by Eloquent
+        delete updatedEvent.organizer_id;
+        delete updatedEvent.organizer_name;
+        //Set organizer_id to the id from the selected object
+        updatedEvent.organizer_id = updatedEvent.organizer.id;
 
         axios.put(this.dataUrl, updatedEvent)
           .then(response => {
             this.hasError = false;
-            this.feedback = "Saved!"
+            this.feedback = "Saved!";
             console.log("success");
           })
           .catch(response => {
@@ -180,9 +200,6 @@
             console.log(response);
             sweetAlert("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
-      },
-      updateRadio (event) {
-        this.event.allow_anonymous_rsvp = event.target.firstChild.value == 'true';
       },
       updateAttendance () {
         axios.get(this.attendanceUrl)
@@ -193,8 +210,46 @@
           console.log(response);
           sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
+      },
+      deletePrompt() {
+          let self = this;
+          swal({
+              title: "Are you sure?",
+              text: "Once deleted, you will not be able to recover this event!",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes, delete it!",
+              closeOnConfirm: false
+          }, function(){
+              self.deleteEvent();
+          });
+      },
+      deleteEvent() {
+          axios.delete(this.dataUrl)
+              .then(response => {
+                this.hasError = false;
+                swal({
+                    title: "Deleted!",
+                    text: "The event has been deleted.",
+                    type: "success"
+                }, function() {
+                    window.location.href = "/admin/events";
+                });
+              })
+              .catch(error => {
+                  this.hasError = true;
+                  this.feedback = "";
+                  if(error.response.status == 403) {
+                      swal({
+                          title: "Whoops!",
+                          text: "You don't have permission to perform that action.",
+                          type: "error"
+                      });
+                  } else {
+                      sweetAlert("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                  }
+              });
       }
-
     }
   }
 </script>

@@ -28,6 +28,7 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['auth.token', 'auth.cas.force'
     Route::get('notification/send', 'NotificationController@sendNotification');
     Route::post('notification/manual', 'NotificationController@sendNotificationManual');
     Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit', 'store']]);
+    Route::get('users/search', 'UserController@search');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('events', 'EventController', ['except' => ['create', 'edit']]);
     Route::resource('rsvps', 'RsvpController', ['except' => ['create', 'edit']]);

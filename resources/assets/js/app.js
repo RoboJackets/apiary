@@ -8,20 +8,20 @@
 require('./bootstrap');
 var axios = require('axios')
 var dt = require('datatables.net/js/jquery.dataTables');
-/**
- *  Import DataTables for Bootstrap4 module
- */
+
+// Import DataTables for Bootstrap4 module
 require('datatables.net-bs4');
 
 window.Vue = require('vue');
 
-//Import the Vuelidate validation plugin
-
+// Import the Vuelidate validation plugin
 import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
+Vue.use(Vuelidate);
+
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect);
 
 // Import the FlatPickr Date Component
-
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 Vue.use(flatPickr);
@@ -38,6 +38,7 @@ Vue.use(require('vue-moment'));
 // Form Fields
 Vue.component('term-input', require('./components/fields/TermInput.vue'));
 Vue.component('custom-radio-buttons', require('./components/fields/CustomRadioButtons.vue'));
+Vue.component('user-lookup', require('./components/fields/UserLookup.vue'));
 
 // Large Scale Components
 
