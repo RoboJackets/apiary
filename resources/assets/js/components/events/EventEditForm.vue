@@ -90,7 +90,7 @@
 
         <div class="tab-pane" id="attendance">
           <h3>Attendance</h3>
-
+          <button type="button" class="btn btn-primary btn-above-table">Record Attendance</button>
           <datatable id="attendance-view-table"
             :data-object="attendance"
             :columns="attendanceTableConfig">
