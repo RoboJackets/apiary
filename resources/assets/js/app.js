@@ -18,6 +18,7 @@ window.Vue = require('vue');
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate);
 
+// Import the VueSelect component
 import vSelect from 'vue-select'
 Vue.component('v-select', vSelect);
 
@@ -49,6 +50,7 @@ Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTabl
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));
 Vue.component('accept-payment', require('./components/AcceptPayment.vue'));
+Vue.component('attendance-modal', require('./components/wrappers/AttendanceModal.vue'));
 
 // Events
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'));
