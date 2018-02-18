@@ -35,28 +35,19 @@
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
             this.loadTeams();
             //Listen for keystrokes from card swipe (or keyboard)
-            let buffer = "";
-            window.addEventListener("keypress", function(e) {
-                if (this.attendance.attendable_id == "" && e.key == "Enter") {
-                    //Enter was pressed but a team was not picked
-                    buffer = "";
-                    swal("Whoops!", "Please select a team before swiping your BuzzCard", "warning");
-                } else if (e.key != "Enter") {
-                    //A key that's not enter was pressed
-                    buffer += e.key;
-                } else {
-                    //Enter was pressed
-                    this.cardPresented(buffer);
-                    buffer = "";
-                }
-            }.bind(this));
         },
         methods: {
             loadTeams() {
                 //Fetch teams from the API to populate buttons
                 axios.get(this.teamsBaseUrl)
                     .then(response => {
-                        this.teams = response.data.teams.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} );
+                        let rawTeams = response.data.teams;
+                        if (rawTeams.length < 1) {
+                            swal("Bueller...Bueller...", "No teams found.", "warning");
+                        } else {
+                            this.teams = response.data.teams.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} )
+                            this.startListening();
+                        }
                     })
                     .catch(error => {
                         if (error.response.status === 403) {
@@ -93,6 +84,23 @@
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
                         self.loadTeams();
                     });
+            },
+            startListening() {
+                let buffer = "";
+                window.addEventListener("keypress", function(e) {
+                    if (this.attendance.attendable_id == "" && e.key == "Enter") {
+                        //Enter was pressed but a team was not picked
+                        buffer = "";
+                        swal("Whoops!", "Please select a team before swiping your BuzzCard", "warning");
+                    } else if (e.key != "Enter") {
+                        //A key that's not enter was pressed
+                        buffer += e.key;
+                    } else {
+                        //Enter was pressed
+                        this.cardPresented(buffer);
+                        buffer = "";
+                    }
+                }.bind(this));
             },
             //When a team button is clicked, show a prompt to swipe BuzzCard
             clicked: function(event) {
