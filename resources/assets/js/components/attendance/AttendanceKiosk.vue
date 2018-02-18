@@ -34,11 +34,10 @@
         mounted() {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
             this.loadTeams();
-            //Listen for keystrokes from card swipe (or keyboard)
         },
         methods: {
             loadTeams() {
-                //Fetch teams from the API to populate buttons
+                // Fetch teams from the API to populate buttons
                 axios.get(this.teamsBaseUrl)
                     .then(response => {
                         let rawTeams = response.data.teams;
@@ -64,6 +63,7 @@
                     });
             },
             tokenPrompt() {
+                // Prompt for API token to be stored in local browser storage
                 let self = this;
                 swal({
                         title: "Authentication",
@@ -86,6 +86,7 @@
                     });
             },
             startListening() {
+                // Listen for keystrokes from card swipe (or keyboard)
                 let buffer = "";
                 window.addEventListener("keypress", function(e) {
                     if (this.attendance.attendable_id == "" && e.key == "Enter") {
@@ -102,8 +103,8 @@
                     }
                 }.bind(this));
             },
-            //When a team button is clicked, show a prompt to swipe BuzzCard
             clicked: function(event) {
+                // When a team button is clicked, show a prompt to swipe BuzzCard
                 let self = this;
                 self.attendance.attendable_id = event.target.id;
                 swal({
@@ -178,6 +179,7 @@
                 }
             },
             submit() {
+                // Submit attendance data
                 axios.post(this.attendanceBaseUrl, this.attendance)
                     .then(response => {
                         this.hasError = false;
