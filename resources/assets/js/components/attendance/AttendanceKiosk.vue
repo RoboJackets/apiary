@@ -70,7 +70,7 @@
                         text: "Please provide an API token to process data",
                         type: "input",
                         showCancelButton: true,
-                        closeOnConfirm: true,
+                        closeOnConfirm: false,
                         animation: "slide-from-top",
                     },
                     function(inputValue){
@@ -82,6 +82,7 @@
                         }
                         localStorage.setItem('api_token', inputValue);
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
+                        swal.close();
                         self.loadTeams();
                     });
             },
