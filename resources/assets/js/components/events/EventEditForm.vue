@@ -234,9 +234,12 @@
           type: "warning",
           showCancelButton: true,
           confirmButtonText: "Yes, delete it!",
-          closeOnConfirm: false
-        }, function () {
-          self.deleteEvent();
+          focusCancel: true,
+          confirmButtonColor: "#dc3545"
+        }).then((result) => {
+            if (result.value) {
+                self.deleteEvent();
+            }
         });
       },
       deleteEvent() {
@@ -246,10 +249,13 @@
             swal({
               title: "Deleted!",
               text: "The event has been deleted.",
-              type: "success"
-            }, function () {
-              window.location.href = "/admin/events";
-            });
+              type: "success",
+              timer: 3000
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = "/admin/events";
+                }
+            })
           })
           .catch(error => {
             this.hasError = true;
