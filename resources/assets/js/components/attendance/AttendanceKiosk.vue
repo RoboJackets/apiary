@@ -50,7 +50,7 @@
                     })
                     .catch(error => {
                         if (error.response.status === 403) {
-                            sweetAlert({
+                            swal({
                                 title: "Whoops!",
                                 text: "You don't have permission to perform that action.",
                                 type: "error"
@@ -72,19 +72,17 @@
                         showCancelButton: true,
                         closeOnConfirm: false,
                         animation: "slide-from-top",
-                    },
-                    function(inputValue){
-                        if (inputValue === false) return false;
-
-                        if (inputValue === "") {
-                            sweetAlert.showInputError("Token field is required!");
+                }).then((result) => {
+                        if (result === false) return false;
+                        if (result === "") {
+                            swal.showValidationError("Token field is required!");
                             return false
                         }
-                        localStorage.setItem('api_token', inputValue);
+                        localStorage.setItem('api_token', result);
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
                         swal.close();
                         self.loadTeams();
-                    });
+                });
             },
             startListening() {
                 // Listen for keystrokes from card swipe (or keyboard)
@@ -93,7 +91,12 @@
                     if (this.attendance.attendable_id == "" && e.key == "Enter") {
                         //Enter was pressed but a team was not picked
                         buffer = "";
-                        swal("Whoops!", "Please select a team before swiping your BuzzCard", "warning");
+                        swal({
+                            title: "Whoops!",
+                            text: "Please select a team before swiping your BuzzCard",
+                            type: "warning",
+                            timer: 2000
+                        });
                     } else if (e.key != "Enter") {
                         //A key that's not enter was pressed
                         buffer += e.key;
@@ -115,10 +118,11 @@
                     allowOutsideClick: true,
                     showConfirmButton: false,
                     imageUrl: "/img/swipe.gif",
-                    imageSize: "300x500",
+                    imageWidth: 300,
+                    imageHeight: 500,
                     timer: 10000
-                }, function(isConfirm) {
-                    if (!isConfirm) {
+                }).then((result) => {
+                    if (!result.value) {
                         self.clearFields();
                         swal.close();
                     }
@@ -155,24 +159,24 @@
                         showCancelButton: true,
                         showConfirmButton: false,
                         type: "warning"
-                    }, function(isConfirm) {
-                        if (!isConfirm) {
+                    }).then((result) => {
+                        if (!result.value) {
                             self.clearFields();
                             swal.close();
                         }
                     });
                 } else {
+                    swal.close();
                     console.log("unknown cardData: " + cardData);
                     cardData = null;
                     swal({
                         title: "Hmm...",
-                        text: "Card format not recognized.<br/>Contact #it-helpdesk for assistance.",
-                        html: true,
+                        html: "Card format not recognized.<br/>Contact #it-helpdesk for assistance.",
                         showConfirmButton: true,
                         type: "error",
-                        timer: 2000
-                    }, function(isConfirm) {
-                        if (!isConfirm) {
+                        timer: 3000
+                    }).then((result) => {
+                        if (!result.value) {
                             self.clearFields();
                             swal.close();
                         }
@@ -211,6 +215,7 @@
             clearFields() {
                 this.attendance.attendable_id = "";
                 this.attendance.gtid = "";
+                console.log("fields cleared");
             },
             isNumeric(n) {
                 return !isNaN(parseFloat(n)) && isFinite(n);
