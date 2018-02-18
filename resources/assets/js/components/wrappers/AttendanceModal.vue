@@ -94,7 +94,7 @@
                                 type: "error"
                             });
                         } else {
-                            sweetAlert("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                            swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
                         }
                     })
             },

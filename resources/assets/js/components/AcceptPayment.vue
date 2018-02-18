@@ -154,7 +154,7 @@
           })
           .catch(response => {
             console.log(response);
-            sweetAlert("Connection Error", "Unable to record payment. Check your internet connection or try refreshing the page.", "error");
+            swal("Connection Error", "Unable to record payment. Check your internet connection or try refreshing the page.", "error");
           })
       }
     },

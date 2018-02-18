@@ -12,6 +12,10 @@ var dt = require('datatables.net/js/jquery.dataTables');
 // Import DataTables for Bootstrap4 module
 require('datatables.net-bs4');
 
+//Import SweetAlert2 for nice alert dialogs
+import swal from 'sweetalert2'
+window.swal = swal;
+
 window.Vue = require('vue');
 
 // Import the Vuelidate validation plugin
@@ -51,6 +55,7 @@ Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));
 Vue.component('accept-payment', require('./components/AcceptPayment.vue'));
 Vue.component('attendance-modal', require('./components/wrappers/AttendanceModal.vue'));
+Vue.component('attendance-kiosk', require('./components/attendance/AttendanceKiosk.vue'));
 
 // Events
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'));
