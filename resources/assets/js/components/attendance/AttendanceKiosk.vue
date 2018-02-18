@@ -12,10 +12,6 @@
             </button>
         </div>
         </template>
-        <attendance-modal-single
-                id="attendanceModal"
-                v-bind="attendance">
-        </attendance-modal-single>
     </div>
 </template>
 
@@ -24,13 +20,15 @@
         data() {
             return {
                 attendance: {
+                    gtid: '',
                     attendable_id: '',
                     attendable_type: "App\\Team",
-                    source: "kiosk"
+                    source: "kiosk",
+                    includeName: true
                 },
                 attendanceBaseUrl: "/api/v1/attendance",
                 teamsBaseUrl: "/api/v1/teams",
-                teams: []
+                teams: [],
             }
         },
         mounted() {
@@ -41,27 +39,143 @@
                 })
                 .catch(response => {
                     console.log(response);
-                    sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+                    swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
                 });
 
-            // Listen for bootstrap modal close to clear fields
-            // TODO: Find a better way in Vue to do this w/o jQuery
-            $("#attendanceModal").on("hidden.bs.modal", this.clearFields);
+            //Listen for keystrokes from card swipe (or keyboard)
+            let buffer = "";
+            window.addEventListener("keypress", function(e) {
+                if (this.attendance.attendable_id == "" && e.key == "Enter") {
+                    //Enter was pressed but a team was not picked
+                    buffer = "";
+                    sweetAlert("Whoops!", "Please select a team before swiping your BuzzCard", "warning");
+                } else if (e.key != "Enter") {
+                    //A key that's not enter was pressed
+                    buffer += e.key;
+                } else {
+                    //Enter was pressed
+                    this.cardPresented(buffer);
+                    buffer = "";
+                }
+            }.bind(this));
         },
         methods: {
+            //When a team button is clicked, show a prompt to swipe BuzzCard
             clicked: function(event) {
-                this.attendance.attendable_id = event.target.id;
+                let self = this;
+                self.attendance.attendable_id = event.target.id;
+                swal({
+                    title: "Swipe your BuzzCard now",
+                    showCancelButton: true,
+                    closeOnCancel: false,
+                    allowOutsideClick: true,
+                    showConfirmButton: false,
+                    imageUrl: "/img/swipe.gif",
+                    imageSize: "300x500",
+                    timer: 10000
+                }, function(isConfirm) {
+                    if (!isConfirm) {
+                        self.clearFields();
+                        swal.close();
+                    }
+                });
+            },
+            cardPresented: function(cardData) {
+                // Card is presented, process the data
+                let self = this;
+                console.log("first cardData: " + cardData);
+
+                let pattTrackRaw = new RegExp("=(9[0-9]+)=");
+                let pattError = new RegExp("[%;+][eE]\\?");
+
+                if (this.isNumeric(cardData) && cardData.length == 9 && cardData[0] == "9") {
+                    // Numeric nine-digit number starting with a nine
+                    this.attendance.gtid = cardData;
+                    console.log("numeric cardData: " + cardData);
+                    cardData = null;
+                    this.submit();
+                } else if (pattTrackRaw.test(cardData)) {
+                    // Raw (unformatted) data from track 2 of the magnetic stripe
+                    let data = pattTrackRaw.exec(cardData)[1];
+                    console.log("raw cardData: " + data);
+                    cardData = null;
+                    this.attendance.gtid = data;
+                    this.submit();
+                } else if (pattError.test(cardData)) {
+                    // Error message sent from card reader
+                    console.log("error cardData: " + pattError.exec(cardData));
+                    cardData = null;
+                    swal({
+                        title: "Hmm...",
+                        text: "There was an error reading your card. Please swipe again.",
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        type: "warning"
+                    }, function(isConfirm) {
+                        if (!isConfirm) {
+                            self.clearFields();
+                            swal.close();
+                        }
+                    });
+                } else {
+                    console.log("unknown cardData: " + cardData);
+                    cardData = null;
+                    swal({
+                        title: "Hmm...",
+                        text: "Card format not recognized.<br/>Contact #it-helpdesk for assistance.",
+                        html: true,
+                        showConfirmButton: true,
+                        type: "error",
+                        timer: 2000
+                    }, function(isConfirm) {
+                        if (!isConfirm) {
+                            self.clearFields();
+                            swal.close();
+                        }
+                    });
+                }
+            },
+            submit() {
+                axios.post(this.attendanceBaseUrl, this.attendance)
+                    .then(response => {
+                        this.hasError = false;
+                        this.clearFields();
+                        swal({
+                            title: "You're in!",
+                            text: "Nice to see you, " + response.data.attendance.name + ".",
+                            timer: 2000,
+                            showConfirmButton: false,
+                            type: "success"
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.hasError = true;
+                        this.feedback = "";
+                        if (error.response.status == 403) {
+                            swal({
+                                title: "Whoops!",
+                                text: "You don't have permission to perform that action.",
+                                type: "error"
+                            });
+                        } else {
+                            sweetAlert("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                        }
+                    });
             },
             clearFields() {
                 this.attendance.attendable_id = "";
-
+                this.attendance.gtid = "";
+            },
+            isNumeric(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
             }
         }
     }
 </script>
 
 <style scoped>
-    /* Combination of btn-lg and btn-block with  some customizations */
+    /* Combination of btn-lg and btn-block with some customizations */
     .btn-kiosk {
         min-height: 175px;
         font-weight: bolder;
