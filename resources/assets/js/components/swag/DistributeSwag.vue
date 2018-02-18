@@ -3,47 +3,39 @@
         <div class="col-12">
             <form id="DistributeSwagForm" v-on:submit.prevent="submit">
                 <fieldset class="form-group">
-                    <div class="custom-controls-stacked">
-                        <label class="custom-control custom-checkbox">
-                            <input
-                                    v-model="duesTransaction.swag_shirt_provided"
-                                    type="checkbox"
-                                    class="custom-control-input"
-                                    id="shirt-check"
-                                    :disabled="this.swag_shirt_provided != null ||
+                    <div class="custom-control custom-checkbox">
+                        <input v-model="duesTransaction.swag_shirt_provided"
+                               type="checkbox"
+                               class="custom-control-input"
+                               id="shirt-check"
+                               :disabled="this.swag_shirt_provided != null ||
                                     this.swag_shirt_status == 'Not Eligible'">
-                            <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">Shirt
-                                <span id="shirt-description">
+                        <label class="custom-control-label" for="shirt-check">Shirt
+                            <span id="shirt-description">
                                     <small v-if="this.swag_shirt_provided != null">
                                         (Picked up {{ this.swag_shirt_provided | moment("from") }})
                                     </small>
                                     <small v-else-if="this.swag_shirt_status == 'Not Eligible'">
                                         (Not Eligible)
                                     </small>
-                                </span>
                             </span>
                         </label>
                     </div>
-                    <div class="custom-controls-stacked">
-                        <label class="custom-control custom-checkbox">
-                            <input
-                                    v-model="duesTransaction.swag_polo_provided"
-                                    type="checkbox"
-                                    class="custom-control-input"
-                                    id="polo-check"
-                                    :disabled="this.swag_polo_provided != null ||
+                    <div class="custom-control custom-checkbox">
+                        <input v-model="duesTransaction.swag_polo_provided"
+                               type="checkbox"
+                               class="custom-control-input"
+                               id="polo-check"
+                               :disabled="this.swag_polo_provided != null ||
                                     this.swag_polo_status == 'Not Eligible'">
-                            <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">Polo
-                                <span id="polo-description">
+                        <label class="custom-control-label" for="polo-check">Polo
+                            <span id="polo-description">
                                     <small v-if="this.swag_polo_provided != null">
                                         (Picked up {{ this.swag_polo_provided | moment("from") }})
                                     </small>
                                     <small v-else-if="this.swag_polo_status == 'Not Eligible'">
                                         (Not Eligible)
                                     </small>
-                                </span>
                             </span>
                         </label>
                     </div>
