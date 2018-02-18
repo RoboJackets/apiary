@@ -32,23 +32,15 @@
             }
         },
         mounted() {
-            //Fetch teams from the API to populate buttons
-            axios.get(this.teamsBaseUrl)
-                .then(response => {
-                    this.teams = response.data.teams.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} );
-                })
-                .catch(response => {
-                    console.log(response);
-                    swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
-                });
-
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
+            this.loadTeams();
             //Listen for keystrokes from card swipe (or keyboard)
             let buffer = "";
             window.addEventListener("keypress", function(e) {
                 if (this.attendance.attendable_id == "" && e.key == "Enter") {
                     //Enter was pressed but a team was not picked
                     buffer = "";
-                    sweetAlert("Whoops!", "Please select a team before swiping your BuzzCard", "warning");
+                    swal("Whoops!", "Please select a team before swiping your BuzzCard", "warning");
                 } else if (e.key != "Enter") {
                     //A key that's not enter was pressed
                     buffer += e.key;
@@ -60,6 +52,48 @@
             }.bind(this));
         },
         methods: {
+            loadTeams() {
+                //Fetch teams from the API to populate buttons
+                axios.get(this.teamsBaseUrl)
+                    .then(response => {
+                        this.teams = response.data.teams.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} );
+                    })
+                    .catch(error => {
+                        if (error.response.status === 403) {
+                            sweetAlert({
+                                title: "Whoops!",
+                                text: "You don't have permission to perform that action.",
+                                type: "error"
+                            });
+                        } else if (error.response.status === 401) {
+                            this.tokenPrompt();
+                        } else {
+                            swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                        }
+                    });
+            },
+            tokenPrompt() {
+                let self = this;
+                swal({
+                        title: "Authentication",
+                        text: "Please provide an API token to process data",
+                        type: "input",
+                        showCancelButton: true,
+                        closeOnConfirm: true,
+                        animation: "slide-from-top",
+                    },
+                    function(inputValue){
+                        if (inputValue === false) return false;
+
+                        if (inputValue === "") {
+                            sweetAlert.showInputError("Token field is required!");
+                            return false
+                        }
+                        localStorage.setItem('api_token', inputValue);
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
+                        self.loadTeams();
+                    });
+            },
             //When a team button is clicked, show a prompt to swipe BuzzCard
             clicked: function(event) {
                 let self = this;
@@ -159,7 +193,7 @@
                                 type: "error"
                             });
                         } else {
-                            sweetAlert("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                            swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
                         }
                     });
             },
