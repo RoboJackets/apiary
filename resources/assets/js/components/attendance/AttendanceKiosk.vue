@@ -65,23 +65,21 @@
             tokenPrompt() {
                 // Prompt for API token to be stored in local browser storage
                 let self = this;
+
                 swal({
                         title: "Authentication",
                         text: "Please provide an API token to process data",
-                        type: "input",
-                        showCancelButton: true,
-                        closeOnConfirm: false,
-                        animation: "slide-from-top",
+                        input: "text",
                 }).then((result) => {
-                        if (result === false) return false;
-                        if (result === "") {
-                            swal.showValidationError("Token field is required!");
-                            return false
-                        }
-                        localStorage.setItem('api_token', result);
-                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
-                        swal.close();
-                        self.loadTeams();
+                    if (result === false) return false;
+                    if (result === "") {
+                        swal.showValidationError("Token field is required!");
+                        return false
+                    }
+                    localStorage.setItem('api_token', result.value);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
+                    swal.close();
+                    self.loadTeams();
                 });
             },
             startListening() {
