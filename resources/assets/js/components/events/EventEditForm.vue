@@ -170,7 +170,7 @@
         })
         .catch(response => {
           console.log(response);
-          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
 
       this.attendanceUrl = "/api/v1/attendance?attendable_type=App\\Event&attendable_id=" + this.eventId;
@@ -180,7 +180,7 @@
         })
         .catch(response => {
           console.log(response);
-          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
 
       // Listen for bootstrap modal close to reload attendance
@@ -213,7 +213,7 @@
             this.hasError = true;
             this.feedback = "";
             console.log(response);
-            sweetAlert("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+            swal("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
       },
       updateAttendance() {
@@ -223,7 +223,7 @@
           })
           .catch(response => {
             console.log(response);
-            sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+            swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
           });
       },
       deletePrompt() {
@@ -267,7 +267,7 @@
                 type: "error"
               });
             } else {
-              sweetAlert("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+              swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
             }
           });
       }
