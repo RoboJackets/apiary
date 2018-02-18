@@ -12,6 +12,10 @@ var dt = require('datatables.net/js/jquery.dataTables');
 // Import DataTables for Bootstrap4 module
 require('datatables.net-bs4');
 
+//Import SweetAlert2 for nice alert dialogs
+import swal from 'sweetalert2'
+window.swal = swal;
+
 window.Vue = require('vue');
 
 // Import the Vuelidate validation plugin
