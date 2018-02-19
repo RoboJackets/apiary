@@ -458,6 +458,6 @@ class PaymentController extends Controller
             return $e;
         }
         Log::debug(get_class() . " - Retrieved Square Transaction '$server_txn_id'");
-        return $square_txn;
+        return $square_txn->getTransaction();
     }
 }
