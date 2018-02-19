@@ -384,14 +384,14 @@ class PaymentController extends Controller
         $counter = 0;
         while ($counter < 4) {
             $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
-            if ($square_txn instanceof Transaction) {
+            if (!$square_txn instanceof Exception) {
                 break;
             }
             $counter++;
             sleep($counter * 0.1);
         }
 
-        if (!$square_txn instanceof Transaction) {
+        if ($square_txn instanceof Exception) {
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
