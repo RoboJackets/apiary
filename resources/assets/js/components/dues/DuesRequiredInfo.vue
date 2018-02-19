@@ -108,7 +108,7 @@
         })
         .catch(response => {
           console.log(response);
-          sweetAlert("Connection Error", "Unable to load dues packages. Check your internet connection or try refreshing the page.", "error");
+          swal("Connection Error", "Unable to load dues packages. Check your internet connection or try refreshing the page.", "error");
         });
     },
     methods: {
@@ -131,7 +131,7 @@
               this.$emit("next");
             } else {
               console.log(error);
-              sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+              swal("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
             }
           });
       },

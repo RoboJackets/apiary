@@ -13,7 +13,7 @@
 
                     <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
                     <div class="col-sm-10 col-lg-4">
-                        <input v-model="event.organizer" type="text" class="form-control" id="event-organizer" placeholder="Defaults to you">
+                        <user-lookup v-model="event.organizer"></user-lookup>
                     </div>
                 </div>
 
@@ -65,7 +65,9 @@
                     <label for="event-cost" class="col-sm-2 col-form-label">Cost</label>
                     <div class="col-sm-10 col-lg-4">
                         <div class="input-group">
-                            <span class="input-group-addon" id="prepend-dollar">$</span>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
                             <input
                                     v-model="event.cost"
                                     type="text"
@@ -73,7 +75,6 @@
                                     :class="{ 'is-invalid': $v.event.cost.$error }"
                                     id="event-cost"
                                     placeholder="Enter a decimal (10.00)"
-                                    aria-describedby="prepend-dollar"
                                     @blur="$v.event.cost.$touch()">
                         </div>
                     </div>
@@ -124,7 +125,14 @@
                     this.$v.$touch();
                     return;
                 }
-                axios.post(this.baseUrl, this.event)
+
+                //Set organizer_id to the id from the selected object
+                let newEvent = this.event;
+                if (newEvent.organizer instanceof Object) {
+                    newEvent.organizer_id = newEvent.organizer.id;
+                }
+
+                axios.post(this.baseUrl, newEvent)
                     .then(response => {
                         this.hasError = false;
                         this.feedback = "Saved!";
@@ -135,7 +143,7 @@
                         this.hasError = true;
                         this.feedback = "";
                         console.log(response);
-                        sweetAlert("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+                        swal("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
                     })
             },
         }

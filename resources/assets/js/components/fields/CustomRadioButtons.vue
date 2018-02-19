@@ -1,7 +1,7 @@
 <template>
-  <div class="btn-group" :id="id" data-toggle="buttons">
-    <label v-for="option in options" class="btn btn-secondary" v-bind:class="{ active: option.value == value, 'btn-danger': isError}" @click.left="update">
-      <input v-model="value" type="radio" :value="option.value" autocomplete="off"> {{option.text}}
+  <div class="btn-group btn-group-toggle" role="group" :id="id">
+    <label v-for="option in options" class="btn btn-secondary" v-bind:class="{ active: option.value == value, 'btn-danger': isError}" >
+      <input v-model="changedValue" type="radio" :value="option.value" autocomplete="off" @change="change"> {{option.text}}
     </label>
   </div>
 </template>
@@ -16,13 +16,18 @@
    */
 
   export default {
+    data() {
+        return {
+            changedValue: this.value
+        }
+    },
     props: {
       options: {
         type: Array,
         required: true
       },
       value: {
-        type: String,
+        type: [String, Number],
         default: ''
       },
       id: {
@@ -35,8 +40,8 @@
       }
     },
     methods: {
-      update: function (event) {
-        this.$emit('input', event.target.firstChild.value);
+      change: function () {
+        this.$emit('input', this.changedValue);
       }
     }
   }

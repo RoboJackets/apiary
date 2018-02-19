@@ -143,7 +143,7 @@
         })
         .catch(response => {
           console.log(response);
-          sweetAlert("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
     },
     methods: {
@@ -158,7 +158,7 @@
             this.hasError = true;
             this.feedback = "";
             console.log(response);
-            sweetAlert("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
+            swal("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
           })
       }
     }

@@ -17,8 +17,6 @@ Route::middleware('auth:api')->get('v1/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('v1/attendance', 'AttendanceController@store');
-
 Route::group(['prefix' => 'v1/', 'middleware' => ['auth.token', 'auth.cas.force']], function () {
     Route::post('faset', 'FasetVisitController@store');
     Route::get('faset', 'FasetVisitController@index');
@@ -27,7 +25,8 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['auth.token', 'auth.cas.force'
     Route::put('faset/{id}', 'FasetVisitController@update');
     Route::get('notification/send', 'NotificationController@sendNotification');
     Route::post('notification/manual', 'NotificationController@sendNotificationManual');
-    Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit', 'store']]);
+    Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit']]);
+    Route::get('users/search', 'UserController@search');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('events', 'EventController', ['except' => ['create', 'edit']]);
     Route::resource('rsvps', 'RsvpController', ['except' => ['create', 'edit']]);
