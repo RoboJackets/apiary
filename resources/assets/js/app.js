@@ -10,7 +10,11 @@ var axios = require('axios')
 var dt = require('datatables.net/js/jquery.dataTables');
 
 // Import DataTables for Bootstrap4 module
-require('datatables.net-bs4');
+require( 'datatables.net-bs4');
+require( 'jszip' );
+require( 'datatables.net-buttons-bs4' );
+require( 'datatables.net-buttons/js/buttons.html5.js' );
+require( 'datatables.net-buttons/js/buttons.print.js' );
 
 //Import SweetAlert2 for nice alert dialogs
 import swal from 'sweetalert2'
