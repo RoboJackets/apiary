@@ -380,30 +380,24 @@ class PaymentController extends Controller
         Configuration::getDefaultConfiguration()->setAccessToken($token);
         
         //Query Square API to get authoritative data
-        $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
-        if ($square_txn instanceof ApiException && $square_txn->getCode() == 404) {
-            $counter = 0;
-            while ($counter <= 2) {
-                sleep(0.3);
-                $counter++;
-                $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
-                if ($square_txn instanceof Transaction) {
-                    $counter = 3;
-                } elseif ($square_txn instanceof ApiException && $counter == 2) {
-                    return response(view('errors.generic',
-                        [
-                            'error_code' => 500,
-                            'error_message' => 'Error querying Square transaction (not-found)'
-                        ]), 500);
-                }
-            }
-        } elseif (!$square_txn instanceof Transaction) {
-            return response(view('errors.generic',
+        //See #284 for reasoning for loop
+		$counter = 0;
+		while ($counter < 4) {
+			$square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
+			if ($square_txn instanceof Transaction) {
+				break;
+			}
+			$counter++;
+			sleep($counter * 0.1)
+		}
+		
+		if (!$square_txn instanceof Transaction) {
+			return response(view('errors.generic',
                 [
                     'error_code' => 500,
-                    'error_message' => 'Unknown error querying Square transaction'
+                    'error_message' => 'Error querying Square transaction'
                 ]), 500);
-        }
+		}
         
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
