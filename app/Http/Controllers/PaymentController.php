@@ -388,7 +388,7 @@ class PaymentController extends Controller
 				break;
 			}
 			$counter++;
-			sleep($counter * 0.1)
+			sleep($counter * 0.1);
 		}
 		
 		if (!$square_txn instanceof Transaction) {
