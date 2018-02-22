@@ -9,6 +9,6 @@
         Attendance Export
     @endcomponent
 
-    something something dark side something
+    <attendance-export></attendance-export>
 
 @endsection
