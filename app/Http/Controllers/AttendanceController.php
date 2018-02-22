@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use Bugsnag;
 use App\User;
 use App\Attendance;
@@ -68,9 +69,22 @@ class AttendanceController extends Controller
         $request['recorded_by'] = $request->user()->id;
         unset($request['includeName']);
 
+        // Variables for comparison below
+        $today = date('Y-m-d');
+        $gtid = $request->input('gtid');
+
         try {
-            $att = Attendance::firstOrCreate($request->all());
-            $code = ($att->wasRecentlyCreated) ? 201 : 200;
+            $attTodayQ = Attendance::where($request->all())->whereDate('created_at', $today);
+            $attTodayCount = $attTodayQ->count();
+            if ($attTodayCount > 0) {
+                Log::debug(get_class() . ": Found a swipe today ($today) for $gtid - ignoring.");
+                $att = $attTodayQ->first();
+                $code = 200;
+            } else {
+                Log::debug(get_class() . ": No swipe yet today ($today) for $gtid - saving.");
+                $att = Attendance::create($request->all());
+                $code = 201;
+            }
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
