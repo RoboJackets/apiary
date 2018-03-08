@@ -120,9 +120,8 @@
                     closeOnCancel: false,
                     allowOutsideClick: true,
                     showConfirmButton: false,
-                    imageUrl: "/img/swipe.gif",
-                    imageWidth: 300,
-                    imageHeight: 500,
+                    imageUrl: "/img/swipe-horiz-up.gif",
+                    imageWidth: 450
                 }).then((result) => {
                     if (!result.value) {
                         self.clearFields();
