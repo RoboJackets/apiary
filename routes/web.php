@@ -32,6 +32,15 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
         Route::post('/pay', 'PaymentController@storeUser')->name('dues.pay');
     });
 
+    Route::group(['prefix' => 'teams', 'as' => 'teams.'], function () {
+       Route::get('/', function () {
+          return view('teams.index');
+       })->name('index');
+       Route::get('{name}', function () {
+          return view('teams.show');
+       })->name('show');
+    });
+
     Route::prefix('payments')->group(function () {
         Route::get('/complete', 'PaymentController@handleSquareResponse')
             ->name('payments.complete');

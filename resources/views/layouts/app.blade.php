@@ -16,6 +16,9 @@
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav mr-auto">
+            <li class="nav-item {{ $request->is('teams*') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
+            </li>
             <li class="nav-item {{ $request->is('profile*') ? 'active' : '' }}">
               <a class="nav-link" href="/profile">Profile</a>
             </li>
