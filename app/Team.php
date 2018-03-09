@@ -36,4 +36,26 @@ class Team extends Model
     {
         return $this->morphMany('App\Attendance', 'attendable');
     }
+
+    /**
+     * Scope a query to only include attendable teams
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAttendable($query)
+    {
+        return $query->where('attendable', true);
+    }
+
+    /**
+     * Scope a query to only include visible (non-hidden) teams
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeVisible($query)
+    {
+        return $query->where('hidden', false);
+    }
 }
