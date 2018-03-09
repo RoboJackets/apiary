@@ -14,6 +14,7 @@ use SquareConnect\Configuration;
 use SquareConnect\Model\CreateCheckoutRequest;
 use SquareConnect\Model\CreateOrderRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
+use SquareConnect\Model\Transaction;
 use Validator;
 use Log;
 
@@ -379,20 +380,24 @@ class PaymentController extends Controller
         Configuration::getDefaultConfiguration()->setAccessToken($token);
         
         //Query Square API to get authoritative data
-        try {
-            Log::debug(get_class() . " - Querying Square for Transaction '$server_txn_id'");
-            $square_txn = $txnClient->retrieveTransaction($location, $server_txn_id);
-        } catch (\Exception $e) {
-            Bugsnag::notifyException($e);
-            $error = $e->getMessage();
-            Log::error(get_class() . " - Error querying Square transaction", $error);
+        //See #284 for reasoning for loop
+        $counter = 0;
+        while ($counter < 4) {
+            $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
+            if (!$square_txn instanceof Exception) {
+                break;
+            }
+            $counter++;
+            sleep($counter * 0.1);
+        }
+
+        if ($square_txn instanceof Exception) {
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
                     'error_message' => 'Error querying Square transaction'
                 ]), 500);
         }
-        Log::debug(get_class() . " - Retrieved Square Transaction '$server_txn_id'");
         
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
@@ -431,5 +436,29 @@ class PaymentController extends Controller
         
         alert()->success("We've received your payment", "Success!");
         return redirect('/');
+    }
+
+    /**
+     * Queries Square Transaction API for transaction details
+     *
+     * @param TransactionsApi $client
+     * @param string $location
+     * @param string $server_txn_id
+     * @return \Exception|\SquareConnect\Model\RetrieveTransactionResponse
+     */
+    protected function getSquareTransaction(TransactionsApi $client, $location, $server_txn_id)
+    {
+        try {
+            Log::debug(get_class() . " - Querying Square for Transaction '$server_txn_id'");
+            $square_txn = $client->retrieveTransaction($location, $server_txn_id);
+        } catch (\Exception $e) {
+            Bugsnag::notifyException($e);
+            $error = $e->getMessage();
+            $error = is_array($error) ? $error : [$error];
+            Log::error(get_class() . " - Error querying Square transaction", $error);
+            return $e;
+        }
+        Log::debug(get_class() . " - Retrieved Square Transaction '$server_txn_id'");
+        return $square_txn;
     }
 }

@@ -6,8 +6,7 @@
                     class="btn btn-kiosk btn-secondary"
                     type="button"
                     :id="team.id"
-                    v-on:click="clicked"
-                    data-toggle="modal" data-target="#attendanceModal">
+                    v-on:click="clicked">
                 {{ team.name }}
             </button>
         </div>
@@ -32,6 +31,8 @@
             }
         },
         mounted() {
+            //Remove focus from button
+            document.activeElement.blur();
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
             this.loadTeams();
         },
@@ -83,6 +84,8 @@
                 });
             },
             startListening() {
+                //Remove focus from button
+                document.activeElement.blur();
                 // Listen for keystrokes from card swipe (or keyboard)
                 let buffer = "";
                 window.addEventListener("keypress", function(e) {
@@ -106,6 +109,8 @@
                 }.bind(this));
             },
             clicked: function(event) {
+                //Remove focus from button
+                document.activeElement.blur();
                 // When a team button is clicked, show a prompt to swipe BuzzCard
                 let self = this;
                 self.attendance.attendable_id = event.target.id;
@@ -115,10 +120,8 @@
                     closeOnCancel: false,
                     allowOutsideClick: true,
                     showConfirmButton: false,
-                    imageUrl: "/img/swipe.gif",
-                    imageWidth: 300,
-                    imageHeight: 500,
-                    timer: 10000
+                    imageUrl: "/img/swipe-horiz-up.gif",
+                    imageWidth: 450
                 }).then((result) => {
                     if (!result.value) {
                         self.clearFields();
@@ -211,6 +214,8 @@
                     });
             },
             clearFields() {
+                //Remove focus from button
+                document.activeElement.blur();
                 this.attendance.attendable_id = "";
                 this.attendance.gtid = "";
                 console.log("fields cleared");
