@@ -225,9 +225,9 @@
 <style scoped>
     /* Combination of btn-lg and btn-block with some customizations */
     .btn-kiosk {
-        min-height: 175px;
+        min-height: 250px;
         font-weight: bolder;
-        font-size: 2rem;
+        font-size: 2.75rem;
         display: block;
         width: 100%;
         padding: 0.5rem 1rem;
