@@ -9,7 +9,7 @@
 <div class="container" id="app">
     <div class="row">
         <div class="col-12" style="text-align:center;padding-top: 15px">
-            <h1>Welcome to the Shop!</h1>
+            <h1 style="font-size: 4rem">Welcome to the Shop!</h1>
         </div>
     </div>
     <attendance-kiosk></attendance-kiosk>
