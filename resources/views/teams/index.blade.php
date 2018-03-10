@@ -14,8 +14,8 @@
                 <div class="card card-teams">
                     <div class="card-body">
                         <h5 class="card-title"><b>{{ $team->name }}</b></h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">More Info</a>
+                        <p class="card-text">{{ $team->short_description }}</p>
+                        <a href="{{ route('teams.show', $team->id) }}" class="btn btn-primary">More Info</a>
                     </div>
                 </div>
             </div>
