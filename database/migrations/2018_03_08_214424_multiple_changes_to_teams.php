@@ -17,7 +17,8 @@ class MultipleChangesToTeams extends Migration
             $table->boolean('attendable')->after('founding_semester')->default(false);
             $table->boolean('hidden')->after('founding_semester')->default(false);
             $table->mediumText('short_description')->after('name')->nullable();
-            $table->renameColumn('description', 'long_description');
+            $table->dropColumn('description');
+            $table->longText('long_description')->after('name');
             $table->dropColumn('founding_semester');
             $table->char('founding_year', 4)->after('description')->nullable();
         });
@@ -34,7 +35,8 @@ class MultipleChangesToTeams extends Migration
             $table->dropColumn('attendable');
             $table->dropColumn('hidden');
             $table->dropColumn('short_description');
-            $table->renameColumn('long_description', 'description');
+            $table->dropColumn('long_description');
+            $table->text('description');
             $table->dropColumn('founding_year');
             $table->char('founding_semester', 4)->after('long_description');
         });
