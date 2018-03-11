@@ -131,18 +131,32 @@
           {'title': 'Time', 'data': 'created_at'}
         ],
         attendance: [],
-        attendanceUrl: '',
+        attendanceQuery: {
+          attendable_type: "App\\Event",
+          attendable_id: this.eventId
+        },
+        attendanceUrl: '/api/v1/attendance/search',
         attendanceTableConfig: [
+          {'title': 'Time', 'data': 'created_at'},
           {
-            'title': 'Name', 'data': null, 'render': function (data, type, row) {
+            'title': 'Last Name', 'data': null, 'render': function (data, type, row) {
               try {
-                return data.attendee.name;
+                return data.attendee.last_name;
               } catch (e) {
                 return "Non-member";
               }
             }
           },
-          {'title': 'Time', 'data': 'created_at'}
+          {
+              'title': 'First Name', 'data': null, 'render': function (data, type, row) {
+                  try {
+                      return data.attendee.first_name;
+                  } catch (e) {
+                      return "";
+                  }
+              }
+          },
+          {'title': 'GTID', 'data': 'gtid'}
         ],
         dateTimeConfig: {
           dateFormat: "Y-m-d H:i:S",
@@ -173,8 +187,7 @@
           swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
         });
 
-      this.attendanceUrl = "/api/v1/attendance?attendable_type=App\\Event&attendable_id=" + this.eventId;
-      axios.get(this.attendanceUrl)
+      axios.post(this.attendanceUrl, this.attendanceQuery)
         .then(response => {
           this.attendance = response.data.attendance;
         })
@@ -217,7 +230,7 @@
           })
       },
       updateAttendance() {
-        axios.get(this.attendanceUrl)
+          axios.post(this.attendanceUrl, this.attendanceQuery)
           .then(response => {
             this.attendance = response.data.attendance;
           })
