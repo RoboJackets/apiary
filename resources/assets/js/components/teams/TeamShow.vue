@@ -4,14 +4,12 @@
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <button
                         type="button" class="btn btn-secondary"
-                        style="pointer-events: none;"
                         :disabled="!this.user.is_active"
                         v-if="memberOfTeam" v-on:click="changeMembership('leave')">
                     Leave {{ team.name }}
                 </button>
                 <button
                         type="button" class="btn btn-primary"
-                        style="pointer-events: none;"
                         :disabled="!this.user.is_active"
                         v-else v-on:click="changeMembership('join')">
                     Join {{ team.name }}!
