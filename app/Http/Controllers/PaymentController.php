@@ -454,6 +454,7 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             Bugsnag::notifyException($e);
             $error = $e->getMessage();
+            $error = is_array($error) ? $error : [$error];
             Log::error(get_class() . " - Error querying Square transaction", $error);
             return $e;
         }
