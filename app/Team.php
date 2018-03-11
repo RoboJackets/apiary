@@ -24,7 +24,7 @@ class Team extends Model
     /**
      *  Get the Users that are members of this Team
      */
-    public function users()
+    public function members()
     {
         return $this->belongsToMany('App\User');
     }
