@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Team;
+use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,12 @@ class TeamController extends Controller
     {
         $teams = Team::all();
         return response()->json(['status' => 'success', 'teams' => $teams]);
+    }
+
+    public function indexWeb()
+    {
+        $teams = Team::visible()->orderBy('name', 'asc')->get();
+        return view('teams.index')->with(['teams' => $teams]);
     }
 
     /**
@@ -75,6 +82,33 @@ class TeamController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param mixed $name DB ID or Team Name
+     * @return \Illuminate\Http\Response
+     */
+    public function showWeb($name)
+    {
+        $team = Team::where('id', $name)->orWhere('name', 'LIKE', $name)->first();
+        $user = auth()->user();
+        $teams = auth()->user()->teams;
+        return view('teams.show')->with(['team' => $team, 'user' => $user]);
+    }
+
+    /**
+     * Returns a list of all members of the given team
+     *
+     * @param $id integer Team ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showMembers($id)
+    {
+        $team = Team::find($id);
+        $members = $team->members;
+        return response()->json(['status' => 'success', 'members' => $members]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -107,6 +141,42 @@ class TeamController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
+    }
+
+    /**
+     * Updates membership of the given team
+     *
+     * @param Request $request
+     * @param $id integer
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMembers(Request $request, $id)
+    {
+        $team = Team::find($id);
+        if (!$team) {
+            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
+        }
+
+        $this->validate($request, [
+            'user_id' => 'required|numeric|exists:users,id',
+            'action' => 'required|in:join,leave'
+        ]);
+
+        try {
+            $user = User::find($request->input('user_id'));
+            if ($request->input('action') == "join") {
+                $team->members()->attach($user);
+            } else {
+                $team->members()->detach($user);
+            }
+        } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
+            $errorMessage = $e->errorInfo[2];
+            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
+        }
+
+        $team = Team::with('members')->find($id);
+        return response()->json(['status' => 'success', 'team' => $team], 201);
     }
 
     /**
