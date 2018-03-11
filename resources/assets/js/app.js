@@ -36,7 +36,11 @@ import 'flatpickr/dist/flatpickr.css';
 Vue.use(flatPickr);
 
 //Import Moment for friendly timestamps
-Vue.use(require('vue-moment'));
+import VueMoment from 'vue-moment'
+import moment from 'moment'
+Vue.use(VueMoment, {
+    moment,
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
