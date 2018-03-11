@@ -26,24 +26,7 @@ class AttendanceController extends Controller
      */
     public function index(Request $request)
     {
-        $this->validate($request, [
-            'attendable_type' => 'string',
-            'attendable_id' => 'numeric'
-        ]);
-
-        $attendable_type = $request->attendable_type;
-        $attendable_id = $request->attendable_id;
-
-        if (empty($attendable_type) || empty($attendable_id)) {
-            $attendance = Attendance::with('attendee')->get();
-        } else {
-            $attendance = Attendance::where('attendable_type', $attendable_type)
-                ->where('attendable_id', $attendable_id)
-                ->with('attendee')
-                ->get();
-        }
-
-        
+        $attendance = Attendance::with('attendee')->get();
         return response()->json(['status' => 'success', 'attendance' => $attendance]);
     }
 
@@ -114,19 +97,16 @@ class AttendanceController extends Controller
      */
     public function search(Request $request)
     {
-        $user = auth()->user();
         $this->validate($request, [
             'attendable_type' => 'required',
             'attendable_id' => 'required|numeric',
-            'start_date' => 'required'
+            'start_date' => 'date|nullable',
+            'end_date' => 'date|nullable'
         ]);
-        $end_date_raw = $request->input('end_date');
-        $end_date = (is_null($end_date_raw) || $end_date_raw == "") ? date("Y-m-d") : $end_date_raw;
 
         $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
             ->where('attendable_id', '=', $request->input('attendable_id'))
-            ->whereDate('created_at', '>=', $request->input('start_date'))
-            ->whereDate('created_at', '<=', $end_date)
+            ->start($request->input('start_date'))->end($request->input('end_date'))
             ->with('attendee')->get();
 
         if ($att) {
