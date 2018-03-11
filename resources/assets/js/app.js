@@ -46,7 +46,6 @@ Vue.component('custom-radio-buttons', require('./components/fields/CustomRadioBu
 Vue.component('user-lookup', require('./components/fields/UserLookup.vue'));
 
 // Large Scale Components
-
 Vue.component('datatable', require('./components/Datatable.vue'));
 Vue.component('faset-admin-table', require('./components/wrappers/FasetAdminTable.vue'));
 Vue.component('faset-edit-form', require('./components/FasetEditForm.vue'));
@@ -63,7 +62,6 @@ Vue.component('event-edit-form', require('./components/events/EventEditForm.vue'
 Vue.component('event-create-form', require('./components/events/EventCreateForm.vue'));
 
 // Dues
-
 Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue'));
 Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue'));
 Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue'));
@@ -75,11 +73,12 @@ Vue.component('pending-dues-table', require('./components/wrappers/PendingDuesTa
 Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue'));
 
 // Swag
-
 Vue.component('swag-table', require('./components/wrappers/SwagTable.vue'));
 Vue.component('swag-transaction', require('./components/swag/SwagTransaction.vue'));
 Vue.component('distribute-swag', require('./components/swag/DistributeSwag.vue'));
 
+//Teams
+Vue.component('team-show', require('./components/teams/TeamShow'));
 
 const app = new Vue({
     el: '#app'

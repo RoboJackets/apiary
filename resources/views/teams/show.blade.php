@@ -1,11 +1,13 @@
 @extends('layouts/app')
 
 @section('title')
-    Team Name | Teams | {{ config('app.name') }}
+    {{ $team->name }} | Teams | {{ config('app.name') }}
 @endsection
 
 @section('content')
     @component('layouts/title')
-        Team Name
+        {{$team->name}}
     @endcomponent
+
+    <team-show :team="{{ $team }}" :user="{{ $user }}"></team-show>
 @endsection
