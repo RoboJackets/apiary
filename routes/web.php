@@ -33,12 +33,8 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
     });
 
     Route::group(['prefix' => 'teams', 'as' => 'teams.'], function () {
-       Route::get('/', function () {
-          return view('teams.index');
-       })->name('index');
-       Route::get('{name}', function () {
-          return view('teams.show');
-       })->name('show');
+        Route::get('/', 'TeamController@indexWeb')->name('index');
+       Route::get('{name}', 'TeamController@showWeb')->name('show');
     });
 
     Route::prefix('payments')->group(function () {
