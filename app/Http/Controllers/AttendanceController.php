@@ -13,7 +13,7 @@ class AttendanceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-attendance', ['only' => ['index']]);
+        $this->middleware('permission:read-attendance', ['only' => ['index', 'search']]);
         $this->middleware('permission:create-attendance', ['only' => ['store']]);
         $this->middleware('permission:read-attendance|read-attendance-own', ['only' => ['show']]);
         $this->middleware('permission:update-attendance', ['only' => ['update']]);
@@ -27,24 +27,7 @@ class AttendanceController extends Controller
      */
     public function index(Request $request)
     {
-        $this->validate($request, [
-            'attendable_type' => 'string',
-            'attendable_id' => 'numeric'
-        ]);
-
-        $attendable_type = $request->attendable_type;
-        $attendable_id = $request->attendable_id;
-
-        if (empty($attendable_type) || empty($attendable_id)) {
-            $attendance = Attendance::with('attendee')->get();
-        } else {
-            $attendance = Attendance::where('attendable_type', $attendable_type)
-                ->where('attendable_id', $attendable_id)
-                ->with('attendee')
-                ->get();
-        }
-
-        
+        $attendance = Attendance::with('attendee')->get();
         return response()->json(['status' => 'success', 'attendance' => $attendance]);
     }
 
@@ -114,6 +97,33 @@ class AttendanceController extends Controller
         $user = auth()->user();
         $att = Attendance::find($id);
         if ($att && ($att->gtid == $user->gtid || $user->can('read-attendance'))) {
+            return response()->json(['status' => 'success', 'attendance' => $att]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
+        }
+    }
+
+    /**
+     * Searches attendance records for specified data
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $this->validate($request, [
+            'attendable_type' => 'required',
+            'attendable_id' => 'required|numeric',
+            'start_date' => 'date|nullable',
+            'end_date' => 'date|nullable'
+        ]);
+
+        $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
+            ->where('attendable_id', '=', $request->input('attendable_id'))
+            ->start($request->input('start_date'))->end($request->input('end_date'))
+            ->with('attendee')->get();
+
+        if ($att) {
             return response()->json(['status' => 'success', 'attendance' => $att]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);

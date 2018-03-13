@@ -101,6 +101,12 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
                 return view('swag.swagTransaction', ['id' => $id]);
             })->name('swag.transaction');
         });
+
+        Route::prefix('attendance')->group(function () {
+            Route::get('export', function () {
+                return view('attendance.export');
+            })->name('attendance.export');
+        });
     });
 });
 

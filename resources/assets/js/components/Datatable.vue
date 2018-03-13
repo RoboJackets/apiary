@@ -32,7 +32,10 @@
         table: {}
       }
     },
-    mounted() {  
+    mounted() {
+      let customDom = "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+          "<'row'<'col-sm-12'tr>>" +
+          "<'row'<'col-sm-5'Bi><'col-sm-7'p>>";
       if (typeof(this.dataUrl) !== 'undefined') {
         axios.get(this.dataUrl)
           .then(response => {
@@ -43,7 +46,11 @@
               data: this.tableData,
               columns: this.columns,
               pageLength: 100,
-              lengthMenu: [20, 50, 100, 200, 500, 5000]
+              lengthMenu: [20, 50, 100, 200, 500, 5000],
+              dom: customDom,
+              buttons: [
+                  'copy', 'csv', 'excel', 'print'
+              ]
             });
           })
           .catch(response => {
@@ -58,7 +65,11 @@
           data: this.tableData,
           columns: this.columns,
           pageLength: 100,
-          lengthMenu: [20, 50, 100, 200, 500, 5000]
+          lengthMenu: [20, 50, 100, 200, 500, 5000],
+          dom: customDom,
+          buttons: [
+              'copy', 'csv', 'excel', 'print'
+          ]
         });
       }
     },

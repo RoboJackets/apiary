@@ -25,6 +25,7 @@ Route::group(['prefix' => 'v1/', 'middleware' => ['auth.token', 'auth.cas.force'
     Route::put('faset/{id}', 'FasetVisitController@update');
     Route::get('notification/send', 'NotificationController@sendNotification');
     Route::post('notification/manual', 'NotificationController@sendNotificationManual');
+    Route::post('attendance/search', 'AttendanceController@search')->name('attendance.search');
     Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit']]);
     Route::get('users/search', 'UserController@search');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
