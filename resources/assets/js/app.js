@@ -66,6 +66,7 @@ Vue.component('accept-payment', require('./components/AcceptPayment.vue'));
 Vue.component('attendance-modal', require('./components/wrappers/AttendanceModal.vue'));
 Vue.component('attendance-kiosk', require('./components/attendance/AttendanceKiosk.vue'));
 Vue.component('attendance-export', require('./components/attendance/AttendanceExport.vue'));
+Vue.component('attendance-manual-add', require('./components/attendance/AttendanceManualAdd.vue'));
 
 // Events
 Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'));
