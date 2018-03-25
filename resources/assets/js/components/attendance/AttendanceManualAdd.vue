@@ -64,7 +64,9 @@
                     created_at: "",
                     gtid: "",
                     attendable_type: "App\\Team",
-                    attendable_id: ""
+                    attendable_id: "",
+                    source: "manual",
+                    includeName: true
                 },
                 dateTimeConfig: {
                     dateFormat: "Y-m-d",
