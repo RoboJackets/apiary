@@ -103,9 +103,9 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
         });
 
         Route::prefix('attendance')->group(function () {
-            Route::get('export', function () {
-                return view('attendance.export');
-            })->name('attendance.export');
+            Route::get('/', function () {
+                return view('attendance.admin');
+            })->name('attendance.admin');
         });
     });
 });
