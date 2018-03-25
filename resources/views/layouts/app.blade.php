@@ -36,7 +36,7 @@
                 <a class="dropdown-item" href="/admin/dues/pending">Accept Dues</a>
                 <a class="dropdown-item" href="/admin/swag">Swag</a>
                 <a class="dropdown-item" href="/admin/swag/pending">Give Swag</a>
-                <a class="dropdown-item" href="/admin/attendance/export">Attendance Export</a>
+                <a class="dropdown-item" href="/admin/attendance">Attendance</a>
                 @endhasanyrole
               </div>
             </li>
