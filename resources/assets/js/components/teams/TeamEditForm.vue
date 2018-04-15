@@ -58,6 +58,7 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <a class="btn btn-secondary" href="/admin/teams">Cancel</a>
+                    <button type="button" class="btn btn-danger" @click="deletePrompt">Delete</button>
                     <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
                 </div>
 
@@ -131,6 +132,51 @@
                         swal("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
                     })
             },
+            deletePrompt() {
+                let self = this;
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this team!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    focusCancel: true,
+                    confirmButtonColor: "#dc3545"
+                }).then((result) => {
+                    if (result.value) {
+                        self.deleteTeam();
+                    }
+                });
+            },
+            deleteTeam() {
+                axios.delete(this.dataUrl)
+                    .then(response => {
+                        this.hasError = false;
+                        swal({
+                            title: "Deleted!",
+                            text: "The team has been deleted.",
+                            type: "success",
+                            timer: 3000
+                        }).then((result) => {
+                            if (result.value) {
+                                window.location.href = "/admin/teams";
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        this.hasError = true;
+                        this.feedback = "";
+                        if (error.response.status == 403) {
+                            swal({
+                                title: "Whoops!",
+                                text: "You don't have permission to perform that action.",
+                                type: "error"
+                            });
+                        } else {
+                            swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                        }
+                    });
+            }
         }
     }
 </script>

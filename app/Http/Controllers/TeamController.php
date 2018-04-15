@@ -204,7 +204,7 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        $team = Team::find($id);
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $deleted = $team->delete();
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
