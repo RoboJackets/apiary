@@ -16,7 +16,7 @@
                         <h5 class="card-title"><b><a href="{{ route('teams.show', strtolower($team->name)) }}">
                                     {{$team->name}}
                                 </a></b></h5>
-                        <p class="card-text">{{ $team->short_description }}</p>
+                        <p class="card-text">{{ $team->description }}</p>
                         <a href="{{ route('teams.show', strtolower($team->name)) }}" class="btn btn-primary">
                             More Info
                         </a>

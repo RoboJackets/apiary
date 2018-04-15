@@ -16,9 +16,6 @@ class MultipleChangesToTeams extends Migration
         Schema::table('teams', function (Blueprint $table) {
             $table->boolean('attendable')->after('name')->default(false);
             $table->boolean('hidden')->after('name')->default(false);
-            $table->mediumText('short_description')->after('name')->nullable();
-            $table->dropColumn('description');
-            $table->longText('long_description')->after('name');
             $table->dropColumn('founding_semester');
             $table->char('founding_year', 4)->after('name')->nullable();
         });
@@ -34,9 +31,6 @@ class MultipleChangesToTeams extends Migration
         Schema::table('teams', function (Blueprint $table) {
             $table->dropColumn('attendable');
             $table->dropColumn('hidden');
-            $table->dropColumn('short_description');
-            $table->dropColumn('long_description');
-            $table->text('description');
             $table->dropColumn('founding_year');
             $table->char('founding_semester', 4)->after('long_description');
         });

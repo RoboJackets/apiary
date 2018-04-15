@@ -22,11 +22,6 @@
                 <b>Since:</b> {{ team.founding_year }}
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <b>About:</b> {{ team.long_description }}
-            </div>
-        </div>
     </div>
 </template>
 <script>
