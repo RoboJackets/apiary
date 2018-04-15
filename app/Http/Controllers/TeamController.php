@@ -46,7 +46,9 @@ class TeamController extends Controller
         $this->validate($request, [
             'name' => 'required|string|unique:teams',
             'description' => 'string|max:255|nullable',
-            'founding_semester' => 'numeric|required'
+            'founding_year' => 'numeric|required',
+            'attendable' => 'boolean',
+            'hidden' => 'boolean'
         ]);
 
         try {
@@ -92,6 +94,19 @@ class TeamController extends Controller
         $team = Team::where('id', $name)->orWhere('name', 'LIKE', $name)->first();
         $user = auth()->user();
         $teams = auth()->user()->teams;
+        return view('teams.show')->with(['team' => $team, 'user' => $user]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param mixed $id DB ID or slug
+     * @return \Illuminate\Http\Response
+     */
+    public function showWebAdmin($id)
+    {
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $user = auth()->user();
         return view('teams.show')->with(['team' => $team, 'user' => $user]);
     }
 

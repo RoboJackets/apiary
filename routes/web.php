@@ -106,6 +106,20 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
                 return view('swag.swagTransaction', ['id' => $id]);
             })->name('swag.transaction');
         });
+
+        Route::prefix('teams')->name('admin.teams.')->group(function () {
+            Route::get('/', function () {
+                return view('teams.indexAdmin');
+            })->name('index');
+
+            Route::get('create', function () {
+                return view('teams.create');
+            })->name('create');
+
+            Route::get('{id}', function ($id) {
+                return view('teams.edit', ['id' => $id]);
+            })->name('edit');
+        });
     });
 });
 
