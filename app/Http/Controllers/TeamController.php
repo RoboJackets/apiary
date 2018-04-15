@@ -74,7 +74,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        $team = Team::find($id);
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
 
         if ($team) {
             return response()->json(['status' => 'success', 'team' => $team]);
@@ -132,15 +132,17 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $team = Team::find($id);
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if (!$team) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
         $this->validate($request, [
-            'name' => 'string|unique:teams|nullable',
+            'name' => 'string',
             'description' => 'string|max:255|nullable',
-            'founding_semester' => 'numeric'
+            'founding_year' => 'numeric|nullable',
+            'attendable' => 'boolean',
+            'hidden' => 'boolean'
         ]);
 
         try {
