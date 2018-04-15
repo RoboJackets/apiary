@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Team extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasSlug;
 
     /**
      * The attributes that are not mass assignable.
@@ -57,5 +59,15 @@ class Team extends Model
     public function scopeVisible($query)
     {
         return $query->where('hidden', false);
+    }
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['name'])
+            ->saveSlugsTo('slug');
     }
 }
