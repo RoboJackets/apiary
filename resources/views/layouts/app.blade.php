@@ -16,6 +16,9 @@
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav mr-auto">
+            <li class="nav-item {{ $request->is('/') ? 'active' : '' }}">
+              <a class="nav-link" href="/">Home</a>
+            </li>
             <li class="nav-item {{ $request->is('teams*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
             </li>
@@ -32,7 +35,9 @@
                 @hasanyrole('admin|officer-i')
                 <a class="dropdown-item" href="/admin/users">Users</a>
                 <a class="dropdown-item" href="/admin/events">Events</a>
+                <a class="dropdown-item" href="{{ route('admin.teams.index') }}">Teams</a>
                 <a class="dropdown-item" href="/admin/faset">Faset</a>
+                <div class="dropdown-divider"></div>
                 @endhasanyrole
                 @hasanyrole('admin|officer-i|officer-ii')
                 <a class="dropdown-item" href="/admin/dues">Dues</a>
