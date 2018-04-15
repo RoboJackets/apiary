@@ -101,7 +101,7 @@
                         this.hasError = false;
                         this.feedback = "Saved!";
                         console.log("success");
-                        window.location.href= "/admin/teams/" + response.data.team.slug;
+                        window.location.href= "/teams/" + response.data.team.slug;
                     })
                     .catch(response => {
                         this.hasError = true;
