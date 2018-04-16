@@ -82,6 +82,7 @@ Vue.component('team-show', require('./components/teams/TeamShow'));
 Vue.component('teams-admin-table', require('./components/wrappers/TeamsAdminTable.vue'));
 Vue.component('team-create-form', require('./components/teams/TeamCreateForm.vue'));
 Vue.component('team-edit-form', require('./components/teams/TeamEditForm.vue'));
+Vue.component('team-invite-modal', require('./components/teams/TeamInviteModal.vue'));
 
 const app = new Vue({
     el: '#app'

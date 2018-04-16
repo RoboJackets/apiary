@@ -63,6 +63,27 @@
                 </div>
 
             </form>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="rsvp-tab" data-toggle="tab" href="#rsvps">Members</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane show active" id="members">
+                    <h3>Members</h3>
+                    <team-invite-modal
+                            id="teamInviteModal"
+                            :teamId="this.teamId">
+                    </team-invite-modal>
+                    <button type="button" class="btn btn-secondary btn-above-table" data-toggle="modal" data-target="#teamInviteModal">Invite</button>
+                    <datatable id="team-members-table"
+                               :data-object="team.members"
+                               :columns="memberTableConfig">
+                    </datatable>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -75,7 +96,12 @@
         props: ['teamId'],
         mounted() {
             this.dataUrl = this.baseUrl + this.teamId;
-            axios.get(this.dataUrl)
+
+            axios.get(this.dataUrl, {
+                params: {
+                    include: 'members'
+                }
+            })
                 .then(response => {
                     this.team = response.data.team;
                 })
@@ -99,6 +125,11 @@
                 yesNoOptions: [
                     {value: "0", text: "No"},
                     {value: "1", text: "Yes"},
+                ],
+                memberTableConfig: [
+                    {'title': 'Name', 'data': 'name'},
+                    {'title': 'GTID', 'data': 'gtid'},
+                    {'title': 'Action', 'data': ''}
                 ],
             }
         },
