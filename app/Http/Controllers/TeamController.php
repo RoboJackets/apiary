@@ -72,9 +72,13 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->orWhere('slug', $id);
+        if ($request->input('include') == "members") {
+            $team = $team->with('members');
+        }
+        $team = $team->first();
 
         if ($team) {
             return response()->json(['status' => 'success', 'team' => $team]);
@@ -169,7 +173,7 @@ class TeamController extends Controller
      */
     public function updateMembers(Request $request, $id)
     {
-        $team = Team::find($id);
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if (!$team) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
