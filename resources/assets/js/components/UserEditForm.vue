@@ -137,6 +137,7 @@
 <script>
 
   import { alpha, email, maxLength } from 'vuelidate/lib/validators';
+  import notGTEmail from '../customValidators/notGTEmail';
 
   export default {
     props: ['userUid'],
@@ -193,7 +194,7 @@
     },
     validations: {
       user: {
-        personal_email: {email},
+        personal_email: {email, notGTEmail},
         phone: {maxLength: maxLength(15)},
         preferred_name: {alpha},
         shirt_size: {},
