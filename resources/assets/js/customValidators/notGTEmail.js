@@ -1,3 +1,3 @@
 export default notGTEmail => {
-  return !notGTEmail.trim().endsWith('gatech.edu');
+  return !notGTEmail.trim().toLowerCase().endsWith('gatech.edu');
 };
