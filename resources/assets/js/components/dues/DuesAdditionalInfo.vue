@@ -90,8 +90,8 @@
 </template>
 
 <script>
-
   import { alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
+  import notGTEmail from '../../customValidators/notGTEmail';
 
   export default {
     props: ['user'],
@@ -125,7 +125,7 @@
     },
     validations: {
       localUser: {
-        personal_email: {email},
+        personal_email: {email, notGTEmail},
         phone: {maxLength: maxLength(15)},
         preferred_name: {alpha},
         emergency_contact_name: {},
