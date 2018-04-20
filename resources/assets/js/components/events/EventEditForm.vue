@@ -8,8 +8,15 @@
         <div class="form-group row">
           <label for="event-name" class="col-sm-2 col-form-label">Event Name</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="event.name" type="text" class="form-control" id="event-name"
-               placeholder="None on record">
+            <input
+              v-model="event.name"
+              type="text"
+              class="form-control"
+              id="event-name"
+              placeholder="None on record">
+            <div class="invalid-feedback">
+              Name is a required field
+            </div>
           </div>
 
           <label for="event-organizer" class="col-sm-2 col-form-label">Organizer</label>
@@ -22,24 +29,24 @@
           <label for="event-starttime" class="col-sm-2 col-form-label">Start Time</label>
           <div class="col-sm-10 col-lg-4">
             <flat-pickr
-                id="event-starttime"
-                v-model="event.start_time"
-                placeholder="Select start time"
-                :required="true"
-                :config="dateTimeConfig"
-                input-class="form-control">
+              id="event-starttime"
+              v-model="event.start_time"
+              placeholder="Select start time"
+              :required="true"
+              :config="dateTimeConfig"
+              input-class="form-control">
             </flat-pickr>
           </div>
 
           <label for="event-endtime" class="col-sm-2 col-form-label">End Time</label>
           <div class="col-sm-10 col-lg-4">
             <flat-pickr
-                id="event-endtime"
-                v-model="event.end_time"
-                placeholder="Select start time"
-                :required="true"
-                :config="dateTimeConfig"
-                input-class="form-control">
+              id="event-endtime"
+              v-model="event.end_time"
+              placeholder="Select start time"
+              :required="true"
+              :config="dateTimeConfig"
+              input-class="form-control">
             </flat-pickr>
           </div>
         </div>
@@ -54,11 +61,11 @@
               style="color:red">*</span></label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
-                v-model="event.allow_anonymous_rsvp"
-                :options="rsvpOptions"
-                id="event-anonymousrsvp-buttons"
-                :is-error="$v.event.allow_anonymous_rsvp.$error"
-                @input="$v.event.allow_anonymous_rsvp.$touch()">
+              v-model="event.allow_anonymous_rsvp"
+              :options="rsvpOptions"
+              id="event-anonymousrsvp-buttons"
+              :is-error="$v.event.allow_anonymous_rsvp.$error"
+              @input="$v.event.allow_anonymous_rsvp.$touch()">
             </custom-radio-buttons>
           </div>
         </div>
@@ -86,8 +93,8 @@
           <h3>RSVPs</h3>
 
           <datatable id="rsvp-admin-table"
-               :data-object="event.rsvps"
-               :columns="rsvpTableConfig">
+           :data-object="event.rsvps"
+           :columns="rsvpTableConfig">
           </datatable>
         </div>
 
@@ -95,13 +102,13 @@
           <h3>Attendance</h3>
           <button type="button" class="btn btn-primary btn-above-table" data-toggle="modal" data-target="#attendanceModal">Record Attendance</button>
           <attendance-modal
-              id="attendanceModal"
-              :attendableId="this.eventId"
-              attendableType="App\Event">
+            id="attendanceModal"
+            :attendableId="this.eventId"
+            attendableType="App\Event">
           </attendance-modal>
           <datatable id="attendance-view-table"
-               :data-object="attendance"
-               :columns="attendanceTableConfig">
+           :data-object="attendance"
+           :columns="attendanceTableConfig">
           </datatable>
         </div>
 
