@@ -70,6 +70,28 @@
           </div>
         </div>
 
+        <div class="form-group row">
+          <label for="event-cost" class="col-sm-2 col-form-label">Cost</label>
+          <div class="col-sm-10 col-lg-4">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+              <input
+                v-model="event.cost"
+                type="text"
+                class="form-control"
+                :class="{ 'is-invalid': $v.event.cost.$error }"
+                id="event-cost"
+                placeholder="Enter a decimal (10.00)"
+                @blur="$v.event.cost.$touch()">
+            </div>
+            <div class="invalid-feedback">
+              Cost must be a number
+            </div>
+          </div>
+        </div>
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <a class="btn btn-secondary" href="/admin/events">Cancel</a>
