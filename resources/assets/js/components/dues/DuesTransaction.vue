@@ -22,8 +22,15 @@
       <label for="package-cost" class="col-sm-2 col-form-label">Dues Cost</label>
       <div class="col-sm-10 col-lg-4">
         <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <input v-model="package.cost" type="text" readonly class="form-control" id="package-cost">
+          <div class="input-group-prepend">
+            <div class="input-group-text">$</div>
+          </div>
+          <input
+            v-model="package.cost"
+            type="text"
+            readonly
+            class="form-control"
+            id="package-cost">
         </div>
       </div>
     </div>
