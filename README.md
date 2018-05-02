@@ -28,7 +28,7 @@ It is also known to run well in Homestead on Macs.
 This is a pretty conventional Laravel project, so we recommend following [the official guide](https://laravel.com/docs/5.6#installation) to get your workspace set up. At minimum, you will need PHP 7.1.3+, [`composer`](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx), `npm`, and a MySQL 5.7+ compatible database available on your machine.
 
 You can install all of the required php extensions with:
-`$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml
+`$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml`
 
 ### Install Apiary
 Clone the repository onto your local machine:
@@ -73,9 +73,12 @@ You can use php's built in development web server to easily test your applicatio
 
 ## Tips for Development
 
+### `npm run watch`
+Automatically rebuilds your front-end assets whenever the files change on disk. It's the same as running `npm run dev`
+
+
 TODO
 artisan tinker
-npm run watch
 cache clearing
 
 ## Moving to production
