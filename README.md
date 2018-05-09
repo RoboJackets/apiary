@@ -48,7 +48,7 @@ To enable the Keyring functionality, edit your `my.cnf` as follows, then restart
     [mysqld]
     early-plugin-load=keyring_file.so
     
-To check if the Keyring plugin was enable successfully, run the following command from a MySQL command line.
+To check if the Keyring plugin was enabled successfully, run the following command from a MySQL command line.
 
     mysql> SELECT PLUGIN_NAME, PLUGIN_STATUS
            FROM INFORMATION_SCHEMA.PLUGINS
