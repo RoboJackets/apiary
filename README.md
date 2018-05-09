@@ -66,7 +66,7 @@ Clone the repository onto your local machine:
 
 `$ git clone https://github.com/RoboJackets/apiary.git`
 
-If you a member of RoboJackets, reach out in [#apiary]() and ask for a copy of a mostly configured `.env` file.
+If you are a member of RoboJackets, reach out in [#apiary]() and ask for a copy of a mostly configured `.env` file.
 
 Copy the example environment file to configure Apiary for local development:
 
