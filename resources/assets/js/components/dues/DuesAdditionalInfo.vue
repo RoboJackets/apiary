@@ -32,6 +32,12 @@
               :class="{ 'is-invalid': $v.localUser.personal_email.$error }"
               @input="$v.localUser.personal_email.$touch()">
           </div>
+          <div class="invalid-feedback" v-if="!$v.localUser.personal_email.notGTEmail">
+            Personal email cannot be a GT email address
+          </div>
+          <div class="invalid-feedback" v-if="!$v.localUser.personal_email.email">
+            Must be a valid email address
+          </div>
         </div>
 
         <div class="form-group row">
@@ -45,6 +51,9 @@
               maxlength="15"
               :class="{ 'is-invalid': $v.localUser.phone.$error }"
               @input="$v.localUser.phone.$touch()">
+            <div class="invalid-feedback">
+              Must be a valid phone number with no punctuation
+            </div>
           </div>
         </div>
 
@@ -74,6 +83,9 @@
               maxlength="15"
               :class="{ 'is-invalid': $v.localUser.emergency_contact_phone.$error }"
               @input="$v.localUser.emergency_contact_phone.$touch()">
+              <div class="invalid-feedback">
+                Must be a valid phone number with no punctuation
+              </div>
           </div>
         </div>
 
