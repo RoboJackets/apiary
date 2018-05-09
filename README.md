@@ -17,11 +17,17 @@ This project has been tailored to support the specific workflow of RoboJackets a
 
 ## Getting Started with Local Development
 
+If you've never worked with [Laravel](https://laravel.com) before, we recommend watching [the Laravel from Scratch webcast series](https://laracasts.com/series/laravel-from-scratch-2017) to get you up to speed quickly.
+
 Apiary is written entirely in languages that can be run from any operating system, however, support is only provided for Linux environments. All instructions below assume that the user is running on a modern, Debian-based linux distribution.
 
 For an easier setup, you may wish to use [Laravel Homestead](https://laravel.com/docs/5.6/homestead).
 Homestead is a pre-packaged Vagrant box maintained by the Laravel creators designed for Laravel development. It takes care of most of the server configuration so that you can get up and running quickly.  
 If you opt to use Homestead, all steps listed below should be performed *inside the Vagrant box*, rather than on the host machine.
+
+Laravel Mix is used to compile browser assets. Currently, we're concatenating and minifying all of our JS and CSS. This step is also where we compile our SCSS into CSS. In your local dev environment, you should run `npm run dev` the first time you clone the repo and any time the assets change. Laravel Mix is a simple wrapper around webpack, which you really don't need to know about at this point. However, the fact that we use Webpack as a module bundler means that the process to reference JavaScript and CSS is a little bit different. It also means that if you add new CSS or JS files into the project, you need to reference them in [`webpack.mix.js`](webpack.mix.js) to be compiled. See the [Laravel Docs](https://laravel.com/docs/5.4/mix#running-mix) for more details.
+
+Most of the backend code lives under [`app/Http`](), with templates under [`resources/views`]() and [`resources/assets/js`](), but you're encouraged to browse through the project tree to get a better feel of where different components live. The `php artisan` command can generate new classes for you in the correct locations automatically - run it with no parameters to see all the options.
 
 ### Install dependencies
 
