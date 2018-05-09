@@ -17,18 +17,43 @@ This project has been tailored to support the specific workflow of RoboJackets a
 
 ## Getting Started with Local Development
 
-See [CONTRIBUTING.md]()
-
 Apiary is written entirely in languages that can be run from any operating system, however, support is only provided for Linux environments. All instructions below assume that the user is running on a modern, Debian-based linux distribution.
 
-It is also known to run well in Homestead on Macs.
+For an easier setup, you may wish to use [Laravel Homestead](https://laravel.com/docs/5.6/homestead).
+Homestead is a pre-packaged Vagrant box maintained by the Laravel creators designed for Laravel development. It takes care of most of the server configuration so that you can get up and running quickly.  
+If you opt to use Homestead, all steps listed below should be performed *inside the Vagrant box*, rather than on the host machine.
 
 ### Install dependencies
 
 This is a pretty conventional Laravel project, so we recommend following [the official guide](https://laravel.com/docs/5.6#installation) to get your workspace set up. At minimum, you will need PHP 7.1.3+, [`composer`](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx), `npm`, and a MySQL 5.7+ compatible database available on your machine.
 
+*If you're using Homestead, all of this is taken care of for you out of the box.*
+
 You can install all of the required php extensions with:
 `$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml`
+
+#### Database Encryption
+
+Due to the nature of the data stored in certain tables in Apiary, some tables require encryption. This is implemented with MySQL's [Keyring](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
+For migrations to run successfully, you must also have a proper keyring set up in your development and production environments.
+
+To enable the Keyring functionality, edit your `my.cnf` as follows, then restart MySQL:  
+
+    [mysqld]
+    early-plugin-load=keyring_file.so
+    
+To check if the Keyring plugin was enable successfully, run the following command from a MySQL command line.
+
+    mysql> SELECT PLUGIN_NAME, PLUGIN_STATUS
+           FROM INFORMATION_SCHEMA.PLUGINS
+           WHERE PLUGIN_NAME LIKE 'keyring%';
+    +--------------+---------------+
+    | PLUGIN_NAME  | PLUGIN_STATUS |
+    +--------------+---------------+
+    | keyring_file | ACTIVE        |
+    +--------------+---------------+
+    
+Further documentation about MySQL Keyring can be found in the MySQL [documentation](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
 
 ### Install Apiary
 Clone the repository onto your local machine:
@@ -41,9 +66,22 @@ Copy the example environment file to configure Apiary for local development:
 
 `$ cp .env.example .env`
 
-and edit the file to add credentials for your database and mail driver. Mailgun is the suggested mail driver, but you can easily configure Mailtrap or a local mail server using the Laravel instructions.
+For a basic development environment, you'll need to modify the following settings:
 
-If you are running Apiary locally, you will need to additionally set values for all `CAS_MASQUERADE` keys in the config file.
+| Key                          | Value                                                                                                                                                                          |
+|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| APP_URL                      | Set to the hostname of your local dev environment, ex. `apiary.test`.                                                                                                          |
+| DB_*                         | Set appropriately for your database.                                                                                                                                           |
+| MAIL_*                       | Mailgun is the suggested mail driver, but you can easily configure Mailtrap or a local mail server referencing the [Laravel documentation](https://laravel.com/docs/5.4/mail). |
+| CAS_HOSTNAME                 | FQDN of the CAS server to use, ex. login.gatech.edu                                                                                                                            |
+| CAS_REAL_HOSTS               | Should match CAS_HOSTNAME                                                                                                                                                      |
+| CAS_LOGOUT_URL               | CAS Single-Log-Out URL, ex. https://login.gatech.edu/cas/logout                                                                                                                |
+| CAS_MASQUERADE               | If set, bypasses the CAS authentication flow and authenticates as the specified username.                                                                                      |
+| CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
+| CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
+| CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
+| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user                                                                                                                                |
+
 
 #### Installing dependencies
 
@@ -51,15 +89,21 @@ Run composer and npm install
 
 `$ composer install && npm install`
 
+You will need to run these commands again in the future if there are any changes to required packages.
+
 ### Before Your First Run
 
-Generate an application key (Run this only once)
+Generate an application key (Run this only once for initial setup)
 
 `$ php artisan key:generate`
 
-Run database migrations to set up tables (Run this after any new migrations are added)
+Run database migrations to set up tables (Run this for initial setup and when any new migrations are added later)
 
 `$ php artisan migrate`
+
+Seed the database tables with base content (Run this only once for initial setup)
+
+`$ php artisan db:seed`
 
 Generate static assets (Run this every time Vue or JS files are edited)
 
@@ -71,19 +115,29 @@ You can use php's built in development web server to easily test your applicatio
 
 `$ php artisan serve`
 
+This is not necessary if you are using Homestead - You should use the configured hostname from `Homestead.yaml` instead, ex. `apiary.test`.
+
 ## Tips for Development
 
 ### `npm run watch`
-Automatically rebuilds your front-end assets whenever the files change on disk. It's the same as running `npm run dev`
+Automatically rebuilds your front-end assets whenever the files change on disk. It's the same as running `npm run dev`. Some platforms will need `npm run watch-poll` to see changes to files, rather than just `watch`.
 
+### `php artisan tinker`
 
-TODO
-artisan tinker
-cache clearing
+Tinker allows you to interact with Apiary on the command line including the Eloquent ORM, jobs, events, and more. A good introduction to Tinker can be found [here](https://scotch.io/tutorials/tinker-with-the-data-in-your-laravel-apps-with-php-artisan-tinker).
 
-## Moving to production
+## Moving to Production
 
-TODO
-env file
-db encryption
-deploy scripts
+### `.env`
+
+There are a few additional changes needed to `.env` when moving to production.
+
+| Key                          | Value                                                                                                                                                                          |
+|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| APP_NAME                     | MyRoboJackets (or other as you see fit)                                                                                                                                        |
+| APP_ENV                      | production                                                                                                                                                                     |
+| APP_DEBUG                    | false                                                                                                                                                                          |
+| APP_LOG_LEVEL                | info (or other as you see fit)                                                                                                                                                 |
+| APP_URL                      | DNS hostname for production environment                                                                                                                                        |
+| GA_UA                        | Google Analytics identifier, if desired                                                                                                                                        |
+| SQUARE_*                     | Square API credentials (Get these from the Square Developer Dashboard)   
