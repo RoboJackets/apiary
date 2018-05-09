@@ -9,34 +9,35 @@ Apiary is a tool for managing the membership and operations of RoboJackets, a st
 
 This project grew out of frustration with the limitations imposed by Georgia Tech's student organization management system, OrgSync. We found that while it may be an excellent tool for managing small groups, it does not scale very well. To that end, we've tried to design an application that can better support our student organization at its current size, and grow and develop along with our group.
 
-This project has been tailored to support the specific workflow of RoboJackets and is not currently built in a manner that would be easily adaptable to another organization. The decision to limit the scope of this project was made in light of the requirement that CAS login sends GTIDs, which required an extensive approvals process. It is the belief of the project maintainers that it is exceptionally unlikely that another org will be able to navigate the process of gaining access to the Georgia Tech student data that Apiary requires to be useful.
+This project has been tailored to support the specific workflow of RoboJackets and is not currently built in a manner that would be easily adaptable to another organization. The decision to limit the scope of this project was made in light of the extensive approvals process to access the amount of student data we currently store. We believe it is unlikely that another org will be able and willing to navigate that process.
 
 ## Getting Help
-- For development of Apiary: Raise a Github issue or asking [#apiary]()
-- For production support of MyRoboJackets: Ask in [#it-helpdesk]()
+- For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in #apiary on Slack
+- For production support of MyRoboJackets, ask in #it-helpdesk on Slack
 
 ## Getting Started with Local Development
 
 If you've never worked with [Laravel](https://laravel.com) before, we recommend watching [the Laravel from Scratch webcast series](https://laracasts.com/series/laravel-from-scratch-2017) to get you up to speed quickly.
 
-Apiary is written entirely in languages that can be run from any operating system, however, support is only provided for Linux environments. All instructions below assume that the user is running on a modern, Debian-based linux distribution.
+Apiary is written entirely in languages that can be run from any operating system; however, support is only provided for Linux environments. All instructions below assume that the user is running on a modern, Debian-based Linux distribution.
 
 For an easier setup, you may wish to use [Laravel Homestead](https://laravel.com/docs/5.6/homestead).
-Homestead is a pre-packaged Vagrant box maintained by the Laravel creators designed for Laravel development. It takes care of most of the server configuration so that you can get up and running quickly.  
-If you opt to use Homestead, all steps listed below should be performed *inside the Vagrant box*, rather than on the host machine.
+Homestead is a pre-packaged [Vagrant](https://www.vagrantup.com/) box maintained by the Laravel creators designed for Laravel development. It takes care of most of the server configuration so that you can get up and running quickly. If you opt to use Homestead, all steps listed below should be performed **inside the Vagrant box**, rather than on the host machine.
 
-Laravel Mix is used to compile browser assets. Currently, we're concatenating and minifying all of our JS and CSS. This step is also where we compile our SCSS into CSS. In your local dev environment, you should run `npm run dev` the first time you clone the repo and any time the assets change. Laravel Mix is a simple wrapper around webpack, which you really don't need to know about at this point. However, the fact that we use Webpack as a module bundler means that the process to reference JavaScript and CSS is a little bit different. It also means that if you add new CSS or JS files into the project, you need to reference them in [`webpack.mix.js`](webpack.mix.js) to be compiled. See the [Laravel Docs](https://laravel.com/docs/5.4/mix#running-mix) for more details.
+Laravel Mix is used to compile browser assets. Currently, we're concatenating and minifying all of our JS and CSS. This step is also where we compile our SCSS into CSS. In your local dev environment, you should run `npm run dev` the first time you clone the repo and any time the assets change. Laravel Mix is a simple wrapper around webpack, which you really don't need to know about at this point. However, the fact that we use Webpack as a module bundler means that the process to reference JavaScript and CSS is a little bit different. It also means that if you add new CSS or JS files into the project, you need to reference them in [`webpack.mix.js`](webpack.mix.js) to be compiled. See [the relevant Laravel documentation](https://laravel.com/docs/5.4/mix#running-mix) for more details.
 
-Most of the backend code lives under [`app/Http`](), with templates under [`resources/views`]() and [`resources/assets/js`](), but you're encouraged to browse through the project tree to get a better feel of where different components live. The `php artisan` command can generate new classes for you in the correct locations automatically - run it with no parameters to see all the options.
+Most of the backend code lives under [`app/Http`](/app/Http), with templates under [`resources/views`](/resources/views) and [`resources/assets/js`](/resources/assets/js), but you're encouraged to browse through the project tree to get a better feel of where different components live. The `php artisan` command can generate new classes for you in the correct locations automatically - run it with no parameters to see all the options.
 
 ### Install dependencies
 
 This is a pretty conventional Laravel project, so we recommend following [the official guide](https://laravel.com/docs/5.6#installation) to get your workspace set up. At minimum, you will need PHP 7.1.3+, [`composer`](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx), `npm`, and a MySQL 5.7+ compatible database available on your machine.
 
-*If you're using Homestead, all of this is taken care of for you out of the box.*
+*If you're using Homestead, this section is taken care of for you out of the box.*
 
 You can install all of the required php extensions with:
-`$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml`
+```
+$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml
+```
 
 #### Database Encryption
 
@@ -47,7 +48,7 @@ To enable the Keyring functionality, edit your `my.cnf` as follows, then restart
 
     [mysqld]
     early-plugin-load=keyring_file.so
-    
+
 To check if the Keyring plugin was enabled successfully, run the following command from a MySQL command line.
 
     mysql> SELECT PLUGIN_NAME, PLUGIN_STATUS
@@ -58,19 +59,23 @@ To check if the Keyring plugin was enabled successfully, run the following comma
     +--------------+---------------+
     | keyring_file | ACTIVE        |
     +--------------+---------------+
-    
-Further documentation about MySQL Keyring can be found in the MySQL [documentation](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
+
+Further documentation about MySQL Keyring can be found in [the MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
 
 ### Install Apiary
 Clone the repository onto your local machine:
 
-`$ git clone https://github.com/RoboJackets/apiary.git`
+```
+$ git clone https://github.com/RoboJackets/apiary.git
+```
 
-If you are a member of RoboJackets, reach out in [#apiary]() and ask for a copy of a mostly configured `.env` file.
+If you a member of RoboJackets, reach out in #apiary on Slack and ask for a copy of a mostly configured `.env` file.
 
 Copy the example environment file to configure Apiary for local development:
 
-`$ cp .env.example .env`
+```
+$ cp .env.example .env
+```
 
 For a basic development environment, you'll need to modify the following settings:
 
@@ -81,7 +86,7 @@ For a basic development environment, you'll need to modify the following setting
 | MAIL_*                       | Mailgun is the suggested mail driver, but you can easily configure Mailtrap or a local mail server referencing the [Laravel documentation](https://laravel.com/docs/5.4/mail). |
 | CAS_HOSTNAME                 | FQDN of the CAS server to use, ex. login.gatech.edu                                                                                                                            |
 | CAS_REAL_HOSTS               | Should match CAS_HOSTNAME                                                                                                                                                      |
-| CAS_LOGOUT_URL               | CAS Single-Log-Out URL, ex. https://login.gatech.edu/cas/logout                                                                                                                |
+| CAS_LOGOUT_URL               | CAS logout URL, ex. https://login.gatech.edu/cas/logout                                                                                                                |
 | CAS_MASQUERADE               | If set, bypasses the CAS authentication flow and authenticates as the specified username.                                                                                      |
 | CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
 | CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
@@ -91,37 +96,47 @@ For a basic development environment, you'll need to modify the following setting
 
 #### Installing dependencies
 
-Run composer and npm install
-
-`$ composer install && npm install`
+```
+$ composer install && npm install
+```
 
 You will need to run these commands again in the future if there are any changes to required packages.
 
 ### Before Your First Run
 
-Generate an application key (Run this only once for initial setup)
+Generate an application key (run this only once for initial setup.)
 
-`$ php artisan key:generate`
+```
+$ php artisan key:generate
+```
 
-Run database migrations to set up tables (Run this for initial setup and when any new migrations are added later)
+Run database migrations to set up tables (run this for initial setup and when any new migrations are added later.)
 
-`$ php artisan migrate`
+```
+$ php artisan migrate
+```
 
-Seed the database tables with base content (Run this only once for initial setup)
+Seed the database tables with base content (run this only once for initial setup.)
 
-`$ php artisan db:seed`
+```
+$ php artisan db:seed
+```
 
-Generate static assets (Run this every time Vue or JS files are edited)
+Generate static assets (run this every time Vue or JS files are edited.)
 
-`$ npm run dev`
+```
+$ npm run dev
+```
 
 ### Starting the Local Development Server
 
-You can use php's built in development web server to easily test your application without needing to configure a production-ready web server, such as nginx or Apache. To start this server:
+You can use `php`'s built in development web server to easily test your application without needing to configure a production-ready web server, such as `nginx` or `apache`. To start this server:
 
-`$ php artisan serve`
+```
+$ php artisan serve
+```
 
-This is not necessary if you are using Homestead - You should use the configured hostname from `Homestead.yaml` instead, ex. `apiary.test`.
+This is not necessary if you are using Homestead - you should use the configured hostname from `Homestead.yaml` instead, ex. `apiary.test`.
 
 ## Tips for Development
 
