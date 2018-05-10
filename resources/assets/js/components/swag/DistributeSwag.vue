@@ -54,7 +54,7 @@
 </template>
 
 <script>
-    /*
+/*
      *  @props transactionType: Morph of the Transaction model to attach the payment
      *  @props transactionID: ID of the specific morph of a given Transaction Model
      *  @props swag_polo_status: Status of polo swag item (Not Eligible/Not Picked Up/Picked Up)
@@ -62,51 +62,56 @@
      *  @emit done: Event emitted after a payment is recorded successfully
      */
 
-    import { numeric, required, sameAs } from 'vuelidate/lib/validators';
+import { numeric, required, sameAs } from 'vuelidate/lib/validators';
 
-    export default {
-        props: {
-            transactionType: {
-                type: String,
-                required: true
-            },
-            transactionId: {
-                type: Number,
-                required: true
-            },
-            swag_polo_provided: {
-                required: true
-            },
-            swag_shirt_provided: {
-                required: true
-            },
-            swag_polo_status: {
-                required: true
-            },
-            swag_shirt_status: {
-                required: true
-            }
-        },
-        data() {
-            return {
-                duesTransaction: {
-                    swag_shirt_provided: false,
-                    swag_polo_provided: false
-                },
-                baseUrl: "/api/v1/dues/transactions/",
-            }
-        },
-        methods: {
-            submit: function() {
-                axios.put(this.baseUrl + this.transactionId, this.duesTransaction)
-                    .then(response => {
-                    this.$emit('done');
-            })
-            .catch(response => {
-                    console.log(response);
-                swal("Connection Error", "Unable to record swag distribution. Check your internet connection or try refreshing the page.", "error");
-            })
-            }
-        }
-    }
+export default {
+  props: {
+    transactionType: {
+      type: String,
+      required: true,
+    },
+    transactionId: {
+      type: Number,
+      required: true,
+    },
+    swag_polo_provided: {
+      required: true,
+    },
+    swag_shirt_provided: {
+      required: true,
+    },
+    swag_polo_status: {
+      required: true,
+    },
+    swag_shirt_status: {
+      required: true,
+    },
+  },
+  data() {
+    return {
+      duesTransaction: {
+        swag_shirt_provided: false,
+        swag_polo_provided: false,
+      },
+      baseUrl: '/api/v1/dues/transactions/',
+    };
+  },
+  methods: {
+    submit: function() {
+      axios
+        .put(this.baseUrl + this.transactionId, this.duesTransaction)
+        .then(response => {
+          this.$emit('done');
+        })
+        .catch(response => {
+          console.log(response);
+          swal(
+            'Connection Error',
+            'Unable to record swag distribution. Check your internet connection or try refreshing the page.',
+            'error'
+          );
+        });
+    },
+  },
+};
 </script>

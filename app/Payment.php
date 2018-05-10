@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Payment extends Model
 {
     use SoftDeletes;
-    
+
     /**
      * The accessors to append to the model's array form.
      *
@@ -24,7 +24,7 @@ class Payment extends Model
     protected $guarded = ['id'];
 
     /**
-     * Get all of the owning payable models
+     * Get all of the owning payable models.
      */
     public function payable()
     {
@@ -40,26 +40,26 @@ class Payment extends Model
     }
 
     /**
-     * Get the presentation-ready format of a Payment Method
+     * Get the presentation-ready format of a Payment Method.
      *
-     * @return String
+     * @return string
      */
     public function getMethodPresentationAttribute()
     {
-        $valueMap = array(
+        $valueMap = [
             'cash' => 'Cash',
             'squarecash' => 'Square Cash',
             'check' => 'Check',
             'swipe' => 'Swiped Card',
-            'square' => 'Square'
-        );
+            'square' => 'Square',
+        ];
 
         $method = $this->method;
 
         if (array_key_exists($method, $valueMap)) {
             return $valueMap[$this->method];
         } else {
-            return null;
+            return;
         }
     }
 }

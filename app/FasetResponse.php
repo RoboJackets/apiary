@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class FasetResponse extends Model
 {
     use SoftDeletes;
-    
+
     /**
-     *  Get the FASET visit associated with this FASET response
+     *  Get the FASET visit associated with this FASET response.
      */
     public function fasetVisit()
     {
@@ -18,7 +18,7 @@ class FasetResponse extends Model
     }
 
     /**
-     *  Get the FASET survey question associated with this FASET response
+     *  Get the FASET survey question associated with this FASET response.
      */
     public function fasetSurvey()
     {

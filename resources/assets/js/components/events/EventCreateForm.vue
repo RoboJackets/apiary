@@ -104,60 +104,58 @@
 </template>
 
 <script>
-  import { required, numeric } from 'vuelidate/lib/validators'
-  export default {
-    name: "createEventForm",
-    data() {
-      return {
-        event: {},
-        feedback: '',
-        hasError: false,
-        baseUrl: "/api/v1/events",
-        dateTimeConfig: {
-          dateFormat: "Y-m-d H:i:S",
-          enableTime:true,
-          altInput: true
-        },
-        rsvpOptions: [
-          {value: "0", text: "No"},
-          {value: "1", text: "Yes"},
-        ],
-      }
-    },
-    validations: {
-      event: {
-        name: {required},
-        cost: {numeric},
-        allow_anonymous_rsvp: {required}
-      }
-    },
-    methods: {
-      submit () {
-        if (this.$v.$invalid) {
-          this.$v.$touch();
-          return;
-        }
-
-        //Set organizer_id to the id from the selected object
-        let newEvent = this.event;
-        if (newEvent.organizer instanceof Object) {
-          newEvent.organizer_id = newEvent.organizer.id;
-        }
-
-        axios.post(this.baseUrl, newEvent)
-          .then(response => {
-            this.hasError = false;
-            this.feedback = "Saved!";
-            console.log("success");
-            window.location.href= "/admin/events/" + response.data.event.id;
-          })
-          .catch(response => {
-            this.hasError = true;
-            this.feedback = "";
-            console.log(response);
-            swal("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-          })
+import { required, numeric } from 'vuelidate/lib/validators';
+export default {
+  name: 'createEventForm',
+  data() {
+    return {
+      event: {},
+      feedback: '',
+      hasError: false,
+      baseUrl: '/api/v1/events',
+      dateTimeConfig: {
+        dateFormat: 'Y-m-d H:i:S',
+        enableTime: true,
+        altInput: true,
       },
-    }
-  }
+      rsvpOptions: [{ value: '0', text: 'No' }, { value: '1', text: 'Yes' }],
+    };
+  },
+  validations: {
+    event: {
+      name: { required },
+      cost: { numeric },
+      allow_anonymous_rsvp: { required },
+    },
+  },
+  methods: {
+    submit() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
+
+      //Set organizer_id to the id from the selected object
+      let newEvent = this.event;
+      if (newEvent.organizer instanceof Object) {
+        newEvent.organizer_id = newEvent.organizer.id;
+      }
+
+      axios
+        .post(this.baseUrl, newEvent)
+        .then(response => {
+          this.hasError = false;
+          this.feedback = 'Saved!';
+          console.log('success');
+          window.location.href = '/admin/events/' + response.data.event.id;
+        })
+        .catch(response => {
+          this.hasError = true;
+          this.feedback = '';
+          console.log(response);
+          swal('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
+        });
+    },
+  },
+};
 </script>

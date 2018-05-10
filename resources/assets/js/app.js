@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6,28 +5,28 @@
  */
 
 require('./bootstrap');
-var axios = require('axios')
+var axios = require('axios');
 var dt = require('datatables.net/js/jquery.dataTables');
 
 // Import DataTables for Bootstrap4 module
-require( 'datatables.net-bs4');
-require( 'jszip' );
-require( 'datatables.net-buttons-bs4' );
-require( 'datatables.net-buttons/js/buttons.html5.js' );
-require( 'datatables.net-buttons/js/buttons.print.js' );
+require('datatables.net-bs4');
+require('jszip');
+require('datatables.net-buttons-bs4');
+require('datatables.net-buttons/js/buttons.html5.js');
+require('datatables.net-buttons/js/buttons.print.js');
 
 //Import SweetAlert2 for nice alert dialogs
-import swal from 'sweetalert2'
+import swal from 'sweetalert2';
 window.swal = swal;
 
 window.Vue = require('vue');
 
 // Import the Vuelidate validation plugin
-import Vuelidate from 'vuelidate'
+import Vuelidate from 'vuelidate';
 Vue.use(Vuelidate);
 
 // Import the VueSelect component
-import vSelect from 'vue-select'
+import vSelect from 'vue-select';
 Vue.component('v-select', vSelect);
 
 // Import the FlatPickr Date Component
@@ -36,10 +35,10 @@ import 'flatpickr/dist/flatpickr.css';
 Vue.use(flatPickr);
 
 //Import Moment for friendly timestamps
-import VueMoment from 'vue-moment'
-import moment from 'moment'
+import VueMoment from 'vue-moment';
+import moment from 'moment';
 Vue.use(VueMoment, {
-    moment,
+  moment,
 });
 
 /**
@@ -91,7 +90,6 @@ Vue.component('swag-table', require('./components/wrappers/SwagTable.vue'));
 Vue.component('swag-transaction', require('./components/swag/SwagTransaction.vue'));
 Vue.component('distribute-swag', require('./components/swag/DistributeSwag.vue'));
 
-
 const app = new Vue({
-    el: '#app'
+  el: '#app',
 });

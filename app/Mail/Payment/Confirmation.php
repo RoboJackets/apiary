@@ -2,11 +2,10 @@
 
 namespace App\Mail\Payment;
 
+use App\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Payment;
 
 class Confirmation extends Mailable
 {

@@ -19,7 +19,7 @@ class AttendanceController extends Controller
         $this->middleware('permission:update-attendance', ['only' => ['update']]);
         $this->middleware('permission:delete-attendance', ['only' => ['destroy']]);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +28,7 @@ class AttendanceController extends Controller
     public function index(Request $request)
     {
         $attendance = Attendance::with('attendee')->get();
+
         return response()->json(['status' => 'success', 'attendance' => $attendance]);
     }
 
@@ -36,7 +37,6 @@ class AttendanceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     *
      */
     public function store(Request $request)
     {
@@ -45,7 +45,7 @@ class AttendanceController extends Controller
             'attendable_id' => 'required|numeric',
             'gtid' => 'required|numeric',
             'source' => 'required|string',
-            'created_at' => 'date'
+            'created_at' => 'date',
         ]);
 
         $wantsName = ($request->has('includeName'));
@@ -60,17 +60,18 @@ class AttendanceController extends Controller
             $attTodayQ = Attendance::where($request->all())->whereDate('created_at', $today);
             $attTodayCount = $attTodayQ->count();
             if ($attTodayCount > 0) {
-                Log::debug(get_class() . ": Found a swipe today ($today) for $gtid - ignoring.");
+                Log::debug(get_class().": Found a swipe today ($today) for $gtid - ignoring.");
                 $att = $attTodayQ->first();
                 $code = 200;
             } else {
-                Log::debug(get_class() . ": No swipe yet today ($today) for $gtid - saving.");
+                Log::debug(get_class().": No swipe yet today ($today) for $gtid - saving.");
                 $att = Attendance::create($request->all());
                 $code = 201;
             }
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -78,7 +79,7 @@ class AttendanceController extends Controller
         //This array merge is only okay until Fractal is implemented
         if ($wantsName) {
             $user = User::where('gtid', '=', $request->input('gtid'))->first();
-            $name = ($user) ? ["name" => $user->name] : ["name" => "Non-Member"];
+            $name = ($user) ? ['name' => $user->name] : ['name' => 'Non-Member'];
             $att = array_merge($att->toArray(), $name);
         }
 
@@ -104,7 +105,7 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Searches attendance records for specified data
+     * Searches attendance records for specified data.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -115,7 +116,7 @@ class AttendanceController extends Controller
             'attendable_type' => 'required',
             'attendable_id' => 'required|numeric',
             'start_date' => 'date|nullable',
-            'end_date' => 'date|nullable'
+            'end_date' => 'date|nullable',
         ]);
 
         $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
@@ -144,7 +145,7 @@ class AttendanceController extends Controller
             'attendable_id' => 'numeric',
             'gtid' => 'numeric|exists:users',
             'source' => 'string',
-            'recorded_by' => 'numeric|exists:users'
+            'recorded_by' => 'numeric|exists:users',
         ]);
 
         $att = Attendance::find($id);
@@ -154,8 +155,10 @@ class AttendanceController extends Controller
             } catch (QueryException $e) {
                 Bugsnag::notifyException($e);
                 $errorMessage = $e->errorInfo[2];
+
                 return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
             }
+
             return response()->json(['status' => 'success', 'attendance' => $att]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
@@ -177,7 +180,7 @@ class AttendanceController extends Controller
             return response()->json(['status' => 'success', 'message' => 'Attendance deleted.']);
         } else {
             return response()->json(['status' => 'error',
-                'message' => 'Attendance does not exist or was previously deleted.'], 422);
+                'message' => 'Attendance does not exist or was previously deleted.', ], 422);
         }
     }
 }

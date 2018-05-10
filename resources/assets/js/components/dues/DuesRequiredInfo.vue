@@ -83,96 +83,105 @@
 </template>
 
 <script>
+import { required, numeric } from 'vuelidate/lib/validators';
 
-  import { required, numeric } from 'vuelidate/lib/validators';
-
-  export default {
-    props: ['user'],
-    data() {
-      return {
-        shirtSizeOptions: [
-          {value: "s", text: "S"},
-          {value: "m", text: "M"},
-          {value: "l", text: "L"},
-          {value: "xl", text: "XL"},
-          {value: "xxl", text: "XXL"},
-          {value: "xxxl", text: "XXXL"},
-        ],
-        duesPackages: null,
-        duesPackageChoice: ''
+export default {
+  props: ['user'],
+  data() {
+    return {
+      shirtSizeOptions: [
+        { value: 's', text: 'S' },
+        { value: 'm', text: 'M' },
+        { value: 'l', text: 'L' },
+        { value: 'xl', text: 'XL' },
+        { value: 'xxl', text: 'XXL' },
+        { value: 'xxxl', text: 'XXXL' },
+      ],
+      duesPackages: null,
+      duesPackageChoice: '',
+    };
+  },
+  mounted() {
+    var dataUrl = '/api/v1/dues/packages/available';
+    axios
+      .get(dataUrl)
+      .then(response => {
+        this.duesPackages = response.data.dues_packages;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load dues packages. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+  },
+  methods: {
+    submit() {
+      //Perform form Validation
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
       }
-    },
-    mounted() {
-      var dataUrl = "/api/v1/dues/packages/available";
-      axios.get(dataUrl)
+
+      Promise.all([
+        this.saveUserUpdates(this.localUser),
+        this.createDuesRequest(this.localUser.id, this.duesPackageChoice),
+      ])
         .then(response => {
-          this.duesPackages = response.data.dues_packages;
+          this.$emit('next');
         })
-        .catch(response => {
-          console.log(response);
-          swal("Connection Error", "Unable to load dues packages. Check your internet connection or try refreshing the page.", "error");
+        .catch(error => {
+          console.log(error.response.status);
+          if (error.response.status == 400) {
+            this.$emit('next');
+          } else {
+            console.log(error);
+            swal(
+              'Connection Error',
+              'Unable to save data. Check your internet connection or try refreshing the page.',
+              'error'
+            );
+          }
         });
     },
-    methods: {
-      submit () {
-        //Perform form Validation
-        if (this.$v.$invalid) {
-          this.$v.$touch();
-          return;
-        }
+    saveUserUpdates: function(user) {
+      var baseUserUrl = '/api/v1/users/';
+      var dataUserUrl = baseUserUrl + user.id;
 
-        Promise.all([
-          this.saveUserUpdates(this.localUser), 
-          this.createDuesRequest(this.localUser.id, this.duesPackageChoice)])
-          .then(response => {
-            this.$emit("next");
-          })
-          .catch(error => {
-            console.log(error.response.status);
-            if (error.response.status == 400) {
-              this.$emit("next");
-            } else {
-              console.log(error);
-              swal("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-            }
-          });
-      },
-      saveUserUpdates: function (user) {
-        var baseUserUrl = "/api/v1/users/";
-        var dataUserUrl = baseUserUrl + user.id;
+      delete this.localUser.dues;
 
-        delete this.localUser.dues;
-
-        return axios.put(dataUserUrl, this.localUser);
-      },
-      createDuesRequest: function (userId, duesPackageId) {
-        var duesRequest = {
-          user_id: userId,
-          dues_package_id: duesPackageId
-        };
-        var duesTransactionsUrl = "/api/v1/dues/transactions";
-
-        return axios.post(duesTransactionsUrl, duesRequest);
-      }
+      return axios.put(dataUserUrl, this.localUser);
     },
-    computed: {
-      localUser: function () {
-        return this.user;
-      }
+    createDuesRequest: function(userId, duesPackageId) {
+      var duesRequest = {
+        user_id: userId,
+        dues_package_id: duesPackageId,
+      };
+      var duesTransactionsUrl = '/api/v1/dues/transactions';
+
+      return axios.post(duesTransactionsUrl, duesRequest);
     },
-    validations: {
-      localUser: {
-        shirt_size: {
-          required
-        },
-        polo_size: {
-          required
-        }
-      },
-      duesPackageChoice: {
+  },
+  computed: {
+    localUser: function() {
+      return this.user;
+    },
+  },
+  validations: {
+    localUser: {
+      shirt_size: {
         required,
-        numeric
-      }
-    }
-  }
+      },
+      polo_size: {
+        required,
+      },
+    },
+    duesPackageChoice: {
+      required,
+      numeric,
+    },
+  },
+};
 </script>

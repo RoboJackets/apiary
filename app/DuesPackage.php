@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DuesPackage extends Model
 {
     use SoftDeletes;
-    
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -61,9 +61,10 @@ class DuesPackage extends Model
      */
     public function getIsActiveAttribute()
     {
-        $now  = new \DateTime();
+        $now = new \DateTime();
         $start = new \DateTime($this->effective_start);
         $end = new \DateTime($this->effective_end);
-        return (($start <= $now) && ($end >= $now));
+
+        return ($start <= $now) && ($end >= $now);
     }
 }

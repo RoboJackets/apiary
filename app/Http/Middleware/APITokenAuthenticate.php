@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Factory as AuthFactory;
 
 class APITokenAuthenticate
 {
@@ -14,7 +14,7 @@ class APITokenAuthenticate
     {
         $this->auth = $auth;
     }
-    
+
     /**
      * Handle an incoming request.
      *
@@ -30,6 +30,7 @@ class APITokenAuthenticate
             $this->auth->shouldUse('api');
             $this->auth->authenticate();
         }
+
         return $next($request);
     }
 }

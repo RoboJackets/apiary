@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Bugsnag;
-use Illuminate\Validation\Rule;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
-use App\Event;
 use App\User;
+use App\Event;
+use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class EventController extends Controller
 {
@@ -28,6 +27,7 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
+
         return response()->json(['status' => 'success', 'events' => $events]);
     }
 
@@ -40,10 +40,10 @@ class EventController extends Controller
     public function store(Request $request)
     {
         // Default to currently logged-in user
-        if (isset($request->organizer) && !$request->has('organizer_id')) {
+        if (isset($request->organizer) && ! $request->has('organizer_id')) {
             $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
             unset($request['organizer']);
-        } elseif (!$request->has('organizer_id')) {
+        } elseif (! $request->has('organizer_id')) {
             $request['organizer_id'] = auth()->user()->id;
         }
 
@@ -54,7 +54,7 @@ class EventController extends Controller
             'organizer_id' => 'exists:users,id',
             'location' => 'max:255',
             'start_time' => 'date',
-            'end_time' => 'date'
+            'end_time' => 'date',
         ]);
 
         try {
@@ -62,6 +62,7 @@ class EventController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -100,7 +101,7 @@ class EventController extends Controller
     {
         $requestingUser = $request->user();
         $event = Event::find($id);
-        if (!$event) {
+        if (! $event) {
             return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
         }
 
@@ -108,13 +109,13 @@ class EventController extends Controller
         //Enforce users only viewing themselves (read-users-own)
         if ($requestingUser->cant('update-events') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this Event.'], 403);
+                'message' => 'Forbidden - You do not have permission to update this Event.', ], 403);
         }
 
-        if ($request->has('organizer') && !$request->has('organizer_id')) {
+        if ($request->has('organizer') && ! $request->has('organizer_id')) {
             $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
             unset($request['organizer']);
-        } elseif (!$request->has('organizer_id')) {
+        } elseif (! $request->has('organizer_id')) {
             $request['organizer_id'] = auth()->user()->id;
         }
 
@@ -125,7 +126,7 @@ class EventController extends Controller
             'organizer_id' => 'required|exists:users,id',
             'location' => 'max:255|nullable',
             'start_time' => 'date|nullable',
-            'end_time' => 'date|nullable'
+            'end_time' => 'date|nullable',
         ]);
 
         try {
@@ -133,6 +134,7 @@ class EventController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -152,7 +154,7 @@ class EventController extends Controller
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         } else {
             return response()->json(['status' => 'error',
-                'message' => 'event_not_found'], 422);
+                'message' => 'event_not_found', ], 422);
         }
     }
 }

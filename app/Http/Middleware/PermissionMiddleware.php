@@ -18,7 +18,7 @@ class PermissionMiddleware
     {
         if (Auth::guest() && $request->ajax()) {
             return response()->json(['status' => 'error',
-                'message' => 'Unauthorized - You must authenticate to perform this action.'], 401);
+                'message' => 'Unauthorized - You must authenticate to perform this action.', ], 401);
         } elseif (Auth::guest()) {
             abort(403);
         }
@@ -35,7 +35,7 @@ class PermissionMiddleware
 
         if ($request->ajax()) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to perform this action.'], 403);
+                'message' => 'Forbidden - You do not have permission to perform this action.', ], 403);
         } else {
             abort(403);
         }

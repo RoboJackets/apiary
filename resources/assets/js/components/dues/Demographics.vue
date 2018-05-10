@@ -34,57 +34,62 @@
 </template>
 
 <script>
-  export default {
-    props: ['user'],
-    data() {
-      return {
-        ethnicityOptions: [
-          {value: "white", text: "White/Caucasian"},
-          {value: "asian", text: "Asian"},
-          {value: "hispanic", text: "Hispanic"},
-          {value: "black", text: "Black or African American"},
-          {value: "native", text: "Native American"},
-          {value: "islander", text: "Native Hawaiian and Other Pacific Islander"},
-          {value: "none", text: "Prefer not to respond"},
-        ],
-        genderOptions: [
-          {value: "male", text: "Male"},
-          {value: "female", text: "Female"},
-          {value: "nonbinary", text: "Non-binary or gender-queer"},
-          {value: "none", text: "Prefer not to respond"},
-        ],      
-      }
-    },
-    mounted() {
-      if (!this.localUser.ethnicity) {
-        this.localUser.ethnicity = [];
-      } else {
-        this.localUser.ethnicity = this.localUser.ethnicity.split(",");
-      }
-    },
-    methods: {
-      submit () {
-        var baseUrl = "/api/v1/users/";
-        var dataUrl = baseUrl + this.localUser.uid;
-
-        delete this.localUser.dues;
-        
-        this.localUser.ethnicity = this.localUser.ethnicity.toString();
-        
-        axios.put(dataUrl, this.localUser)
-          .then(response => {
-            this.$emit("next");
-          })
-          .catch(response => {
-            console.log(response);
-            swal("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-          })
-      }
-    },
-    computed: {
-      localUser: function () {
-        return this.user;
-      }
+export default {
+  props: ['user'],
+  data() {
+    return {
+      ethnicityOptions: [
+        { value: 'white', text: 'White/Caucasian' },
+        { value: 'asian', text: 'Asian' },
+        { value: 'hispanic', text: 'Hispanic' },
+        { value: 'black', text: 'Black or African American' },
+        { value: 'native', text: 'Native American' },
+        { value: 'islander', text: 'Native Hawaiian and Other Pacific Islander' },
+        { value: 'none', text: 'Prefer not to respond' },
+      ],
+      genderOptions: [
+        { value: 'male', text: 'Male' },
+        { value: 'female', text: 'Female' },
+        { value: 'nonbinary', text: 'Non-binary or gender-queer' },
+        { value: 'none', text: 'Prefer not to respond' },
+      ],
+    };
+  },
+  mounted() {
+    if (!this.localUser.ethnicity) {
+      this.localUser.ethnicity = [];
+    } else {
+      this.localUser.ethnicity = this.localUser.ethnicity.split(',');
     }
-  }
+  },
+  methods: {
+    submit() {
+      var baseUrl = '/api/v1/users/';
+      var dataUrl = baseUrl + this.localUser.uid;
+
+      delete this.localUser.dues;
+
+      this.localUser.ethnicity = this.localUser.ethnicity.toString();
+
+      axios
+        .put(dataUrl, this.localUser)
+        .then(response => {
+          this.$emit('next');
+        })
+        .catch(response => {
+          console.log(response);
+          swal(
+            'Connection Error',
+            'Unable to save data. Check your internet connection or try refreshing the page.',
+            'error'
+          );
+        });
+    },
+  },
+  computed: {
+    localUser: function() {
+      return this.user;
+    },
+  },
+};
 </script>
