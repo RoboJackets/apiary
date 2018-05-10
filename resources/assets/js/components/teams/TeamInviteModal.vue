@@ -20,7 +20,7 @@
                                 <user-lookup v-model="user"></user-lookup>
                             </div>
                             <div class="col-sm-3">
-                                <button type="submit" class="btn btn-primary" @click="submit">Submit</button>
+                                <button type="button" class="btn btn-primary" @click="submit">Submit</button>
                             </div>
                         </div>
                         <div class="row">
