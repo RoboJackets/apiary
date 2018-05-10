@@ -96,19 +96,8 @@
         props: ['teamId'],
         mounted() {
             this.dataUrl = this.baseUrl + this.teamId;
-
-            axios.get(this.dataUrl, {
-                params: {
-                    include: 'members'
-                }
-            })
-                .then(response => {
-                    this.team = response.data.team;
-                })
-                .catch(response => {
-                    console.log(response);
-                    swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
-                });
+            this.loadMembers();
+            $("#teamInviteModal").on("hidden.bs.modal", this.loadMembers);
         },
         data() {
             return {
@@ -162,6 +151,18 @@
                         console.log(response);
                         swal("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
                     })
+            },
+            loadMembers() {
+                axios.get(this.dataUrl, {
+                    params: {
+                        include: 'members'
+                    }
+                }).then(response => {
+                        this.team = response.data.team;
+                }).catch(response => {
+                    console.log(response);
+                    swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+                });
             },
             deletePrompt() {
                 let self = this;
