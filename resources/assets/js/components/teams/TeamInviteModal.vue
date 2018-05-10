@@ -17,7 +17,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 col-lg-9">
-                                <user-lookup v-model="member.user"></user-lookup>
+                                <user-lookup v-model="user"></user-lookup>
                             </div>
                             <div class="col-sm-3">
                                 <button type="submit" class="btn btn-primary" @click="submit">Submit</button>
@@ -49,8 +49,8 @@
         },
         data() {
             return {
+                user: "",
                 member: {
-                    user: "",
                     user_id: "",
                     action: "join"
                 },
@@ -62,26 +62,26 @@
         methods: {
             submit() {
                 if (this.$v.$invalid) {
+                    this.feedback = "Validation Error";
+                    this.hasError = true;
                     this.$v.$touch();
                     return;
                 }
 
                 let membersUrl = this.baseUrl + this.teamId + "/members";
-                let updatedMember = this.member;
-                updatedMember.user_id = this.member.user.id;
-                delete updatedMember.user;
+                this.member.user_id = this.user.id;
 
-                axios.post(membersUrl, updatedMember)
+                axios.post(membersUrl, this.member)
                     .then(response => {
                         this.hasError = false;
-                        this.feedback = "Invited " + response.data.member.name + "!";
-                        console.log("success");
+                        this.feedback = "Invited " + response.data.member + "!";
                         this.member.user_id = "";
-                        this.$refs.input.focus();
+                        this.user = "";
                     })
                     .catch(error => {
+                        console.log("error: " + error);
                         this.hasError = true;
-                        this.feedback = "";
+                        this.feedback = "An error occurred!";
                         if (error.response.status == 403) {
                             swal({
                                 title: "Whoops!",
@@ -95,8 +95,8 @@
             },
         },
         validations: {
+            user: {required},
             member: {
-                user: {required},
                 action: {required}
             }
         },
