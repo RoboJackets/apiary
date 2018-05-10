@@ -1,13 +1,11 @@
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 // Boostrap overrides
-@import "custom";
+@import 'custom';
 
 // Bootstrap
-@import "node_modules/bootstrap/scss/bootstrap";
-
+@import 'node_modules/bootstrap/scss/bootstrap';
 
 // Custom Stylesheets
-@import "user";
+@import 'user';

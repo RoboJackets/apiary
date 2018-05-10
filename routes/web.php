@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::get('/', 'DashboardController@index')->name('home');
 
@@ -27,7 +26,7 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
         Route::get('/', function () {
             return view('dues/payDues');
         })->name('payDues');
-        
+
         Route::get('/pay', 'PaymentController@storeUser')->name('dues.payOne');
         Route::post('/pay', 'PaymentController@storeUser')->name('dues.pay');
     });
@@ -38,7 +37,7 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
     });
 
     Route::get('login', function () {
-        return redirect('https://login.gatech.edu/cas/logout?service=' . config('app.url'));
+        return redirect('https://login.gatech.edu/cas/logout?service='.config('app.url'));
     })->name('logout');
 
     Route::prefix('admin')->group(function () {
@@ -122,5 +121,5 @@ Route::get('login', function () {
 
 Route::get('logout', function () {
     Session::flush();
-    cas()->logout(config("app.url"));
+    cas()->logout(config('app.url'));
 })->name('logout');

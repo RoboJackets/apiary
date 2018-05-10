@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Team;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class TeamController extends Controller
 {
@@ -25,6 +25,7 @@ class TeamController extends Controller
     public function index()
     {
         $teams = Team::all();
+
         return response()->json(['status' => 'success', 'teams' => $teams]);
     }
 
@@ -39,7 +40,7 @@ class TeamController extends Controller
         $this->validate($request, [
             'name' => 'required|string|unique:teams',
             'description' => 'string|max:255|nullable',
-            'founding_semester' => 'numeric|required'
+            'founding_semester' => 'numeric|required',
         ]);
 
         try {
@@ -47,6 +48,7 @@ class TeamController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -84,14 +86,14 @@ class TeamController extends Controller
     public function update(Request $request, $id)
     {
         $team = Team::find($id);
-        if (!$team) {
+        if (! $team) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
         $this->validate($request, [
             'name' => 'string|unique:teams|nullable',
             'description' => 'string|max:255|nullable',
-            'founding_semester' => 'numeric'
+            'founding_semester' => 'numeric',
         ]);
 
         try {
@@ -99,6 +101,7 @@ class TeamController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -123,7 +126,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
         } else {
             return response()->json(['status' => 'error',
-                'message' => 'team_not_found'], 422);
+                'message' => 'team_not_found', ], 422);
         }
     }
 }

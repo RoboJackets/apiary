@@ -102,47 +102,51 @@
 </template>
 
 <script>
-  import { alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
-  import notGTEmail from '../../customValidators/notGTEmail';
+import { alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
+import notGTEmail from '../../customValidators/notGTEmail';
 
-  export default {
-    props: ['user'],
-    methods: {
-      submit () {
-        if (this.$v.$invalid) {
-          this.$v.$touch();
-          return;
-        }
-
-        var baseUrl = "/api/v1/users/";
-        var dataUrl = baseUrl + this.localUser.uid;
-
-        delete this.localUser.dues;
-        
-        axios.put(dataUrl, this.localUser)
-          .then(response => {
-            this.$emit("next");
-          })
-          .catch(response => {
-            console.log(response);
-            swal("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-          })
-          
+export default {
+  props: ['user'],
+  methods: {
+    submit() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
       }
+
+      var baseUrl = '/api/v1/users/';
+      var dataUrl = baseUrl + this.localUser.uid;
+
+      delete this.localUser.dues;
+
+      axios
+        .put(dataUrl, this.localUser)
+        .then(response => {
+          this.$emit('next');
+        })
+        .catch(response => {
+          console.log(response);
+          swal(
+            'Connection Error',
+            'Unable to save data. Check your internet connection or try refreshing the page.',
+            'error'
+          );
+        });
     },
-    computed: {
-      localUser: function () {
-        return this.user;
-      }
+  },
+  computed: {
+    localUser: function() {
+      return this.user;
     },
-    validations: {
-      localUser: {
-        personal_email: {email, notGTEmail},
-        phone: {maxLength: maxLength(15)},
-        preferred_name: {alpha},
-        emergency_contact_name: {},
-        emergency_contact_phone: {maxLength: maxLength(15)}
-      }
-    }
-  }
+  },
+  validations: {
+    localUser: {
+      personal_email: { email, notGTEmail },
+      phone: { maxLength: maxLength(15) },
+      preferred_name: { alpha },
+      emergency_contact_name: {},
+      emergency_contact_phone: { maxLength: maxLength(15) },
+    },
+  },
+};
 </script>

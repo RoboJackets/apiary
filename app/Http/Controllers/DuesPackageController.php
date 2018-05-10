@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\DuesPackage;
+use Illuminate\Http\Request;
 
 class DuesPackageController extends Controller
 {
@@ -23,24 +23,27 @@ class DuesPackageController extends Controller
     public function index()
     {
         $packages = DuesPackage::all();
+
         return response()->json(['status' => 'success', 'dues_packages' => $packages]);
     }
 
     /**
-     * Display a listing of active DuesPackages
+     * Display a listing of active DuesPackages.
      */
     public function indexActive()
     {
         $activePackages = DuesPackage::active()->get();
+
         return response()->json(['status' => 'success', 'dues_packages' => $activePackages]);
     }
 
     /**
-     * Display a listing of DuesPackages that are available for purchase
+     * Display a listing of DuesPackages that are available for purchase.
      */
     public function indexAvailable()
     {
         $activePackages = DuesPackage::availableForPurchase()->get();
+
         return response()->json(['status' => 'success', 'dues_packages' => $activePackages]);
     }
 
@@ -58,7 +61,7 @@ class DuesPackageController extends Controller
             'eligible_for_polo' => 'boolean',
             'effective_start' => 'required|date',
             'effective_end' => 'required|date',
-            'cost' => 'required|numeric'
+            'cost' => 'required|numeric',
         ]);
 
         try {
@@ -66,11 +69,13 @@ class DuesPackageController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
         if (is_numeric($package->id)) {
             $dbPackage = DuesPackage::findOrFail($package->id);
+
             return response()->json(['status' => 'success', 'dues_package' => $dbPackage], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
@@ -108,7 +113,7 @@ class DuesPackageController extends Controller
             'eligible_for_polo' => 'boolean',
             'effective_start' => 'date',
             'effective_end' => 'date',
-            'cost' => 'numeric'
+            'cost' => 'numeric',
         ]);
 
         $package = DuesPackage::find($id);
@@ -140,7 +145,7 @@ class DuesPackageController extends Controller
             return response()->json(['status' => 'success', 'message' => 'DuesPackage deleted.']);
         } else {
             return response()->json(['status' => 'error',
-                'message' => 'DuesPackage does not exist or was previously deleted.'], 422);
+                'message' => 'DuesPackage does not exist or was previously deleted.', ], 422);
         }
     }
 }

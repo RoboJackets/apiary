@@ -60,6 +60,6 @@ class Kernel extends HttpKernel
         'auth.cas.check'  => \App\Http\Middleware\CASCheck::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
-        'auth.token' => \App\Http\Middleware\APITokenAuthenticate::class
+        'auth.token' => \App\Http\Middleware\APITokenAuthenticate::class,
     ];
 }

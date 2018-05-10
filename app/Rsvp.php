@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Rsvp extends Model
 {
     use SoftDeletes;
-    
+
     /**
      * The attributes that are not mass assignable.
      *
      * @var array
      */
     protected $guarded = [
-        'id', 'created_at', 'updated_at'
+        'id', 'created_at', 'updated_at',
     ];
 
     public function user()

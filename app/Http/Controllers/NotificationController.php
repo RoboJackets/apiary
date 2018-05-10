@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\FasetVisit;
-use App\Notifications\GeneralInterestNotification;
-use Carbon\Carbon;
 use Notification;
+use Carbon\Carbon;
+use App\FasetVisit;
 use Illuminate\Http\Request;
+use App\Notifications\GeneralInterestNotification;
 
 class NotificationController extends Controller
 {
@@ -14,7 +14,7 @@ class NotificationController extends Controller
     {
         $this->middleware(['permission:send-notifications']);
     }
-    
+
     public function sendNotification()
     {
         $hours = 0;
@@ -23,15 +23,16 @@ class NotificationController extends Controller
             Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
             $hours++;
         });
+
         return response()->json(['status' => 'success']);
     }
-    
+
     public function sendNotificationManual(Request $request)
     {
-        if (!$request->has('emails')) {
+        if (! $request->has('emails')) {
             return response()->json(['status' => 'error', 'error' => "Missing parameter 'emails'"], 400);
         }
-        
+
         $hours = 0;
         $found = [];
         $notfound = [];
@@ -50,10 +51,11 @@ class NotificationController extends Controller
             }
             $hours++;
         }
+
         return response()->json([
             'status' => 'success',
             'found' => ['count' => count($found), 'emails' => $found],
-            'notfound' => ['count' => count($notfound), 'emails' => $notfound]
+            'notfound' => ['count' => count($notfound), 'emails' => $notfound],
         ]);
     }
 }

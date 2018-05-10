@@ -1,4 +1,5 @@
 <?php
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -17,7 +18,6 @@ return [
     | balanced hosts, then separate each with a comma.
     */
     'cas_real_hosts'      => env('CAS_REAL_HOSTS', 'cas.myuniv.edu'),
-
 
     /*
     |--------------------------------------------------------------------------
@@ -143,7 +143,6 @@ return [
     */
     'cas_debug'           => env('CAS_DEBUG', false),
 
-
     /*
     |--------------------------------------------------------------------------
     | Enable Verbose error messages. Not recommended for production.
@@ -162,5 +161,5 @@ return [
     'cas_masquerade_gtGTID' => env('CAS_MASQUERADE_gtGTID', null),
     'cas_masquerade_email_primary' => env('CAS_MASQUERADE_email_primary', null),
     'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName', null),
-    'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null)
+    'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null),
 ];

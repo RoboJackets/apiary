@@ -18,11 +18,11 @@ class Team extends Model
         'id',
         'deleted_at',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
-     *  Get the Users that are members of this Team
+     *  Get the Users that are members of this Team.
      */
     public function users()
     {

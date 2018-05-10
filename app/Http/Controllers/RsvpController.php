@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Event;
-use App\Rsvp;
-use App\FasetVisit;
-use App\User;
 use Auth;
+use App\Rsvp;
+use App\User;
+use App\Event;
+use App\FasetVisit;
+use Illuminate\Http\Request;
 
 class RsvpController extends Controller
 {
@@ -31,6 +31,7 @@ class RsvpController extends Controller
     public function index()
     {
         $rsvps = Rsvp::all();
+
         return response()->json(['status' => 'success', 'rsvps' => $rsvps]);
     }
 
@@ -47,7 +48,7 @@ class RsvpController extends Controller
         //Enforce users only creating RSVPs for themselves (create-rsvps-own)
         if ($requestingUser->cant('create-rsvps') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You may not create an RSVP for another user.'], 403);
+                'message' => 'Forbidden - You may not create an RSVP for another user.', ], 403);
         }
 
         return  response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
@@ -64,7 +65,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (!$rsvp) {
+        if (! $rsvp) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -72,7 +73,7 @@ class RsvpController extends Controller
         $requestedUser = $rsvp->user;
         if ($requestingUser->cant('update-rsvps') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You may not update an RSVP for another user.'], 403);
+                'message' => 'Forbidden - You may not update an RSVP for another user.', ], 403);
         }
 
         return response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
@@ -82,7 +83,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (!$rsvp) {
+        if (! $rsvp) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -90,7 +91,7 @@ class RsvpController extends Controller
         $requestedUser = $rsvp->user;
         if ($requestingUser->cant('delete-rsvps') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You may not delete an RSVP for another user.'], 403);
+                'message' => 'Forbidden - You may not delete an RSVP for another user.', ], 403);
         }
 
         $deleted = $rsvp->delete();
@@ -98,14 +99,14 @@ class RsvpController extends Controller
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         } else {
             return response()->json(['status' => 'error',
-                'message' => 'event_not_found'], 422);
+                'message' => 'event_not_found', ], 422);
         }
     }
 
     public function oneClickCreate(Event $event, Request $request)
     {
         $user = auth()->user();
-        if (!$event->allow_anonymous_rsvp && !Auth::check()) {
+        if (! $event->allow_anonymous_rsvp && ! Auth::check()) {
             cas()->authenticate();
         }
 
@@ -113,7 +114,7 @@ class RsvpController extends Controller
             $source = $request->source;
             $fasetVisit = FasetVisit::where('visit_token', $source)->first();
 
-            if (!is_null($fasetVisit) && !is_null($user)) {
+            if (! is_null($fasetVisit) && ! is_null($user)) {
                 $fasetVisit['user_id'] = $user->id;
                 $fasetVisit->save();
             }
@@ -121,13 +122,13 @@ class RsvpController extends Controller
 
         $rsvp = new Rsvp;
 
-        if (!is_null($user)) {
+        if (! is_null($user)) {
             $rsvp->user_id = $user->id;
         }
 
         $rsvp->event_id = $event->id;
         $rsvp->source = $request->source;
-        $rsvp->response = "yes";
+        $rsvp->response = 'yes';
 
         $rsvp->saveOrFail();
 

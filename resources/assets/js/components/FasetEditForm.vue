@@ -120,47 +120,58 @@
 </template>
 
 <script>
-  export default {
-    props: ['fasetVisitId'],
-    data() {
-      return {
-        fasetVisit: {},
-        feedback: '',
-        hasError: false,
-        dataUrl: '',
-        baseFasetUrl: "/api/v1/faset/"
-      }
-    },
-    mounted() {
-      this.dataUrl = this.baseFasetUrl + this.fasetVisitId;
-      axios.get(this.dataUrl)
+export default {
+  props: ['fasetVisitId'],
+  data() {
+    return {
+      fasetVisit: {},
+      feedback: '',
+      hasError: false,
+      dataUrl: '',
+      baseFasetUrl: '/api/v1/faset/',
+    };
+  },
+  mounted() {
+    this.dataUrl = this.baseFasetUrl + this.fasetVisitId;
+    axios
+      .get(this.dataUrl)
+      .then(response => {
+        var visit = response.data.visit;
+        var survey = visit.faset_responses.map(function(a) {
+          return a.response;
+        });
+        visit.faset_responses = survey;
+        this.fasetVisit = visit;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+  },
+  methods: {
+    submit() {
+      axios
+        .put(this.dataUrl, this.fasetVisit)
         .then(response => {
-          var visit = response.data.visit;
-          var survey = visit.faset_responses.map(function(a) {return a.response;});
-          visit.faset_responses = survey;
-          this.fasetVisit = visit;
-
+          this.hasError = false;
+          this.feedback = 'Saved!';
+          console.log('success');
         })
         .catch(response => {
+          this.hasError = true;
+          this.feedback = '';
           console.log(response);
-          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+          swal(
+            'Connection Error',
+            'Unable to save data. Check your internet connection or try refreshing the page.',
+            'error'
+          );
         });
     },
-    methods: {
-      submit () {
-        axios.put(this.dataUrl, this.fasetVisit)
-          .then(response => {
-            this.hasError = false;
-            this.feedback = "Saved!"
-            console.log("success");
-          })
-          .catch(response => {
-            this.hasError = true;
-            this.feedback = "";
-            console.log(response);
-            swal("Connection Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-          })
-      }
-    }
-  }
+  },
+};
 </script>

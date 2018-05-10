@@ -6,8 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\Dues\RequestComplete as Mailable;
-use Illuminate\Notifications\Messages\MailMessage;
-use App\DuesPackage;
 
 class RequestCompleteNotification extends Notification implements ShouldQueue
 {

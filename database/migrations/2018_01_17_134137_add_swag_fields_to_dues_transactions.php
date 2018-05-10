@@ -19,7 +19,7 @@ class AddSwagFieldsToDuesTransactions extends Migration
             $table->timestamp('swag_polo_provided')->nullable()->after('id');
             $table->dropColumn('received_shirt');
             $table->timestamp('swag_shirt_provided')->nullable()->after('id');
-            
+
             //Add provided by
             $table->unsignedInteger('swag_polo_providedBy')->nullable()->after('swag_polo_provided');
             $table->unsignedInteger('swag_shirt_providedBy')->nullable()->after('swag_shirt_provided');

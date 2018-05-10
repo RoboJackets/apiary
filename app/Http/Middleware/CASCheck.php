@@ -3,22 +3,22 @@
  * Created by PhpStorm.
  * User: kberz
  * Date: 6/18/2017
- * Time: 7:34 PM
+ * Time: 7:34 PM.
  */
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Contracts\Auth\Guard;
-use App\User;
-use Illuminate\Support\Facades\Auth;
 use phpCAS;
+use Closure;
+use App\User;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
 
 class CASCheck
 {
     use CreateOrUpdateCASUser;
-    
+
     protected $auth;
     protected $cas;
 
@@ -38,7 +38,7 @@ class CASCheck
     public function handle($request, Closure $next)
     {
         phpCAS::checkAuthentication();
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser($request);
                 if (is_a($user, "App\User")) {
@@ -49,7 +49,7 @@ class CASCheck
                     return response(view('errors.generic',
                         [
                             'error_code' => 500,
-                            'error_message' => 'Unknown error authenticating with CAS'
+                            'error_message' => 'Unknown error authenticating with CAS',
                         ]), 500);
                 }
             } else {

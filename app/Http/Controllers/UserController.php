@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Log;
-use Illuminate\Validation\Rule;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
+use Illuminate\Database\QueryException;
 
 class UserController extends Controller
 {
@@ -19,7 +18,7 @@ class UserController extends Controller
         $this->middleware('permission:update-users|update-users-own', ['only' => ['update']]);
         $this->middleware('permission:delete-users', ['only' => ['destroy']]);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -31,32 +30,34 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+
         return response()->json(['status' => 'success', 'users' => $users]);
     }
 
     /**
      * Searches for a resource based upon a keyword
      * Accepts GTID, First/Preferred Name, and Username (uid)
-     * GTID returns first result, others return all matching (wildcard)
+     * GTID returns first result, others return all matching (wildcard).
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request)
     {
-        if (!$request->has('keyword')) {
+        if (! $request->has('keyword')) {
             return response()->json(['status' => 'error', 'error' => 'Missing keyword'], 422);
         }
         $keyword = $request->input('keyword');
         if (is_numeric($keyword)) {
             $results = User::where('gtid', $keyword)->get();
         } else {
-            $keyword = "%" . $request->input('keyword') . "%";
+            $keyword = '%'.$request->input('keyword').'%';
             $results = User::where('uid', 'LIKE', $keyword)
                 ->orWhere('first_name', 'LIKE', $keyword)
                 ->orWhere('preferred_name', 'LIKE', $keyword)
                 ->get();
         }
+
         return response()->json(['status' => 'success', 'users' => $results]);
     }
 
@@ -86,10 +87,10 @@ class UserController extends Controller
             'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'accept_safety_agreement' => 'date|nullable',
-            'generateToken' => 'boolean'
+            'generateToken' => 'boolean',
         ];
         $this->validate($request, $validations);
-        
+
         $user = new User();
         if ($request->input('generateToken')) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -104,6 +105,7 @@ class UserController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -116,6 +118,7 @@ class UserController extends Controller
 
         if (is_numeric($user->id)) {
             $dbUser = User::findOrFail($user->id)->makeVisible('api_token');
+
             return response()->json(['status' => 'success', 'user' => $dbUser], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
@@ -137,14 +140,14 @@ class UserController extends Controller
             //Enforce users only viewing themselves (read-users-own)
             if ($requestingUser->cant('read-users') && $requestingUser->id != $user->id) {
                 return response()->json(['status' => 'error',
-                    'message' => 'Forbidden - You do not have permission to view this User.'], 403);
+                    'message' => 'Forbidden - You do not have permission to view this User.', ], 403);
             }
 
             //Show API tokens only to admins and the users themselves
             if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
                 $user = $user->makeVisible('api_token');
             }
-            
+
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
@@ -162,14 +165,14 @@ class UserController extends Controller
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
-        if (!$user) {
+        if (! $user) {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
 
         //Enforce users only updating themselves (update-users-own)
         if ($requestingUser->cant('update-users') && $requestingUser->id != $user->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this User.'], 403);
+                'message' => 'Forbidden - You do not have permission to update this User.', ], 403);
         }
 
         //Update only included fields
@@ -186,7 +189,7 @@ class UserController extends Controller
             'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'accept_safety_agreement => date|nullable',
-            'generateToken' => 'boolean'
+            'generateToken' => 'boolean',
         ]);
 
         //Generate an API token for the user if requested *AND* the requesting user is self or admin
@@ -199,7 +202,7 @@ class UserController extends Controller
             $user->save();
         }
         unset($request['generateToken']);
-        
+
         $user->update($request->all());
 
         if ($request->has('roles')) {
@@ -207,12 +210,12 @@ class UserController extends Controller
         }
 
         $user = User::find($user->id);
-        
+
         //Show API tokens only to admins and the users themselves
         if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
             $user = $user->makeVisible('api_token');
         }
-        
+
         if ($user) {
             return response()->json(['status' => 'success', 'user' => $user]);
         } else {
@@ -234,7 +237,7 @@ class UserController extends Controller
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         } else {
             return response()->json(['status' => 'error',
-                'message' => 'User does not exist or was previously deleted.'], 422);
+                'message' => 'User does not exist or was previously deleted.', ], 422);
         }
     }
 }

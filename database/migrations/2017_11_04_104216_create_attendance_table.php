@@ -22,7 +22,7 @@ class CreateAttendanceTable extends Migration
             $table->unsignedInteger('recorded_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('recorded_by')->references('id')->on('users');
         });
     }
