@@ -60,8 +60,10 @@
           <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
             <select id="duesPackage" v-model="duesPackageChoice" class="custom-select" :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
-              <option value="" style="display:none">Select One</option>
-              <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}}</option>
+              <option value="" style="display:none" v-if="!duesPackages">Loading...</option>
+              <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages Available</option>
+              <option value="" style="display:none" v-if="duesPackages && duesPackages.length > 0">Select One</option>
+              <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}} - ${{duesPackage.cost}}</option>
             </select>
             <div class="invalid-feedback">
               Select a dues package.
@@ -96,7 +98,7 @@
           {value: "xxl", text: "XXL"},
           {value: "xxxl", text: "XXXL"},
         ],
-        duesPackages: [],
+        duesPackages: null,
         duesPackageChoice: ''
       }
     },
