@@ -185,8 +185,8 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        $team = Team::with('members')->find($id);
-        return response()->json(['status' => 'success', 'team' => $team], 201);
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        return response()->json(['status' => 'success', 'team' => $team, 'member' => $user->name], 201);
     }
 
     /**
