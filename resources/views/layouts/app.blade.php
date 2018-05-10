@@ -35,9 +35,8 @@
                 @hasanyrole('admin|officer-i')
                 <a class="dropdown-item" href="/admin/users">Users</a>
                 <a class="dropdown-item" href="/admin/events">Events</a>
+                <a class="dropdown-item" href="/admin/faset">FASET</a>
                 <a class="dropdown-item" href="{{ route('admin.teams.index') }}">Teams</a>
-                <a class="dropdown-item" href="/admin/faset">Faset</a>
-                <div class="dropdown-divider"></div>
                 @endhasanyrole
                 @hasanyrole('admin|officer-i|officer-ii')
                 <a class="dropdown-item" href="/admin/dues">Dues</a>
