@@ -32,7 +32,10 @@ class TeamController extends Controller
     public function indexWeb()
     {
         $teams = Team::visible()->orderBy('name', 'asc')->get();
-        return view('teams.index')->with(['teams' => $teams]);
+        $user = auth()->user();
+        //Leave this line in here, it provides team data to the view.
+        $user_teams = auth()->user()->teams;
+        return view('teams.index')->with(['teams' => $teams, 'user' => $user]);
     }
 
     /**
@@ -85,20 +88,6 @@ class TeamController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param mixed $name DB ID or Team Name
-     * @return \Illuminate\Http\Response
-     */
-    public function showWeb($name)
-    {
-        $team = Team::where('id', $name)->orWhere('name', 'LIKE', $name)->first();
-        $user = auth()->user();
-        $teams = auth()->user()->teams;
-        return view('teams.show')->with(['team' => $team, 'user' => $user]);
     }
 
     /**
