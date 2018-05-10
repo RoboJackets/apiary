@@ -86,11 +86,11 @@ export default {
   computed: {
     payments: function() {
       if (this.duesTransaction.hasOwnProperty('payment')) {
-        return this.duesTransaction.payment
+        return this.duesTransaction.payment;
       } else {
         return [];
       }
-    }
+    },
   },
   methods: {
     paymentSubmitted: function() {

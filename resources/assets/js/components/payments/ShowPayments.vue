@@ -69,8 +69,8 @@ export default {
   props: {
     payments: {
       required: true,
-      type: Array
-    }
-  }
-}
+      type: Array,
+    },
+  },
+};
 </script>
