@@ -87,6 +87,9 @@
               :is-error="$v.user.shirt_size.$error"
               @input="$v.user.shirt_size.$touch()">
             </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a shirt size.
+            </div>
           </div>
         </div>
 
@@ -100,10 +103,12 @@
               :is-error="$v.user.polo_size.$error"
               @input="$v.user.polo_size.$touch()">
             </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a polo size.
+            </div>
           </div>
         </div>
 
-        
         <h3>Emergency Contacts</h3>
 
         <div class="form-group row">
@@ -148,49 +153,26 @@
 </template>
 
 <script>
-import { alpha, email, maxLength } from 'vuelidate/lib/validators';
-import notGTEmail from '../customValidators/notGTEmail';
+  import { alpha, email, maxLength, required } from 'vuelidate/lib/validators';
+  import notGTEmail from '../customValidators/notGTEmail';
 
-export default {
-  props: ['userUid'],
-  data() {
-    return {
-      user: {},
-      feedback: '',
-      hasError: false,
-      dataUrl: '',
-      baseUrl: '/api/v1/users/',
-      shirtSizeOptions: [
-        { value: 's', text: 'S' },
-        { value: 'm', text: 'M' },
-        { value: 'l', text: 'L' },
-        { value: 'xl', text: 'XL' },
-        { value: 'xxl', text: 'XXL' },
-        { value: 'xxxl', text: 'XXXL' },
-      ],
-    };
-  },
-  mounted() {
-    this.dataUrl = this.baseUrl + this.userUid;
-    axios
-      .get(this.dataUrl)
-      .then(response => {
-        this.user = response.data.user;
-      })
-      .catch(response => {
-        console.log(response);
-        swal(
-          'Connection Error',
-          'Unable to load data. Check your internet connection or try refreshing the page.',
-          'error'
-        );
-      });
-  },
-  methods: {
-    submit() {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+  export default {
+    props: ['userUid'],
+    data() {
+      return {
+        user: {},
+        feedback: '',
+        hasError: false,
+        dataUrl: '',
+        baseUrl: "/api/v1/users/",
+        shirtSizeOptions: [
+          {value: "s", text: "S"},
+          {value: "m", text: "M"},
+          {value: "l", text: "L"},
+          {value: "xl", text: "XL"},
+          {value: "xxl", text: "XXL"},
+          {value: "xxxl", text: "XXXL"},
+        ]
       }
 
       delete this.user.dues;
@@ -213,17 +195,27 @@ export default {
           );
         });
     },
-  },
-  validations: {
-    user: {
-      personal_email: { email, notGTEmail },
-      phone: { maxLength: maxLength(15) },
-      preferred_first_name: { alpha },
-      shirt_size: {},
-      polo_size: {},
-      emergency_contact_name: {},
-      emergency_contact_phone: { maxLength: maxLength(15) },
-    },
-  },
-};
+    validations: {
+      user: {
+        personal_email: {email, notGTEmail},
+        phone: {maxLength: maxLength(15)},
+        preferred_first_name: {alpha},
+        shirt_size: {},
+        polo_size: {},
+        emergency_contact_name: {},
+        emergency_contact_phone: {maxLength: maxLength(15)},
+      },
+      validations: {
+        user: {
+          personal_email: {email, notGTEmail},
+          phone: {maxLength: maxLength(15)},
+          preferred_name: {alpha},
+          shirt_size: {required},
+          polo_size: {required},
+          emergency_contact_name: {},
+          emergency_contact_phone: {maxLength: maxLength(15)}
+        }
+      }
+    }
+  };
 </script>

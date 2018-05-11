@@ -38,6 +38,9 @@
               :is-error="$v.localUser.shirt_size.$error"
               @input="$v.localUser.shirt_size.$touch()">
             </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a shirt size.
+            </div>
           </div>
         </div>
 
@@ -51,6 +54,9 @@
               :is-error="$v.localUser.polo_size.$error"
               @input="$v.localUser.polo_size.$touch()">
             </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a polo size.
+            </div>
           </div>
         </div>      
 
