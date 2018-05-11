@@ -57,3 +57,7 @@ body {
 .flatpickr-input[readonly] {
   background-color: white;
 }
+
+.custom-radio-input.is-invalid ~ .invalid-feedback {
+  display: block;
+}
