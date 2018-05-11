@@ -19,7 +19,9 @@
           <label for="payment-amount" class="col-sm-2 col-form-label">Payment Amount</label>
           <div class="col-sm-10 col-lg-4">
             <div class="input-group">
-              <span class="input-group-addon">$</span>
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
               <input
                 v-model="payment.amount"
                 type="number"

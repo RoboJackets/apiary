@@ -83,6 +83,7 @@ Vue.component('demographics', require('./components/dues/Demographics.vue'));
 Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.vue'));
 Vue.component('pending-dues-table', require('./components/wrappers/PendingDuesTable.vue'));
 Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue'));
+Vue.component('show-payments', require('./components/payments/ShowPayments.vue'));
 
 // Swag
 

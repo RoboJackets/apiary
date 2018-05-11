@@ -35,9 +35,7 @@
       </div>
     </div>
     <template v-if="duesTransaction.status == 'pending'">
-      <h3>
-        Record Payment
-      </h3>
+      <h3>Record Payment</h3>
       <accept-payment
         transaction-type="DuesTransaction"
         :transaction-id="parseInt(duesTransactionId)"
@@ -45,6 +43,9 @@
         @done="paymentSubmitted">
       </accept-payment>
     </template>
+
+    <show-payments :payments="payments">
+    </show-payments>
   </div>
 </template>
 
@@ -81,6 +82,15 @@ export default {
           'error'
         );
       });
+  },
+  computed: {
+    payments: function() {
+      if (this.duesTransaction.hasOwnProperty('payment')) {
+        return this.duesTransaction.payment;
+      } else {
+        return [];
+      }
+    },
   },
   methods: {
     paymentSubmitted: function() {
