@@ -30,26 +30,35 @@ export default {
     return {
       tableData: [],
       table: {},
+      generateTable: function (tableData) {
+        const customDom =
+            "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'Bi><'col-sm-7'p>>";
+        this.tableData = tableData;
+
+        this.table = $('#' + this.id).DataTable({
+          stateSave: true,
+          data: this.tableData,
+          columns: this.columns,
+          pageLength: 100,
+          lengthMenu: [20, 50, 100, 200, 500, 5000],
+          dom: customDom,
+          buttons: ['copy', 'csv', 'excel', 'print'],
+        });
+        let dataPath = this.dataPath;
+        $('#' + this.id + ' tbody tr').click( function () { //make each row clickable
+          const rowID = this.childNodes[0].innerText;
+          const path = window.location.pathname;
+          window.location.pathname = path.substring(0, path.lastIndexOf('/') + 1) + dataPath + '/' + rowID;
+        });
+      }
     };
   },
   mounted() {
-    let customDom =
-      "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'Bi><'col-sm-7'p>>";
     if (typeof this.dataUrl !== 'undefined') {
       axios
         .get(this.dataUrl)
         .then(response => {
-          this.tableData = response.data[this.dataPath];
-
-          this.table = $('#' + this.id).DataTable({
-            stateSave: true,
-            data: this.tableData,
-            columns: this.columns,
-            pageLength: 100,
-            lengthMenu: [20, 50, 100, 200, 500, 5000],
-            dom: customDom,
-            buttons: ['copy', 'csv', 'excel', 'print'],
-          });
+          this.generateTable(response.data[this.dataPath]);
         })
         .catch(response => {
           console.log(response);
@@ -60,17 +69,7 @@ export default {
           );
         });
     } else {
-      this.tableData = this.dataObject;
-
-      this.table = $('#' + this.id).DataTable({
-        stateSave: true,
-        data: this.tableData,
-        columns: this.columns,
-        pageLength: 100,
-        lengthMenu: [20, 50, 100, 200, 500, 5000],
-        dom: customDom,
-        buttons: ['copy', 'csv', 'excel', 'print'],
-      });
+      this.generateTable(this.dataObject);
     }
   },
   watch: {
