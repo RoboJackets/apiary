@@ -46,12 +46,12 @@ export default {
         });
         let dataPath = this.dataPath;
         //make each row clickable
-        $('#' + this.id + ' tbody tr').click(function () {
+        $('#' + this.id + ' tbody tr').click(function() {
           const rowID = this.childNodes[0].innerText;
           const path = window.location.pathname;
           window.location.pathname = path.substring(0, path.lastIndexOf('/') + 1) + dataPath + '/' + rowID;
         });
-      }
+      },
     };
   },
   mounted() {
