@@ -23,7 +23,7 @@ export default {
     dataPath: String,
     dataLink: {
       type: String,
-      default: window.location.pathname
+      default: window.location.pathname,
     },
     id: {
       type: String,
@@ -50,13 +50,13 @@ export default {
         });
         this.makeRowsClickable();
       },
-      makeRowsClickable: function () {
+      makeRowsClickable: function() {
         const path = this.dataLink;
         if (this.tableData.length) {
           const rowID = '#' + this.id + ' tbody tr';
           $(rowID).click(function() {
-            window.location.pathname = path + (path.lastIndexOf('/') === path.length - 1 ? '' : '/')
-              + this.childNodes[0].innerText;
+            window.location.pathname =
+              path + (path.lastIndexOf('/') === path.length - 1 ? '' : '/') + this.childNodes[0].innerText;
           });
           $(rowID).css('cursor', 'pointer');
         }
