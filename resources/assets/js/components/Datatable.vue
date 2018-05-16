@@ -21,6 +21,10 @@ export default {
     dataUrl: String,
     dataObject: Array,
     dataPath: String,
+    dataLink: {
+      type: String,
+      default: window.location.pathname
+    },
     id: {
       type: String,
       default: 'DataTable',
@@ -44,13 +48,18 @@ export default {
           dom: customDom,
           buttons: ['copy', 'csv', 'excel', 'print'],
         });
-        let dataPath = this.dataPath;
-        //make each row clickable
-        $('#' + this.id + ' tbody tr').click(function() {
-          const rowID = this.childNodes[0].innerText;
-          const path = window.location.pathname;
-          window.location.pathname = path.substring(0, path.lastIndexOf('/') + 1) + dataPath + '/' + rowID;
-        });
+        this.makeRowsClickable();
+      },
+      makeRowsClickable: function () {
+        const path = this.dataLink;
+        if (this.tableData.length) {
+          const rowID = '#' + this.id + ' tbody tr';
+          $(rowID).click(function() {
+            window.location.pathname = path + (path.lastIndexOf('/') === path.length - 1 ? '' : '/')
+              + this.childNodes[0].innerText;
+          });
+          $(rowID).css('cursor', 'pointer');
+        }
       },
     };
   },
@@ -80,6 +89,8 @@ export default {
 
         this.table.clear();
         this.table.rows.add(this.tableData).draw();
+
+        this.makeRowsClickable();
       }
     },
   },
