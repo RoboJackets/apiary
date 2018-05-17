@@ -13,6 +13,7 @@
    *  @props dataObject: The data object that will be used to populate the table if no dataUrl is supplied
    *  @props columns: Columns config data for DataTables, API: https://datatables.net/reference/option/
    *  @props dataPath: the top level key that holds the data
+   *  @props dataLink: The root pathname used for linking URLs from children in the table; defaults to the window's current pathname
    *  @props delete: boolean value indicating if there should be delete buttons on each row
    */
 export default {
