@@ -22,7 +22,6 @@ $factory->define(App\FasetVisit::class, function (Faker\Generator $faker) {
     ];
 });
 
-//Cannot have use factory for DuesTransaction, since it requires a linking DuesPackage
 $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
     return [
         'id' => $faker->numberBetween($min = 0, $max = 200),
@@ -37,7 +36,7 @@ $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     $lastName = $faker->lastName;
-    $uid = $faker-> $faker->bothify('?'.lcfirst($lastname).'##');
+    $uid = $faker->bothify('?'.lcfirst($lastName).'##');
     return [
         'id' => $faker->numberBetween($min = 0, $max = 200),
         'uid' => $uid,
@@ -45,10 +44,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'slack_id' => null,
         'gt_email' => $uid.'@gatech.edu',
         'personal_email' => $faker->safeEmail,
-        'first_name' => $faker->firstName($gender = null|'male'|'female'),
+        'first_name' => $faker->firstName,
         'middle_name' => $faker->optional()->lastName,
         'last_name' => $lastName,
-        'preferred_name' => null,
+        'preferred_name' => $faker->firstName,
         'phone' => $faker->numerify('##########'),
         'emergency_contact_name' => null,
         'emergency_contact_phone' => null,
@@ -56,7 +55,25 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'graduation_semester' => null,
         'shirt_size' => $faker->randomElement($array = array('s','m','l', 'xl')),
         'polo_size' => $faker->randomElement($array = array('s','m','l', 'xl')),
-        'gender' => $faker->randomElement($array = array('male', 'female')),
-        'ethnicity' => $faker->randomElement($array = array()),
+        'gender' => $faker->randomElement($array = array('male', 'female', 'nonbinary', 'none')),
+        'ethnicity' => $faker->randomElement($array = array('white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none')),
+        'accept_safety_agreement' => $faker->optional()->dateTime,
+    ];
+});
+
+$factory->define(App\Payment::class, function (Faker\Generator $faker) {
+    return [
+        'id' => $faker->numberBetween($min = 0, $max = 200),
+        'payable_id' => $faker->numberBetween($min = 0, $max = 200),
+        'payable_type' => $faker->randomElement($array = array('App\DuesTransaction', 'App\Event')),
+        'amount' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
+        'processing_fee' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
+        'method' => 'square',
+        'recorded_by' => User::first()->id,
+        'checkout_id' => null,
+        'client_txn_id' => null,
+        'server_txn_id' => null,
+        'unique_id' => $faker->asciify('********************'),
+        'notes' => 'Pending square payment',
     ];
 });
