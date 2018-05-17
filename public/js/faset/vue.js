@@ -22,6 +22,7 @@ var form = new Vue({
       result['faset_email'] = formData.get('faset-email');
       result['faset_name'] = formData.get('faset-name');
       result['faset_responses'] = [];
+      result['created_at'] = new Date();
       if (values.includes('other')) {
         values.splice(values.indexOf('other'), 1);
         values.push(formData.get('other'));
