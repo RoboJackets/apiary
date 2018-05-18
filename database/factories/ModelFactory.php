@@ -53,10 +53,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'emergency_contact_phone' => null,
         'join_semester' => null,
         'graduation_semester' => null,
-        'shirt_size' => $faker->randomElement($array = array('s','m','l', 'xl')),
-        'polo_size' => $faker->randomElement($array = array('s','m','l', 'xl')),
-        'gender' => $faker->randomElement($array = array('male', 'female', 'nonbinary', 'none')),
-        'ethnicity' => $faker->randomElement($array = array('white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none')),
+        'shirt_size' => $faker->randomElement($array = ['s','m','l', 'xl']),
+        'polo_size' => $faker->randomElement($array = ['s','m','l', 'xl']),
+        'gender' => $faker->randomElement($array = ['male', 'female', 'nonbinary', 'none']),
+        'ethnicity' => $faker->randomElement($array = ['white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none']),
         'accept_safety_agreement' => $faker->optional()->dateTime,
     ];
 });
@@ -65,7 +65,7 @@ $factory->define(App\Payment::class, function (Faker\Generator $faker) {
     return [
         'id' => $faker->numberBetween($min = 0, $max = 200),
         'payable_id' => $faker->numberBetween($min = 0, $max = 200),
-        'payable_type' => $faker->randomElement($array = array('App\DuesTransaction', 'App\Event')),
+        'payable_type' => $faker->randomElement($array = ['App\DuesTransaction', 'App\Event']),
         'amount' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'processing_fee' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'method' => 'square',
