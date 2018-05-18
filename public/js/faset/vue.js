@@ -24,7 +24,10 @@ var form = new Vue({
       result['faset_responses'] = [];
       if (values.includes('other')) {
         values.splice(values.indexOf('other'), 1);
-        values.push(formData.get('other'));
+        let otherText = formData.get('heardfrom-other-text');
+        if (otherText) {
+          values.push(otherText);
+        }
       }
       result['faset_responses'] = values;
       worker.postMessage(JSON.stringify(result));
@@ -40,6 +43,9 @@ var form = new Vue({
       setTimeout(this.focusNameInput, 1000);
 
       document.getElementById("form").reset();
+    },
+    checkOther: function (e) {
+      $('#heardfrom-other').prop("checked", true);
     },
     queueUpdate: function (e) {
       'use strict';
