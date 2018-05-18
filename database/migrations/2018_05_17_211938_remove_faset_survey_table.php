@@ -13,7 +13,6 @@ class RemoveFasetSurveyTable extends Migration
      */
     public function up()
     {
-
         Schema::table('faset_responses', function (Blueprint $table) {
             $table->dropForeign(['faset_survey_id']);
             $table->dropColumn('faset_survey_id');
