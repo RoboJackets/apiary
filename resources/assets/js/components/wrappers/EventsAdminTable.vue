@@ -11,14 +11,7 @@ export default {
   data() {
     return {
       tableConfig: [
-        {
-          title: 'ID',
-          data: 'id',
-          render: function(data, type, row) {
-            var link = "<a href='/admin/events/" + data + "'>" + data + '</a>';
-            return type === 'display' ? link : data;
-          },
-        },
+        { title: 'ID', data: 'id' },
         { title: 'Name', data: 'name' },
         { title: 'Organizer', data: 'organizer_name' },
       ],
