@@ -1,5 +1,5 @@
 <footer class="footer">
-  <div class="container">
+  <div class="container" style="overflow: hidden; height: 100%">
     <div class="d-flex justify-content-between">
       <div>
         <p class="text-muted text-right">Made with ♥ by RoboJackets</p>
