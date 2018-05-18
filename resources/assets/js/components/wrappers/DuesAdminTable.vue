@@ -11,14 +11,7 @@ export default {
   data() {
     return {
       tableConfig: [
-        {
-          title: 'ID',
-          data: 'id',
-          render: function(data, type, row) {
-            var link = "<a href='/admin/dues/" + data + "'>" + data + '</a>';
-            return type === 'display' ? link : data;
-          },
-        },
+        { title: 'ID', data: 'id' },
         { title: 'Timestamp', data: 'created_at' },
         { title: 'Name', data: 'user.name' },
         { title: 'Dues Package', data: 'package.name' },
