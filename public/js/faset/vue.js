@@ -26,7 +26,7 @@ var form = new Vue({
         values.splice(values.indexOf('other'), 1);
         values.push(formData.get('other'));
       }
-      result['faset_responses'][0] = {"1" : values};
+      result['faset_responses'] = values;
       worker.postMessage(JSON.stringify(result));
 
       swal({
