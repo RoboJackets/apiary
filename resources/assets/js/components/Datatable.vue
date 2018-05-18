@@ -13,6 +13,7 @@
    *  @props dataObject: The data object that will be used to populate the table if no dataUrl is supplied
    *  @props columns: Columns config data for DataTables, API: https://datatables.net/reference/option/
    *  @props dataPath: the top level key that holds the data
+   *  @props dataLink: The root pathname used for linking URLs from children in the table; defaults to the window's current pathname
    *  @props delete: boolean value indicating if there should be delete buttons on each row
    */
 export default {
@@ -21,6 +22,10 @@ export default {
     dataUrl: String,
     dataObject: Array,
     dataPath: String,
+    dataLink: {
+      type: String,
+      default: window.location.pathname,
+    },
     id: {
       type: String,
       default: 'DataTable',
@@ -30,26 +35,41 @@ export default {
     return {
       tableData: [],
       table: {},
+      generateTable: function(tableData) {
+        const customDom =
+          "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'Bi><'col-sm-7'p>>";
+        this.tableData = tableData;
+
+        this.table = $('#' + this.id).DataTable({
+          stateSave: true,
+          data: this.tableData,
+          columns: this.columns,
+          pageLength: 100,
+          lengthMenu: [20, 50, 100, 200, 500, 5000],
+          dom: customDom,
+          buttons: ['copy', 'csv', 'excel', 'print'],
+        });
+        this.makeRowsClickable();
+      },
+      makeRowsClickable: function() {
+        const path = this.dataLink;
+        if (this.tableData.length) {
+          const rowID = '#' + this.id + ' tbody tr';
+          $(rowID).click(function() {
+            window.location.pathname =
+              path + (path.lastIndexOf('/') === path.length - 1 ? '' : '/') + this.childNodes[0].innerText;
+          });
+          $(rowID).css('cursor', 'pointer');
+        }
+      },
     };
   },
   mounted() {
-    let customDom =
-      "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'Bi><'col-sm-7'p>>";
     if (typeof this.dataUrl !== 'undefined') {
       axios
         .get(this.dataUrl)
         .then(response => {
-          this.tableData = response.data[this.dataPath];
-
-          this.table = $('#' + this.id).DataTable({
-            stateSave: true,
-            data: this.tableData,
-            columns: this.columns,
-            pageLength: 100,
-            lengthMenu: [20, 50, 100, 200, 500, 5000],
-            dom: customDom,
-            buttons: ['copy', 'csv', 'excel', 'print'],
-          });
+          this.generateTable(response.data[this.dataPath]);
         })
         .catch(response => {
           console.log(response);
@@ -60,17 +80,7 @@ export default {
           );
         });
     } else {
-      this.tableData = this.dataObject;
-
-      this.table = $('#' + this.id).DataTable({
-        stateSave: true,
-        data: this.tableData,
-        columns: this.columns,
-        pageLength: 100,
-        lengthMenu: [20, 50, 100, 200, 500, 5000],
-        dom: customDom,
-        buttons: ['copy', 'csv', 'excel', 'print'],
-      });
+      this.generateTable(this.dataObject);
     }
   },
   watch: {
@@ -80,6 +90,8 @@ export default {
 
         this.table.clear();
         this.table.rows.add(this.tableData).draw();
+
+        this.makeRowsClickable();
       }
     },
   },
