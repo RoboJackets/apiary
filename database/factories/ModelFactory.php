@@ -37,6 +37,7 @@ $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     $lastName = $faker->lastName;
     $uid = $faker->bothify('?'.lcfirst($lastName).'##');
+    
     return [
         'id' => $faker->numberBetween($min = 0, $max = 200),
         'uid' => $uid,
@@ -53,8 +54,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'emergency_contact_phone' => null,
         'join_semester' => null,
         'graduation_semester' => null,
-        'shirt_size' => $faker->randomElement($array = ['s','m','l', 'xl']),
-        'polo_size' => $faker->randomElement($array = ['s','m','l', 'xl']),
+        'shirt_size' => $faker->randomElement($array = ['s', 'm', 'l', 'xl']),
+        'polo_size' => $faker->randomElement($array = ['s', 'm', 'l', 'xl']),
         'gender' => $faker->randomElement($array = ['male', 'female', 'nonbinary', 'none']),
         'ethnicity' => $faker->randomElement($array = ['white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none']),
         'accept_safety_agreement' => $faker->optional()->dateTime,
