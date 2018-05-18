@@ -37,7 +37,7 @@ $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     $lastName = $faker->lastName;
     $uid = $faker->bothify('?'.lcfirst($lastName).'##');
-    
+
     return [
         'id' => $faker->numberBetween($min = 0, $max = 200),
         'uid' => $uid,
