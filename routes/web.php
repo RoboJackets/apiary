@@ -124,7 +124,6 @@ Route::get('logout', function () {
     cas()->logout(config('app.url'));
 })->name('logout');
 
-
 Route::get('privacy', function () {
     return view('privacy');
 });
