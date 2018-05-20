@@ -10,6 +10,11 @@
 | database. Just tell the factory how a default model should look.
 |
 */
+function idMap($collection) {
+    return $collection->map(function ($el) {
+        return $el->id;
+    })->toArray();
+}
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\FasetVisit::class, function (Faker\Generator $faker) {
@@ -31,6 +36,18 @@ $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
         'effective_start' => $faker->dateTime(),
         'effective_end' => $faker->dateTime(),
         'cost' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
+    ];
+});
+
+$factory->define(App\DuesTransaction::class, function (Faker\Generator $faker) {
+    return [
+        'id' => $faker->numberBetween($min = 0, $max = 200),
+        'swag_shirt_provided' => $faker->optional()->dateTime,
+        'swag_shirt_providedBy' => User::first() != null ? User::first()->id : null,
+        'swag_polo_provided' => $faker->optional()->dateTime,
+        'swag_polo_providedBy' => User::first() != null ? User::first()->id : null,
+        'dues_package_id' => $faker->randomElement($array = idMap(DuesPackage::all())),
+        'user_id' => $faker->randomElement($array = idMap(User::all())),
     ];
 });
 
@@ -70,7 +87,7 @@ $factory->define(App\Payment::class, function (Faker\Generator $faker) {
         'amount' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'processing_fee' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'method' => 'square',
-        'recorded_by' => User::first()->id,
+        'recorded_by' => $faker->randomElement($array = idMap(User::all())),
         'checkout_id' => null,
         'client_txn_id' => null,
         'server_txn_id' => null,
