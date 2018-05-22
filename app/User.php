@@ -48,7 +48,6 @@ class User extends Authenticatable
         'last_name',
         'gt_email',
         'name',
-        'preferred_first_name',
         'gtid',
         'api_token',
         'full_name',
@@ -101,17 +100,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the preferred first name associated with the User.
-     */
-    public function getPreferredNameAttribute($preferred_name)
-    {
-        return ($preferred_name) ?: $this->first_name;
-    }
-
-    /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
      */
-    public function setPreferredNameAttribute($preferred_name)
+    public function setPreferredFirstNameAttribute($preferred_name)
     {
         $this->attributes['preferred_name'] = $preferred_name == $this->first_name ? null : $preferred_name;
     }
