@@ -61,3 +61,7 @@ body {
 .custom-radio-input.is-invalid ~ .invalid-feedback {
   display: block;
 }
+
+input.form-control.is-invalid ~ .invalid-feedback {
+  display: block;
+}
