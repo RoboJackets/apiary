@@ -40,7 +40,7 @@
               </div>
             </div>
             <small id="payment-amount-help" class="form-text text-muted">
-              Record the actual amount of money being collected. including surcharges or processing fees.
+              Record the actual amount of money being collected, including surcharges or processing fees.
             </small>
           </div>
         </div>
