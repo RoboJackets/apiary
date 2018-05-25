@@ -12,6 +12,9 @@
               :is-error="$v.payment.method.$error"
               @input="$v.payment.method.$touch()">
             </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must select a payment method.
+            </div>
           </div>
         </div>
 
@@ -29,6 +32,12 @@
                 :class="{ 'is-invalid': $v.payment.amount.$error }"
                 @input="$v.payment.amount.$touch()"
                 id="payment-amount">
+              <div :class="{ 'invalid-feedback': payment.method === 'swipe'}" v-if="payment.method === 'swipe'">
+                The payment amount must match the amount due + $3.
+              </div>
+              <div :class="{ 'invalid-feedback': payment.method !== 'swipe'}" v-if="payment.method !== 'swipe'">
+                The payment amount must match the amount due.
+              </div>
             </div>
             <small id="payment-amount-help" class="form-text text-muted">
               Record the actual amount of money being collected. including surcharges or processing fees.
