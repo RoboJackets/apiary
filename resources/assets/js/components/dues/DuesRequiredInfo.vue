@@ -58,7 +58,7 @@
               You must choose a polo size.
             </div>
           </div>
-        </div>      
+        </div>
 
         <h3>Membership Information</h3>
 
