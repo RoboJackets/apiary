@@ -153,69 +153,69 @@
 </template>
 
 <script>
-  import { alpha, email, maxLength, required } from 'vuelidate/lib/validators';
-  import notGTEmail from '../customValidators/notGTEmail';
+import { alpha, email, maxLength, required } from 'vuelidate/lib/validators';
+import notGTEmail from '../customValidators/notGTEmail';
 
-  export default {
-    props: ['userUid'],
-    data() {
-      return {
-        user: {},
-        feedback: '',
-        hasError: false,
-        dataUrl: '',
-        baseUrl: "/api/v1/users/",
-        shirtSizeOptions: [
-          {value: "s", text: "S"},
-          {value: "m", text: "M"},
-          {value: "l", text: "L"},
-          {value: "xl", text: "XL"},
-          {value: "xxl", text: "XXL"},
-          {value: "xxxl", text: "XXXL"},
-        ]
-      }
+export default {
+  props: ['userUid'],
+  data() {
+    return {
+      user: {},
+      feedback: '',
+      hasError: false,
+      dataUrl: '',
+      baseUrl: '/api/v1/users/',
+      shirtSizeOptions: [
+        { value: 's', text: 'S' },
+        { value: 'm', text: 'M' },
+        { value: 'l', text: 'L' },
+        { value: 'xl', text: 'XL' },
+        { value: 'xxl', text: 'XXL' },
+        { value: 'xxxl', text: 'XXXL' },
+      ],
+    };
 
-      delete this.user.dues;
+    delete this.user.dues;
 
-      axios
-        .put(this.dataUrl, this.user)
-        .then(response => {
-          this.hasError = false;
-          this.feedback = 'Saved!';
-          console.log('success');
-        })
-        .catch(response => {
-          this.hasError = true;
-          this.feedback = '';
-          console.log(response);
-          swal(
-            'Connection Error',
-            'Unable to save data. Check your internet connection or try refreshing the page.',
-            'error'
-          );
-        });
+    axios
+      .put(this.dataUrl, this.user)
+      .then(response => {
+        this.hasError = false;
+        this.feedback = 'Saved!';
+        console.log('success');
+      })
+      .catch(response => {
+        this.hasError = true;
+        this.feedback = '';
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to save data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+  },
+  validations: {
+    user: {
+      personal_email: { email, notGTEmail },
+      phone: { maxLength: maxLength(15) },
+      preferred_first_name: { alpha },
+      shirt_size: {},
+      polo_size: {},
+      emergency_contact_name: {},
+      emergency_contact_phone: { maxLength: maxLength(15) },
     },
     validations: {
       user: {
-        personal_email: {email, notGTEmail},
-        phone: {maxLength: maxLength(15)},
-        preferred_first_name: {alpha},
-        shirt_size: {},
-        polo_size: {},
+        personal_email: { email, notGTEmail },
+        phone: { maxLength: maxLength(15) },
+        preferred_name: { alpha },
+        shirt_size: { required },
+        polo_size: { required },
         emergency_contact_name: {},
-        emergency_contact_phone: {maxLength: maxLength(15)},
+        emergency_contact_phone: { maxLength: maxLength(15) },
       },
-      validations: {
-        user: {
-          personal_email: {email, notGTEmail},
-          phone: {maxLength: maxLength(15)},
-          preferred_name: {alpha},
-          shirt_size: {required},
-          polo_size: {required},
-          emergency_contact_name: {},
-          emergency_contact_phone: {maxLength: maxLength(15)}
-        }
-      }
-    }
-  };
+    },
+  },
+};
 </script>
