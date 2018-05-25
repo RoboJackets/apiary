@@ -153,7 +153,6 @@
 </template>
 
 <script>
-
   import { alpha, email, maxLength, required } from 'vuelidate/lib/validators';
   import notGTEmail from '../customValidators/notGTEmail';
 
@@ -212,14 +211,14 @@
     },
     validations: {
       user: {
-        personal_email: {email, notGTEmail},
-        phone: {maxLength: maxLength(15)},
-        preferred_name: {alpha},
-        shirt_size: {required},
-        polo_size: {required},
+        personal_email: { email, notGTEmail },
+        phone: { maxLength: maxLength(15) },
+        preferred_name: { alpha },
+        shirt_size: { required },
+        polo_size: { required },
         emergency_contact_name: {},
-        emergency_contact_phone: {maxLength: maxLength(15)}
-      }
-    }
-  }
+        emergency_contact_phone: { maxLength: maxLength(15) },
+      },
+    },
+  };
 </script>
