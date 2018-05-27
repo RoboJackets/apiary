@@ -175,7 +175,7 @@ class TeamController extends Controller
         try {
             $user = User::find($request->input('user_id'));
             if ($request->input('action') == "join") {
-                $team->members()->attach($user);
+                $team->members()->syncWithoutDetaching($user);
             } else {
                 $team->members()->detach($user);
             }
