@@ -7,24 +7,36 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                tableConfig: [
-                    {'title': 'Name', 'data':'name', 'render': function (data, type, row) {
-                            var link = "<a href='/admin/teams/" + row['slug'] + "'>" + data + "</a>";
-                            return type === "display" ? link : data;
-                        }},
-                    {'title': 'Description', 'data': 'description'},
-                    {'title': 'Founding Year', 'data': 'founding_year'},
-                    {'title': 'Hidden', 'data':'hidden', 'render': function (data, type, row) {
-                            return data === 1 ? "Yes" : "No";
-                        }},
-                    {'title': 'Attendable', 'data':'attendable', 'render': function (data, type, row) {
-                            return data === 1 ? "Yes" : "No";
-                        }},
-                ]
-            }
-        }
-    }
+export default {
+  data() {
+    return {
+      tableConfig: [
+        {
+          title: 'Name',
+          data: 'name',
+          render: function(data, type, row) {
+            var link = "<a href='/admin/teams/" + row['slug'] + "'>" + data + '</a>';
+            return type === 'display' ? link : data;
+          },
+        },
+        { title: 'Description', data: 'description' },
+        { title: 'Founding Year', data: 'founding_year' },
+        {
+          title: 'Hidden',
+          data: 'hidden',
+          render: function(data, type, row) {
+            return data === 1 ? 'Yes' : 'No';
+          },
+        },
+        {
+          title: 'Attendable',
+          data: 'attendable',
+          render: function(data, type, row) {
+            return data === 1 ? 'Yes' : 'No';
+          },
+        },
+      ],
+    };
+  },
+};
 </script>

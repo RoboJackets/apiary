@@ -39,66 +39,71 @@
 </template>
 
 <script>
-    import {required, numeric} from 'vuelidate/lib/validators'
-    export default {
-        props: {
-            id: "",
-            teamId: {
-                type: [Number, String],
-            },
-        },
-        data() {
-            return {
-                user: "",
-                member: {
-                    user_id: "",
-                    action: "join"
-                },
-                feedback: "",
-                baseUrl: "/api/v1/teams/",
-                hasError: false,
-            }
-        },
-        methods: {
-            submit() {
-                if (this.$v.$invalid) {
-                    this.feedback = "Validation Error";
-                    this.hasError = true;
-                    this.$v.$touch();
-                    return;
-                }
+import { required, numeric } from 'vuelidate/lib/validators';
+export default {
+  props: {
+    id: '',
+    teamId: {
+      type: [Number, String],
+    },
+  },
+  data() {
+    return {
+      user: '',
+      member: {
+        user_id: '',
+        action: 'join',
+      },
+      feedback: '',
+      baseUrl: '/api/v1/teams/',
+      hasError: false,
+    };
+  },
+  methods: {
+    submit() {
+      if (this.$v.$invalid) {
+        this.feedback = 'Validation Error';
+        this.hasError = true;
+        this.$v.$touch();
+        return;
+      }
 
-                let membersUrl = this.baseUrl + this.teamId + "/members";
-                this.member.user_id = this.user.id;
+      let membersUrl = this.baseUrl + this.teamId + '/members';
+      this.member.user_id = this.user.id;
 
-                axios.post(membersUrl, this.member)
-                    .then(response => {
-                        this.hasError = false;
-                        this.feedback = "Invited " + response.data.member + "!";
-                        this.member.user_id = "";
-                        this.user = "";
-                    })
-                    .catch(error => {
-                        console.log("error: " + error);
-                        this.hasError = true;
-                        this.feedback = "An error occurred!";
-                        if (error.response.status == 403) {
-                            swal({
-                                title: "Whoops!",
-                                text: "You don't have permission to perform that action.",
-                                type: "error"
-                            });
-                        } else {
-                            swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
-                        }
-                    })
-            },
-        },
-        validations: {
-            user: {required},
-            member: {
-                action: {required}
-            }
-        },
-    }
+      axios
+        .post(membersUrl, this.member)
+        .then(response => {
+          this.hasError = false;
+          this.feedback = 'Invited ' + response.data.member + '!';
+          this.member.user_id = '';
+          this.user = '';
+        })
+        .catch(error => {
+          console.log('error: ' + error);
+          this.hasError = true;
+          this.feedback = 'An error occurred!';
+          if (error.response.status == 403) {
+            swal({
+              title: 'Whoops!',
+              text: "You don't have permission to perform that action.",
+              type: 'error',
+            });
+          } else {
+            swal(
+              'Error',
+              'Unable to process data. Check your internet connection or try refreshing the page.',
+              'error'
+            );
+          }
+        });
+    },
+  },
+  validations: {
+    user: { required },
+    member: {
+      action: { required },
+    },
+  },
+};
 </script>

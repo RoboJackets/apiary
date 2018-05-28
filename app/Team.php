@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model
 {
@@ -40,7 +40,7 @@ class Team extends Model
     }
 
     /**
-     * Scope a query to only include attendable teams
+     * Scope a query to only include attendable teams.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
@@ -51,7 +51,7 @@ class Team extends Model
     }
 
     /**
-     * Scope a query to only include visible (non-hidden) teams
+     * Scope a query to only include visible (non-hidden) teams.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder

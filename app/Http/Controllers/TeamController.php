@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Team;
 use App\User;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -37,6 +36,7 @@ class TeamController extends Controller
         $user = auth()->user();
         //Leave this line in here, it provides team data to the view.
         $user_teams = auth()->user()->teams;
+
         return view('teams.index')->with(['teams' => $teams, 'user' => $user]);
     }
 
@@ -53,7 +53,7 @@ class TeamController extends Controller
             'description' => 'string|max:255|nullable',
             'founding_year' => 'numeric|required',
             'attendable' => 'boolean',
-            'hidden' => 'boolean'
+            'hidden' => 'boolean',
         ]);
 
         try {
@@ -81,7 +81,7 @@ class TeamController extends Controller
     public function show($id, Request $request)
     {
         $team = Team::where('id', $id)->orWhere('slug', $id);
-        if ($request->input('include') == "members") {
+        if ($request->input('include') == 'members') {
             $team = $team->with('members');
         }
         $team = $team->first();
@@ -103,11 +103,12 @@ class TeamController extends Controller
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $user = auth()->user();
+
         return view('teams.show')->with(['team' => $team, 'user' => $user]);
     }
 
     /**
-     * Returns a list of all members of the given team
+     * Returns a list of all members of the given team.
      *
      * @param $id integer Team ID
      * @return \Illuminate\Http\JsonResponse
@@ -116,6 +117,7 @@ class TeamController extends Controller
     {
         $team = Team::find($id);
         $members = $team->members;
+
         return response()->json(['status' => 'success', 'members' => $members]);
     }
 
@@ -129,7 +131,7 @@ class TeamController extends Controller
     public function update(Request $request, $id)
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (!$team) {
+        if (! $team) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -138,7 +140,7 @@ class TeamController extends Controller
             'description' => 'string|max:255|nullable',
             'founding_year' => 'numeric|nullable',
             'attendable' => 'boolean',
-            'hidden' => 'boolean'
+            'hidden' => 'boolean',
         ]);
 
         try {
@@ -158,7 +160,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Updates membership of the given team
+     * Updates membership of the given team.
      *
      * @param Request $request
      * @param $id integer
@@ -167,18 +169,18 @@ class TeamController extends Controller
     public function updateMembers(Request $request, $id)
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (!$team) {
+        if (! $team) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
         $this->validate($request, [
             'user_id' => 'required|numeric|exists:users,id',
-            'action' => 'required|in:join,leave'
+            'action' => 'required|in:join,leave',
         ]);
 
         try {
             $user = User::find($request->input('user_id'));
-            if ($request->input('action') == "join") {
+            if ($request->input('action') == 'join') {
                 $team->members()->syncWithoutDetaching($user);
             } else {
                 $team->members()->detach($user);
@@ -186,10 +188,12 @@ class TeamController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+
         return response()->json(['status' => 'success', 'team' => $team, 'member' => $user->name], 201);
     }
 

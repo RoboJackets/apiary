@@ -82,7 +82,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Check membership status for a given team
+     * Check membership status for a given team.
      *
      * @param $team Team ID
      * @return bool Whether or not user is a member of the given team

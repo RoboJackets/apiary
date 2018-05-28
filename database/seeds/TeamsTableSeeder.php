@@ -13,17 +13,17 @@ class TeamsTableSeeder extends Seeder
     {
         DB::table('teams')->insert([
             ['name' => 'IGVC', 'hidden' => false, 'attendable' => true, 'founding_year' => 2004,
-                'description' => "", 'slug' => "igvc"],
+                'description' => '', 'slug' => 'igvc', ],
             ['name' => 'BattleBots', 'hidden' => false, 'attendable' => true, 'founding_year' => 1999,
-                'description' => "", 'slug' => "battlebots"],
+                'description' => '', 'slug' => 'battlebots', ],
             ['name' => 'Outreach', 'hidden' => false, 'attendable' => true, 'founding_year' => 2001,
-                'description' => "", 'slug' => "outreach"],
+                'description' => '', 'slug' => 'outreach', ],
             ['name' => 'RoboCup', 'hidden' => false, 'attendable' => true, 'founding_year' => 2007,
-                'description' => "", 'slug' => "robocup"],
+                'description' => '', 'slug' => 'robocup', ],
             ['name' => 'RoboRacing', 'hidden' => false, 'attendable' => true, 'founding_year' => 2013,
-                'description' => "", 'slug' => "roboracing"],
+                'description' => '', 'slug' => 'roboracing', ],
             ['name' => 'Core', 'hidden' => true, 'attendable' => true, 'founding_year' => 1969,
-                'description' => "", 'slug' => "core"]
+                'description' => '', 'slug' => 'core', ],
         ]);
     }
 }

@@ -60,56 +60,54 @@
 </template>
 
 <script>
-    import { required, numeric } from 'vuelidate/lib/validators'
-    export default {
-        name: "createTeamForm",
-        data() {
-            return {
-                team: {},
-                feedback: '',
-                hasError: false,
-                baseUrl: "/api/v1/teams",
-                dateTimeConfig: {
-                    dateFormat: "Y-m-d H:i:S",
-                    enableTime:true,
-                    altInput: true
-                },
-                yesNoOptions: [
-                    {value: "0", text: "No"},
-                    {value: "1", text: "Yes"},
-                ],
-            }
-        },
-        validations: {
-            team: {
-                name: {required},
-                founding_year: {numeric},
-                description: {required},
-                hidden: {required},
-                attendable: {required},
-            }
-        },
-        methods: {
-            submit () {
-                if (this.$v.$invalid) {
-                    this.$v.$touch();
-                    return;
-                }
+import { required, numeric } from 'vuelidate/lib/validators';
+export default {
+  name: 'createTeamForm',
+  data() {
+    return {
+      team: {},
+      feedback: '',
+      hasError: false,
+      baseUrl: '/api/v1/teams',
+      dateTimeConfig: {
+        dateFormat: 'Y-m-d H:i:S',
+        enableTime: true,
+        altInput: true,
+      },
+      yesNoOptions: [{ value: '0', text: 'No' }, { value: '1', text: 'Yes' }],
+    };
+  },
+  validations: {
+    team: {
+      name: { required },
+      founding_year: { numeric },
+      description: { required },
+      hidden: { required },
+      attendable: { required },
+    },
+  },
+  methods: {
+    submit() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
 
-                axios.post(this.baseUrl, this.team)
-                    .then(response => {
-                        this.hasError = false;
-                        this.feedback = "Saved!";
-                        console.log("success");
-                        window.location.href= "/teams/" + response.data.team.slug;
-                    })
-                    .catch(response => {
-                        this.hasError = true;
-                        this.feedback = "";
-                        console.log(response);
-                        swal("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-                    })
-            },
-        }
-    }
+      axios
+        .post(this.baseUrl, this.team)
+        .then(response => {
+          this.hasError = false;
+          this.feedback = 'Saved!';
+          console.log('success');
+          window.location.href = '/teams/' + response.data.team.slug;
+        })
+        .catch(response => {
+          this.hasError = true;
+          this.feedback = '';
+          console.log(response);
+          swal('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
+        });
+    },
+  },
+};
 </script>
