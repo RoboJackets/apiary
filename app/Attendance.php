@@ -34,4 +34,36 @@ class Attendance extends Model
     {
         return $this->belongsTo('App\User', 'gtid', 'gtid');
     }
+
+    /**
+     * Scope query to start at given date
+     *
+     * @param $query mixed
+     * @param $date string Date to start search
+     * @return mixed
+     */
+    public function scopeStart($query, $date)
+    {
+        if ($date == null) {
+            return null;
+        } else {
+            return $query->whereDate('created_at', '>=', $date);
+        }
+    }
+
+    /**
+     * Scope query to end at given date
+     *
+     * @param $query mixed
+     * @param $date string Date to start search
+     * @return mixed
+     */
+    public function scopeEnd($query, $date)
+    {
+        if ($date == null) {
+            return null;
+        } else {
+            return $query->whereDate('created_at', '<=', $date);
+        }
+    }
 }

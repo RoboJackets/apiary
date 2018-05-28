@@ -1,15 +1,12 @@
 <template>
     <div class="row">
         <template v-for="team in teams">
-        <div class="col-sm-12 col-md-4" style="padding-top:50px">
-            <button
-                    class="btn btn-kiosk btn-secondary"
-                    type="button"
-                    :id="team.id"
-                    v-on:click="clicked">
-                {{ team.name }}
-            </button>
-        </div>
+            <div class="col-sm-12 col-md-4" style="padding-top:50px">
+                <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
+                <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
+                    {{ team.name }}
+                </div>
+            </div>
         </template>
     </div>
 </template>
@@ -177,10 +174,8 @@
                         type: "error",
                         timer: 3000
                     }).then((result) => {
-                        if (!result.value) {
-                            self.clearFields();
-                            swal.close();
-                        }
+                        self.clearFields();
+                        swal.close();
                     });
                 }
             },
@@ -230,13 +225,16 @@
 <style scoped>
     /* Combination of btn-lg and btn-block with some customizations */
     .btn-kiosk {
-        min-height: 175px;
+        min-height: 250px;
         font-weight: bolder;
-        font-size: 2rem;
-        display: block;
+        font-size: 2.75rem;
         width: 100%;
         padding: 0.5rem 1rem;
         line-height: 1.5;
         border-radius: 0;
+        /* Vertically Center Text */
+        display:flex;
+        justify-content:center;
+        align-items:center;
     }
 </style>

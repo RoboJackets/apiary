@@ -30,6 +30,7 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     Route::post('notification/manual', 'NotificationController@sendNotificationManual');
 
     //Misc Resources
+    Route::post('attendance/search', 'AttendanceController@search')->name('attendance.search');
     Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit']]);
     Route::get('users/search', 'UserController@search');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);

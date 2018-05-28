@@ -64,7 +64,7 @@
               <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}}</option>
             </select>
             <div class="invalid-feedback">
-              Please select a dues package.
+              Select a dues package.
             </div>
           </div>
         </div>

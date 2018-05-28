@@ -119,6 +119,12 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
                 return view('teams.edit', ['id' => $id]);
             })->name('edit');
         });
+
+        Route::prefix('attendance')->group(function () {
+            Route::get('/', function () {
+                return view('attendance.admin');
+            })->name('attendance.admin');
+        });
     });
 });
 

@@ -50,7 +50,14 @@
               placeholder="None on record"
               :class="{ 'is-invalid': $v.user.personal_email.$error }"
               @input="$v.user.personal_email.$touch()">
+            <div class="invalid-feedback" v-if="!$v.user.personal_email.notGTEmail">
+              Personal email cannot be a GT email address
+            </div>
+            <div class="invalid-feedback" v-if="!$v.user.personal_email.email">
+              Must be a valid email address
+            </div>
           </div>
+
         </div>
 
         <div class="form-group row">
@@ -64,6 +71,9 @@
               placeholder="None on record"
               :class="{ 'is-invalid': $v.user.phone.$error }"
               @input="$v.user.phone.$touch()">
+              <div class="invalid-feedback">
+                Must be a valid phone number with no punctuation
+              </div>
           </div>
         </div>
 
@@ -121,6 +131,9 @@
               placeholder="None on record"
               :class="{ 'is-invalid': $v.user.emergency_contact_phone.$error }"
               @input="$v.user.emergency_contact_phone.$touch()">
+              <div class="invalid-feedback">
+                Must be a valid phone number with no punctuation
+            </div>
           </div>
         </div>
 
@@ -137,6 +150,7 @@
 <script>
 
   import { alpha, email, maxLength } from 'vuelidate/lib/validators';
+  import notGTEmail from '../customValidators/notGTEmail';
 
   export default {
     props: ['userUid'],
@@ -193,7 +207,7 @@
     },
     validations: {
       user: {
-        personal_email: {email},
+        personal_email: {email, notGTEmail},
         phone: {maxLength: maxLength(15)},
         preferred_name: {alpha},
         shirt_size: {},
