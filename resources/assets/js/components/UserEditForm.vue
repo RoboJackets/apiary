@@ -84,12 +84,8 @@
                 v-model="user.shirt_size"
                 :options="shirtSizeOptions"
                 id="user-shirtsize"
-                :is-error="$v.user.shirt_size.$error"
                 @input="$v.user.shirt_size.$touch()">
             </custom-radio-buttons>
-            <div class="invalid-feedback">
-              You must choose a shirt size.
-            </div>
           </div>
         </div>
 
@@ -100,12 +96,8 @@
                 v-model="user.polo_size"
                 :options="shirtSizeOptions"
                 id="user-polosize"
-                :is-error="$v.user.polo_size.$error"
                 @input="$v.user.polo_size.$touch()">
             </custom-radio-buttons>
-            <div class="invalid-feedback">
-              You must choose a polo size.
-            </div>
           </div>
         </div>
 
@@ -224,8 +216,8 @@ export default {
       personal_email: { email, notGTEmail },
       phone: { maxLength: maxLength(15) },
       preferred_first_name: { alpha },
-      shirt_size: { required },
-      polo_size: { required },
+      shirt_size: {},
+      polo_size: {},
       emergency_contact_name: {},
       emergency_contact_phone: { maxLength: maxLength(15) },
     },
