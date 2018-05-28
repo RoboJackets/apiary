@@ -11,10 +11,9 @@ class TeamController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-teams', ['only' => ['index']]);
+        $this->middleware('permission:read-teams', ['only' => ['index', 'indexWeb', 'show', 'showMembers']]);
         $this->middleware('permission:create-teams', ['only' => ['store']]);
-        $this->middleware('permission:read-teams', ['only' => ['show']]);
-        $this->middleware('permission:update-teams', ['only' => ['update']]);
+        $this->middleware('permission:update-teams', ['only' => ['update', 'updateMembers']]);
         $this->middleware('permission:delete-teams', ['only' => ['destroy']]);
     }
 
@@ -25,7 +24,11 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::all();
+        if (\Auth::user()->can('read-hidden-teams')) {
+            $teams = Team::all();
+        } else {
+            $teams = Team::visible()->get();
+        }
 
         return response()->json(['status' => 'success', 'teams' => $teams]);
     }
@@ -86,25 +89,13 @@ class TeamController extends Controller
         }
         $team = $team->first();
 
-        if ($team) {
+        if ($team && $team->hidden == true && \Auth::user()->cant('read-hidden-teams')) {
+            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
+        } elseif ($team) {
             return response()->json(['status' => 'success', 'team' => $team]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param mixed $id DB ID or slug
-     * @return \Illuminate\Http\Response
-     */
-    public function showWebAdmin($id)
-    {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        $user = auth()->user();
-
-        return view('teams.show')->with(['team' => $team, 'user' => $user]);
     }
 
     /**
@@ -117,6 +108,10 @@ class TeamController extends Controller
     {
         $team = Team::find($id);
         $members = $team->members;
+
+        if ($team && $team->hidden == true && \Auth::user()->cant('read-hidden-teams')) {
+            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
+        }
 
         return response()->json(['status' => 'success', 'members' => $members]);
     }
@@ -131,7 +126,7 @@ class TeamController extends Controller
     public function update(Request $request, $id)
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team) {
+        if (! $team || ($team->hidden == true && \Auth::user()->cant('update-hidden-teams'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -169,7 +164,7 @@ class TeamController extends Controller
     public function updateMembers(Request $request, $id)
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team) {
+        if (! $team || ($team->hidden == true && \Auth::user()->cant('update-hidden-teams'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
