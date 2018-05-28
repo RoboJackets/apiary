@@ -6,6 +6,7 @@ use App\Team;
 use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class TeamController extends Controller
 {
@@ -26,6 +27,7 @@ class TeamController extends Controller
     public function index()
     {
         $teams = Team::all();
+
         return response()->json(['status' => 'success', 'teams' => $teams]);
     }
 
@@ -59,6 +61,7 @@ class TeamController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -143,6 +146,7 @@ class TeamController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -203,7 +207,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
         } else {
             return response()->json(['status' => 'error',
-                'message' => 'team_not_found'], 422);
+                'message' => 'team_not_found', ], 422);
         }
     }
 }

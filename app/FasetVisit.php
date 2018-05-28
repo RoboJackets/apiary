@@ -3,15 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FasetVisit extends Model
 {
     use Notifiable, SoftDeletes;
 
     /**
-     *  Get the FASET Responses associated with this FASET Visit
+     *  Get the FASET Responses associated with this FASET Visit.
      */
     public function fasetResponses()
     {
@@ -19,7 +19,7 @@ class FasetVisit extends Model
     }
 
     /**
-     *  Get the organization member who visited at FASET, assuming the record could be linked
+     *  Get the organization member who visited at FASET, assuming the record could be linked.
      */
     public function user()
     {
@@ -31,12 +31,13 @@ class FasetVisit extends Model
         $this->fasetResponses()->create(compact('faset_survey_id', 'response'));
     }
 
-    public function save(array $options = array())
+    public function save(array $options = [])
     {
         if (empty($this->visit_token)) {
             // Store 20 char secure random token
-            $this->visit_token = strtr(base64_encode(random_bytes(15)), "+/=", "-_.");
+            $this->visit_token = strtr(base64_encode(random_bytes(15)), '+/=', '-_.');
         }
+
         return parent::save($options);
     }
 

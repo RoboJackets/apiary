@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Attendance extends Model
 {
     use SoftDeletes;
-    
+
     //Override automatic table name generation
     protected $table = 'attendance';
-    
+
     /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = ['id'];
-    
+
     /**
      * Get all of the owning attendable models.
      */
@@ -36,7 +36,7 @@ class Attendance extends Model
     }
 
     /**
-     * Scope query to start at given date
+     * Scope query to start at given date.
      *
      * @param $query mixed
      * @param $date string Date to start search
@@ -45,14 +45,14 @@ class Attendance extends Model
     public function scopeStart($query, $date)
     {
         if ($date == null) {
-            return null;
+            return;
         } else {
             return $query->whereDate('created_at', '>=', $date);
         }
     }
 
     /**
-     * Scope query to end at given date
+     * Scope query to end at given date.
      *
      * @param $query mixed
      * @param $date string Date to start search
@@ -61,7 +61,7 @@ class Attendance extends Model
     public function scopeEnd($query, $date)
     {
         if ($date == null) {
-            return null;
+            return;
         } else {
             return $query->whereDate('created_at', '<=', $date);
         }

@@ -46,38 +46,43 @@
 </template>
 
 <script>
-  export default {
-    props: {
-        duesTransactionId: {
-            required:true
-        }
+export default {
+  props: {
+    duesTransactionId: {
+      required: true,
     },
-    data() {
-      return {
-        duesTransaction: {},
-        user: {},
-        package: {},
-        dataUrl: "",
-        baseUrl: "/api/v1/dues/transactions/"
-      }
+  },
+  data() {
+    return {
+      duesTransaction: {},
+      user: {},
+      package: {},
+      dataUrl: '',
+      baseUrl: '/api/v1/dues/transactions/',
+    };
+  },
+  mounted() {
+    this.dataUrl = this.baseUrl + this.duesTransactionId;
+    axios
+      .get(this.dataUrl)
+      .then(response => {
+        this.duesTransaction = response.data.dues_transaction;
+        this.user = this.duesTransaction.user;
+        this.package = this.duesTransaction.package;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+  },
+  methods: {
+    swagDistributed: function() {
+      window.location.href = document.referrer ? document.referrer : '/admin/swag';
     },
-    mounted() {
-      this.dataUrl = this.baseUrl + this.duesTransactionId;
-      axios.get(this.dataUrl)
-        .then(response => {
-          this.duesTransaction = response.data.dues_transaction;
-          this.user = this.duesTransaction.user;
-          this.package = this.duesTransaction.package;
-        })
-        .catch(response => {
-          console.log(response);
-          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
-        });
-    },
-    methods: {
-      swagDistributed: function () {
-        window.location.href= (document.referrer) ? document.referrer : "/admin/swag";
-      }
-    }
-    }
+  },
+};
 </script>

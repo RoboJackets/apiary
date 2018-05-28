@@ -1,21 +1,21 @@
 body {
-	background-color: $jumbotron-bg;
+  background-color: $jumbotron-bg;
   ::placeholder {
     opacity: 0.4 !important;
   }
 }
 
 #fasetSuccess {
-	max-width: 60%;
-	display: block;
-	margin: 1rem auto;
+  max-width: 60%;
+  display: block;
+  margin: 1rem auto;
 }
 
 // Typeahead (v-select component) Styles
 .v-select.open .dropdown-toggle {
-   border-color: #5cb3fd;
-   border-radius: 0;
- }
+  border-color: #5cb3fd;
+  border-radius: 0;
+}
 
 .v-select .dropdown-toggle {
   border-radius: 0 !important;

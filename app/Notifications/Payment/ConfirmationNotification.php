@@ -6,8 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\Payment\Confirmation as Mailable;
-use Illuminate\Notifications\Messages\MailMessage;
-use App\Payment;
 
 class ConfirmationNotification extends Notification implements ShouldQueue
 {

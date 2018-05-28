@@ -140,179 +140,201 @@
 </template>
 
 <script>
-  import {required, numeric} from 'vuelidate/lib/validators'
+import { required, numeric } from 'vuelidate/lib/validators';
 
-  export default {
-    name: "editEventForm",
-    props: ['eventId'],
-    data() {
-      return {
-        event: {},
-        feedback: '',
-        hasError: false,
-        dataUrl: '',
-        baseUrl: "/api/v1/events/",
-        rsvpTableConfig: [
-          {'title': 'ID', 'data': 'id'},
-          {'title': 'User', 'data': 'user_id'},
-          {'title': 'Response', 'data': 'response'},
-          {'title': 'Source', 'data': 'source'},
-          {'title': 'Time', 'data': 'created_at'}
-        ],
-        attendance: [],
-        attendanceQuery: {
-          attendable_type: "App\\Event",
-          attendable_id: this.eventId
-        },
-        attendanceUrl: '/api/v1/attendance/search',
-        attendanceTableConfig: [
-          {'title': 'Time', 'data': 'created_at'},
-          {
-            'title': 'Last Name', 'data': null, 'render': function (data, type, row) {
-              try {
-                return data.attendee.last_name;
-              } catch (e) {
-                return "Non-member";
-              }
+export default {
+  name: 'editEventForm',
+  props: ['eventId'],
+  data() {
+    return {
+      event: {},
+      feedback: '',
+      hasError: false,
+      dataUrl: '',
+      baseUrl: '/api/v1/events/',
+      rsvpTableConfig: [
+        { title: 'ID', data: 'id' },
+        { title: 'User', data: 'user_id' },
+        { title: 'Response', data: 'response' },
+        { title: 'Source', data: 'source' },
+        { title: 'Time', data: 'created_at' },
+      ],
+      attendance: [],
+      attendanceQuery: {
+        attendable_type: 'App\\Event',
+        attendable_id: this.eventId,
+      },
+      attendanceUrl: '/api/v1/attendance/search',
+      attendanceTableConfig: [
+        { title: 'Time', data: 'created_at' },
+        {
+          title: 'Last Name',
+          data: null,
+          render: function(data, type, row) {
+            try {
+              return data.attendee.last_name;
+            } catch (e) {
+              return 'Non-member';
             }
           },
-          {
-              'title': 'First Name', 'data': null, 'render': function (data, type, row) {
-                  try {
-                      return data.attendee.first_name;
-                  } catch (e) {
-                      return "";
-                  }
-              }
-          },
-          {'title': 'GTID', 'data': 'gtid'}
-        ],
-        dateTimeConfig: {
-          dateFormat: "Y-m-d H:i:S",
-          enableTime: true,
-          altInput: true
         },
-        rsvpOptions: [
-          {value: "0", text: "No"},
-          {value: "1", text: "Yes"},
-        ],
-      }
+        {
+          title: 'First Name',
+          data: null,
+          render: function(data, type, row) {
+            try {
+              return data.attendee.first_name;
+            } catch (e) {
+              return '';
+            }
+          },
+        },
+        { title: 'GTID', data: 'gtid' },
+      ],
+      dateTimeConfig: {
+        dateFormat: 'Y-m-d H:i:S',
+        enableTime: true,
+        altInput: true,
+      },
+      rsvpOptions: [{ value: '0', text: 'No' }, { value: '1', text: 'Yes' }],
+    };
+  },
+  validations: {
+    event: {
+      name: { required },
+      cost: { numeric },
+      allow_anonymous_rsvp: { required },
     },
-    validations: {
-      event: {
-        name: {required},
-        cost: {numeric},
-        allow_anonymous_rsvp: {required}
+  },
+  mounted() {
+    this.dataUrl = this.baseUrl + this.eventId;
+    axios
+      .get(this.dataUrl)
+      .then(response => {
+        this.event = response.data.event;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+
+    axios
+      .post(this.attendanceUrl, this.attendanceQuery)
+      .then(response => {
+        this.attendance = response.data.attendance;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+
+    // Listen for bootstrap modal close to reload attendance
+    // TODO: Find a better way in Vue to do this w/o jQuery
+    $('#attendanceModal').on('hidden.bs.modal', this.updateAttendance);
+  },
+  methods: {
+    submit() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
       }
-    },
-    mounted() {
-      this.dataUrl = this.baseUrl + this.eventId;
-      axios.get(this.dataUrl)
+
+      let updatedEvent = this.event;
+      delete updatedEvent.rsvps;
+
+      //Delete these as they're computed by Eloquent
+      delete updatedEvent.organizer_id;
+      delete updatedEvent.organizer_name;
+      //Set organizer_id to the id from the selected object
+      updatedEvent.organizer_id = updatedEvent.organizer.id;
+
+      axios
+        .put(this.dataUrl, updatedEvent)
         .then(response => {
-          this.event = response.data.event;
+          this.hasError = false;
+          this.feedback = 'Saved!';
+          console.log('success');
         })
         .catch(response => {
+          this.hasError = true;
+          this.feedback = '';
           console.log(response);
-          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+          swal('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
         });
-
-      axios.post(this.attendanceUrl, this.attendanceQuery)
+    },
+    updateAttendance() {
+      axios
+        .post(this.attendanceUrl, this.attendanceQuery)
         .then(response => {
           this.attendance = response.data.attendance;
         })
         .catch(response => {
           console.log(response);
-          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
+          swal(
+            'Connection Error',
+            'Unable to load data. Check your internet connection or try refreshing the page.',
+            'error'
+          );
         });
-
-      // Listen for bootstrap modal close to reload attendance
-      // TODO: Find a better way in Vue to do this w/o jQuery
-      $("#attendanceModal").on("hidden.bs.modal", this.updateAttendance);
     },
-    methods: {
-      submit() {
-        if (this.$v.$invalid) {
-          this.$v.$touch();
-          return;
+    deletePrompt() {
+      let self = this;
+      swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this event!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        focusCancel: true,
+        confirmButtonColor: '#dc3545',
+      }).then(result => {
+        if (result.value) {
+          self.deleteEvent();
         }
-
-        let updatedEvent = this.event;
-        delete updatedEvent.rsvps;
-
-        //Delete these as they're computed by Eloquent
-        delete updatedEvent.organizer_id;
-        delete updatedEvent.organizer_name;
-        //Set organizer_id to the id from the selected object
-        updatedEvent.organizer_id = updatedEvent.organizer.id;
-
-        axios.put(this.dataUrl, updatedEvent)
-          .then(response => {
-            this.hasError = false;
-            this.feedback = "Saved!";
-            console.log("success");
-          })
-          .catch(response => {
-            this.hasError = true;
-            this.feedback = "";
-            console.log(response);
-            swal("Error", "Unable to save data. Check your internet connection or try refreshing the page.", "error");
-          })
-      },
-      updateAttendance() {
-          axios.post(this.attendanceUrl, this.attendanceQuery)
-          .then(response => {
-            this.attendance = response.data.attendance;
-          })
-          .catch(response => {
-            console.log(response);
-            swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
-          });
-      },
-      deletePrompt() {
-        let self = this;
-        swal({
-          title: "Are you sure?",
-          text: "Once deleted, you will not be able to recover this event!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
-          focusCancel: true,
-          confirmButtonColor: "#dc3545"
-        }).then((result) => {
+      });
+    },
+    deleteEvent() {
+      axios
+        .delete(this.dataUrl)
+        .then(response => {
+          this.hasError = false;
+          swal({
+            title: 'Deleted!',
+            text: 'The event has been deleted.',
+            type: 'success',
+            timer: 3000,
+          }).then(result => {
             if (result.value) {
-                self.deleteEvent();
-            }
-        });
-      },
-      deleteEvent() {
-        axios.delete(this.dataUrl)
-          .then(response => {
-            this.hasError = false;
-            swal({
-              title: "Deleted!",
-              text: "The event has been deleted.",
-              type: "success",
-              timer: 3000
-            }).then((result) => {
-                if (result.value) {
-                    window.location.href = "/admin/events";
-                }
-            })
-          })
-          .catch(error => {
-            this.hasError = true;
-            this.feedback = "";
-            if (error.response.status == 403) {
-              swal({
-                title: "Whoops!",
-                text: "You don't have permission to perform that action.",
-                type: "error"
-              });
-            } else {
-              swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+              window.location.href = '/admin/events';
             }
           });
-      }
-    }
-  }
+        })
+        .catch(error => {
+          this.hasError = true;
+          this.feedback = '';
+          if (error.response.status == 403) {
+            swal({
+              title: 'Whoops!',
+              text: "You don't have permission to perform that action.",
+              type: 'error',
+            });
+          } else {
+            swal(
+              'Error',
+              'Unable to process data. Check your internet connection or try refreshing the page.',
+              'error'
+            );
+          }
+        });
+    },
+  },
+};
 </script>

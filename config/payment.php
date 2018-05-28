@@ -29,5 +29,5 @@ return [
         */
 
         'location_id' => env('SQUARE_LOCATION_ID'),
-    ]
+    ],
 ];

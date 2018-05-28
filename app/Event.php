@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Event extends Model
 {
     use SoftDeletes;
-    
+
     protected $dates = [
         'created_at',
         'updated_at',
         'start_time',
-        'end_time'
+        'end_time',
     ];
 
     /**
@@ -22,7 +22,7 @@ class Event extends Model
      * @var array
      */
     protected $guarded = [
-        'id', 'created_at', 'updated_at', 'organizer_name', 'organizer'
+        'id', 'created_at', 'updated_at', 'organizer_name', 'organizer',
     ];
 
     /**
@@ -31,7 +31,7 @@ class Event extends Model
      * @var array
      */
     protected $appends = [
-        'organizer_name'
+        'organizer_name',
     ];
 
     public function organizer()
@@ -53,7 +53,7 @@ class Event extends Model
     }
 
     /**
-     * Get the Payable amount
+     * Get the Payable amount.
      */
     public function getPayableAmount()
     {
@@ -61,7 +61,7 @@ class Event extends Model
     }
 
     /**
-     * Get the organizer_name attribute for the model
+     * Get the organizer_name attribute for the model.
      */
     public function getOrganizerNameAttribute()
     {

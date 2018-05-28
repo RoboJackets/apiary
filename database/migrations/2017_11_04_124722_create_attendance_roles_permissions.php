@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateAttendanceRolesPermissions extends Migration
 {
@@ -27,29 +27,29 @@ class CreateAttendanceRolesPermissions extends Migration
         $role->givePermissionTo('read-attendance-own');
         $role->givePermissionTo('update-attendance');
         $role->givePermissionTo('delete-attendance');
-        
+
         $role = Role::firstOrCreate(['name' => 'officer-ii']);
         $role->givePermissionTo('create-attendance');
         $role->givePermissionTo('read-attendance');
         $role->givePermissionTo('read-attendance-own');
         $role->givePermissionTo('update-attendance');
         $role->givePermissionTo('delete-attendance');
-        
+
         $role = Role::firstOrCreate(['name' => 'officer-i']);
         $role->givePermissionTo('create-attendance');
         $role->givePermissionTo('read-attendance');
         $role->givePermissionTo('read-attendance-own');
         $role->givePermissionTo('update-attendance');
         $role->givePermissionTo('delete-attendance');
-        
+
         $role = Role::firstOrCreate(['name' => 'core']);
         $role->givePermissionTo('create-attendance');
         $role->givePermissionTo('read-attendance');
         $role->givePermissionTo('read-attendance-own');
-        
+
         $role = Role::firstOrCreate(['name' => 'member']);
         $role->givePermissionTo('read-attendance-own');
-        
+
         $role = Role::firstOrCreate(['name' => 'non-member']);
         $role->givePermissionTo('read-attendance-own');
     }

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\FasetVisit;
 use App\FasetResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class FasetVisitController extends Controller
 {
@@ -24,14 +23,14 @@ class FasetVisitController extends Controller
     {
         $this->validate($request, [
             'faset_email' => 'required|email|max:255',
-            'faset_name' => 'required|max:255'
+            'faset_name' => 'required|max:255',
         ]);
 
         try {
             DB::beginTransaction();
             $personInfo = $request->only(['faset_email', 'faset_name']);
             $visit = FasetVisit::create($personInfo);
-            
+
             $fasetResponses = $request->only('faset_responses')['faset_responses'];
 
             foreach ($fasetResponses as $question) {
@@ -45,12 +44,13 @@ class FasetVisitController extends Controller
             DB::commit();
             Log::info('New FASET Visit Logged:', ['email' => $visit->faset_email]);
 
-            return response()->json(array("status" => "success"));
+            return response()->json(['status' => 'success']);
         } catch (Exception $e) {
             Bugsnag::notifyException($e);
             DB::rollback();
             Log::error('New FASET visit save failed', ['error' => $e->getMessage()]);
-            return response()->json(array("status" => "error"))->setStatusCode(500);
+
+            return response()->json(['status' => 'error'])->setStatusCode(500);
         }
     }
 
@@ -64,7 +64,7 @@ class FasetVisitController extends Controller
     {
         $requestingUser = $request->user();
         $visit = FasetVisit::with(['fasetResponses'])->find($id);
-        if (!$visit) {
+        if (! $visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
 
@@ -72,7 +72,7 @@ class FasetVisitController extends Controller
         //Enforce users only viewing their own FasetVisit (read-faset-visits-own)
         if ($requestingUser->cant('read-faset-visits') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to view this FasetVisit.'], 403);
+                'message' => 'Forbidden - You do not have permission to view this FasetVisit.', ], 403);
         }
 
         return response()->json(['status' => 'success', 'visit' => $visit]);
@@ -90,11 +90,11 @@ class FasetVisitController extends Controller
         //Update only included fields
         $this->validate($request, [
             'faset_name' => 'max:127',
-            'faset_email' => 'email|max:127'
+            'faset_email' => 'email|max:127',
         ]);
 
         $visit = FasetVisit::find($id);
-        if (!$visit) {
+        if (! $visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
 
@@ -103,7 +103,7 @@ class FasetVisitController extends Controller
         //Enforce users only updating themselves (update-users-own)
         if ($requestingUser->cant('update-faset-visits') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this FasetVisit.'], 403);
+                'message' => 'Forbidden - You do not have permission to update this FasetVisit.', ], 403);
         }
 
         $visit->update($request->all());
@@ -120,6 +120,7 @@ class FasetVisitController extends Controller
     public function index(Request $request)
     {
         $visits = FasetVisit::all();
+
         return response()->json(['status' => 'success', 'visits' => $visits]);
     }
 
@@ -129,7 +130,7 @@ class FasetVisitController extends Controller
         $emails = [];
         foreach ($visits as $visit) {
             echo "Processing Visit $visit->id<br/>\n";
-            if (!in_array($visit->faset_email, $emails)) {
+            if (! in_array($visit->faset_email, $emails)) {
                 $emails[] = $visit->faset_email;
             } else {
                 echo "Deleting Visit $visit->id<br/>\n";

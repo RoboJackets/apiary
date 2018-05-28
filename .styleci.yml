@@ -1,1 +1,39 @@
-preset: psr2
+php:
+  preset: laravel
+
+js:
+  tab-width: 2
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  trailing-commas: es5
+  semicolons: true
+  arrow-parens: avoid
+  bracket-spacing: true
+  finder:
+    name:
+      - "*.js"
+      - "*.jsx"
+
+vue:
+  tab-width: 2
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  trailing-commas: es5
+  semicolons: true
+  arrow-parens: avoid
+  bracket-spacing: true
+  finder:
+    name: "*.vue"
+    
+css:
+  tab-width: 2
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  finder:
+    name:
+      - "*.css"
+      - "*.scss"
+      - "*.less"

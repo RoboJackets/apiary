@@ -12,7 +12,7 @@ class PermissionController extends Controller
     {
         $this->middleware('role:admin');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +21,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
+
         return response()->json(['status' => 'success', 'permissions' => $permissions]);
     }
 
@@ -42,22 +43,25 @@ class PermissionController extends Controller
         $permission->save();
 
         $roles = $request->input('roles');
-        if (!empty($roles)) {
+        if (! empty($roles)) {
             foreach ($roles as $role) {
                 try {
                     $dbRole = Role::findByName($role);
                 } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
                     Bugsnag::notifyException($e);
+
                     return response()->json(['status' => 'error', 'message' => "Role '$role' not found."], 404);
                 } catch (\Exception $e) {
                     Bugsnag::notifyException($e);
+
                     return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
                 }
                 $dbRole->givePermissionTo($permission->name);
             }
         }
-        
+
         $dbPermission = Permission::find($permission->id);
+
         return response()->json(['status' => 'success', 'permission' => $dbPermission]);
     }
 
@@ -73,13 +77,15 @@ class PermissionController extends Controller
             $permission = Permission::findByName($name)->with('roles')->first();
         } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
             Bugsnag::notifyException($e);
+
             return response()->json(['status' => 'error',
-                'message' => "Permission '$name' not found."], 404);
+                'message' => "Permission '$name' not found.", ], 404);
         } catch (\Exception $e) {
             Bugsnag::notifyException($e);
+
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
-        
+
         return response()->json(['status' => 'success', 'permission' => $permission]);
     }
 
@@ -98,14 +104,17 @@ class PermissionController extends Controller
             $permission->save();
         } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
             Bugsnag::notifyException($e);
+
             return response()->json(['status' => 'error',
-                'message' => "Permission '$name' not found."], 404);
+                'message' => "Permission '$name' not found.", ], 404);
         } catch (\Exception $e) {
             Bugsnag::notifyException($e);
+
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
-        
+
         $dbPermission = Permission::find($permission->id);
+
         return response()->json(['status' => 'success', 'permission' => $dbPermission]);
     }
 
@@ -122,13 +131,15 @@ class PermissionController extends Controller
             $permission->delete();
         } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
             Bugsnag::notifyException($e);
+
             return response()->json(['status' => 'error',
-                'message' => "Permission '$name' not found."], 404);
+                'message' => "Permission '$name' not found.", ], 404);
         } catch (\Exception $e) {
             Bugsnag::notifyException($e);
+
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
-        
+
         return response()->json(['status' => 'success', 'message' => 'Permission deleted.'], 200);
     }
 }

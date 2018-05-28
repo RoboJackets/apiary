@@ -18,6 +18,6 @@ $factory->define(App\FasetVisit::class, function (Faker\Generator $faker) {
     return [
         'faset_name' => $faker->name,
         'faset_email' => $faker->safeEmail,
-        'visit_token' => $faker->asciify('********************')
+        'visit_token' => $faker->asciify('********************'),
     ];
 });

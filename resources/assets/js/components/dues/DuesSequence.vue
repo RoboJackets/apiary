@@ -29,58 +29,62 @@
 
 
 <script type="text/javascript">
-  /*
+/*
    *  @props 
    */
 
-  export default {
-    props: ['userUid'],
-    data() {
-      return {
-        steps: [
-          'dues-required-info',
-          'safety-agreement',
-          'dues-additional-info',
-          'dues-demographics-info',
-          'dues-payment-instructions'
-          ],
-        currentStep: 0,
-        user: {},
-        dataUrl: '',
-        baseUrl: "/api/v1/users/",
+export default {
+  props: ['userUid'],
+  data() {
+    return {
+      steps: [
+        'dues-required-info',
+        'safety-agreement',
+        'dues-additional-info',
+        'dues-demographics-info',
+        'dues-payment-instructions',
+      ],
+      currentStep: 0,
+      user: {},
+      dataUrl: '',
+      baseUrl: '/api/v1/users/',
+    };
+  },
+  mounted() {
+    this.dataUrl = this.baseUrl + this.userUid;
+    axios
+      .get(this.dataUrl)
+      .then(response => {
+        this.user = response.data.user;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+  },
+  methods: {
+    next: function() {
+      if (this.currentStep < this.steps.length) {
+        //transition
+        this.currentStep = this.currentStep + 1;
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+      } else {
+        warn('No more steps');
       }
     },
-    mounted() {
-      this.dataUrl = this.baseUrl + this.userUid;
-      axios.get(this.dataUrl)
-        .then(response => {
-          this.user = response.data.user;
-        })
-        .catch(response => {
-          console.log(response);
-          swal("Connection Error", "Unable to load data. Check your internet connection or try refreshing the page.", "error");
-        });
-    },
-    methods: {
-      next: function() {
-        if (this.currentStep < this.steps.length) {
-          //transition
-          this.currentStep = this.currentStep + 1;
-          $("html, body").animate({ scrollTop: 0 }, "slow");
-        } else {
-          warn("No more steps");
-        }
+  },
+  computed: {
+    currentStepName: function() {
+      try {
+        return this.steps[this.currentStep];
+      } catch (e) {
+        return '';
       }
     },
-    computed: {
-      currentStepName: function() {
-        try {
-          return this.steps[this.currentStep];
-        } catch (e) {
-          return "";
-        }
-      }
-    }
-  }
-    
+  },
+};
 </script>

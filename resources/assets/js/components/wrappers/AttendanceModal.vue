@@ -44,67 +44,72 @@
 </template>
 
 <script>
-    import {required, numeric} from 'vuelidate/lib/validators'
-    export default {
-        props: {
-            id: "",
-            attendableId: {
-                type: [Number, String],
-            },
-            attendableType: {
-                type: String,
-            },
-        },
-        data() {
-            return {
-                attendance: {
-                    gtid: "",
-                    attendable_id: this.attendableId,
-                    attendable_type: this.attendableType,
-                    source: "MyRoboJackets",
-                    includeName: "true"
-                },
-                feedback: "",
-                baseUrl: "/api/v1/attendance",
-                hasError: false,
-            }
-        },
-        methods: {
-            submit() {
-                if (this.$v.$invalid) {
-                    this.$v.$touch();
-                    return;
-                }
+import { required, numeric } from 'vuelidate/lib/validators';
+export default {
+  props: {
+    id: '',
+    attendableId: {
+      type: [Number, String],
+    },
+    attendableType: {
+      type: String,
+    },
+  },
+  data() {
+    return {
+      attendance: {
+        gtid: '',
+        attendable_id: this.attendableId,
+        attendable_type: this.attendableType,
+        source: 'MyRoboJackets',
+        includeName: 'true',
+      },
+      feedback: '',
+      baseUrl: '/api/v1/attendance',
+      hasError: false,
+    };
+  },
+  methods: {
+    submit() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
 
-                axios.post(this.baseUrl, this.attendance)
-                    .then(response => {
-                        this.hasError = false;
-                        this.feedback = "Saved! (" + response.data.attendance.name + ")";
-                        console.log("success");
-                        this.attendance.gtid = "";
-                        this.$refs.input.focus();
-                    })
-                    .catch(error => {
-                        this.hasError = true;
-                        this.feedback = "";
-                        if (error.response.status == 403) {
-                            swal({
-                                title: "Whoops!",
-                                text: "You don't have permission to perform that action.",
-                                type: "error"
-                            });
-                        } else {
-                            swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
-                        }
-                    })
-            },
-        },
-        validations: {
-            attendance: {
-                gtid: {required, numeric},
-                attendable_type: {required},
-                attendable_id: {required, numeric}
-            }
-        },
-    }
+      axios
+        .post(this.baseUrl, this.attendance)
+        .then(response => {
+          this.hasError = false;
+          this.feedback = 'Saved! (' + response.data.attendance.name + ')';
+          console.log('success');
+          this.attendance.gtid = '';
+          this.$refs.input.focus();
+        })
+        .catch(error => {
+          this.hasError = true;
+          this.feedback = '';
+          if (error.response.status == 403) {
+            swal({
+              title: 'Whoops!',
+              text: "You don't have permission to perform that action.",
+              type: 'error',
+            });
+          } else {
+            swal(
+              'Error',
+              'Unable to process data. Check your internet connection or try refreshing the page.',
+              'error'
+            );
+          }
+        });
+    },
+  },
+  validations: {
+    attendance: {
+      gtid: { required, numeric },
+      attendable_type: { required },
+      attendable_id: { required, numeric },
+    },
+  },
+};
 </script>
