@@ -97,7 +97,19 @@
         mounted() {
             this.dataUrl = this.baseUrl + this.teamId;
             this.loadMembers();
+
+            //Refresh member list on modal close
             $("#teamInviteModal").on("hidden.bs.modal", this.loadMembers);
+
+            //Add jQuery listener to "Remove" button
+            //Yes, this is gross. Feel free to make it less gross.
+            let table = $('#team-members-table').DataTable();
+            let self = this;
+            table.on('draw', function() {
+                $("[id^=btn-delete-]").click(function(e) {
+                    self.removeUserPrompt($(this).data('name'), $(this).data('user-id'));
+                });
+            });
         },
         data() {
             return {
@@ -117,11 +129,12 @@
                 ],
                 memberTableConfig: [
                     {'title': 'Name', 'data': 'name'},
-                    {'title': 'GTID', 'data': 'gtid'},
+                    {'title': 'Username', 'data': 'uid'},
+                    {'title': 'Join Date', 'data': 'pivot.created_at'},
                     {'title': 'Action', 'data': null,
                         render: function (data, type, row) {
-                            return '<button type="button" id="btn-delete-'+data.uid+'" data-uid="'+data.uid+
-                                '" class="btn btn-danger btn-sm">Remove</button>'
+                            return '<button type="button" id="btn-delete-'+data.id+'" data-name="'+data.name+
+                                '" data-user-id="'+data.id+'" class="btn btn-danger btn-sm">Remove</button>'
                         }
                     }
                 ],
@@ -214,12 +227,11 @@
                         }
                     });
             },
-            removeUserPrompt: function (event) {
+            removeUserPrompt: function (name, user_id) {
                 let self = this;
-                alert(event.target.uid);
                 swal({
                     title: "Are you sure?",
-                    text: "Once removed, you must manually re-add this user to the team to re-join.",
+                    text: "Once removed, you must manually re-add this user ("+name+") to the team to re-join.",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonText: "Yes, remove them!",
@@ -227,12 +239,41 @@
                     confirmButtonColor: "#dc3545"
                 }).then((result) => {
                     if (result.value) {
-                        self.removeUser();
+                        self.removeUser(name, user_id);
                     }
                 });
             },
-            removeUser(uid) {
-                alert("poop");
+            removeUser(name, user_id) {
+                let membersUrl = this.baseUrl + this.teamId + "/members";
+                let data = {
+                  'user_id': user_id, 'action': 'leave'
+                };
+                console.log(data);
+
+                axios.post(membersUrl, data)
+                    .then(response => {
+                        this.hasError = false;
+                        this.loadMembers();
+                        swal({
+                            title: "Success!",
+                            text: "Removed "+name+" from "+this.team.name+".",
+                            type: "success",
+                            timer: "1500"
+                        })
+                    })
+                    .catch(error => {
+                        console.log("error: " + error);
+                        this.hasError = true;
+                        if (error.response.status == 403) {
+                            swal({
+                                title: "Whoops!",
+                                text: "You don't have permission to perform that action.",
+                                type: "error"
+                            });
+                        } else {
+                            swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
+                        }
+                    })
             }
         }
     }
