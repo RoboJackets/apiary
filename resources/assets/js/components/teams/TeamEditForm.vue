@@ -118,7 +118,12 @@
                 memberTableConfig: [
                     {'title': 'Name', 'data': 'name'},
                     {'title': 'GTID', 'data': 'gtid'},
-                    {'title': 'Action', 'data': ''}
+                    {'title': 'Action', 'data': null,
+                        render: function (data, type, row) {
+                            return '<button type="button" id="btn-delete-'+data.uid+'" data-uid="'+data.uid+
+                                '" class="btn btn-danger btn-sm">Remove</button>'
+                        }
+                    }
                 ],
             }
         },
@@ -208,6 +213,26 @@
                             swal("Error", "Unable to process data. Check your internet connection or try refreshing the page.", "error");
                         }
                     });
+            },
+            removeUserPrompt: function (event) {
+                let self = this;
+                alert(event.target.uid);
+                swal({
+                    title: "Are you sure?",
+                    text: "Once removed, you must manually re-add this user to the team to re-join.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, remove them!",
+                    focusCancel: true,
+                    confirmButtonColor: "#dc3545"
+                }).then((result) => {
+                    if (result.value) {
+                        self.removeUser();
+                    }
+                });
+            },
+            removeUser(uid) {
+                alert("poop");
             }
         }
     }
