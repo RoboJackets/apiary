@@ -13,7 +13,8 @@ class TeamController extends Controller
     {
         $this->middleware('permission:read-teams', ['only' => ['index', 'indexWeb', 'show', 'showMembers']]);
         $this->middleware('permission:create-teams', ['only' => ['store']]);
-        $this->middleware('permission:update-teams', ['only' => ['update', 'updateMembers']]);
+        $this->middleware('permission:update-teams', ['only' => ['update']]);
+        $this->middleware('permission:update-teams|update-teams-membership-own', ['only' => ['updateMembers']]);
         $this->middleware('permission:delete-teams', ['only' => ['destroy']]);
     }
 
@@ -106,7 +107,7 @@ class TeamController extends Controller
      */
     public function showMembers($id)
     {
-        $team = Team::find($id);
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
 
         if ($team && $team->hidden == true && \Auth::user()->cant('read-hidden-teams')) {
@@ -163,15 +164,23 @@ class TeamController extends Controller
      */
     public function updateMembers(Request $request, $id)
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || ($team->hidden == true && \Auth::user()->cant('update-hidden-teams'))) {
-            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
-        }
+        $requestingUser = $request->user();
 
         $this->validate($request, [
             'user_id' => 'required|numeric|exists:users,id',
             'action' => 'required|in:join,leave',
         ]);
+
+        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        if (! $team || ($team->hidden == true && \Auth::user()->cant('update-hidden-teams'))) {
+            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
+        }
+
+        //Enforce users only updating themselves (update-teams-membership-own)
+        if ($requestingUser->cant('update-teams') && $requestingUser->id != $request->input('user_id')) {
+            return response()->json(['status' => 'error',
+                'message' => 'Forbidden - You do not have permission to update this User\'s memberships.', ], 403);
+        }
 
         try {
             $user = User::find($request->input('user_id'));
