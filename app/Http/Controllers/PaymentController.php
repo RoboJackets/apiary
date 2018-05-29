@@ -404,6 +404,7 @@ class PaymentController extends Controller
 
         if ($square_txn instanceof Exception) {
             Bugsnag::notifyException($square_txn);
+
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
