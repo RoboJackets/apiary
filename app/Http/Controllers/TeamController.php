@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Team;
 use App\User;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        if (\Auth::user()->can('read-hidden-teams')) {
+        if (\Auth::user()->can('read-teams-hidden')) {
             $teams = Team::all();
         } else {
             $teams = Team::visible()->get();
@@ -54,10 +55,11 @@ class TeamController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|unique:teams',
-            'description' => 'string|max:255|nullable',
+            'description' => 'string|max:4096|nullable',
             'founding_year' => 'numeric|required',
             'attendable' => 'boolean',
-            'hidden' => 'boolean',
+            'visible' => 'boolean',
+            'self_serviceable' => 'boolean'
         ]);
 
         try {
@@ -90,7 +92,7 @@ class TeamController extends Controller
         }
         $team = $team->first();
 
-        if ($team && $team->hidden == true && \Auth::user()->cant('read-hidden-teams')) {
+        if ($team && $team->visible == false && \Auth::user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         } elseif ($team) {
             return response()->json(['status' => 'success', 'team' => $team]);
@@ -110,7 +112,7 @@ class TeamController extends Controller
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
 
-        if ($team && $team->hidden == true && \Auth::user()->cant('read-hidden-teams')) {
+        if ($team && $team->visible == false && \Auth::user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -127,16 +129,17 @@ class TeamController extends Controller
     public function update(Request $request, $id)
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || ($team->hidden == true && \Auth::user()->cant('update-hidden-teams'))) {
+        if (! $team || ($team->visible == false && \Auth::user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
         $this->validate($request, [
             'name' => 'string',
-            'description' => 'string|max:255|nullable',
+            'description' => 'string|max:4096|nullable',
             'founding_year' => 'numeric|nullable',
             'attendable' => 'boolean',
             'hidden' => 'boolean',
+            'self_serviceable' => 'boolean'
         ]);
 
         try {
@@ -172,7 +175,7 @@ class TeamController extends Controller
         ]);
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || ($team->hidden == true && \Auth::user()->cant('update-hidden-teams'))) {
+        if (! $team || ($team->visible == false && \Auth::user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 

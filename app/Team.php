@@ -51,14 +51,14 @@ class Team extends Model
     }
 
     /**
-     * Scope a query to only include visible (non-hidden) teams.
+     * Scope a query to only include visible teams.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeVisible($query)
     {
-        return $query->where('hidden', false);
+        return $query->where('visible', true);
     }
 
     /**

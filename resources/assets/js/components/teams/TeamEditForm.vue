@@ -30,27 +30,42 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="team-hidden-buttons" class="col-sm-2 col-form-label">Hidden<span
-                            style="color:red">*</span></label>
-                    <div class="col-sm-10 col-lg-4">
+                    <label for="team-visible-buttons" class="col-sm-2 col-form-label">
+                        <abbr title="Displayed to users">Visible</abbr><span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-2">
                         <custom-radio-buttons
-                                v-model="team.hidden"
+                                v-model="team.visible"
                                 :options="yesNoOptions"
-                                id="team-hidden-buttons"
-                                :is-error="$v.team.hidden.$error"
-                                @input="$v.team.hidden.$touch()">
+                                id="team-visible-buttons"
+                                :is-error="$v.team.visible.$error"
+                                @input="$v.team.visible.$touch()">
                         </custom-radio-buttons>
                     </div>
 
-                    <label for="team-attendable-buttons" class="col-sm-2 col-form-label">Attendable<span
-                            style="color:red">*</span></label>
-                    <div class="col-sm-10 col-lg-4">
+                    <label for="team-attendable-buttons" class="col-sm-2 col-form-label">
+                        <abbr title="Used for attendance tracking">Attendable</abbr><span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-2">
                         <custom-radio-buttons
                                 v-model="team.attendable"
                                 :options="yesNoOptions"
                                 id="team-attendable-buttons"
                                 :is-error="$v.team.attendable.$error"
                                 @input="$v.team.attendable.$touch()">
+                        </custom-radio-buttons>
+                    </div>
+
+                    <label for="team-self-serviceable-buttons" class="col-sm-2 col-form-label">
+                        <abbr title="Users can join/leave via self-service">Self-Serviceable</abbr><span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-10 col-lg-2">
+                        <custom-radio-buttons
+                                v-model="team.self_serviceable"
+                                :options="yesNoOptions"
+                                id="team-self-serviceable-buttons"
+                                :is-error="$v.team.self_serviceable.$error"
+                                @input="$v.team.self_serviceable.$touch()">
                         </custom-radio-buttons>
                     </div>
                 </div>
@@ -151,8 +166,9 @@ export default {
       name: { required },
       founding_year: { numeric },
       description: { required },
-      hidden: { required },
+      visible: { required },
       attendable: { required },
+      self_serviceable: { required },
     },
   },
   methods: {
@@ -162,13 +178,16 @@ export default {
         return;
       }
 
+      //Unset Members from Team
+      delete(this.team.members);
+
       axios
         .put(this.dataUrl, this.team)
         .then(response => {
           this.hasError = false;
           this.feedback = 'Saved!';
           console.log('success');
-          window.location.href = '/teams/' + response.data.team.slug;
+          window.location.href = '/admin/teams/' + response.data.team.slug;
         })
         .catch(response => {
           this.hasError = true;
