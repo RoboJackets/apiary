@@ -83,9 +83,11 @@ export default {
       let re = new RegExp('(9[0-9]{8})');
       if (!Number.isInteger(parseInt(this.attendance.gtid)) && this.attendance.gtid !== '') {
         let matches = re.exec(this.attendance.gtid);
-        this.attendance.gtid = matches[0];
-        //We have to manually submit it since the carriage return happens before the regex is run
-        this.submit();
+        if (matches != null) {
+          this.attendance.gtid = matches[0];
+          //We have to manually submit it since the carriage return happens before the regex is run
+          this.submit();
+        }
       }
     },
     submit() {
