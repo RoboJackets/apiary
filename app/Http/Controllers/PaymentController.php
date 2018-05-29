@@ -321,7 +321,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Processes Square redirect after completec checkout transaction.
+     * Processes Square redirect after completed checkout transaction.
      */
     public function handleSquareResponse(Request $request)
     {
@@ -403,6 +403,7 @@ class PaymentController extends Controller
         }
 
         if ($square_txn instanceof Exception) {
+            Bugsnag::notifyException($square_txn);
             return response(view('errors.generic',
                 [
                     'error_code' => 500,
@@ -465,7 +466,6 @@ class PaymentController extends Controller
             Log::debug(get_class()." - Querying Square for Transaction '$server_txn_id'");
             $square_txn = $client->retrieveTransaction($location, $server_txn_id);
         } catch (\Exception $e) {
-            Bugsnag::notifyException($e);
             $error = $e->getMessage();
             $error = is_array($error) ? $error : [$error];
             Log::error(get_class().' - Error querying Square transaction', $error);
