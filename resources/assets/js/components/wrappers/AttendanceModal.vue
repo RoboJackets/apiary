@@ -70,18 +70,18 @@ export default {
   },
   watch: {
     'attendance.gtid': function(val, oldVal) {
-      this.debouncedGTID()
-    }
+      this.debouncedGTID();
+    },
   },
-  created: function () {
-    this.debouncedGTID = _.debounce(this.parseGTID, 500)
+  created: function() {
+    this.debouncedGTID = _.debounce(this.parseGTID, 500);
   },
   methods: {
     parseGTID() {
       //Allows use of card readers that can't parse out data (#317)
       //Parses out the GTID using regex and updates the value accordingly
       let re = new RegExp('(9[0-9]{8})');
-      if (!Number.isInteger(parseInt(this.attendance.gtid)) && this.attendance.gtid !== "") {
+      if (!Number.isInteger(parseInt(this.attendance.gtid)) && this.attendance.gtid !== '') {
         let matches = re.exec(this.attendance.gtid);
         this.attendance.gtid = matches[0];
         //We have to manually submit it since the carriage return happens before the regex is run
