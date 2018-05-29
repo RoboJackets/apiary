@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 class TeamController extends Controller
 {
@@ -59,7 +59,7 @@ class TeamController extends Controller
             'founding_year' => 'numeric|required',
             'attendable' => 'boolean',
             'visible' => 'boolean',
-            'self_serviceable' => 'boolean'
+            'self_serviceable' => 'boolean',
         ]);
 
         try {
@@ -139,7 +139,7 @@ class TeamController extends Controller
             'founding_year' => 'numeric|nullable',
             'attendable' => 'boolean',
             'hidden' => 'boolean',
-            'self_serviceable' => 'boolean'
+            'self_serviceable' => 'boolean',
         ]);
 
         try {

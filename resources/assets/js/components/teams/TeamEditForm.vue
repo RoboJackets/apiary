@@ -179,7 +179,7 @@ export default {
       }
 
       //Unset Members from Team
-      delete(this.team.members);
+      delete this.team.members;
 
       axios
         .put(this.dataUrl, this.team)
