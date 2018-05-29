@@ -62,6 +62,17 @@ class Team extends Model
     }
 
     /**
+     * Scope a query to only include self-serviceable teams.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSelfServiceable($query)
+    {
+        return $query->where('self_serviceable', true);
+    }
+
+    /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions() : SlugOptions
