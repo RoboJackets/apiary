@@ -2,17 +2,18 @@
     <div>
         <button
                 type="button" class="btn btn-secondary"
-                :disabled="!this.user.is_active"
+                :disabled="!this.user.is_active || !this.team.self_serviceable"
                 v-if="memberOfTeam" v-on:click="changeMembership('leave')">
             Leave
         </button>
         <button
                 type="button" class="btn btn-primary"
-                :disabled="!this.user.is_active"
+                :disabled="!this.user.is_active || !this.team.self_serviceable"
                 v-else v-on:click="changeMembership('join')">
             Join
         </button>
-        <em v-if="!this.user.is_active"><br/><small>You must be an active member to join/leave teams.</small></em>
+        <em v-if="!this.user.is_active">&nbsp;&nbsp;<small>You must be an active member to join/leave teams.</small></em>
+        <em v-if="!this.team.self_serviceable">&nbsp;&nbsp;<small>Join/leave is restricted for this team.</small></em>
     </div>
 </template>
 <script>

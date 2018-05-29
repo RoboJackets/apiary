@@ -182,7 +182,13 @@ class TeamController extends Controller
         //Enforce users only updating themselves (update-teams-membership-own)
         if ($requestingUser->cant('update-teams') && $requestingUser->id != $request->input('user_id')) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this User\'s memberships.', ], 403);
+                'message' => 'no_priv_for_target_user', ], 403);
+        }
+
+        //Enforce updating membership via self-service only for eligible teams
+        if ($requestingUser->cant('update-teams') && $team->self_serviceable == false) {
+            return response()->json(['status' => 'error',
+                'message' => 'self_service_disabled', ], 403);
         }
 
         try {
