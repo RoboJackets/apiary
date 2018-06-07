@@ -10,13 +10,13 @@
 | database. Just tell the factory how a default model should look.
 |
 */
-function idMap($collection) {
+function idMap($collection)
+{
     return $collection->map(function ($el) {
         return $el->id;
     })->toArray();
 }
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\FasetVisit::class, function (Faker\Generator $faker) {
     static $password;
 
