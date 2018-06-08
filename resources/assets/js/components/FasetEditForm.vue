@@ -111,8 +111,9 @@
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
-          <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
+          <button type="button" v-on:click="sendEmail" class="btn btn-secondary">Send Email</button>
         </div>
+        <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
 
       </form>
     </div>
@@ -121,14 +122,15 @@
 
 <script>
 export default {
-  props: ['fasetVisitId'],
+  props: ["fasetVisitId"],
   data() {
     return {
       fasetVisit: {},
-      feedback: '',
+      feedback: "",
       hasError: false,
-      dataUrl: '',
-      baseFasetUrl: '/api/v1/faset/',
+      dataUrl: "",
+      baseFasetUrl: "/api/v1/faset/",
+      notificationUrl: "/api/v1/notification/manual"
     };
   },
   mounted() {
@@ -146,9 +148,9 @@ export default {
       .catch(response => {
         console.log(response);
         swal(
-          'Connection Error',
-          'Unable to load data. Check your internet connection or try refreshing the page.',
-          'error'
+          "Connection Error",
+          "Unable to load data. Check your internet connection or try refreshing the page.",
+          "error"
         );
       });
   },
@@ -158,20 +160,44 @@ export default {
         .put(this.dataUrl, this.fasetVisit)
         .then(response => {
           this.hasError = false;
-          this.feedback = 'Saved!';
-          console.log('success');
+          this.feedback = "Saved!";
+          console.log("success");
         })
         .catch(response => {
           this.hasError = true;
-          this.feedback = '';
+          this.feedback = "";
           console.log(response);
           swal(
-            'Connection Error',
-            'Unable to save data. Check your internet connection or try refreshing the page.',
-            'error'
+            "Connection Error",
+            "Unable to save data. Check your internet connection or try refreshing the page.",
+            "error"
           );
         });
     },
-  },
+
+    sendEmail(event) {
+      if (this.fasetVisit.faset_email) {
+        axios
+          .put(this.notificationUrl, {
+            emails: [this.fasetVisit.faset_email]
+          })
+          .then(response => {
+            this.hasError = false;
+            this.feedback = "Sent!";
+            console.log("success");
+          })
+          .catch(response => {
+            this.hasError = true;
+            this.feedback = "";
+            console.log(response);
+            swal(
+              "Connection Error",
+              "Unable to send email. Check your internet connection or try refreshing the page.",
+              "error"
+            );
+          });
+      }
+    }
+  }
 };
 </script>
