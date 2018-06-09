@@ -111,8 +111,9 @@
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
-          <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
+          <button type="button" v-on:click="sendEmail" class="btn btn-secondary">Send Email</button>
         </div>
+        <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
 
       </form>
     </div>
@@ -129,6 +130,7 @@ export default {
       hasError: false,
       dataUrl: '',
       baseFasetUrl: '/api/v1/faset/',
+      notificationUrl: '/api/v1/notification/manual',
     };
   },
   mounted() {
@@ -171,6 +173,30 @@ export default {
             'error'
           );
         });
+    },
+
+    sendEmail(event) {
+      if (this.fasetVisit.faset_email) {
+        axios
+          .post(this.notificationUrl, {
+            emails: [this.fasetVisit.faset_email],
+          })
+          .then(response => {
+            this.hasError = false;
+            this.feedback = 'Sent!';
+            console.log('success');
+          })
+          .catch(response => {
+            this.hasError = true;
+            this.feedback = '';
+            console.log(response);
+            swal(
+              'Connection Error',
+              'Unable to send email. Check your internet connection or try refreshing the page.',
+              'error'
+            );
+          });
+      }
     },
   },
 };
