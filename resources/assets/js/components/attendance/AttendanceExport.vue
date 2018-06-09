@@ -10,6 +10,9 @@
                         :is-error="$v.attendance.attendable_id.$error"
                         @input="$v.attendance.attendable_id.$touch()">
                 </custom-radio-buttons>
+                <div class="invalid-feedback">
+                    You must select a team.
+                </div>
             </div>
         </div>
         <div class="row form-row">
@@ -21,8 +24,11 @@
                         placeholder="Select start date"
                         :required="true"
                         :config="dateTimeConfig"
-                        input-class="form-control">
+                        input-class="form-control"
+                        :class="{ 'is-invalid': $v.attendance.start_date.$error }"
+                >
                 </flat-pickr>
+                <div class="invalid-feedback">You must select a date.</div>
             </div>
         </div>
         <div class="row form-row">
@@ -158,6 +164,11 @@ export default {
         });
     },
     loadAttendance() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
+
       let self = this;
       axios
         .post(this.attendanceBaseUrl + '/search', this.attendance)

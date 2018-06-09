@@ -1,4 +1,7 @@
 export default notGTEmail => {
+  if (!notGTEmail) {
+    return true;
+  }
   return !notGTEmail
     .trim()
     .toLowerCase()
