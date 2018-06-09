@@ -130,7 +130,7 @@ export default {
       hasError: false,
       dataUrl: '',
       baseFasetUrl: '/api/v1/faset/',
-      notificationUrl: '/api/v1/notification/manual'
+      notificationUrl: '/api/v1/notification/manual',
     };
   },
   mounted() {
@@ -179,7 +179,7 @@ export default {
       if (this.fasetVisit.faset_email) {
         axios
           .post(this.notificationUrl, {
-            emails: [this.fasetVisit.faset_email]
+            emails: [this.fasetVisit.faset_email],
           })
           .then(response => {
             this.hasError = false;
@@ -197,7 +197,7 @@ export default {
             );
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
