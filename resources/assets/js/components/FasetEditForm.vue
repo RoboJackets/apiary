@@ -178,7 +178,7 @@ export default {
     sendEmail(event) {
       if (this.fasetVisit.faset_email) {
         axios
-          .put(this.notificationUrl, {
+          .post(this.notificationUrl, {
             emails: [this.fasetVisit.faset_email]
           })
           .then(response => {
