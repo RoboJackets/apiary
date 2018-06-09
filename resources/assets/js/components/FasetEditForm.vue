@@ -122,15 +122,15 @@
 
 <script>
 export default {
-  props: ["fasetVisitId"],
+  props: ['fasetVisitId'],
   data() {
     return {
       fasetVisit: {},
-      feedback: "",
+      feedback: '',
       hasError: false,
-      dataUrl: "",
-      baseFasetUrl: "/api/v1/faset/",
-      notificationUrl: "/api/v1/notification/manual"
+      dataUrl: '',
+      baseFasetUrl: '/api/v1/faset/',
+      notificationUrl: '/api/v1/notification/manual'
     };
   },
   mounted() {
@@ -148,9 +148,9 @@ export default {
       .catch(response => {
         console.log(response);
         swal(
-          "Connection Error",
-          "Unable to load data. Check your internet connection or try refreshing the page.",
-          "error"
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
         );
       });
   },
@@ -160,17 +160,17 @@ export default {
         .put(this.dataUrl, this.fasetVisit)
         .then(response => {
           this.hasError = false;
-          this.feedback = "Saved!";
-          console.log("success");
+          this.feedback = 'Saved!';
+          console.log('success');
         })
         .catch(response => {
           this.hasError = true;
-          this.feedback = "";
+          this.feedback = '';
           console.log(response);
           swal(
-            "Connection Error",
-            "Unable to save data. Check your internet connection or try refreshing the page.",
-            "error"
+            'Connection Error',
+            'Unable to save data. Check your internet connection or try refreshing the page.',
+            'error'
           );
         });
     },
@@ -183,17 +183,17 @@ export default {
           })
           .then(response => {
             this.hasError = false;
-            this.feedback = "Sent!";
-            console.log("success");
+            this.feedback = 'Sent!';
+            console.log('success');
           })
           .catch(response => {
             this.hasError = true;
-            this.feedback = "";
+            this.feedback = '';
             console.log(response);
             swal(
-              "Connection Error",
-              "Unable to send email. Check your internet connection or try refreshing the page.",
-              "error"
+              'Connection Error',
+              'Unable to send email. Check your internet connection or try refreshing the page.',
+              'error'
             );
           });
       }
