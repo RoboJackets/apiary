@@ -19,7 +19,6 @@ class MultipleChangesToTeams extends Migration
             $table->boolean('visible')->after('name')->default(false);
             $table->boolean('self_serviceable')->after('name')->default(false);
             $table->dropColumn('founding_semester');
-            $table->char('founding_year', 4)->after('name')->nullable();
         });
     }
 

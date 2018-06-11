@@ -12,17 +12,17 @@ class TeamsTableSeeder extends Seeder
     public function run()
     {
         DB::table('teams')->insert([
-            ['name' => 'IGVC', 'visible' => true, 'attendable' => true, 'founding_year' => 2004,
+            ['name' => 'IGVC', 'visible' => true, 'attendable' => true,
                 'description' => '', 'slug' => 'igvc', 'self_serviceable' => true, ],
-            ['name' => 'BattleBots', 'visible' => true, 'attendable' => true, 'founding_year' => 1999,
+            ['name' => 'BattleBots', 'visible' => true, 'attendable' => true,
                 'description' => '', 'slug' => 'battlebots', 'self_serviceable' => true, ],
-            ['name' => 'Outreach', 'visible' => true, 'attendable' => true, 'founding_year' => 2001,
+            ['name' => 'Outreach', 'visible' => true, 'attendable' => true,
                 'description' => '', 'slug' => 'outreach', 'self_serviceable' => true, ],
-            ['name' => 'RoboCup', 'visible' => true, 'attendable' => true, 'founding_year' => 2007,
+            ['name' => 'RoboCup', 'visible' => true, 'attendable' => true,
                 'description' => '', 'slug' => 'robocup', 'self_serviceable' => true, ],
-            ['name' => 'RoboRacing', 'visible' => true, 'attendable' => true, 'founding_year' => 2013,
+            ['name' => 'RoboRacing', 'visible' => true, 'attendable' => true,
                 'description' => '', 'slug' => 'roboracing', 'self_serviceable' => true, ],
-            ['name' => 'Core', 'hidden' => true, 'attendable' => true, 'founding_year' => 1969,
+            ['name' => 'Core', 'hidden' => true, 'attendable' => true,
                 'description' => '', 'slug' => 'core', 'self_serviceable' => false, ],
         ]);
     }
