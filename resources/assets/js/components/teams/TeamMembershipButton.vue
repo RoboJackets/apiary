@@ -1,19 +1,19 @@
 <template>
     <div>
-        <button
-                type="button" class="btn btn-secondary"
-                :disabled="!this.user.is_active || !this.team.self_serviceable"
-                v-if="memberOfTeam" v-on:click="changeMembership('leave')">
+        <button v-if="memberOfTeam && this.user.is_active && this.team.self_serviceable"
+                type="button" class="btn btn-secondary" v-on:click="changeMembership('leave')">
             Leave
         </button>
-        <button
-                type="button" class="btn btn-primary"
-                :disabled="!this.user.is_active || !this.team.self_serviceable"
-                v-else v-on:click="changeMembership('join')">
+        <button v-else-if="!memberOfTeam && this.user.is_active && this.team.self_serviceable"
+                type="button" class="btn btn-primary" v-on:click="changeMembership('join')">
             Join
         </button>
-        <em v-if="!this.user.is_active">&nbsp;&nbsp;<small>You must be an active member to join/leave teams.</small></em>
-        <em v-if="!this.team.self_serviceable">&nbsp;&nbsp;<small>Join/leave is restricted for this team.</small></em>
+        <em v-else-if="this.user.is_active && !this.team.self_serviceable">&nbsp;&nbsp;
+            <small>Contact an admin to {{ this.actionVerb }} this team.</small>
+        </em>
+        <em v-else-if="!this.user.is_active">&nbsp;&nbsp;
+            <small>You must be an active member to {{ this.actionVerb }} teams.</small>
+        </em>
     </div>
 </template>
 <script>
@@ -35,6 +35,9 @@ export default {
         return val.id === self.team.id;
       });
     },
+    actionVerb: function() {
+      return (this.memberOfTeam) ? "leave" : "join";
+    }
   },
   methods: {
     changeMembership: function(action) {

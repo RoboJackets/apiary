@@ -16,7 +16,7 @@
                         <h5 class="card-title"><b>{{$team->name}}</b></h5>
                         <p class="card-text">{{ $team->description }}</p>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer" style="min-height: 63px">
                         <team-membership-button :team="{{ $team }}" :user="{{ $user }}"></team-membership-button>
                     </div>
                 </div>

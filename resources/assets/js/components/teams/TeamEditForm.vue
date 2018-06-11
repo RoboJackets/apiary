@@ -87,12 +87,12 @@
 
             <div class="tab-content">
                 <div class="tab-pane show active" id="members">
-                    <h3>Members</h3>
+                    <br/>
                     <team-invite-modal
                             id="teamInviteModal"
                             :teamId="this.teamId">
                     </team-invite-modal>
-                    <button type="button" class="btn btn-secondary btn-above-table" data-toggle="modal" data-target="#teamInviteModal">Invite</button>
+                    <button type="button" class="btn btn-secondary btn-above-table" data-toggle="modal" data-target="#teamInviteModal">Add Members</button>
                     <datatable id="team-members-table"
                                :data-object="team.members"
                                :columns="memberTableConfig">

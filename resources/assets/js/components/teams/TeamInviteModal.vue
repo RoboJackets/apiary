@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" :id="id">Invite Member</h5>
+                    <h5 class="modal-title" :id="id">Add Members</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -12,7 +12,7 @@
                     <form id="inviteMemberForm" v-on:submit.prevent="submit">
                         <div class="row">
                             <div class="col-12">
-                                <em>Enter a first name to search...</em>
+                                <em>Enter a name (any part) to search...</em>
                             </div>
                         </div>
                         <div class="row">
@@ -75,7 +75,7 @@ export default {
         .post(membersUrl, this.member)
         .then(response => {
           this.hasError = false;
-          this.feedback = 'Invited ' + response.data.member + '!';
+          this.feedback = 'Added ' + response.data.member + '!';
           this.member.user_id = '';
           this.user = '';
         })
