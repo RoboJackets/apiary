@@ -36,8 +36,8 @@ export default {
       });
     },
     actionVerb: function() {
-      return (this.memberOfTeam) ? "leave" : "join";
-    }
+      return this.memberOfTeam ? 'leave' : 'join';
+    },
   },
   methods: {
     changeMembership: function(action) {
