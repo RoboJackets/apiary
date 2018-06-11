@@ -62,3 +62,11 @@ body {
 .card-teams {
   margin-bottom: 15px;
 }
+
+.custom-radio-input.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+input.form-control.is-invalid ~ .invalid-feedback {
+  display: block;
+}

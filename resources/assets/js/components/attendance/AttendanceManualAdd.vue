@@ -9,9 +9,10 @@
                         placeholder="Select date"
                         :required="true"
                         :config="dateTimeConfig"
-                        input-class="form-control">
+                        input-class="form-control"
+                        :class="{ 'is-invalid': $v.attendance.created_at.$error }">
                 </flat-pickr>
-                <em v-if="$v.attendance.created_at.$error" style="color:red">You must select a date.</em>
+                <div class="invalid-feedback">You must select a date.</div>
             </div>
         </div>
         <div class="row form-row">
@@ -24,11 +25,14 @@
                         :is-error="$v.attendance.attendable_id.$error"
                         @input="$v.attendance.attendable_id.$touch()">
                 </custom-radio-buttons>
+                <div class="invalid-feedback">
+                    You must select a team.
+                </div>
             </div>
         </div>
         <div class="row form-row">
             <label for="gtid" class="col-sm-2 col-form-label">GTID<span style="color:red">*</span></label>
-            <div class="col-sm-12 col-lg-4">
+            <div class="col-sm-10 col-lg-4">
                 <input
                         type="number"
                         id="gtid"
@@ -39,6 +43,9 @@
                         @keyup.enter="submit"
                         @input="$v.attendance.gtid.$touch()"
                         @blur="$v.attendance.gtid.$touch()">
+                <div class="invalid-feedback">
+                    You must enter a GTID.
+                </div>
             </div>
         </div>
         <div class="row form-row">
