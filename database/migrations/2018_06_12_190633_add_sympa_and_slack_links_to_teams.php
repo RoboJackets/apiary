@@ -14,9 +14,9 @@ class AddSympaAndSlackLinksToTeams extends Migration
     public function up()
     {
         Schema::table('teams', function (Blueprint $table) {
-            $table->string('slack_channel_name')->after('description');
-            $table->string('slack_channel_id')->after('description');
-            $table->string('mailing_list_name')->after('description');
+            $table->string('slack_channel_name')->after('description')->nullable();
+            $table->string('slack_channel_id')->after('description')->nullable();
+            $table->string('mailing_list_name')->after('description')->nullable();
         });
     }
 
