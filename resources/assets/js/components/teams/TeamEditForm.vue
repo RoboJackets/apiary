@@ -12,14 +12,6 @@
                                :class="{ 'is-invalid': $v.team.name.$error }" id="name" @blur="$v.team.name.$touch()"
                                placeholder="None on record">
                     </div>
-
-                    <label for="founding-year" class="col-sm-2 col-form-label">Founding Year<span
-                            style="color:red">*</span></label>
-                    <div class="col-sm-10 col-lg-4">
-                        <input v-model="team.founding_year" type="number" class="form-control"
-                               :class="{ 'is-invalid': $v.team.founding_year.$error }" id="founding-year"
-                               @blur="$v.team.founding_year.$touch()" placeholder="None on record">
-                    </div>
                 </div>
 
                 <div class="form-group row">
@@ -164,7 +156,6 @@ export default {
   validations: {
     team: {
       name: { required },
-      founding_year: { numeric },
       description: { required },
       visible: { required },
       attendable: { required },

@@ -56,7 +56,6 @@ class TeamController extends Controller
         $this->validate($request, [
             'name' => 'required|string|unique:teams',
             'description' => 'string|max:4096|nullable',
-            'founding_year' => 'numeric|required',
             'attendable' => 'boolean',
             'visible' => 'boolean',
             'self_serviceable' => 'boolean',
@@ -136,7 +135,6 @@ class TeamController extends Controller
         $this->validate($request, [
             'name' => 'string',
             'description' => 'string|max:4096|nullable',
-            'founding_year' => 'numeric|nullable',
             'attendable' => 'boolean',
             'hidden' => 'boolean',
             'self_serviceable' => 'boolean',

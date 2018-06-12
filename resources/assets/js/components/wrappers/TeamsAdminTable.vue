@@ -20,7 +20,6 @@ export default {
           },
         },
         { title: 'Description', data: 'description' },
-        { title: 'Founding Year', data: 'founding_year' },
         {
           title: 'Visible',
           data: 'visible',
