@@ -8,11 +8,11 @@
                 type="button" class="btn btn-primary" v-on:click="changeMembership('join')">
             Join
         </button>
-        <em v-else-if="this.user.is_active && !this.team.self_serviceable">&nbsp;&nbsp;
-            <small>Contact an admin to {{ this.actionVerb }} this team.</small>
-        </em>
-        <em v-else-if="!this.user.is_active">&nbsp;&nbsp;
+        <em v-else-if="!this.user.is_active && this.team.self_serviceable">&nbsp;&nbsp;
             <small>You must be an active member to {{ this.actionVerb }} teams.</small>
+        </em>
+        <em v-else-if="!this.team.self_serviceable">&nbsp;&nbsp;
+            <small>Contact an admin to {{ this.actionVerb }} this team.</small>
         </em>
     </div>
 </template>
@@ -60,7 +60,7 @@ export default {
           } else if (response.status === 201 && data.action === 'leave') {
             swal({
               type: 'success',
-              title: 'See you soon!',
+              title: 'Goodbye!',
               text: 'You left ' + this.team.name + '.',
               timer: 1500,
             });
