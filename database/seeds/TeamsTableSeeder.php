@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
 
 class TeamsTableSeeder extends Seeder
 {
@@ -13,17 +14,17 @@ class TeamsTableSeeder extends Seeder
     {
         DB::table('teams')->insert([
             ['name' => 'IGVC', 'visible' => true, 'attendable' => true,
-                'description' => '', 'slug' => 'igvc', 'self_serviceable' => true, ],
+                'description' => 'IGVC', 'slug' => 'igvc', 'self_serviceable' => true ],
             ['name' => 'BattleBots', 'visible' => true, 'attendable' => true,
-                'description' => '', 'slug' => 'battlebots', 'self_serviceable' => true, ],
+                'description' => 'BattleBots', 'slug' => 'battlebots', 'self_serviceable' => true ],
             ['name' => 'Outreach', 'visible' => true, 'attendable' => true,
-                'description' => '', 'slug' => 'outreach', 'self_serviceable' => true, ],
+                'description' => 'Outreach', 'slug' => 'outreach', 'self_serviceable' => true ],
             ['name' => 'RoboCup', 'visible' => true, 'attendable' => true,
-                'description' => '', 'slug' => 'robocup', 'self_serviceable' => true, ],
+                'description' => 'RoboCup', 'slug' => 'robocup', 'self_serviceable' => true ],
             ['name' => 'RoboRacing', 'visible' => true, 'attendable' => true,
-                'description' => '', 'slug' => 'roboracing', 'self_serviceable' => true, ],
-            ['name' => 'Core', 'hidden' => true, 'attendable' => true,
-                'description' => '', 'slug' => 'core', 'self_serviceable' => false, ],
+                'description' => 'RoboRacing', 'slug' => 'roboracing', 'self_serviceable' => true ],
+            ['name' => 'Core', 'visible' => true, 'attendable' => true,
+                'description' => 'Core', 'slug' => 'core', 'self_serviceable' => false ],
         ]);
     }
 }
