@@ -19,7 +19,6 @@
                         <div class="col-sm-12 col-lg-9">
                             <input  v-model="attendance.gtid"
                                     type="text"
-                                    maxlength="9"
                                     class="form-control"
                                     :class="{ 'is-invalid': $v.attendance.gtid.$error }"
                                     ref="input">
@@ -69,7 +68,28 @@ export default {
       hasError: false,
     };
   },
+  watch: {
+    'attendance.gtid': function(val, oldVal) {
+      this.debouncedGTID();
+    },
+  },
+  created: function() {
+    this.debouncedGTID = _.debounce(this.parseGTID, 500);
+  },
   methods: {
+    parseGTID() {
+      //Allows use of card readers that can't parse out data (#317)
+      //Parses out the GTID using regex and updates the value accordingly
+      let re = new RegExp('(9[0-9]{8})');
+      if (!Number.isInteger(parseInt(this.attendance.gtid)) && this.attendance.gtid !== '') {
+        let matches = re.exec(this.attendance.gtid);
+        if (matches != null) {
+          this.attendance.gtid = matches[0];
+          //We have to manually submit it since the carriage return happens before the regex is run
+          this.submit();
+        }
+      }
+    },
     submit() {
       if (this.$v.$invalid) {
         this.$v.$touch();

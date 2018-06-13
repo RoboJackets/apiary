@@ -16,7 +16,7 @@
               id="event-name"
               @blur="$v.event.name.$touch()">
             <div class="invalid-feedback">
-              Name is a required field
+              You must enter a name for this event.
             </div>
           </div>
 
@@ -67,6 +67,9 @@
               :is-error="$v.event.allow_anonymous_rsvp.$error"
               @input="$v.event.allow_anonymous_rsvp.$touch()">
             </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must indicate whether to allow anonymous RSVPs.
+            </div>
           </div>
         </div>
 

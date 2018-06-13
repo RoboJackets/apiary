@@ -60,3 +60,9 @@ var form = new Vue({
 });
 
 worker.addEventListener('message', form.queueUpdate, false);
+
+window.onbeforeunload = function() {
+  if (form.queued != "") {
+    return form.queued;
+  }
+}
