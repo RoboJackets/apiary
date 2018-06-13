@@ -33,12 +33,8 @@ class FasetVisitController extends Controller
 
             $fasetResponses = $request->only('faset_responses')['faset_responses'];
 
-            foreach ($fasetResponses as $question) {
-                foreach ($question as $surveyID => $fasetResponse) {
-                    foreach ($fasetResponse as $answer) {
-                        $visit->addFasetResponse($surveyID, $answer);
-                    }
-                }
+            foreach ($fasetResponses as $response) {
+                $visit->fasetResponses()->create(['response' => $response]);
             }
 
             DB::commit();
