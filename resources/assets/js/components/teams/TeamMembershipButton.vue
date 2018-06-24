@@ -8,10 +8,10 @@
                 type="button" class="btn btn-primary" v-on:click="changeMembership('join')">
             Join
         </button>
-        <em v-else-if="!this.user.is_active && this.team.self_serviceable">&nbsp;&nbsp;
+        <em v-else-if="!this.user.is_active && this.team.self_serviceable">&nbsp;
             <small>You must be an active member to {{ this.actionVerb }} teams.</small>
         </em>
-        <em v-else-if="!this.team.self_serviceable">&nbsp;&nbsp;
+        <em v-else-if="!this.team.self_serviceable">&nbsp;
             <small>Contact an admin to {{ this.actionVerb }} this team.</small>
         </em>
     </div>
