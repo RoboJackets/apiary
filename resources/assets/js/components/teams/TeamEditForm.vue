@@ -22,6 +22,18 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="mailing_list_name" class="col-sm-2 col-form-label">Mailing List Name</label>
+                    <div class="input-group col-sm-10 col-lg-4">
+                        <input v-model="team.mailing_list_name" type="text" class="form-control"
+                               :class="{ 'is-invalid': $v.team.mailing_list_name.$error }" id="mailing_list_name"
+                               @blur="$v.team.mailing_list_name.$touch()">
+                        <div class="input-group-append">
+                            <span class="input-group-text">@lists.gatech.edu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="team-visible-buttons" class="col-sm-2 col-form-label">
                         <abbr title="Displayed to users">Visible</abbr><span style="color:red">*</span>
                     </label>
@@ -160,6 +172,7 @@ export default {
       visible: { required },
       attendable: { required },
       self_serviceable: { required },
+      mailing_list_name: { required }
     },
   },
   methods: {
