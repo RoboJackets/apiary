@@ -59,6 +59,9 @@ class TeamController extends Controller
             'attendable' => 'boolean',
             'visible' => 'boolean',
             'self_serviceable' => 'boolean',
+            'mailing_list_name' => 'string|nullable',
+            'slack_channel_id' => 'string|nullable',
+            'slack_channel_name' => 'string|nullable'
         ]);
 
         try {
@@ -138,6 +141,9 @@ class TeamController extends Controller
             'attendable' => 'boolean',
             'hidden' => 'boolean',
             'self_serviceable' => 'boolean',
+            'mailing_list_name' => 'string|nullable',
+            'slack_channel_id' => 'string|nullable',
+            'slack_channel_name' => 'string|nullable'
         ]);
 
         try {
