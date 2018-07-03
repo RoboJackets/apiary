@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import { required, numeric } from 'vuelidate/lib/validators';
+import { required, numeric, alphaNum } from 'vuelidate/lib/validators';
 
 export default {
   name: 'teamEditForm',
@@ -195,9 +195,9 @@ export default {
       visible: { required },
       attendable: { required },
       self_serviceable: { required },
-      mailing_list_name: { required },
-      slack_channel_id: { required },
-      slack_channel_name: { required },
+      mailing_list_name: { },
+      slack_channel_id: { alphaNum },
+      slack_channel_name: { alphaNum },
     },
   },
   methods: {
