@@ -14,7 +14,7 @@ class FasetResponse extends Model
      */
     public function fasetVisit()
     {
-        return $this->belongsTo('App\FasetVisit');
+        return $this->belongsTo(\App\FasetVisit::class);
     }
 
     protected $fillable = ['faset_survey_id', 'response'];

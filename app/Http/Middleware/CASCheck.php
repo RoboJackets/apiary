@@ -41,7 +41,7 @@ class CASCheck
         if (! Auth::check()) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser($request);
-                if (is_a($user, "App\User")) {
+                if (is_a($user, \App\User::class)) {
                     Auth::login($user);
                 } elseif (is_a($user, "Illuminate\Http\Response")) {
                     return $user;

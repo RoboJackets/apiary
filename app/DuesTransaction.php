@@ -32,7 +32,7 @@ class DuesTransaction extends Model
      */
     public function payment()
     {
-        return $this->morphMany('App\Payment', 'payable');
+        return $this->morphMany(\App\Payment::class, 'payable');
     }
 
     /**
@@ -40,7 +40,7 @@ class DuesTransaction extends Model
      */
     public function package()
     {
-        return $this->belongsTo('App\DuesPackage', 'dues_package_id');
+        return $this->belongsTo(\App\DuesPackage::class, 'dues_package_id');
     }
 
     /**
@@ -48,7 +48,7 @@ class DuesTransaction extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     /**
@@ -151,7 +151,7 @@ class DuesTransaction extends Model
             })
             ->leftJoin('payments', function ($j) {
                 $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', 'App\\DuesTransaction')
+                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                     ->where('payments.deleted_at', '=', null);
             })
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
@@ -173,7 +173,7 @@ class DuesTransaction extends Model
         )
             ->leftJoin('payments', function ($j) {
                 $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', 'App\\DuesTransaction')
+                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                     ->where('payments.deleted_at', '=', null);
             })
             ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
@@ -198,7 +198,7 @@ class DuesTransaction extends Model
         )
             ->leftJoin('payments', function ($j) {
                 $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', 'App\\DuesTransaction')
+                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                     ->where('payments.deleted_at', '=', null);
             })
             ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')

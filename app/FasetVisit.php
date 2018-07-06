@@ -15,7 +15,7 @@ class FasetVisit extends Model
      */
     public function fasetResponses()
     {
-        return $this->hasMany('App\FasetResponse');
+        return $this->hasMany(\App\FasetResponse::class);
     }
 
     /**
@@ -23,7 +23,7 @@ class FasetVisit extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     public function save(array $options = [])

@@ -70,7 +70,7 @@ class User extends Authenticatable
      */
     public function fasetVisits()
     {
-        return $this->hasMany('App\FasetVisit');
+        return $this->hasMany(\App\FasetVisit::class);
     }
 
     /**
@@ -78,7 +78,7 @@ class User extends Authenticatable
      */
     public function teams()
     {
-        return $this->belongsToMany('App\Team')->withTimestamps();
+        return $this->belongsToMany(\App\Team::class)->withTimestamps();
     }
 
     /**
@@ -131,7 +131,7 @@ class User extends Authenticatable
      */
     public function dues()
     {
-        return $this->hasMany('App\DuesTransaction');
+        return $this->hasMany(\App\DuesTransaction::class);
     }
 
     /**
@@ -139,7 +139,7 @@ class User extends Authenticatable
      */
     public function organizes()
     {
-        return $this->hasMany('App\Event', 'organizer');
+        return $this->hasMany(\App\Event::class, 'organizer');
     }
 
     /**
@@ -147,7 +147,7 @@ class User extends Authenticatable
      */
     public function rsvps()
     {
-        return $this->hasMany('App\Rsvp');
+        return $this->hasMany(\App\Rsvp::class);
     }
 
     /**

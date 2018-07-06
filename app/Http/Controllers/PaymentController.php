@@ -146,12 +146,12 @@ class PaymentController extends Controller
         }
 
         if (! $payable) {
-            if ($payable_type == "App\DuesTransaction") {
+            if ($payable_type == \App\DuesTransaction::class) {
                 $payable = DuesTransaction::find($payable_id);
                 $amount = $payable->package->amount;
                 $name = 'Dues - '.$payable->package->name;
                 $email = $user->gt_email;
-            } elseif ($payable_type == "App\Event") {
+            } elseif ($payable_type == \App\Event::class) {
                 $payable = Event::find($payable_id);
                 $amount = $payable->price;
                 $name = 'Event - '.$payable->name;
