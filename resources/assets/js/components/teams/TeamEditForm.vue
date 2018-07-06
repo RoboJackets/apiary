@@ -195,7 +195,7 @@ export default {
       visible: { required },
       attendable: { required },
       self_serviceable: { required },
-      mailing_list_name: { },
+      mailing_list_name: {},
       slack_channel_id: { alphaNum },
       slack_channel_name: { alphaNum },
     },

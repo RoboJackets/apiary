@@ -61,7 +61,7 @@ class TeamController extends Controller
             'self_serviceable' => 'boolean',
             'mailing_list_name' => 'string|nullable',
             'slack_channel_id' => 'string|nullable',
-            'slack_channel_name' => 'string|nullable'
+            'slack_channel_name' => 'string|nullable',
         ]);
 
         try {
@@ -143,7 +143,7 @@ class TeamController extends Controller
             'self_serviceable' => 'boolean',
             'mailing_list_name' => 'string|nullable',
             'slack_channel_id' => 'string|nullable',
-            'slack_channel_name' => 'string|nullable'
+            'slack_channel_name' => 'string|nullable',
         ]);
 
         try {
