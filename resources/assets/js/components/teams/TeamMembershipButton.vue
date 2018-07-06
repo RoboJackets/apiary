@@ -50,16 +50,17 @@ export default {
         .post(this.baseUrl + this.team.id + '/members', data)
         .then(response => {
           if (response.status === 201 && data.action === 'join') {
+            let text = "Make sure to join the team's Slack channel and mailing list to stay up-to-date.";
             swal({
               type: 'success',
-              title: 'Sweet!',
-              text: 'You joined ' + this.team.name + '!',
-              timer: 1500,
+              title: 'You joined ' + this.team.name + '!',
+              text: text,
+              // timer: 1500,
             });
             this.user_teams.push(response.data.team);
           } else if (response.status === 201 && data.action === 'leave') {
             swal({
-              type: 'success',
+              type: 'info',
               title: 'Goodbye!',
               text: 'You left ' + this.team.name + '.',
               timer: 1500,
