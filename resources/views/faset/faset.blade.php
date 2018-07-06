@@ -17,16 +17,16 @@
       </div>
 
       <div class="row justify-content-center">
-        <form id="form" class="col-sm-8" v-on:submit.prevent="submit">
+        <form id="form" class="col-sm-8" @submit.prevent="submit" autocomplete="off">
           <div class="form-group">
             <label for="faset-name">Name</label>
-            <input type="text" class="form-control" id="faset-name" name="faset-name" autofocus placeholder="George Burdell" autocomplete="off" required>
+            <input type="text" class="form-control" id="faset-name" name="faset-name" autofocus placeholder="George Burdell" autocomplete="nope" required>
             <small class="form-text text-muted">First and last name</small>
           </div>
 
           <div class="form-group">
             <label for="faset-email">Email</label>
-            <input type="email" class="form-control" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="off" required>
+            <input type="email" class="form-control" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="nope" required>
           </div>
 
           <fieldset class="form-group">
@@ -66,6 +66,13 @@
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="heardfrom-vex" name="heardfrom" value="vex">
               <label class="custom-control-label" for="heardfrom-vex">Vex Event</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heardfrom-other" name="heardfrom" value="other">
+              <label class="custom-control-label" for="heardfrom-other">
+                Other:
+                <input type="text" name="heardfrom-other-text" @focus="checkOther" autocomplete="off">
+              </label>
             </div>
           </fieldset>
 

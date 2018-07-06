@@ -26,11 +26,6 @@ class FasetVisit extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function addFasetResponse($faset_survey_id, $response)
-    {
-        $this->fasetResponses()->create(compact('faset_survey_id', 'response'));
-    }
-
     public function save(array $options = [])
     {
         if (empty($this->visit_token)) {
