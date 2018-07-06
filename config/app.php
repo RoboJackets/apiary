@@ -179,7 +179,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Laravel\Tinker\TinkerServiceProvider::class,
         Subfission\Cas\CasServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
