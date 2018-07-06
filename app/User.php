@@ -63,7 +63,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['api_token'];
+    protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
 
     /**
      *  Get the FASET visits associated with this user.
@@ -78,7 +78,18 @@ class User extends Authenticatable
      */
     public function teams()
     {
-        return $this->belongsToMany('App\Team');
+        return $this->belongsToMany('App\Team')->withTimestamps();
+    }
+
+    /**
+     * Check membership status for a given team.
+     *
+     * @param $team Team ID
+     * @return bool Whether or not user is a member of the given team
+     */
+    public function memberOfTeam($team)
+    {
+        return $this->teams->contains($team);
     }
 
     /**

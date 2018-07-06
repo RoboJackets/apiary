@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
         Route::post('/pay', 'PaymentController@storeUser')->name('dues.pay');
     });
 
+    Route::group(['prefix' => 'teams', 'as' => 'teams.'], function () {
+        Route::get('/', 'TeamController@indexWeb')->name('index');
+    });
+
     Route::prefix('payments')->group(function () {
         Route::get('/complete', 'PaymentController@handleSquareResponse')
             ->name('payments.complete');
@@ -99,6 +103,20 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
             Route::get('{id}', function ($id) {
                 return view('swag.swagTransaction', ['id' => $id]);
             })->name('swag.transaction');
+        });
+
+        Route::prefix('teams')->name('admin.teams.')->group(function () {
+            Route::get('/', function () {
+                return view('teams.indexAdmin');
+            })->name('index');
+
+            Route::get('create', function () {
+                return view('teams.create');
+            })->name('create');
+
+            Route::get('{id}', function ($id) {
+                return view('teams.edit', ['id' => $id]);
+            })->name('edit');
         });
 
         Route::prefix('attendance')->group(function () {
