@@ -23,7 +23,7 @@
                                     <br/>
                                 @endif
                                 @if($team->slack_channel_id)
-                                    Slack: <a href="https://slack.com/app_redirect?team=T033JPZLT&channel={{$team->slack_channel_id}}">#{{$team->slack_channel_name}}</a>
+                                    Slack: <a href="https://slack.com/app_redirect?team=T033JPZLT&channel={{$team->slack_channel_id}}" target="_blank">#{{$team->slack_channel_name}}</a>
                                 @endif
                             </p>
                         @endif
