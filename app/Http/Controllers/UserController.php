@@ -44,7 +44,7 @@ class UserController extends Controller
      */
     public function search(Request $request)
     {
-        if (! $request->has('keyword')) {
+        if (! $request->filled('keyword')) {
             return response()->json(['status' => 'error', 'error' => 'Missing keyword'], 422);
         }
         $keyword = $request->input('keyword');
@@ -109,7 +109,7 @@ class UserController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if ($request->has('roles')) {
+        if ($request->filled('roles')) {
             foreach ($request->input('roles') as $role) {
                 $requestedRole = Role::where('id', $role)->firstOrFail();
                 $user->assignRole($requestedRole);
@@ -205,7 +205,7 @@ class UserController extends Controller
 
         $user->update($request->all());
 
-        if ($request->has('roles')) {
+        if ($request->filled('roles')) {
             $user->roles()->sync($request->input('roles'));
         }
 

@@ -93,10 +93,10 @@ class DuesTransactionController extends Controller
         $user_id = $request->input('user_id');
 
         //Make sure that the user is actually allowed to create this transaction
-        if ($request->has('user_id') && $user_id != $user->id && (! $user->is_admin)) {
+        if ($request->filled('user_id') && $user_id != $user->id && (! $user->is_admin)) {
             return response()->json(['status' => 'error',
                 'message' => 'You may not create a DuesTransaction for another user.', ], 403);
-        } elseif (! $request->has('user_id')) {
+        } elseif (! $request->filled('user_id')) {
             $request->merge(['user_id' => $user->id]);
         }
 

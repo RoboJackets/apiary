@@ -51,7 +51,7 @@ class PaymentController extends Controller
     {
         $currentUser = auth()->user();
 
-        if (! $request->has('recorded_by') ||
+        if (! $request->filled('recorded_by') ||
             $currentUser->cant('update-payments')) {
             $request['recorded_by'] = $currentUser->id;
         }
