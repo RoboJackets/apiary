@@ -68,8 +68,10 @@ class Handler extends ExceptionHandler
         if ($request->wantsJson()) {
             return response()->json(['status' => 'error', 'error' => $message], $statusCode);
         } elseif (config('app.debug') == false) {
-            return response(view('errors.generic',
-                ['error_code' => $statusCode, 'error_message' => $message]), $statusCode);
+            return response(view(
+                'errors.generic',
+                ['error_code' => $statusCode, 'error_message' => $message]
+            ), $statusCode);
         } else {
             return parent::render($request, $exception);
         }

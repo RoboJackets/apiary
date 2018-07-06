@@ -11,11 +11,15 @@ class DuesTransactionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-dues-transactions',
-            ['only' => ['index', 'indexPaid', 'indexPending', 'indexPendingSwag']]);
+        $this->middleware(
+            'permission:read-dues-transactions',
+            ['only' => ['index', 'indexPaid', 'indexPending', 'indexPendingSwag']]
+        );
         $this->middleware('permission:create-dues-transactions', ['only' => ['store']]);
-        $this->middleware('permission:read-dues-transactions|read-dues-transactions-own',
-            ['only' => ['show']]);
+        $this->middleware(
+            'permission:read-dues-transactions|read-dues-transactions-own',
+            ['only' => ['show']]
+        );
         $this->middleware('permission:update-dues-transactions', ['only' => ['update']]);
         $this->middleware('permission:delete-dues-transactions', ['only' => ['destroy']]);
     }

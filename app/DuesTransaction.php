@@ -132,8 +132,12 @@ class DuesTransaction extends Model
      */
     public function scopePendingSwag($query)
     {
-        return $query->select('dues_transactions.*', 'dues_packages.eligible_for_shirt',
-            'dues_packages.eligible_for_polo', DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'"))
+        return $query->select(
+            'dues_transactions.*',
+            'dues_packages.eligible_for_shirt',
+            'dues_packages.eligible_for_polo',
+            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
+        )
             ->join('dues_packages', function ($j) {
                 $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
                 ->where(function ($q) {
@@ -163,8 +167,10 @@ class DuesTransaction extends Model
      */
     public function scopePaid($query)
     {
-        $query = $query->select('dues_transactions.*',
-            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'"))
+        $query = $query->select(
+            'dues_transactions.*',
+            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
+        )
             ->leftJoin('payments', function ($j) {
                 $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', 'App\\DuesTransaction')
@@ -186,8 +192,10 @@ class DuesTransaction extends Model
      */
     public function scopeUnpaid($query)
     {
-        return $query->select('dues_transactions.*',
-                DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'"))
+        return $query->select(
+            'dues_transactions.*',
+            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
+        )
             ->leftJoin('payments', function ($j) {
                 $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', 'App\\DuesTransaction')
