@@ -22,6 +22,41 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="mailing_list_name" class="col-sm-2 col-form-label">Mailing List Name</label>
+                    <div class="input-group col-sm-10 col-lg-4">
+                        <input v-model="team.mailing_list_name" type="text" class="form-control"
+                               :class="{ 'is-invalid': $v.team.mailing_list_name.$error }" id="mailing_list_name"
+                               @blur="$v.team.mailing_list_name.$touch()" placeholder="None on record">
+                        <div class="input-group-append">
+                            <span class="input-group-text">@lists.gatech.edu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="slack_channel_id" class="col-sm-2 col-form-label">
+                        <abbr title="Internal Slack Identifier">Slack Channel ID</abbr></label>
+                    <div class="input-group col-sm-10 col-lg-4">
+                        <input v-model="team.slack_channel_id" type="text" class="form-control"
+                               :class="{ 'is-invalid': $v.team.slack_channel_id.$error }" id="slack_channel_id"
+                               @blur="$v.team.slack_channel_id.$touch()" placeholder="None on record">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="slack_channel_name" class="col-sm-2 col-form-label">
+                        <abbr title="Public-Facing Name">Slack Channel Name</abbr></label>
+                    <div class="input-group col-sm-10 col-lg-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">#</span>
+                        </div>
+                        <input v-model="team.slack_channel_name" type="text" class="form-control"
+                               :class="{ 'is-invalid': $v.team.slack_channel_name.$error }" id="slack_channel_name"
+                               @blur="$v.team.slack_channel_name.$touch()" placeholder="None on record">
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="team-visible-buttons" class="col-sm-2 col-form-label">
                         <abbr title="Displayed to users">Visible</abbr><span style="color:red">*</span>
                     </label>
@@ -96,7 +131,7 @@
 </template>
 
 <script>
-import { required, numeric } from 'vuelidate/lib/validators';
+import { required, numeric, alphaNum } from 'vuelidate/lib/validators';
 
 export default {
   name: 'teamEditForm',
@@ -160,6 +195,9 @@ export default {
       visible: { required },
       attendable: { required },
       self_serviceable: { required },
+      mailing_list_name: { },
+      slack_channel_id: { alphaNum },
+      slack_channel_name: { alphaNum },
     },
   },
   methods: {
