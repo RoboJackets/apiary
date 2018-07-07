@@ -1,0 +1,10 @@
+linters:
+  phpcs:
+    standard: 'PSR2'
+    tab_width: 4
+  eslint:
+    config: './eslint.config'
+  csslint:
+  sasslint:
+  shellcheck:
+    shell: bash
