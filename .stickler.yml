@@ -5,6 +5,6 @@ linters:
   eslint:
     config: './eslint.config'
   csslint:
-  sass-lint:
+  sasslint:
   shellcheck:
     shell: bash
