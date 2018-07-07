@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -o pipefail
+
 cd "${0%/*}"
 
 composer install --no-interaction
