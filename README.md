@@ -91,8 +91,7 @@ For a basic development environment, you'll need to modify the following setting
 | CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
 | CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
 | CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
-| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user                                                                                                                                |
-
+| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user                                                         
 
 #### Installing dependencies
 
