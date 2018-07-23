@@ -7,6 +7,7 @@ use App\FasetResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Validation\Validator;
 
 class FasetVisitController extends Controller
 {
@@ -22,10 +23,14 @@ class FasetVisitController extends Controller
     public function store(Request $request)
     {
         Log::debug(get_class().': Pre-Validation Data', $request->all());
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'faset_email' => 'required|email|max:255',
             'faset_name' => 'required|max:255',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'errors' => $validator->errors()->all()]);
+        }
 
         try {
             DB::beginTransaction();
