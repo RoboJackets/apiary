@@ -29,7 +29,7 @@ class FasetVisitController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'errors' => $validator->errors()->all()]);
+            return response()->json(['status' => 'error', 'errors' => $validator->errors()->all()], 422);
         }
 
         try {
