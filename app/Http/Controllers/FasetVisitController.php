@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\FasetVisit;
 use App\FasetResponse;
 use Illuminate\Http\Request;
@@ -21,24 +22,31 @@ class FasetVisitController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        Log::debug(get_class().': Pre-Validation Data', $request->all());
+        $validator = Validator::make($request->all(), [
             'faset_email' => 'required|email|max:255',
             'faset_name' => 'required|max:255',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'errors' => $validator->errors()->all()], 422);
+        }
+
         try {
             DB::beginTransaction();
             $personInfo = $request->only(['faset_email', 'faset_name']);
+            Log::debug(get_class().': New Visit Data (Pre-Store)', $personInfo);
             $visit = FasetVisit::create($personInfo);
 
             $fasetResponses = $request->only('faset_responses')['faset_responses'];
+            Log::debug(get_class().': New Visit Response Data (Pre-Store)', $fasetResponses);
 
             foreach ($fasetResponses as $response) {
                 $visit->fasetResponses()->create(['response' => $response]);
             }
 
             DB::commit();
-            Log::info('New FASET Visit Logged:', ['email' => $visit->faset_email]);
+            Log::info(get_class().'New FASET Visit Logged:', ['email' => $visit->faset_email]);
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {
