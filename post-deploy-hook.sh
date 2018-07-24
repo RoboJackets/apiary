@@ -5,7 +5,7 @@ set -o pipefail
 
 cd "${0%/*}"
 
-composer install --no-interaction
+composer install --no-interaction --no-progress --no-suggest
 php artisan migrate --no-interaction
 php artisan config:clear --no-interaction
 php artisan view:clear --no-interaction
