@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Migrations\Migration;
@@ -34,7 +32,6 @@ class CreateUpdateTeamMembershipOwnPermission extends Migration
 
         $role = Role::firstOrCreate(['name' => 'member']);
         $role->givePermissionTo('update-teams-membership-own');
-
     }
 
     /**

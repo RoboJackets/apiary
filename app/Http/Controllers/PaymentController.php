@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PaymentSuccess;
 use Log;
 use Bugsnag;
 use App\Event;
@@ -10,6 +9,7 @@ use Validator;
 use App\Payment;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
+use App\Events\PaymentSuccess;
 use SquareConnect\ApiException;
 use SquareConnect\Configuration;
 use SquareConnect\Api\CheckoutApi;

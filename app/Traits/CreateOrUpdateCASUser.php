@@ -66,13 +66,13 @@ trait CreateOrUpdateCASUser
 
         //Role update based on active status (in case it didn't happen elsewhere)
         if ($user->is_active && $user->hasRole('non-member')) {
-            Log::info(get_class() . ": Updating role membership for $user->uid");
+            Log::info(get_class().": Updating role membership for $user->uid");
             $user->removeRole('non-member');
             $role_member = Role::where('name', 'member')->first();
-            if ($role_member && !$user->hasRole('member')) {
+            if ($role_member && ! $user->hasRole('member')) {
                 $user->assignRole($role_member);
             } else {
-                Log::error(get_class() . ": Role 'member' not found for assignment to $user->uid.");
+                Log::error(get_class().": Role 'member' not found for assignment to $user->uid.");
             }
         }
 
