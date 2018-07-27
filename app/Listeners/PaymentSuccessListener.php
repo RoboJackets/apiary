@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use Log;
+use Spatie\Permission\Models\Role;
 use App\DuesTransaction;
 use App\Events\PaymentSuccess;
 use Illuminate\Queue\InteractsWithQueue;
@@ -36,8 +37,15 @@ class PaymentSuccessListener
             if ($payable->status == "paid") {
                 $user = $payable->user;
                 Log::info(get_class() . ": Updating role membership for " . $user->uid);
-                $user->removeRole('non-member');
-                $user->assignRole('member');
+                if ($user->hasRole('non-member')) {
+                    $user->removeRole('non-member');
+                }
+                $role_member = Role::where('name', 'member')->first();
+                if ($role_member) {
+                    $user->assignRole($role_member);
+                } else {
+                    Log::error(get_class()."Role 'member' not found for assignment to $user->uid.");
+                }
             }
         }
     }
