@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PaymentSuccess;
 use Log;
 use Bugsnag;
 use App\Event;
@@ -76,6 +77,7 @@ class PaymentController extends Controller
         if (is_numeric($payment->id)) {
             $dbPayment = Payment::findOrFail($payment->id);
             $dbPayment->payable->user->notify(new Confirm($dbPayment));
+            event(new PaymentSuccess($dbPayment));
 
             return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
         } else {
@@ -449,6 +451,8 @@ class PaymentController extends Controller
         Log::debug(get_class()."Payment $payment->id Updated Successfully");
 
         alert()->success("We've received your payment", 'Success!');
+
+        event(new PaymentSuccess($payment));
 
         return redirect('/');
     }
