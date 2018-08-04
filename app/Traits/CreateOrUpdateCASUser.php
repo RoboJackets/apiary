@@ -54,12 +54,25 @@ trait CreateOrUpdateCASUser
         $user->last_name = $this->cas->getAttribute('sn');
         $user->save();
 
+        //Initial Role Assignment
         if ($user->wasRecentlyCreated || $user->roles->count() == 0) {
             $role = Role::where('name', 'non-member')->first();
             if ($role) {
                 $user->assignRole($role);
             } else {
                 Log::error(get_class()."Role 'non-member' not found for assignment to $user->uid.");
+            }
+        }
+
+        //Role update based on active status (in case it didn't happen elsewhere)
+        if ($user->is_active && $user->hasRole('non-member')) {
+            Log::info(get_class().": Updating role membership for $user->uid");
+            $user->removeRole('non-member');
+            $role_member = Role::where('name', 'member')->first();
+            if ($role_member && ! $user->hasRole('member')) {
+                $user->assignRole($role_member);
+            } else {
+                Log::error(get_class().": Role 'member' not found for assignment to $user->uid.");
             }
         }
 

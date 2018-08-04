@@ -73,7 +73,6 @@ Vue.component('event-edit-form', require('./components/events/EventEditForm.vue'
 Vue.component('event-create-form', require('./components/events/EventCreateForm.vue'));
 
 // Dues
-
 Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue'));
 Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue'));
 Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue'));
@@ -86,10 +85,16 @@ Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue
 Vue.component('show-payments', require('./components/payments/ShowPayments.vue'));
 
 // Swag
-
 Vue.component('swag-table', require('./components/wrappers/SwagTable.vue'));
 Vue.component('swag-transaction', require('./components/swag/SwagTransaction.vue'));
 Vue.component('distribute-swag', require('./components/swag/DistributeSwag.vue'));
+
+//Teams
+Vue.component('teams-admin-table', require('./components/wrappers/TeamsAdminTable.vue'));
+Vue.component('team-create-form', require('./components/teams/TeamCreateForm.vue'));
+Vue.component('team-edit-form', require('./components/teams/TeamEditForm.vue'));
+Vue.component('team-invite-modal', require('./components/teams/TeamInviteModal.vue'));
+Vue.component('team-membership-button', require('./components/teams/TeamMembershipButton.vue'));
 
 const app = new Vue({
   el: '#app',

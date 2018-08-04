@@ -1,6 +1,6 @@
 <template>
   <div class="custom-radio-input btn-group btn-group-toggle" role="group" :id="id" :class="{ 'is-invalid': isError }" >
-    <label v-for="option in options" class="btn btn-secondary" :class="{ active: option.value === value, 'btn-danger': isError }" >
+    <label v-for="option in options" class="btn btn-secondary" :class="{ active: option.value == value, 'btn-danger': isError }" >
       <input v-model="changedValue" type="radio" :value="option.value" autocomplete="off" @change="change"> {{option.text}}
     </label>
   </div>
