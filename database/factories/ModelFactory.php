@@ -32,8 +32,8 @@ $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
         'name' => $faker->word,
         'eligible_for_shirt' => $faker->numberBetween($min = 0, $max = 1),
         'eligible_for_polo' => $faker->numberBetween($min = 0, $max = 1),
-        'effective_start' => $faker->dateTime(),
-        'effective_end' => $faker->dateTime(),
+        'effective_start' => $faker->dateTimeBetween($startDate = '-5 years', $endDate = '-1 year'),
+        'effective_end' => $faker->dateTimeBetween($startDate = '-11 months', $endDate = 'now'),
         'cost' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
     ];
 });
@@ -62,7 +62,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'first_name' => $faker->firstName,
         'middle_name' => $faker->optional()->lastName,
         'last_name' => $lastName,
-        'preferred_name' => $faker->firstName,
+        'preferred_name' => $faker->optional()->firstName,
         'phone' => $faker->numerify('##########'),
         'emergency_contact_name' => null,
         'emergency_contact_phone' => null,
