@@ -29,7 +29,6 @@ $factory->define(App\FasetVisit::class, function (Faker\Generator $faker) {
 
 $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
     return [
-        'id' => $faker->numberBetween($min = 0, $max = 200),
         'name' => $faker->word,
         'eligible_for_shirt' => $faker->numberBetween($min = 0, $max = 1),
         'eligible_for_polo' => $faker->numberBetween($min = 0, $max = 1),
@@ -41,13 +40,12 @@ $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
 
 $factory->define(App\DuesTransaction::class, function (Faker\Generator $faker) {
     return [
-        'id' => $faker->numberBetween($min = 0, $max = 200),
         'swag_shirt_provided' => $faker->optional()->dateTime,
-        'swag_shirt_providedBy' => User::first() != null ? User::first()->id : null,
+        'swag_shirt_providedBy' => App\User::first() != null ? App\User::first()->id : null,
         'swag_polo_provided' => $faker->optional()->dateTime,
-        'swag_polo_providedBy' => User::first() != null ? User::first()->id : null,
-        'dues_package_id' => $faker->randomElement($array = idMap(DuesPackage::all())),
-        'user_id' => $faker->randomElement($array = idMap(User::all())),
+        'swag_polo_providedBy' => App\User::first() != null ? App\User::first()->id : null,
+        'dues_package_id' => $faker->randomElement($array = idMap(App\DuesPackage::all())),
+        'user_id' => $faker->randomElement($array = idMap(App\User::all())),
     ];
 });
 
@@ -56,7 +54,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     $uid = $faker->bothify('?'.lcfirst($lastName).'##');
 
     return [
-        'id' => $faker->numberBetween($min = 0, $max = 200),
         'uid' => $uid,
         'gtid' => $faker->numerify('#########'),
         'slack_id' => null,
@@ -81,13 +78,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Payment::class, function (Faker\Generator $faker) {
     return [
-        'id' => $faker->numberBetween($min = 0, $max = 200),
         'payable_id' => $faker->numberBetween($min = 0, $max = 200),
         'payable_type' => $faker->randomElement($array = ['App\DuesTransaction', 'App\Event']),
         'amount' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'processing_fee' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'method' => 'square',
-        'recorded_by' => $faker->randomElement($array = idMap(User::all())),
+        'recorded_by' => $faker->randomElement($array = idMap(App\User::all())),
         'checkout_id' => null,
         'client_txn_id' => null,
         'server_txn_id' => null,
