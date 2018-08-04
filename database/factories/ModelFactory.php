@@ -71,7 +71,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'shirt_size' => $faker->randomElement($array = ['s', 'm', 'l', 'xl']),
         'polo_size' => $faker->randomElement($array = ['s', 'm', 'l', 'xl']),
         'gender' => $faker->randomElement($array = ['male', 'female', 'nonbinary', 'none']),
-        'ethnicity' => $faker->randomElement($array = ['white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none']),
+        'ethnicity' => $faker->randomElement($array =
+        ['white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none']),
         'accept_safety_agreement' => $faker->optional()->dateTime,
     ];
 });
