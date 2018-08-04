@@ -12,12 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 10)->create();
-        factory(App\DuesPackage::class, 10)->create();
-        factory(App\DuesTransaction::class, 10)->create()->each(function($duesTransaction) {
-            $duesTransaction->payment()->save(factory(App\Payment::class)->make());
-            $duesTransaction->package();
-        });
-        factory(App\FasetVisit::class, 20)->create();
+        $this->call(TeamsTableSeeder::class);
     }
 }

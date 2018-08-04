@@ -5,7 +5,7 @@
             :on-change="change"
             :filter="filter"
             :options="this.options"
-            placeholder="Enter a First Name"
+            placeholder="Enter a name (any part)"
             :value="value">
     </v-select>
 </template>

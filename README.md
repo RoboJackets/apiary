@@ -1,7 +1,7 @@
 Apiary
 =======
 
-[![GitHub license](https://img.shields.io/github/license/robojackets/apiary.svg?style=flat-square)](https://raw.githubusercontent.com/robojackets/apiary/master/LICENSE) [![StyleCI badge](https://styleci.io/repos/92999743/shield)](https://styleci.io/repos/92999743) [![Documentation generator status](https://img.shields.io/circleci/project/github/RoboJackets/apiary.svg?style=flat-square)](https://circleci.com/gh/RoboJackets/apiary)
+[![GitHub license](https://img.shields.io/github/license/robojackets/apiary.svg?style=flat-square)](https://raw.githubusercontent.com/robojackets/apiary/master/LICENSE) [![Maintainability](https://api.codeclimate.com/v1/badges/73e3a7cd07c32ef15e09/maintainability)](https://codeclimate.com/github/RoboJackets/apiary/maintainability)
 
 Apiary is a tool for managing the membership and operations of RoboJackets, a student organization at Georgia Tech.
 
@@ -91,8 +91,7 @@ For a basic development environment, you'll need to modify the following setting
 | CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
 | CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
 | CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
-| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user                                                                                                                                |
-
+| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user                                                         
 
 #### Installing dependencies
 
