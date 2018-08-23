@@ -127,7 +127,7 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
     });
 });
 
-Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('auth.cas.check');
+Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check');
 
 Route::get('attendance/kiosk', function () {
     return view('attendance.kiosk');

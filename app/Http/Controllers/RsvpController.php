@@ -55,6 +55,52 @@ class RsvpController extends Controller
     }
 
     /**
+     * Stores a user-submitted RSVP resource
+     *
+     * @param Event $event
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public function storeUser(Event $event, Request $request)
+    {
+        // Get the user to store, if present
+        // If not present and required, redirect to CAS
+        $user = auth()->user();
+        if (! $event->allow_anonymous_rsvp && ! Auth::check()) {
+            cas()->authenticate();
+        }
+
+        // Link to FASET visit if the user is logged in
+        if ($request->has('token')) {
+            $source = "email";
+            $token = $request->input('token');
+            $fasetVisit = FasetVisit::where('visit_token', $token)->first();
+
+            if (! is_null($fasetVisit) && ! is_null($user)) {
+                $fasetVisit['user_id'] = $user->id;
+                $fasetVisit->save();
+            }
+        }
+
+        $rsvp = new Rsvp;
+
+        if (! is_null($user)) {
+            $rsvp->user_id = $user->id;
+        }
+
+        $rsvp->ip_address = $request->ip();
+        $rsvp->user_agent = $request->userAgent();
+        $rsvp->event_id = $event->id;
+        $rsvp->source = ($source) ?: $request->input('source');
+        $rsvp->response = 'yes';
+
+        $rsvp->saveOrFail();
+
+        return view('giConfirmTemp');
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -101,39 +147,5 @@ class RsvpController extends Controller
             return response()->json(['status' => 'error',
                 'message' => 'event_not_found', ], 422);
         }
-    }
-
-    public function oneClickCreate(Event $event, Request $request)
-    {
-        $user = auth()->user();
-        if (! $event->allow_anonymous_rsvp && ! Auth::check()) {
-            cas()->authenticate();
-        }
-
-        if (isset($request->source)) {
-            $source = $request->source;
-            $fasetVisit = FasetVisit::where('visit_token', $source)->first();
-
-            if (! is_null($fasetVisit) && ! is_null($user)) {
-                $fasetVisit['user_id'] = $user->id;
-                $fasetVisit->save();
-            }
-        }
-
-        $rsvp = new Rsvp;
-
-        if (! is_null($user)) {
-            $rsvp->user_id = $user->id;
-        }
-
-        $rsvp->ip_address = $request->ip();
-        $rsvp->user_agent = $request->userAgent();
-        $rsvp->event_id = $event->id;
-        $rsvp->source = $request->source;
-        $rsvp->response = 'yes';
-
-        $rsvp->saveOrFail();
-
-        return view('giConfirmTemp');
     }
 }
