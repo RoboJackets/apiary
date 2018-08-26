@@ -9,15 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class FasetVisitController extends Controller
+class RecruitingVisitController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-faset-visits', ['only' => ['index']]);
-        $this->middleware('permission:create-faset-visits', ['only' => ['store']]);
-        $this->middleware('permission:read-faset-visits|read-faset-visits-own', ['only' => ['show']]);
-        $this->middleware('permission:update-faset-visits|update-faset-visits-own', ['only' => ['update']]);
-        $this->middleware('permission:update-faset-visits', ['only' => ['dedup']]);
+        $this->middleware('permission:read-recruiting-visits', ['only' => ['index']]);
+        $this->middleware('permission:create-recruiting-visits', ['only' => ['store']]);
+        $this->middleware('permission:read-recruiting-visits|read-recruiting-visits-own', ['only' => ['show']]);
+        $this->middleware('permission:update-recruiting-visits|update-recruiting-visits-own', ['only' => ['update']]);
+        $this->middleware('permission:update-recruiting-visits', ['only' => ['dedup']]);
     }
 
     public function store(Request $request)
@@ -73,8 +73,8 @@ class FasetVisitController extends Controller
         }
 
         $requestedUser = $visit->user;
-        //Enforce users only viewing their own FasetVisit (read-faset-visits-own)
-        if ($requestingUser->cant('read-faset-visits') && $requestingUser->id != $requestedUser->id) {
+        //Enforce users only viewing their own FasetVisit (read-recruiting-visits-own)
+        if ($requestingUser->cant('read-recruiting-visits') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
                 'message' => 'Forbidden - You do not have permission to view this FasetVisit.', ], 403);
         }
@@ -105,7 +105,7 @@ class FasetVisitController extends Controller
         $requestingUser = $request->user();
         $requestedUser = $visit->user;
         //Enforce users only updating themselves (update-users-own)
-        if ($requestingUser->cant('update-faset-visits') && $requestingUser->id != $requestedUser->id) {
+        if ($requestingUser->cant('update-recruiting-visits') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
                 'message' => 'Forbidden - You do not have permission to update this FasetVisit.', ], 403);
         }

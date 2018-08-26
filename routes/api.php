@@ -18,12 +18,12 @@ Route::middleware('auth:api')->get('v1/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token', 'auth.cas.force']], function () {
-    //FASET
-    Route::post('faset', 'FasetVisitController@store');
-    Route::get('faset', 'FasetVisitController@index');
-    Route::get('faset/dedup', 'FasetVisitController@dedup');
-    Route::get('faset/{id}', 'FasetVisitController@show');
-    Route::put('faset/{id}', 'FasetVisitController@update');
+    //Recruiting (Formerly known as FASET)
+    Route::post('recruiting', 'RecruitingVisitController@store');
+    Route::get('recruiting', 'RecruitingVisitController@index');
+    Route::get('recruiting/dedup', 'RecruitingVisitController@dedup');
+    Route::get('recruiting/{id}', 'RecruitingVisitController@show');
+    Route::put('recruiting/{id}', 'RecruitingVisitController@update');
 
     //Notifications
     Route::get('notification/send', 'NotificationController@sendNotification');

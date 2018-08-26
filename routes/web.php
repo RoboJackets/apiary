@@ -14,8 +14,8 @@
 Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::get('/', 'DashboardController@index')->name('home');
 
-    Route::get('faset', function () {
-        return view('faset/faset');
+    Route::get('recruiting', function () {
+        return view('recruiting/form');
     });
 
     Route::get('profile', function () {
@@ -45,14 +45,14 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
     })->name('logout');
 
     Route::prefix('admin')->group(function () {
-        Route::prefix('faset')->group(function () {
+        Route::prefix('recruiting')->group(function () {
             Route::get('/', function () {
-                return view('faset/fasetadmin');
-            })->name('fasetAdmin');
+                return view('recruiting/recruitingadmin');
+            })->name('recruitingAdmin');
 
             Route::get('{id}', function ($id) {
-                return view('faset/fasetedit', ['id' => $id]);
-            })->name('fasetEdit');
+                return view('recruiting/fasetedit', ['id' => $id]);
+            })->name('recruitingEdit');
         });
 
         Route::prefix('users')->group(function () {
