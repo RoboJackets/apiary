@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
             })->name('recruitingAdmin');
 
             Route::get('{id}', function ($id) {
-                return view('recruiting/fasetedit', ['id' => $id]);
+                return view('recruiting/recruitingedit', ['id' => $id]);
             })->name('recruitingEdit');
         });
 

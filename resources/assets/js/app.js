@@ -54,8 +54,8 @@ Vue.component('user-lookup', require('./components/fields/UserLookup.vue'));
 
 // Large Scale Components
 Vue.component('datatable', require('./components/Datatable.vue'));
-Vue.component('faset-admin-table', require('./components/wrappers/FasetAdminTable.vue'));
-Vue.component('faset-edit-form', require('./components/FasetEditForm.vue'));
+Vue.component('recruiting-admin-table', require('./components/wrappers/RecruitingAdminTable.vue'));
+Vue.component('recruiting-edit-form', require('./components/RecruitingEditForm.vue'));
 Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue'));
 Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
 Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));

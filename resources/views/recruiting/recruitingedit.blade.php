@@ -1,16 +1,16 @@
 @extends('layouts/app')
 
 @section('title')
-FASET Admin | config('app.name') }}
+Recruiting Admin | config('app.name') }}
 @endsection
 
 @section('content')
 @component('layouts/title')
-  Edit FASET Response
+  Edit Recruiting Response
 @endcomponent
 
-<a href="{{route('fasetAdmin')}}">Back to List</a>
+<a href="{{route('recruitingAdmin')}}">Back to List</a>
 
-<faset-edit-form faset-visit-id="{{$id}}"></faset-edit-form>
+<recruiting-edit-form recruiting-visit-id="{{$id}}"></recruiting-edit-form>
 
 @endsection

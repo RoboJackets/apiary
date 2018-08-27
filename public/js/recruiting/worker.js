@@ -6,7 +6,7 @@ function upload(data) {
     let xhr = new XMLHttpRequest();
     while (xhr.status !== 200) {
         xhr = new XMLHttpRequest();
-        xhr.open("POST", "/api/v1/faset", false);
+        xhr.open("POST", "/api/v1/recruiting", false);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.setRequestHeader("Accept", "application/json");
         xhr.timeout = 5000;
