@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\NotificationTemplate;
 
 class NotificationTemplateController extends Controller
 {
@@ -13,17 +14,8 @@ class NotificationTemplateController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $nt = NotificationTemplate::all();
+        return response()->json(['status' => 'success', 'templates' => $nt]);
     }
 
     /**
@@ -34,7 +26,20 @@ class NotificationTemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'subject' => 'required|string',
+            'body_markdown' => 'required',
+        ]);
+
+        $nt = new NotificationTemplate();
+        $nt->name = $request->input('name');
+        $nt->subject = $request->input('subject');
+        $nt->body_markdown = $request->input('body_markdown');
+        $nt->created_by = $request->user()->id;
+        $nt->save();
+
+        return response()->json(['status' => 'success', 'template' => $nt]);
     }
 
     /**
@@ -45,18 +50,12 @@ class NotificationTemplateController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $nt = NotificationTemplate::find($id);
+        if ($nt) {
+            return response()->json(['status' => 'success', 'template' => $nt]);
+        } else {
+            return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
+        }
     }
 
     /**
@@ -68,7 +67,19 @@ class NotificationTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $nt = NotificationTemplate::find($id);
+        if (!$nt) {
+            return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
+        }
+
+        $this->validate($request, [
+            'name' => 'string',
+            'subject' => 'string',
+        ]);
+
+        $nt->update($request->all());
+
+        return response()->json(['status' => 'success', 'template' => $nt]);
     }
 
     /**
@@ -79,6 +90,12 @@ class NotificationTemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $nt = NotificationTemplate::find($id);
+        if ($nt) {
+            $nt->delete();
+            return response()->json(['status' => 'success', 'message' => 'model_deleted']);
+        } else {
+            return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
+        }
     }
 }

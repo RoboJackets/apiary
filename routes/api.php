@@ -26,8 +26,12 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     Route::put('recruiting/{id}', 'RecruitingVisitController@update');
 
     //Notifications
-    Route::get('notification/send', 'NotificationController@sendNotification');
-    Route::post('notification/manual', 'NotificationController@sendNotificationManual');
+    Route::group(['prefix' => 'notification', 'as' => 'notification.'], function() {
+        Route::get('send', 'NotificationController@sendNotification')->name('send');
+        Route::post('manual', 'NotificationController@sendNotificationManual')->name('manual');
+
+        Route::resource('templates', 'NotificationTemplateController', ['except' => ['create', 'edit']]);
+    });
 
     //Misc Resources
     Route::post('attendance/search', 'AttendanceController@search')->name('attendance.search');
