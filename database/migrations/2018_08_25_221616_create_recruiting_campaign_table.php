@@ -21,6 +21,7 @@ class CreateRecruitingCampaignTable extends Migration
 
             $table->unsignedInteger('created_by');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('notification_template_id')->references('id')->on('notification_templates');
