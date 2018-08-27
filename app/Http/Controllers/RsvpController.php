@@ -126,6 +126,8 @@ class RsvpController extends Controller
             $rsvp->user_id = $user->id;
         }
 
+        $rsvp->ip_address = $request->ip();
+        $rsvp->user_agent = $request->userAgent();
         $rsvp->event_id = $event->id;
         $rsvp->source = $request->source;
         $rsvp->response = 'yes';
