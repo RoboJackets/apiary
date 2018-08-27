@@ -21,6 +21,7 @@ class CreateNotificationTemplatesTable extends Migration
 
             $table->unsignedInteger('created_by');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('created_by')->references('id')->on('users');
         });
