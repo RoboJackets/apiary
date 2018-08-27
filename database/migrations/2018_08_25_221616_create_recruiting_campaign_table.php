@@ -13,12 +13,13 @@ class CreateRecruitingCampaignTable extends Migration
      */
     public function up()
     {
-        Schema::create('recruiting_campaign', function (Blueprint $table) {
+        Schema::create('recruiting_campaigns', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('notification_template_id');
+            $table->enum('status', ['new', 'in_progress', 'completed']);
+            $table->unsignedInteger('notification_template_id')->nullable();
 
-            $table->integer('created_by');
+            $table->unsignedInteger('created_by');
             $table->timestamps();
 
             $table->foreign('created_by')->references('id')->on('users');
@@ -33,6 +34,6 @@ class CreateRecruitingCampaignTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recruiting_campaign');
+        Schema::dropIfExists('recruiting_campaigns');
     }
 }
