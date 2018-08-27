@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Notification;
 use Carbon\Carbon;
-use App\FasetVisit;
+use App\RecruitingVisit;
 use Illuminate\Http\Request;
 use App\Notifications\GeneralInterestNotification;
 
@@ -18,7 +18,7 @@ class NotificationController extends Controller
     public function sendNotification()
     {
         $hours = 0;
-        FasetVisit::chunk(30, function ($chunk) use (&$hours) {
+        RecruitingVisit::chunk(30, function ($chunk) use (&$hours) {
             $when = Carbon::now()->addHours($hours);
             Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
             $hours++;
@@ -41,10 +41,10 @@ class NotificationController extends Controller
         foreach ($chunks as $chunk) {
             $when = Carbon::now()->addHours($hours);
             foreach ($chunk as $address) {
-                $visit = FasetVisit::where('faset_email', $address)->first();
+                $visit = RecruitingVisit::where('recruiting_email', $address)->first();
                 if (isset($visit->id)) {
                     Notification::send($visit, (new GeneralInterestNotification())->delay($when));
-                    $found[] = $visit->faset_email;
+                    $found[] = $visit->recruiting_email;
                 } else {
                     $notfound[] = $address;
                 }

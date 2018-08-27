@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use App\FasetVisit;
-use App\FasetResponse;
+use App\RecruitingVisit;
+use App\RecruitingResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -24,8 +24,8 @@ class RecruitingVisitController extends Controller
     {
         Log::debug(get_class().': Pre-Validation Data', $request->all());
         $validator = Validator::make($request->all(), [
-            'faset_email' => 'required|email|max:255',
-            'faset_name' => 'required|max:255',
+            'recruiting_email' => 'required|email|max:255',
+            'recruiting_name' => 'required|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -34,25 +34,25 @@ class RecruitingVisitController extends Controller
 
         try {
             DB::beginTransaction();
-            $personInfo = $request->only(['faset_email', 'faset_name']);
+            $personInfo = $request->only(['recruiting_email', 'recruiting_name']);
             Log::debug(get_class().': New Visit Data (Pre-Store)', $personInfo);
-            $visit = FasetVisit::create($personInfo);
+            $visit = RecruitingVisit::create($personInfo);
 
-            $fasetResponses = $request->only('faset_responses')['faset_responses'];
-            Log::debug(get_class().': New Visit Response Data (Pre-Store)', $fasetResponses);
+            $recruitingResponses = $request->only('recruiting_responses')['recruiting_responses'];
+            Log::debug(get_class().': New Visit Response Data (Pre-Store)', $recruitingResponses);
 
-            foreach ($fasetResponses as $response) {
-                $visit->fasetResponses()->create(['response' => $response]);
+            foreach ($recruitingResponses as $response) {
+                $visit->recruitingResponses()->create(['response' => $response]);
             }
 
             DB::commit();
-            Log::info(get_class().'New FASET Visit Logged:', ['email' => $visit->faset_email]);
+            Log::info(get_class().'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {
             Bugsnag::notifyException($e);
             DB::rollback();
-            Log::error('New FASET visit save failed', ['error' => $e->getMessage()]);
+            Log::error('New Recruiting visit save failed', ['error' => $e->getMessage()]);
 
             return response()->json(['status' => 'error'])->setStatusCode(500);
         }
@@ -61,22 +61,22 @@ class RecruitingVisitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id FasetVisit ID Number
+     * @param  int $id RecruitingVisit ID Number
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
     {
         $requestingUser = $request->user();
-        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+        $visit = RecruitingVisit::with(['recruitingResponses'])->find($id);
         if (! $visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
 
         $requestedUser = $visit->user;
-        //Enforce users only viewing their own FasetVisit (read-recruiting-visits-own)
+        //Enforce users only viewing their own RecruitingVisit (read-recruiting-visits-own)
         if ($requestingUser->cant('read-recruiting-visits') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to view this FasetVisit.', ], 403);
+                'message' => 'Forbidden - You do not have permission to view this RecruitingVisit.', ], 403);
         }
 
         return response()->json(['status' => 'success', 'visit' => $visit]);
@@ -86,18 +86,18 @@ class RecruitingVisitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id FasetVisit Id
+     * @param  int $id RecruitingVisit Id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //Update only included fields
         $this->validate($request, [
-            'faset_name' => 'max:127',
-            'faset_email' => 'email|max:127',
+            'recruiting_name' => 'max:127',
+            'recruiting_email' => 'email|max:127',
         ]);
 
-        $visit = FasetVisit::find($id);
+        $visit = RecruitingVisit::find($id);
         if (! $visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
@@ -107,12 +107,12 @@ class RecruitingVisitController extends Controller
         //Enforce users only updating themselves (update-users-own)
         if ($requestingUser->cant('update-recruiting-visits') && $requestingUser->id != $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this FasetVisit.', ], 403);
+                'message' => 'Forbidden - You do not have permission to update this RecruitingVisit.', ], 403);
         }
 
         $visit->update($request->all());
 
-        $visit = FasetVisit::with(['fasetResponses'])->find($id);
+        $visit = RecruitingVisit::with(['recruitingResponses'])->find($id);
 
         if ($visit) {
             return response()->json(['status' => 'success', 'visit' => $visit]);
@@ -123,26 +123,26 @@ class RecruitingVisitController extends Controller
 
     public function index(Request $request)
     {
-        $visits = FasetVisit::all();
+        $visits = RecruitingVisit::all();
 
         return response()->json(['status' => 'success', 'visits' => $visits]);
     }
 
     public function dedup()
     {
-        $visits = FasetVisit::all();
+        $visits = RecruitingVisit::all();
         $emails = [];
         foreach ($visits as $visit) {
             echo "Processing Visit $visit->id<br/>\n";
-            if (! in_array($visit->faset_email, $emails)) {
-                $emails[] = $visit->faset_email;
+            if (! in_array($visit->recruiting_email, $emails)) {
+                $emails[] = $visit->recruiting_email;
             } else {
                 echo "Deleting Visit $visit->id<br/>\n";
-                $count = FasetResponse::where('faset_visit_id', $visit->id)->count();
+                $count = RecruitingResponse::where('recruiting_visit_id', $visit->id)->count();
                 echo "Deleting $count Responses for Visit $visit->id<br/>\n";
-                foreach ($visit->fasetResponses as $response) {
+                foreach ($visit->recruitingResponses as $response) {
                     echo "Deleting Response $response->response<br/>\n";
-                    $deletedRows = FasetResponse::where('faset_visit_id', $visit->id)->delete();
+                    $deletedRows = RecruitingResponse::where('recruiting_visit_id', $visit->id)->delete();
                 }
                 $visit->delete();
             }

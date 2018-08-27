@@ -66,11 +66,11 @@ class User extends Authenticatable
     protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
 
     /**
-     *  Get the FASET visits associated with this user.
+     *  Get the recruiting visits associated with this user.
      */
-    public function fasetVisits()
+    public function recruitingVisits()
     {
-        return $this->hasMany('App\FasetVisit');
+        return $this->hasMany('App\RecruitingVisit');
     }
 
     /**

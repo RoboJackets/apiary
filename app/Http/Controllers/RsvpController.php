@@ -6,7 +6,7 @@ use Auth;
 use App\Rsvp;
 use App\User;
 use App\Event;
-use App\FasetVisit;
+use App\RecruitingVisit;
 use Illuminate\Http\Request;
 
 class RsvpController extends Controller
@@ -71,15 +71,15 @@ class RsvpController extends Controller
             cas()->authenticate();
         }
 
-        // Link to FASET visit if the user is logged in
+        // Link to recruiting visit if the user is logged in
         if ($request->has('token')) {
             $source = "email";
             $token = $request->input('token');
-            $fasetVisit = FasetVisit::where('visit_token', $token)->first();
+            $recruitingVisit = RecruitingVisit::where('visit_token', $token)->first();
 
-            if (! is_null($fasetVisit) && ! is_null($user)) {
-                $fasetVisit['user_id'] = $user->id;
-                $fasetVisit->save();
+            if (! is_null($recruitingVisit) && ! is_null($user)) {
+                $recruitingVisit['user_id'] = $user->id;
+                $recruitingVisit->save();
             }
         }
 
