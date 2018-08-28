@@ -96,6 +96,12 @@ Vue.component('team-edit-form', require('./components/teams/TeamEditForm.vue'));
 Vue.component('team-invite-modal', require('./components/teams/TeamInviteModal.vue'));
 Vue.component('team-membership-button', require('./components/teams/TeamMembershipButton.vue'));
 
+// Notifications
+Vue.component('notification-templates-admin-table',
+  require('./components/notification/templates/NotificationTemplatesAdminTable.vue'));
+Vue.component('notification-templates-create-form',
+  require('./components/notification/templates/NotificationTemplatesCreateForm.vue'));
+
 const app = new Vue({
   el: '#app',
 });

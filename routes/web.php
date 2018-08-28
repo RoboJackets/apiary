@@ -124,6 +124,16 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
                 return view('attendance.admin');
             })->name('attendance.admin');
         });
+
+        Route::prefix('notification')->name('admin.notification.')->group(function () {
+           Route::get('templates', function() {
+               return view('notification.templates.index');
+           })->name('templates.index');
+
+            Route::get('templates/create', function() {
+                return view('notification.templates.create');
+            })->name('templates.create');
+        });
     });
 });
 
