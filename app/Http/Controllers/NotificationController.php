@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Notification;
+use App\Mail\DatabaseMailable;
+use Mail;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;
@@ -33,29 +34,24 @@ class NotificationController extends Controller
             return response()->json(['status' => 'error', 'error' => "Missing parameter 'emails'"], 400);
         }
 
+        $template = $request->input('template_id');
+
         $hours = 0;
-        $found = [];
-        $notfound = [];
+        $queued = [];
         $emails = $request->input('emails');
         $chunks = array_chunk($emails, 30);
         foreach ($chunks as $chunk) {
             $when = Carbon::now()->addHours($hours);
             foreach ($chunk as $address) {
-                $visit = RecruitingVisit::where('recruiting_email', $address)->first();
-                if (isset($visit->id)) {
-                    Notification::send($visit, (new GeneralInterestNotification())->delay($when));
-                    $found[] = $visit->recruiting_email;
-                } else {
-                    $notfound[] = $address;
-                }
+                Mail::to($address)->send(new DatabaseMailable($template, null));
+                $queued[] = $address;
             }
             $hours++;
         }
 
         return response()->json([
             'status' => 'success',
-            'found' => ['count' => count($found), 'emails' => $found],
-            'notfound' => ['count' => count($notfound), 'emails' => $notfound],
+            'queued' => ['count' => count($queued), 'emails' => $queued],
         ]);
     }
 }
