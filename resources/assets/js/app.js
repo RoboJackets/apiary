@@ -101,6 +101,8 @@ Vue.component('notification-templates-admin-table',
   require('./components/notification/templates/NotificationTemplatesAdminTable.vue'));
 Vue.component('notification-templates-create-form',
   require('./components/notification/templates/NotificationTemplatesCreateForm.vue'));
+Vue.component('notification-templates-edit-form',
+  require('./components/notification/templates/NotificationTemplatesEditForm.vue'));
 
 const app = new Vue({
   el: '#app',

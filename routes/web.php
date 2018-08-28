@@ -126,13 +126,21 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
         });
 
         Route::prefix('notification')->name('admin.notification.')->group(function () {
-           Route::get('templates', function() {
-               return view('notification.templates.index');
-           })->name('templates.index');
 
-            Route::get('templates/create', function() {
-                return view('notification.templates.create');
-            })->name('templates.create');
+            // Templates
+            Route::prefix('templates')->name('templates.')->group(function () {
+                Route::get('/', function () {
+                    return view('notification.templates.index');
+                })->name('index');
+
+                Route::get('create', function () {
+                    return view('notification.templates.create');
+                })->name('create');
+
+                Route::get('{id}', function ($id) {
+                    return view('notification.templates.edit', ['id' => $id]);
+                })->name('edit');
+            });
         });
     });
 });
