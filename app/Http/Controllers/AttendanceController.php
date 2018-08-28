@@ -53,18 +53,18 @@ class AttendanceController extends Controller
         unset($request['includeName']);
 
         // Variables for comparison below
-        $today = date('Y-m-d');
+        $date = $request->input('created_at');
         $gtid = $request->input('gtid');
 
         try {
-            $attTodayQ = Attendance::where($request->all())->whereDate('created_at', $today);
-            $attTodayCount = $attTodayQ->count();
-            if ($attTodayCount > 0) {
-                Log::debug(get_class().": Found a swipe today ($today) for $gtid - ignoring.");
-                $att = $attTodayQ->first();
+            $attExistingQ = Attendance::where($request->all())->whereDate('created_at', $date);
+            $attExistingCount = $attExistingQ->count();
+            if ($attExistingCount > 0) {
+                Log::debug(get_class().": Found a swipe on $date for $gtid - ignoring.");
+                $att = $attExistingQ->first();
                 $code = 200;
             } else {
-                Log::debug(get_class().": No swipe yet today ($today) for $gtid - saving.");
+                Log::debug(get_class().": No swipe yet on $date for $gtid - saving.");
                 $att = Attendance::create($request->all());
                 $code = 201;
             }
