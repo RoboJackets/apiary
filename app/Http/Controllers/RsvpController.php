@@ -92,12 +92,12 @@ class RsvpController extends Controller
         $rsvp->ip_address = $request->ip();
         $rsvp->user_agent = $request->userAgent();
         $rsvp->event_id = $event->id;
-        $rsvp->source = ($source) ?: $request->input('source');
+        $rsvp->source = (isset($source)) ? $source : $request->input('source');
         $rsvp->response = 'yes';
 
         $rsvp->saveOrFail();
 
-        return view('giConfirmTemp');
+        return view('rsvp.confirmation')->with(['event' => $event]);
     }
 
     /**
