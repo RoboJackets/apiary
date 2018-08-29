@@ -3,22 +3,26 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Mail\DatabaseMailable as Mailable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Mail\GeneralInterestInvite as Mailable;
 
-class GeneralInterestNotification extends Notification implements ShouldQueue
+class DatabaseNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $template_id;
+    public $metadata;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($template_id, $metadata)
     {
-        //
+        $this->template_id = $template_id;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -40,15 +44,7 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        // Set data for inclusion in the view
-        $token = $notifiable->recruitingVisit->visit_token;
-        $email = $notifiable->email_address;
-
-        // Update the notifiable to show it has been sent
-        $notifiable->notified_at = date('Y-m-d H:i:s', time());
-        $notifiable->save();
-
-        return (new Mailable($token))->to($email);
+        return (new Mailable($this->template_id, $this->metadata))->to($notifiable->email);
     }
 
     /**

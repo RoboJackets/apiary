@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>FASET Form | MyRoboJackets</title>
+    <title>Recruiting Form | MyRoboJackets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 
     @include('favicon')
   </head>
-  <body id="faset">
+  <body id="recruiting">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <img class="mt-2 px-5 img-fluid" src="{{ asset('img/faset_form_header.svg') }}">
+          <img class="mt-2 px-5 img-fluid" src="{{ asset('img/recruiting_form_header.svg') }}">
           <hr class="my-4">
         </div>
       </div>
@@ -19,14 +19,14 @@
       <div class="row justify-content-center">
         <form id="form" class="col-sm-8" @submit.prevent="submit" autocomplete="off">
           <div class="form-group">
-            <label for="faset-name">Name</label>
-            <input type="text" class="form-control" id="faset-name" name="faset-name" autofocus placeholder="George Burdell" autocomplete="nope" required>
+            <label for="recruiting-name">Name</label>
+            <input type="text" class="form-control" id="recruiting-name" name="recruiting-name" autofocus placeholder="George Burdell" autocomplete="nope" required>
             <small class="form-text text-muted">First and last name</small>
           </div>
 
           <div class="form-group">
-            <label for="faset-email">Email</label>
-            <input type="email" class="form-control" id="faset-email" name="faset-email" placeholder="example@gatech.edu" autocomplete="nope" required>
+            <label for="recruiting-email">Email</label>
+            <input type="email" class="form-control" id="recruiting-email" name="recruiting-email" placeholder="example@gatech.edu" autocomplete="nope" required>
           </div>
 
           <fieldset class="form-group">
@@ -84,7 +84,7 @@
     </div>
 
     <script src="{{ mix('/js/app.js') }}"></script>
-    <script src="/js/faset/vue.js"></script>
+    <script src="/js/recruiting/vue.js"></script>
   </body>
 </html>
 

@@ -18,10 +18,10 @@ class GeneralInterestInvite extends Mailable
      *
      * @return void
      */
-    public function __construct($vist_token)
+    public function __construct($visit_token)
     {
         $this->app_url = url('/');
-        $this->visit_token = $vist_token;
+        $this->visit_token = $visit_token;
     }
 
     /**
