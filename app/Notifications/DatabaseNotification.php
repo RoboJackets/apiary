@@ -3,9 +3,9 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Mail\DatabaseMailable as Mailable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Mail\DatabaseMailable as Mailable;
 
 class DatabaseNotification extends Notification implements ShouldQueue
 {

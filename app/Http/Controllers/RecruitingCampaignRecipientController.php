@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\RecruitingCampaignRecipient;
 use Illuminate\Http\Request;
+use App\RecruitingCampaignRecipient;
 
 class RecruitingCampaignRecipientController extends Controller
 {
@@ -15,6 +15,7 @@ class RecruitingCampaignRecipientController extends Controller
     public function index()
     {
         $rcr = RecruitingCampaignRecipient::all();
+
         return response()->json(['status' => 'success', 'recipients' => $rcr]);
     }
 

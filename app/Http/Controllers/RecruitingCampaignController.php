@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Notifications\GeneralInterestNotification;
 use Log;
 use Notification;
 use Carbon\Carbon;
-use App\RecruitingCampaign;
-use App\RecruitingCampaignRecipient;
 use App\RecruitingVisit;
+use App\RecruitingCampaign;
 use Illuminate\Http\Request;
+use App\RecruitingCampaignRecipient;
+use App\Notifications\GeneralInterestNotification;
 
 class RecruitingCampaignController extends Controller
 {
@@ -26,6 +26,7 @@ class RecruitingCampaignController extends Controller
     public function index()
     {
         $rc = RecruitingCampaign::all();
+
         return response()->json(['status' => 'success', 'campaigns' => $rc]);
     }
 
@@ -41,7 +42,7 @@ class RecruitingCampaignController extends Controller
             'name' => 'required|string',
             'notification_template_id' => 'numeric|exists:notification_templates,id',
             'start_date' => 'date|required',
-            'end_date' => 'date|required'
+            'end_date' => 'date|required',
         ]);
 
         // Store the campaign
@@ -59,6 +60,7 @@ class RecruitingCampaignController extends Controller
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
             $errorMessage = $e->errorInfo[2];
+
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
@@ -72,7 +74,7 @@ class RecruitingCampaignController extends Controller
         $added_recipient_emails = [];
         foreach ($visits as $v) {
             if (in_array($v->recruiting_email, $added_recipient_emails)) {
-                Log::info(get_class() . ": Email '$v->recruiting_email' already in the list. Ignoring.'");
+                Log::info(get_class().": Email '$v->recruiting_email' already in the list. Ignoring.'");
             } else {
                 // Add new recipient
                 $rcr = new RecruitingCampaignRecipient();
@@ -87,9 +89,8 @@ class RecruitingCampaignController extends Controller
 
                 // Add to array for dedup
                 $added_recipient_emails[] = $v->recruiting_email;
-                Log::info(get_class(). ": Added email '$v->recruiting_email' as recipient for campaign $rc->id");
+                Log::info(get_class().": Added email '$v->recruiting_email' as recipient for campaign $rc->id");
             }
-
         }
 
         $db_rc = RecruitingCampaign::where('id', $rc->id)->with('recipients')->first();
@@ -101,7 +102,7 @@ class RecruitingCampaignController extends Controller
     }
 
     /**
-     * Create queue entries for email send
+     * Create queue entries for email send.
      *
      * @param $id integer
      * @return \Illuminate\Http\Response
@@ -112,9 +113,9 @@ class RecruitingCampaignController extends Controller
         $rc = RecruitingCampaign::where('id', $id)->first();
         $rcr_q = RecruitingCampaignRecipient::where('recruiting_campaign_id', $id)->whereNull('notified_at');
         $rcr_count = $rcr_q->count();
-        $rcr_chunk = $rcr_q->chunk(30, function($chunk) use (&$delay_hours){
+        $rcr_chunk = $rcr_q->chunk(30, function ($chunk) use (&$delay_hours) {
             $when = Carbon::now()->addHours($delay_hours);
-            Log::debug(get_class() . ": Scheduling chunk for delivery in $delay_hours hours at $when");
+            Log::debug(get_class().": Scheduling chunk for delivery in $delay_hours hours at $when");
 
             // This accepts an array ($chunk) of "Notifiable" models, so it's 30 at once like M A G I C
             Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
@@ -122,6 +123,7 @@ class RecruitingCampaignController extends Controller
             //Bump to an additional hour for the next chunk
             $delay_hours++;
         });
+
         return response()->json(['status' => 'success', 'queue_result' => ['recipients' => $rcr_count, 'chunks' => $delay_hours]]);
     }
 
@@ -157,6 +159,7 @@ class RecruitingCampaignController extends Controller
     public function destroy(RecruitingCampaign $recruitingCampaign)
     {
         $recruitingCampaign->delete();
+
         return response()->json(['status' => 'success'], 201);
     }
 }

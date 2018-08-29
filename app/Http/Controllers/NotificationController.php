@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\DatabaseMailable;
 use Mail;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;
+use App\Mail\DatabaseMailable;
 use App\Notifications\GeneralInterestNotification;
 
 class NotificationController extends Controller

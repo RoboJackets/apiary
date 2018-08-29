@@ -28,7 +28,7 @@ class RecruitingCampaign extends Model
     }
 
     /**
-     * Get the recipients for this campaign
+     * Get the recipients for this campaign.
      */
     public function recipients()
     {

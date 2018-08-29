@@ -1,7 +1,7 @@
 <?php
 
-use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -33,8 +33,8 @@ class ChangeFasetToRecruiting extends Migration
         }
 
         // Rename the tables
-        Schema::rename("faset_visits", "recruiting_visits");
-        Schema::rename("faset_responses", "recruiting_responses");
+        Schema::rename('faset_visits', 'recruiting_visits');
+        Schema::rename('faset_responses', 'recruiting_responses');
 
         // Put the foreign key constraint back
         Schema::table('recruiting_responses', function (Blueprint $table) {
@@ -68,8 +68,8 @@ class ChangeFasetToRecruiting extends Migration
         }
 
         // Put the tables back first
-        Schema::rename("recruiting_visits", "faset_visits");
-        Schema::rename("recruiting_responses", "faset_responses");
+        Schema::rename('recruiting_visits', 'faset_visits');
+        Schema::rename('recruiting_responses', 'faset_responses');
 
         // Put the foreign key constraint back
         Schema::table('faset_responses', function (Blueprint $table) {

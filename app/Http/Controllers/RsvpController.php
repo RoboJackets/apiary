@@ -55,7 +55,7 @@ class RsvpController extends Controller
     }
 
     /**
-     * Stores a user-submitted RSVP resource
+     * Stores a user-submitted RSVP resource.
      *
      * @param Event $event
      * @param Request $request
@@ -73,7 +73,7 @@ class RsvpController extends Controller
 
         // Link to recruiting visit if the user is logged in
         if ($request->has('token')) {
-            $source = "email";
+            $source = 'email';
             $token = $request->input('token');
             $recruitingVisit = RecruitingVisit::where('visit_token', $token)->first();
 

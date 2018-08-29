@@ -15,6 +15,7 @@ class NotificationTemplateController extends Controller
     public function index()
     {
         $nt = NotificationTemplate::all();
+
         return response()->json(['status' => 'success', 'templates' => $nt]);
     }
 
@@ -68,7 +69,7 @@ class NotificationTemplateController extends Controller
     public function update(Request $request, $id)
     {
         $nt = NotificationTemplate::find($id);
-        if (!$nt) {
+        if (! $nt) {
             return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
         }
 
@@ -93,6 +94,7 @@ class NotificationTemplateController extends Controller
         $nt = NotificationTemplate::find($id);
         if ($nt) {
             $nt->delete();
+
             return response()->json(['status' => 'success', 'message' => 'model_deleted']);
         } else {
             return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);

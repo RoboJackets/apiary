@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('v1/user', function (Request $request) {
 Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token', 'auth.cas.force']], function () {
 
     // Recruiting (Formerly known as FASET)
-    Route::group(['prefix' => 'recruiting', 'as' => 'recruiting.'], function() {
+    Route::group(['prefix' => 'recruiting', 'as' => 'recruiting.'], function () {
         Route::post('/', 'RecruitingVisitController@store')->name('store');
         Route::get('/', 'RecruitingVisitController@index')->name('index');
         Route::resource('campaigns/recipients', 'RecruitingCampaignController', ['except' => ['create', 'edit']]);
@@ -32,7 +32,7 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     });
 
     // Notifications
-    Route::group(['prefix' => 'notification', 'as' => 'notification.'], function() {
+    Route::group(['prefix' => 'notification', 'as' => 'notification.'], function () {
         Route::get('send', 'NotificationController@sendNotification')->name('send');
         Route::post('manual', 'NotificationController@sendNotificationManual')->name('manual');
 
