@@ -1,5 +1,5 @@
 @component('mail::message')
-_You are receiving this email because you expressed interest in joining RoboJackets, the competitive robotics organization at Georgia Tech._
+_You are receiving this email because you expressed interest in joining RoboJackets, the student organization for competitive robotics at Georgia Tech._
 
 Hello future RoboJackets,
 
