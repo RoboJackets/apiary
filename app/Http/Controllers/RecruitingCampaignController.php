@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\GeneralInterestNotification;
 use Log;
+use Notification;
+use Carbon\Carbon;
 use App\RecruitingCampaign;
 use App\RecruitingCampaignRecipient;
 use App\RecruitingVisit;
@@ -10,6 +13,11 @@ use Illuminate\Http\Request;
 
 class RecruitingCampaignController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:send-notifications']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -90,6 +98,26 @@ class RecruitingCampaignController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
+    }
+
+    /**
+     * Create queue entries for email send
+     *
+     * @param $id integer
+     */
+    public function queue($id)
+    {
+        $delay_hours = 0;
+        $rc = RecruitingCampaign::where('id', $id)->first();
+        $rcr_q = RecruitingCampaignRecipient::where('recruiting_campaign_id', $id);
+        $rcr_count = $rcr_q->count();
+        $rcr_chunk = $rcr_q->chunk(30, function($chunk) use (&$delay_hours){
+                $when = Carbon::now()->addHours($delay_hours);
+                Log::debug(get_class() . ": Scheduling chunk for delivery in $delay_hours hours at $when");
+                Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
+                $delay_hours++;
+        });
+        return response()->json(['status' => 'success', 'queue_result' => ['recipients' => $rcr_count, 'chunks' => $delay_hours]]);
     }
 
     /**
