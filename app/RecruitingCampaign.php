@@ -16,4 +16,12 @@ class RecruitingCampaign extends Model
     {
         return $this->belongsTo('App\User', 'created_by');
     }
+
+    /**
+     * Get the recipients for this campaign
+     */
+    public function recipients()
+    {
+        return $this->hasMany('App\RecruitingCampaignRecipient');
+    }
 }
