@@ -1,37 +1,34 @@
 @component('mail::message')
-Hello Future RoboJackets,
+_You are receiving this email because you expressed interest in joining RoboJackets, the competitive robotics club at Georgia Tech._
 
-First, if you are one of the new freshmen starting your journey at Georgia Tech, RoboJackets would like to welcome you to the GT family. Your time here will be full of excitement and challenge, and we hope RoboJackets will be a part of that experience.
+Hello future RoboJackets,
 
-If you are receiving this email, you expressed interest in joining RoboJackets, the competitive robotics club at Georgia Tech.
+If you are a first-year student starting your journey at Georgia Tech, RoboJackets would like to welcome you to the GT family. Your time here will be full of excitement and challenge, and we hope RoboJackets will be a part of that experience.
 
-# How to Join
-To better acquaint you with our teams, we would like to invite you to our General Interest events. RoboJackets will be holding two General Interest (GI) meetings that will give you the details of our teams’ activities and how to join.
+# How to join
+To better acquaint you with our teams, we would like to invite you to our General Interest (GI) events. RoboJackets will be holding two sessions that will give you the details of our teams’ activities and how to get involved.
 
-These events will feature FREE PIZZA and lots of robots!
+There will be **free pizza** and lots of robots!
 
-# General Interest Meetings
-We will be hosting two General Interest meetings this year. The two meetings cover the same content, and you should only attend one of the two. Both meetings are located in the [Howey Lecture Hall, L3](https://goo.gl/fJGRNe).
+The two events will cover the same content, so you should only attend one of the two. Both sessions will be hosted in [Howey L3](https://goo.gl/fJGRNe).
 
 # RSVP
-Please RSVP to the meeting you want to attend using the link below.
+Please RSVP to the event you want to attend using the link below so we know how many people to expect.
 
 @component('mail::button', ['url' => $app_url . "/events/7/rsvp?source=" . $visit_token])
-    RSVP for Wednesday, September 4 (6-8pm)
+    RSVP for Tuesday, September 4 (6-8pm)
 @endcomponent
 
 @component('mail::button', ['url' => $app_url . "/events/8/rsvp?source=" . $visit_token])
-    RSVP for Thursday, September 5 (6-8pm)
+    RSVP for Wednesday, September 5 (6-8pm)
 @endcomponent
 
-# Can't Make It
-Don't worry if you can't make it to either of these dates. We'll be sending out another email after the meeting with all of the information we presented.
+Don't worry if you can't make it to either of these dates. We'll be sending out another email afterwards with all of the information we presented.
 
-# Contact Information
+I look forward to seeing you all next week! If you have any questions in the meantime, please feel free to contact our leadership team at [hello@robojackets.org](mailto:hello@robojackets.org).
 
-Thank you for your interest in joining RoboJackets. If you have any questions, feel free to contact our leadership team at [info@robojackets.org](mailto:info@robojackets.org).
+Thank you for your interest in joining RoboJackets!
 
-We hope to see you soon!
-
-The RoboJackets Leadership Team
+Jason Gibson
+RoboJackets President
 @endcomponent
