@@ -40,7 +40,7 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new Mailable($notifiable->visit_token))->to($notifiable->faset_email);
+        return (new Mailable($notifiable->visit_token))->to($notifiable->recruiting_email);
     }
 
     /**
