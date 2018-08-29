@@ -29,7 +29,5 @@ I look forward to seeing you all next week! If you have any questions in the mea
 
 Thank you for your interest in joining RoboJackets!
 
-Jason Gibson
-
-RoboJackets President
+Jason Gibson<br/>RoboJackets President
 @endcomponent
