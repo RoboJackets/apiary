@@ -6,7 +6,7 @@ Hello future RoboJackets,
 If you are a first-year student starting your journey at Georgia Tech, RoboJackets would like to welcome you to the GT family. Your time here will be full of excitement and challenge, and we hope RoboJackets will be a part of that experience.
 
 # How to join
-To better acquaint you with our teams, we would like to invite you to our General Interest (GI) event. Each GI session will give you the details of our teams’ activities and how to get involved.
+To better acquaint you with our teams, we would like to invite you to our General Interest (GI) events. Each GI session will give you the details of our teams’ activities and how to get involved.
 
 There will be **free pizza** and lots of robots!
 
