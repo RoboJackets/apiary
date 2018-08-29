@@ -125,7 +125,7 @@ class RecruitingCampaignController extends Controller
         });
 
         return response()->json(['status' => 'success',
-            'queue_result' => ['recipients' => $rcr_count, 'chunks' => $delay_hours]]);
+            'queue_result' => ['recipients' => $rcr_count, 'chunks' => $delay_hours], ]);
     }
 
     /**
