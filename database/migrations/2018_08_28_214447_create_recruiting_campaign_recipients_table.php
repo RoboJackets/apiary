@@ -18,9 +18,9 @@ class CreateRecruitingCampaignRecipientsTable extends Migration
             $table->string('email_address');
             $table->string('source');
             $table->unsignedInteger('recruiting_campaign_id');
-            $table->unsignedInteger('recruiting_visit_id');
-            $table->unsignedInteger('user_id');
-            $table->timestamp('notified_at');
+            $table->unsignedInteger('recruiting_visit_id')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->timestamp('notified_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

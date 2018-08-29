@@ -10,6 +10,16 @@ class RecruitingCampaign extends Model
     use SoftDeletes;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'status',
+    ];
+
+    /**
      * Get the user that owns the campaign.
      */
     public function creator()

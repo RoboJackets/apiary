@@ -14,7 +14,8 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function index()
     {
-        //
+        $rcr = RecruitingCampaignRecipient::all();
+        return response()->json(['status' => 'success', 'recipients' => $rcr]);
     }
 
     /**

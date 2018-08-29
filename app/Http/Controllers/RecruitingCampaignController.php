@@ -2,9 +2,128 @@
 
 namespace App\Http\Controllers;
 
+use Log;
+use App\RecruitingCampaign;
+use App\RecruitingCampaignRecipient;
+use App\RecruitingVisit;
 use Illuminate\Http\Request;
 
 class RecruitingCampaignController extends Controller
 {
-    //
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $rc = RecruitingCampaign::all();
+        return response()->json(['status' => 'success', 'campaigns' => $rc]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string',
+            'notification_template_id' => 'numeric|exists:notification_templates,id',
+            'start_date' => 'date|required',
+            'end_date' => 'date|required'
+        ]);
+
+        // Store the campaign
+        // Yes, I know there is an easier way to do this.
+        $rc = new RecruitingCampaign();
+        $fields = array_keys($request->all());
+        foreach ($fields as $field) {
+            $rc->$field = $request->input($field);
+        }
+        $rc->created_by = $request->user()->id;
+        $rc->status = 'new';
+
+        try {
+            $rc->save();
+        } catch (QueryException $e) {
+            Bugsnag::notifyException($e);
+            $errorMessage = $e->errorInfo[2];
+            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
+        }
+
+        // Import recipients from visits
+        $start = $request->input('start_date');
+        $end = $request->input('end_date');
+        $visits = RecruitingVisit::where('created_at', '>=', $start)
+                ->where('created_at', '<=', $end)
+                ->get();
+
+        $added_recipient_emails = [];
+        foreach ($visits as $v) {
+            if (in_array($v->recruiting_email, $added_recipient_emails)) {
+                Log::info(get_class() . ": Email '$v->recruiting_email' already in the list. Ignoring.'");
+            } else {
+                // Add new recipient
+                $rcr = new RecruitingCampaignRecipient();
+                $rcr->email_address = $v->recruiting_email;
+                $rcr->source = 'recruiting_visit';
+                $rcr->recruiting_visit_id = $v->id;
+                $rcr->recruiting_campaign_id = $rc->id;
+                if ($v->user_id != null) {
+                    $rcr->user_id = $v->user_id;
+                }
+                $rcr->save();
+
+                // Add to array for dedup
+                $added_recipient_emails[] = $v->recruiting_email;
+                Log::info(get_class(). ": Added email '$v->recruiting_email' as recipient for campaign $rc->id");
+            }
+
+        }
+
+        $db_rc = RecruitingCampaign::where('id', $rc->id)->with('recipients')->first();
+        if (is_numeric($db_rc->id)) {
+            return response()->json(['status' => 'success', 'campaign' => $db_rc], 201);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\RecruitingCampaign  $recruitingCampaign
+     * @return \Illuminate\Http\Response
+     */
+    public function show(RecruitingCampaign $recruitingCampaign)
+    {
+        return response()->json(['status' => 'success', 'campaign' => $recruitingCampaign]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\RecruitingCampaign  $recruitingCampaign
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, RecruitingCampaign $recruitingCampaign)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\RecruitingCampaign  $recruitingCampaign
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(RecruitingCampaign $recruitingCampaign)
+    {
+        $recruitingCampaign->delete();
+        return response()->json(['status' => 'success'], 201);
+    }
 }
