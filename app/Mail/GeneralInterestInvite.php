@@ -32,7 +32,7 @@ class GeneralInterestInvite extends Mailable
     public function build()
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->subject('RoboJackets General Interest Meeting - RSVP Requested')
+                    ->subject('RoboJackets General Interest Event - RSVP Requested')
                     ->markdown('mail.generalinterest.invite')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
