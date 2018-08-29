@@ -104,18 +104,23 @@ class RecruitingCampaignController extends Controller
      * Create queue entries for email send
      *
      * @param $id integer
+     * @return \Illuminate\Http\Response
      */
     public function queue($id)
     {
         $delay_hours = 0;
         $rc = RecruitingCampaign::where('id', $id)->first();
-        $rcr_q = RecruitingCampaignRecipient::where('recruiting_campaign_id', $id);
+        $rcr_q = RecruitingCampaignRecipient::where('recruiting_campaign_id', $id)->whereNull('notified_at');
         $rcr_count = $rcr_q->count();
         $rcr_chunk = $rcr_q->chunk(30, function($chunk) use (&$delay_hours){
-                $when = Carbon::now()->addHours($delay_hours);
-                Log::debug(get_class() . ": Scheduling chunk for delivery in $delay_hours hours at $when");
-                Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
-                $delay_hours++;
+            $when = Carbon::now()->addHours($delay_hours);
+            Log::debug(get_class() . ": Scheduling chunk for delivery in $delay_hours hours at $when");
+
+            // This accepts an array ($chunk) of "Notifiable" models, so it's 30 at once like M A G I C
+            Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
+
+            //Bump to an additional hour for the next chunk
+            $delay_hours++;
         });
         return response()->json(['status' => 'success', 'queue_result' => ['recipients' => $rcr_count, 'chunks' => $delay_hours]]);
     }
