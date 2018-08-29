@@ -145,7 +145,7 @@ class RecruitingCampaignController extends Controller
      */
     public function update(Request $request, RecruitingCampaign $recruitingCampaign)
     {
-        //
+        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
     }
 
     /**

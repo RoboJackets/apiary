@@ -26,7 +26,7 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
     }
 
     /**
@@ -37,7 +37,7 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function show(RecruitingCampaignRecipient $recruitingCampaignRecipient)
     {
-        //
+        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
     }
 
     /**
@@ -49,7 +49,7 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function update(Request $request, RecruitingCampaignRecipient $recruitingCampaignRecipient)
     {
-        //
+        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
     }
 
     /**
@@ -60,6 +60,6 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function destroy(RecruitingCampaignRecipient $recruitingCampaignRecipient)
     {
-        //
+        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
     }
 }
