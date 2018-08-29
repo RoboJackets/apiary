@@ -24,6 +24,7 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
         Route::post('/', 'RecruitingVisitController@store')->name('store');
         Route::get('/', 'RecruitingVisitController@index')->name('index');
         Route::resource('campaigns/recipients', 'RecruitingCampaignController', ['except' => ['create', 'edit']]);
+        Route::get('campaigns/{id}/queue', 'RecruitingCampaignController@queue')->name('campaigns.queue');
         Route::resource('campaigns', 'RecruitingCampaignController', ['except' => ['create', 'edit']]);
         Route::get('dedup', 'RecruitingVisitController@dedup')->name('dedup');
         Route::get('{id}', 'RecruitingVisitController@show')->name('show');
