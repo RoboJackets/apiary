@@ -33,11 +33,11 @@ class Confirmation extends Mailable
     public function build()
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->subject('[RoboJackets] Payment Processed')
-                    ->markdown('mail.payment.confirmation')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
                             ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
-                    });
+                    })
+                    ->subject('[RoboJackets] Payment Processed')
+                    ->markdown('mail.payment.confirmation');
     }
 }

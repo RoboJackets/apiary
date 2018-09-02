@@ -32,11 +32,11 @@ class RequestComplete extends Mailable
     public function build()
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
-                    ->markdown('mail.dues.requestcomplete')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
                             ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
-                    });
+                    })
+                    ->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
+                    ->markdown('mail.dues.requestcomplete');
     }
 }
