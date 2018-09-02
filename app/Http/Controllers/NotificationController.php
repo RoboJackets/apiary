@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Mail;
+use Notification;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;
@@ -30,28 +31,49 @@ class NotificationController extends Controller
 
     public function sendNotificationManual(Request $request)
     {
-        if (! $request->filled('emails')) {
-            return response()->json(['status' => 'error', 'error' => "Missing parameter 'emails'"], 400);
-        }
+        $this->validate($request, [
+            'emails' => 'required',
+            'template_type' => 'required|in:recruiting,database',
+            'template_id' => 'numeric'
+        ]);
 
-        $template = $request->input('template_id');
+        $template_type = $request->input('template_type');
+        $template_id = $request->input('template_id');
 
         $hours = 0;
-        $queued = [];
+        $found = [];
+        $notfound = [];
         $emails = $request->input('emails');
         $chunks = array_chunk($emails, 30);
         foreach ($chunks as $chunk) {
             $when = Carbon::now()->addHours($hours);
-            foreach ($chunk as $address) {
-                Mail::to($address)->send(new DatabaseMailable($template, null));
-                $queued[] = $address;
+            if ($template_type == "recruiting") {
+                foreach ($chunk as $address) {
+                    $visit = RecruitingVisit::where('recruiting_email', $address)->first();
+                    if (isset($visit->id)) {
+                        Notification::send($visit, (new GeneralInterestNotification())->delay($when));
+                        $found[] = $visit->recruiting_email;
+                    } else {
+                        $notfound[] = $address;
+                    }
+                }
+                $hours++;
+            } elseif ($template_type == "database") {
+                foreach ($chunk as $address) {
+                    Mail::to($address)->send(new DatabaseMailable($template_id, null));
+                    $found[] = $address;
+                }
+                $hours++;
+            } else {
+                return response()->json(['status' => 'error', 'error' => 'Invalid template type']);
             }
-            $hours++;
+
         }
 
         return response()->json([
             'status' => 'success',
-            'queued' => ['count' => count($queued), 'emails' => $queued],
+            'found' => ['count' => count($found), 'emails' => $found],
+            'notfound' => ['count' => count($notfound), 'emails' => $notfound],
         ]);
     }
 }

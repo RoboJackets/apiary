@@ -46,5 +46,13 @@ class RecruitingVisit extends Model
         return $this->recruiting_email;
     }
 
+    /**
+     * Get the visit token for the model
+     */
+    public function getVisitToken()
+    {
+        return $this->visit_token ?: null;
+    }
+
     protected $fillable = ['recruiting_email', 'recruiting_name'];
 }
