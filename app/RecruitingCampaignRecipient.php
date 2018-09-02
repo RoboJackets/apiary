@@ -46,7 +46,7 @@ class RecruitingCampaignRecipient extends Model
     }
 
     /**
-     * Get the visit token for the model
+     * Get the visit token for the model.
      */
     public function getVisitToken()
     {

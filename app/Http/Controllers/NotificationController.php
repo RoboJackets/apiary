@@ -34,7 +34,7 @@ class NotificationController extends Controller
         $this->validate($request, [
             'emails' => 'required',
             'template_type' => 'required|in:recruiting,database',
-            'template_id' => 'numeric'
+            'template_id' => 'numeric',
         ]);
 
         $template_type = $request->input('template_type');
@@ -47,7 +47,7 @@ class NotificationController extends Controller
         $chunks = array_chunk($emails, 30);
         foreach ($chunks as $chunk) {
             $when = Carbon::now()->addHours($hours);
-            if ($template_type == "recruiting") {
+            if ($template_type == 'recruiting') {
                 foreach ($chunk as $address) {
                     $visit = RecruitingVisit::where('recruiting_email', $address)->first();
                     if (isset($visit->id)) {
@@ -58,7 +58,7 @@ class NotificationController extends Controller
                     }
                 }
                 $hours++;
-            } elseif ($template_type == "database") {
+            } elseif ($template_type == 'database') {
                 foreach ($chunk as $address) {
                     Mail::to($address)->send(new DatabaseMailable($template_id, null));
                     $found[] = $address;
@@ -67,7 +67,6 @@ class NotificationController extends Controller
             } else {
                 return response()->json(['status' => 'error', 'error' => 'Invalid template type']);
             }
-
         }
 
         return response()->json([
