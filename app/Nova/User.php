@@ -128,7 +128,8 @@ class User extends Resource
             'xl' => 'Extra-Large',
             'xxl' => 'XXL',
             'xxxl' => 'XXXL',
-        ]
+        ];
+
         return [
             Select::make('T-Shirt Size', 'shirt_size')
                 ->options($shirt_sizes)
