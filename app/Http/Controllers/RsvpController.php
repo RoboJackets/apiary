@@ -72,7 +72,7 @@ class RsvpController extends Controller
         }
 
         // Link to recruiting visit if the user is logged in
-        if ($request->has('token')) {
+        if ($request->filled('token')) {
             $source = 'email';
             $token = $request->input('token');
             $recruitingVisit = RecruitingVisit::where('visit_token', $token)->first();
