@@ -24,7 +24,7 @@ class RecruitingCampaign extends Model
      */
     public function creator()
     {
-        return $this->belongsTo('App\User', 'created_by');
+        return $this->belongsTo(\App\User::class, 'created_by');
     }
 
     /**
@@ -32,6 +32,6 @@ class RecruitingCampaign extends Model
      */
     public function recipients()
     {
-        return $this->hasMany('App\RecruitingCampaignRecipient');
+        return $this->hasMany(\App\RecruitingCampaignRecipient::class);
     }
 }

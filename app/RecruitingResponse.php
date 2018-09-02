@@ -14,7 +14,7 @@ class RecruitingResponse extends Model
      */
     public function recruitingVisit()
     {
-        return $this->belongsTo('App\RecruitingVisit');
+        return $this->belongsTo(\App\RecruitingVisit::class);
     }
 
     protected $fillable = ['recruiting_survey_id', 'response'];
