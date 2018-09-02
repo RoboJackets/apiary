@@ -14,8 +14,8 @@
 Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::get('/', 'DashboardController@index')->name('home');
 
-    Route::get('faset', function () {
-        return view('faset/faset');
+    Route::get('recruiting', function () {
+        return view('recruiting/form');
     });
 
     Route::get('profile', function () {
@@ -45,14 +45,14 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
     })->name('logout');
 
     Route::prefix('admin')->group(function () {
-        Route::prefix('faset')->group(function () {
+        Route::prefix('recruiting')->group(function () {
             Route::get('/', function () {
-                return view('faset/fasetadmin');
-            })->name('fasetAdmin');
+                return view('recruiting/recruitingadmin');
+            })->name('recruitingAdmin');
 
             Route::get('{id}', function ($id) {
-                return view('faset/fasetedit', ['id' => $id]);
-            })->name('fasetEdit');
+                return view('recruiting/recruitingedit', ['id' => $id]);
+            })->name('recruitingEdit');
         });
 
         Route::prefix('users')->group(function () {
@@ -124,10 +124,28 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
                 return view('attendance.admin');
             })->name('attendance.admin');
         });
+
+        Route::prefix('notification')->name('admin.notification.')->group(function () {
+
+            // Templates
+            Route::prefix('templates')->name('templates.')->group(function () {
+                Route::get('/', function () {
+                    return view('notification.templates.index');
+                })->name('index');
+
+                Route::get('create', function () {
+                    return view('notification.templates.create');
+                })->name('create');
+
+                Route::get('{id}', function ($id) {
+                    return view('notification.templates.edit', ['id' => $id]);
+                })->name('edit');
+            });
+        });
     });
 });
 
-Route::get('/events/{event}/rsvp', 'RsvpController@oneClickCreate')->middleware('auth.cas.check');
+Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check');
 
 Route::get('attendance/kiosk', function () {
     return view('attendance.kiosk');

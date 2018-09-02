@@ -66,11 +66,11 @@ class User extends Authenticatable
     protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
 
     /**
-     *  Get the FASET visits associated with this user.
+     *  Get the recruiting visits associated with this user.
      */
-    public function fasetVisits()
+    public function recruitingVisits()
     {
-        return $this->hasMany(\App\FasetVisit::class);
+        return $this->hasMany('App\RecruitingVisit');
     }
 
     /**
@@ -78,7 +78,7 @@ class User extends Authenticatable
      */
     public function teams()
     {
-        return $this->belongsToMany(\App\Team::class)->withTimestamps();
+        return $this->belongsToMany('App\Team')->withTimestamps();
     }
 
     /**
@@ -131,7 +131,7 @@ class User extends Authenticatable
      */
     public function dues()
     {
-        return $this->hasMany(\App\DuesTransaction::class);
+        return $this->hasMany('App\DuesTransaction');
     }
 
     /**
@@ -139,7 +139,7 @@ class User extends Authenticatable
      */
     public function organizes()
     {
-        return $this->hasMany(\App\Event::class, 'organizer');
+        return $this->hasMany('App\Event', 'organizer');
     }
 
     /**
@@ -147,7 +147,7 @@ class User extends Authenticatable
      */
     public function rsvps()
     {
-        return $this->hasMany(\App\Rsvp::class);
+        return $this->hasMany('App\Rsvp');
     }
 
     /**

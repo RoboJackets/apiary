@@ -1,6 +1,6 @@
 <template>
-  <datatable id="faset-admin-table"
-    data-url="/api/v1/faset"
+  <datatable id="recruiting-admin-table"
+    data-url="/api/v1/recruiting"
     data-path="visits"
     :columns="tableConfig">
   </datatable>
@@ -13,8 +13,8 @@ export default {
       tableConfig: [
         { title: 'ID', data: 'id' },
         { title: 'Timestamp', data: 'created_at' },
-        { title: 'Name', data: 'faset_name' },
-        { title: 'Email', data: 'faset_email' },
+        { title: 'Name', data: 'recruiting_name' },
+        { title: 'Email', data: 'recruiting_email' },
       ],
     };
   },

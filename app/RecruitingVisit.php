@@ -6,24 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class FasetVisit extends Model
+class RecruitingVisit extends Model
 {
     use Notifiable, SoftDeletes;
 
     /**
-     *  Get the FASET Responses associated with this FASET Visit.
+     *  Get the Recruiting Responses associated with this Recruiting Visit.
      */
-    public function fasetResponses()
+    public function recruitingResponses()
     {
-        return $this->hasMany(\App\FasetResponse::class);
+        return $this->hasMany('App\RecruitingResponse');
     }
 
     /**
-     *  Get the organization member who visited at FASET, assuming the record could be linked.
+     *  Get the organization member who visited at the recruiting event, assuming the record could be linked.
      */
     public function user()
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo('App\User');
     }
 
     public function save(array $options = [])
@@ -43,8 +43,8 @@ class FasetVisit extends Model
      */
     public function routeNotificationForMail()
     {
-        return $this->faset_email;
+        return $this->recruiting_email;
     }
 
-    protected $fillable = ['faset_email', 'faset_name'];
+    protected $fillable = ['recruiting_email', 'recruiting_name'];
 }

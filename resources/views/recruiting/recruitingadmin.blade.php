@@ -1,15 +1,15 @@
 @extends('layouts/app')
 
 @section('title')
-FASET Admin | {{ config('app.name') }}
+Recruiting Admin | {{ config('app.name') }}
 @endsection
 
 @section('content')
 @component('layouts/title')
-  FASET Admin
+  Recruiting Admin
 @endcomponent
 
-<faset-admin-table>
-</faset-admin-table>
+<recruiting-admin-table>
+</recruiting-admin-table>
 
 @endsection
