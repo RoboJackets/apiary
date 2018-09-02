@@ -2,15 +2,13 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphToMany;
 
 class User extends Resource
@@ -35,7 +33,10 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'uid', 'first_name', 'last_name', 'preferred_name'
+        'uid',
+        'first_name',
+        'last_name',
+        'preferred_name',
     ];
 
     /**
@@ -53,7 +54,7 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            new Panel('Metadata', $this->metaFields())
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
@@ -114,22 +115,30 @@ class User extends Resource
                 ->hideFromIndex(),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
-                ->hideFromIndex()
+                ->hideFromIndex(),
         ];
     }
 
     protected function swagFields()
     {
+        $shirt_sizes = [
+            's' => 'Small',
+            'm' => 'Medium',
+            'l' => 'Large',
+            'xl' => 'Extra-Large',
+            'xxl' => 'XXL',
+            'xxxl' => 'XXXL',
+        ]
         return [
             Select::make('T-Shirt Size', 'shirt_size')
-                ->options(['s' => 'Small', 'm' => 'Medium', 'l' => 'Large', 'xl' => 'Extra-Large', 'xxl' => 'XXL', 'xxxl' => 'XXXL'])
+                ->options($shirt_sizes)
                 ->displayUsingLabels()
                 ->hideFromIndex(),
 
             Select::make('Polo Size')
-                ->options(['s' => 'Small', 'm' => 'Medium', 'l' => 'Large', 'xl' => 'Extra-Large', 'xxl' => 'XXL', 'xxxl' => 'XXXL'])
+                ->options($shirt_sizes)
                 ->displayUsingLabels()
-                ->hideFromIndex()
+                ->hideFromIndex(),
         ];
     }
 

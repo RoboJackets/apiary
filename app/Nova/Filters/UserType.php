@@ -28,6 +28,13 @@ class UserType extends Filter
      */
     public function options(Request $request)
     {
-        return ['Administrator' => 'admin', 'Officer I' => 'officer-i', 'Officer II' => 'officer-ii', 'Core' => 'core', 'Member' => 'member', 'Non-Member' => 'non-member'];
+        return [
+            'Administrator' => 'admin',
+            'Officer I' => 'officer-i',
+            'Officer II' => 'officer-ii',
+            'Core' => 'core',
+            'Member' => 'member',
+            'Non-Member' => 'non-member',
+        ];
     }
 }
