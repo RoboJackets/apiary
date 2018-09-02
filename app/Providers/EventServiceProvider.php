@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\PaymentSuccess' => [
-            'App\Listeners\PaymentSuccessListener',
+        \App\Events\PaymentSuccess::class => [
+            \App\Listeners\PaymentSuccessListener::class,
         ],
     ];
 

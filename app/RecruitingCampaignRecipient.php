@@ -16,7 +16,7 @@ class RecruitingCampaignRecipient extends Model
      */
     public function recruitingCampaign()
     {
-        return $this->belongsTo('App\RecruitingCampaign');
+        return $this->belongsTo(\App\RecruitingCampaign::class);
     }
 
     /**
@@ -24,7 +24,7 @@ class RecruitingCampaignRecipient extends Model
      */
     public function recruitingVisit()
     {
-        return $this->belongsTo('App\RecruitingVisit');
+        return $this->belongsTo(\App\RecruitingVisit::class);
     }
 
     /**
@@ -32,7 +32,7 @@ class RecruitingCampaignRecipient extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     /**

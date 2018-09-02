@@ -15,7 +15,7 @@ class RecruitingVisit extends Model
      */
     public function recruitingResponses()
     {
-        return $this->hasMany('App\RecruitingResponse');
+        return $this->hasMany(\App\RecruitingResponse::class);
     }
 
     /**
@@ -23,7 +23,7 @@ class RecruitingVisit extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     public function save(array $options = [])
