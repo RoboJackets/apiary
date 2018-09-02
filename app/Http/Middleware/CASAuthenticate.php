@@ -39,16 +39,18 @@ class CASAuthenticate
         if (! Auth::guard('api')->check()) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser($request);
-                if (is_a($user, "App\User")) {
+                if (is_a($user, \App\User::class)) {
                     Auth::login($user);
                 } elseif (is_a($user, "Illuminate\Http\Response")) {
                     return $user;
                 } else {
-                    return response(view('errors.generic',
+                    return response(view(
+                        'errors.generic',
                         [
                             'error_code' => 500,
                             'error_message' => 'Unknown error authenticating with CAS',
-                        ]), 500);
+                        ]
+                    ), 500);
                 }
             } else {
                 if ($request->ajax() || $request->wantsJson()) {

@@ -35,9 +35,12 @@ trait CreateOrUpdateCASUser
 
         foreach ($attrs as $attr) {
             if (! $this->cas->hasAttribute($attr) || $this->cas->getAttribute($attr) == null) {
-                return response(view('errors.generic',
+                return response(view(
+                    'errors.generic',
                     ['error_code' => 500,
-                        'error_message' => 'Missing/invalid attributes from CAS', ]), 500);
+                    'error_message' => 'Missing/invalid attributes from CAS',
+                    ]
+                ), 500);
             }
         }
 

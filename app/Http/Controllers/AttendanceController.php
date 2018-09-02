@@ -48,7 +48,7 @@ class AttendanceController extends Controller
             'created_at' => 'date',
         ]);
 
-        $wantsName = ($request->has('includeName'));
+        $wantsName = ($request->filled('includeName'));
         $request['recorded_by'] = $request->user()->id;
         unset($request['includeName']);
 

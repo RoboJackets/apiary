@@ -28,7 +28,7 @@ class Team extends Model
      */
     public function members()
     {
-        return $this->belongsToMany('App\User')->withTimestamps();
+        return $this->belongsToMany(\App\User::class)->withTimestamps();
     }
 
     /**
@@ -36,7 +36,7 @@ class Team extends Model
      */
     public function attendance()
     {
-        return $this->morphMany('App\Attendance', 'attendable');
+        return $this->morphMany(\App\Attendance::class, 'attendable');
     }
 
     /**

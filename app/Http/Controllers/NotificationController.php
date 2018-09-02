@@ -30,7 +30,7 @@ class NotificationController extends Controller
 
     public function sendNotificationManual(Request $request)
     {
-        if (! $request->has('emails')) {
+        if (! $request->filled('emails')) {
             return response()->json(['status' => 'error', 'error' => "Missing parameter 'emails'"], 400);
         }
 

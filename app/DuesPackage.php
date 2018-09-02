@@ -28,7 +28,7 @@ class DuesPackage extends Model
      */
     public function transactions()
     {
-        return $this->hasMany('App\DuesTransaction');
+        return $this->hasMany(\App\DuesTransaction::class);
     }
 
     /**
