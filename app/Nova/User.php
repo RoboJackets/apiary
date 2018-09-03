@@ -66,6 +66,21 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
+            Text::make('Preferred First Name')
+                ->sortable(),
+
+            Text::make('Legal First Name', 'first_name')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Last Name')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->sortable()
+                ->rules('required', 'max:255'),
+
             Text::make('Georgia Tech Email', 'gt_email')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
@@ -83,21 +98,6 @@ class User extends Resource
 
             Text::make('API Token')
                 ->onlyOnDetail(),
-
-            Text::make('Preferred First Name')
-                ->sortable(),
-
-            Text::make('Legal First Name', 'first_name')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Last Name')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
-                ->sortable()
-                ->rules('required', 'max:255'),
 
             Text::make('Phone Number', 'phone')
                 ->hideFromIndex(),
