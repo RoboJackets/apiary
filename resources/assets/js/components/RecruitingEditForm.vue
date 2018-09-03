@@ -180,10 +180,11 @@ export default {
         axios
           .post(this.notificationUrl, {
             emails: [this.recruitingVisit.recruiting_email],
+            template_type: 'recruiting'
           })
           .then(response => {
             this.hasError = false;
-            this.feedback = 'Sent!';
+            this.feedback = 'Email queued successfully!';
             console.log('success');
           })
           .catch(response => {

@@ -44,4 +44,12 @@ class RecruitingCampaignRecipient extends Model
     {
         return $this->email_address;
     }
+
+    /**
+     * Get the visit token for the model.
+     */
+    public function getVisitToken()
+    {
+        return $this->recruitingVisit->visit_token ?: null;
+    }
 }

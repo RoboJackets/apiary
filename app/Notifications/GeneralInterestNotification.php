@@ -40,13 +40,15 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        // Set data for inclusion in the view
-        $token = $notifiable->recruitingVisit->visit_token;
-        $email = $notifiable->email_address;
+        // Get data to pass to the mailable
+        $email = $notifiable->routeNotificationForMail();
+        $token = $notifiable->getVisitToken();
 
-        // Update the notifiable to show it has been sent
-        $notifiable->notified_at = date('Y-m-d H:i:s', time());
-        $notifiable->save();
+        if ($notifiable instanceof \App\RecruitingCampaignRecipient) {
+            // Update the notifiable to show it has been sent
+            $notifiable->notified_at = date('Y-m-d H:i:s', time());
+            $notifiable->save();
+        }
 
         return (new Mailable($token))->to($email);
     }
