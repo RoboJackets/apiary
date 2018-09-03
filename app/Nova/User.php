@@ -87,7 +87,7 @@ class User extends Resource
 
             Text::make('Personal Email')
                 ->hideFromIndex()
-                ->rules('email', 'max:255')
+                ->rules('email', 'max:255', 'nullable')
                 ->creationRules('unique:users,personal_email')
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
