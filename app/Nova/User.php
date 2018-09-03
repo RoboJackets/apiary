@@ -87,9 +87,9 @@ class User extends Resource
 
             Text::make('Personal Email')
                 ->hideFromIndex()
-                ->rules('required', 'email', 'max:255')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->rules('email', 'max:255')
+                ->creationRules('unique:users,personal_email')
+                ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
             Number::make('GTID')
                 ->onlyOnDetail()
