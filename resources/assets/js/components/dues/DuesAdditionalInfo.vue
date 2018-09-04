@@ -9,12 +9,12 @@
           <label for="user-preferredname" class="col-sm-2 col-form-label">Preferred Name</label>
           <div class="col-sm-10 col-lg-4">
             <input
-              v-model="localUser.preferred_name"
+              v-model="localUser.preferred_first_name"
               type="text"
               class="form-control" 
               id="user-preferredname"
-              :class="{ 'is-invalid': $v.localUser.preferred_name.$error }"
-              @input="$v.localUser.preferred_name.$touch()">
+              :class="{ 'is-invalid': $v.localUser.preferred_first_name.$error }"
+              @input="$v.localUser.preferred_first_name.$touch()">
             <small id="iser-preferredname-help" class="form-text text-muted">
               Only if different from your first name on file with Georgia Tech
             </small>
