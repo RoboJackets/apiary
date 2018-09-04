@@ -143,7 +143,7 @@ export default {
     localUser: {
       personal_email: { email, notGTEmail },
       phone: { maxLength: maxLength(15) },
-      preferred_name: { alpha },
+      preferred_first_name: { alpha },
       emergency_contact_name: {},
       emergency_contact_phone: { maxLength: maxLength(15) },
     },
