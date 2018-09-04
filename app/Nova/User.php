@@ -102,7 +102,7 @@ class User extends Resource
             Text::make('Phone Number', 'phone')
                 ->hideFromIndex(),
 
-            Boolean::make('Active')
+            Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
         ];
