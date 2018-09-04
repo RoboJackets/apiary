@@ -55,22 +55,27 @@ class DuesPackage extends Resource
     {
         return [
             Text::make('Name')
-                ->sortable(),
+                ->sortable()
+                ->rules('required', 'max:255'),
 
             Boolean::make('Active', 'is_active')
+                ->sortable()
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
             DateTime::make('Start Date', 'effective_start')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->rules('required'),
 
             DateTime::make('End Date', 'effective_end')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->rules('required'),
 
             Number::make('Cost')
                 ->sortable()
                 ->min(0)
-                ->step(0.01),
+                ->step(0.01)
+                ->rules('required'),
 
             Boolean::make('Available for Purchase')
                 ->sortable(),
