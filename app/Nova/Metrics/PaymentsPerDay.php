@@ -6,7 +6,6 @@ use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
 
-
 class PaymentsPerDay extends Trend
 {
     /**
