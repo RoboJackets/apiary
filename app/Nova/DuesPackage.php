@@ -3,13 +3,11 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
-use Illuminate\Http\Request;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class DuesPackage extends Resource
 {
