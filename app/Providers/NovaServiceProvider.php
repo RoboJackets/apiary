@@ -3,10 +3,9 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
+use App\Nova\Metrics\PaymentsPerDay;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use App\Nova\Metrics\PaymentsPerDay;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {

@@ -2,10 +2,10 @@
 
 namespace App\Nova\Metrics;
 
+use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
 
-use App\Payment;
 
 class PaymentsPerDay extends Trend
 {
