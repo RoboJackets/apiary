@@ -31,7 +31,7 @@ class RecruitingCampaignRecipientController extends Controller
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
             'addresses' => 'required',
             'recruiting_visit_id' => 'exists:recruiting_visits,id',
-            'user_id' => 'exists:users,id|numeric'
+            'user_id' => 'exists:users,id|numeric',
         ]);
 
         $addresses = $request->input('addresses');
@@ -66,7 +66,7 @@ class RecruitingCampaignRecipientController extends Controller
         }
 
         return response()->json(['status' => 'success',
-            'recipients' => ['added' => $added_addresses, 'duplicate' => $duplicate_addresses]], 201);
+            'recipients' => ['added' => $added_addresses, 'duplicate' => $duplicate_addresses], ], 201);
     }
 
     /**
@@ -93,10 +93,11 @@ class RecruitingCampaignRecipientController extends Controller
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric|nullable',
             'email_address' => 'nullable',
             'recruiting_visit_id' => 'exists:recruiting_visits,id|nullable',
-            'user_id' => 'exists:users,id|numeric|nullable'
+            'user_id' => 'exists:users,id|numeric|nullable',
         ]);
 
         $rcr = $recruitingCampaignRecipient->update($request->all());
+
         return response()->json(['status' => 'success', 'recipient' => $rcr]);
     }
 
@@ -109,6 +110,7 @@ class RecruitingCampaignRecipientController extends Controller
     public function destroy(RecruitingCampaignRecipient $recruitingCampaignRecipient)
     {
         $recruitingCampaignRecipient->delete();
+
         return response()->json(['status' => 'success'], 200);
     }
 }
