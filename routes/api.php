@@ -23,7 +23,8 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     Route::group(['prefix' => 'recruiting', 'as' => 'recruiting.'], function () {
         Route::post('/', 'RecruitingVisitController@store')->name('store');
         Route::get('/', 'RecruitingVisitController@index')->name('index');
-        Route::resource('campaigns/recipients',
+        Route::resource(
+            'campaigns/recipients',
             'RecruitingCampaignRecipientController',
             ['except' => ['create', 'edit']]
         );
