@@ -62,7 +62,8 @@ class RecruitingCampaignRecipientController extends Controller
                 }
             }
         } else {
-            return response()->json(['status' => 'error', 'error' => 'Invalid address format - Must be array or string.'], 422);
+            return response()->json(['status' => 'error',
+                'error' => 'Invalid address format - Must be array or string.'], 422);
         }
 
         return response()->json(['status' => 'success',
