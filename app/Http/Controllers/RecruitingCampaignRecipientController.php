@@ -28,7 +28,7 @@ class RecruitingCampaignRecipientController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'campaign_id' => 'exists:recruiting_campaigns,id|numeric',
+            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
             'addresses' => 'required',
             'recruiting_visit_id' => 'exists:recruiting_visits,id',
             'user_id' => 'exists:users,id|numeric'
@@ -66,7 +66,7 @@ class RecruitingCampaignRecipientController extends Controller
         }
 
         return response()->json(['status' => 'success',
-            'recipients' => ['added' => $added_addresses, 'duplicate' => $duplicate_addresses]]);
+            'recipients' => ['added' => $added_addresses, 'duplicate' => $duplicate_addresses]], 201);
     }
 
     /**
@@ -77,7 +77,7 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function show(RecruitingCampaignRecipient $recruitingCampaignRecipient)
     {
-        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
+        return response()->json(['status' => 'success', 'recipient' => $recruitingCampaignRecipient], 200);
     }
 
     /**
@@ -89,7 +89,15 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function update(Request $request, RecruitingCampaignRecipient $recruitingCampaignRecipient)
     {
-        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
+        $this->validate($request, [
+            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric|nullable',
+            'email_address' => 'nullable',
+            'recruiting_visit_id' => 'exists:recruiting_visits,id|nullable',
+            'user_id' => 'exists:users,id|numeric|nullable'
+        ]);
+
+        $rcr = $recruitingCampaignRecipient->update($request->all());
+        return response()->json(['status' => 'success', 'recipient' => $rcr]);
     }
 
     /**
@@ -100,6 +108,7 @@ class RecruitingCampaignRecipientController extends Controller
      */
     public function destroy(RecruitingCampaignRecipient $recruitingCampaignRecipient)
     {
-        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
+        $recruitingCampaignRecipient->delete();
+        return response()->json(['status' => 'success'], 200);
     }
 }
