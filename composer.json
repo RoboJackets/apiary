@@ -71,7 +71,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../nova"
+            "url": "./nova"
         }
     ]
 }
