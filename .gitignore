@@ -6,7 +6,6 @@
 /public/js/app.js
 /storage/*.key
 /vendor
-/nova
 /.idea
 /.vagrant
 Homestead.json
@@ -17,3 +16,4 @@ npm-debug.log
 /public/nova-assets/
 /resources/lang/vendor/nova/
 /resources/views/vendor/nova/
+auth.json

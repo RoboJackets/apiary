@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e3320d7f8e480ca14256c38b5c2e9e4",
+    "content-hash": "3347f45678da7395ef479327334c534a",
     "packages": [
         {
             "name": "bugsnag/bugsnag",
@@ -1347,12 +1347,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "dev-master",
+            "version": "v1.0.19",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:laravel/nova.git",
+                "reference": "eecf9a5b6f7eb5b5d89bf53766f3b6c60c0996f1"
+            },
             "dist": {
-                "type": "path",
-                "url": "../nova",
-                "reference": "6b34fd3882e3cff2dc99d288393e92025bc93094",
-                "shasum": null
+                "type": "zip",
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-eecf9a5b6f7eb5b5d89bf53766f3b6c60c0996f1-zip-4f98de.zip",
+                "reference": "eecf9a5b6f7eb5b5d89bf53766f3b6c60c0996f1",
+                "shasum": "0d09c4fd14e9a33c939c97d7ee753632ef7cff88"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -1406,7 +1411,8 @@
             "keywords": [
                 "admin",
                 "laravel"
-            ]
+            ],
+            "time": "2018-09-19T18:44:35+00:00"
         },
         {
             "name": "laravel/tinker",
