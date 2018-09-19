@@ -39,7 +39,7 @@ else
 fi
 
 echo "Downloading latest version"
-wget --load-cookies cookies.txt -O nova.zip https://nova.laravel.com/releases/$latest_release
+wget -q --load-cookies cookies.txt -O nova.zip https://nova.laravel.com/releases/$latest_release
 
 unzip -q nova.zip
 
