@@ -6,6 +6,7 @@
 /public/js/app.js
 /storage/*.key
 /vendor
+/nova
 /.idea
 /.vagrant
 Homestead.json
