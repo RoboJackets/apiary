@@ -22,9 +22,10 @@
         "spatie/laravel-permission": "^2.6",
         "spatie/laravel-sluggable": "^2.1",
         "square/connect": "^2.5",
-        "subfission/cas": "^2.0",
+        "subfission/cas": "dev-master",
         "uxweb/sweet-alert": "^1.4",
-        "vyuldashev/nova-permission": "^1.3"
+        "vyuldashev/nova-permission": "^1.3",
+        "apereo/phpCAS": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

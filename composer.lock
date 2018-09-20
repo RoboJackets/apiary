@@ -4,8 +4,63 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3347f45678da7395ef479327334c534a",
+    "content-hash": "3bab6f54f700b4c331fbf5c8377a9587",
     "packages": [
+        {
+            "name": "apereo/phpcas",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apereo/phpCAS.git",
+                "reference": "7a949dee79aaadc16161d7d4863b5c0871546222"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apereo/phpCAS/zipball/7a949dee79aaadc16161d7d4863b5c0871546222",
+                "reference": "7a949dee79aaadc16161d7d4863b5c0871546222",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "source/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Joachim Fritschi",
+                    "homepage": "https://wiki.jasig.org/display/~fritschi"
+                },
+                {
+                    "name": "Adam Franco",
+                    "homepage": "https://wiki.jasig.org/display/~adamfranco"
+                }
+            ],
+            "description": "Provides a simple API for authenticating users against a CAS server",
+            "homepage": "https://wiki.jasig.org/display/CASC/phpCAS",
+            "keywords": [
+                "apereo",
+                "cas",
+                "jasig"
+            ],
+            "time": "2018-03-15T13:17:25+00:00"
+        },
         {
             "name": "bugsnag/bugsnag",
             "version": "v3.14.1",
@@ -1153,60 +1208,6 @@
             "time": "2015-04-20T18:58:01+00:00"
         },
         {
-            "name": "jasig/phpcas",
-            "version": "1.3.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/apereo/phpCAS.git",
-                "reference": "61c8899c8f91204e8b9135d795461e50fe5c2db0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/apereo/phpCAS/zipball/61c8899c8f91204e8b9135d795461e50fe5c2db0",
-                "reference": "61c8899c8f91204e8b9135d795461e50fe5c2db0",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3.7.10"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "source/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Joachim Fritschi",
-                    "homepage": "https://wiki.jasig.org/display/~fritschi"
-                },
-                {
-                    "name": "Adam Franco",
-                    "homepage": "https://wiki.jasig.org/display/~adamfranco"
-                }
-            ],
-            "description": "Provides a simple API for authenticating users against a CAS server",
-            "homepage": "https://wiki.jasig.org/display/CASC/phpCAS",
-            "keywords": [
-                "cas",
-                "jasig"
-            ],
-            "time": "2017-04-10T19:12:45+00:00"
-        },
-        {
             "name": "laravel/framework",
             "version": "v5.6.38",
             "source": {
@@ -2239,16 +2240,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.19.1",
+            "version": "2.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "6ab41261b74707e4cbda196a51239039bd3494b7"
+                "reference": "e2200bb92b67632abc92aa438de9cb0958da20d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6ab41261b74707e4cbda196a51239039bd3494b7",
-                "reference": "6ab41261b74707e4cbda196a51239039bd3494b7",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/e2200bb92b67632abc92aa438de9cb0958da20d9",
+                "reference": "e2200bb92b67632abc92aa438de9cb0958da20d9",
                 "shasum": ""
             },
             "require": {
@@ -2296,7 +2297,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2018-09-14T18:26:21+00:00"
+            "time": "2018-09-20T01:30:08+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
@@ -2453,27 +2454,37 @@
         },
         {
             "name": "subfission/cas",
-            "version": "v2.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/subfission/cas.git",
-                "reference": "fff20c4a851463b46f206f685bd9797d79904a37"
+                "reference": "f3c9c003e293a7f6d1c364c2f8612a4cfbfa4d3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/subfission/cas/zipball/fff20c4a851463b46f206f685bd9797d79904a37",
-                "reference": "fff20c4a851463b46f206f685bd9797d79904a37",
+                "url": "https://api.github.com/repos/subfission/cas/zipball/f3c9c003e293a7f6d1c364c2f8612a4cfbfa4d3a",
+                "reference": "f3c9c003e293a7f6d1c364c2f8612a4cfbfa4d3a",
                 "shasum": ""
             },
             "require": {
+                "apereo/phpcas": "~1.3.4",
                 "illuminate/support": "5.x",
-                "jasig/phpcas": "~1.3.4",
                 "php": ">=5.5.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.*"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Subfission\\Cas\\CasServiceProvider"
+                    ],
+                    "aliases": {
+                        "Cas": "Subfission\\Cas\\Facades\\Cas"
+                    }
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Subfission\\Cas\\": "src/Subfission/Cas/"
@@ -2500,7 +2511,7 @@
                 "laravel 5",
                 "phpCAS"
             ],
-            "time": "2017-10-28T07:21:39+00:00"
+            "time": "2018-06-05T12:32:56+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5381,7 +5392,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "subfission/cas": 20,
+        "apereo/phpcas": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
