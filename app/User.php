@@ -250,4 +250,19 @@ class User extends Authenticatable
             $q->paid()->current();
         });
     }
+
+    /**
+     * Scope a query to automatically include only inactive members
+     * Active: Has paid dues for a currently ongoing term
+     *         or, has a non-zero payment for an active DuesPackage.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInactive($query)
+    {
+        return $query->whereDoesntHave('dues', function ($q) {
+            $q->paid()->current();
+        });
+    }
 }
