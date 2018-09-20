@@ -22,9 +22,6 @@
             <li class="nav-item {{ $request->is('teams*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
             </li>
-            <li class="nav-item {{ $request->is('profile*') ? 'active' : '' }}">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
 
             @hasanyrole('admin|officer-i|officer-ii')
             <li class="nav-item dropdown {{ $request->is('admin*') ? 'active' : '' }}">
@@ -53,17 +50,21 @@
           </ul>
 
           @if (auth()->user())
-          
-          <span class="navbar-text">
-            <span class="font-italic">Logged in as </span> {{auth()->user()->name}}
-          </span>
-          <span class="navbar-item">
-            <a class="nav-link text-muted" href="{{route('logout')}}">Logout</a>
-          </span>
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{auth()->user()->name}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/profile">Profile</a>
+                  <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
+                </div>
+              </li>
+            </ul>
           @else
-          <span class="navbar-item">
-            <a class="nav-link text-muted" href="{{'https://login.gatech.edu/cas/login?service=' . $request->fullUrl()}}">Login</a>
-          </span>
+            <span class="navbar-item">
+              <a class="nav-link text-muted" href="{{'https://login.gatech.edu/cas/login?service=' . $request->fullUrl()}}">Login</a>
+            </span>
           @endif
         </div>
       </div>
