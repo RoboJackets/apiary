@@ -17,7 +17,11 @@ class UserActive extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->active();
+        if ($value === 'yes') {
+            return $query->active();
+        } else {
+            return $query->inactive();
+        }
     }
 
     /**
@@ -30,6 +34,7 @@ class UserActive extends Filter
     {
         return [
             'Yes' => 'yes',
+            'No' => 'no',
         ];
     }
 }
