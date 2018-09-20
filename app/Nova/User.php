@@ -37,6 +37,7 @@ class User extends Resource
         'first_name',
         'last_name',
         'preferred_name',
+        'gtid',
     ];
 
     /**
