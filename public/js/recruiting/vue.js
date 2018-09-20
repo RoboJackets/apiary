@@ -1,7 +1,7 @@
 /*jslint browser:true devel:true*/
 /*global Vue, Worker*/
 
-var worker = new Worker('/js/faset/worker.js');
+var worker = new Worker('/js/recruiting/worker.js');
 
 var form = new Vue({
   el: 'form',
@@ -19,9 +19,9 @@ var form = new Vue({
     submit: function () {
       'use strict';
       var formData = new FormData(event.target), values = formData.getAll('heardfrom'), result = {};
-      result['faset_email'] = formData.get('faset-email');
-      result['faset_name'] = formData.get('faset-name');
-      result['faset_responses'] = [];
+      result['recruiting_email'] = formData.get('recruiting-email');
+      result['recruiting_name'] = formData.get('recruiting-name');
+      result['recruiting_responses'] = [];
       result['created_at'] = new Date();
       if (values.includes('other')) {
         values.splice(values.indexOf('other'), 1);
@@ -30,7 +30,7 @@ var form = new Vue({
           values.push(otherText);
         }
       }
-      result['faset_responses'] = values;
+      result['recruiting_responses'] = values;
       worker.postMessage(JSON.stringify(result));
 
       swal({
@@ -53,7 +53,7 @@ var form = new Vue({
       this.queued = e.data;
     },
     focusNameInput: function() {
-      document.getElementById("faset-name").focus();
+      document.getElementById("recruiting-name").focus();
       console.log("Input Focused");
     }
   }

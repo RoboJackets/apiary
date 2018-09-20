@@ -36,7 +36,7 @@ export default {
         },
         {
           title: 'Self-Serviceable',
-          data: 'self-serviceable',
+          data: 'self_serviceable',
           render: function(data, type, row) {
             return data === 1 ? 'Yes' : 'No';
           },

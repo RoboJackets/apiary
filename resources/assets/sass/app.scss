@@ -7,5 +7,9 @@
 // Bootstrap
 @import 'node_modules/bootstrap/scss/bootstrap';
 
+.btn-primary {
+  @include button-variant($rj-gold, $rj-gold);
+}
+
 // Custom Stylesheets
 @import 'user';

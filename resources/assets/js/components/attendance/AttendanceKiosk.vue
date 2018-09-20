@@ -123,6 +123,7 @@ export default {
       self.attendance.attendable_id = event.target.id;
       swal({
         title: 'Swipe your BuzzCard now',
+        html: event.target.innerText,
         showCancelButton: true,
         closeOnCancel: false,
         allowOutsideClick: true,

@@ -20,11 +20,11 @@ class Rsvp extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     public function event()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo(\App\Event::class);
     }
 }

@@ -42,7 +42,7 @@ class RoleController extends Controller
         $role->name = $request->input('name');
         $role->save();
 
-        if ($request->has('permissions')) {
+        if ($request->filled('permissions')) {
             try {
                 $role->givePermissionTo($request->input('permissions'));
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
@@ -110,12 +110,12 @@ class RoleController extends Controller
             'name' => Rule::unique('roles')->ignore($role->id),
         ]);
 
-        if ($request->has('name')) {
+        if ($request->filled('name')) {
             $role->name = $request->input('name');
             $role->save();
         }
 
-        if ($request->has('permissions')) {
+        if ($request->filled('permissions')) {
             try {
                 $role->syncPermissions($request->input('permissions'));
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
@@ -180,7 +180,7 @@ class RoleController extends Controller
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
 
-        if (! $request->has('users')) {
+        if (! $request->filled('users')) {
             return response()->json(['status' => 'error',
                 'message' => 'You must specify users to assign to a role.', ], 422);
         }

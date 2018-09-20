@@ -24,11 +24,24 @@ class DuesPackage extends Model
     protected $appends = ['is_active'];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'effective_start',
+        'effective_end',
+    ];
+
+    /**
      * Get the DuesTransaction associated with the DuesPackage model.
      */
     public function transactions()
     {
-        return $this->hasMany('App\DuesTransaction');
+        return $this->hasMany(\App\DuesTransaction::class);
     }
 
     /**

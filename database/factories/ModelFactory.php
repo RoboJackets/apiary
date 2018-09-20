@@ -17,12 +17,12 @@ function idMap($collection)
     })->toArray();
 }
 
-$factory->define(App\FasetVisit::class, function (Faker\Generator $faker) {
+$factory->define(App\RecruitingVisit::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'faset_name' => $faker->name,
-        'faset_email' => $faker->safeEmail,
+        'recruiting_name' => $faker->name,
+        'recruiting_email' => $faker->safeEmail,
         'visit_token' => $faker->asciify('********************'),
     ];
 });

@@ -52,7 +52,7 @@ class PaymentController extends Controller
     {
         $currentUser = auth()->user();
 
-        if (! $request->has('recorded_by') ||
+        if (! $request->filled('recorded_by') ||
             $currentUser->cant('update-payments')) {
             $request['recorded_by'] = $currentUser->id;
         }
@@ -134,9 +134,12 @@ class PaymentController extends Controller
                 //No transactions found without payment
                 Log::warning(get_class().': No eligible Dues Transaction found for payment.');
 
-                return response(view('errors.generic',
+                return response(view(
+                    'errors.generic',
                     ['error_code' => 400,
-                        'error_message' => 'No eligible Dues Transaction found for payment.', ]), 400);
+                    'error_message' => 'No eligible Dues Transaction found for payment.',
+                    ]
+                ), 400);
             }
 
             $amount = $payable->package->cost;
@@ -145,12 +148,12 @@ class PaymentController extends Controller
         }
 
         if (! $payable) {
-            if ($payable_type == "App\DuesTransaction") {
+            if ($payable_type == \App\DuesTransaction::class) {
                 $payable = DuesTransaction::find($payable_id);
                 $amount = $payable->package->amount;
                 $name = 'Dues - '.$payable->package->name;
                 $email = $user->gt_email;
-            } elseif ($payable_type == "App\Event") {
+            } elseif ($payable_type == \App\Event::class) {
                 $payable = Event::find($payable_id);
                 $amount = $payable->price;
                 $name = 'Event - '.$payable->name;
@@ -180,9 +183,12 @@ class PaymentController extends Controller
         } else {
             Log::error(get_class()." - Error Creating Square Checkout - $squareResult");
 
-            return response(view('errors.generic',
+            return response(view(
+                'errors.generic',
                 ['error_code' => 500,
-                    'error_message' => 'Unable to process Square Checkout request.', ]), 500);
+                'error_message' => 'Unable to process Square Checkout request.',
+                ]
+            ), 500);
         }
     }
 
@@ -338,11 +344,13 @@ class PaymentController extends Controller
         if ($validator->fails()) {
             Log::warning(get_class().' - Missing parameter in Square response');
 
-            return response(view('errors.generic',
+            return response(view(
+                'errors.generic',
                 [
                     'error_code' => 400,
                     'error_message' => 'Missing parameter in Square response.',
-                ]), 500);
+                ]
+            ), 500);
         }
 
         $checkout_id = $request->input('checkoutId');
@@ -355,11 +363,13 @@ class PaymentController extends Controller
         if (! is_numeric($payment_id) || substr($client_txn_id, 0, 3) != 'PMT') {
             Log::error(get_class()." - Invalid Payment ID in Square response '$payment_id'");
 
-            return response(view('errors.generic',
+            return response(view(
+                'errors.generic',
                 [
                     'error_code' => 422,
                     'error_message' => 'Invalid Payment ID in Square response.',
-                ]), 500);
+                ]
+            ), 500);
         }
 
         //Find the payment
@@ -367,11 +377,13 @@ class PaymentController extends Controller
         if (! $payment) {
             Log::warning(get_class()." - Error locating Payment '$payment_id'");
 
-            return response(view('errors.generic',
+            return response(view(
+                'errors.generic',
                 [
                     'error_code' => 404,
                     'error_message' => 'Unable to locate payment.',
-                ]), 500);
+                ]
+            ), 500);
         }
         Log::debug(get_class()." - Found Payment '$payment_id'");
 
@@ -379,11 +391,13 @@ class PaymentController extends Controller
         if ($payment->amount != 0 || $payment->checkout_id != null) {
             Log::warning(get_class()." - Payment Already Processed '$payment_id'");
 
-            return response(view('errors.generic',
+            return response(view(
+                'errors.generic',
                 [
                     'error_code' => 409,
                     'error_message' => 'Payment already processed.',
-                ]), 500);
+                ]
+            ), 500);
         }
 
         //Prepare Square API Call
@@ -407,19 +421,23 @@ class PaymentController extends Controller
         if ($square_txn instanceof Exception) {
             Bugsnag::notifyException($square_txn);
 
-            return response(view('errors.generic',
+            return response(view(
+                'errors.generic',
                 [
                     'error_code' => 500,
                     'error_message' => 'Error querying Square transaction',
-                ]), 500);
+                ]
+            ), 500);
         }
 
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
         $proc_fee = $tenders[0]->getProcessingFeeMoney()->getAmount() / 100;
         $created_at = $square_txn->getTransaction()->getCreatedAt();
-        Log::debug(get_class()." - Square Transaction Details for '$server_txn_id'",
-            ['Amount' => $amount, 'Txn Date' => $created_at, 'Processing Fee' => $proc_fee]);
+        Log::debug(
+            get_class()." - Square Transaction Details for '$server_txn_id'",
+            ['Amount' => $amount, 'Txn Date' => $created_at, 'Processing Fee' => $proc_fee]
+        );
 
         //Compare received payment amount to expected payment amount
         $payable = $payment->payable;
@@ -430,11 +448,13 @@ class PaymentController extends Controller
             $data = ['Expected' => $expected_amount, 'Actual' => $amount, 'Server Txn ID' => $server_txn_id];
             Log::error(get_class().' - '.$message, $data);
 
-            return response(view('errors.generic',
+            return response(view(
+                'errors.generic',
                 [
                     'error_code' => 409,
                     'error_message' => 'Payment discrepancy found. Please contact the Treasurer for assistance.',
-                ]), 500);
+                ]
+            ), 500);
         }
 
         $payment->amount = $amount;
