@@ -178,6 +178,7 @@ class User extends Resource
     {
         return [
             new Filters\UserType,
+            new Filters\UserActive,
         ];
     }
 
@@ -200,6 +201,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [new Actions\ResetApiToken];
+        return [
+            new Actions\ResetApiToken
+        ];
     }
 }
