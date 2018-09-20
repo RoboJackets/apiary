@@ -57,7 +57,6 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="/profile">Profile</a>
-                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
                 </div>
               </li>
