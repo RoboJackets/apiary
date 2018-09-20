@@ -16,4 +16,5 @@ npm-debug.log
 /public/nova-assets/
 /resources/lang/vendor/nova/
 /resources/views/vendor/nova/
+/public/vendor/nova/
 auth.json
