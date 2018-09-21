@@ -1,20 +1,20 @@
 <template>
   <div>
     <div v-if="currentStepName == 'dues-required-info'">
-      <dues-required-info :user="user" @next="next">
+      <dues-required-info :user="user" @next="next" @back="back">
       </dues-required-info>
     </div>
 
     <div v-if="currentStepName == 'safety-agreement'">
-      <safety-agreement :user-uid="user.uid" @next="next"></safety-agreement>
+      <safety-agreement :user-uid="user.uid" @next="next" @back="back"></safety-agreement>
     </div>
 
     <div v-if="currentStepName == 'dues-additional-info'">
-      <dues-additional-info :user="user" @next="next"></dues-additional-info>
+      <dues-additional-info :user="user" @next="next" @back="back"></dues-additional-info>
     </div>
 
     <div v-if="currentStepName == 'dues-demographics-info'">
-      <demographics :user="user" @next="next"></demographics>
+      <demographics :user="user" @next="next" @back="back"></demographics>
     </div>
 
     <div v-if="currentStepName == 'dues-payment-instructions'">
@@ -74,6 +74,15 @@ export default {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
       } else {
         warn('No more steps');
+      }
+    },
+    back: function() {
+      if (this.currentStep > 0) {
+        //transition
+        this.currentStep = this.currentStep - 1;
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+      } else {
+        warn('No step to go back to');
       }
     },
   },

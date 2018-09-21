@@ -87,7 +87,10 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-6 col-12">
+          <div class="col-lg-3 col-6">
+            <button @click="$emit('back')" class="btn btn-secondary float-left">Back</button>
+          </div>
+          <div class="col-lg-3 col-6">
             <button type="submit" class="btn btn-primary float-right">Continue</button>
             <button type="submit" class="btn btn-secondary float-right mx-2">Skip</button>
           </div>
