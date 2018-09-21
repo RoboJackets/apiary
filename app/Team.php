@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Laravel\Nova\Actions\Actionable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model
 {
+    use Actionable;
     use SoftDeletes, HasSlug;
 
     /**
