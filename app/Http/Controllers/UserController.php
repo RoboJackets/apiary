@@ -161,7 +161,8 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showTeams($id, Request $request) {
+    public function showTeams($id, Request $request)
+    {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
             $requestingUser = $request->user();
