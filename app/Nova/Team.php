@@ -94,11 +94,14 @@ class Team extends Resource
     protected function controlFields()
     {
         return [
-            Boolean::make('Visible'),
+            Boolean::make('Visible')
+                ->sortable(),
 
-            Boolean::make('Attendable'),
+            Boolean::make('Attendable')
+                ->sortable(),
 
-            Boolean::make('Self-Serviceable', 'self_serviceable'),
+            Boolean::make('Self-Serviceable', 'self_serviceable')
+                ->sortable(),
         ];
     }
 
