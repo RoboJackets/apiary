@@ -29,41 +29,42 @@ class RecruitingCampaignRecipientController extends Controller
     {
         $this->validate($request, [
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
-            'addresses' => 'required',
+            'recipients' => 'required_unless:addresses|array',
+            'address' => 'required_unless:recipients',
             'recruiting_visit_id' => 'exists:recruiting_visits,id',
             'user_id' => 'exists:users,id|numeric',
         ]);
 
-        $addresses = $request->input('addresses');
+        if ($request->filled('recipients')) {
+            $recipients = $request->input('recipients');
+        } else {
+            $recipients[0]['address'] = $request->input('address');
+            $recipients[0]['recruiting_visit_id'] = $request->input('address');
+            $recipients[0]['user_id'] = $request->input('user_id');
+            $recipients[0]['source'] = $request->input('source', 'manual');
+        }
+
+        // Used for response
         $added_addresses = [];
         $duplicate_addresses = [];
 
-        if (is_string($addresses)) {
-            // Just one address to add, so let's overwrite $addresses as a single-member array
-            $addresses = [$addresses];
-        }
+        foreach ($recipients as $recipient) {
+            $rcr = RecruitingCampaignRecipient::firstOrNew([
+                'email_address' => $recipient['address'],
+                'recruiting_campaign_id' => $recipient['recruiting_campaign_id'],
+            ]);
 
-        if (is_array($addresses)) {
-            foreach ($addresses as $address) {
-                $rcr = RecruitingCampaignRecipient::firstOrNew([
-                    'email_address' => $address,
-                    'recruiting_campaign_id' => $request->input('recruiting_campaign_id'),
-                ]);
-
-                if (isset($rcr->id)) {
-                    // Model already exists
-                    $duplicate_addresses[] = $rcr->email_address;
-                } else {
-                    // Model doesn't exist, so let's add stuff and save it
-                    $rcr->source = $request->input('source', 'manual');
-                    $rcr->recruiting_visit_id = $request->input('recruiting_visit_id');
-                    $rcr->user_id = $request->input('recruiting_visit_id');
-                    $rcr->save();
-                }
+            if (isset($rcr->id)) {
+                // Model already exists
+                $duplicate_addresses[] = $rcr->email_address;
+            } else {
+                // Model doesn't exist, so let's add stuff and save it
+                $rcr->source = $recipient['source'];
+                $rcr->recruiting_visit_id = $recipient['recruiting_visit_id'];
+                $rcr->user_id = $recipient['user_id'];
+                $rcr->save();
+                $added_addresses[] = $recipient['address'];
             }
-        } else {
-            return response()->json(['status' => 'error',
-                'error' => 'Invalid address format - Must be array or string.', ], 422);
         }
 
         return response()->json(['status' => 'success',
