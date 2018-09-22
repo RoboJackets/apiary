@@ -29,28 +29,19 @@ class RecruitingCampaignRecipientController extends Controller
     {
         $this->validate($request, [
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
-            'recipients' => 'required_unless:addresses|array',
-            'address' => 'required_unless:recipients',
-            'recruiting_visit_id' => 'exists:recruiting_visits,id',
-            'user_id' => 'exists:users,id|numeric',
+            'recipients' => 'required|array',
+            'recipients.*.email_address' => 'required',
+            'recipients.*.recruiting_visit_id' => 'exists:recruiting_visits,id|numeric',
+            'recipients.*.user_id' => 'exists:users,id|numeric',
         ]);
-
-        if ($request->filled('recipients')) {
-            $recipients = $request->input('recipients');
-        } else {
-            $recipients[0]['address'] = $request->input('address');
-            $recipients[0]['recruiting_visit_id'] = $request->input('address');
-            $recipients[0]['user_id'] = $request->input('user_id');
-            $recipients[0]['source'] = $request->input('source', 'manual');
-        }
 
         // Used for response
         $added_addresses = [];
         $duplicate_addresses = [];
 
-        foreach ($recipients as $recipient) {
+        foreach ($request->input('recipients') as $recipient) {
             $rcr = RecruitingCampaignRecipient::firstOrNew([
-                'email_address' => $recipient['address'],
+                'email_address' => $recipient['email_address'],
                 'recruiting_campaign_id' => $recipient['recruiting_campaign_id'],
             ]);
 
@@ -63,7 +54,7 @@ class RecruitingCampaignRecipientController extends Controller
                 $rcr->recruiting_visit_id = $recipient['recruiting_visit_id'];
                 $rcr->user_id = $recipient['user_id'];
                 $rcr->save();
-                $added_addresses[] = $recipient['address'];
+                $added_addresses[] = $recipient['email_address'];
             }
         }
 
