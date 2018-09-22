@@ -40,10 +40,10 @@ class EventController extends Controller
     public function store(Request $request)
     {
         // Default to currently logged-in user
-        if (isset($request->organizer) && ! $request->has('organizer_id')) {
+        if (isset($request->organizer) && ! $request->filled('organizer_id')) {
             $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
             unset($request['organizer']);
-        } elseif (! $request->has('organizer_id')) {
+        } elseif (! $request->filled('organizer_id')) {
             $request['organizer_id'] = auth()->user()->id;
         }
 
@@ -112,10 +112,10 @@ class EventController extends Controller
                 'message' => 'Forbidden - You do not have permission to update this Event.', ], 403);
         }
 
-        if ($request->has('organizer') && ! $request->has('organizer_id')) {
+        if ($request->filled('organizer') && ! $request->filled('organizer_id')) {
             $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
             unset($request['organizer']);
-        } elseif (! $request->has('organizer_id')) {
+        } elseif (! $request->filled('organizer_id')) {
             $request['organizer_id'] = auth()->user()->id;
         }
 

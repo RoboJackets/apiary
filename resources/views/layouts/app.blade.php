@@ -35,8 +35,9 @@
                 @hasanyrole('admin|officer-i')
                 <a class="dropdown-item" href="/admin/users">Users</a>
                 <a class="dropdown-item" href="/admin/events">Events</a>
-                <a class="dropdown-item" href="/admin/faset">FASET</a>
+                <a class="dropdown-item" href="/admin/recruiting">Recruiting</a>
                 <a class="dropdown-item" href="{{ route('admin.teams.index') }}">Teams</a>
+                <a class="dropdown-item" href="{{ route('admin.notification.templates.index') }}">Notification Templates</a>
                 @endhasanyrole
                 @hasanyrole('admin|officer-i|officer-ii')
                 <a class="dropdown-item" href="/admin/dues">Dues</a>

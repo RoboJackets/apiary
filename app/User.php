@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Laravel\Nova\Actions\Actionable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use Actionable;
     use SoftDeletes;
     use Notifiable;
     use HasRoles;
@@ -66,11 +68,11 @@ class User extends Authenticatable
     protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
 
     /**
-     *  Get the FASET visits associated with this user.
+     *  Get the recruiting visits associated with this user.
      */
-    public function fasetVisits()
+    public function recruitingVisits()
     {
-        return $this->hasMany('App\FasetVisit');
+        return $this->hasMany(\App\RecruitingVisit::class);
     }
 
     /**
@@ -78,7 +80,7 @@ class User extends Authenticatable
      */
     public function teams()
     {
-        return $this->belongsToMany('App\Team')->withTimestamps();
+        return $this->belongsToMany(\App\Team::class)->withTimestamps();
     }
 
     /**
@@ -131,7 +133,7 @@ class User extends Authenticatable
      */
     public function dues()
     {
-        return $this->hasMany('App\DuesTransaction');
+        return $this->hasMany(\App\DuesTransaction::class);
     }
 
     /**
@@ -139,7 +141,7 @@ class User extends Authenticatable
      */
     public function organizes()
     {
-        return $this->hasMany('App\Event', 'organizer');
+        return $this->hasMany(\App\Event::class, 'organizer');
     }
 
     /**
@@ -147,7 +149,7 @@ class User extends Authenticatable
      */
     public function rsvps()
     {
-        return $this->hasMany('App\Rsvp');
+        return $this->hasMany(\App\Rsvp::class);
     }
 
     /**
@@ -245,6 +247,21 @@ class User extends Authenticatable
     public function scopeActive($query)
     {
         return $query->whereHas('dues', function ($q) {
+            $q->paid()->current();
+        });
+    }
+
+    /**
+     * Scope a query to automatically include only inactive members
+     * Active: Has paid dues for a currently ongoing term
+     *         or, has a non-zero payment for an active DuesPackage.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInactive($query)
+    {
+        return $query->whereDoesntHave('dues', function ($q) {
             $q->paid()->current();
         });
     }

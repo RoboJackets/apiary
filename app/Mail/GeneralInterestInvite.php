@@ -18,10 +18,10 @@ class GeneralInterestInvite extends Mailable
      *
      * @return void
      */
-    public function __construct($vist_token)
+    public function __construct($visit_token)
     {
         $this->app_url = url('/');
-        $this->visit_token = $vist_token;
+        $this->visit_token = $visit_token;
     }
 
     /**
@@ -32,11 +32,11 @@ class GeneralInterestInvite extends Mailable
     public function build()
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->subject('RoboJackets General Interest Meeting - RSVP Requested')
-                    ->markdown('mail.generalinterest.invite')
                     ->withSwiftMessage(function ($message) {
                         $message->getHeaders()
-                            ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');
-                    });
+                            ->addTextHeader('Reply-To', 'RoboJackets <hello@robojackets.org>');
+                    })
+                    ->subject('RoboJackets General Interest Event - RSVP Requested')
+                    ->markdown('mail.generalinterest.invite');
     }
 }
