@@ -5,8 +5,8 @@ namespace App\Nova;
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 
 class DuesPackage extends Resource
@@ -71,10 +71,9 @@ class DuesPackage extends Resource
                 ->hideFromIndex()
                 ->rules('required'),
 
-            Number::make('Cost')
+            Currency::make('Cost')
                 ->sortable()
-                ->min(0)
-                ->step(0.01)
+                ->format('%.2n')
                 ->rules('required'),
 
             Boolean::make('Available for Purchase')
