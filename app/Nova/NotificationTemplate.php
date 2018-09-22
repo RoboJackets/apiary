@@ -74,6 +74,7 @@ class NotificationTemplate extends Resource
         return [
 
             BelongsTo::make('User', 'creator')
+                ->searchable()
                 ->rules('required')
                 ->hideFromIndex()
                 ->hideWhenUpdating(),
