@@ -53,7 +53,7 @@ class AttendanceController extends Controller
         unset($request['includeName']);
 
         // Variables for comparison below
-        $date = $request->has('created_at') ? $request->input('created_at') : date('Y-m-d');
+        $date = $request->input('created_at', date('Y-m-d'));
         $gtid = $request->input('gtid');
 
         try {
