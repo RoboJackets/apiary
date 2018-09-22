@@ -10,8 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model
 {
-    use Actionable;
-    use SoftDeletes, HasSlug;
+    use Actionable, SoftDeletes, HasSlug;
 
     /**
      * The attributes that are not mass assignable.
