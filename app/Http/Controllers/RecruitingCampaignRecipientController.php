@@ -15,11 +15,19 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param integer $recruiting_campaign_id
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($recruiting_campaign_id, Request $request)
     {
-        $rcr = RecruitingCampaignRecipient::all();
+        // Add $r_c_i to $request to allow for validation of campaign existence
+        $request['recruiting_campaign_id'] = $recruiting_campaign_id;
+        $this->validate($request, [
+            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric'
+        ]);
+
+        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)->get();
 
         return response()->json(['status' => 'success', 'recipients' => $rcr]);
     }
@@ -27,11 +35,15 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  integer $recruiting_campaign_id
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($recruiting_campaign_id, Request $request)
     {
+        // Add $r_c_i to $request to allow for validation of campaign existence
+        $request['recruiting_campaign_id'] = $recruiting_campaign_id;
+
         $this->validate($request, [
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
             'recipients' => 'required|array',
@@ -70,23 +82,41 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\RecruitingCampaignRecipient  $recruitingCampaignRecipient
+     * @param integer $recruiting_campaign_id
+     * @param  integer $recruiting_campaign_recipient_id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show(RecruitingCampaignRecipient $recruitingCampaignRecipient)
+    public function show($recruiting_campaign_id, $recruiting_campaign_recipient_id, Request $request)
     {
-        return response()->json(['status' => 'success', 'recipient' => $recruitingCampaignRecipient], 200);
+        // Add $r_c_i and $id to $request to allow for validation
+        $request['recruiting_campaign_id'] = $recruiting_campaign_id;
+        $request['id'] = $recruiting_campaign_recipient_id;
+
+        $this->validate($request, [
+            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
+            'id' => 'exists:recruiting_campaign_recipients,id|numeric'
+        ]);
+
+        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
+            ->where('id', $recruiting_campaign_recipient_id)->first();
+
+        return response()->json(['status' => 'success', 'recipient' => $rcr], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param  integer $recruiting_campaign_id
+     * @param  integer $recruiting_campaign_recipient_id
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RecruitingCampaignRecipient  $recruitingCampaignRecipient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RecruitingCampaignRecipient $recruitingCampaignRecipient)
+    public function update($recruiting_campaign_id, $recruiting_campaign_recipient_id, Request $request)
     {
+        // Add $r_c_i to $request to allow for validation of campaign existence
+        $request['recruiting_campaign_id'] = $recruiting_campaign_id;
+
         $this->validate($request, [
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric|nullable',
             'email_address' => 'nullable',
@@ -94,7 +124,10 @@ class RecruitingCampaignRecipientController extends Controller
             'user_id' => 'exists:users,id|numeric|nullable',
         ]);
 
-        $rcr = $recruitingCampaignRecipient->update($request->all());
+        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
+            ->where('id', $recruiting_campaign_recipient_id)->first();
+
+        $rcr->update($request->all());
 
         return response()->json(['status' => 'success', 'recipient' => $rcr]);
     }
@@ -102,12 +135,15 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RecruitingCampaignRecipient  $recruitingCampaignRecipient
+     * @param  integer $recruiting_campaign_id
+     * @param  integer $recruiting_campaign_recipient_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RecruitingCampaignRecipient $recruitingCampaignRecipient)
+    public function destroy($recruiting_campaign_id, $recruiting_campaign_recipient_id)
     {
-        $recruitingCampaignRecipient->delete();
+        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
+            ->where('id', $recruiting_campaign_recipient_id)->first();
+        $rcr->delete();
 
         return response()->json(['status' => 'success'], 200);
     }
