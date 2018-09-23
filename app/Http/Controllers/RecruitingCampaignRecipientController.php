@@ -7,6 +7,11 @@ use App\RecruitingCampaignRecipient;
 
 class RecruitingCampaignRecipientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:send-notifications']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +47,7 @@ class RecruitingCampaignRecipientController extends Controller
         foreach ($request->input('recipients') as $recipient) {
             $rcr = RecruitingCampaignRecipient::firstOrNew([
                 'email_address' => $recipient['email_address'],
-                'recruiting_campaign_id' => $recipient['recruiting_campaign_id'],
+                'recruiting_campaign_id' => $request->input('recruiting_campaign_id'),
             ]);
 
             if (isset($rcr->id)) {
@@ -50,9 +55,9 @@ class RecruitingCampaignRecipientController extends Controller
                 $duplicate_addresses[] = $rcr->email_address;
             } else {
                 // Model doesn't exist, so let's add stuff and save it
-                $rcr->source = $recipient['source'];
-                $rcr->recruiting_visit_id = $recipient['recruiting_visit_id'];
-                $rcr->user_id = $recipient['user_id'];
+                $rcr->source = $recipient['source'] ?? 'manual';
+                $rcr->recruiting_visit_id = $recipient['recruiting_visit_id'] ?? null;
+                $rcr->user_id = $recipient['user_id'] ?? null;
                 $rcr->save();
                 $added_addresses[] = $recipient['email_address'];
             }
