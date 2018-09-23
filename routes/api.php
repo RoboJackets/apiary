@@ -23,7 +23,11 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     Route::group(['prefix' => 'recruiting', 'as' => 'recruiting.'], function () {
         Route::post('/', 'RecruitingVisitController@store')->name('store');
         Route::get('/', 'RecruitingVisitController@index')->name('index');
-        Route::resource('campaigns/recipients', 'RecruitingCampaignController', ['except' => ['create', 'edit']]);
+        Route::resource(
+            'campaigns/{campaign_id}/recipients',
+            'RecruitingCampaignRecipientController',
+            ['except' => ['create', 'edit']]
+        );
         Route::get('campaigns/{id}/queue', 'RecruitingCampaignController@queue')->name('campaigns.queue');
         Route::resource('campaigns', 'RecruitingCampaignController', ['except' => ['create', 'edit']]);
         Route::get('dedup', 'RecruitingVisitController@dedup')->name('dedup');
@@ -35,7 +39,6 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     Route::group(['prefix' => 'notification', 'as' => 'notification.'], function () {
         Route::get('send', 'NotificationController@sendNotification')->name('send');
         Route::post('manual', 'NotificationController@sendNotificationManual')->name('manual');
-
         Route::resource('templates', 'NotificationTemplateController', ['except' => ['create', 'edit']]);
     });
 
