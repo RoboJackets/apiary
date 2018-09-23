@@ -2,21 +2,22 @@
 
 namespace App\Nova;
 
+use App\User;
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\BelongsTo;
 
-class DuesPackage extends Resource
+class NotificationTemplate extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\DuesPackage';
+    public static $model = 'App\NotificationTemplate';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,6 +33,8 @@ class DuesPackage extends Resource
      */
     public static $search = [
         'name',
+        'subject',
+        'body_markdown',
     ];
 
     /**
@@ -43,9 +46,11 @@ class DuesPackage extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
+            Text::make('Name')
+                ->rules('required', 'max:255')
+                ->sortable(),
 
-            new Panel('Swag', $this->swagFields()),
+            new Panel('Email Content', $this->basicFields()),
 
             new Panel('Metadata', $this->metaFields()),
         ];
@@ -54,40 +59,12 @@ class DuesPackage extends Resource
     protected function basicFields()
     {
         return [
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Boolean::make('Active', 'is_active')
-                ->sortable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
-
-            DateTime::make('Start Date', 'effective_start')
-                ->hideFromIndex()
-                ->rules('required'),
-
-            DateTime::make('End Date', 'effective_end')
-                ->hideFromIndex()
-                ->rules('required'),
-
-            Currency::make('Cost')
-                ->sortable()
-                ->format('%.2n')
-                ->rules('required'),
-
-            Boolean::make('Available for Purchase')
+            Text::make('Subject')
+                ->rules('required', 'max:255')
                 ->sortable(),
-        ];
-    }
 
-    protected function swagFields()
-    {
-        return [
-            Boolean::make('Eligible for T-Shirt', 'eligible_for_shirt')
-                ->hideFromIndex(),
-
-            Boolean::make('Eligible for Polo')
+            Markdown::make('Body', 'body_markdown')
+                ->rules('required')
                 ->hideFromIndex(),
         ];
     }
@@ -95,7 +72,14 @@ class DuesPackage extends Resource
     protected function metaFields()
     {
         return [
-            DateTime::make('Created', 'created_at')
+
+            BelongsTo::make('User', 'creator')
+                ->searchable()
+                ->rules('required')
+                ->hideFromIndex()
+                ->hideWhenUpdating(),
+
+            DateTime::make('Created At')
                 ->onlyOnDetail(),
 
             DateTime::make('Last Updated', 'updated_at')

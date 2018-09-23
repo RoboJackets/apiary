@@ -1,16 +1,13 @@
 <template>
     <div>
-        <button v-if="memberOfTeam && this.user.is_active && this.team.self_serviceable"
+        <button v-if="memberOfTeam && this.team.self_serviceable"
                 type="button" class="btn btn-secondary" v-on:click="changeMembership('leave')">
             Leave
         </button>
-        <button v-else-if="!memberOfTeam && this.user.is_active && this.team.self_serviceable"
+        <button v-else-if="!memberOfTeam && this.team.self_serviceable"
                 type="button" class="btn btn-primary" v-on:click="changeMembership('join')">
             Join
         </button>
-        <em v-else-if="!this.user.is_active && this.team.self_serviceable">&nbsp;
-            <small>You must be an active member to {{ this.actionVerb }} teams.</small>
-        </em>
         <em v-else-if="!this.team.self_serviceable">&nbsp;
             <small>Contact an admin to {{ this.actionVerb }} this team.</small>
         </em>

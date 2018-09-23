@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\BelongsToMany;
 
 class User extends Resource
 {
@@ -37,6 +38,7 @@ class User extends Resource
         'first_name',
         'last_name',
         'preferred_name',
+        'gtid',
     ];
 
     /**
@@ -53,6 +55,8 @@ class User extends Resource
             new Panel('Emergency Contact', $this->emergencyFields()),
 
             new Panel('Swag', $this->swagFields()),
+
+            BelongsToMany::make('Teams'),
 
             new Panel('Metadata', $this->metaFields()),
         ];
@@ -178,6 +182,7 @@ class User extends Resource
     {
         return [
             new Filters\UserType,
+            new Filters\UserActive,
         ];
     }
 
@@ -200,6 +205,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [new Actions\ResetApiToken];
+        return [
+            new Actions\ResetApiToken,
+        ];
     }
 }

@@ -4,12 +4,13 @@ namespace App;
 
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model
 {
-    use SoftDeletes, HasSlug;
+    use Actionable, SoftDeletes, HasSlug;
 
     /**
      * The attributes that are not mass assignable.
