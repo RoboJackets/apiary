@@ -15,7 +15,7 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param integer $recruiting_campaign_id
+     * @param int $recruiting_campaign_id
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -24,7 +24,7 @@ class RecruitingCampaignRecipientController extends Controller
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $recruiting_campaign_id;
         $this->validate($request, [
-            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric'
+            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
         ]);
 
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)->get();
@@ -35,7 +35,7 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  integer $recruiting_campaign_id
+     * @param  int $recruiting_campaign_id
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -82,8 +82,8 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param integer $recruiting_campaign_id
-     * @param  integer $recruiting_campaign_recipient_id
+     * @param int $recruiting_campaign_id
+     * @param  int $recruiting_campaign_recipient_id
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -95,7 +95,7 @@ class RecruitingCampaignRecipientController extends Controller
 
         $this->validate($request, [
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
-            'id' => 'exists:recruiting_campaign_recipients,id|numeric'
+            'id' => 'exists:recruiting_campaign_recipients,id|numeric',
         ]);
 
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
@@ -107,8 +107,8 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  integer $recruiting_campaign_id
-     * @param  integer $recruiting_campaign_recipient_id
+     * @param  int $recruiting_campaign_id
+     * @param  int $recruiting_campaign_recipient_id
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -135,8 +135,8 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer $recruiting_campaign_id
-     * @param  integer $recruiting_campaign_recipient_id
+     * @param  int $recruiting_campaign_id
+     * @param  int $recruiting_campaign_recipient_id
      * @return \Illuminate\Http\Response
      */
     public function destroy($recruiting_campaign_id, $recruiting_campaign_recipient_id)
