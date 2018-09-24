@@ -139,9 +139,9 @@ class User extends Authenticatable
     /**
      * Get the events organized by the User.
      */
-    public function organizes()
+    public function events()
     {
-        return $this->hasMany(\App\Event::class, 'organizer');
+        return $this->hasMany(\App\Event::class, 'organizer_id');
     }
 
     /**
@@ -249,5 +249,44 @@ class User extends Authenticatable
         return $query->whereHas('dues', function ($q) {
             $q->paid()->current();
         });
+    }
+
+    public static function allowedInclude(User $user)
+    {
+        // Array of attributes/relationships allowed to include
+        $allowedInclude = [];
+
+//        // Map of attributes to permission name (read-users-x)
+//        $attrPermMap = [
+//            'gtid' => 'gtid',
+//            'api_token' => 'api_token',
+//            'emergency_contact_name' => 'emergency_contact',
+//            'emergency_contact_phone' => 'emergency_contact',
+//            'gender' => 'demographics',
+//            'ethnicity' => 'demographics',
+//        ];
+//
+//        foreach ($attrPermMap as $attr => $permission) {
+//            if ($user->hasPermissionTo("read-users-$permission")) {
+//                $allowedInclude[] = $attr;
+//            }
+//        }
+
+        // Map of related models to permission name (read-x)
+        $relationPermMap = [
+            'recruitingVisits' => 'recruiting-visits',
+//          'teams' => 'teams-membership',
+            'dues' => 'dues-transactions',
+            'events' => 'events',
+            'rsvps' => 'rsvps',
+        ];
+
+        foreach ($relationPermMap as $relation => $permission) {
+            if ($user->can("read-$permission")) {
+                $allowedInclude[] = $relation;
+            }
+        }
+
+        return $allowedInclude;
     }
 }
