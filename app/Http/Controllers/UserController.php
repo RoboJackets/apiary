@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use \Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Resources\User as UserResource;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -23,15 +26,13 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     *
-     * @api {get} /users/ List all users
-     * @apiGroup Users
      */
     public function index()
     {
-        $users = User::all();
-
-        return response()->json(['status' => 'success', 'users' => $users]);
+        $users = QueryBuilder::for(User::class)
+            ->allowedIncludes(User::allowedInclude(Auth::user()))
+            ->get();
+        return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
     }
 
     /**
@@ -148,7 +149,7 @@ class UserController extends Controller
                 $user = $user->makeVisible('api_token');
             }
 
-            return response()->json(['status' => 'success', 'user' => $user]);
+            return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
