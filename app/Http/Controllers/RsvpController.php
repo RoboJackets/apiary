@@ -71,6 +71,13 @@ class RsvpController extends Controller
             cas()->authenticate();
         }
 
+        $now = new \DateTime();
+        $end = isset($event->end_time) ? new \DateTime($event->end_time) : null;
+        if ($end && $end <= $now) {
+            return response()->json(['status' => 'error', 'message' =>
+                'Forbidden - You cannot RSVP to events that have ended.'], 403);
+        }
+
         // Link to recruiting visit if the user is logged in
         if ($request->filled('token')) {
             $source = 'email';
