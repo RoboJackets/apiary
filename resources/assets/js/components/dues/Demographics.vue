@@ -23,7 +23,7 @@
 
         <div class="row">
           <div class="col-lg-3 col-6">
-            <button @click="$emit('back')" class="btn btn-secondary float-left">Back</button>
+            <button @click.prevent="$emit('back')" class="btn btn-secondary float-left">Back</button>
           </div>
           <div class="col-lg-3 col-6">
             <button type="submit" class="btn btn-primary float-right">Continue</button>

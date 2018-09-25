@@ -19,7 +19,7 @@
 
     <div class="row">
       <div class="col-6">
-        <button @click="$emit('back')" class="btn btn-secondary float-left mx-2">Back</button>
+        <button @click.prevent="$emit('back')" class="btn btn-secondary float-left mx-2">Back</button>
         <button @click="selectAll" type="button" class="btn btn-secondary float-left">Check All</button>
       </div>
       <div class="col-6">
