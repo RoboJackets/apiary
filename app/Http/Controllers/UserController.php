@@ -155,6 +155,31 @@ class UserController extends Controller
     }
 
     /**
+     * Displays the teams the specified user belongs to.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showTeams($id, Request $request)
+    {
+        $user = User::findByIdentifier($id)->first();
+        if ($user) {
+            $requestingUser = $request->user();
+            if ($requestingUser->hasRole('admin')) {
+                $teams = $user->teams()->get();
+                return response()->json(['status' => 'success', 'teams' => $teams]);
+            } else {
+                return response()->json(['status' => 'error',
+                    'message' => 'Forbidden - You do not have permission to view this User\'s data.', ], 403);
+            }
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
+        }
+    }
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request

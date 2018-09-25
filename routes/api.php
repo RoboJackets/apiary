@@ -46,6 +46,7 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     Route::post('attendance/search', 'AttendanceController@search')->name('attendance.search');
     Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit']]);
     Route::get('users/search', 'UserController@search');
+    Route::get('users/{id}/teams', 'UserController@showTeams');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('events', 'EventController', ['except' => ['create', 'edit']]);
     Route::resource('rsvps', 'RsvpController', ['except' => ['create', 'edit']]);
