@@ -44,7 +44,7 @@ export default {
             swal('Bueller...Bueller...', 'No teams found.', 'warning');
           } else {
             this.teams = response.data.teams.filter(function(item) {
-              return item.visible && item.attendable;
+              return item.attendable;
             }).sort(function(a, b) {
               return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
             });
