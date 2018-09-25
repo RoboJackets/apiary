@@ -111,9 +111,9 @@ class PaymentController extends Controller
         } else {
             //Assuming DuesTransaction for now
 
-            //Find DuesTransactions without payment attempts
+            //Find the most recent DuesTransaction without a payment attempt
             $transactWithoutPmt = DuesTransaction::doesntHave('payment')
-                ->where('user_id', $user->id)->first();
+                ->where('user_id', $user->id)->get()->sortBy('updated_at')->last();
 
             //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
             // and that have not passed the effective end

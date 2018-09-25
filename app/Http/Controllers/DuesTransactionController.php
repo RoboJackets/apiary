@@ -120,8 +120,8 @@ class DuesTransactionController extends Controller
         $existingTransaction = DuesTransaction::where('dues_package_id', $request->input('dues_package_id'))
             ->where('user_id', $request->input('user_id'))->first();
         if ($existingTransaction) {
-            return response()->json(['status' => 'error',
-                'message' => 'There is already a pending Dues Transaction for this user', ], 400);
+            $existingTransaction->touch(); //Update the updated_date on the transaction so it takes precedence
+            return response()->json(['status' => 'success', 'dues_transaction' => $existingTransaction], 200);
         }
 
         try {
