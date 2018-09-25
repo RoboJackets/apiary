@@ -27,7 +27,7 @@
           </div>
           <div class="col-lg-3 col-6">
             <button type="submit" class="btn btn-primary float-right">Continue</button>
-            <button type="submit" class="btn btn-secondary float-right mx-2">Skip</button>
+            <button @click.prevent="$emit('next')" class="btn btn-secondary float-right mx-2">Skip</button>
           </div>
         </div>
 
