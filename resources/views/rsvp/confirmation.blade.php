@@ -33,7 +33,7 @@
                 @endisset
                 @if($event['cost'] != 0)
                     <b>Cost: </b> ${{ $event->cost }}
-                @endisset
+                @endif
             </p>
         </div>
     </div>
