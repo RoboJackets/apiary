@@ -219,15 +219,7 @@ export default {
       .get(this.dataUrl)
       .then(response => {
         this.event = response.data.event;
-
-        // The event is expired if it has an end date and that time was before now.
-        // This is used for a warning in the attendance dialog so people don't accidentally record
-        // attendance for a past event. If it expires after the page loads, then we probably will
-        // want the swipes anyway, since it won't be long past it.
-        if (this.event.end_time) {
-          var endDate = moment(this.event.end_time);
-          this.isExpired = endDate.isBefore();
-        }
+        this.updateExpiredWarning();
       })
       .catch(response => {
         console.log(response);
@@ -277,6 +269,7 @@ export default {
         .then(response => {
           this.hasError = false;
           this.feedback = 'Saved!';
+          this.updateExpiredWarning();
           console.log('success');
         })
         .catch(response => {
@@ -291,12 +284,6 @@ export default {
         .post(this.attendanceUrl, this.attendanceQuery)
         .then(response => {
           this.attendance = response.data.attendance;
-
-          // Update whether the event expired warning should show up
-          if (this.event.end_time) {
-            var endDate = moment(this.event.end_time);
-            this.isExpired = endDate.isBefore();
-          }
         })
         .catch(response => {
           console.log(response);
@@ -356,6 +343,16 @@ export default {
             );
           }
         });
+    },
+    updateExpiredWarning() {
+      // The event is expired if it has an end date and that time was before now.
+      // This is used for a warning in the attendance dialog so people don't accidentally record
+      // attendance for a past event. If it expires after the page loads, then we probably will
+      // want the swipes anyway, since it won't be long past it.
+      if (this.event.end_time) {
+        var endDate = moment(this.event.end_time);
+        this.isExpired = endDate.isBefore();
+      }
     },
   },
 };
