@@ -80,7 +80,9 @@ export default {
     axios
       .get(this.teamsUrl)
       .then(response => {
-        this.teams = response.data.teams;
+        this.teams = response.data.teams.sort(function(a, b) {
+          return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
+        });
       })
       .catch(response => {
         console.log(response);
