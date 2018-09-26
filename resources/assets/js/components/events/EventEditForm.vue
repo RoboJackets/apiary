@@ -130,7 +130,8 @@
           <attendance-modal
             id="attendanceModal"
             :attendableId="this.eventId"
-            attendableType="App\Event">
+            attendableType="App\Event"
+            v-bind:showExpiredEventWarning="this.isExpired">
           </attendance-modal>
           <datatable id="attendance-view-table"
            :data-object="attendance"
@@ -145,6 +146,7 @@
 
 <script>
 import { required, numeric } from 'vuelidate/lib/validators';
+import moment from 'moment';
 
 export default {
   name: 'editEventForm',
@@ -201,6 +203,7 @@ export default {
         altInput: true,
       },
       rsvpOptions: [{ value: '0', text: 'No' }, { value: '1', text: 'Yes' }],
+      isExpired: false,
     };
   },
   validations: {
@@ -216,6 +219,15 @@ export default {
       .get(this.dataUrl)
       .then(response => {
         this.event = response.data.event;
+
+        // The event is expired if it has an end date and that time was before now.
+        // This is used for a warning in the attendance dialog so people don't accidentally record
+        // attendance for a past event. If it expires after the page loads, then we probably will
+        // want the swipes anyway, since it won't be long past it.
+        if (this.event.end_time) {
+          var endDate = moment(this.event.end_time);
+          this.isExpired = endDate.isBefore();
+        }
       })
       .catch(response => {
         console.log(response);
