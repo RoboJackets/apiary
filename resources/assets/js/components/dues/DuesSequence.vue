@@ -17,6 +17,16 @@
       <demographics :user="user" @next="next"></demographics>
     </div>
 
+    <div v-if="currentStepName == 'join-teams'">
+      <div class="row">
+        <h3>Join a Team</h3>
+        <p>insert useful message here</p>
+      </div>
+      <div class="row">
+        <team-card v-for="team in teams" v-if="team.self_serviceable" :team="team" :user="user" :key="team.id"></team-card>
+      </div>
+    </div>
+
     <div v-if="currentStepName == 'dues-payment-instructions'">
       <payment-instructions>
         <p>
@@ -42,12 +52,14 @@ export default {
         'safety-agreement',
         'dues-additional-info',
         'dues-demographics-info',
+        'join-teams',
         'dues-payment-instructions',
       ],
       currentStep: 0,
       user: {},
       dataUrl: '',
       baseUrl: '/api/v1/users/',
+      teamsUrl: '/api/v1/teams',
     };
   },
   mounted() {
@@ -56,6 +68,19 @@ export default {
       .get(this.dataUrl)
       .then(response => {
         this.user = response.data.user;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+    axios
+      .get(this.teamsUrl)
+      .then(response => {
+        this.teams = response.data.teams;
       })
       .catch(response => {
         console.log(response);
