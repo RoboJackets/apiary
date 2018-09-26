@@ -19,8 +19,14 @@
 
     <div v-if="currentStepName == 'join-teams'">
       <div class="row">
-        <h3>Join a Team</h3>
-        <p>insert useful message here</p>
+        <div class="col-12">
+          <h3>Join a Team</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p>insert useful message here</p>
+        </div>
       </div>
       <div class="row">
         <team-card v-for="team in teams" v-if="team.self_serviceable" :team="team" :user="user" :user-teams="userTeams" :key="team.id"></team-card>
