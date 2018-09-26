@@ -18,11 +18,12 @@ export default {
   props: {
     team: {},
     user: {},
+    userTeams: {},
   },
   data() {
     return {
       baseUrl: '/api/v1/teams/',
-      user_teams: this.user.teams,
+      user_teams: this.user.teams || this.userTeams,
     };
   },
   computed: {

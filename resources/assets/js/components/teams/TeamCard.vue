@@ -18,7 +18,7 @@
                 </template>
             </div>
             <div class="card-footer" style="min-height: 63px">
-                <team-membership-button :team="team" :user="user"></team-membership-button>
+                <team-membership-button :team="team" :user="user" :user-teams="userTeams"></team-membership-button>
             </div>
         </div>
     </div>
@@ -28,6 +28,7 @@ export default {
   props: {
     team: {},
     user: {},
+    userTeams: {},
   },
 };
 </script>

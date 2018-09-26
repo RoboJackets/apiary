@@ -23,7 +23,7 @@
         <p>insert useful message here</p>
       </div>
       <div class="row">
-        <team-card v-for="team in teams" v-if="team.self_serviceable" :team="team" :user="user" :key="team.id"></team-card>
+        <team-card v-for="team in teams" v-if="team.self_serviceable" :team="team" :user="user" :user-teams="userTeams" :key="team.id"></team-card>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
    */
 
 export default {
-  props: ['userUid'],
+  props: ['userUid', 'userTeams'],
   data() {
     return {
       steps: [
