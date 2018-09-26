@@ -74,8 +74,9 @@ class RsvpController extends Controller
         $now = new \DateTime();
         $end = isset($event->end_time) ? new \DateTime($event->end_time) : null;
         if ($end && $end <= $now) {
-            return response()->json(['status' => 'error', 'message' =>
-                'Forbidden - You cannot RSVP to events that have ended.'], 403);
+            // return response()->json(['status' => 'error', 'message' =>
+            //    'Forbidden - You cannot RSVP to events that have ended.'], 403);
+            return view('rsvp.expired')->with(['event' => $event]);
         }
 
         // Link to recruiting visit if the user is logged in
