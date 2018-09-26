@@ -96,7 +96,9 @@ export default {
           if (rawTeams.length < 1) {
             swal('Bueller...Bueller...', 'No teams found.', 'warning');
           } else {
-            let alphaTeams = response.data.teams.sort(function(a, b) {
+            let alphaTeams = response.data.teams.filter(function(item) {
+              return item.attendable;
+            }).sort(function(a, b) {
               return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
             });
             alphaTeams.forEach(function(team) {
