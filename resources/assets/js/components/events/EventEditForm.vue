@@ -131,7 +131,7 @@
             id="attendanceModal"
             :attendableId="this.eventId"
             attendableType="App\Event"
-            v-bind:showExpiredEventWarning="this.isExpired">
+            :showExpiredEventWarning="this.isExpired">
           </attendance-modal>
           <datatable id="attendance-view-table"
            :data-object="attendance"
@@ -291,6 +291,12 @@ export default {
         .post(this.attendanceUrl, this.attendanceQuery)
         .then(response => {
           this.attendance = response.data.attendance;
+
+          // Update whether the event expired warning should show up
+          if (this.event.end_time) {
+            var endDate = moment(this.event.end_time);
+            this.isExpired = endDate.isBefore();
+          }
         })
         .catch(response => {
           console.log(response);

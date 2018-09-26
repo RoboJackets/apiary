@@ -73,6 +73,9 @@ export default {
       type: Boolean,
     },
   },
+  mounted() {
+    $('#' + this.id).on('show.bs.modal', this.updateExpiredEventWarning);
+  },
   data() {
     return {
       attendance: {
@@ -142,6 +145,10 @@ export default {
             );
           }
         });
+    },
+    updateExpiredEventWarning() {
+      // Update whether the warning is going to be shown the next time the modal appears
+      this.showingExpiredEventWarning = this.showExpiredEventWarning;
     },
   },
   validations: {
