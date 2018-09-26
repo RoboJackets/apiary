@@ -25,7 +25,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <p>insert useful message here</p>
+          <p>Team membership in MyRoboJackets helps us with membership statistics, etc.</p>
         </div>
       </div>
       <div class="row">
