@@ -31,6 +31,12 @@
       <div class="row">
         <team-card v-for="team in teams" v-if="team.self_serviceable" :team="team" :user="user" :user-teams="userTeams" :key="team.id"></team-card>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <button @click="next" class="btn btn-primary float-right">Continue</button>
+          <button @click="next" class="btn btn-secondary float-right mx-2">Skip</button>
+        </div>
+      </div>
     </div>
 
     <div v-if="currentStepName == 'dues-payment-instructions'">
