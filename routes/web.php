@@ -13,7 +13,7 @@
 
 Route::get('nova/logout', function () {
     return redirect('logout');
-});
+})->name('nova.logout');
 
 Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::get('/', 'DashboardController@index')->name('home');
