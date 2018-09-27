@@ -72,6 +72,10 @@ export default {
     'attendance.gtid': function(val, oldVal) {
       this.debouncedGTID();
     },
+    attendableId: function(val, oldVal) {
+      // Update the data object when the prop attendableId changes
+      this.attendance.attendable_id = this.attendableId;
+    }
   },
   created: function() {
     this.debouncedGTID = _.debounce(this.parseGTID, 500);

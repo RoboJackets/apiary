@@ -55,11 +55,14 @@
         </div>
         <div class="row form-row">
             <button type="button" class="btn btn-primary" @click="submit">Submit</button>
+            <button type="button" class="btn btn-primary mx-2" @click.prevent="setToToday" data-toggle="modal" data-target="#attendanceModal" :disabled="this.attendance.attendable_id.length == 0">Record Swipes</button>
         </div>
+        <attendance-modal id="attendanceModal" :attendableId="this.attendance.attendable_id" :attendableType="this.attendance.attendable_type"></attendance-modal>
     </div>
 </template>
 <script>
 import { required, numeric, between, minLength, maxLength } from 'vuelidate/lib/validators';
+import moment from 'moment';
 export default {
   name: 'attendance-manual-add',
   data() {
@@ -157,6 +160,10 @@ export default {
             );
           }
         });
+    },
+    setToToday() {
+      this.attendance.created_at = moment().format('YYYY-MM-DD');
+      this.attendance.gitd = '';
     },
   },
   mounted() {
