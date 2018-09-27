@@ -20,12 +20,12 @@
     <div v-if="currentStepName == 'join-teams'">
       <div class="row">
         <div class="col-12">
-          <h3>Join a Team</h3>
+          <h3>Team Membership</h3>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <p>Team membership in MyRoboJackets helps us with membership statistics, etc.</p>
+          <p>This is the list of teams we know you're on. If this isn't accurate, please update it here.</p>
         </div>
       </div>
       <div class="row">
