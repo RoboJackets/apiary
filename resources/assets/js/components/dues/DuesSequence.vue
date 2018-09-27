@@ -34,7 +34,6 @@
       <div class="row">
         <div class="col-12">
           <button @click="next" class="btn btn-primary float-right">Continue</button>
-          <button @click="next" class="btn btn-secondary float-right mx-2">Skip</button>
         </div>
       </div>
     </div>
