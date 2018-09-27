@@ -1,23 +1,23 @@
 <template>
   <div>
-    <div v-if="currentStepName == 'dues-required-info'">
+    <div v-show="currentStepName == 'dues-required-info'">
       <dues-required-info :user="user" @next="next" @back="back">
       </dues-required-info>
     </div>
 
-    <div v-if="currentStepName == 'safety-agreement'">
+    <div v-show="currentStepName == 'safety-agreement'">
       <safety-agreement :user-uid="user.uid" @next="next" @back="back"></safety-agreement>
     </div>
 
-    <div v-if="currentStepName == 'dues-additional-info'">
+    <div v-show="currentStepName == 'dues-additional-info'">
       <dues-additional-info :user="user" @next="next" @back="back"></dues-additional-info>
     </div>
 
-    <div v-if="currentStepName == 'dues-demographics-info'">
+    <div v-show="currentStepName == 'dues-demographics-info'">
       <demographics :user="user" @next="next" @back="back"></demographics>
     </div>
 
-    <div v-if="currentStepName == 'dues-payment-instructions'">
+    <div v-show="currentStepName == 'dues-payment-instructions'">
       <payment-instructions>
         <p>
           To complete your annual registration, please submit the SGA-mandated dues payments. RoboJackets dues are $100 for the year or $55 for the semester.
