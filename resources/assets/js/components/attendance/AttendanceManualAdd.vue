@@ -55,7 +55,9 @@
         </div>
         <div class="row form-row">
             <button type="button" class="btn btn-primary" @click="submit">Submit</button>
-            <button type="button" class="btn btn-primary mx-2" @click.prevent="setToToday" data-toggle="modal" data-target="#attendanceModal" :disabled="this.attendance.attendable_id.length == 0">Record Swipes</button>
+            <span class="d-inline-block" id="swipes-tooltip" tabindex="0" data-toggle="tooltip" title="Select a team">
+                <button type="button" class="btn btn-primary mx-2" @click.prevent="setToToday" data-toggle="modal" data-target="#attendanceModal" :disabled="!recordSwipesEnabled" :style="recordSwipesEnabled ? '' : 'pointer-events: none;'">Record Swipes</button>
+            </span>
         </div>
         <attendance-modal id="attendanceModal" :attendableId="this.attendance.attendable_id" :attendableType="this.attendance.attendable_type"></attendance-modal>
     </div>
@@ -86,7 +88,15 @@ export default {
       },
       attendanceBaseUrl: '/api/v1/attendance',
       teamsBaseUrl: '/api/v1/teams',
+      recordSwipesEnabled: false,
     };
+  },
+  watch: {
+    'attendance.attendable_id': function(val, oldVal) {
+      // Only enable the tooltip warning you to select a team when no team is selected
+      this.recordSwipesEnabled = typeof this.attendance.attendable_id === 'number';
+      $('#swipes-tooltip').tooltip(this.recordSwipesEnabled ? 'disable' : 'enable');
+    },
   },
   methods: {
     loadTeams() {
@@ -168,6 +178,7 @@ export default {
   },
   mounted() {
     this.loadTeams();
+    $('#swipes-tooltip').tooltip('enable');
   },
   validations: {
     attendance: {
