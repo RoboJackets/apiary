@@ -1,7 +1,7 @@
 <template>
     <div class="modal fade" :id="id" tabindex="-1" role="dialog" :aria-labelledby="id" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" v-if="showingExpiredEventWarning">
+            <div class="modal-content" v-if="showingEndedEventWarning">
                 <div class="modal-header">
                     <h5 class="modal-title" :id="id">This event has ended</h5>
                 </div>
@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-secondary" v-on:click="showingExpiredEventWarning = false">Continue</button>
+                    <button type="button" class="btn btn-secondary" v-on:click="showingEndedEventWarning = false">Continue</button>
                 </div>
             </div>
             <div class="modal-content" v-else>
@@ -69,12 +69,12 @@ export default {
     attendableType: {
       type: String,
     },
-    showExpiredEventWarning: {
+    showEndedEventWarning: {
       type: Boolean,
     },
   },
   mounted() {
-    $('#' + this.id).on('show.bs.modal', this.updateExpiredEventWarning);
+    $('#' + this.id).on('show.bs.modal', this.updateEndedEventWarning);
   },
   data() {
     return {
@@ -88,7 +88,7 @@ export default {
       feedback: '',
       baseUrl: '/api/v1/attendance',
       hasError: false,
-      showingExpiredEventWarning: this.showExpiredEventWarning,
+      showingEndedEventWarning: this.showEndedEventWarning,
     };
   },
   watch: {
@@ -146,9 +146,9 @@ export default {
           }
         });
     },
-    updateExpiredEventWarning() {
+    updateEndedEventWarning() {
       // Update whether the warning is going to be shown the next time the modal appears
-      this.showingExpiredEventWarning = this.showExpiredEventWarning;
+      this.showingEndedEventWarning = this.showEndedEventWarning;
     },
   },
   validations: {
