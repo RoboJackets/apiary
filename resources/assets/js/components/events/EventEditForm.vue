@@ -352,6 +352,8 @@ export default {
       if (this.event.end_time) {
         var endDate = moment(this.event.end_time);
         this.hasEnded = endDate.isBefore();
+      } else {
+        this.hasEnded = false;
       }
     },
   },
