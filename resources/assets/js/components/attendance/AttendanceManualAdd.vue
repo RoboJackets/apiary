@@ -18,13 +18,11 @@
         <div class="row form-row">
             <label for="teams-buttons" class="col-sm-2 col-form-label">Team<span style="color:red">*</span></label>
             <div class="col-sm-10 col-lg-4">
-                <custom-radio-buttons
-                        v-model="attendance.attendable_id"
-                        :options="teams"
-                        id="teams-buttons"
-                        :is-error="$v.attendance.attendable_id.$error"
-                        @input="$v.attendance.attendable_id.$touch()">
-                </custom-radio-buttons>
+                <select id="teams-buttons" v-model="attendance.attendable_id" class="custom-select" :class="{ 'is-invalid': $v.attendance.attendable_id.$error }" @input="$v.attendance.attendable_id.$touch()">
+                    <option value="" style="display:none" v-if="!teams">Loading...</option>
+                    <option value="" style="display:none" v-if="teams && teams.length > 0">Select One</option>
+                    <option v-for="team in teams" :value="team.value">{{team.text}}</option>
+                </select>
                 <div class="invalid-feedback">
                     You must select a team.
                 </div>
