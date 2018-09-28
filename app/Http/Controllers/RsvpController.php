@@ -74,7 +74,7 @@ class RsvpController extends Controller
         $now = new \DateTime();
         $end = isset($event->end_time) ? new \DateTime($event->end_time) : null;
         if ($end && $end <= $now) {
-            return view('rsvp.expired')->with(['event' => $event]);
+            return view('rsvp.ended')->with(['event' => $event]);
         }
 
         // Link to recruiting visit if the user is logged in
