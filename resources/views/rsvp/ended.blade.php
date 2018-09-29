@@ -21,20 +21,13 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-8" style="text-align:center">
-            <h1 class="display-4">You're all set!</h1>
+            <h1 class="display-4">This event has ended!</h1>
 
             <p class="lead">
-                We can't wait to see you at <b>{{ $event->name }}</b>.<br/>
-                @isset($event['location'])
-                    <b>Location: </b> {{ $event->location }}<br/>
-                @endisset
-                @isset($event['start_time'])
-                    <b>Date: </b> {{ date("l, F jS, Y \a\\t h:i A" ,strtotime($event->start_time)) }}<br/>
-                @endisset
-                @if($event['cost'] != 0)
-                    <b>Cost: </b> ${{ $event->cost }}
-                @endif
+                We would have loved to see you at <b>{{ $event->name }}</b>, but unfortunately, that event has already ended.
             </p>
+
+            <p>Click <a href="https://robojackets.org/calendar/">here</a> to see our upcoming events.</p>
         </div>
     </div>
 </div>
