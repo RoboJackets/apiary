@@ -26,6 +26,8 @@
             <p class="lead">
                 We would have loved to see you at <b>{{ $event->name }}</b>, but unfortunately, that event has already ended.
             </p>
+
+            <p>Click <a href="https://robojackets.org/calendar/">here</a> to see our upcoming events.</p>
         </div>
     </div>
 </div>
