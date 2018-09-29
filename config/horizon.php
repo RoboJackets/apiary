@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'prefix' => env('HORIZON_PREFIX', 'horizon:'),
+    'prefix' => env('HORIZON_PREFIX', env('APP_NAME', 'apiary').':'.env('APP_ENV', 'prod').':'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,8 +55,8 @@ return [
     */
 
     'trim' => [
-        'recent' => 60,
-        'failed' => 10080,
+        'recent' => 1440,   // 24 hours
+        'failed' => 10080,  // 1 week
     ],
 
     /*
@@ -90,5 +90,9 @@ return [
                 'tries' => 3,
             ],
         ],
+    ],
+
+    'middleware' => [
+        'auth.cas.force',
     ],
 ];
