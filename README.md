@@ -12,8 +12,8 @@ This project grew out of frustration with the limitations imposed by Georgia Tec
 This project has been tailored to support the specific workflow of RoboJackets and is not currently built in a manner that would be easily adaptable to another organization. The decision to limit the scope of this project was made in light of the extensive approvals process to access the amount of student data we currently store. We believe it is unlikely that another org will be able and willing to navigate that process.
 
 ## Getting Help
-- For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in #apiary on Slack
-- For production support of MyRoboJackets, ask in #it-helpdesk on Slack
+- For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) on Slack
+- For production support of MyRoboJackets, ask in [#it-helpdesk](https://robojackets.slack.com/app_redirect?channel=it-helpdesk) on Slack
 
 ## Getting Started with Local Development
 
@@ -69,7 +69,7 @@ Clone the repository onto your local machine:
 $ git clone https://github.com/RoboJackets/apiary.git
 ```
 
-If you a member of RoboJackets, reach out in #apiary on Slack and ask for a copy of a mostly configured `.env` file.
+If you a member of RoboJackets, reach out in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) on Slack and ask for a copy of a mostly configured `.env` file.
 
 Copy the example environment file to configure Apiary for local development:
 
