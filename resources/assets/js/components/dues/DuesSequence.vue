@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="row">
-        <team-card v-for="team in teams" v-if="team.self_serviceable" :team="team" :user="user" :user-teams="userTeams" :key="team.id"></team-card>
+        <team-card v-for="team in teams" v-if="team.visible" :team="team" :user="user" :user-teams="userTeams" :key="team.id"></team-card>
       </div>
       <div class="row">
         <div class="col-12">
