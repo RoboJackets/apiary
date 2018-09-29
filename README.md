@@ -44,7 +44,7 @@ $ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-op
 Due to the nature of the data stored in certain tables in Apiary, some tables require encryption. This is implemented with MySQL's [Keyring](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
 For migrations to run successfully, you must also have a proper keyring set up in your development and production environments.
 
-To enable the Keyring functionality, edit your `my.cnf` as follows, then restart MySQL:  
+To enable the Keyring functionality, edit your `my.cnf` as follows, then restart MySQL:
 
     [mysqld]
     early-plugin-load=keyring_file.so
@@ -61,6 +61,10 @@ To check if the Keyring plugin was enabled successfully, run the following comma
     +--------------+---------------+
 
 Further documentation about MySQL Keyring can be found in [the MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
+
+### Install Redis
+
+Apiary uses Redis for queueing jobs, with Laravel Horizon used to manage them. You should be able to just install Redis and the corresponding PHP extension. Once you get Apiary configured below, you can run `php artisan horizon` to process jobs.
 
 ### Install Apiary
 Clone the repository onto your local machine:
@@ -91,7 +95,7 @@ For a basic development environment, you'll need to modify the following setting
 | CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
 | CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
 | CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
-| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user                                                         
+| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user
 
 #### Installing dependencies
 
@@ -162,4 +166,10 @@ There are a few additional changes needed to `.env` when moving to production.
 | APP_LOG_LEVEL                | info (or other as you see fit)                                                                                                                                                 |
 | APP_URL                      | DNS hostname for production environment                                                                                                                                        |
 | GA_UA                        | Google Analytics identifier, if desired                                                                                                                                        |
-| SQUARE_*                     | Square API credentials (Get these from the Square Developer Dashboard)   
+| SQUARE_*                     | Square API credentials (Get these from the Square Developer Dashboard)
+
+### Horizon Configuration
+
+Review the Laravel documentation on deploying Horizon to a production environment.
+
+Also be sure to set up a cron job to run scheduled tasks - Horizon uses this to keep track of statistics.
