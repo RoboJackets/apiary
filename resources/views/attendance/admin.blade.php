@@ -20,7 +20,7 @@
     <div class="tab-content">
         <div class="tab-pane show active" id="update">
             <h3>Add</h3>
-            <em>Note:</em> This should be used for adding past attendance only. Normal team attendance should be recorded through the kiosk.<br/>
+            <em>Note:</em> This should only be used for adding past attendance and for teams that are not on the kiosk, such as trainings. Normal team attendance should be recorded through the kiosk.<br/>
             <attendance-manual-add></attendance-manual-add>
             <h3>Delete</h3>
             <div class="row">
