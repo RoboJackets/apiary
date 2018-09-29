@@ -99,6 +99,8 @@ For a basic development environment, you'll need to modify the following setting
 $ composer install && npm install
 ```
 
+Please note that we are using [Laravel Nova](https://nova.laravel.com/) for some admin pages. You will be prompted for credentials when running Composer if an update to Nova is required. Get in touch with us in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) when this happens.
+
 You will need to run these commands again in the future if there are any changes to required packages.
 
 ### Before Your First Run
