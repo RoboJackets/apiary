@@ -44,7 +44,7 @@
             <flat-pickr
               id="event-endtime"
               v-model="event.end_time"
-              placeholder="Select start time"
+              placeholder="Select end time"
               :required="true"
               :config="dateTimeConfig"
               input-class="form-control">
