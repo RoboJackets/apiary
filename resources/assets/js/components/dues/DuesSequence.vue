@@ -25,7 +25,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <p>This is the list of teams we know you're on. If this isn't accurate, please update it here.</p>
+          <p>This is the list of teams we know you're on. If this isn't accurate, please update it here. You can update this at any point by visiting the teams page linked above.</p>
         </div>
       </div>
       <div class="row">
