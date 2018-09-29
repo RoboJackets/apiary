@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\BelongsToMany;
 
 class User extends Resource
 {
@@ -54,6 +55,8 @@ class User extends Resource
             new Panel('Emergency Contact', $this->emergencyFields()),
 
             new Panel('Swag', $this->swagFields()),
+
+            BelongsToMany::make('Teams'),
 
             new Panel('Metadata', $this->metaFields()),
         ];

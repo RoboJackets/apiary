@@ -216,7 +216,8 @@ export default {
           this.hasError = false;
           this.feedback = 'Saved!';
           console.log('success');
-          window.location.href = '/admin/teams/' + response.data.team.slug;
+          var newHREF = '/admin/teams/' + response.data.team.slug;
+          if (!window.location.href.endsWith(newHREF)) window.location.href = newHREF;
         })
         .catch(response => {
           this.hasError = true;
