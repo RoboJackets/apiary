@@ -15,7 +15,7 @@ class DuesTransactionController extends Controller
             'permission:read-dues-transactions',
             ['only' => ['index', 'indexPaid', 'indexPending', 'indexPendingSwag']]
         );
-        $this->middleware('permission:create-dues-transactions', ['only' => ['store']]);
+        $this->middleware('permission:create-dues-transactions-own|create-dues-transactions', ['only' => ['store']]);
         $this->middleware(
             'permission:read-dues-transactions|read-dues-transactions-own',
             ['only' => ['show']]
@@ -93,7 +93,7 @@ class DuesTransactionController extends Controller
         $user_id = $request->input('user_id');
 
         //Make sure that the user is actually allowed to create this transaction
-        if ($request->filled('user_id') && $user_id != $user->id && (! $user->hasRole('admin'))) {
+        if ($request->filled('user_id') && $user_id != $user->id && (! $user->hasPermissionTo('create-dues-transactions'))) {
             return response()->json(['status' => 'error',
                 'message' => 'You may not create a DuesTransaction for another user.', ], 403);
         } elseif (! $request->filled('user_id')) {

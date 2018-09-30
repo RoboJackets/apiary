@@ -278,7 +278,7 @@ paths:
         - Dues Transactions
       description: |-
         **Permissions**  
-        Requires `create-dues-transactions` permission.
+        Requires `create-dues-transactions` or `create-dues-transactions-own` permissions.
       parameters:
         - name: body
           in: body
