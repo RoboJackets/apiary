@@ -59,11 +59,16 @@ class PaymentController extends Controller
 
         $this->validate($request, [
             'amount' => 'required|numeric',
-            'method' => 'required|string',
+            'method' => 'required|string|in:cash,check,swipe,square,squarecash',
             'recorded_by' => 'numeric|exists:users,id',
             'payable_type' => 'required|string',
             'payable_id' => 'required|numeric',
         ]);
+
+        if ($user->cant('create-payment-' . $request->input('method'))) {
+            return response()->json(['status' => 'error', 'message' =>
+                'Forbidden - you do not have permission to use accept payment method'], 403);
+        }
 
         try {
             $payment = Payment::create($request->all());
