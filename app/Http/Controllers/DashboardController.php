@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
         //User is "new" if they don't have any transactions, or they have never paid dues
         $paidTxn = count(DuesTransaction::paid()->where('user_id', $user->id)->get());
-        $isNew = ($user->dues->count() == 0 || ($user->dues->count() == 1 && $paidTxn == 0));
+        $isNew = ($user->dues->count() == 0 || ($user->dues->count() >= 1 && $paidTxn == 0));
 
         //User needs a transaction if they don't have one for an active dues package
         $needsTransaction = (DuesTransaction::current()->where('user_id', $user->id)->count() == 0);
