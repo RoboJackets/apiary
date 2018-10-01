@@ -17,7 +17,7 @@
       <demographics :user="user" @next="next" @back="back"></demographics>
     </div>
 
-    <div v-if="currentStepName == 'join-teams'">
+    <div v-show="currentStepName == 'join-teams'">
       <div class="row">
         <div class="col-12">
           <h3>Team Membership</h3>
@@ -32,8 +32,11 @@
         <team-card v-for="team in teams" v-if="team.visible" :team="team" :user="user" :user-teams="userTeams" :key="team.id"></team-card>
       </div>
       <div class="row">
-        <div class="col-12">
-          <button @click="next" class="btn btn-primary float-right">Continue</button>
+        <div class="col-6">
+          <button @click="back" class="btn btn-secondary float-left">Back</button>
+        </div>
+        <div class="col-6">
+          <button @click="next" class="btn btn-primary float-right">Finish</button>
         </div>
       </div>
     </div>
