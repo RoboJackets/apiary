@@ -419,13 +419,13 @@ class PaymentController extends Controller
         //Query Square API to get authoritative data
         //See #284 for reasoning for loop
         $counter = 0;
-        while ($counter < 4) {
+        while ($counter < 10) {
             $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
             if (! $square_txn instanceof Exception) {
                 break;
             }
             $counter++;
-            sleep($counter * 0.1);
+            usleep($counter * 100000);
         }
 
         if ($square_txn instanceof Exception) {
