@@ -187,6 +187,7 @@ export default {
       }
     },
     paymentMethodOptions: function() {
+      paymentMethods = this.paymentMethods.split(',');
       return [
         { value: 'cash', text: 'Cash' },
         { value: 'check', text: 'Check' },
@@ -194,7 +195,7 @@ export default {
         { value: 'square', text: 'Square (Online)' },
         { value: 'squarecash', text: 'SquareCash' },
       ].filter(item => {
-        return (this.paymentMethods.indexOf(item.value) != -1);
+        return (paymentMethods.indexOf(item.value) != -1);
       });
     }
   },
