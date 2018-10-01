@@ -42,7 +42,7 @@ class PaymentSuccessListener
                 if ($role_member && ! $user->hasRole('member')) {
                     $user->assignRole($role_member);
                 } elseif ($user->hasRole('member')) {
-                    Log::warning(get_class().": Role 'member' already assigned to $user->uid");
+                    Log::notice(get_class().": Role 'member' already assigned to $user->uid");
                 } else {
                     Log::error(get_class().": Role 'member' not found for assignment to $user->uid");
                 }
