@@ -145,13 +145,6 @@ export default {
         method: '',
         amount: null,
       },
-      paymentMethods: [
-        { value: 'cash', text: 'Cash' },
-        { value: 'check', text: 'Check' },
-        { value: 'swipe', text: 'Swiped Card' },
-        { value: 'square', text: 'Square (Online)' },
-        { value: 'squarecash', text: 'SquareCash' },
-      ],
       baseUrl: '/api/v1/payments',
     };
   },
