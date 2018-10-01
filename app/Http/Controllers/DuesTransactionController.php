@@ -124,8 +124,8 @@ class DuesTransactionController extends Controller
             if ($pkgIsActive) {
                 $hasPayment = $existingTransaction->payment()->exists();
                 if ($hasPayment) {
-                    $paidTotal = ($existingTransaction->payment->sum('amount') > 0);
-                    if (! $paidTotal) {
+                    $paidAny = ($existingTransaction->payment->sum('amount') > 0);
+                    if (! $paidAny) {
                         $existingTransaction->delete();
                     }
                 } else {
