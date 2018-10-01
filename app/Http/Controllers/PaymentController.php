@@ -59,11 +59,21 @@ class PaymentController extends Controller
 
         $this->validate($request, [
             'amount' => 'required|numeric',
-            'method' => 'required|string',
+            'method' => 'required|string|in:cash,check,swipe,square,squarecash',
             'recorded_by' => 'numeric|exists:users,id',
             'payable_type' => 'required|string',
             'payable_id' => 'required|numeric',
         ]);
+
+        if ($currentUser->cant('create-payments-'.$request->input('method'))) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Forbidden - you do not have permission to accept that payment method',
+                ],
+                403
+            );
+        }
 
         try {
             $payment = Payment::create($request->all());
@@ -111,9 +121,9 @@ class PaymentController extends Controller
         } else {
             //Assuming DuesTransaction for now
 
-            //Find DuesTransactions without payment attempts
+            //Find the most recent DuesTransaction without a payment attempt
             $transactWithoutPmt = DuesTransaction::doesntHave('payment')
-                ->where('user_id', $user->id)->first();
+                ->where('user_id', $user->id)->latest('updated_at')->first();
 
             //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
             // and that have not passed the effective end

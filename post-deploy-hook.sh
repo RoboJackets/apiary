@@ -11,4 +11,4 @@ php artisan nova:publish --no-interaction
 npm install --no-progress
 npm run production --no-progress
 php artisan up
-php artisan queue:restart
+php artisan horizon:terminate
