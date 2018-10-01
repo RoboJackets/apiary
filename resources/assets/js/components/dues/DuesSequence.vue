@@ -17,6 +17,30 @@
       <demographics :user="user" @next="next" @back="back"></demographics>
     </div>
 
+    <div v-show="currentStepName == 'join-teams'">
+      <div class="row">
+        <div class="col-12">
+          <h3>Team Membership</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p>This is the list of teams we know you're on. If this isn't accurate, please update it here. You can update this at any point by visiting the teams page linked above.</p>
+        </div>
+      </div>
+      <div class="row">
+        <team-card v-for="team in teams" v-if="team.visible" :team="team" :user="user" :user-teams="userTeams" :key="team.id"></team-card>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <button @click="back" class="btn btn-secondary float-left">Back</button>
+        </div>
+        <div class="col-6">
+          <button @click="next" class="btn btn-primary float-right">Finish</button>
+        </div>
+      </div>
+    </div>
+
     <div v-show="currentStepName == 'dues-payment-instructions'">
       <payment-instructions>
         <p>
@@ -34,7 +58,7 @@
    */
 
 export default {
-  props: ['userUid'],
+  props: ['userUid', 'userTeams'],
   data() {
     return {
       steps: [
@@ -42,12 +66,14 @@ export default {
         'safety-agreement',
         'dues-additional-info',
         'dues-demographics-info',
+        'join-teams',
         'dues-payment-instructions',
       ],
       currentStep: 0,
       user: {},
       dataUrl: '',
       baseUrl: '/api/v1/users/',
+      teamsUrl: '/api/v1/teams',
     };
   },
   mounted() {
@@ -56,6 +82,21 @@ export default {
       .get(this.dataUrl)
       .then(response => {
         this.user = response.data.user;
+      })
+      .catch(response => {
+        console.log(response);
+        swal(
+          'Connection Error',
+          'Unable to load data. Check your internet connection or try refreshing the page.',
+          'error'
+        );
+      });
+    axios
+      .get(this.teamsUrl)
+      .then(response => {
+        this.teams = response.data.teams.sort(function(a, b) {
+          return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
+        });
       })
       .catch(response => {
         console.log(response);

@@ -9,6 +9,6 @@ Dues | {{ config('app.name') }}
   Pay Dues
 @endcomponent
 
-<dues-sequence user-uid="{{auth()->user()->uid}}"></dues-sequence>
+<dues-sequence user-uid="{{auth()->user()->uid}}" :user-teams="{{auth()->user()->teams}}"></dues-sequence>
 
 @endsection
