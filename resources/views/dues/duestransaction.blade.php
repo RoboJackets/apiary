@@ -13,8 +13,8 @@ Dues Transaction | {{ config('app.name') }}
 The outer regex takes the permissions and removes the create-payment- prefix. --}}
 <dues-transaction
     dues-transaction-id="{{$id}}"
-    :payment-methods="{{join(',', preg_replace("/^create-payment-(.*)$/", "$1",
-                        preg_grep("/^create-payment-.*(?<!own)$/", $perms)))}}">
+    payment-methods="{{join(',', preg_replace("/^create-payments-(.*)$/", "$1",
+                        preg_grep("/^create-payments-.*(?<!own)$/", $perms)))}}">
 
 </dues-transaction>
 
