@@ -7,7 +7,7 @@
           <div class="col-12 col-md-9 col-lg-4">
             <custom-radio-buttons
               v-model="payment.method"
-              :options="paymentMethods"
+              :options="paymentMethodOptions"
               id="payment-method"
               :is-error="$v.payment.method.$error"
               @input="$v.payment.method.$touch()">
@@ -132,6 +132,10 @@ export default {
     amount: {
       required: true,
     },
+    paymentMethods: {
+      required: true,
+      type: Array,
+    },
   },
   data() {
     return {
@@ -182,6 +186,17 @@ export default {
         return parseFloat(this.amount);
       }
     },
+    paymentMethodOptions: function() {
+      return [
+        { value: 'cash', text: 'Cash' },
+        { value: 'check', text: 'Check' },
+        { value: 'swipe', text: 'Swiped Card' },
+        { value: 'square', text: 'Square (Online)' },
+        { value: 'squarecash', text: 'SquareCash' },
+      ].filter(item => {
+        return (this.paymentMethods.indexOf(item.value) != -1);
+      });
+    }
   },
   validations: {
     payment: {

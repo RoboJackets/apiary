@@ -40,6 +40,7 @@
         transaction-type="DuesTransaction"
         :transaction-id="parseInt(duesTransactionId)"
         :amount="package.cost"
+        :payment-methods="paymentMethods"
         @done="paymentSubmitted">
       </accept-payment>
     </template>
@@ -55,6 +56,9 @@ export default {
     duesTransactionId: {
       required: true,
     },
+    paymentMethods: {
+      type: Array,
+    }
   },
   data() {
     return {
