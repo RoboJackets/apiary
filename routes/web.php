@@ -89,7 +89,10 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
             })->name('pendingDuesAdmin');
 
             Route::get('{id}', function ($id) {
-                return view('dues/duestransaction', ['id' => $id]);
+                return view('dues/duestransaction', [
+                    'id' => $id,
+                    'perms' => auth()->user()->getAllPermissions()->pluck('name')->all(),
+                ]);
             })->name('duesTransaction');
         });
 
