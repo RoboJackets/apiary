@@ -29,7 +29,10 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::prefix('dues')->group(function () {
         Route::get('/', function () {
             if (auth()->user()->is_active) {
-                return redirect()->route('home');
+                return response()->view('errors.generic', [
+                    'error_code' => 400,
+                    'error_message' => 'You\'ve already paid dues for this semester',
+                ], 400);
             } else {
                 return view('dues/payDues');
             }
