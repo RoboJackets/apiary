@@ -28,7 +28,11 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
 
     Route::prefix('dues')->group(function () {
         Route::get('/', function () {
-            return view('dues/payDues');
+            if (auth()->user()->is_active) {
+                return response()->view('dues.alreadypaid', [], 400);
+            } else {
+                return view('dues/payDues');
+            }
         })->name('payDues');
 
         Route::get('/pay', 'PaymentController@storeUser')->name('dues.payOne');
