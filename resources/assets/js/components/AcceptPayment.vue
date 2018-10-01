@@ -180,7 +180,7 @@ export default {
       }
     },
     paymentMethodOptions: function() {
-      paymentMethods = this.paymentMethods.split(',');
+      var paymentMethods = this.paymentMethods.split(',');
       return [
         { value: 'cash', text: 'Cash' },
         { value: 'check', text: 'Check' },
