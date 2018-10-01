@@ -65,7 +65,7 @@ class PaymentController extends Controller
             'payable_id' => 'required|numeric',
         ]);
 
-        if ($user->cant('create-payment-' . $request->input('method'))) {
+        if ($currentUser->cant('create-payments-' . $request->input('method'))) {
             return response()->json(['status' => 'error', 'message' =>
                 'Forbidden - you do not have permission to use accept payment method'], 403);
         }
