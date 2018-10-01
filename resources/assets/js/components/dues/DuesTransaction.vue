@@ -57,7 +57,7 @@ export default {
       required: true,
     },
     paymentMethods: {
-      type: Array,
+      type: String,
     }
   },
   data() {

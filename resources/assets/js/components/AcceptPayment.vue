@@ -134,7 +134,7 @@ export default {
     },
     paymentMethods: {
       required: true,
-      type: Array,
+      type: String,
     },
   },
   data() {
