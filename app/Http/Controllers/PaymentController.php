@@ -65,7 +65,7 @@ class PaymentController extends Controller
             'payable_id' => 'required|numeric',
         ]);
 
-        if ($currentUser->cant('create-payments-' . $request->input('method'))) {
+        if ($currentUser->cant('create-payments-'.$request->input('method'))) {
             return response()->json(
                 [
                     'status' => 'error',
