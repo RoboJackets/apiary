@@ -8,7 +8,7 @@
         <fieldset class="form-group">
           <label class ="lead" for="gender">What is your gender?</label>
           <div v-for="option in genderOptions" class="custom-control custom-radio">
-            <input v-model="localUser.gender" type="radio" class="custom-control-input" :value="option.value" name="gender" :id="'gender-'+option.value">
+            <input v-model="gender" type="radio" class="custom-control-input" :value="option.value" name="gender" :id="'gender-'+option.value">
             <label class="custom-control-label" :for="'gender-'+option.value">{{option.text}}</label>
           </div>
         </fieldset>
@@ -16,15 +16,18 @@
         <fieldset class="form-group">
           <label class="lead" for="ethnicity">What is your ethnicity/race? (Check all that Apply)</label>
           <div v-for="option in ethnicityOptions" class="custom-control custom-checkbox">
-            <input v-model="localUser.ethnicity" type="checkbox" class="custom-control-input" :value="option.value" :id="'ethnicity-'+option.value" name="ethnicity">
+            <input v-model="ethnicity" type="checkbox" class="custom-control-input" :value="option.value" :id="'ethnicity-'+option.value" name="ethnicity">
             <label class="custom-control-label" :for="'ethnicity-'+option.value">{{option.text}}</label>
           </div>
         </fieldset>
 
         <div class="row">
-          <div class="col-lg-6 col-12">
+          <div class="col-lg-3 col-6">
+            <button @click.prevent="$emit('back')" class="btn btn-secondary float-left">Back</button>
+          </div>
+          <div class="col-lg-3 col-6">
             <button type="submit" class="btn btn-primary float-right">Continue</button>
-            <button type="submit" class="btn btn-secondary float-right mx-2">Skip</button>
+            <button @click.prevent="$emit('next')" class="btn btn-secondary float-right mx-2">Skip</button>
           </div>
         </div>
 
@@ -53,26 +56,22 @@ export default {
         { value: 'nonbinary', text: 'Non-binary or gender-queer' },
         { value: 'none', text: 'Prefer not to respond' },
       ],
+      ethnicity: [],
+      gender: '',
     };
-  },
-  mounted() {
-    if (!this.localUser.ethnicity) {
-      this.localUser.ethnicity = [];
-    } else {
-      this.localUser.ethnicity = this.localUser.ethnicity.split(',');
-    }
   },
   methods: {
     submit() {
       var baseUrl = '/api/v1/users/';
-      var dataUrl = baseUrl + this.localUser.uid;
+      var dataUrl = baseUrl + this.user.uid;
 
-      delete this.localUser.dues;
+      delete this.user.dues;
 
-      this.localUser.ethnicity = this.localUser.ethnicity.toString();
+      this.user.ethnicity = this.ethnicity.toString();
+      this.user.gender = this.gender;
 
       axios
-        .put(dataUrl, this.localUser)
+        .put(dataUrl, this.user)
         .then(response => {
           this.$emit('next');
         })
@@ -86,10 +85,12 @@ export default {
         });
     },
   },
-  computed: {
-    localUser: function() {
-      return this.user;
-    },
+  mounted() {
+    if (this.user.ethnicity) {
+      this.ethnicity = this.user.ethnicity.split(',');
+    } else {
+      this.ethnicity = [];
+    }
   },
 };
 </script>
