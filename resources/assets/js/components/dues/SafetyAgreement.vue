@@ -18,8 +18,11 @@
     </fieldset>
 
     <div class="row">
-      <div class="col-12">
+      <div class="col-6">
+        <button @click.prevent="$emit('back')" class="btn btn-secondary float-left mx-2">Back</button>
         <button @click="selectAll" type="button" class="btn btn-secondary float-left">Check All</button>
+      </div>
+      <div class="col-6">
         <button @click="submit" type="submit" class="btn btn-primary float-right">Continue</button>
       </div>
     </div>

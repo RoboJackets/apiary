@@ -116,12 +116,22 @@ class DuesTransactionController extends Controller
             }
         }
 
-        //Check to make sure there isn't already an existing package for the target user
-        $existingTransaction = DuesTransaction::where('dues_package_id', $request->input('dues_package_id'))
-            ->where('user_id', $request->input('user_id'))->first();
-        if ($existingTransaction) {
-            return response()->json(['status' => 'error',
-                'message' => 'There is already a pending Dues Transaction for this user', ], 400);
+        // If there's an existing active transaction that hasn't been paid, delete it
+        // and replace it with the one currently being requested
+        if ($user->dues->count() > 0) {
+            $existingTransaction = $user->dues->last();
+            $pkgIsActive = $existingTransaction->package->is_active;
+            if ($pkgIsActive) {
+                $hasPayment = $existingTransaction->payment()->exists();
+                if ($hasPayment) {
+                    $paidTotal = ($existingTransaction->payment->sum('amount') > 0);
+                    if (! $paidTotal) {
+                        $existingTransaction->delete();
+                    }
+                } else {
+                    $existingTransaction->delete();
+                }
+            }
         }
 
         try {
