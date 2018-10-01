@@ -20,6 +20,26 @@ class NotificationTemplate extends Resource
     public static $model = 'App\NotificationTemplate';
 
     /**
+     * Get the displayble label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'Notification Templates';
+    }
+
+    /**
+     * Get the displayble singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return 'Notification Template';
+    }
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
