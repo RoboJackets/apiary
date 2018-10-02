@@ -171,7 +171,7 @@ export default {
     },
     setToToday() {
       this.attendance.created_at = moment().format('YYYY-MM-DD');
-      this.attendance.gitd = '';
+      this.attendance.gtid = '';
     },
   },
   mounted() {
