@@ -173,3 +173,7 @@ There are a few additional changes needed to `.env` when moving to production.
 Review the Laravel documentation on deploying Horizon to a production environment.
 
 Also be sure to set up a cron job to run scheduled tasks - Horizon uses this to keep track of statistics.
+
+# Security reporting
+
+Any security issues with the code or any RoboJackets-managed deployment (*.robojackets.org) should be reported to [developers@robojackets.org](mailto:developers@robojackets.org) and [security@robojackets.org](mailto:security@robojackets.org).
