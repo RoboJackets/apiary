@@ -421,14 +421,14 @@ class PaymentController extends Controller
         $counter = 0;
         while ($counter < 10) {
             $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
-            if (! $square_txn instanceof Exception) {
+            if (! $square_txn instanceof \SquareConnect\ApiException) {
                 break;
             }
             $counter++;
             usleep($counter * 100000);
         }
 
-        if ($square_txn instanceof Exception) {
+        if ($square_txn instanceof \SquareConnect\ApiException) {
             Bugsnag::notifyException($square_txn);
 
             return response(view(
