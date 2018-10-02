@@ -428,7 +428,7 @@ class PaymentController extends Controller
             usleep($counter * 100000);
         }
 
-        if ($square_txn instanceof Exception) {
+        if ($square_txn instanceof \SquareConnect\ApiException) {
             Bugsnag::notifyException($square_txn);
 
             return response(view(
