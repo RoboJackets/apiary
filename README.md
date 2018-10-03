@@ -176,4 +176,4 @@ Also be sure to set up a cron job to run scheduled tasks - Horizon uses this to 
 
 # Security reporting
 
-Any security issues with the code or any RoboJackets-managed deployment (*.robojackets.org) should be reported to [apiary@robojackets.org](mailto:apiary@robojackets.org). This will notify our development and operations teams and you should receive a response within 8 business hours.
+Any security issues with the Apiary code or any RoboJackets-managed Apiary deployment (*.robojackets.org) should be reported to [apiary@robojackets.org](mailto:apiary@robojackets.org). This will notify our development and operations teams and you should receive a response within 8 business hours.
