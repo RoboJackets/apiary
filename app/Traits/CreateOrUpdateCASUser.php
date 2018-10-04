@@ -9,6 +9,7 @@
 namespace App\Traits;
 
 use Log;
+use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -25,10 +26,18 @@ trait CreateOrUpdateCASUser
     public function createOrUpdateCASUser(Request $request)
     {
         $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
+        // Attributes that will be split by commas when masquerading
+        $arrayAttrs = ['gtPersonEntitlement'];
+        // Merge them together so we verify all attributes are present, even the array ones
+        $attrs = array_merge($attrs, $arrayAttrs);
         if ($this->cas->isMasquerading()) {
             $masq_attrs = [];
             foreach ($attrs as $attr) {
                 $masq_attrs[$attr] = config('cas.cas_masquerade_'.$attr);
+            }
+            // Split the attributes that we need to split
+            foreach ($arrayAttrs as $attr) {
+                $masq_attrs[$attr] = explode(',', $masq_attrs[$attr]);
             }
             $this->cas->setAttributes($masq_attrs);
         }
@@ -76,6 +85,23 @@ trait CreateOrUpdateCASUser
                 $user->assignRole($role_member);
             } else {
                 Log::error(get_class().": Role 'member' not found for assignment to $user->uid.");
+            }
+        }
+
+        if ($user->teams->count() == 0) {
+            Log::info(get_class().": Updating team membership for $user->uid from OrgSync.");
+            $orgsyncGroups = [];
+            foreach ($this->cas->getAttribute('gtPersonEntitlement') as $entitlement) {
+                if (strpos($entitlement, '/gt/departmental/studentlife/studentgroups/RoboJackets/') === 0) {
+                    $orgsyncGroups[] = substr($entitlement, 55);
+                }
+            }
+
+            foreach ($orgsyncGroups as $group) {
+                $team = Team::where('name', $group)->first();
+                if ($team != null) {
+                    $team->members()->syncWithoutDetaching($user);
+                }
             }
         }
 
