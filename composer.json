@@ -21,6 +21,7 @@
         "laravel/nova": "~1.0",
         "laravel/tinker": "~1.0",
         "predis/predis": "~1.0",
+        "spatie/laravel-failed-job-monitor": "^3.0",
         "spatie/laravel-permission": "^2.6",
         "spatie/laravel-sluggable": "^2.1",
         "square/connect": "^2.5",
