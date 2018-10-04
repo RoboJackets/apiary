@@ -9,8 +9,8 @@
 namespace App\Traits;
 
 use Log;
-use App\User;
 use App\Team;
+use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -90,10 +90,10 @@ trait CreateOrUpdateCASUser
 
         if ($user->teams->count() == 0) {
             Log::info(get_class().": Updating team membership for $user->uid from OrgSync.");
-            $orgsyncGroups = array();
+            $orgsyncGroups = [];
             foreach ($this->cas->getAttribute('gtPersonEntitlement') as $entitlement) {
                 if (strpos($entitlement, '/gt/departmental/studentlife/studentgroups/RoboJackets/') === 0) {
-                    $orgsyncGroups[]  = substr($entitlement, 55);
+                    $orgsyncGroups[] = substr($entitlement, 55);
                 }
             }
 
