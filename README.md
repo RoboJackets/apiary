@@ -173,3 +173,7 @@ There are a few additional changes needed to `.env` when moving to production.
 Review the Laravel documentation on deploying Horizon to a production environment.
 
 Also be sure to set up a cron job to run scheduled tasks - Horizon uses this to keep track of statistics.
+
+# Security reporting
+
+Any security issues with the Apiary code or any RoboJackets-managed Apiary deployment (*.robojackets.org) should be reported to [apiary@robojackets.org](mailto:apiary@robojackets.org). This will notify our development and operations teams and you should receive a response within 8 business hours.
