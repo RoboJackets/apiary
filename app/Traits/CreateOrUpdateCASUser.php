@@ -96,12 +96,12 @@ trait CreateOrUpdateCASUser
                 }
             }
 
-            $addedAnyTeams = FALSE;
+            $addedAnyTeams = false;
             foreach ($orgsyncGroups as $group) {
                 $team = Team::where('name', $group)->first();
                 if ($team != null) {
                     $team->members()->syncWithoutDetaching($user);
-                    $addedAnyTeams = TRUE;
+                    $addedAnyTeams = true;
                 }
             }
             if ($addedAnyTeams) {
