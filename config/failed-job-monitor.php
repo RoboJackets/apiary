@@ -27,7 +27,7 @@ return [
     'channels' => ['mail', 'slack'],
 
     'mail' => [
-        'to' => 'email@example.com',
+        'to' => env('FAILED_JOB_EMAIL_ADDRESS'),
     ],
 
     'slack' => [
