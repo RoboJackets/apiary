@@ -89,7 +89,6 @@ trait CreateOrUpdateCASUser
         }
 
         if ($user->teams->count() == 0) {
-            Log::info(get_class().": Updating team membership for $user->uid from OrgSync.");
             $orgsyncGroups = [];
             foreach ($this->cas->getAttribute('gtPersonEntitlement') as $entitlement) {
                 if (strpos($entitlement, '/gt/departmental/studentlife/studentgroups/RoboJackets/') === 0) {
@@ -97,11 +96,16 @@ trait CreateOrUpdateCASUser
                 }
             }
 
+            $addedAnyTeams = false;
             foreach ($orgsyncGroups as $group) {
                 $team = Team::where('name', $group)->first();
                 if ($team != null) {
                     $team->members()->syncWithoutDetaching($user);
+                    $addedAnyTeams = true;
                 }
+            }
+            if ($addedAnyTeams) {
+                Log::info(get_class().": Updating team membership for $user->uid from OrgSync.");
             }
         }
 
