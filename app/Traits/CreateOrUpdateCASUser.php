@@ -25,10 +25,18 @@ trait CreateOrUpdateCASUser
     public function createOrUpdateCASUser(Request $request)
     {
         $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
+        // Attributes that will be split by commas when masquerading
+        $arrayAttrs = ['gtPersonEntitlement'];
+        // Merge them together so we verify all attributes are present, even the array ones
+        $attrs = array_merge($attrs, $arrayAttrs);
         if ($this->cas->isMasquerading()) {
             $masq_attrs = [];
             foreach ($attrs as $attr) {
                 $masq_attrs[$attr] = config('cas.cas_masquerade_'.$attr);
+            }
+            // Split the attributes that we need to split
+            foreach ($arrayAttrs as $attr) {
+                $masq_attrs[$attr] = explode(',', $masq_attrs[$attr]);
             }
             $this->cas->setAttributes($masq_attrs);
         }
