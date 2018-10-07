@@ -3,10 +3,11 @@
 namespace App\Http\Resources;
 
 use Auth;
-use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Team as TeamResource;
+use App\Http\Resources\Event as EventResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
+use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 
 class User extends JsonResource
 {
@@ -30,7 +31,8 @@ class User extends JsonResource
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
-            'preferred_name' => $this->preferred_name,
+            'preferred_first_name' => $this->preferred_first_name,
+            'full_name' => $this->full_name,
             'phone' => $this->phone,
             $this->mergeWhen(Auth::user()->can('read-users-emergency_contact'), [
                 'emergency_contact_name' => $this->emergency_contact_name,
@@ -50,9 +52,10 @@ class User extends JsonResource
             'deleted_at' => $this->deleted_at,
 
             // Relationships
+            'dues' => DuesTransactionResource::collection($this->whenLoaded('dues')),
             'events' => EventResource::collection($this->whenLoaded('events')),
+            'recruitingVisits' => RecruitingVisitResource::collection($this->whenLoaded('recruitingVisits')),
             'teams' => TeamResource::collection($this->whenLoaded('teams')),
-            'recruitingVisit' => TeamResource::collection($this->whenLoaded('recruitingVisits')),
         ];
     }
 }
