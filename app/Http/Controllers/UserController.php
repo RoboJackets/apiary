@@ -9,7 +9,6 @@ use Illuminate\Validation\Rule;
 use App\Http\Resources\User as UserResource;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -29,9 +28,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = QueryBuilder::for(User::class)
-            ->allowedIncludes(User::allowedInclude(Auth::user()))
-            ->get();
+        $users = User::with(User::allowedInclude(Auth::user()))->get();
         return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
     }
 
