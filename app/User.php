@@ -256,22 +256,6 @@ class User extends Authenticatable
         // Array of attributes/relationships allowed to include
         $allowedInclude = [];
 
-//        // Map of attributes to permission name (read-users-x)
-//        $attrPermMap = [
-//            'gtid' => 'gtid',
-//            'api_token' => 'api_token',
-//            'emergency_contact_name' => 'emergency_contact',
-//            'emergency_contact_phone' => 'emergency_contact',
-//            'gender' => 'demographics',
-//            'ethnicity' => 'demographics',
-//        ];
-//
-//        foreach ($attrPermMap as $attr => $permission) {
-//            if ($user->hasPermissionTo("read-users-$permission")) {
-//                $allowedInclude[] = $attr;
-//            }
-//        }
-
         // Map of related models to permission name (read-x)
         $relationPermMap = [
             'recruitingVisits' => 'recruiting-visits',
