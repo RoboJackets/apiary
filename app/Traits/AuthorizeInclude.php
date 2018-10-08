@@ -15,6 +15,11 @@ trait AuthorizeInclude
      */
     public function authorizeInclude($class, $requestedInclude = null)
     {
+        // If the user doesn't request anything, we don't need to authorize anything
+        if (is_null($requestedInclude)) {
+            return [];
+        }
+
         $allowedInclude = [];
         $uid = \Auth::user()->uid;
         \Log::debug(__METHOD__ . ": Checking authorization of $uid for $class");
