@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\User;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
+use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 
 class DuesTransactionController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware(
@@ -27,13 +31,14 @@ class DuesTransactionController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $request Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transact = DuesTransaction::all();
-        $transact->load(['user', 'package', 'payment']);
-
+        $include = $request->input('include');
+        $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransactionResource::collection($transact);
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -42,10 +47,11 @@ class DuesTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexPaid()
+    public function indexPaid(Request $request)
     {
-        $transact = DuesTransaction::paid()->with(['user', 'package'])->get();
-
+        $include = $request->input('include');
+        $transact = DuesTransaction::paid()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransactionResource::collection($transact);
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -54,10 +60,11 @@ class DuesTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexPending()
+    public function indexPending(Request $request)
     {
-        $transact = DuesTransaction::pending()->with(['user', 'package'])->get();
-
+        $include = $request->input('include');
+        $transact = DuesTransaction::pending()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransactionResource::collection($transact);
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -66,10 +73,11 @@ class DuesTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexPendingSwag()
+    public function indexPendingSwag(Request $request)
     {
-        $transact = DuesTransaction::pendingSwag()->with(['user', 'package'])->get();
-
+        $include = $request->input('include');
+        $transact = DuesTransaction::pendingSwag()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransactionResource::collection($transact);
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -138,6 +146,7 @@ class DuesTransactionController extends Controller
 
             $user->notify(new Confirm($dbTransact->package));
 
+            $dbTransact = new DuesTransactionResource($dbTransact);
             return response()->json(['status' => 'success', 'dues_transaction' => $dbTransact], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
@@ -154,12 +163,11 @@ class DuesTransactionController extends Controller
     public function show($id, Request $request)
     {
         $requestingUser = $request->user();
-        $transact = DuesTransaction::find($id);
+        $include = $request->input('include');
+        $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->find($id);
         if (! $transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
-
-        $transact->load('user', 'package', 'payment');
 
         $requestedUser = $transact->user;
         //Enforce users only viewing their own DuesTransactions (read-dues-transactions-own)
@@ -168,6 +176,7 @@ class DuesTransactionController extends Controller
                 'message' => 'Forbidden - You do not have permission to view this DuesTransaction.', ], 403);
         }
 
+        $transact = new DuesTransactionResource($transact);
         return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
     }
 
@@ -212,6 +221,7 @@ class DuesTransactionController extends Controller
         }
 
         $transact = DuesTransaction::find($transact->id);
+        $transact = new DuesTransactionResource($transact);
         if ($transact) {
             return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
         } else {
