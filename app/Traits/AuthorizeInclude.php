@@ -56,7 +56,7 @@ trait AuthorizeInclude
     /**
      * Converts a string in camelCase to dashed-format
      * Ex. duesTransactions -> dues-transactions
-     * @param $string string to convery
+     * @param $string string to convert
      * @return string result
      */
     private function camelToDashed($string) {
