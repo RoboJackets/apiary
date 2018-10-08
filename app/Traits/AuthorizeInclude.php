@@ -7,7 +7,7 @@ use App\User;
 trait AuthorizeInclude
 {
     /**
-     * Given an array of requested relationships to be included,
+     * Given an array or comma-separated string of requested relationships to be included,
      * return an array of those allowed based on the requester's permissions
      * @param $class string Class
      * @param $requestedInclude array of relationship names
