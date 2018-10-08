@@ -6,12 +6,15 @@ use \Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Resources\User as UserResource;
+use App\Traits\AuthorizeInclude;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
@@ -24,11 +27,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with(User::allowedInclude(Auth::user()))->get();
+        $include = $request->input('include');
+        $users = User::with($this->authorizeInclude(User::class, $include))->get();
         return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
     }
 

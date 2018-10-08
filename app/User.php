@@ -194,6 +194,21 @@ class User extends Authenticatable
     }
 
     /**
+     * Map of relationships to permissions for dynamic inclusion
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'recruitingVisits' => 'recruiting-visits',
+            'teams' => 'teams-membership',
+            'dues' => 'dues-transactions',
+            'events' => 'events',
+            'rsvps' => 'rsvps',
+        ];
+    }
+
+    /**
      * Get the is_active flag for the User.
      *
      * @return bool
@@ -249,28 +264,5 @@ class User extends Authenticatable
         return $query->whereHas('dues', function ($q) {
             $q->paid()->current();
         });
-    }
-
-    public static function allowedInclude(User $user)
-    {
-        // Array of attributes/relationships allowed to include
-        $allowedInclude = [];
-
-        // Map of related models to permission name (read-x)
-        $relationPermMap = [
-            'recruitingVisits' => 'recruiting-visits',
-//          'teams' => 'teams-membership',
-            'dues' => 'dues-transactions',
-            'events' => 'events',
-            'rsvps' => 'rsvps',
-        ];
-
-        foreach ($relationPermMap as $relation => $permission) {
-            if ($user->can("read-$permission")) {
-                $allowedInclude[] = $relation;
-            }
-        }
-
-        return $allowedInclude;
     }
 }
