@@ -137,7 +137,8 @@ class UserController extends Controller
      */
     public function show($id, Request $request)
     {
-        $user = User::findByIdentifier($id)->first();
+        $include = $request->input('include');
+        $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
         if ($user) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
@@ -147,6 +148,7 @@ class UserController extends Controller
             }
 
             //Show API tokens only to admins and the users themselves
+            //TODO: Replace this with something better
             if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
                 $user = $user->makeVisible('api_token');
             }
@@ -215,12 +217,13 @@ class UserController extends Controller
         $user = User::find($user->id);
 
         //Show API tokens only to admins and the users themselves
+        //TODO: Replace this with something better
         if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
             $user = $user->makeVisible('api_token');
         }
 
         if ($user) {
-            return response()->json(['status' => 'success', 'user' => $user]);
+            return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
