@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Payment as PaymentResource;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
@@ -32,7 +33,8 @@ class DuesTransaction extends JsonResource
             'deleted_at' => $this->deleted_at,
 
             // Relationships
-            'package' => DuesPackageResource::collection($this->whenLoaded('package')),
+            'user' => new UserResource($this->whenLoaded('user')),
+            'package' => new DuesPackageResource($this->whenLoaded('package')),
             'payment' => PaymentResource::collection($this->whenLoaded('payment')),
         ];
     }
