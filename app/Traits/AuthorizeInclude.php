@@ -24,8 +24,8 @@ trait AuthorizeInclude
         if (method_exists($model, 'getRelationshipPermissionMap')) {
             $relationPermMap = $model->getRelationshipPermissionMap();
         } else {
-            \Log::error(__METHOD__ . ": Unable to retrieve relationship permission map for $class");
-            return [];
+            \Log::notice(__METHOD__ . ": No relationship permission map for $class, assuming default naming");
+            $relationPermMap = [];
         }
 
         if (is_array($requestedInclude)) {
@@ -41,15 +41,26 @@ trait AuthorizeInclude
 
         // If the user asks for it and has permission to read it, give it to them.
         foreach ($requestedInclude as $include) {
-            if (array_key_exists($include, $relationPermMap)) {
-                $permission = $relationPermMap[$include];
-                if (\Auth::user()->can("read-$permission")) {
-                    $allowedInclude[] = $include;
-                }
+            // Use either the predefined permission name or assume default naming convention
+            $permission = array_key_exists($include, $relationPermMap) ?
+                $relationPermMap[$include] : $this->camelToDashed($include);
+
+            if (\Auth::user()->can("read-$permission")) {
+                $allowedInclude[] = $include;
             }
         }
         \Log::debug(__METHOD__ . ": Authorized of $uid completed for $class - " . json_encode($allowedInclude));
         return $allowedInclude;
+    }
+
+    /**
+     * Converts a string in camelCase to dashed-format
+     * Ex. duesTransactions -> dues-transactions
+     * @param $string string to convery
+     * @return string result
+     */
+    private function camelToDashed($string) {
+        return strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $string));
     }
 
 }
