@@ -3,20 +3,22 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Textarea;
 
-class DuesPackage extends Resource
+class Team extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\DuesPackage';
+    public static $model = 'App\Team';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,6 +34,7 @@ class DuesPackage extends Resource
      */
     public static $search = [
         'name',
+        'description',
     ];
 
     /**
@@ -45,9 +48,13 @@ class DuesPackage extends Resource
         return [
             new Panel('Basic Information', $this->basicFields()),
 
-            new Panel('Swag', $this->swagFields()),
+            new Panel('Communications', $this->commFields()),
+
+            new Panel('Controls', $this->controlFields()),
 
             new Panel('Metadata', $this->metaFields()),
+
+            HasMany::make('User', 'members'),
         ];
     }
 
@@ -58,37 +65,41 @@ class DuesPackage extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Boolean::make('Active', 'is_active')
-                ->sortable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
-
-            DateTime::make('Start Date', 'effective_start')
+            Textarea::make('Description')
                 ->hideFromIndex()
                 ->rules('required'),
-
-            DateTime::make('End Date', 'effective_end')
-                ->hideFromIndex()
-                ->rules('required'),
-
-            Currency::make('Cost')
-                ->sortable()
-                ->format('%.2n')
-                ->rules('required'),
-
-            Boolean::make('Available for Purchase')
-                ->sortable(),
         ];
     }
 
-    protected function swagFields()
+    protected function commFields()
     {
         return [
-            Boolean::make('Eligible for T-Shirt', 'eligible_for_shirt')
-                ->hideFromIndex(),
+            Text::make('Mailing List Name')
+                ->hideFromIndex()
+                ->sortable()
+                ->rules('max:255'),
 
-            Boolean::make('Eligible for Polo')
-                ->hideFromIndex(),
+            Text::make('Slack Channel Name')
+                ->hideFromIndex()
+                ->rules('max:255'),
+
+            Text::make('Slack Channel ID')
+                ->hideFromIndex()
+                ->rules('max:255'),
+        ];
+    }
+
+    protected function controlFields()
+    {
+        return [
+            Boolean::make('Visible')
+                ->sortable(),
+
+            Boolean::make('Attendable')
+                ->sortable(),
+
+            Boolean::make('Self-Serviceable', 'self_serviceable')
+                ->sortable(),
         ];
     }
 

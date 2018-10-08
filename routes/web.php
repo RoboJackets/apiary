@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('nova/logout', function () {
+    return redirect('logout');
+});
+
 Route::group(['middleware' => 'auth.cas.force'], function () {
     Route::get('/', 'DashboardController@index')->name('home');
 
@@ -39,10 +43,6 @@ Route::group(['middleware' => 'auth.cas.force'], function () {
         Route::get('/complete', 'PaymentController@handleSquareResponse')
             ->name('payments.complete');
     });
-
-    Route::get('login', function () {
-        return redirect('https://login.gatech.edu/cas/logout?service='.config('app.url'));
-    })->name('logout');
 
     Route::prefix('admin')->group(function () {
         Route::prefix('recruiting')->group(function () {

@@ -12,6 +12,18 @@ class RecruitingCampaignRecipient extends Model
     use Notifiable;
 
     /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    /**
      * Get the user that owns the phone.
      */
     public function recruitingCampaign()
