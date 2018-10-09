@@ -21,6 +21,7 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the user that owns the campaign.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function creator()
     {
@@ -28,7 +29,17 @@ class RecruitingCampaign extends Model
     }
 
     /**
+     * Get the template used in the campaign
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function template()
+    {
+        return $this->belongsTo(\App\NotificationTemplate::class, 'notification_template_id');
+    }
+
+    /**
      * Get the recipients for this campaign.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function recipients()
     {
