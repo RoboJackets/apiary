@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\ActiveMembers;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -122,7 +123,9 @@ class Team extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new ActiveMembers)->onlyOnDetail(),
+        ];
     }
 
     /**
