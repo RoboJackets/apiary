@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\HasMany;
 
 class User extends Resource
 {
@@ -57,6 +58,8 @@ class User extends Resource
             new Panel('Swag', $this->swagFields()),
 
             BelongsToMany::make('Teams'),
+
+			HasMany::make('Attendance'),
 
             new Panel('Metadata', $this->metaFields()),
         ];
