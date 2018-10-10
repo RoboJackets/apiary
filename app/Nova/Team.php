@@ -56,7 +56,7 @@ class Team extends Resource
 
             HasMany::make('User', 'members'),
 
-			HasMany::make('Attendance'),
+            HasMany::make('Attendance'),
         ];
     }
 
