@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Attendance;
+use App\Rsvp;
 use App\Policies\AttendancePolicy;
+use App\Policies\RsvpPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Attendance::class => AttendancePolicy::class,
+        Rsvp::class => RsvpPolicy::class,
     ];
 
     /**
