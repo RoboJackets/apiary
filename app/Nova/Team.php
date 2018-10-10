@@ -55,6 +55,8 @@ class Team extends Resource
             new Panel('Metadata', $this->metaFields()),
 
             HasMany::make('User', 'members'),
+
+			HasMany::make('Attendance'),
         ];
     }
 
