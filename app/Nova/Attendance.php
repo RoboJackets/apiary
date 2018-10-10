@@ -77,10 +77,10 @@ class Attendance extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            (new BelongsTo('User', 'attendee', 'App\Nova\User'))
+            BelongsTo::make('User', 'attendee')
                 ->sortable(),
 
-            (new MorphTo('Attended', 'attendable'))
+            MorphTo::make('Attended', 'attendable')
                 ->sortable()
                 ->types([
                     Event::class,
