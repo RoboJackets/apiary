@@ -3,24 +3,39 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Textarea;
-use App\Nova\Metrics\ActiveMembers;
-use App\Nova\Metrics\TotalTeamMembers;
+use Laravel\Nova\Fields\BelongsTo;
 
-class Team extends Resource
+class Rsvp extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Team';
+    public static $model = 'App\Rsvp';
+
+    /**
+     * Get the displayble label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'RSVPs';
+    }
+
+    /**
+     * Get the displayble singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return 'RSVP';
+    }
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -30,14 +45,11 @@ class Team extends Resource
     public static $title = 'name';
 
     /**
-     * The columns that should be searched.
+     * Indicates if the resource should be displayed in the sidebar.
      *
-     * @var array
+     * @var bool
      */
-    public static $search = [
-        'name',
-        'description',
-    ];
+    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -50,60 +62,40 @@ class Team extends Resource
         return [
             new Panel('Basic Information', $this->basicFields()),
 
-            new Panel('Communications', $this->commFields()),
-
-            new Panel('Controls', $this->controlFields()),
+            new Panel('Detailed Information', $this->detailedFields()),
 
             new Panel('Metadata', $this->metaFields()),
-
-            HasMany::make('User', 'members'),
-
-            HasMany::make('Attendance'),
         ];
     }
 
     protected function basicFields()
     {
         return [
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            BelongsTo::make('User')
+                ->sortable(),
 
-            Textarea::make('Description')
-                ->hideFromIndex()
-                ->rules('required'),
+            BelongsTo::make('Event')
+                ->sortable(),
+
+            Text::make('Response')
+                ->sortable(),
+
+            Text::make('Source')
+                ->sortable(),
         ];
     }
 
-    protected function commFields()
+    protected function detailedFields()
     {
         return [
-            Text::make('Mailing List Name')
-                ->hideFromIndex()
-                ->sortable()
-                ->rules('max:255'),
+            Text::make('User Agent')
+                ->hideFromIndex(),
 
-            Text::make('Slack Channel Name')
-                ->hideFromIndex()
-                ->rules('max:255'),
+            Text::make('IP Address')
+                ->hideFromIndex(),
 
-            Text::make('Slack Channel ID')
-                ->hideFromIndex()
-                ->rules('max:255'),
-        ];
-    }
-
-    protected function controlFields()
-    {
-        return [
-            Boolean::make('Visible')
-                ->sortable(),
-
-            Boolean::make('Attendable')
-                ->sortable(),
-
-            Boolean::make('Self-Serviceable', 'self_serviceable')
-                ->sortable(),
+            Text::make('Token')
+                ->hideFromIndex(),
         ];
     }
 
@@ -126,10 +118,7 @@ class Team extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new TotalTeamMembers())->onlyOnDetail(),
-            (new ActiveMembers())->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**
