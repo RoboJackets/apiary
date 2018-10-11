@@ -82,4 +82,15 @@ class DuesPackage extends Model
 
         return ($start <= $now) && ($end >= $now);
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'transactions' => 'dues-transactions'
+        ];
+    }
 }

@@ -64,4 +64,17 @@ class RecruitingCampaignRecipient extends Model
     {
         return $this->recruitingVisit->visit_token ?: null;
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'recruitingCampaign' => 'recruiting-campaigns',
+            'recruitingVisit' => 'recruiting-visits',
+            'user' => 'users'
+        ];
+    }
 }

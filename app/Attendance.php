@@ -74,4 +74,16 @@ class Attendance extends Model
             return $query->whereDate('created_at', '<=', $date);
         }
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'attendee' => 'users',
+            'recorded' => 'users'
+        ];
+    }
 }

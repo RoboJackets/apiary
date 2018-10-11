@@ -45,4 +45,17 @@ class RecruitingCampaign extends Model
     {
         return $this->hasMany(\App\RecruitingCampaignRecipient::class);
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'creator' => 'users',
+            'template' => 'notification-templates',
+            'recipients' => 'recruiting-campaign-recipients'
+        ];
+    }
 }
