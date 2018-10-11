@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-use App\Nova\Metrics\ActiveMembers;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -11,6 +10,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
+use App\Nova\Metrics\ActiveMembers;
 
 class Team extends Resource
 {

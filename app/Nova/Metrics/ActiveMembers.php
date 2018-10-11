@@ -19,6 +19,7 @@ class ActiveMembers extends Value
     {
         if ($request->resourceId) {
             $count = Team::where('id', $request->resourceId)->get()->first()->members()->active()->count();
+
             return $this->result($count);
         } else {
             return $this->result(User::active()->count());
