@@ -3,24 +3,22 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Textarea;
-use App\Nova\Metrics\ActiveMembers;
-use App\Nova\Metrics\TotalTeamMembers;
+use Laravel\Nova\Fields\BelongsTo;
 
-class Team extends Resource
+class Event extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Team';
+    public static $model = 'App\Event';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,7 +34,6 @@ class Team extends Resource
      */
     public static $search = [
         'name',
-        'description',
     ];
 
     /**
@@ -50,13 +47,9 @@ class Team extends Resource
         return [
             new Panel('Basic Information', $this->basicFields()),
 
-            new Panel('Communications', $this->commFields()),
-
-            new Panel('Controls', $this->controlFields()),
-
             new Panel('Metadata', $this->metaFields()),
 
-            HasMany::make('User', 'members'),
+            HasMany::make('RSVPs'),
 
             HasMany::make('Attendance'),
         ];
@@ -65,45 +58,33 @@ class Team extends Resource
     protected function basicFields()
     {
         return [
-            Text::make('Name')
+            Text::make('Event Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Textarea::make('Description')
+            (new BelongsTo('Organizer', 'organizer', 'App\Nova\User'))
+                ->searchable()
+                ->sortable()
+                ->rules('required')
+                // default to self
+                ->help('The organizer of the event'),
+
+            DateTime::make('Start Time')
+                ->hideFromIndex(),
+
+            DateTime::make('End Time')
+                ->hideFromIndex(),
+
+            Text::make('Location')
+                ->hideFromIndex()
+                ->rules('max:255'),
+
+            Currency::make('Cost')
                 ->hideFromIndex()
                 ->rules('required'),
-        ];
-    }
 
-    protected function commFields()
-    {
-        return [
-            Text::make('Mailing List Name')
-                ->hideFromIndex()
-                ->sortable()
-                ->rules('max:255'),
-
-            Text::make('Slack Channel Name')
-                ->hideFromIndex()
-                ->rules('max:255'),
-
-            Text::make('Slack Channel ID')
-                ->hideFromIndex()
-                ->rules('max:255'),
-        ];
-    }
-
-    protected function controlFields()
-    {
-        return [
-            Boolean::make('Visible')
-                ->sortable(),
-
-            Boolean::make('Attendable')
-                ->sortable(),
-
-            Boolean::make('Self-Serviceable', 'self_serviceable')
-                ->sortable(),
+            Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
+                ->hideFromIndex(),
         ];
     }
 
@@ -126,10 +107,7 @@ class Team extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new TotalTeamMembers())->onlyOnDetail(),
-            (new ActiveMembers())->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**
