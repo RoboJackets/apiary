@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
+use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\PaymentsPerDay;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -17,6 +19,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+        Nova::serving(function (ServingNova $event) {
+            Nova::style('apiary-custom', __DIR__.'/../../resources/assets/css/nova.css');
+        });
     }
 
     /**
@@ -55,6 +60,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new PaymentsPerDay,
+            new ActiveMembers,
         ];
     }
 

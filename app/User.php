@@ -76,6 +76,14 @@ class User extends Authenticatable
     }
 
     /**
+     *  Get the attendance records associated with this user.
+     */
+    public function attendance()
+    {
+        return $this->hasMany(\App\Attendance::class, 'gtid', 'gtid');
+    }
+
+    /**
      *  Get the Teams that this User is a member of.
      */
     public function teams()

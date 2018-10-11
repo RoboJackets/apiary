@@ -19,7 +19,7 @@ class DuesTransactionController extends Controller
             'permission:read-dues-transactions',
             ['only' => ['index', 'indexPaid', 'indexPending', 'indexPendingSwag']]
         );
-        $this->middleware('permission:create-dues-transactions', ['only' => ['store']]);
+        $this->middleware('permission:create-dues-transactions-own|create-dues-transactions', ['only' => ['store']]);
         $this->middleware(
             'permission:read-dues-transactions|read-dues-transactions-own',
             ['only' => ['show']]
@@ -101,7 +101,7 @@ class DuesTransactionController extends Controller
         $user_id = $request->input('user_id');
 
         //Make sure that the user is actually allowed to create this transaction
-        if ($request->filled('user_id') && $user_id != $user->id && (! $user->is_admin)) {
+        if ($request->filled('user_id') && $user_id != $user->id && (! $user->can('create-dues-transactions'))) {
             return response()->json(['status' => 'error',
                 'message' => 'You may not create a DuesTransaction for another user.', ], 403);
         } elseif (! $request->filled('user_id')) {
@@ -124,12 +124,22 @@ class DuesTransactionController extends Controller
             }
         }
 
-        //Check to make sure there isn't already an existing package for the target user
-        $existingTransaction = DuesTransaction::where('dues_package_id', $request->input('dues_package_id'))
-            ->where('user_id', $request->input('user_id'))->first();
-        if ($existingTransaction) {
-            return response()->json(['status' => 'error',
-                'message' => 'There is already a pending Dues Transaction for this user', ], 400);
+        // If there's an existing active transaction that hasn't been paid, delete it
+        // and replace it with the one currently being requested
+        if ($user->dues->count() > 0) {
+            $existingTransaction = $user->dues->last();
+            $pkgIsActive = $existingTransaction->package->is_active;
+            if ($pkgIsActive) {
+                $hasPayment = $existingTransaction->payment()->exists();
+                if ($hasPayment) {
+                    $paidAny = ($existingTransaction->payment->sum('amount') > 0);
+                    if (! $paidAny) {
+                        $existingTransaction->delete();
+                    }
+                } else {
+                    $existingTransaction->delete();
+                }
+            }
         }
 
         try {

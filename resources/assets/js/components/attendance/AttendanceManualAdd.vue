@@ -18,13 +18,11 @@
         <div class="row form-row">
             <label for="teams-buttons" class="col-sm-2 col-form-label">Team<span style="color:red">*</span></label>
             <div class="col-sm-10 col-lg-4">
-                <custom-radio-buttons
-                        v-model="attendance.attendable_id"
-                        :options="teams"
-                        id="teams-buttons"
-                        :is-error="$v.attendance.attendable_id.$error"
-                        @input="$v.attendance.attendable_id.$touch()">
-                </custom-radio-buttons>
+                <select id="teams-buttons" v-model="attendance.attendable_id" class="custom-select" :class="{ 'is-invalid': $v.attendance.attendable_id.$error }" @input="$v.attendance.attendable_id.$touch()">
+                    <option value="" style="display:none" v-if="!teams">Loading...</option>
+                    <option value="" style="display:none" v-if="teams && teams.length > 0">Select One</option>
+                    <option v-for="team in teams" :value="team.value">{{team.text}}</option>
+                </select>
                 <div class="invalid-feedback">
                     You must select a team.
                 </div>
@@ -55,11 +53,16 @@
         </div>
         <div class="row form-row">
             <button type="button" class="btn btn-primary" @click="submit">Submit</button>
+            <span class="d-inline-block" id="swipes-tooltip" tabindex="0" data-toggle="tooltip" title="Select a team">
+                <button type="button" class="btn btn-primary mx-2" @click.prevent="setToToday" data-toggle="modal" data-target="#attendanceModal" :disabled="!recordSwipesEnabled" :style="recordSwipesEnabled ? '' : 'pointer-events: none;'">Record Swipes</button>
+            </span>
         </div>
+        <attendance-modal id="attendanceModal" :attendableId="this.attendance.attendable_id" :attendableType="this.attendance.attendable_type"></attendance-modal>
     </div>
 </template>
 <script>
 import { required, numeric, between, minLength, maxLength } from 'vuelidate/lib/validators';
+import moment from 'moment';
 export default {
   name: 'attendance-manual-add',
   data() {
@@ -83,7 +86,15 @@ export default {
       },
       attendanceBaseUrl: '/api/v1/attendance',
       teamsBaseUrl: '/api/v1/teams',
+      recordSwipesEnabled: false,
     };
+  },
+  watch: {
+    'attendance.attendable_id': function(val, oldVal) {
+      // Only enable the tooltip warning you to select a team when no team is selected
+      this.recordSwipesEnabled = typeof this.attendance.attendable_id === 'number';
+      $('#swipes-tooltip').tooltip(this.recordSwipesEnabled ? 'disable' : 'enable');
+    },
   },
   methods: {
     loadTeams() {
@@ -96,7 +107,9 @@ export default {
           if (rawTeams.length < 1) {
             swal('Bueller...Bueller...', 'No teams found.', 'warning');
           } else {
-            let alphaTeams = response.data.teams.sort(function(a, b) {
+            let alphaTeams = response.data.teams.filter(function(item) {
+              return item.attendable;
+            }).sort(function(a, b) {
               return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
             });
             alphaTeams.forEach(function(team) {
@@ -156,9 +169,14 @@ export default {
           }
         });
     },
+    setToToday() {
+      this.attendance.created_at = moment().format('YYYY-MM-DD');
+      this.attendance.gtid = '';
+    },
   },
   mounted() {
     this.loadTeams();
+    $('#swipes-tooltip').tooltip('enable');
   },
   validations: {
     attendance: {
