@@ -74,7 +74,7 @@ class RecruitingCampaignRecipient extends Model
         return [
             'recruitingCampaign' => 'recruiting-campaigns',
             'recruitingVisit' => 'recruiting-visits',
-            'user' => 'users'
+            'user' => 'users',
         ];
     }
 }

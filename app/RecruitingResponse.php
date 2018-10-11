@@ -26,7 +26,7 @@ class RecruitingResponse extends Model
     public function getRelationshipPermissionMap()
     {
         return [
-            'recruitingVisit' => 'recruiting-visits'
+            'recruitingVisit' => 'recruiting-visits',
         ];
     }
 }

@@ -55,7 +55,7 @@ class RecruitingCampaign extends Model
         return [
             'creator' => 'users',
             'template' => 'notification-templates',
-            'recipients' => 'recruiting-campaign-recipients'
+            'recipients' => 'recruiting-campaign-recipients',
         ];
     }
 }

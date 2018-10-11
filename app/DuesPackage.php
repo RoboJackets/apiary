@@ -90,7 +90,7 @@ class DuesPackage extends Model
     public function getRelationshipPermissionMap()
     {
         return [
-            'transactions' => 'dues-transactions'
+            'transactions' => 'dues-transactions',
         ];
     }
 }

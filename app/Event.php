@@ -77,7 +77,7 @@ class Event extends Model
         return [
             'organizer' => 'users',
             'rsvps' => 'rsvps',
-            'attendance' => 'attendance'
+            'attendance' => 'attendance',
         ];
     }
 }

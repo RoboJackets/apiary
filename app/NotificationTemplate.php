@@ -33,7 +33,7 @@ class NotificationTemplate extends Model
     public function getRelationshipPermissionMap()
     {
         return [
-            'creator' => 'users'
+            'creator' => 'users',
         ];
     }
 }

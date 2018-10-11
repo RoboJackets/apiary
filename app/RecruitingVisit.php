@@ -64,7 +64,7 @@ class RecruitingVisit extends Model
     {
         return [
             'recruitingResponses' => 'recruiting-responses',
-            'user' => 'users'
+            'user' => 'users',
         ];
     }
 }

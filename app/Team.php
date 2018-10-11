@@ -91,7 +91,7 @@ class Team extends Model
     {
         return [
             'members' => 'team-membership',
-            'attendance' => 'attendance'
+            'attendance' => 'attendance',
         ];
     }
 }

@@ -36,7 +36,7 @@ class Rsvp extends Model
     {
         return [
             'user' => 'users',
-            'event' => 'events'
+            'event' => 'events',
         ];
     }
 }

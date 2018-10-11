@@ -71,7 +71,7 @@ class Payment extends Model
     {
         return [
             'user' => 'users',
-            'payable' => 'dues-transactions'
+            'payable' => 'dues-transactions',
         ];
     }
 }

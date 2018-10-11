@@ -83,7 +83,7 @@ class Attendance extends Model
     {
         return [
             'attendee' => 'users',
-            'recorded' => 'users'
+            'recorded' => 'users',
         ];
     }
 }
