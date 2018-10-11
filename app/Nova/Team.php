@@ -125,8 +125,8 @@ class Team extends Resource
     public function cards(Request $request)
     {
         return [
-            (new TotalTeamMembers)->onlyOnDetail(),
-            (new ActiveMembers)->onlyOnDetail(),
+            (new TotalTeamMembers())->onlyOnDetail(),
+            (new ActiveMembers())->onlyOnDetail(),
         ];
     }
 
