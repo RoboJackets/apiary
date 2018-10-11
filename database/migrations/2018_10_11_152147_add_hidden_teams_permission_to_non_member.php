@@ -14,7 +14,7 @@ class AddHiddenTeamsPermissionToNonMember extends Migration
     public function up()
     {
         // Reset cached roles and permissions
-        app()['cache']->forget('spat5ie.permission.cache');
+        app()['cache']->forget('spatie.permission.cache');
 
         Permission::firstOrCreate(['name' => 'update-teams-membership-own']);
 
@@ -34,7 +34,6 @@ class AddHiddenTeamsPermissionToNonMember extends Migration
 
         $role = Role::firstOrCreate(['name' => 'non-member']);
         $role->revokePermissionTo('update-teams-membership-own');
-
         Permission::where('name', 'update-teams-membership-own')->delete();
     }
 }
