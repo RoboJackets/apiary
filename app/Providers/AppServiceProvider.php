@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Http\Resources\Json\Resource;
 use Laravel\Horizon\Horizon;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Resources\Json\Resource;
 
 class AppServiceProvider extends ServiceProvider
 {

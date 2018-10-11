@@ -33,6 +33,7 @@ class EventController extends Controller
     {
         $include = $request->input('include');
         $events = Event::with($this->authorizeInclude(EventResource::class, $include))->get();
+
         return response()->json(['status' => 'success', 'events' => EventResource::collection($events)]);
     }
 

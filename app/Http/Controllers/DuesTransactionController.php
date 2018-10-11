@@ -39,6 +39,7 @@ class DuesTransactionController extends Controller
         $include = $request->input('include');
         $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
+
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -52,6 +53,7 @@ class DuesTransactionController extends Controller
         $include = $request->input('include');
         $transact = DuesTransaction::paid()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
+
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -65,6 +67,7 @@ class DuesTransactionController extends Controller
         $include = $request->input('include');
         $transact = DuesTransaction::pending()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
+
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -78,6 +81,7 @@ class DuesTransactionController extends Controller
         $include = $request->input('include');
         $transact = DuesTransaction::pendingSwag()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
+
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
     }
 
@@ -157,6 +161,7 @@ class DuesTransactionController extends Controller
             $user->notify(new Confirm($dbTransact->package));
 
             $dbTransact = new DuesTransactionResource($dbTransact);
+
             return response()->json(['status' => 'success', 'dues_transaction' => $dbTransact], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
@@ -187,6 +192,7 @@ class DuesTransactionController extends Controller
         }
 
         $transact = new DuesTransactionResource($transact);
+
         return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
     }
 

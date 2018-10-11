@@ -26,6 +26,7 @@ class NotificationTemplateController extends Controller
     {
         $include = $request->input('include');
         $nt = NotificationTemplate::with($this->authorizeInclude(NotificationTemplate::class, $include))->get();
+
         return response()->json(['status' => 'success', 'templates' => NotificationTemplateResource::collection($nt)]);
     }
 

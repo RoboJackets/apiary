@@ -6,8 +6,8 @@ use Auth;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\Event as EventResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
 class User extends JsonResource
 {

@@ -143,6 +143,7 @@ class RecruitingCampaignController extends Controller
     public function show(RecruitingCampaign $recruitingCampaign)
     {
         $rc = new RecruitingCampaignResource($recruitingCampaign);
+
         return response()->json(['status' => 'success', 'campaign' => $rc]);
     }
 

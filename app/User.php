@@ -202,7 +202,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Map of relationships to permissions for dynamic inclusion
+     * Map of relationships to permissions for dynamic inclusion.
      * @return array
      */
     public function getRelationshipPermissionMap()

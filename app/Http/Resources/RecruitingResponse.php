@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
 class RecruitingResponse extends JsonResource
 {

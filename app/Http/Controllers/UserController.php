@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use \Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -34,6 +33,7 @@ class UserController extends Controller
     {
         $include = $request->input('include');
         $users = User::with($this->authorizeInclude(User::class, $include))->get();
+
         return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
     }
 

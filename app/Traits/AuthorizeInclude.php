@@ -8,7 +8,7 @@ trait AuthorizeInclude
 {
     /**
      * Given an array or comma-separated string of requested relationships to be included,
-     * return an array of those allowed based on the requester's permissions
+     * return an array of those allowed based on the requester's permissions.
      * @param $class string Class
      * @param $requestedInclude array of relationship names
      * @return array relationships to include
@@ -22,14 +22,14 @@ trait AuthorizeInclude
 
         $allowedInclude = [];
         $uid = \Auth::user()->uid;
-        \Log::debug(__METHOD__ . ": Checking authorization of $uid for $class");
+        \Log::debug(__METHOD__.": Checking authorization of $uid for $class");
 
         // Get permission mapping from the target model class
         $model = new $class();
         if (method_exists($model, 'getRelationshipPermissionMap')) {
             $relationPermMap = $model->getRelationshipPermissionMap();
         } else {
-            \Log::notice(__METHOD__ . ": No relationship permission map for $class, assuming default naming");
+            \Log::notice(__METHOD__.": No relationship permission map for $class, assuming default naming");
             $relationPermMap = [];
         }
 
@@ -40,7 +40,8 @@ trait AuthorizeInclude
             $requestedInclude = explode(',', $requestedInclude);
         } else {
             $type = gettype($requestedInclude);
-            \Log::warning(__METHOD__ . ": Received invalid $type of relationships to include");
+            \Log::warning(__METHOD__.": Received invalid $type of relationships to include");
+
             return [];
         }
 
@@ -54,18 +55,19 @@ trait AuthorizeInclude
                 $allowedInclude[] = $include;
             }
         }
-        \Log::debug(__METHOD__ . ": Authorized of $uid completed for $class - " . json_encode($allowedInclude));
+        \Log::debug(__METHOD__.": Authorized of $uid completed for $class - ".json_encode($allowedInclude));
+
         return $allowedInclude;
     }
 
     /**
      * Converts a string in camelCase to dashed-format
-     * Ex. duesTransactions -> dues-transactions
+     * Ex. duesTransactions -> dues-transactions.
      * @param $string string to convert
      * @return string result
      */
-    private function camelToDashed($string) {
+    private function camelToDashed($string)
+    {
         return strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $string));
     }
-
 }

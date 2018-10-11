@@ -29,7 +29,7 @@ class RecruitingCampaign extends Model
     }
 
     /**
-     * Get the template used in the campaign
+     * Get the template used in the campaign.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function template()

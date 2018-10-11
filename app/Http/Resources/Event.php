@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class Event extends JsonResource
 {
@@ -26,7 +26,7 @@ class Event extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
-            'organizer' => new UserResource($this->whenLoaded('organizer'))
+            'organizer' => new UserResource($this->whenLoaded('organizer')),
         ];
     }
 }

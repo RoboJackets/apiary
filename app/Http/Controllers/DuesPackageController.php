@@ -29,6 +29,7 @@ class DuesPackageController extends Controller
     {
         $include = $request->input('include');
         $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->get();
+
         return response()->json(['status' => 'success', 'dues_packages' => DuesPackageResource::collection($packages)]);
     }
 
