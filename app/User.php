@@ -208,7 +208,7 @@ class User extends Authenticatable
      */
     public function getIsActiveAttribute()
     {
-        return User::where('id', $this->id)->active()->count() != 0;
+        return self::where('id', $this->id)->active()->count() != 0;
     }
 
     /**
