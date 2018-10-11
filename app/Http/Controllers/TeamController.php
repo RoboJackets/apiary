@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Team;
 use App\User;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
 use Illuminate\Database\QueryException;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use App\Http\Resources\Team as TeamResource;
+use App\Http\Resources\User as UserResource;
 
 class TeamController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-teams', ['only' => ['index', 'indexWeb', 'show', 'showMembers']]);
@@ -22,17 +27,16 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (\Auth::user()->can('read-teams-hidden')) {
-            $teams = Team::all();
-        } else {
-            $teams = Team::visible()->get();
-        }
+        $include = $request->input('include');
+        $teamsQ = Team::with($this->authorizeInclude(Team::class, $include));
+        $teams = (\Auth::user()->can('read-teams-hidden')) ? $teamsQ->get() : $teamsQ->visible()->get();
 
-        return response()->json(['status' => 'success', 'teams' => $teams]);
+        return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
     }
 
     public function indexWeb()
@@ -42,7 +46,7 @@ class TeamController extends Controller
         //Leave this line in here, it provides team data to the view.
         $user_teams = auth()->user()->teams;
 
-        return view('teams.index')->with(['teams' => $teams, 'user' => $user]);
+        return view('teams.index')->with(['teams' => TeamResource::collection($teams), 'user' => UserResource::collection($user)]);
     }
 
     /**
@@ -74,7 +78,7 @@ class TeamController extends Controller
         }
 
         if (is_numeric($team->id)) {
-            return response()->json(['status' => 'success', 'team' => $team], 201);
+            return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
@@ -83,21 +87,20 @@ class TeamController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int  $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id);
-        if ($request->input('include') == 'members') {
-            $team = $team->with('members');
-        }
-        $team = $team->first();
+        $include = $request->input('include');
+        $team = Team::with($this->authorizeInclude(Team::class, $include))
+            ->where('id', $id)->orWhere('slug', $id)->first();
 
         if ($team && $team->visible == false && \Auth::user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         } elseif ($team) {
-            return response()->json(['status' => 'success', 'team' => $team]);
+            return response()->json(['status' => 'success', 'team' => new TeamResource($team)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
@@ -118,7 +121,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        return response()->json(['status' => 'success', 'members' => $members]);
+        return response()->json(['status' => 'success', 'members' => UserResource::collection($members)]);
     }
 
     /**
@@ -156,7 +159,7 @@ class TeamController extends Controller
         }
 
         if (is_numeric($team->id)) {
-            return response()->json(['status' => 'success', 'team' => $team], 201);
+            return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
@@ -209,7 +212,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = new TeamResource(Team::where('id', $id)->orWhere('slug', $id)->first());
 
         return response()->json(['status' => 'success', 'team' => $team, 'member' => $user->name], 201);
     }
