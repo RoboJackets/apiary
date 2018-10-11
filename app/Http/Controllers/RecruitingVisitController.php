@@ -6,11 +6,15 @@ use Validator;
 use App\RecruitingVisit;
 use App\RecruitingResponse;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
 class RecruitingVisitController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-recruiting-visits', ['only' => ['index']]);
@@ -61,13 +65,15 @@ class RecruitingVisitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id RecruitingVisit ID Number
+     * @param int $id RecruitingVisit ID Number
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
     {
+        $include = $request->input('include');
         $requestingUser = $request->user();
-        $visit = RecruitingVisit::with(['recruitingResponses'])->find($id);
+        $visit = RecruitingVisit::with($this->authorizeInclude(RecruitingVisit::class, $include))->find($id);
         if (! $visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
@@ -79,7 +85,7 @@ class RecruitingVisitController extends Controller
                 'message' => 'Forbidden - You do not have permission to view this RecruitingVisit.', ], 403);
         }
 
-        return response()->json(['status' => 'success', 'visit' => $visit]);
+        return response()->json(['status' => 'success', 'visit' => new RecruitingVisitResource($visit)]);
     }
 
     /**
@@ -115,17 +121,22 @@ class RecruitingVisitController extends Controller
         $visit = RecruitingVisit::with(['recruitingResponses'])->find($id);
 
         if ($visit) {
-            return response()->json(['status' => 'success', 'visit' => $visit]);
+            return response()->json(['status' => 'success', 'visit' => new RecruitingVisitResource($visit)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
-        $visits = RecruitingVisit::all();
+        $include = $request->input('include');
+        $visits = RecruitingVisit::with($this->authorizeInclude(RecruitingVisit::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'visits' => $visits]);
+        return response()->json(['status' => 'success', 'visits' => RecruitingVisitResource::collection($visits)]);
     }
 
     public function dedup()
