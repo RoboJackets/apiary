@@ -3,24 +3,50 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Textarea;
-use App\Nova\Metrics\ActiveMembers;
-use App\Nova\Metrics\TotalTeamMembers;
+use Laravel\Nova\Fields\BelongsTo;
 
-class Team extends Resource
+class Attendance extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Team';
+    public static $model = 'App\Attendance';
+
+    /**
+     * Get the displayble label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'Attendance';
+    }
+
+    /**
+     * Get the displayble singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return 'Attendance Record';
+    }
+
+    /**
+     * Get the URI key for the resource.
+     *
+     * @return string
+     */
+    public static function uriKey()
+    {
+        return 'attendance';
+    }
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -28,16 +54,6 @@ class Team extends Resource
      * @var string
      */
     public static $title = 'name';
-
-    /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-        'name',
-        'description',
-    ];
 
     /**
      * Get the fields displayed by the resource.
@@ -50,59 +66,36 @@ class Team extends Resource
         return [
             new Panel('Basic Information', $this->basicFields()),
 
-            new Panel('Communications', $this->commFields()),
-
-            new Panel('Controls', $this->controlFields()),
-
             new Panel('Metadata', $this->metaFields()),
-
-            HasMany::make('User', 'members'),
-
-            HasMany::make('Attendance'),
         ];
     }
 
     protected function basicFields()
     {
         return [
-            Text::make('Name')
+            Text::make('GTID')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Textarea::make('Description')
-                ->hideFromIndex()
-                ->rules('required'),
-        ];
-    }
+            BelongsTo::make('User', 'attendee')
+                ->sortable(),
 
-    protected function commFields()
-    {
-        return [
-            Text::make('Mailing List Name')
-                ->hideFromIndex()
+            MorphTo::make('Attended', 'attendable')
                 ->sortable()
-                ->rules('max:255'),
+                ->types([
+                    Event::class,
+                    Team::class,
+                ]),
 
-            Text::make('Slack Channel Name')
-                ->hideFromIndex()
-                ->rules('max:255'),
+            (new BelongsTo('Recorded By', 'recorded', 'App\Nova\User'))
+                ->sortable()
+                ->help('The user that recorded the swipe'),
 
-            Text::make('Slack Channel ID')
-                ->hideFromIndex()
-                ->rules('max:255'),
-        ];
-    }
-
-    protected function controlFields()
-    {
-        return [
-            Boolean::make('Visible')
+            DateTime::make('Time', 'created_at')
                 ->sortable(),
 
-            Boolean::make('Attendable')
-                ->sortable(),
-
-            Boolean::make('Self-Serviceable', 'self_serviceable')
+            Text::make('Source')
+                ->hideFromIndex()
                 ->sortable(),
         ];
     }
@@ -126,10 +119,7 @@ class Team extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new TotalTeamMembers())->onlyOnDetail(),
-            (new ActiveMembers())->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**

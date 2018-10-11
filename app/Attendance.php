@@ -36,6 +36,14 @@ class Attendance extends Model
     }
 
     /**
+     * Get the User who recorded the Attendance model.
+     */
+    public function recorded()
+    {
+        return $this->hasOne('\App\User', 'id', 'recorded_by');
+    }
+
+    /**
      * Scope query to start at given date.
      *
      * @param $query mixed
