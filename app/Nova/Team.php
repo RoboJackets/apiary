@@ -10,6 +10,8 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
+use App\Nova\Metrics\ActiveMembers;
+use App\Nova\Metrics\TotalTeamMembers;
 
 class Team extends Resource
 {
@@ -124,7 +126,10 @@ class Team extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new TotalTeamMembers())->onlyOnDetail(),
+            (new ActiveMembers())->onlyOnDetail(),
+        ];
     }
 
     /**
