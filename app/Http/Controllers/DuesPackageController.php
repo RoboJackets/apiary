@@ -89,7 +89,7 @@ class DuesPackageController extends Controller
         if (is_numeric($package->id)) {
             $dbPackage = DuesPackage::findOrFail($package->id);
 
-            return response()->json(['status' => 'success', 'dues_package' => $dbPackage], 201);
+            return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource(($dbPackage))], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
@@ -140,7 +140,7 @@ class DuesPackageController extends Controller
 
         $package = DuesPackage::find($package->id);
         if ($package) {
-            return response()->json(['status' => 'success', 'dues_package' => $package]);
+            return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
