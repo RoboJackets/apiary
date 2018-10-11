@@ -36,7 +36,7 @@ This is a pretty conventional Laravel project, so we recommend following [the of
 
 You can install all of the required php extensions with:
 ```
-$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml
+$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath
 ```
 
 #### Database Encryption
