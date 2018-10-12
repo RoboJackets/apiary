@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Metrics\RsvpSourceBreakdown;
 
 class Event extends Resource
 {
@@ -107,7 +108,9 @@ class Event extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new RsvpSourceBreakdown())->onlyOnDetail(),
+        ];
     }
 
     /**
