@@ -6,6 +6,7 @@ use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use App\Nova\Filters\Attendable;
+use App\Nova\Filters\UserActive;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
@@ -133,6 +134,7 @@ class Attendance extends Resource
     {
         return [
             new Attendable,
+            new UserActive,
         ];
     }
 
