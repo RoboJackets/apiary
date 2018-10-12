@@ -12,6 +12,9 @@
 </template>
 
 <script>
+function checkboxEventListener(e) {
+  this.stickToTeam = e.target.checked;
+}
 export default {
   data() {
     return {
@@ -25,6 +28,7 @@ export default {
       attendanceBaseUrl: '/api/v1/attendance',
       teamsBaseUrl: '/api/v1/teams',
       teams: [],
+      stickToTeam: false,
     };
   },
   mounted() {
@@ -125,19 +129,24 @@ export default {
       self.attendance.attendable_id = event.target.id;
       swal({
         title: 'Swipe your BuzzCard now',
-        html: event.target.innerText,
+        html: event.target.innerText, // displays team name
         showCancelButton: true,
         closeOnCancel: false,
         allowOutsideClick: true,
         showConfirmButton: false,
         imageUrl: '/img/swipe-horiz-up.gif',
         imageWidth: 450,
+        input: 'checkbox',
+        inputValue: 0,
+        inputPlaceholder: 'Stick to this team'
       }).then(result => {
+        swal.getInput().removeEventListener("change", checkboxEventListener)
         if (!result.value) {
           self.clearFields();
           swal.close();
         }
       });
+      swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
     },
     cardPresented: function(cardData) {
       // Card is presented, process the data
