@@ -12,7 +12,6 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\BelongsToMany;
-use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class User extends Resource
 {
@@ -211,6 +210,8 @@ class User extends Resource
     {
         return [
             new Actions\ResetApiToken,
+            new Actions\ExportGtid,
+            new Actions\ExportUsername,
         ];
     }
 }
