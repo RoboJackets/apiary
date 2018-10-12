@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use App\Nova\Metrics\TotalCollections;
 
 class DuesPackage extends Resource
 {
@@ -131,7 +132,9 @@ class DuesPackage extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new TotalCollections())->onlyOnDetail(),
+        ];
     }
 
     /**
