@@ -3,8 +3,10 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use App\Nova\Filters\DateTo;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Filters\DateFrom;
 use App\Nova\Filters\Attendable;
 use App\Nova\Filters\UserActive;
 use Laravel\Nova\Fields\MorphTo;
@@ -135,6 +137,8 @@ class Attendance extends Resource
         return [
             new Attendable,
             new UserActive,
+            new DateFrom,
+            new DateTo,
         ];
     }
 
