@@ -136,7 +136,7 @@ export default {
         title: 'Swipe your BuzzCard now',
         html: event.target.innerText, // displays team name
         showCancelButton: true,
-        allowOutsideClick: true,
+        allowOutsideClick: () => !swal.isLoading(),
         showConfirmButton: false,
         imageUrl: '/img/swipe-horiz-up.gif',
         imageWidth: 450,
@@ -208,6 +208,7 @@ export default {
     submit() {
       // Submit attendance data
       this.submitting = true;
+      swal.showLoading();
       axios
         .post(this.attendanceBaseUrl, this.attendance)
         .then(response => {
@@ -223,7 +224,6 @@ export default {
               toast: this.stickToTeam,
             });
           } else {
-            swal.hideLoading();
             this.clearGTID();
           }
         })
@@ -248,10 +248,8 @@ export default {
         })
         .finally(() => {
           this.submitting = false;
+          swal.hideLoading();
         });
-      if (this.stickToTeam) {
-        swal.showLoading();
-      }
     },
     clearFields() {
       //Remove focus from button
@@ -286,5 +284,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+</style>
+<style>
+/* Global styles */
+.swal2-loading {
+    flex-direction: column;
+}
+.swal2-loading button {
+    margin-bottom: 2em !important;
 }
 </style>
