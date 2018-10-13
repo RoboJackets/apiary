@@ -13,7 +13,6 @@ class ResetApiToken extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-
     /**
      * The displayable name of the action.
      *

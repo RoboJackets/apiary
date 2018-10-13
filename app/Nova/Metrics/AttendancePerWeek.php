@@ -34,6 +34,7 @@ class AttendancePerWeek extends Trend
         }
 
         $request->timezone = $originalTimezone;
+
         return $result;
     }
 

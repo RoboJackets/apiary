@@ -29,7 +29,10 @@ class Attendable extends Filter
         $parts = explode(',', $value);
         $attendableType = $parts[0];
         $attendableID = $parts[1];
-        if (!in_array($attendableType, ['App\Event', 'App\Team']) || !is_numeric($attendableID)) return $query;
+        if (! in_array($attendableType, ['App\Event', 'App\Team']) || ! is_numeric($attendableID)) {
+            return $query;
+        }
+
         return $query->where('attendable_type', $attendableType)->where('attendable_id', $attendableID);
     }
 
@@ -43,12 +46,13 @@ class Attendable extends Filter
     {
         // Get all the teams and events (attendables), display them as "Team: <team name>" or "Event: <event name>"
         // Store the value as "App\Team,##" or "App\Event,##", where ## is the ID
-        $teams = Team::where('attendable', 1)->get()->mapWithKeys(function($item) {
+        $teams = Team::where('attendable', 1)->get()->mapWithKeys(function ($item) {
             return ['Team: '.$item['name'] => 'App\Team,'.$item['id']];
         })->toArray();
-        $events = Event::all()->mapWithKeys(function($item) {
+        $events = Event::all()->mapWithKeys(function ($item) {
             return ['Event: '.$item['name'] => 'App\Event,'.$item['id']];
         })->toArray();
+
         return array_merge($teams, $events);
     }
 }

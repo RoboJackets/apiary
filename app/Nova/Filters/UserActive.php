@@ -4,7 +4,6 @@ namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
-use Illuminate\Support\Facades\DB;
 
 class UserActive extends Filter
 {
@@ -24,13 +23,13 @@ class UserActive extends Filter
             } else {
                 return $query->inactive();
             }
-        } else if ($request->resource() === 'App\Nova\Attendance') {
+        } elseif ($request->resource() === 'App\Nova\Attendance') {
             if ($value === 'yes') {
-                return $query->whereHas('attendee', function($q) {
+                return $query->whereHas('attendee', function ($q) {
                     $q->active();
                 });
             } else {
-                return $query->whereDoesntHave('attendee', function($q) {
+                return $query->whereDoesntHave('attendee', function ($q) {
                     $q->active();
                 });
             }

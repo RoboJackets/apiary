@@ -32,9 +32,9 @@ class PrimaryTeam extends Value
         foreach ($teams as $item) {
             if ($item['count'] == $max) {
                 $maxTeamIDs[] = $item['attendable_id'];
-            } else if ($item['count'] > $max) {
+            } elseif ($item['count'] > $max) {
                 $max = $item['count'];
-                $maxTeamIDs = [ $item['attendable_id'] ];
+                $maxTeamIDs = [$item['attendable_id']];
             }
         }
 
@@ -42,6 +42,7 @@ class PrimaryTeam extends Value
             return $this->result('No teams or attendance');
         } else {
             $names = Team::whereIn('id', $maxTeamIDs)->get()->pluck('name')->toArray();
+
             return $this->result(implode(', ', $names));
         }
     }

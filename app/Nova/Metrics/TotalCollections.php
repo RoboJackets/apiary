@@ -17,7 +17,7 @@ class TotalCollections extends Value
     public function calculate(Request $request)
     {
         $query = Payment::where('payable_type', 'App\DuesTransaction')
-            ->whereIn('payable_id', function($q) use ($request) {
+            ->whereIn('payable_id', function ($q) use ($request) {
                 $q->select('id')
                     ->from('dues_transactions')
                     ->where('dues_package_id', $request->resourceId)
@@ -26,6 +26,7 @@ class TotalCollections extends Value
         if ($request->range > 0) {
             $query = $query->whereBetween('created_at', [now()->subDays($request->range)->startOfDay(), now()]);
         }
+
         return $this->result($query->sum('amount'));
     }
 
