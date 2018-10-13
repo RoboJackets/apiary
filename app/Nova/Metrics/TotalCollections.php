@@ -27,7 +27,7 @@ class TotalCollections extends Value
             $query = $query->whereBetween('created_at', [now()->subDays($request->range)->startOfDay(), now()]);
         }
 
-        return $this->result($query->sum('amount'));
+        return $this->result($query->sum('amount'))->dollars();
     }
 
     /**
