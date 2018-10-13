@@ -30,6 +30,7 @@ export default {
       teamsBaseUrl: '/api/v1/teams',
       teams: [],
       stickToTeam: false,
+      submitting: false,
     };
   },
   mounted() {
@@ -102,6 +103,9 @@ export default {
       window.addEventListener(
         'keypress',
         function(e) {
+          if (this.submitting) {
+            return;
+          }
           if (this.attendance.attendable_id == '' && e.key == 'Enter') {
             //Enter was pressed but a team was not picked
             buffer = '';
@@ -204,6 +208,7 @@ export default {
     },
     submit() {
       // Submit attendance data
+      this.submitting = true;
       axios
         .post(this.attendanceBaseUrl, this.attendance)
         .then(response => {
@@ -241,6 +246,9 @@ export default {
               'error'
             );
           }
+        })
+        .finally(() => {
+          this.submitting = false;
         });
       if (this.stickToTeam) {
         swal.showLoading();
