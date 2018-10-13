@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use App\Nova\Metrics\MemberSince;
+use App\Nova\Metrics\PrimaryTeam;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
 use App\Nova\Metrics\TotalAttendance;
@@ -177,6 +178,7 @@ class User extends Resource
         return [
             (new MemberSince())->onlyOnDetail(),
             (new TotalAttendance())->onlyOnDetail(),
+            (new PrimaryTeam())->onlyOnDetail(),
         ];
     }
 
