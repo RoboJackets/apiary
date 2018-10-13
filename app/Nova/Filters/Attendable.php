@@ -29,6 +29,7 @@ class Attendable extends Filter
         $parts = explode(',', $value);
         $attendableType = $parts[0];
         $attendableID = $parts[1];
+        if (!in_array($attendableType, ['App\Event', 'App\Team']) || !is_numeric($attendableID)) return $query;
         return $query->where('attendable_type', $attendableType)->where('attendable_id', $attendableID);
     }
 
