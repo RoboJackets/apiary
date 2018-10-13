@@ -136,7 +136,6 @@ export default {
         title: 'Swipe your BuzzCard now',
         html: event.target.innerText, // displays team name
         showCancelButton: true,
-        closeOnCancel: false,
         allowOutsideClick: true,
         showConfirmButton: false,
         imageUrl: '/img/swipe-horiz-up.gif',
