@@ -13,6 +13,14 @@ class ResetApiToken extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
+
+    /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Reset API Token';
+
     /**
      * Perform the action on the given models.
      *
