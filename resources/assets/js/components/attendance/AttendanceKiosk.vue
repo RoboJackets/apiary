@@ -182,12 +182,10 @@ export default {
           showCancelButton: true,
           showConfirmButton: false,
           type: 'warning',
-        }).then(result => {
-          if (!result.value) {
+          onClose: () => {
             self.clearFields();
-            swal.close();
           }
-        });
+        })
       } else {
         swal.close();
         console.log('unknown cardData: ' + cardData);
@@ -198,10 +196,10 @@ export default {
           showConfirmButton: true,
           type: 'error',
           timer: 3000,
-        }).then(result => {
-          self.clearFields();
-          swal.close();
-        });
+          onClose: () => {
+            self.clearFields();
+          }
+        })
       }
     },
     submit() {
@@ -229,6 +227,7 @@ export default {
           console.log(error);
           this.hasError = true;
           this.feedback = '';
+          this.clearFields();
           if (error.response.status == 403) {
             swal({
               title: 'Whoops!',
