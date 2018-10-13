@@ -26,9 +26,9 @@ class RsvpSourceBreakdown extends Partition
         return $this->count($request, Rsvp::class, 'source')
                     ->label(function ($value) {
                         switch ($value) {
-                        case null:
+                            case null:
                             return '<unknown>';
-                        default:
+                            default:
                             return $value;
                         }
                     });

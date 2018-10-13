@@ -24,11 +24,12 @@ class AttendancePerWeek extends Trend
 
         // If we're on a team page, not the main dashboard, filter to that team
         if ($request->resourceId) {
-            $result = $this->countByWeeks($request, (new Attendance())
+            $query = (new Attendance())
                 ->newQuery()
                 ->where('attendable_id', $request->resourceId)
-                ->where('attendable_type', 'App\Team')
-            )->showLatestValue();
+                ->where('attendable_type', 'App\Team');
+
+            $result = $this->countByWeeks($request, $query)->showLatestValue();
         } else {
             $result = $this->countByWeeks($request, Attendance::class)->showLatestValue();
         }
