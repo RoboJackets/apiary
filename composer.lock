@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94be1a7538fa9fbbc21c2541f71cd54b",
+    "content-hash": "45788842acf6bc9144fcfc6329bf60db",
     "packages": [
+        {
+            "name": "64robots/nova-date-filter",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/64robots/nova-date-filter.git",
+                "reference": "a0a33d175a650f14ff948d98254997c909a5f4a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/64robots/nova-date-filter/zipball/a0a33d175a650f14ff948d98254997c909a5f4a7",
+                "reference": "a0a33d175a650f14ff948d98254997c909a5f4a7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "R64\\Filters\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "R64\\Filters\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova date filter.",
+            "keywords": [
+                "date",
+                "filter",
+                "laravel",
+                "nova"
+            ],
+            "time": "2018-10-08T06:31:06+00:00"
+        },
         {
             "name": "apereo/phpcas",
             "version": "dev-master",
