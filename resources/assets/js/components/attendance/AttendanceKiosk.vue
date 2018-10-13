@@ -14,6 +14,7 @@
 <script>
 function checkboxEventListener(e) {
   this.stickToTeam = e.target.checked;
+  document.activeElement.blur();
 }
 export default {
   data() {
@@ -137,16 +138,18 @@ export default {
         imageUrl: '/img/swipe-horiz-up.gif',
         imageWidth: 450,
         input: 'checkbox',
-        inputValue: 0,
-        inputPlaceholder: 'Stick to this team'
-      }).then(result => {
-        swal.getInput().removeEventListener("change", checkboxEventListener)
-        if (!result.value) {
-          self.clearFields();
-          swal.close();
+        inputValue: this.stickToTeam,
+        inputPlaceholder: 'Stick to this team',
+        onOpen: () => {
+          // Remove focus from checkbox
+          document.activeElement.blur();
+          swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
+        },
+        onClose: () => {
+          swal.getInput().removeEventListener("change", checkboxEventListener);
+          this.clearFields();
         }
-      });
-      swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
+      })
     },
     cardPresented: function(cardData) {
       // Card is presented, process the data
@@ -207,14 +210,20 @@ export default {
         .post(this.attendanceBaseUrl, this.attendance)
         .then(response => {
           this.hasError = false;
-          this.clearFields();
-          swal({
-            title: "You're in!",
-            text: 'Nice to see you, ' + response.data.attendance.name + '.',
-            timer: 2000,
-            showConfirmButton: false,
-            type: 'success',
-          });
+          if (!this.stickToTeam) {
+            this.clearFields();
+            swal({
+              title: "You're in!",
+              text: 'Nice to see you, ' + response.data.attendance.name + '.',
+              timer: 2000,
+              showConfirmButton: false,
+              type: 'success',
+              toast: this.stickToTeam,
+            });
+          } else {
+            swal.hideLoading();
+            this.clearGTID();
+          }
         })
         .catch(error => {
           console.log(error);
@@ -234,13 +243,21 @@ export default {
             );
           }
         });
+      if (this.stickToTeam) {
+        swal.showLoading();
+      }
     },
     clearFields() {
       //Remove focus from button
       document.activeElement.blur();
       this.attendance.attendable_id = '';
       this.attendance.gtid = '';
+      this.stickToTeam = false;
       console.log('fields cleared');
+    },
+    clearGTID() {
+      document.activeElement.blur();
+      this.attendance.gtid = '';
     },
     isNumeric(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
