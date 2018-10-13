@@ -7,6 +7,7 @@ use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\PaymentsPerDay;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
+use App\Nova\Metrics\AttendancePerWeek;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -61,6 +62,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             new PaymentsPerDay,
             new ActiveMembers,
+            new AttendancePerWeek,
         ];
     }
 
