@@ -208,20 +208,7 @@ class User extends Authenticatable
      */
     public function getIsActiveAttribute()
     {
-        if ($this->dues->count() > 0) {
-            $lastDuesTransaction = $this->dues->last();
-            $pkgIsActive = $lastDuesTransaction->package->is_active;
-            $hasPayment = ($lastDuesTransaction->payment()->exists());
-            if ($hasPayment) {
-                $paidTotal = ($lastDuesTransaction->payment->sum('amount') >= $lastDuesTransaction->getPayableAmount());
-
-                return $paidTotal && $pkgIsActive;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        return self::where('id', $this->id)->active()->count() != 0;
     }
 
     /**
