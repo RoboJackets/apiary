@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\HasMany;
 use App\Nova\Metrics\MemberSince;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
+use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
 
 class User extends Resource
@@ -175,6 +176,7 @@ class User extends Resource
     {
         return [
             (new MemberSince())->onlyOnDetail(),
+            (new TotalAttendance())->onlyOnDetail(),
         ];
     }
 
