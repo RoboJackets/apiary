@@ -24,7 +24,7 @@ class TotalAttendance extends Value
         $request->timezone = 'Etc/GMT';
 
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
-        // If we're on a team page, not the main dashboard, filter to that team
+        // If a subrange is selected, let the library do the work, otherwise just count everything
         if ($request->range > 0) {
             $result = $this->count($request, (new Attendance())
                 ->newQuery()
