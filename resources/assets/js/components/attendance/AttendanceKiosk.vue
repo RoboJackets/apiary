@@ -136,7 +136,7 @@ export default {
     getTeamSwalConfig: function(teamName) {
       // This method pulls from state (attendance.attendable_id) when teamName is not passed (or undefined)
       if (teamName === undefined) {
-        const targetTeams = this.teams.filter(team => team.id === this.attendance.attendable_id);
+        const targetTeams = this.teams.filter(team => team.id.toString() === this.attendance.attendable_id);
         if (targetTeams.length === 1) {
           teamName = targetTeams[0].name;
         }
