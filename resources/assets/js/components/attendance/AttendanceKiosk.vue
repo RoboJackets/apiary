@@ -221,7 +221,6 @@ export default {
               timer: 2000,
               showConfirmButton: false,
               type: 'success',
-              toast: this.stickToTeam,
             });
           } else {
             this.clearGTID();
