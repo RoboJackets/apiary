@@ -225,7 +225,7 @@ export default {
           swal({
             title: "You're in!",
             text: 'Nice to see you, ' + response.data.attendance.name + '.',
-            timer: 2000,
+            timer: 1000,
             showConfirmButton: false,
             type: 'success',
           }).then(() => {
