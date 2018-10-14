@@ -131,11 +131,11 @@ export default {
       document.activeElement.blur();
       // When a team button is clicked, show a prompt to swipe BuzzCard
       this.attendance.attendable_id = event.target.id;
-      swal(this.getTeamSwalConfig(event.target.id, event.target.innerText));
+      swal(this.getTeamSwalConfig(event.target.innerText));
     },
-    getTeamSwalConfig: function(teamId, teamName) {
+    getTeamSwalConfig: function(teamName) {
       if (teamName === undefined) {
-        const targetTeams = this.teams.filter(team => team.id === teamId);
+        const targetTeams = this.teams.filter(team => team.id === this.attendance.attendable_id);
         if (targetTeams.length === 1) {
           teamName = targetTeams[0].name;
         }
@@ -229,7 +229,7 @@ export default {
             type: 'success',
           }).then(() => {
             if (this.stickToTeam) {
-              swal(this.getTeamSwalConfig(this.attendance.attendable_id));
+              swal(this.getTeamSwalConfig());
             }
           });
           if (!this.stickToTeam) {
