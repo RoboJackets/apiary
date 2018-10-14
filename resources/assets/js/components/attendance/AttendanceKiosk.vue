@@ -130,11 +130,19 @@ export default {
       //Remove focus from button
       document.activeElement.blur();
       // When a team button is clicked, show a prompt to swipe BuzzCard
-      let self = this;
-      self.attendance.attendable_id = event.target.id;
-      swal({
+      this.attendance.attendable_id = event.target.id;
+      swal(this.getTeamSwalConfig(event.target.id, event.target.innerText));
+    },
+    getTeamSwalConfig: function(teamId, teamName) {
+      if (teamName === undefined) {
+        const targetTeams = this.teams.filter(team => team.id === teamId);
+        if (targetTeams.length === 1) {
+          teamName = targetTeams[0].name;
+        }
+      }
+      return {
         title: 'Swipe your BuzzCard now',
-        html: event.target.innerText, // displays team name
+        html: teamName, // displays team name
         showCancelButton: true,
         allowOutsideClick: () => !swal.isLoading(),
         showConfirmButton: false,
@@ -152,7 +160,7 @@ export default {
           swal.getInput().removeEventListener("change", checkboxEventListener);
           this.clearFields();
         }
-      })
+      }
     },
     cardPresented: function(cardData) {
       // Card is presented, process the data
@@ -213,15 +221,19 @@ export default {
         .post(this.attendanceBaseUrl, this.attendance)
         .then(response => {
           this.hasError = false;
+          swal({
+            title: "You're in!",
+            text: 'Nice to see you, ' + response.data.attendance.name + '.',
+            timer: 2000,
+            showConfirmButton: false,
+            type: 'success',
+          }).then(() => {
+            if (this.stickToTeam) {
+              swal(this.getTeamSwalConfig(this.attendance.attendable_id));
+            }
+          });
           if (!this.stickToTeam) {
             this.clearFields();
-            swal({
-              title: "You're in!",
-              text: 'Nice to see you, ' + response.data.attendance.name + '.',
-              timer: 2000,
-              showConfirmButton: false,
-              type: 'success',
-            });
           } else {
             this.clearGTID();
           }
