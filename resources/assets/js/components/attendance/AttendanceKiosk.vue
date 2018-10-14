@@ -288,6 +288,10 @@ export default {
 </style>
 <style>
 /* Global styles */
+.swal2-checkbox {
+    font-size: 110%;
+    margin: 1.5em auto !important;
+}
 .swal2-loading {
     flex-direction: column;
 }
