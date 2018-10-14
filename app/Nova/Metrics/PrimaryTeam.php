@@ -20,7 +20,6 @@ class PrimaryTeam extends Value
     public function calculate(Request $request)
     {
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
-        \Log::info('gt'.$gtid);
         $teams = Attendance::where('gtid', $gtid)
             ->where('attendable_type', 'App\Team')
             ->groupBy('attendable_id')
