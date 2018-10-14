@@ -47,7 +47,6 @@ class AttendancePerWeek extends Trend
     public function ranges()
     {
         return [
-            4 => '1 Month',
             8 => '2 Months',
             12 => '3 Months',
             26 => '6 Months',
