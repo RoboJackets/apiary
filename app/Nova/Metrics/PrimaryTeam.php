@@ -21,8 +21,34 @@ class PrimaryTeam extends Value
     {
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         $teams = Attendance::where('gtid', $gtid)
-            ->where('attendable_type', 'App\Team')
-            ->groupBy('attendable_id')
+            ->where('attendable_type', 'App\Team');
+
+        if (is_numeric($request->range) && $request->range >= -2) {
+            // For the purposes of this, the spring semester runs January - April, summer runs May - July, and fall
+            // runs August - December
+            $date = now()->startOfDay();
+            if ($request->range == -1) {
+                // Find start of semester date
+                if ($date->month <= 4) {
+                    $date = $date->month(1)->day(1);
+                } else if ($date->month <= 7) {
+                    $date = $date->month(5)->day(1);
+                } else {
+                    $date = $date->month(8)->day(1);
+                }
+            } else if ($request->range == -2) {
+                // Find the most recent August 1
+                $date = $date->month(8)->day(1);
+                if ($date->greaterThan(now())) {
+                    $date = $date->subYear();
+                }
+            } else {
+                $date = $date->subDays($request->range);
+            }
+            $teams = $teams->whereBetween('created_at', [$date, now()]);
+        }
+
+        $teams = $teams->groupBy('attendable_id')
             ->select('attendable_id', DB::raw('count(*) as count'))
             ->get()->toArray();
 
@@ -53,7 +79,13 @@ class PrimaryTeam extends Value
      */
     public function ranges()
     {
-        return [];
+        return [
+            -1 => 'This Semester',
+            -2 => 'This Academic Year',
+            -3 => 'All Time',
+            30 => 'Last 30 Days',
+            60 => 'Last 60 Days',
+        ];
     }
 
     /**
