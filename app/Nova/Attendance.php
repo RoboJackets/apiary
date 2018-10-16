@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use App\Nova\Filters\DateFrom;
 use App\Nova\Filters\Attendable;
-use App\Nova\Filters\UserActive;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Filters\UserActiveAttendance;
 
 class Attendance extends Resource
 {
@@ -136,7 +136,7 @@ class Attendance extends Resource
     {
         return [
             new Attendable,
-            new UserActive,
+            new UserActiveAttendance,
             new DateFrom,
             new DateTo,
         ];

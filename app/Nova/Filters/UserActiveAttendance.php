@@ -5,8 +5,15 @@ namespace App\Nova\Filters;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class UserActive extends Filter
+class UserActiveAttendance extends Filter
 {
+    /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'User Active';
+
     /**
      * Apply the filter to the given query.
      *
@@ -18,9 +25,13 @@ class UserActive extends Filter
     public function apply(Request $request, $query, $value)
     {
         if ($value === 'yes') {
-            return $query->active();
+            return $query->whereHas('attendee', function ($q) {
+                $q->active();
+            });
         } else {
-            return $query->inactive();
+            return $query->whereDoesntHave('attendee', function ($q) {
+                $q->active();
+            });
         }
     }
 
