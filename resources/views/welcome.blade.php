@@ -59,7 +59,7 @@
                             Dues payments are accepted online with credit/debit cards or in-person with card/cash/check.
                         </p>
                         <a style="margin-bottom: 0.5rem;display:block" href="/dues/pay">Pay Online Now</a>
-                        <a href="/dues">Change Dues Package</a>
+                        <a href="/dues">Change Dues Term</a>
                     </div>
                 </div>
             </div>
