@@ -31,12 +31,12 @@ class PrimaryTeam extends Value
                 // Find start of semester date
                 if ($date->month <= 4) {
                     $date = $date->month(1)->day(1);
-                } else if ($date->month <= 7) {
+                } elseif ($date->month <= 7) {
                     $date = $date->month(5)->day(1);
                 } else {
                     $date = $date->month(8)->day(1);
                 }
-            } else if ($request->range == -2) {
+            } elseif ($request->range == -2) {
                 // Find the most recent August 1
                 $date = $date->month(8)->day(1);
                 if ($date->greaterThan(now())) {

@@ -20,16 +20,16 @@ class ActiveAttendanceBreakdown extends Partition
     }
 
     /**
-     * Whether to show based on all attendance records or only those from the last two weeks
+     * Whether to show based on all attendance records or only those from the last two weeks.
      *
-     * @var boolean
+     * @var bool
      */
     protected $showAllTime = false;
 
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      *
-     * @param  boolean  $showAllTime
+     * @param  bool  $showAllTime
      */
     public function __construct($showAllTime = false)
     {
@@ -65,6 +65,7 @@ class ActiveAttendanceBreakdown extends Partition
                 if (! $item->active) {
                     $key = 'Inactive';
                 }
+
                 return [$key => $item->aggregate];
             })->toArray();
 

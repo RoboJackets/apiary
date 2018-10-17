@@ -21,22 +21,23 @@ class SwagPickupRate extends Value
     }
 
     /**
-     * Which type of swag we're looking at, either 'shirt' or 'polo'
+     * Which type of swag we're looking at, either 'shirt' or 'polo'.
      *
-     * @var boolean
+     * @var bool
      */
     protected $swagType;
 
     /**
      * Create a new SwagPickupRate metric. swagType can be either 'shirt' or 'polo'.
      *
-     * @param  boolean  $swagType
+     * @param  bool  $swagType
      */
     public function __construct($swagType)
     {
         if (! in_array($swagType, ['shirt', 'polo'])) {
             \Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
+
             return;
         }
 
@@ -72,10 +73,11 @@ class SwagPickupRate extends Value
 
         if ($hasAnyPickedUp && $hasAnyNotPickedUp) {
             $value = sprintf('%.1f', ($result['true'] / ($result['true'] + $result['false']) * 100));
+
             return $this->result($value.'%');
-        } else if ($hasAnyPickedUp) {
+        } elseif ($hasAnyPickedUp) {
             return $this->result('100%');
-        } else if ($hasAnyNotPickedUp) {
+        } elseif ($hasAnyNotPickedUp) {
             return $this->result('0%');
         } else {
             return $this->result('No transactions');

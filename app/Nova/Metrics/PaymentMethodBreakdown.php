@@ -38,21 +38,22 @@ class PaymentMethodBreakdown extends Partition
                 $key = $item->method;
                 switch ($item->method) {
                     case 'cash':
-                    $key = 'Cash';
-                    break;
+                        $key = 'Cash';
+                        break;
                     case 'check':
-                    $key = 'Check';
-                    break;
+                        $key = 'Check';
+                        break;
                     case 'swipe':
-                    $key = 'Swiped Card';
-                    break;
+                        $key = 'Swiped Card';
+                        break;
                     case 'square':
-                    $key = 'Square (Online)';
-                    break;
+                        $key = 'Square (Online)';
+                        break;
                     case 'squarecash':
-                    $key = 'SquareCash';
-                    break;
+                        $key = 'SquareCash';
+                        break;
                 }
+
                 return [$key => $item->aggregate];
             })->toArray()
         );

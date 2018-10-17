@@ -19,14 +19,14 @@ class Attendable extends Filter
     /**
      * Whether to include events in the attendable options.
      *
-     * @var boolean
+     * @var bool
      */
     protected $includeEvents = true;
 
     /**
      * Create new Attendable filter.
      *
-     * @param  boolean  $includeEvents
+     * @param  bool  $includeEvents
      */
     public function __construct($includeEvents = true)
     {
