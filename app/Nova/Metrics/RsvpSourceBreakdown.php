@@ -23,15 +23,21 @@ class RsvpSourceBreakdown extends Partition
      */
     public function calculate(Request $request)
     {
-        return $this->count($request, Rsvp::class, 'source')
-                    ->label(function ($value) {
-                        switch ($value) {
-                            case null:
-                            return '<unknown>';
-                            default:
-                            return $value;
-                        }
-                    });
+        return $this->result(Rsvp::where('event_id', $request->resourceId)
+            ->leftJoin('recruiting_visits', 'source', '=', 'visit_token')
+            ->selectRaw('if(recruiting_visits.id, "Recruiting Email", source) as rsvpsource')
+            ->selectRaw('count(rsvps.id) as aggregate')
+            ->groupBy('rsvpsource')
+            ->orderBy('aggregate', 'desc')
+            ->get()
+            ->mapWithKeys(function ($item) {
+                if ($item->rsvpsource) {
+                    return [$item->rsvpsource => $item->aggregate];
+                } else {
+                    return ['<unknown>' => $item->aggregate];
+                }
+            })->toArray()
+        );
     }
 
     /**
