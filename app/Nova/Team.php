@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Textarea;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\TotalTeamMembers;
 use App\Nova\Metrics\AttendancePerWeek;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Team extends Resource
 {
@@ -131,6 +132,7 @@ class Team extends Resource
             (new TotalTeamMembers())->onlyOnDetail(),
             (new ActiveMembers())->onlyOnDetail(),
             (new AttendancePerWeek())->onlyOnDetail(),
+            (new ActiveAttendanceBreakdown())->onlyOnDetail(),
         ];
     }
 

@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Metrics\RsvpSourceBreakdown;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Event extends Resource
 {
@@ -110,6 +111,7 @@ class Event extends Resource
     {
         return [
             (new RsvpSourceBreakdown())->onlyOnDetail(),
+            (new ActiveAttendanceBreakdown(true))->onlyOnDetail(),
         ];
     }
 
