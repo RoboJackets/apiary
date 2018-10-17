@@ -17,6 +17,23 @@ class Attendable extends Filter
     public $name = 'Attended';
 
     /**
+     * Whether to include events in the attendable options.
+     *
+     * @var boolean
+     */
+    protected $includeEvents = true;
+
+    /**
+     * Create new Attendable filter.
+     *
+     * @param  boolean  $includeEvents
+     */
+    public function __construct($includeEvents = true)
+    {
+        $this->includeEvents = $includeEvents;
+    }
+
+    /**
      * Apply the filter to the given query.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -49,9 +66,9 @@ class Attendable extends Filter
         $teams = Team::where('attendable', 1)->get()->mapWithKeys(function ($item) {
             return ['Team: '.$item['name'] => 'App\Team,'.$item['id']];
         })->toArray();
-        $events = Event::all()->mapWithKeys(function ($item) {
+        $events = $this->includeEvents ? Event::all()->mapWithKeys(function ($item) {
             return ['Event: '.$item['name'] => 'App\Event,'.$item['id']];
-        })->toArray();
+        })->toArray() : [];
 
         return array_merge($teams, $events);
     }
