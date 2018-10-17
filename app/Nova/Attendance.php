@@ -77,18 +77,15 @@ class Attendance extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            BelongsTo::make('User', 'attendee')
-                ->sortable(),
+            BelongsTo::make('User', 'attendee'),
 
             MorphTo::make('Attended', 'attendable')
-                ->sortable()
                 ->types([
                     Event::class,
                     Team::class,
                 ]),
 
             (new BelongsTo('Recorded By', 'recorded', 'App\Nova\User'))
-                ->sortable()
                 ->help('The user that recorded the swipe'),
 
             DateTime::make('Time', 'created_at')
