@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use App\User;
-
 trait AuthorizeInclude
 {
     /**
@@ -25,7 +23,7 @@ trait AuthorizeInclude
         \Log::debug(__METHOD__.": Checking authorization of $uid for $class");
 
         // Get permission mapping from the target model class
-        $model = new $class();
+        $model = new $class;
         if (method_exists($model, 'getRelationshipPermissionMap')) {
             $relationPermMap = $model->getRelationshipPermissionMap();
         } else {
