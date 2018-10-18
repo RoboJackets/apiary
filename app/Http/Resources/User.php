@@ -11,6 +11,7 @@ use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
 class User extends JsonResource
 {
+
     /**
      * Transform the resource into an array.
      *
@@ -33,8 +34,9 @@ class User extends JsonResource
             'last_name' => $this->last_name,
             'preferred_first_name' => $this->preferred_first_name,
             'full_name' => $this->full_name,
+            'name' => $this->name,
             'phone' => $this->phone,
-            $this->mergeWhen(Auth::user()->can('read-users-emergency_contact'), [
+            $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-users-emergency_contact'), [
                 'emergency_contact_name' => $this->emergency_contact_name,
                 'emergency_contact_phone' => $this->emergency_contact_phone,
             ]),
@@ -42,11 +44,12 @@ class User extends JsonResource
             'graduation_semester' => $this->graduation_semester,
             'shirt_size' => $this->shirt_size,
             'polo_size' => $this->polo_size,
-            $this->mergeWhen(Auth::user()->can('read-users-demographics'), [
+            $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-users-demographics'), [
                 'gender' => $this->gender,
                 'ethnicity' => $this->ethnicity,
             ]),
             'accept_safety_agreement' => $this->accept_safety_agreement,
+            'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -57,5 +60,14 @@ class User extends JsonResource
             'recruitingVisits' => RecruitingVisitResource::collection($this->whenLoaded('recruitingVisits')),
             'teams' => TeamResource::collection($this->whenLoaded('teams')),
         ];
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return bool
+     */
+    protected function requestingSelf($request)
+    {
+        return $request->user()->id === $this->id;
     }
 }
