@@ -42,12 +42,17 @@ class TeamController extends Controller
     public function indexWeb()
     {
         $teams = Team::visible()->orderBy('name', 'asc')->get();
-        $user = auth()->user();
-        //Leave this line in here, it provides team data to the view.
-        $user_teams = auth()->user()->teams;
 
-        return view('teams.index')->with(['teams' => TeamResource::collection($teams),
-            'user' => UserResource::collection($user), ]);
+        // Send only what's necessary to the front end
+        $user_id = auth()->user()->id;
+        // Lazy load the teams relationship and send the `id`s over
+        $user_teams = auth()->user()->teams;
+        $user = [
+            'id' => $user_id,
+            'teams' => $user_teams,
+        ];
+
+        return view('teams.index')->with(['teams' => $teams, 'user' => json_encode($user), ]);
     }
 
     /**
