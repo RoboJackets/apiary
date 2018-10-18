@@ -50,7 +50,7 @@ class PaymentMethodBreakdown extends Partition
                         $key = 'Square (Online)';
                         break;
                     case 'squarecash':
-                        $key = 'SquareCash';
+                        $key = 'Square Cash';
                         break;
                 }
 
