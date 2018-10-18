@@ -195,7 +195,6 @@ export default {
             }
           },
         },
-        { title: 'GTID', data: 'gtid' },
       ],
       dateTimeConfig: {
         dateFormat: 'Y-m-d H:i:S',
@@ -214,7 +213,7 @@ export default {
     },
   },
   mounted() {
-    this.dataUrl = this.baseUrl + this.eventId;
+    this.dataUrl = this.baseUrl + this.eventId + '?include=organizer';
     axios
       .get(this.dataUrl)
       .then(response => {
