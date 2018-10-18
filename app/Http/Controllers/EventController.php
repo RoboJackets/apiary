@@ -32,7 +32,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $include = $request->input('include');
-        $events = Event::with($this->authorizeInclude(EventResource::class, $include))->get();
+        $events = Event::with($this->authorizeInclude(Event::class, $include))->get();
 
         return response()->json(['status' => 'success', 'events' => EventResource::collection($events)]);
     }
@@ -89,7 +89,7 @@ class EventController extends Controller
     public function show($id, Request $request)
     {
         $include = $request->input('include');
-        $event = Event::with($this->authorizeInclude(EventResource::class, $include))->find($id);
+        $event = Event::with($this->authorizeInclude(Event::class, $include))->find($id);
 
         if ($event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)]);
