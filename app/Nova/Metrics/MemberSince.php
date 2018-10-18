@@ -17,15 +17,18 @@ class MemberSince extends Value
     public function calculate(Request $request)
     {
         // Same logic as in DashboardController
-        $date = strtotime(DuesTransaction::paid()
+        $transaction = DuesTransaction::paid()
             ->where('user_id', $request->resourceId)
-            ->with('package')->first()
-            ->payment->first()
-            ->created_at);
-        // The date must be passed in as the prefix, or the non-numeric characters will be stripped and it will be
-        // treated as a number. This is ugly but works. See
-        // vendor/laravel/nova/resources/js/components/Metrics/Base/ValueMetric.vue line 124.
-        return $this->result('')->prefix(date('F j, Y', $date));
+            ->with('package')->first();
+
+        if ($transaction) {
+            // The date must be passed in as the prefix, or the non-numeric characters will be stripped and it will be
+            // treated as a number. This is ugly but works. See
+            // vendor/laravel/nova/resources/js/components/Metrics/Base/ValueMetric.vue line 124.
+            return $this->result('')->prefix(date('F j, Y', strtotime($transaction->created_at)));
+        } else {
+            return $this->result('n/a');
+        }
     }
 
     /**
