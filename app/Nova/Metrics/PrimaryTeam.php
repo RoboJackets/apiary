@@ -64,7 +64,7 @@ class PrimaryTeam extends Value
         }
 
         if (count($maxTeamIDs) == 0) {
-            return $this->result('No teams or attendance');
+            return $this->result('No attendance');
         } else {
             $names = Team::whereIn('id', $maxTeamIDs)->get()->pluck('name')->toArray();
 
