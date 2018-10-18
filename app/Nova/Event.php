@@ -10,6 +10,8 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Metrics\RsvpSourceBreakdown;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Event extends Resource
 {
@@ -64,7 +66,6 @@ class Event extends Resource
 
             (new BelongsTo('Organizer', 'organizer', 'App\Nova\User'))
                 ->searchable()
-                ->sortable()
                 ->rules('required')
                 // default to self
                 ->help('The organizer of the event'),
@@ -107,7 +108,10 @@ class Event extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new RsvpSourceBreakdown())->onlyOnDetail(),
+            (new ActiveAttendanceBreakdown(true))->onlyOnDetail(),
+        ];
     }
 
     /**
