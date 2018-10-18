@@ -56,7 +56,8 @@ class DuesPackageController extends Controller
     public function indexAvailable(Request $request)
     {
         $include = $request->input('include');
-        $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->availableForPurchase()->get();
+        $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))
+            ->availableForPurchase()->get();
 
         return response()->json(['status' => 'success', 'dues_packages' => DuesPackageResource::collection($packages)]);
     }
@@ -88,9 +89,9 @@ class DuesPackageController extends Controller
         }
 
         if (is_numeric($package->id)) {
-            $dbPackage = DuesPackage::findOrFail($package->id);
+            $dbp = DuesPackage::findOrFail($package->id);
 
-            return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource(($dbPackage))], 201);
+            return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource(($dbp))], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }

@@ -46,7 +46,8 @@ class TeamController extends Controller
         //Leave this line in here, it provides team data to the view.
         $user_teams = auth()->user()->teams;
 
-        return view('teams.index')->with(['teams' => TeamResource::collection($teams), 'user' => UserResource::collection($user)]);
+        return view('teams.index')->with(['teams' => TeamResource::collection($teams),
+            'user' => UserResource::collection($user)]);
     }
 
     /**

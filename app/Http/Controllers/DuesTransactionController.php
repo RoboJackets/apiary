@@ -79,7 +79,8 @@ class DuesTransactionController extends Controller
     public function indexPendingSwag(Request $request)
     {
         $include = $request->input('include');
-        $transact = DuesTransaction::pendingSwag()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransaction::pendingSwag()
+            ->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
 
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
