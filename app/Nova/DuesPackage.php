@@ -8,6 +8,9 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use App\Nova\Metrics\SwagPickupRate;
+use App\Nova\Metrics\TotalCollections;
+use App\Nova\Metrics\PaymentMethodBreakdown;
 
 class DuesPackage extends Resource
 {
@@ -131,7 +134,12 @@ class DuesPackage extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new TotalCollections())->onlyOnDetail(),
+            (new PaymentMethodBreakdown())->onlyOnDetail(),
+            (new SwagPickupRate('shirt'))->onlyOnDetail(),
+            (new SwagPickupRate('polo'))->onlyOnDetail(),
+        ];
     }
 
     /**
