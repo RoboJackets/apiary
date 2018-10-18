@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Rsvp as RsvpResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Event extends JsonResource
@@ -27,6 +28,7 @@ class Event extends JsonResource
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
             'organizer' => new UserResource($this->whenLoaded('organizer')),
+            'rsvps' => new RsvpResource($this->whenLoaded('rsvps')),
         ];
     }
 }
