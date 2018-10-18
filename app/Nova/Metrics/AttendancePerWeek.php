@@ -5,6 +5,7 @@ namespace App\Nova\Metrics;
 use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
+use Illuminate\Support\Facades\DB;
 
 class AttendancePerWeek extends Trend
 {
@@ -22,17 +23,18 @@ class AttendancePerWeek extends Trend
         $originalTimezone = $request->timezone;
         $request->timezone = 'Etc/GMT';
 
+        $query = Attendance::class;
+
         // If we're on a team page, not the main dashboard, filter to that team
         if ($request->resourceId) {
             $query = (new Attendance())
                 ->newQuery()
                 ->where('attendable_id', $request->resourceId)
                 ->where('attendable_type', 'App\Team');
-
-            $result = $this->countByWeeks($request, $query)->showLatestValue();
-        } else {
-            $result = $this->countByWeeks($request, Attendance::class)->showLatestValue();
         }
+
+        // Aggregate based on counting distinct values in the gtid column
+        $result = $this->aggregate($request, $query, Trend::BY_WEEKS, 'count', DB::raw('distinct attendance.gtid'), 'created_at');
 
         $request->timezone = $originalTimezone;
 
