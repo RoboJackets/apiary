@@ -61,7 +61,7 @@ class UserController extends Controller
                 ->get();
         }
 
-        return response()->json(['status' => 'success', 'users' => $results]);
+        return response()->json(['status' => 'success', 'users' => UserResource::collection($results)]);
     }
 
     /**
