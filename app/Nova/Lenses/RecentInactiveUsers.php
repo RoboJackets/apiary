@@ -42,14 +42,11 @@ class RecentInactiveUsers extends Lens
     public function fields(Request $request)
     {
         return [
-            Text::make('GTID')
-                ->sortable(),
+            Text::make('GTID'),
 
-            BelongsTo::make('User', 'attendee', 'App\Nova\User')
-                ->sortable(),
+            BelongsTo::make('User', 'attendee', 'App\Nova\User'),
 
             MorphTo::make('Attended', 'attendable')
-                ->sortable()
                 ->types([
                     Event::class,
                     Team::class,
