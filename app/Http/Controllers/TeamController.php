@@ -52,7 +52,7 @@ class TeamController extends Controller
             'teams' => $user_teams,
         ];
 
-        return view('teams.index')->with(['teams' => $teams, 'user' => json_encode($user), ]);
+        return view('teams.index')->with(['teams' => $teams, 'user' => json_encode($user)]);
     }
 
     /**

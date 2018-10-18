@@ -11,7 +11,6 @@ use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
 class User extends JsonResource
 {
-
     /**
      * Transform the resource into an array.
      *
