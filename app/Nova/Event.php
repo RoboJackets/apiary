@@ -64,7 +64,6 @@ class Event extends Resource
 
             (new BelongsTo('Organizer', 'organizer', 'App\Nova\User'))
                 ->searchable()
-                ->sortable()
                 ->rules('required')
                 // default to self
                 ->help('The organizer of the event'),
