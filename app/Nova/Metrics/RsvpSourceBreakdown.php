@@ -13,7 +13,7 @@ class RsvpSourceBreakdown extends Partition
      *
      * @var string
      */
-    public $name = 'RSVP Source Breakdown';
+    public $name = 'RSVP Sources';
 
     /**
      * Calculate the value of the metric.

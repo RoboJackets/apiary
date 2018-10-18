@@ -24,6 +24,7 @@ class PaymentMethodBreakdown extends Partition
     public function calculate(Request $request)
     {
         return $this->result(Payment::where('payable_type', 'App\DuesTransaction')
+            ->where('amount', '>', 0)
             ->whereIn('payable_id', function ($q) use ($request) {
                 $q->select('id')
                     ->from('dues_transactions')
