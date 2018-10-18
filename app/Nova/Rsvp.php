@@ -71,11 +71,9 @@ class Rsvp extends Resource
     protected function basicFields()
     {
         return [
-            BelongsTo::make('User')
-                ->sortable(),
+            BelongsTo::make('User'),
 
-            BelongsTo::make('Event')
-                ->sortable(),
+            BelongsTo::make('Event'),
 
             Text::make('Response')
                 ->sortable(),
