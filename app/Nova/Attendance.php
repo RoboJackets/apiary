@@ -82,7 +82,10 @@ class Attendance extends Resource
         return [
             Text::make('GTID')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-gtid');
+                }),
 
             BelongsTo::make('User', 'attendee'),
 

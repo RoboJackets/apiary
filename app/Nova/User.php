@@ -104,10 +104,16 @@ class User extends Resource
             Number::make('GTID')
                 ->onlyOnDetail()
                 ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->hideWhenUpdating()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-gtid');
+                }),
 
             Text::make('API Token')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-api_token');
+                }),
 
             Text::make('Phone Number', 'phone')
                 ->hideFromIndex(),
@@ -122,10 +128,16 @@ class User extends Resource
     {
         return [
             Text::make('Emergency Contact Name')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-emergency_contact');
+                }),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-emergency_contact');
+                }),
         ];
     }
 
