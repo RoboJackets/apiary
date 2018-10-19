@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Textarea;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\TotalTeamMembers;
 use App\Nova\Metrics\AttendancePerWeek;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Team extends Resource
@@ -167,5 +168,39 @@ class Team extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    /**
+     * Build an "index" query for the team resource to hide hidden teams.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (! $request->user()->can('read-teams-hidden')) {
+            return $query->where('visible', 1);
+        } else {
+            return $query;
+        }
+    }
+
+    /**
+     * Build a "relatable" query for the given resource.
+     *
+     * This query determines which instances of the model may be attached to other resources.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function relatableQuery(NovaRequest $request, $query)
+    {
+        if (! $request->user()->can('read-teams-hidden')) {
+            return $query->where('visible', 1);
+        } else {
+            return $query;
+        }
     }
 }

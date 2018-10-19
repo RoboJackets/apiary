@@ -19,7 +19,11 @@ class TeamPolicy
      */
     public function view(User $user, Team $team)
     {
-        return $user->can('read-teams-hidden');
+        if (! $team->visible) {
+            return $user->can('read-teams-hidden');
+        } else {
+            return $user->can('read-teams');
+        }
     }
 
     /**
@@ -30,7 +34,7 @@ class TeamPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('read-teams-hidden');
+        return $user->can('read-teams');
     }
 
     /**
