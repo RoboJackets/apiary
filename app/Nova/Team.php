@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\TotalTeamMembers;
+use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Metrics\AttendancePerWeek;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
@@ -59,9 +60,13 @@ class Team extends Resource
 
             new Panel('Metadata', $this->metaFields()),
 
-            HasMany::make('User', 'members'),
+            BelongsToMany::make('User', 'members')->canSee(function ($request) {
+                return $request->user()->can('read-teams-membership') && $request->user()->can('read-users');
+            }),
 
-            HasMany::make('Attendance'),
+            HasMany::make('Attendance')->canSee(function ($request) {
+                return $request->user()->can('read-attendance');
+            }),
         ];
     }
 

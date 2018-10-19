@@ -60,9 +60,21 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            BelongsToMany::make('Teams'),
+            BelongsToMany::make('Teams')->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-teams-membership-own');
+                } else {
+                    return $request->user()->can('read-teams-membership');
+                }
+            }),
 
-            HasMany::make('Attendance'),
+            HasMany::make('Attendance')->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-attendance-own');
+                } else {
+                    return $request->user()->can('read-attendance');
+                }
+            }),
 
             new Panel('Metadata', $this->metaFields()),
         ];

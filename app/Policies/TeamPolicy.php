@@ -95,4 +95,53 @@ class TeamPolicy
     {
         return false;
     }
+
+    /**
+     * Determine whether the user can attach a user to a team.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Team  $team
+     * @param  \App\User  $userResource
+     * @return mixed
+     */
+    public function attachUser(User $user, Team $team, User $userResource)
+    {
+        if ($team->members->contains('id', $userResource->id)) return false;
+        if (! $team->visible && $user->cant('read-teams-hidden')) {
+            return false;
+        }
+        return $user->can('update-teams-membership');
+    }
+
+    /**
+     * Determine whether the user can attach a user to a team.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Team  $team
+     * @param  \App\User  $userResource
+     * @return mixed
+     */
+    public function attachAnyUser(User $user, Team $team)
+    {
+        if (! $team->visible && $user->cant('read-teams-hidden')) {
+            return false;
+        }
+        return $user->can('update-teams-membership');
+    }
+
+    /**
+     * Determine whether the user can detach a user from a team.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Team  $team
+     * @param  \App\User  $userResource
+     * @return mixed
+     */
+    public function detachUser(User $user, Team $team, User $userResource)
+    {
+        if (! $team->visible && $user->cant('read-teams-hidden')) {
+            return false;
+        }
+        return $user->can('update-teams-membership');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\User;
+use App\Team;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -89,5 +90,51 @@ class UserPolicy
     public function forceDelete(User $user, User $userResource)
     {
         return false;
+    }
+
+    /**
+     * Determine whether the user can attach a team to a user.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $userResource
+     * @param  \App\Team  $team
+     * @return mixed
+     */
+    public function attachTeam(User $user, User $userResource, Team $team)
+    {
+        if ($team->members->contains('id', $userResource->id)) return false;
+        if (! $team->visible && $user->cant('read-teams-hidden')) {
+            return false;
+        }
+        return $user->can('update-teams-membership');
+    }
+
+    /**
+     * Determine whether the user can attach a team to a user.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $userResource
+     * @param  \App\Team  $team
+     * @return mixed
+     */
+    public function attachAnyTeam(User $user, User $userResource)
+    {
+        return $user->can('update-teams-membership');
+    }
+
+    /**
+     * Determine whether the user can detach a team from a user.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $userResource
+     * @param  \App\Team  $team
+     * @return mixed
+     */
+    public function detachTeam(User $user, User $userResource, Team $team)
+    {
+        if (! $team->visible && $user->cant('read-teams-hidden')) {
+            return false;
+        }
+        return $user->can('update-teams-membership');
     }
 }
