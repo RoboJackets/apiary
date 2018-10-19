@@ -45,6 +45,9 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
+        $include = $request->input('include');
+        unset($request['include']);
+
         $this->validate($request, [
             'attendable_type' => 'required|string',
             'attendable_id' => 'required|numeric',
@@ -53,9 +56,7 @@ class AttendanceController extends Controller
             'created_at' => 'date',
         ]);
 
-        $wantsName = ($request->filled('includeName'));
         $request['recorded_by'] = $request->user()->id;
-        unset($request['includeName']);
 
         // Variables for comparison below
         $date = $request->input('created_at', date('Y-m-d'));
@@ -80,15 +81,11 @@ class AttendanceController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        //Return user's name, if found and if requested
-        //This array merge is only okay until Fractal is implemented
-        if ($wantsName) {
-            $user = User::where('gtid', '=', $request->input('gtid'))->first();
-            $name = ($user) ? ['name' => $user->name] : ['name' => 'Non-Member'];
-            $att = array_merge($att->toArray(), $name);
-        }
+        // Yes this is kinda gross but it's the best that I could come up with
+        // This is mainly to allow for requesting the attendee relationship for showing the name on swipes
+        $dbAtt = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($att->id);
 
-        return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)], $code);
+        return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($dbAtt)], $code);
     }
 
     /**
