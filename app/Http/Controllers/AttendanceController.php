@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Log;
 use Bugsnag;
-use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
