@@ -16,7 +16,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function name()
     {
-        return $this->showAllTime ? 'Active Attendees' : 'Recent Attendees';
+        return $this->showAllTime ? 'Active Attendees' : 'Attendees Last 4 Weeks';
     }
 
     /**
