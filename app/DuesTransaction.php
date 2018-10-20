@@ -28,6 +28,19 @@ class DuesTransaction extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'swag_shirt_provided',
+        'swag_polo_provided',
+    ];
+
+    /**
      * Get the Payment associated with the DuesTransaction model.
      */
     public function payment()
@@ -49,6 +62,22 @@ class DuesTransaction extends Model
     public function user()
     {
         return $this->belongsTo(\App\User::class);
+    }
+
+    /**
+     * Get the User associated with the swag_shirt_providedBy field on the DuesTransaction model.
+     */
+    public function swagShirtProvidedBy()
+    {
+        return $this->belongsTo(\App\User::class, 'swag_shirt_providedBy', 'id');
+    }
+
+    /**
+     * Get the User associated with the swag_polo_providedBy field on the DuesTransaction model.
+     */
+    public function swagPoloProvidedBy()
+    {
+        return $this->belongsTo(\App\User::class, 'swag_polo_providedBy', 'id');
     }
 
     /**
@@ -181,6 +210,16 @@ class DuesTransaction extends Model
             ->havingRaw('amountPaid >= dues_packages.cost');
 
         return $query;
+    }
+
+    /**
+     * Get the is_paid flag for the DuesTransaction
+     *
+     * @return bool
+     */
+    public function getIsPaidAttribute()
+    {
+        return self::where('dues_transactions.id', $this->id)->paid()->get()->count() != 0;
     }
 
     /**

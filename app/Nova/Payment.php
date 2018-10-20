@@ -3,49 +3,31 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use App\Nova\DuesTransaction;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasOne;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\MorphMany;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
-use App\Nova\Metrics\ActiveMembers;
-use App\Nova\Metrics\TotalTeamMembers;
-use App\Nova\Metrics\AttendancePerWeek;
-use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use Laravel\Nova\Fields\BelongsTo;
 
-class DuesTransaction extends Resource
+class Payment extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\DuesTransaction';
+    public static $model = 'App\Payment';
 
     /**
-     * Get the displayble label of the resource.
+     * Indicates if the resource should be displayed in the sidebar.
      *
-     * @return string
+     * @var bool
      */
-    public static function label()
-    {
-        return 'Dues Transactions';
-    }
-
-    /**
-     * Get the displayble singular label of the resource.
-     *
-     * @return string
-     */
-    public static function singularLabel()
-    {
-        return 'Dues Transaction';
-    }
+    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -58,9 +40,9 @@ class DuesTransaction extends Resource
         return [
             new Panel('Basic Information', $this->basicFields()),
 
-            new Panel('Swag', $this->swagFields()),
+            new Panel('Payment Method', $this->methodFields()),
 
-            MorphMany::make('Payment'),
+            new Panel('Square Details', $this->detailsFields()),
 
             new Panel('Metadata', $this->metaFields()),
         ];
@@ -69,27 +51,42 @@ class DuesTransaction extends Resource
     protected function basicFields()
     {
         return [
-            BelongsTo::make('User', 'user'),
+            MorphTo::make('Payable')->types([
+                DuesTransaction::class,
+            ]),
 
-            BelongsTo::make('Dues Package', 'package', 'App\Nova\DuesPackage'),
+            Currency::make('Amount'),
 
-            Boolean::make('Paid', 'is_paid'),
+            Currency::make('Processing Fee')
+                ->onlyOnDetail(),
+
+            TextArea::make('Notes')
+                ->onlyOnDetail(),
         ];
     }
 
-    protected function swagFields()
+    protected function methodFields()
     {
         return [
-            DateTime::make('T-Shirt Given On', 'swag_shirt_provided')
+            Text::make('Payment Method', 'method_presentation'),
+
+            BelongsTo::make('Recorded By', 'user', 'App\Nova\User'),
+        ];
+    }
+
+    protected function detailsFields()
+    {
+        return [
+            Text::make('Checkout ID')
                 ->onlyOnDetail(),
 
-            BelongsTo::make('T-Shirt Given By', 'swagShirtProvidedBy', 'App\Nova\User')
+            Text::make('Client Transaction ID', 'client_txn_id')
                 ->onlyOnDetail(),
 
-            DateTime::make('Polo Given On', 'swag_polo_provided')
+            Text::make('Server Transaction ID', 'server_txn_id')
                 ->onlyOnDetail(),
 
-            BelongsTo::make('Polo Given By', 'swagPoloProvidedBy', 'App\Nova\User')
+            Text::make('Unique ID')
                 ->onlyOnDetail(),
         ];
     }
