@@ -11,7 +11,10 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js(['resources/assets/js/app.js'], 'public/js/app.js').sass('resources/assets/sass/app.scss', 'public/css/app.css');
+mix.js(['resources/assets/js/app.js'], 'public/js/app.js')
+  .sass('resources/assets/sass/app.scss', 'public/css/app.css')
+  .js(['resources/assets/js/nova.js'], 'public/js/nova.js')
+  .sass('resources/assets/sass/nova/global.scss', 'public/css/nova.css');
 
 if (mix.inProduction()) {
   mix.version();

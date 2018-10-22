@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "chartist": "^0.11.0",
     "datatables.net": "^1.10.19",
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-buttons-bs4": "^1.5.3",
