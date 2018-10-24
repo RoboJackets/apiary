@@ -13,7 +13,7 @@ class AttendanceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-attendance', ['only' => ['index', 'search']]);
+        $this->middleware('permission:read-attendance', ['only' => ['index', 'search', 'statistics']]);
         $this->middleware('permission:create-attendance', ['only' => ['store']]);
         $this->middleware('permission:read-attendance|read-attendance-own', ['only' => ['show']]);
         $this->middleware('permission:update-attendance', ['only' => ['update']]);
@@ -182,5 +182,68 @@ class AttendanceController extends Controller
             return response()->json(['status' => 'error',
                 'message' => 'Attendance does not exist or was previously deleted.', ], 422);
         }
+    }
+
+    /**
+     * Give a summary of attendance from the given time period.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function statistics(Request $request)
+    {
+        $this->validate($request, [
+            'range' => 'numeric|nullable',
+        ]);
+
+        $user = auth()->user();
+        $numberOfWeeks = $request->input('range', 52);
+        $startDay = now()->subWeeks($numberOfWeeks)->startOfDay();
+        $endDay = now();
+
+        // Get average attendance by day of week from the range given
+        // Selects the weekday number and the weekday name so it can be sorted more easily; the number is trimmed out in the map method
+        $attendanceByDay = Attendance::whereBetween('created_at', [$startDay, $endDay])
+            ->where('attendable_type', 'App\Team')
+            ->selectRaw('date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
+            ->groupBy('day')
+            ->orderBy('day', 'asc')
+            ->get()
+            ->mapWithKeys(function ($item) use ($numberOfWeeks) {
+                return [substr($item->day, 1) => $item->aggregate / $numberOfWeeks];
+            });
+
+        // Get the attendance by day for the teams, for all time so historical graphs can be generated
+        $attendanceByTeamQuery = Attendance::selectRaw('date_format(attendance.created_at, \'%Y-%m-%d\') as day, count(gtid) as aggregate, attendable_id, teams.name, teams.visible')
+            ->where('attendable_type', 'App\Team')
+            ->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
+            ->groupBy('day', 'attendable_id')
+            ->orderBy('visible', 'desc')
+            ->orderBy('name', 'asc')
+            ->orderBy('day', 'asc');
+
+        // If the user can't read hidden teams only show them visible teams
+        if ($user->cant('read-teams-hidden')) {
+            $attendanceByTeamQuery = $attendanceByTeamQuery->where('visible', 1);
+        }
+
+        $attendanceByTeam = $attendanceByTeamQuery->get();
+        // If the user can't read teams only give them the attendable_id
+        if ($user->can('read-teams')) {
+            $attendanceByTeam = $attendanceByTeam->groupBy('name');
+        } else {
+            $attendanceByTeam = $attendanceByTeam->groupBy('attendable_id');
+        }
+
+        // Return only the team ID/name, the day, and the count of records on that day
+        $attendanceByTeam = $attendanceByTeam->map(function ($item) {
+            return $item->pluck('aggregate', 'day');
+        });
+
+        $statistics = [
+            'averageDailyMembers' => $attendanceByDay,
+            'byTeam' => $attendanceByTeam,
+        ];
+        return response()->json(['status' => 'success', 'statistics' => $statistics]);
     }
 }
