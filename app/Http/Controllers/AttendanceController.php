@@ -214,20 +214,17 @@ class AttendanceController extends Controller
             });
 
         // Get the attendance by day for the teams, for all time so historical graphs can be generated
-        $attendanceByTeamQuery = Attendance::selectRaw('date_format(attendance.created_at, \'%Y-%m-%d\') as day, count(gtid) as aggregate, attendable_id, teams.name, teams.visible')
+        $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%Y-%m-%d\') as day, count(gtid) as aggregate, attendable_id, teams.name, teams.visible')
             ->where('attendable_type', 'App\Team')
-            ->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
+            ->when($user->cant('read-teams-hidden'), function ($query) {
+                $query->where('visible', 1);
+            })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
             ->groupBy('day', 'attendable_id')
             ->orderBy('visible', 'desc')
             ->orderBy('name', 'asc')
-            ->orderBy('day', 'asc');
+            ->orderBy('day', 'asc')
+            ->get();
 
-        // If the user can't read hidden teams only show them visible teams
-        if ($user->cant('read-teams-hidden')) {
-            $attendanceByTeamQuery = $attendanceByTeamQuery->where('visible', 1);
-        }
-
-        $attendanceByTeam = $attendanceByTeamQuery->get();
         // If the user can't read teams only give them the attendable_id
         if ($user->can('read-teams')) {
             $attendanceByTeam = $attendanceByTeam->groupBy('name');
