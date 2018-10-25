@@ -255,10 +255,17 @@ class AttendanceController extends Controller
         }
         $events = $events->sortKeys();
 
+        // Get the number of people who attended any event in the time period
+        $eventDistinct = Attendance::selectRaw('count(distinct gtid) as aggregate')
+            ->where('attendable_type', 'App\Event')
+            ->whereBetween('created_at', [$startDay, $endDay])
+            ->get()->first()->aggregate;
+
         $statistics = [
             'averageDailyMembers' => $attendanceByDay,
             'byTeam' => $attendanceByTeam,
             'events' => $events,
+            'eventAttendeeTotal' => $eventDistinct,
         ];
         return response()->json(['status' => 'success', 'statistics' => $statistics]);
     }
