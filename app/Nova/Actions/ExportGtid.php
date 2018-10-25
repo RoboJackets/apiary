@@ -25,6 +25,7 @@ class ExportGtid extends DownloadExcel
     {
         $this->withFilename('Members.csv')
             ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
-            ->only('gtid');
+            ->only('first_name', 'last_name', 'gtid')
+            ->withChunkCount(1000);
     }
 }
