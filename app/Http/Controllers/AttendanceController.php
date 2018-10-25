@@ -213,6 +213,13 @@ class AttendanceController extends Controller
                 return [substr($item->day, 1) => $item->aggregate / $numberOfWeeks];
             });
 
+        $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
+            ->where('attendable_type', 'App\Team')
+            ->selectRaw('date_format(created_at, \'%Y %U\') as week, count(distinct gtid) as aggregate')
+            ->groupBy('week')
+            ->get()
+            ->sum('aggregate')) / $numberOfWeeks;
+
         // Get the attendance by day for the teams, for all time so historical graphs can be generated
         $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%Y-%m-%d\') as day, count(gtid) as aggregate, attendable_id, teams.name, teams.visible')
             ->where('attendable_type', 'App\Team')
@@ -260,6 +267,7 @@ class AttendanceController extends Controller
 
         $statistics = [
             'averageDailyMembers' => $attendanceByDay,
+            'averageWeeklyMembers' => $averageWeeklyAttendance,
             'byTeam' => $attendanceByTeam,
             'events' => $events,
             'eventAttendeeTotal' => $eventDistinct,
