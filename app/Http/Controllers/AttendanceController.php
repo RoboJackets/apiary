@@ -240,9 +240,25 @@ class AttendanceController extends Controller
             return $item->pluck('aggregate', 'day');
         });
 
+        $events = Attendance::selectRaw('count(gtid) as aggregate, attendable_id, events.name')
+            ->where('attendable_type', 'App\Event')
+            ->whereBetween('attendance.created_at', [$startDay, $endDay])
+            ->leftJoin('events', 'attendable_id', '=', 'events.id')
+            ->groupBy('attendable_id')
+            ->get();
+
+        // If the user can't read events only give them the attendable_id
+        if ($user->can('read-events')) {
+            $events = $events->pluck('aggregate', 'name');
+        } else {
+            $events = $events->pluck('aggregate', 'attendable_id');
+        }
+        $events = $events->sortKeys();
+
         $statistics = [
             'averageDailyMembers' => $attendanceByDay,
             'byTeam' => $attendanceByTeam,
+            'events' => $events,
         ];
         return response()->json(['status' => 'success', 'statistics' => $statistics]);
     }
