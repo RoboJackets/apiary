@@ -7,4 +7,31 @@
         color: var(--black);
         fill: var(--black);
     }
+
+    .ct-line {
+        stroke-width: 2px;
+    }
+
+    // The first series defaults to blue, like the other charts, so it should be obvious that it's this year's data.
+    // These series colors are the same as from the pie charts, but every second color to give more contrast.
+
+    .ct-series-b .ct-line {
+        stroke: #F99037B3 !important;
+    }
+
+    .ct-series-c .ct-line {
+        stroke: #8FC15DB3;
+    }
+
+    .ct-series-d .ct-line {
+        stroke: #47C1BFB3;
+    }
+
+    .ct-series-e .ct-line {
+        stroke: #6474D7B3;
+    }
+
+    .ct-series-f .ct-line {
+        stroke: #E471DEB3;
+    }
 }
