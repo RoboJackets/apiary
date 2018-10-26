@@ -220,16 +220,16 @@ class AttendanceController extends Controller
             ->get()
             ->sum('aggregate')) / $numberOfWeeks;
 
-        // Get the attendance by day for the teams, for all time so historical graphs can be generated
-        $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%Y-%m-%d\') as day, count(gtid) as aggregate, attendable_id, teams.name, teams.visible')
+        // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
+        $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week, count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
             ->where('attendable_type', 'App\Team')
             ->when($user->cant('read-teams-hidden'), function ($query) {
                 $query->where('visible', 1);
             })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
-            ->groupBy('day', 'attendable_id')
+            ->groupBy('week', 'attendable_id')
             ->orderBy('visible', 'desc')
             ->orderBy('name', 'asc')
-            ->orderBy('day', 'asc')
+            ->orderBy('week', 'asc')
             ->get();
 
         // If the user can't read teams only give them the attendable_id
@@ -241,7 +241,7 @@ class AttendanceController extends Controller
 
         // Return only the team ID/name, the day, and the count of records on that day
         $attendanceByTeam = $attendanceByTeam->map(function ($item) {
-            return $item->pluck('aggregate', 'day');
+            return $item->pluck('aggregate', 'week');
         });
 
         $events = Attendance::selectRaw('count(gtid) as aggregate, attendable_id, events.name')
