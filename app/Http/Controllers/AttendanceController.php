@@ -222,7 +222,7 @@ class AttendanceController extends Controller
 
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
         $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week,'
-                . 'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
+                .'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
             ->where('attendable_type', 'App\Team')
             ->when($user->cant('read-teams-hidden'), function ($query) {
                 $query->where('visible', 1);
