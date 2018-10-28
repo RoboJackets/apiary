@@ -3,9 +3,9 @@
     <heading class="mb-6">Attendance</heading>
 
     <div class="flex flex-wrap -mx-3 mb-3">
-      <ChartistCard title="Average Daily Members (All Teams)" class="w-full" :loading="loading" :total="data.averageWeeklyMembers" total-suffix="average total members per week" :data="data.averageDailyMembers" :options="dailyAverageBarGraphOptions" type="bar"/>
+      <ChartistCard :title="'Average Daily Members (All Teams, Last ' + selectedRange + ' Weeks)'" class="w-full" :loading="loading" :total="data.averageWeeklyMembers" total-suffix="average total members per week" :data="data.averageDailyMembers" :options="dailyAverageBarGraphOptions" type="bar"/>
 
-      <ChartistCard class="w-1/2" :loading="loading" v-for="team in data.byTeam" :key="team.name" :data="team.data" :options="teamLineGraphOptions" :title="team.name" type="line"/>
+      <ChartistCard class="w-1/2" :loading="loading" v-for="team in data.byTeam" :key="team.name" :data="team.data" :options="teamLineGraphOptions" :title="team.name" type="line" legend/>
 
       <ChartistCard class="w-full" :loading="loading" :data="data.events" :options="eventBarGraphOptions" title="Events" :total="data.totalEventAttendees" total-suffix="people attended an event" type="bar"/>
     </div>
@@ -15,6 +15,7 @@
 <script>
 import Chartist from 'chartist';
 import ctPointLabels from 'chartist-plugin-pointlabels';
+import 'chartist-plugin-legend';
 import ChartistCard from './ChartistCard';
 // moment and lodash are available globally already, but Chartist is not
 
