@@ -60,10 +60,17 @@ export default {
           divisor: 12,
           showGrid: true,
           labelInterpolationFnc: function(value) {
-            return moment(value).format('MMM D');
+            var date = moment(value);
+            // Round it to the nearest month. The gridlines are all a day or two shy of the month, but as they're all
+            // weekly data points this is still accurate.
+            if (date.date() >= 14) {
+              date.month(date.month() + 1);
+              // Stop the date from making the month overflow
+              date.date(date.date() - 10);
+            }
+            return date.format('MMM');
           },
         },
-        plugins: [],
       },
       eventBarGraphOptions: {
         fullWidth: false,
@@ -150,8 +157,8 @@ export default {
             return row[0].substr(0, 4);
           }).map(function(yearData, year) {
             // If there are missing week data points in the year, fill them in with zeros
-            if (yearData.length < 52) { // FIXME
-              for (var i = 1; i <= 52; i++) {
+            if (yearData.length < 53) {
+              for (var i = 1; i <= 53; i++) {
                 var weekName = year + ' ' + i;
                 // Skip if that week already has a row (search by the zeroth index being equal to the week name)
                 if (_.some(yearData, [0, weekName])) continue;
