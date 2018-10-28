@@ -244,33 +244,10 @@ class AttendanceController extends Controller
             return $item->pluck('aggregate', 'week');
         });
 
-        $events = Attendance::selectRaw('count(gtid) as aggregate, attendable_id, events.name')
-            ->where('attendable_type', 'App\Event')
-            ->whereBetween('attendance.created_at', [$startDay, $endDay])
-            ->leftJoin('events', 'attendable_id', '=', 'events.id')
-            ->groupBy('attendable_id')
-            ->get();
-
-        // If the user can't read events only give them the attendable_id
-        if ($user->can('read-events')) {
-            $events = $events->pluck('aggregate', 'name');
-        } else {
-            $events = $events->pluck('aggregate', 'attendable_id');
-        }
-        $events = $events->sortKeys();
-
-        // Get the number of people who attended any event in the time period
-        $eventDistinct = Attendance::selectRaw('count(distinct gtid) as aggregate')
-            ->where('attendable_type', 'App\Event')
-            ->whereBetween('created_at', [$startDay, $endDay])
-            ->get()->first()->aggregate;
-
         $statistics = [
             'averageDailyMembers' => $attendanceByDay,
             'averageWeeklyMembers' => $averageWeeklyAttendance,
             'byTeam' => $attendanceByTeam,
-            'events' => $events,
-            'eventAttendeeTotal' => $eventDistinct,
         ];
         return response()->json(['status' => 'success', 'statistics' => $statistics]);
     }
