@@ -1,4 +1,5 @@
-$attendance-series-colors: (var(--primary-70), rgba(#F99037, .7), rgba(#8FC15D, .7), rgba(#47C1BF, .7), rgba(#6474D7, .7), rgba(#E471DE, .7));
+$attendance-series-colors: (var(--primary-70), rgba(#F99037, .7), rgba(#8FC15D, .7), rgba(#47C1BF, .7),
+    rgba(#6474D7, .7), rgba(#E471DE, .7));
 .attendancereport {
     .ct-bar {
         stroke-width: 40px;

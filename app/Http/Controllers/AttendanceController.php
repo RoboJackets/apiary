@@ -201,8 +201,8 @@ class AttendanceController extends Controller
         $startDay = now()->subWeeks($numberOfWeeks)->startOfDay();
         $endDay = now();
 
-        // Get average attendance by day of week from the range given
-        // Selects the weekday number and the weekday name so it can be sorted more easily; the number is trimmed out in the map method
+        // Get average attendance by day of week from the range given. Selects the weekday number and the weekday name
+        // so it can be sorted more easily; the number is trimmed out in the map method
         $attendanceByDay = Attendance::whereBetween('created_at', [$startDay, $endDay])
             ->where('attendable_type', 'App\Team')
             ->selectRaw('date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
@@ -221,7 +221,8 @@ class AttendanceController extends Controller
             ->sum('aggregate')) / $numberOfWeeks;
 
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
-        $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week, count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
+        $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week,'
+                . 'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
             ->where('attendable_type', 'App\Team')
             ->when($user->cant('read-teams-hidden'), function ($query) {
                 $query->where('visible', 1);
@@ -249,6 +250,7 @@ class AttendanceController extends Controller
             'averageWeeklyMembers' => $averageWeeklyAttendance,
             'byTeam' => $attendanceByTeam,
         ];
+
         return response()->json(['status' => 'success', 'statistics' => $statistics]);
     }
 }

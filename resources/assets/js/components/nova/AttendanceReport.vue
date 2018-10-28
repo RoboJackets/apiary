@@ -3,12 +3,31 @@
     <div class="flex flex-wrap -mx-3 mb-3">
       <heading class="mb-6 mx-3">Attendance</heading>
       <select @change="newSelection" class="ml-auto min-w-24 h-6 text-xs no-appearance bg-white mx-3">
-        <option v-for="range in ranges" :key="range" :value="range" :selected="selectedRange == range">{{ range }} weeks</option>
+        <option v-for="range in ranges" :key="range" :value="range" :selected="selectedRange == range">
+          {{ range }} weeks
+        </option>
       </select>
 
-      <ChartistCard :title="'Average Daily Members (All Teams, Last ' + selectedRange + ' Weeks)'" class="w-full" :loading="loading" :total="data.averageWeeklyMembers" total-suffix="average total members per week" :data="data.averageDailyMembers" :options="dailyAverageBarGraphOptions" type="bar"/>
+      <ChartistCard
+        :title="'Average Daily Members (All Teams, Last ' + selectedRange + ' Weeks)'"
+        class="w-full"
+        :loading="loading"
+        :total="data.averageWeeklyMembers"
+        total-suffix="average total members per week"
+        :data="data.averageDailyMembers"
+        :options="dailyAverageBarGraphOptions"
+        type="bar"/>
 
-      <ChartistCard class="w-1/2" :loading="loading" v-for="team in data.byTeam" :key="team.name" :data="team.data" :options="teamLineGraphOptions" :title="team.name" type="line" legend/>
+      <ChartistCard
+        class="w-1/2"
+        :loading="loading"
+        v-for="team in data.byTeam"
+        :key="team.name"
+        :data="team.data"
+        :options="teamLineGraphOptions"
+        :title="team.name"
+        type="line"
+        legend/>
     </div>
   </div>
 </template>
