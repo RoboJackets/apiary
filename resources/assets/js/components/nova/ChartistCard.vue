@@ -62,7 +62,6 @@ export default {
   },
   watch: {
     data: function(val) {
-      console.log(this.data);
       this.chart.update(val);
     },
   },
