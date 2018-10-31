@@ -259,9 +259,17 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [
-            new Actions\ResetApiToken,
-            new Actions\ExportGtid,
-            new Actions\ExportUsername,
+            (new Actions\ResetApiToken)
+                ->canSee(function ($request) {
+                    return true;
+                })->canRun(function ($request, $user) {
+                    return $request->user()->hasRole('admin') || ($request->user()->id == $user->id);
+                }),
+            (new Actions\ExportGtid)
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-gtid');
+                }),
+            (new Actions\ExportUsername),
         ];
     }
 }
