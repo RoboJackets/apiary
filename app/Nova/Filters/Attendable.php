@@ -63,12 +63,23 @@ class Attendable extends Filter
     {
         // Get all the teams and events (attendables), display them as "Team: <team name>" or "Event: <event name>"
         // Store the value as "App\Team,##" or "App\Event,##", where ## is the ID
-        $teams = Team::where('attendable', 1)->get()->mapWithKeys(function ($item) {
-            return ['Team: '.$item['name'] => 'App\Team,'.$item['id']];
-        })->toArray();
-        $events = $this->includeEvents ? Event::all()->mapWithKeys(function ($item) {
-            return ['Event: '.$item['name'] => 'App\Event,'.$item['id']];
-        })->toArray() : [];
+        $teams = [];
+        if ($request->user()->can('read-teams')) {
+            $teams = Team::where('attendable', 1)
+                ->when($request->user()->cant('read-teams-hidden'), function ($query) {
+                    $query->where('visible', 1);
+                })->get()
+                ->mapWithKeys(function ($item) {
+                    return ['Team: '.$item['name'] => 'App\Team,'.$item['id']];
+                })->toArray();
+        }
+
+        $events = [];
+        if ($this->includeEvents && $request->user()->can('read-events')) {
+            $events = Event::all()->mapWithKeys(function ($item) {
+                return ['Event: '.$item['name'] => 'App\Event,'.$item['id']];
+            })->toArray();
+        }
 
         return array_merge($teams, $events);
     }
