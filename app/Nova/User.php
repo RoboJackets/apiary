@@ -124,7 +124,11 @@ class User extends Resource
             Text::make('API Token')
                 ->onlyOnDetail()
                 ->canSee(function ($request) {
-                    return $request->user()->can('read-users-api_token');
+                    if ($request->resourceId == $request->user()->id) {
+                        return true;
+                    } else {
+                        return $request->user()->can('read-users-api_token');
+                    }
                 }),
 
             Text::make('Phone Number', 'phone')
