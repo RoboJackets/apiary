@@ -42,7 +42,10 @@ class RecentInactiveUsers extends Lens
     public function fields(Request $request)
     {
         return [
-            Text::make('GTID'),
+            Text::make('GTID')
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-gtid');
+                }),
 
             BelongsTo::make('User', 'attendee', 'App\Nova\User'),
 

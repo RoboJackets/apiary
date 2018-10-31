@@ -154,7 +154,9 @@ class Attendance extends Resource
     public function lenses(Request $request)
     {
         return [
-            new RecentInactiveUsers,
+            (new RecentInactiveUsers)->canSee(function ($request) {
+                return $request->user()->can('read-attendance');
+            }),
         ];
     }
 
