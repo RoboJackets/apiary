@@ -51,9 +51,15 @@ class Event extends Resource
 
             new Panel('Metadata', $this->metaFields()),
 
-            HasMany::make('RSVPs'),
+            HasMany::make('RSVPs')
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-rsvps');
+                }),
 
-            HasMany::make('Attendance'),
+            HasMany::make('Attendance')
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
@@ -109,8 +115,16 @@ class Event extends Resource
     public function cards(Request $request)
     {
         return [
-            (new RsvpSourceBreakdown())->onlyOnDetail(),
-            (new ActiveAttendanceBreakdown(true))->onlyOnDetail(),
+            (new RsvpSourceBreakdown())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-rsvps');
+                }),
+            (new ActiveAttendanceBreakdown(true))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
