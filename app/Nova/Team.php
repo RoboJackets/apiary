@@ -135,10 +135,26 @@ class Team extends Resource
     public function cards(Request $request)
     {
         return [
-            (new TotalTeamMembers())->onlyOnDetail(),
-            (new ActiveMembers())->onlyOnDetail(),
-            (new AttendancePerWeek())->onlyOnDetail(),
-            (new ActiveAttendanceBreakdown())->onlyOnDetail(),
+            (new TotalTeamMembers())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-teams-membership');
+                }),
+            (new ActiveMembers())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-teams-membership');
+                }),
+            (new AttendancePerWeek())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
+            (new ActiveAttendanceBreakdown())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
