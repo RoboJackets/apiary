@@ -63,6 +63,13 @@ class Attendance extends Resource
     public static $title = 'name';
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array
+     */
+    public static $with = ['recorded', 'attendee'];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
