@@ -200,9 +200,21 @@ class User extends Resource
     public function cards(Request $request)
     {
         return [
-            (new MemberSince())->onlyOnDetail(),
-            (new TotalAttendance())->onlyOnDetail(),
-            (new PrimaryTeam())->onlyOnDetail(),
+            (new MemberSince())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-payments');
+                }),
+            (new TotalAttendance())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
+            (new PrimaryTeam())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
@@ -214,10 +226,13 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            new Filters\UserType,
+        $filters = [
             new Filters\UserActive,
         ];
+        if ($request->user()->hasRole('admin')) {
+            $filters[] = new Filters\UserType;
+        }
+        return $filters;
     }
 
     /**
