@@ -171,25 +171,42 @@ export default {
             return row[0].substr(0, 4);
           }).map(function(yearData, year) {
             // If there are missing week data points in the year, fill them in with zeros
-            if (yearData.length < 53) {
-              for (var i = 1; i <= 53; i++) {
-                var weekName = year + ' ' + i;
+            if (yearData.length < 52) {
+              for (var i = 1; i <= 52; i++) {
+                var weekName = year + ' ' + _.padStart(''+i, 2, '0');
                 // Skip if that week already has a row (search by the zeroth index being equal to the week name)
                 if (_.some(yearData, [0, weekName])) continue;
                 else yearData.splice(i - 1, 0, [weekName, 0]);
               }
             }
-            return {
+            var formattedYear = {
               name: year,
               data: _.map(yearData, function(row) {
                 // Parse the year given so the date is set correctly, but then change it to the current year so the
                 // chart series are overlapping
+
+                var date = moment(row[0], 'GGGG W');
+                // If it's 12/31 of the previous year, round up to 1/1 of the current year. If it's 1/1 of the next
+                // year, round down to 12/31 of the current year.
+                if (date.year() == year - 1) {
+                  date = date.date(1).month(0);
+                } else if (date.year() == year + 1) {
+                  date = date.date(31).month(11);
+                }
+                // Change everything to the current year so the series overlap
+                date = date.year(currentYear);
+
+                // The 53rd week doesn't always exist, so if this is invalid replace it with zero and remove it later
                 return {
-                  x: moment(row[0], 'GGGG W').year(currentYear).toDate(),
+                  x: date.isValid() ? date.toDate() : false,
                   y: row[1],
                 };
               }),
             };
+            // Not every year has the 53rd week, so remove that item if it doesn't have a date
+            if (!formattedYear.data[formattedYear.data.length - 1].x) formattedYear.data.pop();
+
+            return formattedYear;
           }).reverse().value();
           team.data.series = series;
 
