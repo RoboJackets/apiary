@@ -205,7 +205,7 @@ class AttendanceController extends Controller
         // so it can be sorted more easily; the number is trimmed out in the map method
         $attendanceByDay = Attendance::whereBetween('created_at', [$startDay, $endDay])
             ->where('attendable_type', 'App\Team')
-            ->selectRaw('date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
+            ->selectRaw('date_format(created_at, \'%w%W\') as day, count(distinct gtid) as aggregate')
             ->groupBy('day')
             ->orderBy('day', 'asc')
             ->get()
