@@ -104,8 +104,11 @@ export default {
           }),
         ],
       },
-      selectedRange: 52,
+      selectedRange: 8,
       ranges: [
+        2,
+        4,
+        8,
         12,
         26,
         52,
