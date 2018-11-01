@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Lenses\RecentInactiveUsers;
 use App\Nova\Filters\UserActiveAttendance;
 use Laravel\Nova\Http\Requests\LensRequest;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class Attendance extends Resource
@@ -239,5 +240,28 @@ class Attendance extends Resource
     public function authorizedToDelete(Request $request)
     {
         return ($request instanceof LensRequest) ? false : parent::authorizedToDelete($request);
+    }
+
+    /**
+     * Build an "index" query for the team resource to hide hidden teams.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (! $request->user()->can('read-teams-hidden')) {
+            /*
+            return $query->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('teams')
+                    ->where('visible', 1);
+            });
+             */
+            return $query;
+        } else {
+            return $query;
+        }
     }
 }
