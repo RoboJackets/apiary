@@ -9,11 +9,11 @@
       </select>
 
       <ChartistCard
-        :title="'Average Daily Members (All Teams, Last ' + selectedRange + ' Weeks)'"
+        :title="'Average Daily People (All Teams, Last ' + selectedRange + ' Weeks)'"
         class="w-full"
         :loading="loading"
         :total="data.averageWeeklyMembers"
-        total-suffix="average total members per week"
+        total-suffix="average total people per week"
         :data="data.averageDailyMembers"
         :options="dailyAverageBarGraphOptions"
         type="bar"/>
