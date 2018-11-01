@@ -3,7 +3,9 @@
 /public/storage
 /public/mix-manifest.json
 /public/css/app.css
+/public/css/nova.css
 /public/js/app.js
+/public/js/nova.js
 /storage/*.key
 /vendor
 /.idea

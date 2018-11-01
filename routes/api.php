@@ -44,6 +44,7 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
 
     // Misc Resources
     Route::post('attendance/search', 'AttendanceController@search')->name('attendance.search');
+    Route::get('attendance/statistics', 'AttendanceController@statistics')->name('attendance.statistics');
     Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit']]);
     Route::get('users/search', 'UserController@search');
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
