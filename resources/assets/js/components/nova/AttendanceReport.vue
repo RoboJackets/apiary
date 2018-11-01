@@ -173,7 +173,7 @@ export default {
             // If there are missing week data points in the year, fill them in with zeros
             if (yearData.length < 53) {
               for (var i = 1; i <= 53; i++) {
-                var weekName = year + ' ' + i;
+                var weekName = year + ' ' + _.padStart(''+i, 2, '0');
                 // Skip if that week already has a row (search by the zeroth index being equal to the week name)
                 if (_.some(yearData, [0, weekName])) continue;
                 else yearData.splice(i - 1, 0, [weekName, 0]);
