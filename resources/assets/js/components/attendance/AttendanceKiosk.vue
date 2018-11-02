@@ -24,7 +24,7 @@ export default {
         attendable_id: '',
         attendable_type: 'App\\Team',
         source: 'kiosk',
-        includeName: true,
+        include: 'attendee',
       },
       attendanceBaseUrl: '/api/v1/attendance',
       teamsBaseUrl: '/api/v1/teams',
@@ -222,9 +222,10 @@ export default {
         .post(this.attendanceBaseUrl, this.attendance)
         .then(response => {
           this.hasError = false;
+          let attendeeName = (response.data.attendance.attendee.name || "Non-Member" );
           swal({
             title: "You're in!",
-            text: 'Nice to see you, ' + response.data.attendance.name + '.',
+            text: 'Nice to see you, ' + attendeeName + '.',
             timer: 1000,
             showConfirmButton: false,
             type: 'success',
