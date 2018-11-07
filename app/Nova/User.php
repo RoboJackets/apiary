@@ -54,35 +54,6 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Emergency Contact', $this->emergencyFields()),
-
-            new Panel('Swag', $this->swagFields()),
-
-            BelongsToMany::make('Teams')->canSee(function ($request) {
-                if ($request->resourceId == $request->user()->id) {
-                    return $request->user()->can('read-teams-membership-own');
-                } else {
-                    return $request->user()->can('read-teams-membership');
-                }
-            }),
-
-            HasMany::make('Attendance')->canSee(function ($request) {
-                if ($request->resourceId == $request->user()->id) {
-                    return $request->user()->can('read-attendance-own');
-                } else {
-                    return $request->user()->can('read-attendance');
-                }
-            }),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('Username', 'uid')
                 ->sortable()
                 ->hideWhenCreating()
@@ -137,6 +108,28 @@ class User extends Resource
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+
+            new Panel('Emergency Contact', $this->emergencyFields()),
+
+            new Panel('Swag', $this->swagFields()),
+
+            BelongsToMany::make('Teams')->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-teams-membership-own');
+                } else {
+                    return $request->user()->can('read-teams-membership');
+                }
+            }),
+
+            HasMany::make('Attendance')->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-attendance-own');
+                } else {
+                    return $request->user()->can('read-attendance');
+                }
+            }),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 

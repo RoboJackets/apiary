@@ -52,7 +52,13 @@ class Team extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
+            Text::make('Name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Textarea::make('Description')
+                ->hideFromIndex()
+                ->rules('required'),
 
             new Panel('Communications', $this->commFields()),
 
@@ -67,19 +73,6 @@ class Team extends Resource
             HasMany::make('Attendance')->canSee(function ($request) {
                 return $request->user()->can('read-attendance');
             }),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Textarea::make('Description')
-                ->hideFromIndex()
-                ->rules('required'),
         ];
     }
 

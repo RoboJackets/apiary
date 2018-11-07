@@ -66,17 +66,6 @@ class DuesPackage extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Swag', $this->swagFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -101,6 +90,10 @@ class DuesPackage extends Resource
 
             Boolean::make('Available for Purchase')
                 ->sortable(),
+
+            new Panel('Swag', $this->swagFields()),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 

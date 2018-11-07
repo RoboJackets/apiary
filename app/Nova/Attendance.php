@@ -79,15 +79,6 @@ class Attendance extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('GTID')
                 ->sortable()
                 ->rules('required', 'max:255')
@@ -119,6 +110,8 @@ class Attendance extends Resource
             Text::make('Source')
                 ->hideFromIndex()
                 ->sortable(),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
