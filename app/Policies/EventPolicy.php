@@ -19,7 +19,7 @@ class EventPolicy
      */
     public function view(User $user, Event $event)
     {
-        // Normal users have this, but Nova in general is limited by can-access-nova
+        // Normal users have this, but Nova in general is limited by access-nova
         return $user->can('read-events');
     }
 

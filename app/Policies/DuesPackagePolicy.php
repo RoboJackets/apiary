@@ -19,7 +19,7 @@ class DuesPackagePolicy
      */
     public function view(User $user, DuesPackage $duesPackage)
     {
-        // Normal users have this, but Nova in general is limited by can-access-nova
+        // Normal users have this, but Nova in general is limited by access-nova
         return $user->can('read-dues-packages');
     }
 
