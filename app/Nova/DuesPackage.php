@@ -128,10 +128,26 @@ class DuesPackage extends Resource
     public function cards(Request $request)
     {
         return [
-            (new TotalCollections())->onlyOnDetail(),
-            (new PaymentMethodBreakdown())->onlyOnDetail(),
-            (new SwagPickupRate('shirt'))->onlyOnDetail(),
-            (new SwagPickupRate('polo'))->onlyOnDetail(),
+            (new TotalCollections())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-payments');
+                }),
+            (new PaymentMethodBreakdown())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-payments');
+                }),
+            (new SwagPickupRate('shirt'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new SwagPickupRate('polo'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
         ];
     }
 
