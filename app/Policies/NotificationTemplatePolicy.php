@@ -19,7 +19,7 @@ class NotificationTemplatePolicy
      */
     public function view(User $user, NotificationTemplate $notificationTemplate)
     {
-        return $user->hasRole('admin');
+        return $user->can('manage-notification-templates');
     }
 
     /**
@@ -30,7 +30,7 @@ class NotificationTemplatePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin');
+        return $user->can('manage-notification-templates');
     }
 
     /**
@@ -41,7 +41,7 @@ class NotificationTemplatePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('admin');
+        return $user->can('manage-notification-templates');
     }
 
     /**
@@ -53,7 +53,7 @@ class NotificationTemplatePolicy
      */
     public function update(User $user, NotificationTemplate $notificationTemplate)
     {
-        return $user->hasRole('admin');
+        return $user->can('manage-notification-templates');
     }
 
     /**
@@ -65,7 +65,7 @@ class NotificationTemplatePolicy
      */
     public function delete(User $user, NotificationTemplate $notificationTemplate)
     {
-        return $user->hasRole('admin');
+        return $user->can('manage-notification-templates');
     }
 
     /**
@@ -77,7 +77,7 @@ class NotificationTemplatePolicy
      */
     public function restore(User $user, NotificationTemplate $notificationTemplate)
     {
-        return $user->hasRole('admin');
+        return $user->can('manage-notification-templates');
     }
 
     /**

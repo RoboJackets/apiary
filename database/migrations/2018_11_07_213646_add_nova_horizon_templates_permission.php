@@ -4,7 +4,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAccessNovaPermission extends Migration
+class AddNovaHorizonTemplatesPermission extends Migration
 {
     /**
      * Run the migrations.
@@ -18,10 +18,12 @@ class AddAccessNovaPermission extends Migration
 
         $permissionNova = Permission::firstOrCreate(['name' => 'access-nova']);
         $permissionHorizon = Permission::firstOrCreate(['name' => 'access-horizon']);
+        $permissionManageTemplates = Permission::firstOrCreate(['name' => 'manage-notification-templates']);
 
         $role = Role::firstOrCreate(['name' => 'admin']);
         $role->givePermissionTo($permissionNova);
         $role->givePermissionTo($permissionHorizon);
+        $role->givePermissionTo($permissionManageTemplates);
 
         $role = Role::firstOrCreate(['name' => 'officer-ii']);
         $role->givePermissionTo($permissionNova);
@@ -42,5 +44,6 @@ class AddAccessNovaPermission extends Migration
 
         Permission::where('name', 'access-nova')->delete();
         Permission::where('name', 'access-horizon')->delete();
+        Permission::where('name', 'manage-notification-templates')->delete();
     }
 }
