@@ -78,7 +78,7 @@ class DuesPackagePolicy
      */
     public function restore(User $user, DuesPackage $duesPackage)
     {
-        return $user->hasRole('admin');
+        return $user->can('create-dues-packages');
     }
 
     /**

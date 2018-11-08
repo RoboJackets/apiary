@@ -77,7 +77,7 @@ class UserPolicy
      */
     public function restore(User $user, User $userResource)
     {
-        return $user->hasRole('admin');
+        return $user->can('create-users');
     }
 
     /**

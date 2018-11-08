@@ -78,7 +78,7 @@ class EventPolicy
      */
     public function restore(User $user, Event $event)
     {
-        return $user->hasRole('admin');
+        return $user->can('create-events');
     }
 
     /**

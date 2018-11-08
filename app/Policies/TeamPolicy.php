@@ -81,7 +81,7 @@ class TeamPolicy
      */
     public function restore(User $user, Team $team)
     {
-        return $user->hasRole('admin');
+        return $user->can('create-teams');
     }
 
     /**
