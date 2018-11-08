@@ -78,8 +78,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            new \Vyuldashev\NovaPermission\NovaPermissionTool(),
-            new AttendanceReport(),
+            (new \Vyuldashev\NovaPermission\NovaPermissionTool())->canSee(function ($request) {
+                return $request->user()->hasRole('admin');
+            }),
+            (new AttendanceReport())->canSee(function ($request) {
+                return $request->user()->can('read-attendance');
+            }),
         ];
     }
 
