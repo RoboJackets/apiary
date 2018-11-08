@@ -262,7 +262,10 @@ class User extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->can('read-users-gtid');
                 }),
-            (new Actions\ExportUsername),
+            (new Actions\ExportUsername)
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users');
+                }),
         ];
     }
 }
