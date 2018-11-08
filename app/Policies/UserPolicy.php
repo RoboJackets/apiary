@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
 use App\Team;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -102,10 +102,13 @@ class UserPolicy
      */
     public function attachTeam(User $user, User $userResource, Team $team)
     {
-        if ($team->members->contains('id', $userResource->id)) return false;
+        if ($team->members->contains('id', $userResource->id)) {
+            return false;
+        }
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
+
         return $user->can('update-teams-membership');
     }
 
@@ -135,6 +138,7 @@ class UserPolicy
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
+
         return $user->can('update-teams-membership');
     }
 }

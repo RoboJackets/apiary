@@ -11,7 +11,7 @@ class DuesPackagePolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the dues package
+     * Determine whether the user can view the dues package.
      *
      * @param  \App\User  $user
      * @param  \App\DuesPackage  $duesPackage
@@ -46,7 +46,7 @@ class DuesPackagePolicy
     }
 
     /**
-     * Determine whether the user can update the dues package
+     * Determine whether the user can update the dues package.
      *
      * @param  \App\User  $user
      * @param  \App\DuesPackage  $duesPackage
@@ -58,7 +58,7 @@ class DuesPackagePolicy
     }
 
     /**
-     * Determine whether the user can delete the dues package
+     * Determine whether the user can delete the dues package.
      *
      * @param  \App\User  $user
      * @param  \App\DuesPackage  $duesPackage
@@ -70,7 +70,7 @@ class DuesPackagePolicy
     }
 
     /**
-     * Determine whether the user can restore the dues package
+     * Determine whether the user can restore the dues package.
      *
      * @param  \App\User  $user
      * @param  \App\DuesPackage  $duesPackage
@@ -82,7 +82,7 @@ class DuesPackagePolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the dues package
+     * Determine whether the user can permanently delete the dues package.
      *
      * @param  \App\User  $user
      * @param  \App\DuesPackage  $duesPackage

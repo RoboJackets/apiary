@@ -106,10 +106,13 @@ class TeamPolicy
      */
     public function attachUser(User $user, Team $team, User $userResource)
     {
-        if ($team->members->contains('id', $userResource->id)) return false;
+        if ($team->members->contains('id', $userResource->id)) {
+            return false;
+        }
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
+
         return $user->can('update-teams-membership');
     }
 
@@ -126,6 +129,7 @@ class TeamPolicy
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
+
         return $user->can('update-teams-membership');
     }
 
@@ -142,6 +146,7 @@ class TeamPolicy
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
+
         return $user->can('update-teams-membership');
     }
 }

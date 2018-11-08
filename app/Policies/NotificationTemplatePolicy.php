@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\NotificationTemplate;
 use App\User;
+use App\NotificationTemplate;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class NotificationTemplatePolicy

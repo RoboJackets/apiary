@@ -229,6 +229,7 @@ class User extends Resource
         if ($request->user()->hasRole('admin')) {
             $filters[] = new Filters\UserType;
         }
+
         return $filters;
     }
 
