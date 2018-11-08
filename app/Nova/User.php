@@ -223,14 +223,10 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        $filters = [
+        return [
             new Filters\UserActive,
+            new Filters\UserType,
         ];
-        if ($request->user()->hasRole('admin')) {
-            $filters[] = new Filters\UserType;
-        }
-
-        return $filters;
     }
 
     /**
