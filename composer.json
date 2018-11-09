@@ -11,6 +11,7 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
+        "64robots/nova-date-filter": "^0.1.0",
         "apereo/phpCAS": "dev-master",
         "bugsnag/bugsnag-laravel": "^2.0",
         "doctrine/dbal": "^2.5",
@@ -20,6 +21,7 @@
         "laravel/horizon": "^1.4",
         "laravel/nova": "~1.0",
         "laravel/tinker": "~1.0",
+        "maatwebsite/laravel-nova-excel": "^1.0",
         "predis/predis": "~1.0",
         "spatie/laravel-failed-job-monitor": "^3.0",
         "spatie/laravel-permission": "^2.6",

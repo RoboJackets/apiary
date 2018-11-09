@@ -10,6 +10,10 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
+use App\Nova\Metrics\ActiveMembers;
+use App\Nova\Metrics\TotalTeamMembers;
+use App\Nova\Metrics\AttendancePerWeek;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Team extends Resource
 {
@@ -55,6 +59,8 @@ class Team extends Resource
             new Panel('Metadata', $this->metaFields()),
 
             HasMany::make('User', 'members'),
+
+            HasMany::make('Attendance'),
         ];
     }
 
@@ -122,7 +128,12 @@ class Team extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new TotalTeamMembers())->onlyOnDetail(),
+            (new ActiveMembers())->onlyOnDetail(),
+            (new AttendancePerWeek())->onlyOnDetail(),
+            (new ActiveAttendanceBreakdown())->onlyOnDetail(),
+        ];
     }
 
     /**

@@ -8,8 +8,12 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
+use App\Nova\Metrics\MemberSince;
+use App\Nova\Metrics\PrimaryTeam;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
+use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
 
 class User extends Resource
@@ -57,6 +61,8 @@ class User extends Resource
             new Panel('Swag', $this->swagFields()),
 
             BelongsToMany::make('Teams'),
+
+            HasMany::make('Attendance'),
 
             new Panel('Metadata', $this->metaFields()),
         ];
@@ -169,7 +175,11 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new MemberSince())->onlyOnDetail(),
+            (new TotalAttendance())->onlyOnDetail(),
+            (new PrimaryTeam())->onlyOnDetail(),
+        ];
     }
 
     /**
@@ -207,6 +217,8 @@ class User extends Resource
     {
         return [
             new Actions\ResetApiToken,
+            new Actions\ExportGtid,
+            new Actions\ExportUsername,
         ];
     }
 }

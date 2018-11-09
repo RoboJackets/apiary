@@ -3,4 +3,7 @@
 }
 #nova .content {
     max-width: calc(100vw - 14.75rem);
+    min-width: 65.25rem;
 }
+
+@import 'attendancereport';

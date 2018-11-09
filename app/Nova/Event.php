@@ -6,40 +6,21 @@ use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
-use App\Nova\Metrics\SwagPickupRate;
-use App\Nova\Metrics\TotalCollections;
-use App\Nova\Metrics\PaymentMethodBreakdown;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Metrics\RsvpSourceBreakdown;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
-class DuesPackage extends Resource
+class Event extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\DuesPackage';
-
-    /**
-     * Get the displayble label of the resource.
-     *
-     * @return string
-     */
-    public static function label()
-    {
-        return 'Dues Packages';
-    }
-
-    /**
-     * Get the displayble singular label of the resource.
-     *
-     * @return string
-     */
-    public static function singularLabel()
-    {
-        return 'Dues Package';
-    }
+    public static $model = 'App\Event';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -68,49 +49,42 @@ class DuesPackage extends Resource
         return [
             new Panel('Basic Information', $this->basicFields()),
 
-            new Panel('Swag', $this->swagFields()),
-
             new Panel('Metadata', $this->metaFields()),
+
+            HasMany::make('RSVPs'),
+
+            HasMany::make('Attendance'),
         ];
     }
 
     protected function basicFields()
     {
         return [
-            Text::make('Name')
+            Text::make('Event Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Boolean::make('Active', 'is_active')
-                ->sortable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+            (new BelongsTo('Organizer', 'organizer', 'App\Nova\User'))
+                ->searchable()
+                ->rules('required')
+                // default to self
+                ->help('The organizer of the event'),
 
-            DateTime::make('Start Date', 'effective_start')
-                ->hideFromIndex()
-                ->rules('required'),
-
-            DateTime::make('End Date', 'effective_end')
-                ->hideFromIndex()
-                ->rules('required'),
-
-            Currency::make('Cost')
-                ->sortable()
-                ->format('%.2n')
-                ->rules('required'),
-
-            Boolean::make('Available for Purchase')
-                ->sortable(),
-        ];
-    }
-
-    protected function swagFields()
-    {
-        return [
-            Boolean::make('Eligible for T-Shirt', 'eligible_for_shirt')
+            DateTime::make('Start Time')
                 ->hideFromIndex(),
 
-            Boolean::make('Eligible for Polo')
+            DateTime::make('End Time')
+                ->hideFromIndex(),
+
+            Text::make('Location')
+                ->hideFromIndex()
+                ->rules('max:255'),
+
+            Currency::make('Cost')
+                ->hideFromIndex()
+                ->rules('required'),
+
+            Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
         ];
     }
@@ -135,10 +109,8 @@ class DuesPackage extends Resource
     public function cards(Request $request)
     {
         return [
-            (new TotalCollections())->onlyOnDetail(),
-            (new PaymentMethodBreakdown())->onlyOnDetail(),
-            (new SwagPickupRate('shirt'))->onlyOnDetail(),
-            (new SwagPickupRate('polo'))->onlyOnDetail(),
+            (new RsvpSourceBreakdown())->onlyOnDetail(),
+            (new ActiveAttendanceBreakdown(true))->onlyOnDetail(),
         ];
     }
 

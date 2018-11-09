@@ -5,21 +5,17 @@ namespace App\Nova;
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
-use App\Nova\Metrics\SwagPickupRate;
-use App\Nova\Metrics\TotalCollections;
-use App\Nova\Metrics\PaymentMethodBreakdown;
+use Laravel\Nova\Fields\BelongsTo;
 
-class DuesPackage extends Resource
+class Rsvp extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\DuesPackage';
+    public static $model = 'App\Rsvp';
 
     /**
      * Get the displayble label of the resource.
@@ -28,7 +24,7 @@ class DuesPackage extends Resource
      */
     public static function label()
     {
-        return 'Dues Packages';
+        return 'RSVPs';
     }
 
     /**
@@ -38,7 +34,7 @@ class DuesPackage extends Resource
      */
     public static function singularLabel()
     {
-        return 'Dues Package';
+        return 'RSVP';
     }
 
     /**
@@ -49,13 +45,11 @@ class DuesPackage extends Resource
     public static $title = 'name';
 
     /**
-     * The columns that should be searched.
+     * Indicates if the resource should be displayed in the sidebar.
      *
-     * @var array
+     * @var bool
      */
-    public static $search = [
-        'name',
-    ];
+    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -68,7 +62,7 @@ class DuesPackage extends Resource
         return [
             new Panel('Basic Information', $this->basicFields()),
 
-            new Panel('Swag', $this->swagFields()),
+            new Panel('Detailed Information', $this->detailedFields()),
 
             new Panel('Metadata', $this->metaFields()),
         ];
@@ -77,40 +71,28 @@ class DuesPackage extends Resource
     protected function basicFields()
     {
         return [
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            BelongsTo::make('User'),
 
-            Boolean::make('Active', 'is_active')
-                ->sortable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+            BelongsTo::make('Event'),
 
-            DateTime::make('Start Date', 'effective_start')
-                ->hideFromIndex()
-                ->rules('required'),
+            Text::make('Response')
+                ->sortable(),
 
-            DateTime::make('End Date', 'effective_end')
-                ->hideFromIndex()
-                ->rules('required'),
-
-            Currency::make('Cost')
-                ->sortable()
-                ->format('%.2n')
-                ->rules('required'),
-
-            Boolean::make('Available for Purchase')
+            Text::make('Source')
                 ->sortable(),
         ];
     }
 
-    protected function swagFields()
+    protected function detailedFields()
     {
         return [
-            Boolean::make('Eligible for T-Shirt', 'eligible_for_shirt')
+            Text::make('User Agent')
                 ->hideFromIndex(),
 
-            Boolean::make('Eligible for Polo')
+            Text::make('IP Address')
+                ->hideFromIndex(),
+
+            Text::make('Token')
                 ->hideFromIndex(),
         ];
     }
@@ -134,12 +116,7 @@ class DuesPackage extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new TotalCollections())->onlyOnDetail(),
-            (new PaymentMethodBreakdown())->onlyOnDetail(),
-            (new SwagPickupRate('shirt'))->onlyOnDetail(),
-            (new SwagPickupRate('polo'))->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**

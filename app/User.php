@@ -76,6 +76,14 @@ class User extends Authenticatable
     }
 
     /**
+     *  Get the attendance records associated with this user.
+     */
+    public function attendance()
+    {
+        return $this->hasMany(\App\Attendance::class, 'gtid', 'gtid');
+    }
+
+    /**
      *  Get the Teams that this User is a member of.
      */
     public function teams()
@@ -200,20 +208,7 @@ class User extends Authenticatable
      */
     public function getIsActiveAttribute()
     {
-        if ($this->dues->count() > 0) {
-            $lastDuesTransaction = $this->dues->last();
-            $pkgIsActive = $lastDuesTransaction->package->is_active;
-            $hasPayment = ($lastDuesTransaction->payment()->exists());
-            if ($hasPayment) {
-                $paidTotal = ($lastDuesTransaction->payment->sum('amount') >= $lastDuesTransaction->getPayableAmount());
-
-                return $paidTotal && $pkgIsActive;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        return self::where('id', $this->id)->active()->count() != 0;
     }
 
     /**
