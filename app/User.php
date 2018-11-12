@@ -144,6 +144,14 @@ class User extends Authenticatable
         return $this->hasMany(\App\DuesTransaction::class);
     }
 
+    /*
+     * Get the DuesTransactions belonging to the User
+     */
+    public function paidDues()
+    {
+        return $this->hasMany(\App\DuesTransaction::class)->paid();
+    }
+
     /**
      * Get the events organized by the User.
      */

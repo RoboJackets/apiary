@@ -64,7 +64,7 @@ class User extends Resource
 
             HasMany::make('Attendance'),
 
-            HasMany::make('Dues', 'dues', 'App\Nova\DuesTransaction'),
+            HasMany::make('Dues', 'paidDues', 'App\Nova\DuesTransaction'),
 
             new Panel('Metadata', $this->metaFields()),
         ];
