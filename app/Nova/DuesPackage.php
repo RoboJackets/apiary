@@ -140,6 +140,8 @@ class DuesPackage extends Resource
             (new PaymentMethodBreakdown())->onlyOnDetail(),
             (new SwagPickupRate('shirt'))->onlyOnDetail(),
             (new SwagPickupRate('polo'))->onlyOnDetail(),
+            new ShirtSizeBreakdown('shirt'),
+            new ShirtSizeBreakdown('polo'),
             (new ShirtSizeBreakdown('shirt'))->onlyOnDetail(),
             (new ShirtSizeBreakdown('polo'))->onlyOnDetail(),
         ];
