@@ -53,7 +53,8 @@ class ShirtSizeBreakdown extends Partition
     {
         $column = $this->swagType == 'shirt' ? 'shirt_size' : 'polo_size';
 
-        return $this->result(User::when(
+        return $this->result(
+            User::when(
                 $request->resourceId,
                 function ($query, $resourceId) {
                     // When on the detail page, look at the particular package
