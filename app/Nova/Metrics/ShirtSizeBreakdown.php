@@ -53,16 +53,19 @@ class ShirtSizeBreakdown extends Partition
     {
         $column = $this->swagType == 'shirt' ? 'shirt_size' : 'polo_size';
 
-        return $this->result(User::when($request->resourceId,
-            function ($query, $resourceId) {
-                // When on the detail page, look at the particular package
-                return $query->whereHas('dues', function ($q) use ($resourceId) {
-                    return $q->where('dues_package_id', $resourceId)->paid();
-                });
-            }, function ($query) {
-                // When on the index, just look at all active users
-                return $query->active();
-            })->select($column.' as size')
+        return $this->result(User::when(
+                $request->resourceId,
+                function ($query, $resourceId) {
+                    // When on the detail page, look at the particular package
+                    return $query->whereHas('dues', function ($q) use ($resourceId) {
+                        return $q->where('dues_package_id', $resourceId)->paid();
+                    });
+                },
+                function ($query) {
+                    // When on the index, just look at all active users
+                    return $query->active();
+                }
+            )->select($column.' as size')
             ->selectRaw('count('.$column.') as aggregate')
             ->groupBy('size')
             ->orderBy('size')
