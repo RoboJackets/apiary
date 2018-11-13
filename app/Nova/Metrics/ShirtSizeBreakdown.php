@@ -2,7 +2,6 @@
 
 namespace App\Nova\Metrics;
 
-use App\Rsvp;
 use App\User;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
@@ -53,6 +52,7 @@ class ShirtSizeBreakdown extends Partition
     public function calculate(Request $request)
     {
         $column = $this->swagType == 'shirt' ? 'shirt_size' : 'polo_size';
+
         return $this->result(User::when($request->resourceId,
             function ($query, $resourceId) {
                 // When on the detail page, look at the particular package
@@ -76,6 +76,7 @@ class ShirtSizeBreakdown extends Partition
                     'xxl' => 'XXL',
                     'xxxl' => 'XXXL',
                 ];
+
                 return [$item->size ? $shirt_sizes[$item->size] : 'Unknown' => $item->aggregate];
             })->toArray()
         );
