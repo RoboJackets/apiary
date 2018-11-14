@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use App\Nova\Metrics\SwagPickupRate;
 use App\Nova\Metrics\TotalCollections;
+use App\Nova\Metrics\ShirtSizeBreakdown;
 use App\Nova\Metrics\PaymentMethodBreakdown;
 
 class DuesPackage extends Resource
@@ -139,6 +140,10 @@ class DuesPackage extends Resource
             (new PaymentMethodBreakdown())->onlyOnDetail(),
             (new SwagPickupRate('shirt'))->onlyOnDetail(),
             (new SwagPickupRate('polo'))->onlyOnDetail(),
+            new ShirtSizeBreakdown('shirt'),
+            new ShirtSizeBreakdown('polo'),
+            (new ShirtSizeBreakdown('shirt'))->onlyOnDetail(),
+            (new ShirtSizeBreakdown('polo'))->onlyOnDetail(),
         ];
     }
 
