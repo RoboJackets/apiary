@@ -19,7 +19,7 @@ class NotificationTemplatePolicy
      */
     public function view(User $user, NotificationTemplate $notificationTemplate)
     {
-        return $user->can('manage-notification-templates');
+        return $user->can('send-notifications') || $user->can('manage-notification-templates');
     }
 
     /**
@@ -30,7 +30,7 @@ class NotificationTemplatePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('manage-notification-templates');
+        return $user->can('send-notifications') || $user->can('manage-notification-templates');
     }
 
     /**
