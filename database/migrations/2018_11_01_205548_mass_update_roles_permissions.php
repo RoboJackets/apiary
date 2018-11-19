@@ -45,6 +45,10 @@ class MassUpdateRolesPermissions extends Migration
         $p_d_own = Permission::firstOrCreate(['name' => 'create-dues-transactions-own']);
         $p_t_mem = Permission::firstOrCreate(['name' => 'read-teams-membership']);
         $p_t_mem_own = Permission::firstOrCreate(['name' => 'read-teams-membership-own']);
+        $p_rc_c = Permission::firstOrCreate(['name' => 'create-recruiting-campaigns']);
+        $p_rc_r = Permission::firstOrCreate(['name' => 'read-recruiting-campaigns']);
+        $p_rc_u = Permission::firstOrCreate(['name' => 'update-recruiting-campaigns']);
+        $p_rc_d = Permission::firstOrCreate(['name' => 'delete-recruiting-campaigns']);
 
         // And finally let's assign permissions to the new roles
         $r_member_perms = ['read-users-own', 'update-users-own', 'read-events', 'update-events-own',
@@ -122,18 +126,7 @@ class MassUpdateRolesPermissions extends Migration
         $p_t_mem_own = Permission::where('name', 'read-teams-membership-own')->delete();
 
         // Reassign permissions (yes this is gross)
-        $r_admin_perms = ['create-users', 'read-users', 'read-users-own', 'update-users', 'update-users-own',
-            'delete-users', 'create-events', 'read-events', 'update-events', 'update-events-own', 'delete-events',
-            'create-rsvp', 'create-rsvps-own', 'read-rsvps', 'read-rsvps-own', 'update-rsvps', 'update-rsvps-own',
-            'delete-rsvps', 'delete-rsvps-own', 'create-payments', 'create-payments-own', 'read-payments',
-            'read-payments-own', 'update-payments', 'delete-payments', 'create-dues-packages', 'read-dues-packages',
-            'update-dues-packages', 'delete-dues-packages', 'create-dues-transactions', 'read-dues-transactions',
-            'read-dues-transactions-own', 'update-dues-transactions', 'delete-dues-transactions',
-            'create-recruiting-visits', 'read-recruiting-visits', 'read-recruiting-visits-own',
-            'update-recruiting-visits', 'update-recruiting-visits-own', 'delete-recruiting-visits',
-            'delete-recruiting-visits-own', 'send-notifications', 'create-attendance', 'read-attendance',
-            'read-attendance-own', 'update-attendance', 'delete-attendance', 'create-teams', 'read-teams',
-            'update-teams', 'delete-teams', 'read-teams-hidden', 'update-teams-hidden', 'update-teams-membership-own', ];
+        $r_admin_perms = Permission::all();
         $r_admin->syncPermissions($r_admin_perms);
 
         $r_officer_ii_perms = ['read-users', 'read-users-own', 'update-users', 'update-users-own', 'create-events',
