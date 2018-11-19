@@ -1,6 +1,6 @@
 <template>
   <datatable id="dues-admin-table"
-    data-url="/api/v1/dues/transactions"
+    data-url="/api/v1/dues/transactions?include=user"
     data-path="dues_transactions"
     :columns="tableConfig">
   </datatable>
