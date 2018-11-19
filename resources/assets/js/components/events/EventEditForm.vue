@@ -163,7 +163,7 @@ export default {
         { title: 'User', data: 'user_id' },
         { title: 'Response', data: 'response' },
         { title: 'Source', data: 'source' },
-        { title: 'Time', data: 'created_at' },
+        { title: 'Time', data: 'created_at.date' },
       ],
       attendance: [],
       attendanceQuery: {
@@ -172,7 +172,7 @@ export default {
       },
       attendanceUrl: '/api/v1/attendance/search',
       attendanceTableConfig: [
-        { title: 'Time', data: 'created_at' },
+        { title: 'Time', data: 'created_at.date' },
         {
           title: 'Last Name',
           data: null,
