@@ -13,7 +13,7 @@ export default {
     return {
       tableConfig: [
         { title: 'ID', data: 'id' },
-        { title: 'Timestamp', data: 'updated_at' },
+        { title: 'Timestamp', data: 'updated_at.date' },
         { title: 'Name', data: 'user.name' },
         { title: 'Dues Package', data: 'package.name' },
       ],
