@@ -1,9 +1,7 @@
 <?php
 
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class MassUpdateRolesPermissions extends Migration
@@ -54,12 +52,12 @@ class MassUpdateRolesPermissions extends Migration
                             'create-payments-own', 'read-payments-own', 'read-dues-packages',
                             'create-dues-transactions-own', 'read-dues-transactions-own', 'read-recruiting-visits-own',
                             'update-recruiting-visits-own', 'delete-recruiting-visits-own', 'read-attendance-own',
-                            'read-teams', 'read-teams-membership-own', 'update-teams-membership-own'];
+                            'read-teams', 'read-teams-membership-own', 'update-teams-membership-own', ];
         $r_member->syncPermissions($r_member_perms);
         $r_non_member->syncPermissions($r_member_perms);
 
         $r_trainer_perms = ['read-users', 'read-users-emergency_contact', 'create-attendance', 'read-attendance',
-                            'read-teams-hidden'];
+                            'read-teams-hidden', ];
         $r_trainer->syncPermissions($r_trainer_perms);
 
         $r_tl_perms = ['read-users', 'read-users-emergency_contact', 'read-teams-membership'];
@@ -67,7 +65,7 @@ class MassUpdateRolesPermissions extends Migration
 
         $r_pm_perms = ['read-users', 'read-users-emergency_contact', 'read-rsvps', 'create-payments',
                         'create-payments-cash', 'create-payments-check', 'create-recruiting-visits',
-                        'create-attendance', 'read-attendance', 'read-teams-membership', 'update-teams'];
+                        'create-attendance', 'read-attendance', 'read-teams-membership', 'update-teams', ];
         $r_pm->syncPermissions($r_pm_perms);
 
         $r_officer_perms = ['read-users', 'read-users-gtid', 'read-users-emergency_contact', 'create-events',
@@ -77,7 +75,7 @@ class MassUpdateRolesPermissions extends Migration
                             'update-dues-transactions', 'create-recruiting-visits', 'read-recruiting-visits',
                             'create-recruiting-campaigns', 'read-recruiting-campaigns', 'update-recruiting-campaigns',
                             'send-notifications', 'create-attendance', 'read-attendance', 'update-attendance',
-                            'create-teams', 'read-teams-membership', 'update-teams', 'read-teams-hidden'];
+                            'create-teams', 'read-teams-membership', 'update-teams', 'read-teams-hidden', ];
         $r_officer->syncPermissions($r_officer_perms);
 
         $r_admin_perms = Permission::all();
