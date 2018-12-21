@@ -14,7 +14,7 @@ export default {
         { title: 'ID', data: 'id' },
         { title: 'Name', data: 'name' },
         { title: 'Subject', data: 'subject' },
-        { title: 'Last Updated', data: 'updated_at' },
+        { title: 'Last Updated', data: 'updated_at.date' },
       ],
     };
   },

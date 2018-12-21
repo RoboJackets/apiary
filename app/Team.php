@@ -82,4 +82,16 @@ class Team extends Model
             ->generateSlugsFrom(['name'])
             ->saveSlugsTo('slug');
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'members' => 'teams-membership',
+            'attendance' => 'attendance',
+        ];
+    }
 }

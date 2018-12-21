@@ -55,4 +55,16 @@ class RecruitingVisit extends Model
     }
 
     protected $fillable = ['recruiting_email', 'recruiting_name'];
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'recruitingResponses' => 'recruiting-responses',
+            'user' => 'users',
+        ];
+    }
 }

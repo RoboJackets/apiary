@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Log;
 use Bugsnag;
-use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
 use Illuminate\Database\QueryException;
+use App\Http\Resources\Attendance as AttendanceResource;
 
 class AttendanceController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-attendance', ['only' => ['index', 'search', 'statistics']]);
@@ -27,9 +30,10 @@ class AttendanceController extends Controller
      */
     public function index(Request $request)
     {
-        $attendance = Attendance::with('attendee')->get();
+        $include = $request->input('include');
+        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'attendance' => $attendance]);
+        return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection(($att))]);
     }
 
     /**
@@ -40,6 +44,9 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
+        $include = $request->input('include');
+        unset($request['include']);
+
         $this->validate($request, [
             'attendable_type' => 'required|string',
             'attendable_id' => 'required|numeric',
@@ -48,9 +55,7 @@ class AttendanceController extends Controller
             'created_at' => 'date',
         ]);
 
-        $wantsName = ($request->filled('includeName'));
         $request['recorded_by'] = $request->user()->id;
-        unset($request['includeName']);
 
         // Variables for comparison below
         $date = $request->input('created_at', date('Y-m-d'));
@@ -75,15 +80,11 @@ class AttendanceController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        //Return user's name, if found and if requested
-        //This array merge is only okay until Fractal is implemented
-        if ($wantsName) {
-            $user = User::where('gtid', '=', $request->input('gtid'))->first();
-            $name = ($user) ? ['name' => $user->name] : ['name' => 'Non-Member'];
-            $att = array_merge($att->toArray(), $name);
-        }
+        // Yes this is kinda gross but it's the best that I could come up with
+        // This is mainly to allow for requesting the attendee relationship for showing the name on swipes
+        $dbAtt = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($att->id);
 
-        return response()->json(['status' => 'success', 'attendance' => $att], $code);
+        return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($dbAtt)], $code);
     }
 
     /**
@@ -95,10 +96,11 @@ class AttendanceController extends Controller
      */
     public function show(Request $request, $id)
     {
+        $include = $request->input('include');
         $user = auth()->user();
-        $att = Attendance::find($id);
+        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($id);
         if ($att && ($att->gtid == $user->gtid || $user->can('read-attendance'))) {
-            return response()->json(['status' => 'success', 'attendance' => $att]);
+            return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
         }
@@ -112,6 +114,7 @@ class AttendanceController extends Controller
      */
     public function search(Request $request)
     {
+        $include = $request->input('include');
         $this->validate($request, [
             'attendable_type' => 'required',
             'attendable_id' => 'required|numeric',
@@ -122,10 +125,10 @@ class AttendanceController extends Controller
         $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
             ->where('attendable_id', '=', $request->input('attendable_id'))
             ->start($request->input('start_date'))->end($request->input('end_date'))
-            ->with('attendee')->get();
+            ->with($this->authorizeInclude(Attendance::class, $include))->get();
 
         if ($att) {
-            return response()->json(['status' => 'success', 'attendance' => $att]);
+            return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
         }
@@ -159,7 +162,7 @@ class AttendanceController extends Controller
                 return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
             }
 
-            return response()->json(['status' => 'success', 'attendance' => $att]);
+            return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
         }
