@@ -163,7 +163,7 @@ export default {
         { title: 'User', data: 'user_id' },
         { title: 'Response', data: 'response' },
         { title: 'Source', data: 'source' },
-        { title: 'Time', data: 'created_at' },
+        { title: 'Time', data: 'created_at.date' },
       ],
       attendance: [],
       attendanceQuery: {
@@ -172,7 +172,7 @@ export default {
       },
       attendanceUrl: '/api/v1/attendance/search',
       attendanceTableConfig: [
-        { title: 'Time', data: 'created_at' },
+        { title: 'Time', data: 'created_at.date' },
         {
           title: 'Last Name',
           data: null,
@@ -195,7 +195,6 @@ export default {
             }
           },
         },
-        { title: 'GTID', data: 'gtid' },
       ],
       dateTimeConfig: {
         dateFormat: 'Y-m-d H:i:S',
@@ -214,7 +213,7 @@ export default {
     },
   },
   mounted() {
-    this.dataUrl = this.baseUrl + this.eventId;
+    this.dataUrl = this.baseUrl + this.eventId + '?include=organizer';
     axios
       .get(this.dataUrl)
       .then(response => {

@@ -1,14 +1,14 @@
 <template>
   <datatable v-if="this.tableFilter == 'index'"
              id="swag-index-table" 
-             data-url="/api/v1/dues/transactions/paid" 
+             data-url="/api/v1/dues/transactions/paid?include=user"
              data-path="dues_transactions"
              data-link="/admin/swag/"
              :columns="tableConfig">
   </datatable>
   <datatable v-else-if="this.tableFilter == 'pending'"
              id="swag-pending-table"
-             data-url="/api/v1/dues/transactions/pendingSwag"
+             data-url="/api/v1/dues/transactions/pendingSwag?include=user"
              data-path="dues_transactions"
              data-link="/admin/swag/"
              :columns="tableConfig">

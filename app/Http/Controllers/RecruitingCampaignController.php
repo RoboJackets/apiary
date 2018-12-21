@@ -8,11 +8,15 @@ use Carbon\Carbon;
 use App\RecruitingVisit;
 use App\RecruitingCampaign;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
 use App\RecruitingCampaignRecipient;
 use App\Notifications\GeneralInterestNotification;
+use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
 
 class RecruitingCampaignController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware(['permission:send-notifications']);
@@ -21,13 +25,15 @@ class RecruitingCampaignController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $request Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rc = RecruitingCampaign::all();
+        $include = $request->input('include');
+        $rc = RecruitingCampaign::with($this->authorizeInclude(RecruitingCampaign::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'campaigns' => $rc]);
+        return response()->json(['status' => 'success', 'campaigns' => RecruitingCampaignResource::collection($rc)]);
     }
 
     /**
@@ -95,7 +101,7 @@ class RecruitingCampaignController extends Controller
 
         $db_rc = RecruitingCampaign::where('id', $rc->id)->with('recipients')->first();
         if (is_numeric($db_rc->id)) {
-            return response()->json(['status' => 'success', 'campaign' => $db_rc], 201);
+            return response()->json(['status' => 'success', 'campaign' => new RecruitingCampaignResource($db_rc)], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
@@ -136,7 +142,9 @@ class RecruitingCampaignController extends Controller
      */
     public function show(RecruitingCampaign $recruitingCampaign)
     {
-        return response()->json(['status' => 'success', 'campaign' => $recruitingCampaign]);
+        $rc = new RecruitingCampaignResource($recruitingCampaign);
+
+        return response()->json(['status' => 'success', 'campaign' => $rc]);
     }
 
     /**

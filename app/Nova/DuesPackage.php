@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use App\Nova\Metrics\SwagPickupRate;
 use App\Nova\Metrics\TotalCollections;
+use App\Nova\Metrics\ShirtSizeBreakdown;
 use App\Nova\Metrics\PaymentMethodBreakdown;
 
 class DuesPackage extends Resource
@@ -144,6 +145,24 @@ class DuesPackage extends Resource
                     return $request->user()->can('read-dues-transactions');
                 }),
             (new SwagPickupRate('polo'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('shirt'))
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('polo'))
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('shirt'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('polo'))
                 ->onlyOnDetail()
                 ->canSee(function ($request) {
                     return $request->user()->can('read-dues-transactions');

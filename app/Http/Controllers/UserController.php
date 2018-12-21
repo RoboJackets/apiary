@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Traits\AuthorizeInclude;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
@@ -22,16 +26,15 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
-     *
-     * @api {get} /users/ List all users
-     * @apiGroup Users
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $include = $request->input('include');
+        $users = User::with($this->authorizeInclude(User::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'users' => $users]);
+        return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
     }
 
     /**
@@ -58,7 +61,7 @@ class UserController extends Controller
                 ->get();
         }
 
-        return response()->json(['status' => 'success', 'users' => $results]);
+        return response()->json(['status' => 'success', 'users' => UserResource::collection($results)]);
     }
 
     /**
@@ -134,7 +137,8 @@ class UserController extends Controller
      */
     public function show($id, Request $request)
     {
-        $user = User::findByIdentifier($id)->first();
+        $include = $request->input('include');
+        $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
         if ($user) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
@@ -144,11 +148,12 @@ class UserController extends Controller
             }
 
             //Show API tokens only to admins and the users themselves
+            //TODO: Replace this with something better
             if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
                 $user = $user->makeVisible('api_token');
             }
 
-            return response()->json(['status' => 'success', 'user' => $user]);
+            return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
@@ -212,12 +217,13 @@ class UserController extends Controller
         $user = User::find($user->id);
 
         //Show API tokens only to admins and the users themselves
+        //TODO: Replace this with something better
         if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
             $user = $user->makeVisible('api_token');
         }
 
         if ($user) {
-            return response()->json(['status' => 'success', 'user' => $user]);
+            return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }

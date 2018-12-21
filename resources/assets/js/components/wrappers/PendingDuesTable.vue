@@ -1,6 +1,6 @@
 <template>
   <datatable id="dues-admin-table"
-    data-url="/api/v1/dues/transactions/pending"
+    data-url="/api/v1/dues/transactions/pending?include=user"
     data-path="dues_transactions"
     data-link="/admin/dues/"
     :columns="tableConfig">
@@ -13,7 +13,7 @@ export default {
     return {
       tableConfig: [
         { title: 'ID', data: 'id' },
-        { title: 'Timestamp', data: 'updated_at' },
+        { title: 'Timestamp', data: 'updated_at.date' },
         { title: 'Name', data: 'user.name' },
         { title: 'Dues Package', data: 'package.name' },
       ],

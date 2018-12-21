@@ -147,9 +147,9 @@ class User extends Authenticatable
     /**
      * Get the events organized by the User.
      */
-    public function organizes()
+    public function events()
     {
-        return $this->hasMany(\App\Event::class, 'organizer');
+        return $this->hasMany(\App\Event::class, 'organizer_id');
     }
 
     /**
@@ -199,6 +199,21 @@ class User extends Authenticatable
     public function getRememberTokenName()
     {
         throw new \BadMethodCallException('Not implemented');
+    }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'recruitingVisits' => 'recruiting-visits',
+            'teams' => 'teams-membership',
+            'dues' => 'dues-transactions',
+            'events' => 'events',
+            'rsvps' => 'rsvps',
+        ];
     }
 
     /**

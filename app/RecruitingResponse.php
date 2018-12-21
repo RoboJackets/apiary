@@ -18,4 +18,15 @@ class RecruitingResponse extends Model
     }
 
     protected $fillable = ['recruiting_survey_id', 'response'];
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'recruitingVisit' => 'recruiting-visits',
+        ];
+    }
 }
