@@ -5,6 +5,7 @@ namespace App\Providers;
 use Laravel\Nova\Nova;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\PaymentsPerDay;
+use App\Nova\Tools\AttendanceReport;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
 use App\Nova\Metrics\AttendancePerWeek;
@@ -22,7 +23,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
         Nova::serving(function (ServingNova $event) {
-            Nova::style('apiary-custom', __DIR__.'/../../resources/assets/css/nova.css');
+            Nova::script('apiary-custom', __DIR__.'/../../public/js/nova.js');
+            Nova::style('apiary-custom', __DIR__.'/../../public/css/nova.css');
         });
     }
 
@@ -77,6 +79,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new \Vyuldashev\NovaPermission\NovaPermissionTool(),
+            new AttendanceReport(),
         ];
     }
 
