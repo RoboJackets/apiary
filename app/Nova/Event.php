@@ -47,19 +47,6 @@ class Event extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-
-            HasMany::make('RSVPs'),
-
-            HasMany::make('Attendance'),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('Event Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -86,6 +73,18 @@ class Event extends Resource
 
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
+
+            new Panel('Metadata', $this->metaFields()),
+
+            HasMany::make('RSVPs')
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-rsvps');
+                }),
+
+            HasMany::make('Attendance')
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
@@ -109,8 +108,16 @@ class Event extends Resource
     public function cards(Request $request)
     {
         return [
-            (new RsvpSourceBreakdown())->onlyOnDetail(),
-            (new ActiveAttendanceBreakdown(true))->onlyOnDetail(),
+            (new RsvpSourceBreakdown())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-rsvps');
+                }),
+            (new ActiveAttendanceBreakdown(true))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 

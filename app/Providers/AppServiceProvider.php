@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Resource::withoutWrapping();
         Horizon::auth(function ($request) {
-            return auth()->user()->hasRole('admin');
+            return auth()->user()->can('access-horizon');
         });
     }
 

@@ -23,6 +23,17 @@ class AttendancePolicy
     }
 
     /**
+     * Determine whether the user can view any attendance.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        return $user->can('read-attendance');
+    }
+
+    /**
      * Determine whether the user can create attendances.
      *
      * @param  \App\User  $user
@@ -67,7 +78,7 @@ class AttendancePolicy
      */
     public function restore(User $user, Attendance $attendance)
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
