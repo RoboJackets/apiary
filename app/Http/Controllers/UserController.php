@@ -181,7 +181,7 @@ class UserController extends Controller
         }
 
         //Update only included fields
-        $this->validate($request, [
+        $validatedFields = $this->validate($request, [
             'slack_id' => ['max:21', 'nullable', Rule::unique('users')->ignore($user->id)],
             'personal_email' => ['max:255', 'nullable', Rule::unique('users')->ignore($user->id)],
             'middle_name' => 'max:127',
@@ -208,7 +208,7 @@ class UserController extends Controller
         }
         unset($request['generateToken']);
 
-        $user->update($request->all());
+        $user->update($validatedFields);
 
         if ($request->filled('roles')) {
             $user->roles()->sync($request->input('roles'));
