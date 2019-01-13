@@ -19,7 +19,7 @@ export default {
               return team.name;
             });
             if (teams.length === 0) {
-              return "N/A";
+              return "None";
             }
             return teams.join(", ");
         }},
