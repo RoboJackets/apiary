@@ -184,6 +184,8 @@ class UserController extends Controller
         $validatedFields = $this->validate($request, [
             'slack_id' => ['max:21', 'nullable', Rule::unique('users')->ignore($user->id)],
             'personal_email' => ['max:255', 'nullable', Rule::unique('users')->ignore($user->id)],
+            'first_name'=> 'max:127',
+            'last_name' => 'max:127',
             'middle_name' => 'max:127',
             'preferred_name' => 'max:127',
             'phone' => 'max:15',
@@ -195,6 +197,8 @@ class UserController extends Controller
             'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
             'accept_safety_agreement => date|nullable',
             'generateToken' => 'boolean',
+            'gender' => 'string|nullable',
+            'ethnicity' => 'string|nullable',
         ]);
 
         //Generate an API token for the user if requested *AND* the requesting user is self or admin
