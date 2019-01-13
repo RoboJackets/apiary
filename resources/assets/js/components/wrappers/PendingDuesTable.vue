@@ -23,7 +23,7 @@ export default {
               return "N/A";
             }
             return teams.join(", ");
-          }},
+        }},
         { title: 'Dues Package', data: 'package.name' },
       ],
     };

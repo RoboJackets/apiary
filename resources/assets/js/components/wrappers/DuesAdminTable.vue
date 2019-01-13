@@ -22,7 +22,7 @@ export default {
               return "N/A";
             }
             return teams.join(", ");
-          }},
+        }},
         { title: 'Dues Package', data: 'package.name' },
         { title: 'Status', data: 'status', className: 'text-capitalize' },
         { title: 'Amount Paid', data: 'payment[0].amount' },
