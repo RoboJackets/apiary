@@ -74,9 +74,9 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['apiary-production'],
                 'balance' => 'simple',
-                'processes' => 10,
+                'processes' => 3,
                 'tries' => 3,
             ],
         ],
@@ -84,7 +84,7 @@ return [
         'staging' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['apiary-staging'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
@@ -94,10 +94,10 @@ return [
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['apiary-local'],
                 'balance' => 'simple',
                 'processes' => 3,
-                'tries' => 3,
+                'tries' => 1,
             ],
         ],
     ],
