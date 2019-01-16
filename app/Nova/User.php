@@ -113,6 +113,14 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
+            HasMany::make('RecruitingVisits')->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-recruiting-visits-own');
+                } else {
+                    return $request->user()->can('read-recruiting-visits');
+                }
+            }),
+
             BelongsToMany::make('Teams')->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-teams-membership-own');
