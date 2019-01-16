@@ -8,9 +8,14 @@ use App\User;
 use App\Event;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
+use App\Http\Resources\Rsvp as RsvpResource;
+use App\Http\Resources\Event as EventResource;
 
 class RsvpController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-rsvps', ['only' => ['index']]);
@@ -23,16 +28,15 @@ class RsvpController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
-     *
-     * @api {get} /events/ List all events
-     * @apiGroup Users
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rsvps = Rsvp::all();
+        $include = $request->input('include');
+        $rsvps = Rsvp::with($this->authorizeInclude(Rsvp::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'rsvps' => $rsvps]);
+        return response()->json(['status' => 'success', 'rsvps' => RsvpResource::collection($rsvps)]);
     }
 
     /**
@@ -71,6 +75,12 @@ class RsvpController extends Controller
             cas()->authenticate();
         }
 
+        $now = new \DateTime();
+        $end = isset($event->end_time) ? new \DateTime($event->end_time) : null;
+        if ($end && $end <= $now) {
+            return view('rsvp.ended')->with(['event' => $event]);
+        }
+
         // Link to recruiting visit if the user is logged in
         if ($request->filled('token')) {
             $source = 'email';
@@ -97,7 +107,7 @@ class RsvpController extends Controller
 
         $rsvp->saveOrFail();
 
-        return view('rsvp.confirmation')->with(['event' => $event]);
+        return view('rsvp.confirmation')->with(['event' => new EventResource($event)]);
     }
 
     /**

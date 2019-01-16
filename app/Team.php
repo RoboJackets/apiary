@@ -4,12 +4,13 @@ namespace App;
 
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model
 {
-    use SoftDeletes, HasSlug;
+    use Actionable, SoftDeletes, HasSlug;
 
     /**
      * The attributes that are not mass assignable.
@@ -80,5 +81,17 @@ class Team extends Model
         return SlugOptions::create()
             ->generateSlugsFrom(['name'])
             ->saveSlugsTo('slug');
+    }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'members' => 'teams-membership',
+            'attendance' => 'attendance',
+        ];
     }
 }

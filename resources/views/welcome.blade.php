@@ -58,7 +58,8 @@
                         <p class="card-text">
                             Dues payments are accepted online with credit/debit cards or in-person with card/cash/check.
                         </p>
-                        <a href="/dues/pay">Pay Online Now</a>
+                        <a style="margin-bottom: 0.5rem;display:block" href="/dues/pay">Pay Online Now</a>
+                        <a href="/dues">Change Dues Term</a>
                     </div>
                 </div>
             </div>

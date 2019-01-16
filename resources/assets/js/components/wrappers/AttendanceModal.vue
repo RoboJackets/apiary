@@ -1,7 +1,23 @@
 <template>
     <div class="modal fade" :id="id" tabindex="-1" role="dialog" :aria-labelledby="id" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" v-if="showingEndedEventWarning">
+                <div class="modal-header">
+                    <h5 class="modal-title" :id="id">This event has ended</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <span>Do you want to record attendance even though the event has ended?</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" v-on:click="showingEndedEventWarning = false">Continue</button>
+                </div>
+            </div>
+            <div class="modal-content" v-else>
                 <div class="modal-header">
                     <h5 class="modal-title" :id="id">Record Attendance</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -53,6 +69,12 @@ export default {
     attendableType: {
       type: String,
     },
+    showEndedEventWarning: {
+      type: Boolean,
+    },
+  },
+  mounted() {
+    $('#' + this.id).on('show.bs.modal', this.updateEndedEventWarning);
   },
   data() {
     return {
@@ -61,17 +83,22 @@ export default {
         attendable_id: this.attendableId,
         attendable_type: this.attendableType,
         source: 'MyRoboJackets',
-        includeName: 'true',
+        include: 'attendee',
       },
       feedback: '',
       baseUrl: '/api/v1/attendance',
       hasError: false,
+      showingEndedEventWarning: this.showEndedEventWarning,
     };
   },
   watch: {
     'attendance.gtid': function(val, oldVal) {
       this.debouncedGTID();
     },
+    attendableId: function(val, oldVal) {
+      // Update the data object when the prop attendableId changes
+      this.attendance.attendable_id = this.attendableId;
+    }
   },
   created: function() {
     this.debouncedGTID = _.debounce(this.parseGTID, 500);
@@ -100,7 +127,9 @@ export default {
         .post(this.baseUrl, this.attendance)
         .then(response => {
           this.hasError = false;
-          this.feedback = 'Saved! (' + response.data.attendance.name + ')';
+          let responseContent = response.data.attendance;
+          let attendeeName = (responseContent.attendee != null) ? responseContent.attendee.name : "Non-Member";
+          this.feedback = 'Saved! (' + attendeeName + ')';
           console.log('success');
           this.attendance.gtid = '';
           this.$refs.input.focus();
@@ -122,6 +151,10 @@ export default {
             );
           }
         });
+    },
+    updateEndedEventWarning() {
+      // Update whether the warning is going to be shown the next time the modal appears
+      this.showingEndedEventWarning = this.showEndedEventWarning;
     },
   },
   validations: {

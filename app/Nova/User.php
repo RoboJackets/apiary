@@ -8,8 +8,13 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
+use App\Nova\Metrics\MemberSince;
+use App\Nova\Metrics\PrimaryTeam;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
+use App\Nova\Metrics\TotalAttendance;
+use Laravel\Nova\Fields\BelongsToMany;
 
 class User extends Resource
 {
@@ -49,19 +54,6 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Emergency Contact', $this->emergencyFields()),
-
-            new Panel('Swag', $this->swagFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('Username', 'uid')
                 ->sortable()
                 ->hideWhenCreating()
@@ -95,10 +87,20 @@ class User extends Resource
             Number::make('GTID')
                 ->onlyOnDetail()
                 ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->hideWhenUpdating()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-gtid');
+                }),
 
             Text::make('API Token')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    if ($request->resourceId == $request->user()->id) {
+                        return true;
+                    } else {
+                        return $request->user()->can('read-users-api_token');
+                    }
+                }),
 
             Text::make('Phone Number', 'phone')
                 ->hideFromIndex(),
@@ -106,6 +108,28 @@ class User extends Resource
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+
+            new Panel('Emergency Contact', $this->emergencyFields()),
+
+            new Panel('Swag', $this->swagFields()),
+
+            BelongsToMany::make('Teams')->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-teams-membership-own');
+                } else {
+                    return $request->user()->can('read-teams-membership');
+                }
+            }),
+
+            HasMany::make('Attendance')->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-attendance-own');
+                } else {
+                    return $request->user()->can('read-attendance');
+                }
+            }),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
@@ -113,10 +137,16 @@ class User extends Resource
     {
         return [
             Text::make('Emergency Contact Name')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-emergency_contact');
+                }),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-emergency_contact');
+                }),
         ];
     }
 
@@ -166,7 +196,23 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new MemberSince())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-payments');
+                }),
+            (new TotalAttendance())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
+            (new PrimaryTeam())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-attendance');
+                }),
+        ];
     }
 
     /**
@@ -178,8 +224,8 @@ class User extends Resource
     public function filters(Request $request)
     {
         return [
-            new Filters\UserType,
             new Filters\UserActive,
+            new Filters\UserType,
         ];
     }
 
@@ -203,7 +249,20 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [
-            new Actions\ResetApiToken,
+            (new Actions\ResetApiToken)
+                ->canSee(function ($request) {
+                    return true;
+                })->canRun(function ($request, $user) {
+                    return $request->user()->hasRole('admin') || ($request->user()->id == $user->id);
+                }),
+            (new Actions\ExportGtid)
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-gtid');
+                }),
+            (new Actions\ExportUsername)
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users');
+                }),
         ];
     }
 }

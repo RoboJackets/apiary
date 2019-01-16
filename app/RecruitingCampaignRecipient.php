@@ -12,6 +12,18 @@ class RecruitingCampaignRecipient extends Model
     use Notifiable;
 
     /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    /**
      * Get the user that owns the phone.
      */
     public function recruitingCampaign()
@@ -51,5 +63,18 @@ class RecruitingCampaignRecipient extends Model
     public function getVisitToken()
     {
         return $this->recruitingVisit->visit_token ?: null;
+    }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'recruitingCampaign' => 'recruiting-campaigns',
+            'recruitingVisit' => 'recruiting-visits',
+            'user' => 'users',
+        ];
     }
 }

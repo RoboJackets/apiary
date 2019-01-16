@@ -25,4 +25,15 @@ class NotificationTemplate extends Model
     {
         return $this->belongsTo(\App\User::class, 'created_by');
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'creator' => 'users',
+        ];
+    }
 }

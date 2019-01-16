@@ -165,12 +165,14 @@ return [
         Subfission\Cas\CasServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Maatwebsite\LaravelNovaExcel\LaravelNovaExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\NovaServiceProvider::class,

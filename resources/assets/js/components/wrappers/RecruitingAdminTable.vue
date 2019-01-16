@@ -12,7 +12,7 @@ export default {
     return {
       tableConfig: [
         { title: 'ID', data: 'id' },
-        { title: 'Timestamp', data: 'created_at' },
+        { title: 'Timestamp', data: 'created_at.date' },
         { title: 'Name', data: 'recruiting_name' },
         { title: 'Email', data: 'recruiting_email' },
       ],

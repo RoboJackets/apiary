@@ -12,8 +12,9 @@ This project grew out of frustration with the limitations imposed by Georgia Tec
 This project has been tailored to support the specific workflow of RoboJackets and is not currently built in a manner that would be easily adaptable to another organization. The decision to limit the scope of this project was made in light of the extensive approvals process to access the amount of student data we currently store. We believe it is unlikely that another org will be able and willing to navigate that process.
 
 ## Getting Help
-- For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in #apiary on Slack
-- For production support of MyRoboJackets, ask in #it-helpdesk on Slack
+- For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) on Slack
+- For production support of MyRoboJackets, ask in [#it-helpdesk](https://robojackets.slack.com/app_redirect?channel=it-helpdesk) on Slack
+- API documentation can be found [here](https://myrobojackets.docs.stoplight.io/). Report any issues/inaccuracies through [GitHub](https://github.com/RoboJackets/apiary/issues/new).
 
 ## Getting Started with Local Development
 
@@ -22,7 +23,7 @@ If you've never worked with [Laravel](https://laravel.com) before, we recommend 
 Apiary is written entirely in languages that can be run from any operating system; however, support is only provided for Linux environments. All instructions below assume that the user is running on a modern, Debian-based Linux distribution.
 
 For an easier setup, you may wish to use [Laravel Homestead](https://laravel.com/docs/5.6/homestead).
-Homestead is a pre-packaged [Vagrant](https://www.vagrantup.com/) box maintained by the Laravel creators designed for Laravel development. It takes care of most of the server configuration so that you can get up and running quickly. If you opt to use Homestead, all steps listed below should be performed **inside the Vagrant box**, rather than on the host machine.
+Homestead is a pre-packaged [Vagrant](https://www.vagrantup.com/) box maintained by the Laravel creators designed for Laravel development. It takes care of most of the server configuration so that you can get up and running quickly. **If you opt to use Homestead, all steps listed below should be performed inside the Vagrant box, rather than on the host machine.**
 
 Laravel Mix is used to compile browser assets. Currently, we're concatenating and minifying all of our JS and CSS. This step is also where we compile our SCSS into CSS. In your local dev environment, you should run `npm run dev` the first time you clone the repo and any time the assets change. Laravel Mix is a simple wrapper around webpack, which you really don't need to know about at this point. However, the fact that we use Webpack as a module bundler means that the process to reference JavaScript and CSS is a little bit different. It also means that if you add new CSS or JS files into the project, you need to reference them in [`webpack.mix.js`](webpack.mix.js) to be compiled. See [the relevant Laravel documentation](https://laravel.com/docs/5.4/mix#running-mix) for more details.
 
@@ -36,7 +37,7 @@ This is a pretty conventional Laravel project, so we recommend following [the of
 
 You can install all of the required php extensions with:
 ```
-$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml
+$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath
 ```
 
 #### Database Encryption
@@ -44,7 +45,7 @@ $ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-op
 Due to the nature of the data stored in certain tables in Apiary, some tables require encryption. This is implemented with MySQL's [Keyring](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
 For migrations to run successfully, you must also have a proper keyring set up in your development and production environments.
 
-To enable the Keyring functionality, edit your `my.cnf` as follows, then restart MySQL:  
+To enable the Keyring functionality, edit your `my.cnf` as follows, then restart MySQL:
 
     [mysqld]
     early-plugin-load=keyring_file.so
@@ -62,6 +63,10 @@ To check if the Keyring plugin was enabled successfully, run the following comma
 
 Further documentation about MySQL Keyring can be found in [the MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
 
+### Install Redis
+
+Apiary uses Redis for queueing jobs, with Laravel Horizon used to manage them. You should be able to just install Redis and the corresponding PHP extension. Once you get Apiary configured below, you can run `php artisan horizon` to process jobs.
+
 ### Install Apiary
 Clone the repository onto your local machine:
 
@@ -69,7 +74,7 @@ Clone the repository onto your local machine:
 $ git clone https://github.com/RoboJackets/apiary.git
 ```
 
-If you a member of RoboJackets, reach out in #apiary on Slack and ask for a copy of a mostly configured `.env` file.
+If you a member of RoboJackets, reach out in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) on Slack and ask for a copy of a mostly configured `.env` file.
 
 Copy the example environment file to configure Apiary for local development:
 
@@ -91,13 +96,15 @@ For a basic development environment, you'll need to modify the following setting
 | CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
 | CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
 | CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
-| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user                                                         
+| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user
 
 #### Installing dependencies
 
 ```
 $ composer install && npm install
 ```
+
+Please note that we are using [Laravel Nova](https://nova.laravel.com/) for some admin pages. You will be prompted for credentials when running Composer if an update to Nova is required. Get in touch with us in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) when this happens.
 
 You will need to run these commands again in the future if there are any changes to required packages.
 
@@ -160,4 +167,14 @@ There are a few additional changes needed to `.env` when moving to production.
 | APP_LOG_LEVEL                | info (or other as you see fit)                                                                                                                                                 |
 | APP_URL                      | DNS hostname for production environment                                                                                                                                        |
 | GA_UA                        | Google Analytics identifier, if desired                                                                                                                                        |
-| SQUARE_*                     | Square API credentials (Get these from the Square Developer Dashboard)   
+| SQUARE_*                     | Square API credentials (Get these from the Square Developer Dashboard)
+
+### Horizon Configuration
+
+Review the Laravel documentation on deploying Horizon to a production environment.
+
+Also be sure to set up a cron job to run scheduled tasks - Horizon uses this to keep track of statistics.
+
+# Security reporting
+
+Any security issues with the Apiary code or any RoboJackets-managed Apiary deployment (*.robojackets.org) should be reported to [apiary@robojackets.org](mailto:apiary@robojackets.org). This will notify our development and operations teams and you should receive a response within 8 business hours Eastern Time.

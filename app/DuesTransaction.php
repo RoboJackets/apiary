@@ -110,6 +110,20 @@ class DuesTransaction extends Model
     }
 
     /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'user' => 'users',
+            'package' => 'dues-packages',
+            'payment' => 'payments',
+            'user.teams' => 'teams-membership',
+        ];
+    }
+
+    /**
      * Scope a query to only include pending transactions.
      * Pending defined as no payments, or payments that do not sum to payable amount
      * for a currently active DuesPackage.

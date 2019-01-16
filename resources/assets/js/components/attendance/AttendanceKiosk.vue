@@ -12,6 +12,10 @@
 </template>
 
 <script>
+function checkboxEventListener(e) {
+  this.stickToTeam = e.target.checked;
+  document.activeElement.blur();
+}
 export default {
   data() {
     return {
@@ -20,11 +24,13 @@ export default {
         attendable_id: '',
         attendable_type: 'App\\Team',
         source: 'kiosk',
-        includeName: true,
+        include: 'attendee',
       },
       attendanceBaseUrl: '/api/v1/attendance',
       teamsBaseUrl: '/api/v1/teams',
       teams: [],
+      stickToTeam: false,
+      submitting: false,
     };
   },
   mounted() {
@@ -43,7 +49,9 @@ export default {
           if (rawTeams.length < 1) {
             swal('Bueller...Bueller...', 'No teams found.', 'warning');
           } else {
-            this.teams = response.data.teams.sort(function(a, b) {
+            this.teams = response.data.teams.filter(function(item) {
+              return item.visible && item.attendable;
+            }).sort(function(a, b) {
               return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
             });
             this.startListening();
@@ -95,6 +103,9 @@ export default {
       window.addEventListener(
         'keypress',
         function(e) {
+          if (this.submitting) {
+            return;
+          }
           if (this.attendance.attendable_id == '' && e.key == 'Enter') {
             //Enter was pressed but a team was not picked
             buffer = '';
@@ -119,23 +130,38 @@ export default {
       //Remove focus from button
       document.activeElement.blur();
       // When a team button is clicked, show a prompt to swipe BuzzCard
-      let self = this;
-      self.attendance.attendable_id = event.target.id;
-      swal({
+      this.attendance.attendable_id = event.target.id;
+      swal(this.getTeamSwalConfig(event.target.innerText));
+    },
+    getTeamSwalConfig: function(teamName) {
+      // This method pulls from state (attendance.attendable_id) when teamName is not passed (or undefined)
+      if (teamName === undefined) {
+        const targetTeams = this.teams.filter(team => team.id.toString() === this.attendance.attendable_id);
+        if (targetTeams.length === 1) {
+          teamName = targetTeams[0].name;
+        }
+      }
+      return {
         title: 'Swipe your BuzzCard now',
-        html: event.target.innerText,
+        html: teamName, // displays team name
         showCancelButton: true,
-        closeOnCancel: false,
-        allowOutsideClick: true,
+        allowOutsideClick: () => !swal.isLoading(),
         showConfirmButton: false,
         imageUrl: '/img/swipe-horiz-up.gif',
         imageWidth: 450,
-      }).then(result => {
-        if (!result.value) {
-          self.clearFields();
-          swal.close();
+        input: 'checkbox',
+        inputValue: this.stickToTeam,
+        inputPlaceholder: 'Stick to this team',
+        onOpen: () => {
+          // Remove focus from checkbox
+          document.activeElement.blur();
+          swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
+        },
+        onClose: () => {
+          swal.getInput().removeEventListener("change", checkboxEventListener);
+          this.clearFields();
         }
-      });
+      }
     },
     cardPresented: function(cardData) {
       // Card is presented, process the data
@@ -168,12 +194,10 @@ export default {
           showCancelButton: true,
           showConfirmButton: false,
           type: 'warning',
-        }).then(result => {
-          if (!result.value) {
+          onClose: () => {
             self.clearFields();
-            swal.close();
           }
-        });
+        })
       } else {
         swal.close();
         console.log('unknown cardData: ' + cardData);
@@ -184,31 +208,43 @@ export default {
           showConfirmButton: true,
           type: 'error',
           timer: 3000,
-        }).then(result => {
-          self.clearFields();
-          swal.close();
-        });
+          onClose: () => {
+            self.clearFields();
+          }
+        })
       }
     },
     submit() {
       // Submit attendance data
+      this.submitting = true;
+      swal.showLoading();
       axios
         .post(this.attendanceBaseUrl, this.attendance)
         .then(response => {
           this.hasError = false;
-          this.clearFields();
+          let attendeeName = (response.data.attendance.attendee.name || "Non-Member" );
           swal({
             title: "You're in!",
-            text: 'Nice to see you, ' + response.data.attendance.name + '.',
-            timer: 2000,
+            text: 'Nice to see you, ' + attendeeName + '.',
+            timer: 1000,
             showConfirmButton: false,
             type: 'success',
+          }).then(() => {
+            if (this.stickToTeam) {
+              swal(this.getTeamSwalConfig());
+            }
           });
+          if (!this.stickToTeam) {
+            this.clearFields();
+          } else {
+            this.clearGTID();
+          }
         })
         .catch(error => {
           console.log(error);
           this.hasError = true;
           this.feedback = '';
+          this.clearFields();
           if (error.response.status == 403) {
             swal({
               title: 'Whoops!',
@@ -222,6 +258,10 @@ export default {
               'error'
             );
           }
+        })
+        .finally(() => {
+          this.submitting = false;
+          swal.hideLoading();
         });
     },
     clearFields() {
@@ -229,7 +269,12 @@ export default {
       document.activeElement.blur();
       this.attendance.attendable_id = '';
       this.attendance.gtid = '';
+      this.stickToTeam = false;
       console.log('fields cleared');
+    },
+    clearGTID() {
+      document.activeElement.blur();
+      this.attendance.gtid = '';
     },
     isNumeric(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
@@ -252,5 +297,18 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+</style>
+<style>
+/* Global styles */
+.swal2-checkbox {
+    font-size: 110%;
+    margin: 1.5em auto !important;
+}
+.swal2-loading {
+    flex-direction: column;
+}
+.swal2-loading button {
+    margin-bottom: 2em !important;
 }
 </style>

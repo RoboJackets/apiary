@@ -7,7 +7,7 @@
           <div class="col-12 col-md-9 col-lg-4">
             <custom-radio-buttons
               v-model="payment.method"
-              :options="paymentMethods"
+              :options="paymentMethodOptions"
               id="payment-method"
               :is-error="$v.payment.method.$error"
               @input="$v.payment.method.$touch()">
@@ -85,14 +85,14 @@
               <p class="font-weight-bold">TREASURER USE ONLY!</p> Square will usually automatically enter a payment. Only use this if you've confirmed that a payment went through in the Square dashboard but didn't update here.
               <ul>
                   <li>Square transactions incur a $3 processing fee. Add $3 to payment amount.</li>
-                  <li>This is <em>not</em> the same as SquareCash.</li>
+                  <li>This is <em>not</em> the same as Square Cash.</li>
               </ul>
             </template>
             <template v-else-if="payment.method == 'squarecash'">
-              <p class="font-weight-bold">TREASURER USE ONLY!</p> Check with the treasurer before marking SquareCash payments as complete.
+              <p class="font-weight-bold">TREASURER USE ONLY!</p> Check with the treasurer before marking Square Cash payments as complete.
               <ol>
                 <li>View the email saying that the money has been deposited into our account. This is the second email of a given transaction.</li>
-                <li>It is not required to provide a paper receipt for SquareCash transactions.</li>
+                <li>It is not required to provide a paper receipt for Square Cash transactions.</li>
               </ol>
             </template>
           </div>
@@ -132,6 +132,10 @@ export default {
     amount: {
       required: true,
     },
+    paymentMethods: {
+      required: true,
+      type: String,
+    },
   },
   data() {
     return {
@@ -141,13 +145,6 @@ export default {
         method: '',
         amount: null,
       },
-      paymentMethods: [
-        { value: 'cash', text: 'Cash' },
-        { value: 'check', text: 'Check' },
-        { value: 'swipe', text: 'Swiped Card' },
-        { value: 'square', text: 'Square (Online)' },
-        { value: 'squarecash', text: 'SquareCash' },
-      ],
       baseUrl: '/api/v1/payments',
     };
   },
@@ -182,6 +179,18 @@ export default {
         return parseFloat(this.amount);
       }
     },
+    paymentMethodOptions: function() {
+      var paymentMethods = this.paymentMethods.split(',');
+      return [
+        { value: 'cash', text: 'Cash' },
+        { value: 'check', text: 'Check' },
+        { value: 'swipe', text: 'Swiped Card' },
+        { value: 'square', text: 'Square (Online)' },
+        { value: 'squarecash', text: 'Square Cash' },
+      ].filter(item => {
+        return (paymentMethods.indexOf(item.value) != -1);
+      });
+    }
   },
   validations: {
     payment: {

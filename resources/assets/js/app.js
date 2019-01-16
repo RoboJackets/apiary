@@ -94,6 +94,7 @@ Vue.component('teams-admin-table', require('./components/wrappers/TeamsAdminTabl
 Vue.component('team-create-form', require('./components/teams/TeamCreateForm.vue'));
 Vue.component('team-edit-form', require('./components/teams/TeamEditForm.vue'));
 Vue.component('team-invite-modal', require('./components/teams/TeamInviteModal.vue'));
+Vue.component('team-card', require('./components/teams/TeamCard.vue'));
 Vue.component('team-membership-button', require('./components/teams/TeamMembershipButton.vue'));
 
 // Notifications

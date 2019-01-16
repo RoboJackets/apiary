@@ -5,9 +5,13 @@ namespace App\Nova;
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use App\Nova\Metrics\SwagPickupRate;
+use App\Nova\Metrics\TotalCollections;
+use App\Nova\Metrics\ShirtSizeBreakdown;
+use App\Nova\Metrics\PaymentMethodBreakdown;
 
 class DuesPackage extends Resource
 {
@@ -17,6 +21,26 @@ class DuesPackage extends Resource
      * @var string
      */
     public static $model = 'App\DuesPackage';
+
+    /**
+     * Get the displayble label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'Dues Packages';
+    }
+
+    /**
+     * Get the displayble singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return 'Dues Package';
+    }
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -43,17 +67,6 @@ class DuesPackage extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Swag', $this->swagFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -71,14 +84,17 @@ class DuesPackage extends Resource
                 ->hideFromIndex()
                 ->rules('required'),
 
-            Number::make('Cost')
+            Currency::make('Cost')
                 ->sortable()
-                ->min(0)
-                ->step(0.01)
+                ->format('%.2n')
                 ->rules('required'),
 
             Boolean::make('Available for Purchase')
                 ->sortable(),
+
+            new Panel('Swag', $this->swagFields()),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
@@ -112,7 +128,46 @@ class DuesPackage extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new TotalCollections())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-payments');
+                }),
+            (new PaymentMethodBreakdown())
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-payments');
+                }),
+            (new SwagPickupRate('shirt'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new SwagPickupRate('polo'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('shirt'))
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('polo'))
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('shirt'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('polo'))
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+        ];
     }
 
     /**

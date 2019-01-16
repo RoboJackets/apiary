@@ -9,7 +9,7 @@
 
       <label for="transactions-timestamp" class="col-sm-2 col-form-label">Timestamp</label>
       <div class="col-sm-10 col-lg-4">
-        <input v-model="duesTransaction.updated_at" type="text" readonly class="form-control" id="transactions-timestamp">
+        <input v-model="duesTransaction.updated_at.date" type="text" readonly class="form-control" id="transactions-timestamp">
       </div>
     </div>
 
@@ -40,6 +40,7 @@
         transaction-type="DuesTransaction"
         :transaction-id="parseInt(duesTransactionId)"
         :amount="package.cost"
+        :payment-methods="paymentMethods"
         @done="paymentSubmitted">
       </accept-payment>
     </template>
@@ -55,6 +56,9 @@ export default {
     duesTransactionId: {
       required: true,
     },
+    paymentMethods: {
+      type: String,
+    }
   },
   data() {
     return {

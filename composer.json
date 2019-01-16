@@ -11,21 +11,26 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
+        "64robots/nova-date-filter": "^0.1.0",
+        "barryvdh/laravel-ide-helper": "^2.5",
+        "apereo/phpCAS": "dev-master",
         "bugsnag/bugsnag-laravel": "^2.0",
         "doctrine/dbal": "^2.5",
         "fideloper/proxy": "~4.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.6.*",
+        "laravel/horizon": "^1.4",
         "laravel/nova": "~1.0",
         "laravel/tinker": "~1.0",
+        "maatwebsite/laravel-nova-excel": "^1.0",
         "predis/predis": "~1.0",
+        "spatie/laravel-failed-job-monitor": "^3.0",
         "spatie/laravel-permission": "^2.6",
         "spatie/laravel-sluggable": "^2.1",
         "square/connect": "^2.5",
         "subfission/cas": "dev-master",
         "uxweb/sweet-alert": "^1.4",
-        "vyuldashev/nova-permission": "^1.3",
-        "apereo/phpCAS": "dev-master"
+        "vyuldashev/nova-permission": "^1.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -57,6 +62,11 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta"
         ]
     },
     "config": {

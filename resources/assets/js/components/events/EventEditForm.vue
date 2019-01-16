@@ -43,7 +43,7 @@
             <flat-pickr
               id="event-endtime"
               v-model="event.end_time"
-              placeholder="Select start time"
+              placeholder="Select end time"
               :required="true"
               :config="dateTimeConfig"
               input-class="form-control">
@@ -130,7 +130,8 @@
           <attendance-modal
             id="attendanceModal"
             :attendableId="this.eventId"
-            attendableType="App\Event">
+            attendableType="App\Event"
+            :showEndedEventWarning="this.hasEnded">
           </attendance-modal>
           <datatable id="attendance-view-table"
            :data-object="attendance"
@@ -145,6 +146,7 @@
 
 <script>
 import { required, numeric } from 'vuelidate/lib/validators';
+import moment from 'moment';
 
 export default {
   name: 'editEventForm',
@@ -161,7 +163,7 @@ export default {
         { title: 'User', data: 'user_id' },
         { title: 'Response', data: 'response' },
         { title: 'Source', data: 'source' },
-        { title: 'Time', data: 'created_at' },
+        { title: 'Time', data: 'created_at.date' },
       ],
       attendance: [],
       attendanceQuery: {
@@ -170,7 +172,7 @@ export default {
       },
       attendanceUrl: '/api/v1/attendance/search',
       attendanceTableConfig: [
-        { title: 'Time', data: 'created_at' },
+        { title: 'Time', data: 'created_at.date' },
         {
           title: 'Last Name',
           data: null,
@@ -193,7 +195,6 @@ export default {
             }
           },
         },
-        { title: 'GTID', data: 'gtid' },
       ],
       dateTimeConfig: {
         dateFormat: 'Y-m-d H:i:S',
@@ -201,6 +202,7 @@ export default {
         altInput: true,
       },
       rsvpOptions: [{ value: '0', text: 'No' }, { value: '1', text: 'Yes' }],
+      hasEnded: false,
     };
   },
   validations: {
@@ -211,11 +213,12 @@ export default {
     },
   },
   mounted() {
-    this.dataUrl = this.baseUrl + this.eventId;
+    this.dataUrl = this.baseUrl + this.eventId + '?include=organizer';
     axios
       .get(this.dataUrl)
       .then(response => {
         this.event = response.data.event;
+        this.updateEndedWarning();
       })
       .catch(response => {
         console.log(response);
@@ -265,6 +268,7 @@ export default {
         .then(response => {
           this.hasError = false;
           this.feedback = 'Saved!';
+          this.updateEndedWarning();
           console.log('success');
         })
         .catch(response => {
@@ -338,6 +342,18 @@ export default {
             );
           }
         });
+    },
+    updateEndedWarning() {
+      // The event has ended if it has an end date and that time was before now.
+      // This is used for a warning in the attendance dialog so people don't accidentally record
+      // attendance for a past event. If it ends after the page loads, then we probably will
+      // want the swipes anyway, since it won't be long past it.
+      if (this.event.end_time) {
+        var endDate = moment(this.event.end_time);
+        this.hasEnded = endDate.isBefore();
+      } else {
+        this.hasEnded = false;
+      }
     },
   },
 };

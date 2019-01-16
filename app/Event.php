@@ -67,4 +67,17 @@ class Event extends Model
     {
         return $this->organizer->name;
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'organizer' => 'users',
+            'rsvps' => 'rsvps',
+            'attendance' => 'attendance',
+        ];
+    }
 }

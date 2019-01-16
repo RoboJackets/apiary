@@ -36,6 +36,14 @@ class Attendance extends Model
     }
 
     /**
+     * Get the User who recorded the Attendance model.
+     */
+    public function recorded()
+    {
+        return $this->hasOne('\App\User', 'id', 'recorded_by');
+    }
+
+    /**
      * Scope query to start at given date.
      *
      * @param $query mixed
@@ -65,5 +73,17 @@ class Attendance extends Model
         } else {
             return $query->whereDate('created_at', '<=', $date);
         }
+    }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'attendee' => 'users',
+            'recorded' => 'users',
+        ];
     }
 }

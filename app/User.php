@@ -76,6 +76,14 @@ class User extends Authenticatable
     }
 
     /**
+     *  Get the attendance records associated with this user.
+     */
+    public function attendance()
+    {
+        return $this->hasMany(\App\Attendance::class, 'gtid', 'gtid');
+    }
+
+    /**
      *  Get the Teams that this User is a member of.
      */
     public function teams()
@@ -139,9 +147,9 @@ class User extends Authenticatable
     /**
      * Get the events organized by the User.
      */
-    public function organizes()
+    public function events()
     {
-        return $this->hasMany(\App\Event::class, 'organizer');
+        return $this->hasMany(\App\Event::class, 'organizer_id');
     }
 
     /**
@@ -194,26 +202,28 @@ class User extends Authenticatable
     }
 
     /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'recruitingVisits' => 'recruiting-visits',
+            'teams' => 'teams-membership',
+            'dues' => 'dues-transactions',
+            'events' => 'events',
+            'rsvps' => 'rsvps',
+        ];
+    }
+
+    /**
      * Get the is_active flag for the User.
      *
      * @return bool
      */
     public function getIsActiveAttribute()
     {
-        if ($this->dues->count() > 0) {
-            $lastDuesTransaction = $this->dues->last();
-            $pkgIsActive = $lastDuesTransaction->package->is_active;
-            $hasPayment = ($lastDuesTransaction->payment()->exists());
-            if ($hasPayment) {
-                $paidTotal = ($lastDuesTransaction->payment->sum('amount') >= $lastDuesTransaction->getPayableAmount());
-
-                return $paidTotal && $pkgIsActive;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        return self::where('id', $this->id)->active()->count() != 0;
     }
 
     /**

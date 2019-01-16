@@ -3,8 +3,13 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
+use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\PaymentsPerDay;
+use App\Nova\Tools\AttendanceReport;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Events\ServingNova;
+use App\Nova\Metrics\AttendancePerWeek;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -17,6 +22,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+        Nova::serving(function (ServingNova $event) {
+            Nova::script('apiary-custom', __DIR__.'/../../public/js/nova.js');
+            Nova::style('apiary-custom', __DIR__.'/../../public/css/nova.css');
+        });
     }
 
     /**
@@ -42,7 +51,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return $user->hasRole('admin');
+            return $user->can('access-nova');
         });
     }
 
@@ -55,6 +64,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new PaymentsPerDay,
+            new ActiveMembers,
+            new AttendancePerWeek,
+            new ActiveAttendanceBreakdown,
         ];
     }
 
@@ -66,7 +78,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            new \Vyuldashev\NovaPermission\NovaPermissionTool(),
+            (new \Vyuldashev\NovaPermission\NovaPermissionTool())->canSee(function ($request) {
+                return $request->user()->hasRole('admin');
+            }),
+            (new AttendanceReport())->canSee(function ($request) {
+                return $request->user()->can('read-attendance');
+            }),
         ];
     }
 
