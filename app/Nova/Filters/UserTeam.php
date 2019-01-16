@@ -25,7 +25,9 @@ class UserTeam extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->belongsTo(Team::class, $value);
+        return $query->whereHas('teams', function ($query) {
+            $query->where('id', '=', $value);
+        });
     }
 
     /**
