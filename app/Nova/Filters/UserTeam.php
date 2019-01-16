@@ -45,6 +45,7 @@ class UserTeam extends Filter
                     return [$item['name'] => $item['id']];
                 })->toArray();
         }
+
         return $teams;
     }
 }
