@@ -4,6 +4,7 @@ namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use App\Team;
 
 class UserTeam extends Filter
 {
@@ -24,7 +25,7 @@ class UserTeam extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->belongsTo(\App\Team::class, $value);
+        return $query->belongsTo(Team::class, $value);
     }
 
     /**
