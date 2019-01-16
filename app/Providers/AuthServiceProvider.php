@@ -9,7 +9,6 @@ use App\Event;
 use App\Attendance;
 use App\DuesPackage;
 use App\RecruitingVisit;
-use App\Policies\RecruitingVisitPolicy;
 use App\Policies\RsvpPolicy;
 use App\Policies\TeamPolicy;
 use App\Policies\UserPolicy;
@@ -17,6 +16,7 @@ use App\NotificationTemplate;
 use App\Policies\EventPolicy;
 use App\Policies\AttendancePolicy;
 use App\Policies\DuesPackagePolicy;
+use App\Policies\RecruitingVisitPolicy;
 use App\Policies\NotificationTemplatePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
