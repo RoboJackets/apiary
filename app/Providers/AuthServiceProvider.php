@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Attendance::class => AttendancePolicy::class,
         DuesPackage::class => DuesPackagePolicy::class,
         NotificationTemplate::class => NotificationTemplatePolicy::class,
+        RecruitingVisit::class => RecruitingVisitPolicy::class,
     ];
 
     /**
