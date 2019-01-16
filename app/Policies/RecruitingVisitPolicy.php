@@ -78,7 +78,7 @@ class RecruitingVisitPolicy
     {
         return $user->can('delete-recruiting-visits');
     }
-    
+
     /**
      * Determine whether the user can permanently delete the user.
      *
@@ -90,5 +90,4 @@ class RecruitingVisitPolicy
     {
         return false;
     }
-
 }
