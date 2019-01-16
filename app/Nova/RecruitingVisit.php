@@ -18,6 +18,25 @@ class RecruitingVisit extends Resource
     public static $model = 'App\RecruitingVisit';
 
     /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'Recruiting Visits';
+    }
+    /**
+     * Get the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return 'Recruiting Visit';
+    }
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
@@ -127,6 +146,13 @@ class RecruitingVisit extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Actions\SendRecruitingEmail)
+                ->canSee(function ($request) {
+                    return true;
+                })->canRun(function ($request, $user) {
+                    return $request->user()->can('send-notifications');
+                }),
+        ];
     }
 }
