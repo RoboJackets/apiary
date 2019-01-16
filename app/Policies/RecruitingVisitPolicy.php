@@ -20,6 +20,7 @@ class RecruitingVisitPolicy
     {
         return $user->can('read-recruiting-visits');
     }
+
     /**
      * Determine whether the user can view any recruiting visits.
      *
@@ -30,6 +31,7 @@ class RecruitingVisitPolicy
     {
         return $user->can('read-recruiting-visits');
     }
+
     /**
      * Determine whether the user can create recruiting visits.
      *
@@ -40,6 +42,7 @@ class RecruitingVisitPolicy
     {
         return false; // not in nova
     }
+
     /**
      * Determine whether the user can update the recruiting visit.
      *
@@ -51,6 +54,7 @@ class RecruitingVisitPolicy
     {
         return $user->can('update-recruiting-visits');
     }
+
     /**
      * Determine whether the user can delete the recruiting visit.
      *
@@ -62,6 +66,7 @@ class RecruitingVisitPolicy
     {
         return $user->can('delete-recruiting-visits');
     }
+
     /**
      * Determine whether the user can restore the recruiting visit.
      *
@@ -73,6 +78,7 @@ class RecruitingVisitPolicy
     {
         return $user->can('delete-recruiting-visits');
     }
+    
     /**
      * Determine whether the user can permanently delete the user.
      *

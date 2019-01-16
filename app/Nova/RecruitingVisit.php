@@ -26,6 +26,7 @@ class RecruitingVisit extends Resource
     {
         return 'Recruiting Visits';
     }
+
     /**
      * Get the displayable singular label of the resource.
      *
