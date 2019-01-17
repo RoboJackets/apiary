@@ -58,7 +58,7 @@ class Payment extends Resource
 
             Currency::make('Amount')
                 ->sortable()
-                ->format('%.2n')
+                ->format('%.2n'),
 
             Currency::make('Processing Fee')
                 ->sortable()
