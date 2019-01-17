@@ -56,41 +56,31 @@ class DuesTransaction extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
+            ID::make()->sortable(),
 
-            new Panel('Swag', $this->swagFields()),
+            BelongsTo::make('User', 'user_id'),
 
-            MorphMany::make('Payment'),
+            BelongsTo::make('DuesPackage', 'dues_package_id'),
+
+            Text::make('Status')->resolveUsing(function ($str) {
+                return ucfirst($str);
+            }),
+
+            new Panel('T-Shirt Distribution',
+                DateTime::make('Timestamp', 'swag_shirt_provided'),
+                BelongsTo::make('User', 'swag_shirt_providedBy')
+                    ->help('The user that recorded the payment'),
+            ),
+
+            new Panel('Polo Distribution',
+                DateTime::make('Timestamp', 'swag_polo_provided'),
+                BelongsTo::make('User', 'swag_polo_providedBy')
+                    ->help('The user that recorded the payment'),
+            ),
+
+            MorphMany::make('Payments'),
 
             new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
-            BelongsTo::make('User', 'user'),
-
-            BelongsTo::make('Dues Package', 'package', 'App\Nova\DuesPackage'),
-
-            Boolean::make('Paid', 'is_paid'),
-        ];
-    }
-
-    protected function swagFields()
-    {
-        return [
-            DateTime::make('T-Shirt Given On', 'swag_shirt_provided')
-                ->onlyOnDetail(),
-
-            BelongsTo::make('T-Shirt Given By', 'swagShirtProvidedBy', 'App\Nova\User')
-                ->onlyOnDetail(),
-
-            DateTime::make('Polo Given On', 'swag_polo_provided')
-                ->onlyOnDetail(),
-
-            BelongsTo::make('Polo Given By', 'swagPoloProvidedBy', 'App\Nova\User')
-                ->onlyOnDetail(),
         ];
     }
 

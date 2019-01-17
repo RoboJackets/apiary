@@ -14,9 +14,11 @@ use App\Policies\TeamPolicy;
 use App\Policies\UserPolicy;
 use App\NotificationTemplate;
 use App\Policies\EventPolicy;
+use App\Policies\PaymentPolicy;
 use App\Policies\AttendancePolicy;
 use App\Policies\DuesPackagePolicy;
 use App\Policies\RecruitingVisitPolicy;
+use App\Policies\DuesTransactionPolicy;
 use App\Policies\NotificationTemplatePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -36,6 +38,8 @@ class AuthServiceProvider extends ServiceProvider
         DuesPackage::class => DuesPackagePolicy::class,
         NotificationTemplate::class => NotificationTemplatePolicy::class,
         RecruitingVisit::class => RecruitingVisitPolicy::class,
+        Payment::class => PaymentPolicy::class,
+        DuesTransaction::class => DuesTransactionPolicy::class,
     ];
 
     /**

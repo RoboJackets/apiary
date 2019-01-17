@@ -38,56 +38,44 @@ class Payment extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Payment Method', $this->methodFields()),
-
-            new Panel('Square Details', $this->detailsFields()),
-
-            new Panel('Metadata', $this->metaFields()),
+        $payment_methods = [
+            'cash' => 'Cash',
+            'squarecash' => 'Square Cash',
+            'check' => 'Check',
+            'swipe' => 'Swiped Card',
+            'square' => 'Square',
         ];
-    }
 
-    protected function basicFields()
-    {
         return [
-            MorphTo::make('Payable')->types([
-                DuesTransaction::class,
-            ]),
+            ID::make()->sortable(),
 
-            Currency::make('Amount'),
+            MorphTo::make('Paid For', 'payable')
+                ->types([
+                    DuesTransaction::class,
+                ]),
+
+            Select::make('Payment Method', 'method')
+                ->options($payment_methods)
+                ->displayUsingLabels()
+                ->hideFromIndex(),
+
+            Currency::make('Amount')
+                ->sortable()
+                ->format('%.2n')
+                ->rules('required'),
 
             Currency::make('Processing Fee')
-                ->onlyOnDetail(),
+                ->sortable()
+                ->format('%.2n')
+                ->rules('required'),
+
+            BelongsTo::make('Recorded By', 'user', 'App\Nova\User')
+                ->help('The user that recorded the payment'),
 
             TextArea::make('Notes')
                 ->onlyOnDetail(),
-        ];
-    }
 
-    protected function methodFields()
-    {
-        return [
-            Text::make('Payment Method', 'method_presentation'),
-
-            BelongsTo::make('Recorded By', 'user', 'App\Nova\User'),
-        ];
-    }
-
-    protected function detailsFields()
-    {
-        return [
-            Text::make('Checkout ID')
-                ->onlyOnDetail(),
-
-            Text::make('Client Transaction ID', 'client_txn_id')
-                ->onlyOnDetail(),
-
-            Text::make('Server Transaction ID', 'server_txn_id')
-                ->onlyOnDetail(),
-
-            Text::make('Unique ID')
-                ->onlyOnDetail(),
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
