@@ -58,14 +58,16 @@ class DuesTransaction extends Resource
                 return ucfirst($str);
             }),
 
-            Text::make('Polo Status', 'swag_polo_status')
+            Text::make('Shirt Status', 'swag_shirt_status')
                 ->onlyOnIndex(),
 
-            Text::make('Shirt Status', 'swag_shirt_status')
+            Text::make('Polo Status', 'swag_polo_status')
                 ->onlyOnIndex(),
 
             new Panel('T-Shirt Distribution',
                 [
+                    Text::make('Status', 'swag_shirt_status')
+                        ->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_shirt_provided')
                         ->onlyOnDetail(),
                     BelongsTo::make('Distributed By', 'swagShirtProvidedBy', 'App\\Nova\\User')
@@ -76,6 +78,8 @@ class DuesTransaction extends Resource
 
             new Panel('Polo Distribution',
                 [
+                    Text::make('Status', 'swag_polo_status')
+                        ->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
                             ->onlyOnDetail(),
                     BelongsTo::make('Distributed By', 'swagPoloProvidedBy', 'App\\Nova\\User')
@@ -121,7 +125,11 @@ class DuesTransaction extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\DuesTransactionTeam,
+            new Filters\DuesTransactionPaymentStatus,
+            new Filters\DuesTransactionSwagStatus,
+        ];
     }
 
     /**
