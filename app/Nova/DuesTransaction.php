@@ -58,6 +58,12 @@ class DuesTransaction extends Resource
                 return ucfirst($str);
             }),
 
+            Text::make('Polo Status', 'swag_polo_status')
+                ->onlyOnIndex(),
+
+            Text::make('Shirt Status', 'swag_shirt_status')
+                ->onlyOnIndex(),
+
             new Panel('T-Shirt Distribution',
                 [
                     DateTime::make('Timestamp', 'swag_shirt_provided')
