@@ -50,31 +50,39 @@ class DuesTransaction extends Resource
         return [
             ID::make()->sortable(),
 
-            (new BelongsTo('Paid By', 'user_id', 'App\Nova\User')),
+            BelongsTo::make('Paid By', 'user_id', 'App\Nova\User')
+                ->onlyOnDetail(),
 
-            (new BelongsTo('Dues Package', 'dues_package_id', 'App\Nova\DuesPackage')),
+            BelongsTo::make('Dues Package', 'dues_package_id', 'App\Nova\DuesPackage')
+                ->onlyOnDetail(),
 
             Text::make('Status')->resolveUsing(function ($str) {
                 return ucfirst($str);
-            }),
+            })
+                ->onlyOnDetail(),
 
             new Panel('T-Shirt Distribution',
                 [
-                    DateTime::make('Timestamp', 'swag_shirt_provided'),
+                    DateTime::make('Timestamp', 'swag_shirt_provided')
+                        ->onlyOnDetail(),
                     BelongsTo::make('Distributed By', 'swag_shirt_providedBy', 'App\Nova\User')
-                        ->help('The user that recorded the payment'),
+                        ->help('The user that recorded the payment')
+                        ->onlyOnDetail(),
                 ]
             ),
 
             new Panel('Polo Distribution',
                 [
-                    DateTime::make('Timestamp', 'swag_polo_provided'),
-                        BelongsTo::make('Distributed By', 'swag_polo_providedBy', 'App\Nova\User')
-                        ->help('The user that recorded the payment'),
+                    DateTime::make('Timestamp', 'swag_polo_provided')
+                            ->onlyOnDetail(),
+                    BelongsTo::make('Distributed By', 'swag_polo_providedBy', 'App\Nova\User')
+                        ->help('The user that recorded the payment')
+                        ->onlyOnDetail(),
                 ]
             ),
 
-            MorphMany::make('Payments'),
+            MorphMany::make('Payments')
+                ->onlyOnDetail(),
 
             new Panel('Metadata', $this->metaFields()),
         ];
