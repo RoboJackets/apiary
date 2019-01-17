@@ -53,7 +53,7 @@ class DuesTransaction extends Resource
             BelongsTo::make('Paid By', 'user', 'App\\Nova\\User')
                 ->onlyOnDetail(),
 
-            BelongsTo::make('Dues Package', 'dues_package_id', 'App\\Nova\\DuesPackage')
+            BelongsTo::make('Dues Package', 'package', 'App\\Nova\\DuesPackage')
                 ->onlyOnDetail(),
 
             Text::make('Status')->resolveUsing(function ($str) {
