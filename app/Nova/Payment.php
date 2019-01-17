@@ -37,7 +37,6 @@ class Payment extends Resource
      */
     public function fields(Request $request)
     {
-        return [
         $payment_methods = [
             'cash' => 'Cash',
             'squarecash' => 'Square Cash',

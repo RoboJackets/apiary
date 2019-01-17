@@ -17,8 +17,8 @@ use App\Policies\EventPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\AttendancePolicy;
 use App\Policies\DuesPackagePolicy;
-use App\Policies\RecruitingVisitPolicy;
 use App\Policies\DuesTransactionPolicy;
+use App\Policies\RecruitingVisitPolicy;
 use App\Policies\NotificationTemplatePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 

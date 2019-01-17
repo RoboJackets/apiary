@@ -227,7 +227,7 @@ class DuesTransaction extends Model
     }
 
     /**
-     * Get the is_paid flag for the DuesTransaction
+     * Get the is_paid flag for the DuesTransaction.
      *
      * @return bool
      */

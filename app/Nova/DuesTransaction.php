@@ -67,15 +67,19 @@ class DuesTransaction extends Resource
             }),
 
             new Panel('T-Shirt Distribution',
-                DateTime::make('Timestamp', 'swag_shirt_provided'),
-                BelongsTo::make('User', 'swag_shirt_providedBy')
-                    ->help('The user that recorded the payment'),
+                [
+                    DateTime::make('Timestamp', 'swag_shirt_provided'),
+                    BelongsTo::make('Distributed By', 'swag_shirt_providedBy', 'App\Nova\User')
+                        ->help('The user that recorded the payment'),
+                ]
             ),
 
             new Panel('Polo Distribution',
-                DateTime::make('Timestamp', 'swag_polo_provided'),
-                BelongsTo::make('User', 'swag_polo_providedBy')
-                    ->help('The user that recorded the payment'),
+                [
+                    DateTime::make('Timestamp', 'swag_polo_provided'),
+                        BelongsTo::make('Distributed By', 'swag_polo_providedBy', 'App\Nova\User')
+                        ->help('The user that recorded the payment'),
+                ]
             ),
 
             MorphMany::make('Payments'),
