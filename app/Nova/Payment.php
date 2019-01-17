@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\MorphTo;
@@ -10,7 +11,6 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\ID;
 
 class Payment extends Resource
 {
