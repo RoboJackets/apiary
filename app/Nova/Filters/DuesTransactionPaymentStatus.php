@@ -15,13 +15,6 @@ class DuesTransactionPaymentStatus extends BooleanFilter
     public $name = 'Payment Status';
 
     /**
-     * The filter's component.
-     *
-     * @var string
-     */
-    public $component = 'select-filter';
-
-    /**
      * Apply the filter to the given query.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -47,7 +40,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
     public function options(Request $request)
     {
         return [
-            'Pending' => 'pending',
+            'Only Pending' => 'pending',
         ];
     }
 }
