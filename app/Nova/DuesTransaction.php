@@ -50,7 +50,7 @@ class DuesTransaction extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Paid By', 'user_id', 'App\\Nova\\User')
+            BelongsTo::make('Paid By', 'user', 'App\\Nova\\User')
                 ->onlyOnDetail(),
 
             BelongsTo::make('Dues Package', 'dues_package_id', 'App\\Nova\\DuesPackage')
