@@ -31,7 +31,6 @@ class DuesTransactionPaymentStatus extends BooleanFilter
                     ->where('payments.deleted_at', '=', null);
             })
             ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
-            ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) < dues_packages.cost');
         } else {
             return $query;
