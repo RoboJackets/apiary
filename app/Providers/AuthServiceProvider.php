@@ -8,6 +8,7 @@ use App\User;
 use App\Event;
 use App\Attendance;
 use App\DuesPackage;
+use App\DuesTransaction;
 use App\RecruitingVisit;
 use App\Policies\RsvpPolicy;
 use App\Policies\TeamPolicy;
