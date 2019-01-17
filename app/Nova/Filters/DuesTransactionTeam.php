@@ -2,6 +2,7 @@
 
 namespace App\Nova\Filters;
 
+use DB;
 use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
