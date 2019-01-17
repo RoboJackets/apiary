@@ -4,8 +4,6 @@ namespace App\Nova;
 
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
-use App\Nova\DuesTransaction;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Currency;

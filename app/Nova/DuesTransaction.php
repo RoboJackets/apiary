@@ -6,17 +6,9 @@ use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasOne;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\MorphMany;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Textarea;
-use App\Nova\Metrics\ActiveMembers;
-use App\Nova\Metrics\TotalTeamMembers;
-use App\Nova\Metrics\AttendancePerWeek;
-use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
 
 class DuesTransaction extends Resource
 {
