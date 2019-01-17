@@ -95,11 +95,11 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute()
     {
-        if (! $this->package->is_active) {
+        if (! $this->package()->is_active) {
             return 'expired';
-        } elseif ($this->payment->count() == 0) {
+        } elseif ($this->payment()->count() == 0) {
             return 'pending';
-        } elseif ($this->payment->sum('amount') < $this->getPayableAmount()) {
+        } elseif ($this->payment()->sum('amount') < $this->getPayableAmount()) {
             return 'pending';
         } else {
             return 'paid';
@@ -113,9 +113,9 @@ class DuesTransaction extends Model
      */
     public function getSwagPoloStatusAttribute()
     {
-        if ($this->package->eligible_for_polo && $this->swag_polo_provided == null) {
+        if ($this->package()->eligible_for_polo && $this->swag_polo_provided == null) {
             return 'Not Picked Up';
-        } elseif ($this->package->eligible_for_polo && $this->swag_polo_provided != null) {
+        } elseif ($this->package()->eligible_for_polo && $this->swag_polo_provided != null) {
             return 'Picked Up';
         } else {
             return 'Not Eligible';
@@ -129,9 +129,9 @@ class DuesTransaction extends Model
      */
     public function getSwagShirtStatusAttribute()
     {
-        if ($this->package->eligible_for_shirt && $this->swag_shirt_provided == null) {
+        if ($this->package()->eligible_for_shirt && $this->swag_shirt_provided == null) {
             return 'Not Picked Up';
-        } elseif ($this->package->eligible_for_shirt && $this->swag_shirt_provided != null) {
+        } elseif ($this->package()->eligible_for_shirt && $this->swag_shirt_provided != null) {
             return 'Picked Up';
         } else {
             return 'Not Eligible';
