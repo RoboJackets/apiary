@@ -54,28 +54,6 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-<<<<<<< HEAD
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Emergency Contact', $this->emergencyFields()),
-
-            new Panel('Swag', $this->swagFields()),
-
-            BelongsToMany::make('Teams'),
-
-            HasMany::make('Attendance'),
-
-            HasMany::make('Dues', 'paidDues', 'App\Nova\DuesTransaction'),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
-=======
->>>>>>> master
             Text::make('Username', 'uid')
                 ->sortable()
                 ->hideWhenCreating()
