@@ -6,6 +6,7 @@ use App\Rsvp;
 use App\Team;
 use App\User;
 use App\Event;
+use App\Payment;
 use App\Attendance;
 use App\DuesPackage;
 use App\DuesTransaction;

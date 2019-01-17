@@ -71,7 +71,8 @@ class Payment extends Resource
                 ->help('The user that recorded the payment'),
 
             TextArea::make('Notes')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->alwaysShow(),
 
             new Panel('Metadata', $this->metaFields()),
         ];

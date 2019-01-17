@@ -41,6 +41,14 @@ class DuesPackage extends Model
     /**
      * Get the DuesTransaction associated with the DuesPackage model.
      */
+    public function duesTransactions()
+    {
+        return $this->hasMany(\App\DuesTransaction::class);
+    }
+
+    /**
+     * Get the DuesTransaction associated with the DuesPackage model.
+     */
     public function transactions()
     {
         return $this->hasMany(\App\DuesTransaction::class);

@@ -58,6 +58,7 @@ class Team extends Resource
 
             Textarea::make('Description')
                 ->hideFromIndex()
+                ->alwaysShow()
                 ->rules('required'),
 
             new Panel('Communications', $this->commFields()),
