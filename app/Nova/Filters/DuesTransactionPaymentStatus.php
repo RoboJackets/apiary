@@ -3,10 +3,17 @@
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Filters\BooleanFilter;
 
-class DuesTransactionPaymentStatus extends Filter
+class DuesTransactionPaymentStatus extends BooleanFilter
 {
+    /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Payment Status';
+
     /**
      * The filter's component.
      *

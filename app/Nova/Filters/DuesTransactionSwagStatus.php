@@ -3,10 +3,17 @@
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Filters\BooleanFilter;
 
-class DuesTransactionSwagStatus extends Filter
+class DuesTransactionSwagStatus extends BooleanFilter
 {
+    /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Swag Status';
+
     /**
      * The filter's component.
      *

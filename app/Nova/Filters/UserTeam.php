@@ -9,6 +9,13 @@ use Laravel\Nova\Filters\Filter;
 class UserTeam extends Filter
 {
     /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Team';
+
+    /**
      * The filter's component.
      *
      * @var string

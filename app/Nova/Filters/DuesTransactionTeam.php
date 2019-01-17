@@ -9,6 +9,13 @@ use Laravel\Nova\Filters\Filter;
 class DuesTransactionTeam extends Filter
 {
     /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Team';
+
+    /**
      * The filter's component.
      *
      * @var string
@@ -25,9 +32,11 @@ class DuesTransactionTeam extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->join('users', 'user_id', '=', 'users.id')->whereHas('teams', function ($query) use ($value) {
-            $query->where('teams.id', '=', $value);
-        });
+        return $query->leftJoin('users', 'user_id', '=', 'users.id')
+            ->whereHas('teams', function ($query) use ($value) {
+                $query->where('teams.id', '=', $value);
+            }
+            );
     }
 
     /**
