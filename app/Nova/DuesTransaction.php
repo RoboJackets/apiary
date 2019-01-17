@@ -81,7 +81,7 @@ class DuesTransaction extends Resource
                 ]
             ),
 
-            MorphMany::make('Payments')
+            MorphMany::make('Payment')
                 ->onlyOnDetail(),
 
             new Panel('Metadata', $this->metaFields()),
