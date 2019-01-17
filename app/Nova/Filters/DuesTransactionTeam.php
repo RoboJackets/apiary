@@ -32,11 +32,12 @@ class DuesTransactionTeam extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->leftJoin('users', 'user_id', '=', 'users.id')
-            ->whereHas('teams', function ($query) use ($value) {
-                $query->where('teams.id', '=', $value);
-            }
-            );
+        return $query->whereExists(function ($query) use ($value) {
+            $query->select(DB::raw(1))
+                  ->from('team_user')
+                  ->where('dues_transactions.user_id',' = ','team_user.user_id')
+                  ->where('team_user.team_id',' = ', $value);
+        });
     }
 
     /**
