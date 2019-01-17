@@ -17,7 +17,7 @@ class DuesTransaction extends Resource
      *
      * @var string
      */
-    public static $model = 'App\DuesTransaction';
+    public static $model = 'App\\DuesTransaction';
 
     /**
      * Get the displayble label of the resource.
@@ -50,10 +50,10 @@ class DuesTransaction extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Paid By', 'user_id', 'App\Nova\User')
+            BelongsTo::make('Paid By', 'user_id', 'App\\Nova\\User')
                 ->onlyOnDetail(),
 
-            BelongsTo::make('Dues Package', 'dues_package_id', 'App\Nova\DuesPackage')
+            BelongsTo::make('Dues Package', 'dues_package_id', 'App\\Nova\\DuesPackage')
                 ->onlyOnDetail(),
 
             Text::make('Status')->resolveUsing(function ($str) {
@@ -65,7 +65,7 @@ class DuesTransaction extends Resource
                 [
                     DateTime::make('Timestamp', 'swag_shirt_provided')
                         ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swag_shirt_providedBy', 'App\Nova\User')
+                    BelongsTo::make('Distributed By', 'swag_shirt_providedBy', 'App\\Nova\\User')
                         ->help('The user that recorded the payment')
                         ->onlyOnDetail(),
                 ]
@@ -75,7 +75,7 @@ class DuesTransaction extends Resource
                 [
                     DateTime::make('Timestamp', 'swag_polo_provided')
                             ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swag_polo_providedBy', 'App\Nova\User')
+                    BelongsTo::make('Distributed By', 'swag_polo_providedBy', 'App\\Nova\\User')
                         ->help('The user that recorded the payment')
                         ->onlyOnDetail(),
                 ]

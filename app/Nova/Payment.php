@@ -18,7 +18,7 @@ class Payment extends Resource
      *
      * @var string
      */
-    public static $model = 'App\Payment';
+    public static $model = 'App\\Payment';
 
     /**
      * Indicates if the resource should be displayed in the sidebar.
@@ -66,7 +66,7 @@ class Payment extends Resource
                 ->format('%.2n')
                 ->rules('required'),
 
-            BelongsTo::make('Recorded By', 'user', 'App\Nova\User')
+            BelongsTo::make('Recorded By', 'user', 'App\\Nova\\User')
                 ->help('The user that recorded the payment'),
 
             TextArea::make('Notes')
