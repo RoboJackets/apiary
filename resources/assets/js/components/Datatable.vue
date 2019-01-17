@@ -39,8 +39,10 @@ export default {
         const customDom =
           "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'Bi><'col-sm-7'p>>";
         this.tableData = tableData;
+        const self = this;
+        const tableId = '#' + this.id;
 
-        this.table = $('#' + this.id).DataTable({
+        this.table = $(tableId).DataTable({
           stateSave: true,
           data: this.tableData,
           columns: this.columns,
@@ -49,11 +51,14 @@ export default {
           dom: customDom,
           buttons: ['copy', 'csv', 'excel', 'print'],
         });
+        $(tableId).on('search.dt', _.debounce(function() {
+          self.makeRowsClickable();
+        }, 500));
         this.makeRowsClickable();
       },
       makeRowsClickable: function() {
         const path = this.dataLink;
-        if (this.tableData.length) {
+        if (this.tableData && this.tableData.length) {
           const rowID = '#' + this.id + ' tbody tr';
           $(rowID).click(function() {
             window.location.pathname =

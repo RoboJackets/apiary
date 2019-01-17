@@ -4,19 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NotificationTemplate;
+use App\Traits\AuthorizeInclude;
+use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
 
 class NotificationTemplateController extends Controller
 {
+    use AuthorizeInclude;
+
+    public function __construct()
+    {
+        $this->middleware(['permission:send-notifications']);
+    }
+
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $nt = NotificationTemplate::all();
+        $include = $request->input('include');
+        $nt = NotificationTemplate::with($this->authorizeInclude(NotificationTemplate::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'templates' => $nt]);
+        return response()->json(['status' => 'success', 'templates' => NotificationTemplateResource::collection($nt)]);
     }
 
     /**
@@ -40,20 +51,22 @@ class NotificationTemplateController extends Controller
         $nt->created_by = $request->user()->id;
         $nt->save();
 
-        return response()->json(['status' => 'success', 'template' => $nt]);
+        return response()->json(['status' => 'success', 'template' => new NotificationTemplateResource($nt)]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int  $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $nt = NotificationTemplate::find($id);
+        $include = $request->input('include');
+        $nt = NotificationTemplate::with($this->authorizeInclude(NotificationTemplate::class, $include))->find($id);
         if ($nt) {
-            return response()->json(['status' => 'success', 'template' => $nt]);
+            return response()->json(['status' => 'success', 'template' => new NotificationTemplateResource($nt)]);
         } else {
             return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
         }
@@ -80,7 +93,7 @@ class NotificationTemplateController extends Controller
 
         $nt->update($request->all());
 
-        return response()->json(['status' => 'success', 'template' => $nt]);
+        return response()->json(['status' => 'success', 'template' => new NotificationTemplateResource($nt)]);
     }
 
     /**

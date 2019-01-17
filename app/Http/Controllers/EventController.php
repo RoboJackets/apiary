@@ -6,10 +6,14 @@ use Bugsnag;
 use App\User;
 use App\Event;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
 use Illuminate\Database\QueryException;
+use App\Http\Resources\Event as EventResource;
 
 class EventController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-events', ['only' => ['index']]);
@@ -22,13 +26,15 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $request Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::all();
+        $include = $request->input('include');
+        $events = Event::with($this->authorizeInclude(Event::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'events' => $events]);
+        return response()->json(['status' => 'success', 'events' => EventResource::collection($events)]);
     }
 
     /**
@@ -76,15 +82,17 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
     {
-        $event = Event::with(['rsvps'])->find($id);
+        $include = $request->input('include');
+        $event = Event::with($this->authorizeInclude(Event::class, $include))->find($id);
 
         if ($event) {
-            return response()->json(['status' => 'success', 'event' => $event]);
+            return response()->json(['status' => 'success', 'event' => new EventResource($event)]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
         }
@@ -140,7 +148,7 @@ class EventController extends Controller
 
         $event = Event::find($id);
         if ($event->id) {
-            return response()->json(['status' => 'success', 'event' => $event], 201);
+            return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
         } else {
             return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }

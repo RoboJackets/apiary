@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RecruitingCampaignRecipient;
+use App\Http\Resources\RecruitingCampaignRecipient as RCRResource;
 
 class RecruitingCampaignRecipientController extends Controller
 {
@@ -27,9 +28,11 @@ class RecruitingCampaignRecipientController extends Controller
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
         ]);
 
-        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)->get();
+        $include = $request->input('include');
+        $rcr = RecruitingCampaignRecipient::with($this->authorizeInclude(RecruitingCampaignRecipient::class, $include))
+            ->where('recruiting_campaign_id', $recruiting_campaign_id)->get();
 
-        return response()->json(['status' => 'success', 'recipients' => $rcr]);
+        return response()->json(['status' => 'success', 'recipients' => RCRResource::collection($rcr)]);
     }
 
     /**
@@ -101,7 +104,7 @@ class RecruitingCampaignRecipientController extends Controller
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
             ->where('id', $recruiting_campaign_recipient_id)->first();
 
-        return response()->json(['status' => 'success', 'recipient' => $rcr], 200);
+        return response()->json(['status' => 'success', 'recipient' => new RCRResource($rcr)], 200);
     }
 
     /**
@@ -129,7 +132,7 @@ class RecruitingCampaignRecipientController extends Controller
 
         $rcr->update($request->all());
 
-        return response()->json(['status' => 'success', 'recipient' => $rcr]);
+        return response()->json(['status' => 'success', 'recipient' => new RCRResource($rcr)]);
     }
 
     /**

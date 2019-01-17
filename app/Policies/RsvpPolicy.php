@@ -66,7 +66,7 @@ class RsvpPolicy
      */
     public function restore(User $user, Rsvp $rsvp)
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**

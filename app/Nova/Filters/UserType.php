@@ -30,9 +30,10 @@ class UserType extends Filter
     {
         return [
             'Administrator' => 'admin',
-            'Officer I' => 'officer-i',
-            'Officer II' => 'officer-ii',
-            'Core' => 'core',
+            'Officer' => 'officer',
+            'Project Manager' => 'project-manager',
+            'Team Lead' => 'team-lead',
+            'Trainer' => 'trainer',
             'Member' => 'member',
             'Non-Member' => 'non-member',
         ];

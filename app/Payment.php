@@ -62,4 +62,16 @@ class Payment extends Model
             return;
         }
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     * @return array
+     */
+    public function getRelationshipPermissionMap()
+    {
+        return [
+            'user' => 'users',
+            'payable' => 'dues-transactions',
+        ];
+    }
 }

@@ -11,7 +11,7 @@
 
           <label for="recruiting-updated" class="col-sm-2 col-form-label">Last Updated</label>
           <div class="col-sm-10 col-lg-4">
-            <input v-model="recruitingVisit.updated_at" type="text" readonly class="form-control" id="recruiting-updated">
+            <input v-model="recruitingVisit.updated_at.date" type="text" readonly class="form-control" id="recruiting-updated">
           </div>
         </div>
 

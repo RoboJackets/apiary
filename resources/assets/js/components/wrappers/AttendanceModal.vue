@@ -83,7 +83,7 @@ export default {
         attendable_id: this.attendableId,
         attendable_type: this.attendableType,
         source: 'MyRoboJackets',
-        includeName: 'true',
+        include: 'attendee',
       },
       feedback: '',
       baseUrl: '/api/v1/attendance',
@@ -127,7 +127,9 @@ export default {
         .post(this.baseUrl, this.attendance)
         .then(response => {
           this.hasError = false;
-          this.feedback = 'Saved! (' + response.data.attendance.name + ')';
+          let responseContent = response.data.attendance;
+          let attendeeName = (responseContent.attendee != null) ? responseContent.attendee.name : "Non-Member";
+          this.feedback = 'Saved! (' + attendeeName + ')';
           console.log('success');
           this.attendance.gtid = '';
           this.$refs.input.focus();

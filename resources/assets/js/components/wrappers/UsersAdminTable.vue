@@ -12,7 +12,6 @@ export default {
     return {
       tableConfig: [
         { title: 'GT Username', data: 'uid' },
-        { title: 'GTID', data: 'gtid' },
         { title: 'First Name', data: 'first_name' },
         { title: 'Last Name', data: 'last_name' },
         { title: 'Email', data: 'gt_email' },

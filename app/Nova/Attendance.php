@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Lenses\RecentInactiveUsers;
 use App\Nova\Filters\UserActiveAttendance;
 use Laravel\Nova\Http\Requests\LensRequest;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class Attendance extends Resource
@@ -63,6 +64,13 @@ class Attendance extends Resource
     public static $title = 'name';
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array
+     */
+    public static $with = ['recorded', 'attendee'];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -71,18 +79,19 @@ class Attendance extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('GTID')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->canSee(function ($request) {
+                    return $request->user()->can('read-users-gtid');
+                })->resolveUsing(function ($gtid) {
+                    // Hide GTID when the attendee is known
+                    if ($this->attendee) {
+                        return '—';
+                    } else {
+                        return $gtid;
+                    }
+                }),
 
             BelongsTo::make('User', 'attendee'),
 
@@ -101,6 +110,8 @@ class Attendance extends Resource
             Text::make('Source')
                 ->hideFromIndex()
                 ->sortable(),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
@@ -151,7 +162,9 @@ class Attendance extends Resource
     public function lenses(Request $request)
     {
         return [
-            new RecentInactiveUsers,
+            (new RecentInactiveUsers)->canSee(function ($request) {
+                return $request->user()->can('read-attendance');
+            }),
         ];
     }
 
@@ -220,5 +233,28 @@ class Attendance extends Resource
     public function authorizedToDelete(Request $request)
     {
         return ($request instanceof LensRequest) ? false : parent::authorizedToDelete($request);
+    }
+
+    /**
+     * Build an "index" query for the team resource to hide hidden teams.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (! $request->user()->can('read-teams-hidden')) {
+            /*
+            return $query->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('teams')
+                    ->where('visible', 1);
+            });
+             */
+            return $query;
+        } else {
+            return $query;
+        }
     }
 }

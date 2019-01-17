@@ -3,7 +3,9 @@
 /public/storage
 /public/mix-manifest.json
 /public/css/app.css
+/public/css/nova.css
 /public/js/app.js
+/public/js/nova.js
 /storage/*.key
 /vendor
 /.idea
@@ -18,3 +20,5 @@ npm-debug.log
 /resources/views/vendor/nova/
 /public/vendor/nova/
 auth.json
+.phpstorm.meta.php
+.idea_helper.php

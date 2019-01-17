@@ -169,7 +169,7 @@ export default {
       memberTableConfig: [
         { title: 'Name', data: 'name' },
         { title: 'Username', data: 'uid' },
-        { title: 'Join Date', data: 'pivot.created_at' },
+        { title: 'Join Date', data: 'pivot.created_at.date' },
         {
           title: 'Action',
           data: null,

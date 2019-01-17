@@ -76,7 +76,7 @@ export default {
         attendable_type: 'App\\Team',
         attendable_id: '',
         source: 'manual',
-        includeName: true,
+        include: 'attendee',
       },
       dateTimeConfig: {
         dateFormat: 'Y-m-d',
@@ -145,7 +145,9 @@ export default {
         .post(this.attendanceBaseUrl, this.attendance)
         .then(response => {
           this.hasError = false;
-          this.feedback = 'Saved! (' + response.data.attendance.name + ')';
+          let responseContent = response.data.attendance;
+          let attendeeName = (responseContent.attendee != null) ? responseContent.attendee.name : "Non-Member";
+          this.feedback = 'Saved! (' + attendeeName + ')';
           console.log('success');
           this.attendance.gtid = '';
           this.$refs.input.focus();

@@ -60,17 +60,6 @@ class Rsvp extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Detailed Information', $this->detailedFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             BelongsTo::make('User'),
 
             BelongsTo::make('Event'),
@@ -80,6 +69,10 @@ class Rsvp extends Resource
 
             Text::make('Source')
                 ->sortable(),
+
+            new Panel('Detailed Information', $this->detailedFields()),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
