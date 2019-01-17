@@ -22,22 +22,22 @@ class DuesTransactionPolicy
 
     public function create(User $user)
     {
-        return $user->can('create-dues-transactions');
+        return false;
     }
 
     public function update(User $user, DuesTransaction $resource)
     {
-        return $user->can('update-dues-transactions');
+        return false;
     }
 
     public function delete(User $user, DuesTransaction $resource)
     {
-        return $user->can('delete-dues-transactions');
+        return false;
     }
 
     public function restore(User $user, DuesTransaction $resource)
     {
-        return $user->can('delete-dues-transactions');
+        return false;
     }
 
     public function forceDelete(User $user, DuesTransaction $resource)
