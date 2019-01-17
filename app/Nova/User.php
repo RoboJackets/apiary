@@ -137,7 +137,7 @@ class User extends Resource
                 }
             }),
 
-            HasMany::make('Dues')->canSee(function ($request) {
+            HasMany::make('DuesTransactions')->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-dues-transactions-own');
                 } else {

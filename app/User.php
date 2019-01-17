@@ -139,7 +139,7 @@ class User extends Authenticatable
     /*
      * Get the DuesTransactions belonging to the User
      */
-    public function dues()
+    public function duesTransactions()
     {
         return $this->hasMany(\App\DuesTransaction::class);
     }
