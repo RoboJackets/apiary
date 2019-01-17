@@ -81,7 +81,7 @@ class DuesTransaction extends Resource
                     Text::make('Status', 'swag_polo_status')
                         ->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
-                            ->onlyOnDetail(),
+                        ->onlyOnDetail(),
                     BelongsTo::make('Distributed By', 'swagPoloProvidedBy', 'App\\Nova\\User')
                         ->help('The user that recorded the payment')
                         ->onlyOnDetail(),

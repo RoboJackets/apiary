@@ -22,7 +22,7 @@ class DuesTransactionPolicy
 
     public function create(User $user)
     {
-        return false;
+        return $user->can('create-dues-transactions');
     }
 
     public function update(User $user, DuesTransaction $resource)
