@@ -50,9 +50,9 @@ class DuesTransaction extends Resource
         return [
             ID::make()->sortable(),
 
-            (new BelongsTo('Paid By', 'user_id', 'App\Nova\User'))
+            (new BelongsTo('Paid By', 'user_id', 'App\Nova\User')),
 
-            (new BelongsTo('Dues Package', 'dues_package_id', 'App\Nova\DuesPackage'))
+            (new BelongsTo('Dues Package', 'dues_package_id', 'App\Nova\DuesPackage')),
 
             Text::make('Status')->resolveUsing(function ($str) {
                 return ucfirst($str);
