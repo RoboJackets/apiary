@@ -50,16 +50,13 @@ class DuesTransaction extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Paid By', 'user', 'App\\Nova\\User')
-                ->onlyOnDetail(),
+            BelongsTo::make('Paid By', 'user', 'App\\Nova\\User'),
 
-            BelongsTo::make('Dues Package', 'package', 'App\\Nova\\DuesPackage')
-                ->onlyOnDetail(),
+            BelongsTo::make('Dues Package', 'package', 'App\\Nova\\DuesPackage'),
 
             Text::make('Status')->resolveUsing(function ($str) {
                 return ucfirst($str);
-            })
-                ->onlyOnDetail(),
+            }),
 
             new Panel('T-Shirt Distribution',
                 [

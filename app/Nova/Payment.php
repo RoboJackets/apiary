@@ -54,18 +54,16 @@ class Payment extends Resource
 
             Select::make('Payment Method', 'method')
                 ->options($payment_methods)
-                ->displayUsingLabels()
-                ->hideFromIndex(),
+                ->displayUsingLabels(),
 
             Currency::make('Amount')
                 ->sortable()
                 ->format('%.2n')
-                ->rules('required'),
 
             Currency::make('Processing Fee')
                 ->sortable()
                 ->format('%.2n')
-                ->rules('required'),
+                ->onlyOnDetail(),
 
             BelongsTo::make('Recorded By', 'user', 'App\\Nova\\User')
                 ->help('The user that recorded the payment'),
