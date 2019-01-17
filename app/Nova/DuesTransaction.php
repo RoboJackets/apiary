@@ -65,7 +65,7 @@ class DuesTransaction extends Resource
                 [
                     DateTime::make('Timestamp', 'swag_shirt_provided')
                         ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swag_shirt_providedBy', 'App\\Nova\\User')
+                    BelongsTo::make('Distributed By', 'swagShirtProvidedBy', 'App\\Nova\\User')
                         ->help('The user that recorded the payment')
                         ->onlyOnDetail(),
                 ]
@@ -75,7 +75,7 @@ class DuesTransaction extends Resource
                 [
                     DateTime::make('Timestamp', 'swag_polo_provided')
                             ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swag_polo_providedBy', 'App\\Nova\\User')
+                    BelongsTo::make('Distributed By', 'swagPoloProvidedBy', 'App\\Nova\\User')
                         ->help('The user that recorded the payment')
                         ->onlyOnDetail(),
                 ]
