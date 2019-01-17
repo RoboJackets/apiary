@@ -35,8 +35,8 @@ class DuesTransactionTeam extends Filter
         return $query->whereExists(function ($query) use ($value) {
             $query->select(DB::raw(1))
                   ->from('team_user')
-                  ->where('dues_transactions.user_id',' = ','team_user.user_id')
-                  ->where('team_user.team_id',' = ', $value);
+                  ->where('dues_transactions.user_id', '=', 'team_user.user_id')
+                  ->where('team_user.team_id', '=', $value);
         });
     }
 
