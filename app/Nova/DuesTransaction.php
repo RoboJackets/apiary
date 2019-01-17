@@ -6,6 +6,7 @@ use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
@@ -78,7 +79,7 @@ class DuesTransaction extends Resource
                 ]
             ),
 
-            MorphMany::make('Payment')
+            MorphMany::make('Payments', 'payment', 'App\Nova\Payment')
                 ->onlyOnDetail(),
 
             new Panel('Metadata', $this->metaFields()),
