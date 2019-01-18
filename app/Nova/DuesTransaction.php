@@ -56,7 +56,7 @@ class DuesTransaction extends Resource
 
             Text::make('Status')->resolveUsing(function ($str) {
                 return ucfirst($str);
-            }),
+            })->exceptOnForms(),
 
             Text::make('Shirt Status', 'swag_shirt_status')
                 ->onlyOnIndex(),

@@ -95,7 +95,7 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute()
     {
-        if (! $this->package->is_active) {
+        if (null === $this->package || ! $this->package->is_active) {
             return 'expired';
         } elseif ($this->payment->count() == 0) {
             return 'pending';
@@ -113,7 +113,7 @@ class DuesTransaction extends Model
      */
     public function getSwagPoloStatusAttribute()
     {
-        if ($this->package->eligible_for_polo && $this->swag_polo_provided == null) {
+        if (null === $this->package || $this->package->eligible_for_polo && $this->swag_polo_provided == null) {
             return 'Not Picked Up';
         } elseif ($this->package->eligible_for_polo && $this->swag_polo_provided != null) {
             return 'Picked Up';
@@ -129,7 +129,7 @@ class DuesTransaction extends Model
      */
     public function getSwagShirtStatusAttribute()
     {
-        if ($this->package->eligible_for_shirt && $this->swag_shirt_provided == null) {
+        if (null === $this->package || $this->package->eligible_for_shirt && $this->swag_shirt_provided == null) {
             return 'Not Picked Up';
         } elseif ($this->package->eligible_for_shirt && $this->swag_shirt_provided != null) {
             return 'Picked Up';
@@ -178,8 +178,7 @@ class DuesTransaction extends Model
         return $query->select(
             'dues_transactions.*',
             'dues_packages.eligible_for_shirt',
-            'dues_packages.eligible_for_polo',
-            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
+            'dues_packages.eligible_for_polo'
         )
             ->join('dues_packages', function ($j) {
                 $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
@@ -198,7 +197,7 @@ class DuesTransaction extends Model
                     ->where('payments.deleted_at', '=', null);
             })
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
-            ->havingRaw('amountPaid >= dues_packages.cost');
+            ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
     }
 
     /**
@@ -211,8 +210,7 @@ class DuesTransaction extends Model
     public function scopePaid($query)
     {
         $query = $query->select(
-            'dues_transactions.*',
-            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
+            'dues_transactions.*'
         )
             ->leftJoin('payments', function ($j) {
                 $j->on('payments.payable_id', '=', 'dues_transactions.id')
@@ -221,7 +219,7 @@ class DuesTransaction extends Model
             })
             ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
-            ->havingRaw('amountPaid >= dues_packages.cost');
+            ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
 
         return $query;
     }
@@ -246,8 +244,7 @@ class DuesTransaction extends Model
     public function scopeUnpaid($query)
     {
         return $query->select(
-            'dues_transactions.*',
-            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
+            'dues_transactions.*'
         )
             ->leftJoin('payments', function ($j) {
                 $j->on('payments.payable_id', '=', 'dues_transactions.id')
@@ -256,7 +253,7 @@ class DuesTransaction extends Model
             })
             ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
-            ->havingRaw('amountPaid < dues_packages.cost');
+            ->havingRaw('COALESCE(SUM(payments.amount),0.00) < dues_packages.cost');
     }
 
     /**

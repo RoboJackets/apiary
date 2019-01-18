@@ -2,6 +2,7 @@
 
 namespace App\Nova\Filters;
 
+use DB;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
 
@@ -25,13 +26,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
     public function apply(Request $request, $query, $value)
     {
         if ($value['pending']) {
-            return $query->leftJoin('payments', function ($j) {
-                $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
-                    ->where('payments.deleted_at', '=', null);
-            })
-            ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
-            ->havingRaw('COALESCE(SUM(payments.amount),0.00) < dues_packages.cost');
+            return $query->pending();
         } else {
             return $query;
         }
