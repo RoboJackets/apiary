@@ -4,15 +4,14 @@ namespace App\Nova\Actions;
 
 use App\Payment;
 use Illuminate\Bus\Queueable;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\Currency;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Currency;
-use Illuminate\Support\Facades\Auth;
 
 class AddPayment extends Action
 {
@@ -35,6 +34,7 @@ class AddPayment extends Action
         // shouldn't happen but might if someone is abusing the API
         if (Auth::user()->cant('create-payments-'.$fields->method)) {
             $this->markAsFailed($models->first(), null);
+
             return Action::danger(
                 'You do not have permission to accept that payment method. Please contact a developer.'
             );
@@ -43,6 +43,7 @@ class AddPayment extends Action
         if ($fields->method === 'square' || $fields->method === 'swipe') {
             if ($fields->amount !== ($models->first()->package()->get()->first()->cost) + 3) {
                 $this->markAsFailed($models->first(), null);
+
                 return Action::danger(
                     'Missing expected transaction fee - total should be '.(($models->first()->package()->get()->first()->cost) + 3).', '.$fields->amount.' entered.'
                 );
@@ -50,6 +51,7 @@ class AddPayment extends Action
         } else {
             if (floatval($fields->amount) !== floatval($models->first()->package()->get()->first()->cost)) {
                 $this->markAsFailed($models->first(), null);
+
                 return Action::danger(
                     'Unexpected amount '.$fields->amount.' entered - should be '.($models->first()->package()->get()->first()->cost)
                 );
