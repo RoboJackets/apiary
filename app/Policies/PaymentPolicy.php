@@ -27,7 +27,7 @@ class PaymentPolicy
 
     public function update(User $user, Payment $resource)
     {
-        return $user->can('update-payments');
+        return false; // not manually
     }
 
     public function delete(User $user, Payment $resource)

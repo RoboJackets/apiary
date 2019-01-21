@@ -151,6 +151,25 @@ class DuesTransaction extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Actions\DistributeShirt)
+                ->canSee(function ($request) {
+                    return true;
+                })->canRun(function ($request, $user) {
+                    return $request->user()->can('update-dues-transactions');
+                }),
+            (new Actions\DistributePolo)
+                ->canSee(function ($request) {
+                    return true;
+                })->canRun(function ($request, $user) {
+                    return $request->user()->can('update-dues-transactions');
+                }),
+            (new Actions\AddPayment)
+                ->canSee(function ($request) {
+                    return true;
+                })->canRun(function ($request, $dues_transaction) {
+                    return $request->user()->can('create-payments') && ($dues_transaction->user()->get()->first()->id != $request->user()->id);
+                }),
+        ];
     }
 }

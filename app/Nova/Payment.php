@@ -41,7 +41,7 @@ class Payment extends Resource
             'squarecash' => 'Square Cash',
             'check' => 'Check',
             'swipe' => 'Swiped Card',
-            'square' => 'Square',
+            'square' => 'Square Checkout',
         ];
 
         return [
@@ -58,12 +58,10 @@ class Payment extends Resource
                 ->sortable(),
 
             Currency::make('Amount')
-                ->sortable()
                 ->format('%.2n')
                 ->sortable(),
 
             Currency::make('Processing Fee')
-                ->sortable()
                 ->format('%.2n')
                 ->onlyOnDetail()
                 ->sortable(),

@@ -27,7 +27,7 @@ class DuesTransactionPolicy
 
     public function update(User $user, DuesTransaction $resource)
     {
-        return false;
+        return $user->can('update-dues-transactions');
     }
 
     public function delete(User $user, DuesTransaction $resource)
