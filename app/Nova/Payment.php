@@ -21,6 +21,8 @@ class Payment extends Resource
      */
     public static $model = 'App\\Payment';
 
+    public static $with = ['user'];
+
     /**
      * Indicates if the resource should be displayed in the sidebar.
      *

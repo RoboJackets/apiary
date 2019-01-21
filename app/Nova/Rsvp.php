@@ -17,6 +17,8 @@ class Rsvp extends Resource
      */
     public static $model = 'App\Rsvp';
 
+    public static $with = ['user'];
+
     /**
      * Get the displayble label of the resource.
      *

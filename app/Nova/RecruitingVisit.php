@@ -17,6 +17,8 @@ class RecruitingVisit extends Resource
      */
     public static $model = 'App\RecruitingVisit';
 
+    public static $with = ['user'];
+
     /**
      * Get the displayable label of the resource.
      *

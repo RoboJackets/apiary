@@ -19,6 +19,8 @@ class DuesTransaction extends Resource
      */
     public static $model = 'App\\DuesTransaction';
 
+    public static $with = ['payment', 'package', 'user'];
+
     /**
      * Get the displayble label of the resource.
      *
