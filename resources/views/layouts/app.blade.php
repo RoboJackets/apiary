@@ -3,7 +3,7 @@
   <head>
     @include('layouts/head')
   </head>
-  
+
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       @inject('request', 'Illuminate\Http\Request')
@@ -22,6 +22,12 @@
             <li class="nav-item {{ $request->is('teams*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
             </li>
+
+            @can('access-nova')
+            <li class="nav-item">
+              <a class="nav-link" href="/nova/">Nova</a>
+            </li>
+            @endcan
 
             @hasanyrole('admin|officer-i|officer-ii')
             <li class="nav-item dropdown {{ $request->is('admin*') ? 'active' : '' }}">

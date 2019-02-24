@@ -20,7 +20,7 @@ class Event extends Resource
      *
      * @var string
      */
-    public static $model = 'App\\Event';
+    public static $model = 'App\Event';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -51,7 +51,7 @@ class Event extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            (new BelongsTo('Organizer', 'organizer', 'App\\Nova\\User'))
+            (new BelongsTo('Organizer', 'organizer', 'App\Nova\User'))
                 ->searchable()
                 ->rules('required')
                 // default to self

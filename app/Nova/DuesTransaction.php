@@ -158,13 +158,13 @@ class DuesTransaction extends Resource
                 ->canSee(function ($request) {
                     return true;
                 })->canRun(function ($request, $user) {
-                    return $request->user()->can('update-dues-transactions');
+                    return $request->user()->can('distribute-swag');
                 }),
             (new Actions\DistributePolo)
                 ->canSee(function ($request) {
                     return true;
                 })->canRun(function ($request, $user) {
-                    return $request->user()->can('update-dues-transactions');
+                    return $request->user()->can('distribute-swag');
                 }),
             (new Actions\AddPayment)
                 ->canSee(function ($request) {

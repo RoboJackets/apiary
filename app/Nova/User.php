@@ -23,7 +23,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = 'App\\User';
+    public static $model = 'App\User';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -113,7 +113,7 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            HasMany::make('Recruiting Visits', 'recruitingVisits', 'App\Nova\RecruitingVisit')
+            HasMany::make('Recruiting Visits', 'recruitingVisits', RecruitingVisit::class)
             ->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-recruiting-visits-own');
@@ -122,7 +122,7 @@ class User extends Resource
                 }
             }),
 
-            BelongsToMany::make('Teams')->canSee(function ($request) {
+            BelongsToMany::make('Teams', 'teams', Team::class)->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-teams-membership-own');
                 } else {
@@ -130,7 +130,7 @@ class User extends Resource
                 }
             }),
 
-            HasMany::make('Attendance')->canSee(function ($request) {
+            HasMany::make('Attendance', 'attendance', 'App\Nova\Attendance')->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-attendance-own');
                 } else {
@@ -138,7 +138,7 @@ class User extends Resource
                 }
             }),
 
-            HasMany::make('Dues Transactions', 'duesTransactions', 'App\Nova\DuesTransaction')
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
             ->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-dues-transactions-own');
@@ -201,8 +201,13 @@ class User extends Resource
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
 
-            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class),
-            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class),
+            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)->canSee(function ($request) {
+                return $request->user()->hasRole('admin');
+            }),
+
+            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)->canSee(function ($request) {
+                return $request->user()->hasRole('admin');
+            }),
         ];
     }
 

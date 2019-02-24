@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Actionable;
     use SoftDeletes;
     use Notifiable;
     use HasRoles;
@@ -189,12 +188,12 @@ class User extends Authenticatable
 
     public function getAuthIdentifierName()
     {
-        return 'uid';
+        return 'id';
     }
 
     public function getAuthIdentifier()
     {
-        return $this->uid;
+        return $this->id;
     }
 
     public function getAuthPassword()
