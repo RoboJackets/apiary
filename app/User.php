@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Laravel\Nova\Actions\Actionable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
