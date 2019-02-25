@@ -67,6 +67,7 @@ class DuesTransaction extends Resource
                 } elseif (null === $this->package) {
                     return;
                 }
+
                 return $this->package->get()->first()->cost;
             })
                 ->onlyOnDetail()
