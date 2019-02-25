@@ -95,7 +95,7 @@ class DuesPackage extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            HasMany::make('DuesTransactions')->canSee(function ($request) {
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)->canSee(function ($request) {
                 return $request->user()->can('read-dues-transactions');
             }),
 
