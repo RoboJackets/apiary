@@ -173,6 +173,7 @@ class DuesTransaction extends Resource
                             return false;
                         }
                     }
+
                     return $request->user()->can('distribute-swag');
                 })->canRun(function ($request, $dues_transaction) {
                     return $request->user()->can('distribute-swag');
@@ -189,6 +190,7 @@ class DuesTransaction extends Resource
                             return false;
                         }
                     }
+
                     return $request->user()->can('distribute-swag');
                 })->canRun(function ($request, $dues_transaction) {
                     return $request->user()->can('distribute-swag');
@@ -203,6 +205,7 @@ class DuesTransaction extends Resource
                             return false;
                         }
                     }
+
                     return $request->user()->can('create-payments');
                 })->canRun(function ($request, $dues_transaction) {
                     return $request->user()->can('create-payments') && ($dues_transaction->user()->get()->first()->id != $request->user()->id);
