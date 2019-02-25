@@ -165,9 +165,9 @@ class DuesTransaction extends Resource
                 ->canSee(function ($request) {
                     $transaction = \App\DuesTransaction::find($request->resourceId);
                     if (null !== $transaction) {
-                        if (!$transaction->package()->get()->first()->eligible_for_shirt) {
+                        if (! $transaction->package()->get()->first()->eligible_for_shirt) {
                             return false;
-                        } elseif (!$transaction->is_paid) {
+                        } elseif (! $transaction->is_paid) {
                             return false;
                         } elseif (null !== $transaction->swag_shirt_provided) {
                             return false;
@@ -181,9 +181,9 @@ class DuesTransaction extends Resource
                 ->canSee(function ($request) {
                     $transaction = \App\DuesTransaction::find($request->resourceId);
                     if (null !== $transaction) {
-                        if (!$transaction->package()->get()->first()->eligible_for_polo) {
+                        if (! $transaction->package()->get()->first()->eligible_for_polo) {
                             return false;
-                        } elseif (!$transaction->is_paid) {
+                        } elseif (! $transaction->is_paid) {
                             return false;
                         } elseif (null !== $transaction->swag_polo_provided) {
                             return false;
