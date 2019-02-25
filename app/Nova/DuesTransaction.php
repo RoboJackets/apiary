@@ -6,6 +6,7 @@ use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
@@ -59,6 +60,16 @@ class DuesTransaction extends Resource
             Text::make('Status')->resolveUsing(function ($str) {
                 return ucfirst($str);
             })->exceptOnForms(),
+
+            Currency::make('Payment Due', function () {
+                if ($this->is_paid) {
+                    return null;
+                } else {
+                    return $this->package->get()->first()->cost;
+                }
+            })
+                ->onlyOnDetail()
+                ->format('%.2n'),
 
             Text::make('Shirt Status', 'swag_shirt_status')
                 ->onlyOnIndex(),
