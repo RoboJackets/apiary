@@ -53,7 +53,8 @@ class DuesTransaction extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Paid By', 'user', 'App\\Nova\\User'),
+            BelongsTo::make('Paid By', 'user', 'App\\Nova\\User')
+                ->searchable(),
 
             BelongsTo::make('Dues Package', 'package', 'App\\Nova\\DuesPackage'),
 
@@ -66,9 +67,11 @@ class DuesTransaction extends Resource
                     return;
                 } elseif (null === $this->package) {
                     return;
+                } elseif (! $this->package->is_active) {
+                    return;
                 }
 
-                return $this->package->get()->first()->cost;
+                return $this->package->cost;
             })
                 ->onlyOnDetail()
                 ->format('%.2n'),
@@ -178,7 +181,7 @@ class DuesTransaction extends Resource
                 ->canSee(function ($request) {
                     $transaction = \App\DuesTransaction::find($request->resourceId);
                     if (null !== $transaction) {
-                        if (! $transaction->package()->get()->first()->eligible_for_shirt) {
+                        if (! $transaction->package->eligible_for_shirt) {
                             return false;
                         } elseif (! $transaction->is_paid) {
                             return false;
@@ -195,7 +198,7 @@ class DuesTransaction extends Resource
                 ->canSee(function ($request) {
                     $transaction = \App\DuesTransaction::find($request->resourceId);
                     if (null !== $transaction) {
-                        if (! $transaction->package()->get()->first()->eligible_for_polo) {
+                        if (! $transaction->package->eligible_for_polo) {
                             return false;
                         } elseif (! $transaction->is_paid) {
                             return false;
@@ -215,6 +218,8 @@ class DuesTransaction extends Resource
                         if ($transaction->user()->get()->first()->id === $request->user()->id) {
                             return false;
                         } elseif ($transaction->is_paid) {
+                            return false;
+                        } elseif (! $transaction->package->is_active) {
                             return false;
                         }
                     }

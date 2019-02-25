@@ -5,6 +5,7 @@ namespace App\Nova\Actions;
 use App\Event;
 use App\Payment;
 use Illuminate\Bus\Queueable;
+use App\Events\PaymentSuccess;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Currency;
@@ -64,6 +65,14 @@ class AddPayment extends Action
 
             return Action::danger(
                 'Transaction already paid in full. New transaction was not saved.'
+            );
+        }
+
+        if (! $models->first()->package->is_active) {
+            $this->markAsFailed($models->first(), null);
+
+            return Action::danger(
+                'Associated package is no longer active.'
             );
         }
 

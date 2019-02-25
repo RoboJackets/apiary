@@ -86,7 +86,8 @@ class RecruitingVisit extends Resource
                 ->onlyOnDetail()
                 ->rules('required', 'max:255'),
 
-            BelongsTo::make('User'),
+            BelongsTo::make('User')
+                ->searchable(),
         ];
     }
 
