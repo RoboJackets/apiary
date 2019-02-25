@@ -63,7 +63,7 @@ class DuesTransaction extends Resource
 
             Currency::make('Payment Due', function () {
                 if ($this->is_paid) {
-                    return null;
+                    return;
                 } else {
                     return $this->package->get()->first()->cost;
                 }
