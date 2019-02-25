@@ -127,11 +127,18 @@ class DuesTransaction extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            new Filters\DuesTransactionTeam,
-            new Filters\DuesTransactionPaymentStatus,
-            new Filters\DuesTransactionSwagStatus,
-        ];
+        if ($request->user()->can('read-teams-membership')) {
+            return [
+                new Filters\DuesTransactionTeam,
+                new Filters\DuesTransactionPaymentStatus,
+                new Filters\DuesTransactionSwagStatus,
+            ];
+        } else {
+            return [
+                new Filters\DuesTransactionPaymentStatus,
+                new Filters\DuesTransactionSwagStatus,
+            ];
+        }
     }
 
     /**

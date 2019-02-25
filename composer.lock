@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "953f61bc71c962959e37a33002d0cc49",
+    "content-hash": "4ffad791870f564f3fd8390ee13344c8",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
@@ -1901,31 +1901,31 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v1.3.2",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "a88243f3f9bcc02ae0e96ebdce512e467839db09"
+                "reference": "efdc3a2455394121896f89f34dc4cc4a4eeee875"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-a88243f3f9bcc02ae0e96ebdce512e467839db09-zip-93b4e7.zip",
-                "reference": "a88243f3f9bcc02ae0e96ebdce512e467839db09",
-                "shasum": "98626947825e137307cc7c9dc05a2455abe5ec21"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-efdc3a2455394121896f89f34dc4cc4a4eeee875-zip-0420a5.zip",
+                "reference": "efdc3a2455394121896f89f34dc4cc4a4eeee875",
+                "shasum": "84033a6a333ded9df4201e8636de8d7cbde3b4ef"
             },
             "require": {
-                "cakephp/chronos": "^1.0",
+                "cakephp/chronos": "~1.0",
                 "illuminate/support": "5.6.*|5.7.*",
                 "moontoast/math": "^1.1",
                 "php": ">=7.1.0",
                 "spatie/once": "^1.1",
-                "symfony/finder": "^4.0"
+                "symfony/finder": "~4.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.0",
+                "mockery/mockery": "~1.0",
                 "orchestra/database": "3.7.*",
                 "orchestra/testbench": "3.7.*",
-                "phpunit/phpunit": "^7.0",
+                "phpunit/phpunit": "~7.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -1966,7 +1966,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-02-11T20:04:29+00:00"
+            "time": "2019-01-07T21:04:38+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -6002,6 +6002,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {
