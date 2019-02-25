@@ -2,7 +2,6 @@
 
 namespace App\Nova\Actions;
 
-use App\Event;
 use App\Payment;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Select;
