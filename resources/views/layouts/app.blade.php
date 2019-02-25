@@ -25,33 +25,9 @@
 
             @can('access-nova')
             <li class="nav-item">
-              <a class="nav-link" href="/nova/">Nova</a>
+              <a class="nav-link" href="/nova/">Admin</a>
             </li>
             @endcan
-
-            @hasanyrole('admin|officer-i|officer-ii')
-            <li class="nav-item dropdown {{ $request->is('admin*') ? 'active' : '' }}">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarAdminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Admin
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarAdminDropdown">
-                @hasanyrole('admin|officer-i')
-                <a class="dropdown-item" href="/admin/users">Users</a>
-                <a class="dropdown-item" href="/admin/events">Events</a>
-                <a class="dropdown-item" href="/admin/recruiting">Recruiting</a>
-                <a class="dropdown-item" href="{{ route('admin.teams.index') }}">Teams</a>
-                <a class="dropdown-item" href="{{ route('admin.notification.templates.index') }}">Notification Templates</a>
-                @endhasanyrole
-                @hasanyrole('admin|officer-i|officer-ii')
-                <a class="dropdown-item" href="/admin/dues">Dues</a>
-                <a class="dropdown-item" href="/admin/dues/pending">Accept Dues</a>
-                <a class="dropdown-item" href="/admin/swag">Swag</a>
-                <a class="dropdown-item" href="/admin/swag/pending">Give Swag</a>
-                <a class="dropdown-item" href="/admin/attendance">Attendance</a>
-                @endhasanyrole
-              </div>
-            </li>
-            @endhasanyrole
 
           </ul>
 
