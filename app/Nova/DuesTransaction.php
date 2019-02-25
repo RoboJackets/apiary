@@ -163,19 +163,47 @@ class DuesTransaction extends Resource
         return [
             (new Actions\DistributeShirt)
                 ->canSee(function ($request) {
-                    return true;
-                })->canRun(function ($request, $user) {
+                    $transaction = \App\DuesTransaction::find($request->resourceId);
+                    if (null !== $transaction) {
+                        if (!$transaction->package()->get()->first()->eligible_for_shirt) {
+                            return false;
+                        } elseif (!$transaction->is_paid) {
+                            return false;
+                        } elseif (null !== $transaction->swag_shirt_provided) {
+                            return false;
+                        }
+                    }
+                    return $request->user()->can('distribute-swag');
+                })->canRun(function ($request, $dues_transaction) {
                     return $request->user()->can('distribute-swag');
                 }),
             (new Actions\DistributePolo)
                 ->canSee(function ($request) {
-                    return true;
-                })->canRun(function ($request, $user) {
+                    $transaction = \App\DuesTransaction::find($request->resourceId);
+                    if (null !== $transaction) {
+                        if (!$transaction->package()->get()->first()->eligible_for_polo) {
+                            return false;
+                        } elseif (!$transaction->is_paid) {
+                            return false;
+                        } elseif (null !== $transaction->swag_polo_provided) {
+                            return false;
+                        }
+                    }
+                    return $request->user()->can('distribute-swag');
+                })->canRun(function ($request, $dues_transaction) {
                     return $request->user()->can('distribute-swag');
                 }),
             (new Actions\AddPayment)
                 ->canSee(function ($request) {
-                    return true;
+                    $transaction = \App\DuesTransaction::find($request->resourceId);
+                    if (null !== $transaction) {
+                        if ($transaction->user()->get()->first()->id === $request->user()->id) {
+                            return false;
+                        } elseif ($transaction->is_paid) {
+                            return false;
+                        }
+                    }
+                    return $request->user()->can('create-payments');
                 })->canRun(function ($request, $dues_transaction) {
                     return $request->user()->can('create-payments') && ($dues_transaction->user()->get()->first()->id != $request->user()->id);
                 }),

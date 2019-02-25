@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Event;
 use App\Payment;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Select;
@@ -58,6 +59,14 @@ class AddPayment extends Action
             }
         }
 
+        if ($models->first()->is_paid) {
+            $this->markAsFailed($models->first(), null);
+
+            return Action::danger(
+                'Transaction already paid in full. New transaction was not saved.'
+            );
+        }
+
         $payment = new Payment();
         $payment->recorded_by = Auth::user()->id;
         $payment->method = $fields->method;
@@ -66,6 +75,8 @@ class AddPayment extends Action
         $payment->payable_type = \App\DuesTransaction::class;
         $payment->notes = 'Added in Nova';
         $payment->save();
+
+        Event(new PaymentSuccess($payment));
 
         return Action::message('The payment was added!');
     }
