@@ -5,7 +5,6 @@ namespace App\Nova\Actions;
 use App\Event;
 use App\Payment;
 use Illuminate\Bus\Queueable;
-use App\Events\PaymentSuccess;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Currency;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Notifications\Payment\ConfirmationNotification;
 
 class AddPayment extends Action
 {
@@ -85,7 +85,7 @@ class AddPayment extends Action
         $payment->notes = 'Added in Nova';
         $payment->save();
 
-        Event(new PaymentSuccess($payment));
+        $payment->payable->user->notify(new ConfirmationNotification($payment));
 
         return Action::message('The payment was added!');
     }
