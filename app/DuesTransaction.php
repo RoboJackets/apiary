@@ -2,13 +2,11 @@
 
 namespace App;
 
-use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DuesTransaction extends Model
 {
-    use Actionable;
     use SoftDeletes;
 
     /**

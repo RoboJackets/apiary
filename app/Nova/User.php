@@ -113,7 +113,7 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            HasMany::make('Recruiting Visits', 'recruitingVisits', RecruitingVisit::class)
+            HasMany::make('Recruiting Visits')
             ->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-recruiting-visits-own');
@@ -122,7 +122,7 @@ class User extends Resource
                 }
             }),
 
-            BelongsToMany::make('Teams', 'teams', Team::class)->canSee(function ($request) {
+            BelongsToMany::make('Teams')->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-teams-membership-own');
                 } else {
@@ -130,7 +130,7 @@ class User extends Resource
                 }
             }),
 
-            HasMany::make('Attendance', 'attendance', 'App\Nova\Attendance')->canSee(function ($request) {
+            HasMany::make('Attendance')->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-attendance-own');
                 } else {
