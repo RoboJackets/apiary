@@ -143,7 +143,7 @@ export default {
       }
       return {
         title: 'Swipe your BuzzCard now',
-        html: teamName, // displays team name
+        html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
         showCancelButton: true,
         allowOutsideClick: () => !swal.isLoading(),
         showConfirmButton: false,
