@@ -32,32 +32,6 @@ class AddPayment extends Action
                 'Payments cannot be entered for more than one transaction at a time. Contact the developers if you think this is unreasonable.'
             );
         }
-        // shouldn't happen but might if someone is abusing the API
-        if (Auth::user()->cant('create-payments-'.$fields->method)) {
-            $this->markAsFailed($models->first(), null);
-
-            return Action::danger(
-                'You do not have permission to accept that payment method. Please contact a developer.'
-            );
-        }
-
-        if ($fields->method === 'square' || $fields->method === 'swipe') {
-            if ($fields->amount !== ($models->first()->package()->get()->first()->cost) + 3) {
-                $this->markAsFailed($models->first(), null);
-
-                return Action::danger(
-                    'Missing expected transaction fee - total should be '.(($models->first()->package()->get()->first()->cost) + 3).', '.$fields->amount.' entered.'
-                );
-            }
-        } else {
-            if (floatval($fields->amount) !== floatval($models->first()->package()->get()->first()->cost)) {
-                $this->markAsFailed($models->first(), null);
-
-                return Action::danger(
-                    'Unexpected amount '.$fields->amount.' entered - should be '.($models->first()->package()->get()->first()->cost)
-                );
-            }
-        }
 
         if ($models->first()->is_paid) {
             $this->markAsFailed($models->first(), null);
@@ -75,10 +49,48 @@ class AddPayment extends Action
             );
         }
 
+        // shouldn't happen but might if someone is abusing the API
+        if (Auth::user()->cant('create-payments-'.$fields->method)) {
+            $this->markAsFailed($models->first(), null);
+
+            return Action::danger(
+                'You do not have permission to accept that payment method. Please contact a developer.'
+            );
+        }
+
+        $package_amount = round($models->first()->package->cost, 2);
+        $entered_amount = round($fields->amount, 2);
+
+        if ($fields->method === 'square' || $fields->method === 'swipe') {
+            if ($entered_amount !== round($package_amount + 3, 2)) {
+                if ($entered_amount === $package_amount) {
+                    $this->markAsFailed($models->first(), null);
+
+                    return Action::danger(
+                        'Missing expected transaction fee - total should be '.round($package_amount + 3, 2).', '.$entered_amount.' entered.'
+                    );
+                } else {
+                    $this->markAsFailed($models->first(), null);
+
+                    return Action::danger(
+                        'Unexpected amount '.$entered_amount.' entered - should be '.round($package_amount + 3, 2)
+                    );
+                }
+            }
+        } else {
+            if ($entered_amount !== $package_amount) {
+                $this->markAsFailed($models->first(), null);
+
+                return Action::danger(
+                    'Unexpected amount '.$entered_amount.' entered - should be '.$package_amount
+                );
+            }
+        }
+
         $payment = new Payment();
         $payment->recorded_by = Auth::user()->id;
         $payment->method = $fields->method;
-        $payment->amount = $fields->amount;
+        $payment->amount = $entered_amount;
         $payment->payable_id = $models->first()->id;
         $payment->payable_type = \App\DuesTransaction::class;
         $payment->notes = 'Added in Nova';
@@ -120,7 +132,7 @@ class AddPayment extends Action
 
             Currency::make('Amount')
                 ->format('%.2n')
-                ->help('Record the actual amount of money being collected, including surcharges or processing fees.')
+                ->help('Record actual amount of money collected, including processing fees. Credit/debit is +$3.')
                 ->creationRules('required'),
         ];
     }
