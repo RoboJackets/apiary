@@ -23,7 +23,7 @@ class User extends Authenticatable
         'full_name',
         'preferred_first_name',
         'is_active',
-        'is_access_active'
+        'is_access_active',
     ];
 
     /**

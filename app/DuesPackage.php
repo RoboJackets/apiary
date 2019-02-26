@@ -25,7 +25,7 @@ class DuesPackage extends Model
      */
     protected $appends = [
         'is_active',
-        'is_access_active'
+        'is_access_active',
     ];
 
     /**
