@@ -95,6 +95,27 @@ class DuesPackage extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
+            new Panel('Access', [
+                Boolean::make('Active', 'access_active')
+                    ->onlyOnDetail(),
+
+                DateTime::make('Start Date', 'access_start')
+                    ->onlyOnDetail()
+                    ->rules('required'),
+
+                DateTime::make('End Date', 'access_end')
+                    ->onlyOnDetail()
+                    ->rules('required'),
+
+                DateTime::make('Access Start Date', 'access_start')
+                    ->onlyOnForms()
+                    ->rules('required'),
+
+                DateTime::make('Access End Date', 'access_end')
+                    ->onlyOnForms()
+                    ->rules('required'),
+            ]),
+
             HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)->canSee(function ($request) {
                 return $request->user()->can('read-dues-transactions');
             }),

@@ -23,6 +23,15 @@ class DuesTransaction extends Resource
     public static $with = ['payment', 'package', 'user'];
 
     /**
+     * The columns that should be searched.
+     *
+     * @var array
+     */
+    public static $search = [
+        'id',
+    ];
+
+    /**
      * Get the displayble label of the resource.
      *
      * @return string

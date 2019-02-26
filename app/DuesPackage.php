@@ -23,7 +23,10 @@ class DuesPackage extends Model
      *
      * @var array
      */
-    protected $appends = ['is_active'];
+    protected $appends = [
+        'is_active',
+        'is_access_active'
+    ];
 
     /**
      * The attributes that should be mutated to dates.
@@ -36,6 +39,8 @@ class DuesPackage extends Model
         'deleted_at',
         'effective_start',
         'effective_end',
+        'access_start',
+        'access_end',
     ];
 
     /**
@@ -78,6 +83,18 @@ class DuesPackage extends Model
     }
 
     /**
+     * Scope a query to only include access active DuesPackages.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAccessActive($query)
+    {
+        return $query->whereDate('access_start', '<=', date('Y-m-d'))
+            ->whereDate('access_end', '>=', date('Y-m-d'));
+    }
+
+    /**
      * Get the is_active flag for the DuesPackage.
      *
      * @return bool
@@ -87,6 +104,20 @@ class DuesPackage extends Model
         $now = new \DateTime();
         $start = new \DateTime($this->effective_start);
         $end = new \DateTime($this->effective_end);
+
+        return ($start <= $now) && ($end >= $now);
+    }
+
+    /**
+     * Get the is_active flag for the DuesPackage.
+     *
+     * @return bool
+     */
+    public function getIsAccessActiveAttribute()
+    {
+        $now = new \DateTime();
+        $start = new \DateTime($this->access_start);
+        $end = new \DateTime($this->access_end);
 
         return ($start <= $now) && ($end >= $now);
     }

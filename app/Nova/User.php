@@ -109,6 +109,9 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
+            Boolean::make('Access Active', 'is_access_active')
+                ->onlyOnDetail(),
+
             new Panel('Emergency Contact', $this->emergencyFields()),
 
             new Panel('Swag', $this->swagFields()),
@@ -121,7 +124,7 @@ class User extends Resource
                 }
             }),
 
-            BelongsToMany::make('Teams')->canSee(function ($request) {
+            BelongsToMany::make('Teams', 'teams', Team::class)->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-teams-membership-own');
                 } else {

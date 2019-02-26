@@ -22,7 +22,9 @@ class User extends Authenticatable
         'name',
         'full_name',
         'preferred_first_name',
-        'is_active', ];
+        'is_active',
+        'is_access_active'
+    ];
 
     /**
      * The attributes that should be mutated to dates.
@@ -52,6 +54,7 @@ class User extends Authenticatable
         'api_token',
         'full_name',
         'is_active',
+        'access_active',
         'needs_payment',
         'deleted_at',
         'created_at',
@@ -79,6 +82,14 @@ class User extends Authenticatable
     public function attendance()
     {
         return $this->hasMany(\App\Attendance::class, 'gtid', 'gtid');
+    }
+
+    /**
+     *  Get the attendance records associated with this user.
+     */
+    public function manages()
+    {
+        return $this->hasMany(\App\Team::class, 'project_manager');
     }
 
     /**
@@ -241,6 +252,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the access_active flag for the User.
+     *
+     * @return bool
+     */
+    public function getIsAccessActiveAttribute()
+    {
+        return self::where('id', $this->id)->accessActive()->count() != 0;
+    }
+
+    /**
      * Scope a query to automatically determine user identifier.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -276,6 +297,21 @@ class User extends Authenticatable
     }
 
     /**
+     * Scope a query to automatically include only access active members
+     * Active: Has paid dues for a currently ongoing term
+     *         or, has a non-zero payment for an active DuesPackage.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAccessActive($query)
+    {
+        return $query->whereHas('dues', function ($q) {
+            $q->paid()->accessCurrent();
+        });
+    }
+
+    /**
      * Scope a query to automatically include only inactive members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
@@ -283,10 +319,10 @@ class User extends Authenticatable
      * @param mixed $type
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeInactive($query)
+    public function scopeAccessInactive($query)
     {
         return $query->whereDoesntHave('dues', function ($q) {
-            $q->paid()->current();
+            $q->paid()->accessCurrent();
         });
     }
 }

@@ -94,4 +94,9 @@ class Team extends Model
             'attendance' => 'attendance',
         ];
     }
+
+    public function projectManager()
+    {
+        return $this->belongsTo(\App\User::class, 'project_manager');
+    }
 }
