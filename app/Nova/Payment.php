@@ -3,48 +3,25 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 
-class Rsvp extends Resource
+class Payment extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Rsvp';
+    public static $model = 'App\\Payment';
 
     public static $with = ['user'];
-
-    /**
-     * Get the displayble label of the resource.
-     *
-     * @return string
-     */
-    public static function label()
-    {
-        return 'RSVPs';
-    }
-
-    /**
-     * Get the displayble singular label of the resource.
-     *
-     * @return string
-     */
-    public static function singularLabel()
-    {
-        return 'RSVP';
-    }
-
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'name';
 
     /**
      * Indicates if the resource should be displayed in the sidebar.
@@ -61,34 +38,45 @@ class Rsvp extends Resource
      */
     public function fields(Request $request)
     {
+        $payment_methods = [
+            'cash' => 'Cash',
+            'squarecash' => 'Square Cash',
+            'check' => 'Check',
+            'swipe' => 'Swiped Card',
+            'square' => 'Square Checkout',
+        ];
+
         return [
-            BelongsTo::make('User'),
+            ID::make()->sortable(),
 
-            BelongsTo::make('Event'),
+            MorphTo::make('Paid For', 'payable')
+                ->types([
+                    DuesTransaction::class,
+                ]),
 
-            Text::make('Response')
+            Select::make('Payment Method', 'method')
+                ->options($payment_methods)
+                ->displayUsingLabels()
                 ->sortable(),
 
-            Text::make('Source')
+            Currency::make('Amount')
+                ->format('%.2n')
                 ->sortable(),
 
-            new Panel('Detailed Information', $this->detailedFields()),
+            Currency::make('Processing Fee')
+                ->format('%.2n')
+                ->onlyOnDetail()
+                ->sortable(),
+
+            BelongsTo::make('Recorded By', 'user', 'App\\Nova\\User')
+                ->help('The user that recorded the payment')
+                ->sortable(),
+
+            TextArea::make('Notes')
+                ->onlyOnDetail()
+                ->alwaysShow(),
 
             new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function detailedFields()
-    {
-        return [
-            Text::make('User Agent')
-                ->hideFromIndex(),
-
-            Text::make('IP Address')
-                ->hideFromIndex(),
-
-            Text::make('Token')
-                ->hideFromIndex(),
         ];
     }
 

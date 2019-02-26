@@ -3,16 +3,16 @@
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Filters\BooleanFilter;
 
-class UserActive extends Filter
+class DuesTransactionSwagStatus extends BooleanFilter
 {
     /**
      * The displayable name of the action.
      *
      * @var string
      */
-    public $name = 'Active';
+    public $name = 'Swag Status';
 
     /**
      * Apply the filter to the given query.
@@ -24,10 +24,10 @@ class UserActive extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        if ($value === 'yes') {
-            return $query->active();
+        if ($value['pending']) {
+            return $query->pendingSwag();
         } else {
-            return $query->inactive();
+            return $query;
         }
     }
 
@@ -40,8 +40,7 @@ class UserActive extends Filter
     public function options(Request $request)
     {
         return [
-            'Yes' => 'yes',
-            'No' => 'no',
+            'Only Pending' => 'pending',
         ];
     }
 }

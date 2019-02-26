@@ -6,6 +6,7 @@ use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use App\Nova\Metrics\SwagPickupRate;
@@ -93,6 +94,10 @@ class DuesPackage extends Resource
                 ->sortable(),
 
             new Panel('Swag', $this->swagFields()),
+
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)->canSee(function ($request) {
+                return $request->user()->can('read-dues-transactions');
+            }),
 
             new Panel('Metadata', $this->metaFields()),
         ];

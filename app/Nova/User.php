@@ -23,7 +23,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = 'App\\User';
+    public static $model = 'App\User';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -113,7 +113,7 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            HasMany::make('RecruitingVisits')->canSee(function ($request) {
+            HasMany::make('Recruiting Visits', 'recruitingVisits')->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-recruiting-visits-own');
                 } else {
@@ -134,6 +134,15 @@ class User extends Resource
                     return $request->user()->can('read-attendance-own');
                 } else {
                     return $request->user()->can('read-attendance');
+                }
+            }),
+
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
+            ->canSee(function ($request) {
+                if ($request->resourceId == $request->user()->id) {
+                    return $request->user()->can('read-dues-transactions-own');
+                } else {
+                    return $request->user()->can('read-dues-transactions');
                 }
             }),
 
@@ -191,8 +200,13 @@ class User extends Resource
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
 
-            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class),
-            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class),
+            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)->canSee(function ($request) {
+                return $request->user()->hasRole('admin');
+            }),
+
+            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)->canSee(function ($request) {
+                return $request->user()->hasRole('admin');
+            }),
         ];
     }
 

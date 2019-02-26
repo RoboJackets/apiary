@@ -17,6 +17,8 @@ class RecruitingVisit extends Resource
      */
     public static $model = 'App\RecruitingVisit';
 
+    public static $with = ['user'];
+
     /**
      * Get the displayable label of the resource.
      *
@@ -63,17 +65,6 @@ class RecruitingVisit extends Resource
     public function fields(Request $request)
     {
         return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Tracking Information', $this->trackingFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
-    {
-        return [
             Text::make('Name', 'recruiting_name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -81,6 +72,10 @@ class RecruitingVisit extends Resource
             Text::make('Email', 'recruiting_email')
                 ->sortable()
                 ->rules('required', 'max:255', 'email'),
+
+            new Panel('Tracking Information', $this->trackingFields()),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
@@ -91,7 +86,8 @@ class RecruitingVisit extends Resource
                 ->onlyOnDetail()
                 ->rules('required', 'max:255'),
 
-            BelongsTo::make('User'),
+            BelongsTo::make('User')
+                ->searchable(),
         ];
     }
 
@@ -147,13 +143,6 @@ class RecruitingVisit extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            (new Actions\SendRecruitingEmail)
-                ->canSee(function ($request) {
-                    return true;
-                })->canRun(function ($request, $user) {
-                    return $request->user()->can('send-notifications');
-                }),
-        ];
+        return [];
     }
 }

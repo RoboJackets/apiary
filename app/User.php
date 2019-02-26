@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Laravel\Nova\Actions\Actionable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Actionable;
     use SoftDeletes;
     use Notifiable;
     use HasRoles;
@@ -144,6 +142,22 @@ class User extends Authenticatable
         return $this->hasMany(\App\DuesTransaction::class);
     }
 
+    /*
+     * Get the DuesTransactions belonging to the User
+     */
+    public function duesTransactions()
+    {
+        return $this->hasMany(\App\DuesTransaction::class);
+    }
+
+    /*
+     * Get the DuesTransactions belonging to the User
+     */
+    public function paidDues()
+    {
+        return $this->hasMany(\App\DuesTransaction::class)->paid();
+    }
+
     /**
      * Get the events organized by the User.
      */
@@ -173,12 +187,12 @@ class User extends Authenticatable
 
     public function getAuthIdentifierName()
     {
-        return 'uid';
+        return 'id';
     }
 
     public function getAuthIdentifier()
     {
-        return $this->uid;
+        return $this->id;
     }
 
     public function getAuthPassword()

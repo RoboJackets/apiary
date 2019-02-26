@@ -8,6 +8,13 @@ use Laravel\Nova\Filters\Filter;
 class UserType extends Filter
 {
     /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Type';
+
+    /**
      * Apply the filter to the given query.
      *
      * @param  \Illuminate\Http\Request  $request

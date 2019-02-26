@@ -6,7 +6,7 @@ use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class UserTeam extends Filter
+class DuesTransactionTeam extends Filter
 {
     /**
      * The displayable name of the action.
@@ -32,9 +32,8 @@ class UserTeam extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->whereHas('teams', function ($query) use ($value) {
-            $query->where('teams.id', '=', $value);
-        });
+        return $query->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')
+            ->where('team_user.team_id', '=', $value);
     }
 
     /**
