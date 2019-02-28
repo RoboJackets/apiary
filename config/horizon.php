@@ -78,6 +78,7 @@ return [
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 3,
+                'block_for' => null,
             ],
         ],
 
@@ -88,6 +89,7 @@ return [
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
+                'block_for' => null,
             ],
         ],
 
@@ -98,6 +100,7 @@ return [
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
+                'block_for' => null,
             ],
         ],
     ],
