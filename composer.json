@@ -19,7 +19,7 @@
         "fideloper/proxy": "~4.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.6.*",
-        "laravel/horizon": "^1.4",
+        "laravel/horizon": "~2",
         "laravel/nova": "1.3.0",
         "laravel/tinker": "~1.0",
         "maatwebsite/laravel-nova-excel": "^1.0",
