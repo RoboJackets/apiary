@@ -124,7 +124,7 @@ class User extends Resource
                 }
             }),
 
-            BelongsToMany::make('Teams', 'teams', Team::class)->canSee(function ($request) {
+            BelongsToMany::make('Teams')->canSee(function ($request) {
                 if ($request->resourceId == $request->user()->id) {
                     return $request->user()->can('read-teams-membership-own');
                 } else {
