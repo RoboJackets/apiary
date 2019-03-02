@@ -1,0 +1,20 @@
+<template>
+  <div class="px-3 mb-6 w-1/3">
+    <div class="card relative metric px-6 py-4 relative card-panel">
+      <div class="flex mb-4">
+        <h3 class="mr-3 text-base text-80 font-bold">Make a Wish</h3>
+      </div>
+      <p class="flex items-center text-xl mb-4">Having issues with MyRoboJackets? <a class="no-underline" :href="url">Let us know</a></p>
+      </div>
+  </div>
+</template>
+
+<script>
+export default {
+  computed: {
+    url: function() {
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSelERsYq3gLmHbWvVCWha5iCU8z3r9VYC0hCN4ArLpMAiysaQ/viewform?entry.1338203640=' + window.location.pathname;
+    },
+  },
+}
+</script>
