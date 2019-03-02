@@ -32,7 +32,7 @@ class Attendance extends Model
      */
     public function attendee()
     {
-        return $this->belongsTo(\App\User::class, 'gtid', 'gtid');
+        return $this->belongsTo(User::class, 'gtid', 'gtid');
     }
 
     /**
@@ -40,7 +40,7 @@ class Attendance extends Model
      */
     public function recorded()
     {
-        return $this->hasOne('\App\User', 'id', 'recorded_by');
+        return $this->belongsTo(User::class, 'recorded_by');
     }
 
     /**

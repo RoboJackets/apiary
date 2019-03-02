@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ffad791870f564f3fd8390ee13344c8",
+    "content-hash": "86744b78faf57fede17ec510d1524df0",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
@@ -106,30 +106,30 @@
         },
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.5.3",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "3d7f1240896a075aa23b13f82dfcbe165dadeef2"
+                "reference": "754bb4d075d7fb2b23b1a416802c0e45884df495"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/3d7f1240896a075aa23b13f82dfcbe165dadeef2",
-                "reference": "3d7f1240896a075aa23b13f82dfcbe165dadeef2",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/754bb4d075d7fb2b23b1a416802c0e45884df495",
+                "reference": "754bb4d075d7fb2b23b1a416802c0e45884df495",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/reflection-docblock": "^2.0.6",
                 "composer/composer": "^1.6",
-                "illuminate/console": "^5.5,<5.8",
-                "illuminate/filesystem": "^5.5,<5.8",
-                "illuminate/support": "^5.5,<5.8",
+                "illuminate/console": "^5.5,<5.9",
+                "illuminate/filesystem": "^5.5,<5.9",
+                "illuminate/support": "^5.5,<5.9",
                 "php": ">=7"
             },
             "require-dev": {
                 "doctrine/dbal": "~2.3",
-                "illuminate/config": "^5.1,<5.8",
-                "illuminate/view": "^5.1,<5.8",
+                "illuminate/config": "^5.1,<5.9",
+                "illuminate/view": "^5.1,<5.9",
                 "phpro/grumphp": "^0.14",
                 "phpunit/phpunit": "4.*",
                 "scrutinizer/ocular": "~1.1",
@@ -141,7 +141,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -176,7 +176,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2018-12-19T12:12:05+00:00"
+            "time": "2019-02-18T19:54:27+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -1901,31 +1901,31 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v1.3.0",
+            "version": "v1.3.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "efdc3a2455394121896f89f34dc4cc4a4eeee875"
+                "reference": "a88243f3f9bcc02ae0e96ebdce512e467839db09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-efdc3a2455394121896f89f34dc4cc4a4eeee875-zip-0420a5.zip",
-                "reference": "efdc3a2455394121896f89f34dc4cc4a4eeee875",
-                "shasum": "84033a6a333ded9df4201e8636de8d7cbde3b4ef"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-a88243f3f9bcc02ae0e96ebdce512e467839db09-zip-93b4e7.zip",
+                "reference": "a88243f3f9bcc02ae0e96ebdce512e467839db09",
+                "shasum": "98626947825e137307cc7c9dc05a2455abe5ec21"
             },
             "require": {
-                "cakephp/chronos": "~1.0",
+                "cakephp/chronos": "^1.0",
                 "illuminate/support": "5.6.*|5.7.*",
                 "moontoast/math": "^1.1",
                 "php": ">=7.1.0",
                 "spatie/once": "^1.1",
-                "symfony/finder": "~4.0"
+                "symfony/finder": "^4.0"
             },
             "require-dev": {
-                "mockery/mockery": "~1.0",
+                "mockery/mockery": "^1.0",
                 "orchestra/database": "3.7.*",
                 "orchestra/testbench": "3.7.*",
-                "phpunit/phpunit": "~7.0",
+                "phpunit/phpunit": "^7.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -1966,7 +1966,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-01-07T21:04:38+00:00"
+            "time": "2019-02-11T20:04:29+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2117,29 +2117,30 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.7",
+            "version": "3.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "b9bf4ca1ec698010192fbe1694df65ecef3b2502"
+                "reference": "e115760c879a7b647adf38006be015badd2ffbdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/b9bf4ca1ec698010192fbe1694df65ecef3b2502",
-                "reference": "b9bf4ca1ec698010192fbe1694df65ecef3b2502",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/e115760c879a7b647adf38006be015badd2ffbdd",
+                "reference": "e115760c879a7b647adf38006be015badd2ffbdd",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "opis/closure": "^3.1",
                 "php": "^7.0",
                 "phpoffice/phpspreadsheet": "^1.6"
             },
             "require-dev": {
                 "mockery/mockery": "^1.1",
-                "orchestra/database": "^3.7",
-                "orchestra/testbench": "^3.7",
-                "phpunit/phpunit": "^7.5",
+                "orchestra/database": "^3.8",
+                "orchestra/testbench": "^3.8",
+                "phpunit/phpunit": "^8.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -2180,7 +2181,7 @@
                 "php",
                 "phpspreadsheet"
             ],
-            "time": "2019-02-14T18:17:58+00:00"
+            "time": "2019-02-28T14:43:36+00:00"
         },
         {
             "name": "maatwebsite/laravel-nova-excel",
@@ -2631,6 +2632,67 @@
                 "php"
             ],
             "time": "2019-02-16T20:54:15+00:00"
+        },
+        {
+            "name": "opis/closure",
+            "version": "3.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/closure.git",
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/closure/zipball/ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0"
+            },
+            "require-dev": {
+                "jeremeamia/superclosure": "^2.0",
+                "phpunit/phpunit": "^4.0|^5.0|^6.0|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opis\\Closure\\": "src/"
+                },
+                "files": [
+                    "functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                },
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                }
+            ],
+            "description": "A library that can be used to serialize closures (anonymous functions) and arbitrary objects.",
+            "homepage": "https://opis.io/closure",
+            "keywords": [
+                "anonymous functions",
+                "closure",
+                "function",
+                "serializable",
+                "serialization",
+                "serialize"
+            ],
+            "time": "2019-02-22T10:30:00+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3306,25 +3368,25 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "90fa5f9b8a977e85d9c97e82629d02d4f260db24"
+                "reference": "8d050b197cfad9074ceae1968da6dfe08f1cc5d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/90fa5f9b8a977e85d9c97e82629d02d4f260db24",
-                "reference": "90fa5f9b8a977e85d9c97e82629d02d4f260db24",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/8d050b197cfad9074ceae1968da6dfe08f1cc5d5",
+                "reference": "8d050b197cfad9074ceae1968da6dfe08f1cc5d5",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0",
+                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
                 "php": "^7.0"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
-                "phpunit/phpunit": "^6.3|^7.0"
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~8.7.0",
+                "phpunit/phpunit": "^6.3|^7.0|^8.0"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Allows notifications to be sent via Slack"
@@ -3365,20 +3427,20 @@
                 "slack",
                 "spatie"
             ],
-            "time": "2018-08-27T14:54:36+00:00"
+            "time": "2019-02-27T09:37:03+00:00"
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.33.0",
+            "version": "2.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "9da0a1618b0c85f71ef7e11b942d5f6f92d2c063"
+                "reference": "c29eaa782e222299bd669feb37a39285c04f2ee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/9da0a1618b0c85f71ef7e11b942d5f6f92d2c063",
-                "reference": "9da0a1618b0c85f71ef7e11b942d5f6f92d2c063",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/c29eaa782e222299bd669feb37a39285c04f2ee4",
+                "reference": "c29eaa782e222299bd669feb37a39285c04f2ee4",
                 "shasum": ""
             },
             "require": {
@@ -3389,7 +3451,7 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.4.2|~3.5.0|~3.6.0|~3.7.0|~3.8.0",
+                "orchestra/testbench": "~3.4.2|~3.5.0|~3.6.0|~3.7.0",
                 "phpunit/phpunit": "^5.7|6.2|^7.0",
                 "predis/predis": "^1.1"
             },
@@ -3430,30 +3492,30 @@
                 "security",
                 "spatie"
             ],
-            "time": "2019-02-20T15:56:22+00:00"
+            "time": "2019-03-01T19:52:03+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "2.1.6",
+            "version": "2.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "031a5f1c7cee4128849a288625ce67d29be57aee"
+                "reference": "117501fb42c8ff078dbc26dc067dbfb2abc5ce88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/031a5f1c7cee4128849a288625ce67d29be57aee",
-                "reference": "031a5f1c7cee4128849a288625ce67d29be57aee",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/117501fb42c8ff078dbc26dc067dbfb2abc5ce88",
+                "reference": "117501fb42c8ff078dbc26dc067dbfb2abc5ce88",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
-                "php": ">=7.0.0"
+                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/support": "~5.6.0|~5.7.0|~5.8.0",
+                "php": ">=7.1.3"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
-                "phpunit/phpunit": "^6.3|^7.0"
+                "orchestra/testbench": "~3.8.0",
+                "phpunit/phpunit": "^7.5|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -3479,7 +3541,7 @@
                 "laravel-sluggable",
                 "spatie"
             ],
-            "time": "2019-02-14T13:23:51+00:00"
+            "time": "2019-02-27T16:42:58+00:00"
         },
         {
             "name": "spatie/once",
