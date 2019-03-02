@@ -142,6 +142,7 @@ class UserPolicy
                 return true;
             }
         }
+
         return false;
     }
 
