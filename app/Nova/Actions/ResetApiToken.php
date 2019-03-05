@@ -46,4 +46,11 @@ class ResetApiToken extends Action
     {
         return [];
     }
+
+    /**
+     * Indicates if this action is only available on the resource detail view.
+     *
+     * @var bool
+     */
+    public $onlyOnDetail = true;
 }

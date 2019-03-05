@@ -275,6 +275,12 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [
+            (new Actions\SyncAccess)
+                ->canSee(function ($request) {
+                    return true;
+                })->canRun(function ($request, $user) {
+                    return true;
+                }),
             (new Actions\ResetApiToken)
                 ->canSee(function ($request) {
                     return true;

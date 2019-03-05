@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Laravel\Nova\Actions\Actionable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ class User extends Authenticatable
     use SoftDeletes;
     use Notifiable;
     use HasRoles;
+    use Actionable;
 
     /**
      * The accessors to append to the model's array form.
@@ -258,7 +260,15 @@ class User extends Authenticatable
      */
     public function getIsAccessActiveAttribute()
     {
-        return self::where('id', $this->id)->accessActive()->count() != 0;
+        if (self::where('id', $this->id)->accessActive()->count() != 0) {
+            return true;
+        }
+        foreach ($this->teams()->get() as $team) {
+            if (in_array($team->id, config('jedi.access_teams'))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
