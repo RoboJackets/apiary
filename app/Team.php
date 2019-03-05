@@ -97,6 +97,6 @@ class Team extends Model
 
     public function projectManager()
     {
-        return $this->belongsTo(\App\User::class, 'project_manager');
+        return $this->belongsTo(\App\User::class, 'project_manager_id');
     }
 }
