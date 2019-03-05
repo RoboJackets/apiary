@@ -19,9 +19,9 @@ class AddJediFields extends Migration
         });
 
         Schema::table('teams', function (Blueprint $table) {
-            $table->unsignedInteger('project_manager')->nullable()->comment('user_id of the project manager');
+            $table->unsignedInteger('project_manager_id')->nullable()->comment('user_id of the project manager');
 
-            $table->foreign('project_manager')->references('id')->on('users');
+            $table->foreign('project_manager_id')->references('id')->on('users');
         });
     }
 
@@ -38,7 +38,7 @@ class AddJediFields extends Migration
         });
 
         Schema::table('teams', function (Blueprint $table) {
-            $table->dropColumn('project_manager');
+            $table->dropColumn('project_manager_id');
         });
     }
 }

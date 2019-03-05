@@ -277,9 +277,9 @@ class User extends Resource
         return [
             (new Actions\SyncAccess)
                 ->canSee(function ($request) {
-                    return true;
+                    return false !== config('jedi.endpoint');
                 })->canRun(function ($request, $user) {
-                    return true;
+                    return $request->user()->hasRole('admin');
                 }),
             (new Actions\ResetApiToken)
                 ->canSee(function ($request) {

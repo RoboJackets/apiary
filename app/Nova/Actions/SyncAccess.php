@@ -28,7 +28,7 @@ class SyncAccess extends Action
         foreach ($models as $user) {
             $send = [];
             $send['uid'] = $user->uid;
-            $send['preferred_first_name'] = $user->preferred_first_name;
+            $send['first_name'] = $user->preferred_first_name;
             $send['last_name'] = $user->last_name;
             $send['is_access_active'] = $user->is_access_active;
             $send['teams'] = [];
