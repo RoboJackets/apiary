@@ -2,14 +2,13 @@
 
 namespace App\Nova\Actions;
 
+use GuzzleHTTP\Client;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use GuzzleHTTP\Client;
 
 class SyncAccess extends Action
 {
@@ -25,6 +24,7 @@ class SyncAccess extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         // This whole function is going to get factored out later
+        // Also it will be a queued job I guess?
         foreach ($models as $user) {
             $send = [];
             $send['uid'] = $user->uid;
@@ -43,7 +43,7 @@ class SyncAccess extends Action
                         'User-Agent' => 'Apiary on '.config('app.url'),
                         'Accept' => 'application/json',
                         'Authorization' => 'Bearer '.config('jedi.token'),
-                    ]
+                    ],
                 ]
             );
 
