@@ -87,7 +87,7 @@ class User extends Authenticatable
     }
 
     /**
-     *  Get the attendance records associated with this user.
+     *  Get the teams that this user manages.
      */
     public function manages()
     {

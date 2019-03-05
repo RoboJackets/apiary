@@ -100,12 +100,10 @@ class DuesPackage extends Resource
                     ->onlyOnDetail(),
 
                 DateTime::make('Start Date', 'access_start')
-                    ->onlyOnDetail()
-                    ->rules('required'),
+                    ->onlyOnDetail(),
 
                 DateTime::make('End Date', 'access_end')
-                    ->onlyOnDetail()
-                    ->rules('required'),
+                    ->onlyOnDetail(),
 
                 DateTime::make('Access Start Date', 'access_start')
                     ->onlyOnForms()
