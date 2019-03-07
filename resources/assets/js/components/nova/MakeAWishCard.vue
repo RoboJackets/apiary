@@ -1,11 +1,9 @@
 <template>
-  <div class="px-3 mb-6 w-1/3">
-    <div class="card relative metric px-6 py-4 relative card-panel">
-      <div class="flex mb-4">
-        <h3 class="mr-3 text-base text-80 font-bold">Make a Wish</h3>
-      </div>
-      <p class="flex items-center text-xl mb-4">Having issues with MyRoboJackets? <a class="no-underline" :href="url">Let us know</a></p>
-      </div>
+  <div class="card relative px-6 py-4 relative">
+    <div class="flex mb-4">
+      <h3 class="mr-3 text-base text-80 font-bold">Make a Wish</h3>
+    </div>
+    <p class="text-xl mb-4">Having issues? Have suggestions? <a class="no-underline" :href="url">Let us know</a></p>
   </div>
 </template>
 
