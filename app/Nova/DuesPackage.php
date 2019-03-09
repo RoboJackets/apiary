@@ -96,7 +96,7 @@ class DuesPackage extends Resource
             new Panel('Swag', $this->swagFields()),
 
             new Panel('Access', [
-                Boolean::make('Active', 'access_active')
+                Boolean::make('Active', 'is_access_active')
                     ->onlyOnDetail(),
 
                 DateTime::make('Start Date', 'access_start')
