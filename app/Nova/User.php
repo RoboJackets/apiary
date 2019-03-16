@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphToMany;
 use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\BelongsTo;
 
 class User extends Resource
 {
@@ -109,8 +110,19 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            Boolean::make('Access Active', 'is_access_active')
-                ->onlyOnDetail(),
+            new Panel(
+                'System Access',
+                [
+                    Boolean::make('Active', 'is_access_active')
+                        ->onlyOnDetail(),
+
+                    DateTime::make('Override Expiration', 'access_override_until')
+                        ->onlyOnDetail(),
+
+                    BelongsTo::make('Override Entered By', 'accessOverrideBy', User::class)
+                        ->onlyOnDetail(),
+                ]
+            ),
 
             new Panel('Emergency Contact', $this->emergencyFields()),
 
@@ -277,7 +289,13 @@ class User extends Resource
         return [
             (new Actions\SyncAccess)
                 ->canSee(function ($request) {
-                    return false !== config('jedi.endpoint');
+                    return $request->user()->hasRole('admin');
+                })->canRun(function ($request, $user) {
+                    return $request->user()->hasRole('admin');
+                }),
+            (new Actions\OverrideAccess)
+                ->canSee(function ($request) {
+                    return $request->user()->hasRole('admin');
                 })->canRun(function ($request, $user) {
                     return $request->user()->hasRole('admin');
                 }),

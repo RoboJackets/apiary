@@ -38,6 +38,7 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at',
         'accept_safety_agreement',
+        'access_override_until',
     ];
 
     /**
@@ -61,6 +62,8 @@ class User extends Authenticatable
         'deleted_at',
         'created_at',
         'updated_at',
+        'access_override_until',
+        'access_override_by_id',
     ];
 
     /**
@@ -260,16 +263,7 @@ class User extends Authenticatable
      */
     public function getIsAccessActiveAttribute()
     {
-        if (self::where('id', $this->id)->accessActive()->count() != 0) {
-            return true;
-        }
-        foreach ($this->teams()->get() as $team) {
-            if (in_array($team->id, config('jedi.access_teams'))) {
-                return true;
-            }
-        }
-
-        return false;
+        return self::where('id', $this->id)->accessActive()->count() != 0;
     }
 
     /**
@@ -332,9 +326,11 @@ class User extends Authenticatable
      */
     public function scopeAccessActive($query)
     {
+        $now = new \DateTime();
+
         return $query->whereHas('dues', function ($q) {
             $q->paid()->accessCurrent();
-        });
+        })->orWhere('access_override_until', '>', date('Y-m-d'));
     }
 
     /**
@@ -349,6 +345,11 @@ class User extends Authenticatable
     {
         return $query->whereDoesntHave('dues', function ($q) {
             $q->paid()->accessCurrent();
-        });
+        })->where('access_override_until', '<=', date('Y-m-d'));
+    }
+
+    public function accessOverrideBy()
+    {
+        return $this->belongsTo(\App\User::class, 'access_override_by_id');
     }
 }
