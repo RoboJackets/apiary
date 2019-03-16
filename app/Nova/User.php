@@ -12,10 +12,10 @@ use Laravel\Nova\Fields\HasMany;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\BelongsTo;
 
 class User extends Resource
 {
@@ -119,7 +119,7 @@ class User extends Resource
                     DateTime::make('Override Expiration', 'access_override_until')
                         ->onlyOnDetail(),
 
-                    BelongsTo::make('Override Entered By', 'accessOverrideBy', User::class)
+                    BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
                         ->onlyOnDetail(),
                 ]
             ),

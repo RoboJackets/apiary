@@ -4,13 +4,12 @@ namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\DateTime;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Nova\Fields\DateTime;
 
 class OverrideAccess extends Action
 {
