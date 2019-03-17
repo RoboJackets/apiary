@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\User;
 use App\Team;
+use App\User;
 use App\Payment;
 use App\DuesPackage;
 use Laravel\Horizon\Horizon;
-use App\Observers\UserObserver;
 use App\Observers\TeamObserver;
+use App\Observers\UserObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\DuesPackageObserver;
 use Illuminate\Support\ServiceProvider;

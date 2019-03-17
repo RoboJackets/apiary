@@ -19,7 +19,8 @@ class UserObserver
         }
     }
 
-    public function belongsToManyAttached(User $user) {
+    public function belongsToManyAttached(User $user)
+    {
         $this::saved($user);
     }
 }
