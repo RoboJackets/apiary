@@ -7,7 +7,8 @@ use App\Jobs\DuesPackageExpiration;
 
 class DuesPackageObserver
 {
-    public function saved(DuesPackage $package) {
+    public function saved(DuesPackage $package)
+    {
         DuesPackageExpiration::dispatch($package)->onQueue('jedi');
 
         if (null !== $package->access_start && $package->access_start > date('Y-m-d H:i:s')) {

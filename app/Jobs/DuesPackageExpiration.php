@@ -2,13 +2,12 @@
 
 namespace App\Jobs;
 
+use App\DuesPackage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\DuesPackage;
-use App\Jobs\PushToJedi;
 
 class DuesPackageExpiration implements ShouldQueue
 {
@@ -33,7 +32,7 @@ class DuesPackageExpiration implements ShouldQueue
      */
     public function handle()
     {
-        foreach($this->package->transactions as $transaction) {
+        foreach ($this->package->transactions as $transaction) {
             PushToJedi::dispatch($transaction->user)->onQueue('jedi');
         }
     }

@@ -2,15 +2,15 @@
 
 namespace App\Providers;
 
-use Laravel\Horizon\Horizon;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Http\Resources\Json\Resource;
 use App\User;
 use App\Payment;
 use App\DuesPackage;
+use Laravel\Horizon\Horizon;
 use App\Observers\UserObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\DuesPackageObserver;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Resources\Json\Resource;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -74,7 +74,7 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default','jedi'],
+                'queue' => ['default', 'jedi'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 3,
@@ -85,7 +85,7 @@ return [
         'staging' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default','jedi'],
+                'queue' => ['default', 'jedi'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
@@ -96,7 +96,7 @@ return [
         'jedi-test' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default','jedi'],
+                'queue' => ['default', 'jedi'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
@@ -106,7 +106,7 @@ return [
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default','jedi'],
+                'queue' => ['default', 'jedi'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
