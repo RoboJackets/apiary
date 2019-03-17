@@ -78,8 +78,8 @@ class DuesPackage extends Model
      */
     public function scopeActive($query)
     {
-        return $query->whereDate('effective_start', '<=', date('Y-m-d'))
-            ->whereDate('effective_end', '>=', date('Y-m-d'));
+        return $query->where('effective_start', '<', date('Y-m-d H:i:s'))
+            ->where('effective_end', '>', date('Y-m-d H:i:s'));
     }
 
     /**
@@ -90,8 +90,8 @@ class DuesPackage extends Model
      */
     public function scopeAccessActive($query)
     {
-        return $query->whereDate('access_start', '<=', date('Y-m-d'))
-            ->whereDate('access_end', '>=', date('Y-m-d'));
+        return $query->where('access_start', '<', date('Y-m-d H:i:s'))
+            ->where('access_end', '>', date('Y-m-d H:i:s'));
     }
 
     /**

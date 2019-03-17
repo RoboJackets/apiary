@@ -330,7 +330,7 @@ class User extends Authenticatable
 
         return $query->whereHas('dues', function ($q) {
             $q->paid()->accessCurrent();
-        })->orWhere('access_override_until', '>', date('Y-m-d'));
+        })->orWhere('access_override_until', '>', date('Y-m-d H:i:s'));
     }
 
     /**
@@ -345,7 +345,7 @@ class User extends Authenticatable
     {
         return $query->whereDoesntHave('dues', function ($q) {
             $q->paid()->accessCurrent();
-        })->where('access_override_until', '<=', date('Y-m-d'));
+        })->where('access_override_until', '<=', date('Y-m-d H:i:s'));
     }
 
     public function accessOverrideBy()

@@ -14,8 +14,8 @@ class AddJediFields extends Migration
     public function up()
     {
         Schema::table('dues_packages', function (Blueprint $table) {
-            $table->timestamp('access_start')->after('effective_end')->useCurrent();
-            $table->timestamp('access_end')->after('access_start')->useCurrent();
+            $table->timestamp('access_start')->after('effective_end')->nullable();
+            $table->timestamp('access_end')->after('access_start')->nullable();
         });
 
         Schema::table('teams', function (Blueprint $table) {
