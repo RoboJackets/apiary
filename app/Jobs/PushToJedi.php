@@ -33,6 +33,16 @@ class PushToJedi implements ShouldQueue
      */
     public function handle()
     {
+        // hack to remove expired overrides
+        if (null !== $this->user->access_override_until) {
+            if ($this->user->access_override_until <= new \DateTime()) {
+                $this->user->access_override_until = null;
+                $this->user->access_override_by_id = null;
+                $this->user->save(); // observer will trigger a new job
+                return;              // so we can return here
+            }
+        }
+
         $send = [];
         $send['uid'] = $this->user->uid;
         $send['first_name'] = $this->user->preferred_first_name;

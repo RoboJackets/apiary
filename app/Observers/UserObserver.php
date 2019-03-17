@@ -18,4 +18,8 @@ class UserObserver
             PushToJedi::dispatch($user)->delay($user->access_override_until)->onQueue('jedi');
         }
     }
+
+    public function belongsToManyAttached(User $user) {
+        $this::saved($user);
+    }
 }

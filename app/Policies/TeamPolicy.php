@@ -139,7 +139,7 @@ class TeamPolicy
             return false;
         } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
             return true;
-        } elseif ($user->can('update-teams-membership-own') && $team->self_serviceable && ! $team->members->contains('id', $userResource->id)) {
+        } elseif ($user->can('update-teams-membership-own') && $team->self_serviceable && ! $team->members->contains('id', $user->id)) {
             return true;
         } else {
             return $user->can('update-teams-membership');

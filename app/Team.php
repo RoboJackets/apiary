@@ -7,10 +7,12 @@ use Spatie\Sluggable\SlugOptions;
 use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Chelout\RelationshipEvents\Concerns\HasManyEvents;
+use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 
 class Team extends Model
 {
-    use Actionable, SoftDeletes, HasSlug;
+    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasRelationshipObservables;
 
     /**
      * The attributes that are not mass assignable.

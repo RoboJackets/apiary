@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\User;
+use App\Team;
 use App\Payment;
 use App\DuesPackage;
 use Laravel\Horizon\Horizon;
 use App\Observers\UserObserver;
+use App\Observers\TeamObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\DuesPackageObserver;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Payment::observe(PaymentObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
+        Team::observe(TeamObserver::class);
     }
 
     /**

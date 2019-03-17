@@ -7,6 +7,8 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
+use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 
 class User extends Authenticatable
 {
@@ -14,6 +16,17 @@ class User extends Authenticatable
     use Notifiable;
     use HasRoles;
     use Actionable;
+    use HasBelongsToManyEvents;
+    use HasRelationshipObservables;
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::belongsToManyAttached(function ($parent, $related) {
+            throw new \Exception();
+        });
+    }
 
     /**
      * The accessors to append to the model's array form.
@@ -328,9 +341,11 @@ class User extends Authenticatable
     {
         $now = new \DateTime();
 
+        // doesn't work - expired overrides will always be out of scope
+
         return $query->whereHas('dues', function ($q) {
             $q->paid()->accessCurrent();
-        })->orWhere('access_override_until', '>', date('Y-m-d H:i:s'));
+        })->orwhere('access_override_until', '>', date('Y-m-d H:i:s'));
     }
 
     /**
@@ -343,6 +358,8 @@ class User extends Authenticatable
      */
     public function scopeAccessInactive($query)
     {
+        // doesn't work - expired overrides will always be in scope
+
         return $query->whereDoesntHave('dues', function ($q) {
             $q->paid()->accessCurrent();
         })->where('access_override_until', '<=', date('Y-m-d H:i:s'));
