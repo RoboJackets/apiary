@@ -8,11 +8,12 @@ use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 
 class Team extends Model
 {
-    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasRelationshipObservables;
+    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasBelongsToManyEvents, HasRelationshipObservables;
 
     /**
      * The attributes that are not mass assignable.

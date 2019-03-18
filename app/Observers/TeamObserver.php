@@ -1,14 +1,19 @@
 <?php
 
+namespace App\Observers;
+
 use App\Team;
 use App\Jobs\PushToJedi;
 
-namespace App\Observers;
-
 class TeamObserver
 {
-    public function hasManyCreated(Team $team, Model $user)
+    public function belongsToManyAttached($relation, $related)
     {
-        PushToJedi::dispatch($user);
+        PushToJedi::dispatch($related);
+    }
+
+    public function belongsToManyDetached($relation, $related)
+    {
+        PushToJedi::dispatch($related);
     }
 }
