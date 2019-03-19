@@ -3,17 +3,18 @@
 namespace App\Observers;
 
 use App\Team;
+use App\User;
 use App\Jobs\PushToJedi;
 
 class TeamObserver
 {
-    public function belongsToManyAttached($relation, $related)
+    public function belongsToManyAttached(string $relation, Team $team, array $ids)
     {
-        PushToJedi::dispatch($related);
+        PushToJedi::dispatch(User::find($ids[0]));
     }
 
-    public function belongsToManyDetached($relation, $related)
+    public function belongsToManyDetached(string $relation, Team $team, array $ids)
     {
-        PushToJedi::dispatch($related);
+        PushToJedi::dispatch(User::find($ids[0]));
     }
 }
