@@ -66,7 +66,6 @@ trait CreateOrUpdateCASUser
         $user->last_name = $this->cas->getAttribute('sn');
         $user->save();
 
-
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || $user->roles->count() == 0) {
             $role = Role::where('name', 'non-member')->first();

@@ -339,7 +339,6 @@ class User extends Authenticatable
      */
     public function scopeAccessActive($query)
     {
-        $now = new \DateTime();
         return $query->whereHas('dues', function ($q) {
             $q->paid()->accessCurrent();
         })->orwhere('access_override_until', '>=', date('Y-m-d H:i:s'));
