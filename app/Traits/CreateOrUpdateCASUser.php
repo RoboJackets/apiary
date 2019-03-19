@@ -58,14 +58,14 @@ trait CreateOrUpdateCASUser
         $user = User::where('uid', $this->cas->user())->first();
         if ($user == null) {
             $user = new User();
-        }/*
+        }
         $user->uid = $this->cas->user();
         $user->gtid = $this->cas->getAttribute('gtGTID');
         $user->gt_email = $this->cas->getAttribute('email_primary');
         $user->first_name = $this->cas->getAttribute('givenName');
         $user->last_name = $this->cas->getAttribute('sn');
         $user->save();
-        */
+
 
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || $user->roles->count() == 0) {

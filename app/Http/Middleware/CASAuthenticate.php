@@ -37,7 +37,8 @@ class CASAuthenticate
     {
         //Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
-            if ($this->cas->isAuthenticated()) {
+            // Run the user update only if they don't have an active session
+            if ($this->cas->isAuthenticated() && !Auth::check()) {
                 $user = $this->createOrUpdateCASUser($request);
                 if (is_a($user, \App\User::class)) {
                     Auth::login($user);
