@@ -13,6 +13,7 @@ use App\Observers\PaymentObserver;
 use App\Observers\DuesPackageObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,8 +26,16 @@ class AppServiceProvider extends ServiceProvider
     {
         Resource::withoutWrapping();
 
-        Horizon::auth(function ($request) {
-            return auth()->user()->can('access-horizon');
+        Horizon::auth(function () {
+            if (auth()->guard('web')->user() instanceof User &&
+                auth()->guard('web')->user()->can('access-horizon')) {
+                return true;
+            } elseif (auth()->guard('web')->user() == null) {
+                // Theoretically, this should never happen since we're calling the CAS middleware before this.
+                return abort(401, 'Authentication Required');
+            } else {
+                return abort(403, 'Forbidden');
+            }
         });
 
         User::observe(UserObserver::class);
