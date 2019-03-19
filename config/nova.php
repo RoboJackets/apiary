@@ -57,8 +57,8 @@ return [
     */
 
     'middleware' => [
-        \App\Http\Middleware\CASAuthenticate::class,
         'web',
+        \App\Http\Middleware\CASAuthenticate::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
         Authorize::class,

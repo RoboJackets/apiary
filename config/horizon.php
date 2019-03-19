@@ -116,6 +116,7 @@ return [
     ],
 
     'middleware' => [
-        'auth.cas.force',
+        'web',
+        'auth.cas.force'
     ],
 ];
