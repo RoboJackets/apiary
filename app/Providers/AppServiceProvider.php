@@ -10,10 +10,10 @@ use Laravel\Horizon\Horizon;
 use App\Observers\TeamObserver;
 use App\Observers\UserObserver;
 use App\Observers\PaymentObserver;
+use Illuminate\Support\Facades\Auth;
 use App\Observers\DuesPackageObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\Resource;
-use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
