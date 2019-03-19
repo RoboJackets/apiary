@@ -19,15 +19,6 @@ class User extends Authenticatable
     use HasBelongsToManyEvents;
     use HasRelationshipObservables;
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::belongsToManyAttached(function ($parent, $related) {
-            throw new \Exception();
-        });
-    }
-
     /**
      * The accessors to append to the model's array form.
      *
