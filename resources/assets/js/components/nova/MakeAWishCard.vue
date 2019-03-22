@@ -3,7 +3,7 @@
     <div class="flex mb-4">
       <h3 class="mr-3 text-base text-80 font-bold">Make a Wish</h3>
     </div>
-    <p class="text-xl mb-4">Having issues? Have suggestions? <a class="no-underline" :href="url">Let us know</a></p>
+    <p class="text-xl mb-4">Having issues? Have suggestions? <strong><a class="no-underline" :href="url">Let us know!</a></strong></p>
   </div>
 </template>
 
