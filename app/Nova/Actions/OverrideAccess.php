@@ -4,21 +4,16 @@ namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\DateTime;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 
-class ResetApiToken extends Action
+class OverrideAccess extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The displayable name of the action.
-     *
-     * @var string
-     */
-    public $name = 'Reset API Token';
 
     /**
      * Perform the action on the given models.
@@ -27,14 +22,18 @@ class ResetApiToken extends Action
      * @param  \Illuminate\Support\Collection  $models
      * @return mixed
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $users)
     {
-        foreach ($models as $model) {
-            $model->api_token = bin2hex(openssl_random_pseudo_bytes(16));
-            $model->save();
+        foreach ($users as $user) {
+            if ($user->id === Auth::user()->id) {
+                return Action::danger('You cannot override your own access!');
+            }
+            $user->access_override_until = $fields->access_override_until;
+            $user->access_override_by_id = Auth::user()->id;
+            $user->save();
         }
 
-        return Action::message('The API token'.(count($models) == 1 ? ' was' : 's were').' reset!');
+        return Action::message('The access override'.(count($users) == 1 ? ' was' : 's were').' saved!');
     }
 
     /**
@@ -44,7 +43,10 @@ class ResetApiToken extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            DateTime::make('Override Expiration', 'access_override_until')
+                ->rules('required'),
+        ];
     }
 
     /**

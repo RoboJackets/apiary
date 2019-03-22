@@ -57,7 +57,13 @@ class TeamPolicy
      */
     public function update(User $user, Team $team)
     {
-        return $user->can('update-teams');
+        if ($user->can('update-teams')) {
+            return true;
+        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -108,12 +114,15 @@ class TeamPolicy
     {
         if ($team->members->contains('id', $userResource->id)) {
             return false;
-        }
-        if (! $team->visible && $user->cant('read-teams-hidden')) {
+        } elseif (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
+        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        } elseif ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
+            return true;
+        } else {
+            return $user->can('update-teams-membership');
         }
-
-        return $user->can('update-teams-membership');
     }
 
     /**
@@ -128,9 +137,13 @@ class TeamPolicy
     {
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
+        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        } elseif ($user->can('update-teams-membership-own') && $team->self_serviceable && ! $team->members->contains('id', $user->id)) {
+            return true;
+        } else {
+            return $user->can('update-teams-membership');
         }
-
-        return $user->can('update-teams-membership');
     }
 
     /**
@@ -145,8 +158,12 @@ class TeamPolicy
     {
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
+        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        } elseif ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
+            return true;
+        } else {
+            return $user->can('update-teams-membership');
         }
-
-        return $user->can('update-teams-membership');
     }
 }
