@@ -23,6 +23,9 @@ class PushToJedi implements ShouldQueue
      */
     public function __construct(User $user)
     {
+        if (null === config('jedi.endpoint') || null === config('jedi.token')) {
+            $this->delete();
+        }
         $this->user = $user;
     }
 
