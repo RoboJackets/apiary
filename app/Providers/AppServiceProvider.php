@@ -41,7 +41,6 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Payment::observe(PaymentObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
-        Team::observe(TeamObserver::class);
     }
 
     /**
