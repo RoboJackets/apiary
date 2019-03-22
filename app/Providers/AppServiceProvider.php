@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Team;
 use App\User;
 use App\Payment;
 use App\DuesPackage;
 use Laravel\Horizon\Horizon;
-use App\Observers\TeamObserver;
 use App\Observers\UserObserver;
 use App\Observers\PaymentObserver;
 use Illuminate\Support\Facades\Auth;
