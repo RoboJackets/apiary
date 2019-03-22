@@ -23,9 +23,6 @@ class PushToJedi implements ShouldQueue
      */
     public function __construct(User $user)
     {
-        if (null === config('jedi.endpoint') || null === config('jedi.token')) {
-            $this->delete();
-        }
         $this->user = $user;
     }
 
@@ -36,6 +33,10 @@ class PushToJedi implements ShouldQueue
      */
     public function handle()
     {
+        if (null === config('jedi.endpoint') || null === config('jedi.token')) {
+            return;
+        }
+
         $send = [];
         $send['uid'] = $this->user->uid;
         $send['first_name'] = $this->user->preferred_first_name;
