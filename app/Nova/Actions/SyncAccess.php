@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Jobs\PushToJedi;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
@@ -9,16 +10,9 @@ use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 
-class ResetApiToken extends Action
+class SyncAccess extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The displayable name of the action.
-     *
-     * @var string
-     */
-    public $name = 'Reset API Token';
 
     /**
      * Perform the action on the given models.
@@ -29,12 +23,11 @@ class ResetApiToken extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        foreach ($models as $model) {
-            $model->api_token = bin2hex(openssl_random_pseudo_bytes(16));
-            $model->save();
+        foreach ($models as $user) {
+            // I tried to make this class ShouldQueue so Nova would handle queueing
+            // but was getting an exception. I think it's fine to run synchronously...?
+            PushToJedi::dispatchNow($user);
         }
-
-        return Action::message('The API token'.(count($models) == 1 ? ' was' : 's were').' reset!');
     }
 
     /**
@@ -46,11 +39,4 @@ class ResetApiToken extends Action
     {
         return [];
     }
-
-    /**
-     * Indicates if this action is only available on the resource detail view.
-     *
-     * @var bool
-     */
-    public $onlyOnDetail = true;
 }

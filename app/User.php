@@ -2,16 +2,22 @@
 
 namespace App;
 
+use Laravel\Nova\Actions\Actionable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
+use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 
 class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
     use HasRoles;
+    use Actionable;
+    use HasBelongsToManyEvents;
+    use HasRelationshipObservables;
 
     /**
      * The accessors to append to the model's array form.
@@ -22,7 +28,9 @@ class User extends Authenticatable
         'name',
         'full_name',
         'preferred_first_name',
-        'is_active', ];
+        'is_active',
+        'is_access_active',
+    ];
 
     /**
      * The attributes that should be mutated to dates.
@@ -34,6 +42,7 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at',
         'accept_safety_agreement',
+        'access_override_until',
     ];
 
     /**
@@ -52,10 +61,13 @@ class User extends Authenticatable
         'api_token',
         'full_name',
         'is_active',
+        'access_active',
         'needs_payment',
         'deleted_at',
         'created_at',
         'updated_at',
+        'access_override_until',
+        'access_override_by_id',
     ];
 
     /**
@@ -79,6 +91,14 @@ class User extends Authenticatable
     public function attendance()
     {
         return $this->hasMany(\App\Attendance::class, 'gtid', 'gtid');
+    }
+
+    /**
+     *  Get the teams that this user manages.
+     */
+    public function manages()
+    {
+        return $this->hasMany(\App\Team::class, 'project_manager');
     }
 
     /**
@@ -241,6 +261,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the access_active flag for the User.
+     *
+     * @return bool
+     */
+    public function getIsAccessActiveAttribute()
+    {
+        return self::where('id', $this->id)->accessActive()->count() != 0;
+    }
+
+    /**
      * Scope a query to automatically determine user identifier.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -288,5 +318,43 @@ class User extends Authenticatable
         return $query->whereDoesntHave('dues', function ($q) {
             $q->paid()->current();
         });
+    }
+
+    /**
+     * Scope a query to automatically include only access active members
+     * Active: Has paid dues for a currently ongoing term
+     *         or, has a non-zero payment for an active DuesPackage.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAccessActive($query)
+    {
+        return $query->whereHas('dues', function ($q) {
+            $q->paid()->accessCurrent();
+        })->orwhere('access_override_until', '>=', date('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Scope a query to automatically include only inactive members
+     * Active: Has paid dues for a currently ongoing term
+     *         or, has a non-zero payment for an active DuesPackage.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAccessInactive($query)
+    {
+        return $query->whereDoesntHave('dues', function ($q) {
+            $q->paid()->accessCurrent();
+        })->where(function ($query) {
+            $query->where('access_override_until', '<=', date('Y-m-d H:i:s'))
+                ->orWhereNull('access_override_until');
+        });
+    }
+
+    public function accessOverrideBy()
+    {
+        return $this->belongsTo(\App\User::class, 'access_override_by_id');
     }
 }

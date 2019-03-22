@@ -269,6 +269,19 @@ class DuesTransaction extends Model
     }
 
     /**
+     * Scope a query to only include current transactions.
+     * Current defined as belonging to an active DuesPackage.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAccessCurrent($query)
+    {
+        return $query->whereHas('package', function ($q) {
+            $q->accessActive();
+        });
+    }
+
+    /**
      * Get the Payable amount.
      */
     public function getPayableAmount()
