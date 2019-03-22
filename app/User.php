@@ -98,7 +98,7 @@ class User extends Authenticatable
      */
     public function manages()
     {
-        return $this->hasMany(\App\Team::class, 'project_manager');
+        return $this->hasMany(\App\Team::class, 'project_manager_id');
     }
 
     /**
