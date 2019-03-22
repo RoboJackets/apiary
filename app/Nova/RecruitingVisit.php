@@ -51,7 +51,17 @@ class RecruitingVisit extends Resource
      *
      * @var array
      */
-    public static $search = [];
+    public static $search = [
+        'recruiting_name',
+        'recruiting_email',
+    ];
+
+    /**
+     * Indicates if the resource should be globally searchable.
+     *
+     * @var bool
+     */
+    public static $globallySearchable = false;
 
     /**
      * Get the fields displayed by the resource.
