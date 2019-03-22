@@ -51,10 +51,7 @@ class RecruitingVisit extends Resource
      *
      * @var array
      */
-    public static $search = [
-        'recruiting_name',
-        'recruiting_email',
-    ];
+    public static $search = [];
 
     /**
      * Get the fields displayed by the resource.
