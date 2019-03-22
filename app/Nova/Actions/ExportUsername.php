@@ -27,4 +27,11 @@ class ExportUsername extends DownloadExcel
             ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
             ->only('uid');
     }
+
+    /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
 }

@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\TotalTeamMembers;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -60,6 +61,10 @@ class Team extends Resource
                 ->hideFromIndex()
                 ->alwaysShow()
                 ->rules('required'),
+
+            BelongsTo::make('Project Manager', 'projectManager', User::class)
+                ->searchable()
+                ->nullable(),
 
             new Panel('Communications', $this->commFields()),
 

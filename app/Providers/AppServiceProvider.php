@@ -2,7 +2,14 @@
 
 namespace App\Providers;
 
+use App\User;
+use App\Payment;
+use App\DuesPackage;
 use Laravel\Horizon\Horizon;
+use App\Observers\UserObserver;
+use App\Observers\PaymentObserver;
+use Illuminate\Support\Facades\Auth;
+use App\Observers\DuesPackageObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\Resource;
 
@@ -16,9 +23,22 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Resource::withoutWrapping();
-        Horizon::auth(function ($request) {
-            return auth()->user()->can('access-horizon');
+
+        Horizon::auth(function () {
+            if (auth()->guard('web')->user() instanceof User &&
+                auth()->guard('web')->user()->can('access-horizon')) {
+                return true;
+            } elseif (auth()->guard('web')->user() == null) {
+                // Theoretically, this should never happen since we're calling the CAS middleware before this.
+                return abort(401, 'Authentication Required');
+            } else {
+                return abort(403, 'Forbidden');
+            }
         });
+
+        User::observe(UserObserver::class);
+        Payment::observe(PaymentObserver::class);
+        DuesPackage::observe(DuesPackageObserver::class);
     }
 
     /**

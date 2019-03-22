@@ -104,7 +104,7 @@ export default {
           }),
         ],
       },
-      selectedRange: 8,
+      selectedRange: 2,
       ranges: [
         2,
         4,

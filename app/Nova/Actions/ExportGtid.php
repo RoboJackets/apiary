@@ -28,4 +28,11 @@ class ExportGtid extends DownloadExcel
             ->only('first_name', 'last_name', 'gtid')
             ->withChunkCount(1000);
     }
+
+    /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
 }
