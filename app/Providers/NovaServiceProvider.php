@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
+use App\Nova\Cards\MakeAWish;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Tools\AttendanceReport;
@@ -67,6 +68,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             new ActiveMembers,
             new AttendancePerWeek,
             new ActiveAttendanceBreakdown,
+            new MakeAWish,
         ];
     }
 
