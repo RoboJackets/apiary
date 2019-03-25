@@ -1,14 +1,22 @@
 <template>
-    <div class="row">
-        <template v-for="team in teams">
-            <div class="col-sm-12 col-md-4" style="padding-top:50px">
-                <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
-                <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
-                    {{ team.name }}
+    <div>
+        <div class="row">
+            <template v-for="team in teams">
+                <div class="col-sm-12 col-md-4" style="padding-top:50px">
+                    <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
+                    <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
+                        {{ team.name }}
+                    </div>
                 </div>
+            </template>
+        </div>
+        <div class="row">
+            <div class="col-sm-1" style="padding-top: 20px">
+                <object id="nfc-logo" data="/img/nfc-logo.svg" type="image/svg+xml" style="max-width: 20px"></object>
             </div>
-        </template>
+        </div>
     </div>
+
 </template>
 
 <script>
@@ -125,8 +133,13 @@
                 document.activeElement.blur();
                 let self = this;
                 this.socket = new WebSocket("ws://localhost:9000");
+                // Make NFC logo icon green
+                document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#27AE60');
 
                 this.socket.onerror = function(event) {
+                    // Make NFC logo icon red
+                    document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#FF0000');
+
                     swal({
                         title: 'Hmm...',
                         text: 'There was an error connecting to the contactless card reader.',
@@ -145,6 +158,12 @@
                           console.log('Ignoring socket connectivity issues per user request')
                       }
                     });
+                };
+
+                this.socket.onclose = function (event) {
+                    // Make NFC logo icon red
+                    document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#FF0000');
+                    console.log('Socket disconnected')
                 };
 
                 this.socket.onmessage = ({data}) => {
@@ -430,5 +449,16 @@
 
     .swal2-loading button {
         margin-bottom: 2em !important;
+    }
+
+    .nfc-logo {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        background-color: red;
+        -webkit-mask: url(/img/nfc-logo.svg) no-repeat center;
+        mask: url(/img/nfc-logo.svg) no-repeat center;
     }
 </style>
