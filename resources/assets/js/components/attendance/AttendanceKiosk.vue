@@ -268,7 +268,34 @@
                             } else if (response.data.user.roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
-                                swal("You're an admin! :snowflake:");
+                                swal({
+                                    // title: "Hey there, " + response.data.user.first_name + "!",
+                                    title: "mfw #adminperks",
+                                    input: 'select',
+                                    inputOptions: {
+                                        'reload': 'Reload Page',
+                                        'socket': 'Reconnect to contactless reader',
+                                        'exit': 'Exit kiosk mode',
+                                    },
+                                    inputPlaceholder: 'Select an option',
+                                    showCancelButton: true,
+                                    inputValidator: (value) => {
+                                        return new Promise((resolve) => {
+                                            if (value === 'reload') {
+                                                location.reload();
+                                                resolve()
+                                            } else if (value === 'socket') {
+                                                this.startSocketListening();
+                                                resolve()
+                                            } else if (value === 'exit') {
+                                                window.location.href = 'http://exitkiosk';
+                                                resolve()
+                                            } else {
+                                                resolve("That's not a valid option.")
+                                            }
+                                        })
+                                    }
+                                });
                                 return false;
                             } else {
                                 // Roles retried and the user is not an admin
