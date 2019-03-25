@@ -227,6 +227,8 @@ class User extends Authenticatable
             'dues' => 'dues-transactions',
             'events' => 'events',
             'rsvps' => 'rsvps',
+            'roles' => 'roles-and-permissions',
+            'permissions' => 'roles-and-permissions'
         ];
     }
 
