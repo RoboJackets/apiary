@@ -29,6 +29,7 @@
                 },
                 attendanceBaseUrl: '/api/v1/attendance',
                 teamsBaseUrl: '/api/v1/teams',
+                usersBaseUrl: '/api/v1/users',
                 teams: [],
                 stickToTeam: false,
                 submitting: false,
@@ -108,16 +109,7 @@
                         if (this.submitting) {
                             return;
                         }
-                        if (this.attendance.attendable_id == '' && e.key == 'Enter') {
-                            //Enter was pressed but a team was not picked
-                            buffer = '';
-                            swal({
-                                title: 'Whoops!',
-                                text: 'Please select a team before swiping your BuzzCard',
-                                type: 'warning',
-                                timer: 2000,
-                            });
-                        } else if (e.key != 'Enter') {
+                        if (e.key != 'Enter') {
                             //A key that's not enter was pressed
                             buffer += e.key;
                         } else {
@@ -133,6 +125,28 @@
                 document.activeElement.blur();
                 let self = this;
                 this.socket = new WebSocket("ws://localhost:9000");
+
+                this.socket.onerror = function(event) {
+                    swal({
+                        title: 'Hmm...',
+                        text: 'There was an error connecting to the contactless card reader.',
+                        showCancelButton: true,
+                        showConfirmButton: true,
+                        confirmButtonText: 'Retry',
+                        cancelButtonText: 'Continue',
+                        type: 'info',
+                    }).then(function(result) {
+                      if (result.value) {
+                          // handle confirm
+                          console.log('Retrying socket connection per user request');
+                          self.startSocketListening()
+                      } else {
+                          // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
+                          console.log('Ignoring socket connectivity issues per user request')
+                      }
+                    });
+                };
+
                 this.socket.onmessage = ({data}) => {
                     console.log({ event: "Received message", data });
                     this.cardPresented(data);
@@ -232,54 +246,114 @@
                 }
             },
             submit() {
-                // Submit attendance data
-                this.submitting = true;
-                swal.showLoading();
-                axios
-                    .post(this.attendanceBaseUrl, this.attendance)
-                    .then(response => {
-                        this.hasError = false;
-                        let attendeeName = (response.data.attendance.attendee.name || "Non-Member");
-                        swal({
-                            title: "You're in!",
-                            text: 'Nice to see you, ' + attendeeName + '.',
-                            timer: 1000,
-                            showConfirmButton: false,
-                            type: 'success',
-                        }).then(() => {
-                            if (this.stickToTeam) {
-                                swal(this.getTeamSwalConfig());
+                // Check for lack of team selection
+                if (this.attendance.attendable_id === '') {
+                    // We have a valid card read and no team picked, check if user is an admin for hidden menu access
+                    axios
+                        .get(this.usersBaseUrl + "/" + this.attendance.gtid, {
+                            params: {
+                                include: 'roles'
+                            }
+                        })
+                        .then(response => {
+                            if (typeof response.data.user.roles === "undefined") {
+                                // Unable to read roles? That's an error.
+                                console.log('Error checking permissions via API');
+                                swal(
+                                    'Error',
+                                    'Unable to validate permissions. Please contact #it-helpdesk for assistance.',
+                                    'error'
+                                );
+                                return false;
+                            } else if (response.data.user.roles.filter(role => role.name.toString() === "admin").length === 1) {
+                                // Roles retrieved and the user is an admin
+                                console.log('User is an admin!');
+                                swal("You're an admin! :snowflake:");
+                                return false;
+                            } else {
+                                // Roles retried and the user is not an admin
+                                console.log('User is not an admin');
+                                swal({
+                                    title: 'Whoops!',
+                                    text: 'Please select a team before swiping or tapping your BuzzCard',
+                                    type: 'warning',
+                                    timer: 2000,
+                                });
+                                this.clearFields();
+                                return false;
+                            }
+                        })
+                        .catch(error => {
+                            this.hasError = true;
+                            this.feedback = '';
+                            this.clearFields();
+                            if (error.response.status === 404) {
+                                // User not known, but API call succeeded
+                                swal({
+                                    title: 'Whoops!',
+                                    text: 'Please select a team before swiping or tapping your BuzzCard',
+                                    type: 'warning',
+                                    timer: 2000,
+                                });
+                            } else {
+                                swal(
+                                    'Error',
+                                    'Unable to process data. Check your internet connection or try refreshing the page.',
+                                    'error'
+                                );
                             }
                         });
-                        if (!this.stickToTeam) {
-                            this.clearFields();
-                        } else {
-                            this.clearGTID();
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.hasError = true;
-                        this.feedback = '';
-                        this.clearFields();
-                        if (error.response.status == 403) {
+                } else {
+                    // Submit attendance data
+                    this.submitting = true;
+                    swal.showLoading();
+                    axios
+                        .post(this.attendanceBaseUrl, this.attendance)
+                        .then(response => {
+                            this.hasError = false;
+                            let attendeeName = (response.data.attendance.attendee.name || "Non-Member");
                             swal({
-                                title: 'Whoops!',
-                                text: "You don't have permission to perform that action.",
-                                type: 'error',
+                                title: "You're in!",
+                                text: 'Nice to see you, ' + attendeeName + '.',
+                                timer: 1000,
+                                showConfirmButton: false,
+                                type: 'success',
+                            }).then(() => {
+                                if (this.stickToTeam) {
+                                    swal(this.getTeamSwalConfig());
+                                }
                             });
-                        } else {
-                            swal(
-                                'Error',
-                                'Unable to process data. Check your internet connection or try refreshing the page.',
-                                'error'
-                            );
-                        }
-                    })
-                    .finally(() => {
-                        this.submitting = false;
-                        swal.hideLoading();
-                    });
+                            if (!this.stickToTeam) {
+                                this.clearFields();
+                            } else {
+                                this.clearGTID();
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.hasError = true;
+                            this.feedback = '';
+                            this.clearFields();
+                            if (error.response.status == 403) {
+                                swal({
+                                    title: 'Whoops!',
+                                    text: "You don't have permission to perform that action.",
+                                    type: 'error',
+                                });
+                            } else {
+                                swal(
+                                    'Error',
+                                    'Unable to process data. Check your internet connection or try refreshing the page.',
+                                    'error'
+                                );
+                            }
+                        })
+                        .finally(() => {
+                            this.submitting = false;
+                            swal.hideLoading();
+                        });
+                }
+
             },
             clearFields() {
                 //Remove focus from button
