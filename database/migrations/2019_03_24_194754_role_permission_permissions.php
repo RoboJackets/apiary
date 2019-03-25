@@ -1,9 +1,7 @@
 <?php
 
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class RolePermissionPermissions extends Migration

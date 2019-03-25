@@ -228,7 +228,7 @@ class User extends Authenticatable
             'events' => 'events',
             'rsvps' => 'rsvps',
             'roles' => 'roles-and-permissions',
-            'permissions' => 'roles-and-permissions'
+            'permissions' => 'roles-and-permissions',
         ];
     }
 

@@ -3,8 +3,8 @@
 namespace App\Http\Resources;
 
 use Auth;
-use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\Role as RoleResource;
+use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\Event as EventResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Permission as PermissionResource;
