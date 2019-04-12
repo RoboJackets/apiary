@@ -288,11 +288,10 @@
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
                                 swal({
-                                    // title: "Hey there, " + response.data.user.first_name + "!",
-                                    title: "mfw #adminperks",
+                                    title: "Administrator Options",
                                     input: 'select',
                                     inputOptions: {
-                                        'reload': 'Reload Page',
+                                        'reload': 'Reload page',
                                         'socket': 'Reconnect to contactless reader',
                                         'exit': 'Exit kiosk mode',
                                     },
