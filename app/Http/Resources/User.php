@@ -3,9 +3,11 @@
 namespace App\Http\Resources;
 
 use Auth;
+use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\Event as EventResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Permission as PermissionResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
@@ -59,6 +61,8 @@ class User extends JsonResource
             'events' => EventResource::collection($this->whenLoaded('events')),
             'recruitingVisits' => RecruitingVisitResource::collection($this->whenLoaded('recruitingVisits')),
             'teams' => TeamResource::collection($this->whenLoaded('teams')),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
         ];
     }
 
