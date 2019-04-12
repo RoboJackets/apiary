@@ -104,12 +104,15 @@ class UserPolicy
     {
         if ($team->members->contains('id', $userResource->id)) {
             return false;
-        }
-        if (! $team->visible && $user->cant('read-teams-hidden')) {
+        } elseif (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
+        } elseif ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
+            return true;
+        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        } else {
+            return $user->can('update-teams-membership');
         }
-
-        return $user->can('update-teams-membership');
     }
 
     /**
@@ -122,7 +125,22 @@ class UserPolicy
      */
     public function attachAnyTeam(User $user, User $userResource)
     {
-        return $user->can('update-teams-membership');
+        if ($user->can('update-teams-membership')) {
+            return true;
+        } elseif ($user->can('update-teams-membership-own') && $user->is($userResource)) {
+            return true;
+        } else {
+            $user_manages = $user->manages()->get();
+            if (count($user_manages) > 0) {
+                $target_in = $userResource->teams()->get();
+                $diff = $user_manages->diff($target_in);
+                if (count($diff) > 0) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     /**
@@ -137,8 +155,12 @@ class UserPolicy
     {
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
+        } elseif ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
+            return true;
+        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        } else {
+            return $user->can('update-teams-membership');
         }
-
-        return $user->can('update-teams-membership');
     }
 }

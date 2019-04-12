@@ -7,10 +7,13 @@ use Spatie\Sluggable\SlugOptions;
 use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Chelout\RelationshipEvents\Concerns\HasManyEvents;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
+use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 
 class Team extends Model
 {
-    use Actionable, SoftDeletes, HasSlug;
+    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasBelongsToManyEvents, HasRelationshipObservables;
 
     /**
      * The attributes that are not mass assignable.
@@ -93,5 +96,10 @@ class Team extends Model
             'members' => 'teams-membership',
             'attendance' => 'attendance',
         ];
+    }
+
+    public function projectManager()
+    {
+        return $this->belongsTo(\App\User::class, 'project_manager_id');
     }
 }

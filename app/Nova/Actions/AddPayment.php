@@ -136,4 +136,11 @@ class AddPayment extends Action
                 ->creationRules('required'),
         ];
     }
+
+    /**
+     * Indicates if this action is only available on the resource detail view.
+     *
+     * @var bool
+     */
+    public $onlyOnDetail = true;
 }
