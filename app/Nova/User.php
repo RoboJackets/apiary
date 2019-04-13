@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\HasMany;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -108,6 +109,20 @@ class User extends Resource
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+
+            new Panel(
+                'System Access',
+                [
+                    Boolean::make('Active', 'is_access_active')
+                        ->onlyOnDetail(),
+
+                    DateTime::make('Override Expiration', 'access_override_until')
+                        ->onlyOnDetail(),
+
+                    BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
+                        ->onlyOnDetail(),
+                ]
+            ),
 
             new Panel('Emergency Contact', $this->emergencyFields()),
 
@@ -272,6 +287,18 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [
+            (new Actions\SyncAccess)
+                ->canSee(function ($request) {
+                    return $request->user()->hasRole('admin');
+                })->canRun(function ($request, $user) {
+                    return $request->user()->hasRole('admin');
+                }),
+            (new Actions\OverrideAccess)
+                ->canSee(function ($request) {
+                    return $request->user()->hasRole('admin');
+                })->canRun(function ($request, $user) {
+                    return $request->user()->hasRole('admin');
+                }),
             (new Actions\ResetApiToken)
                 ->canSee(function ($request) {
                     return true;
