@@ -41,6 +41,7 @@
                 teams: [],
                 stickToTeam: false,
                 submitting: false,
+                cardType: null
             };
         },
         mounted() {
@@ -122,6 +123,7 @@
                             buffer += e.key;
                         } else {
                             //Enter was pressed
+                            this.cardType = 'magstripe';
                             this.cardPresented(buffer);
                             buffer = '';
                         }
@@ -168,6 +170,7 @@
 
                 this.socket.onmessage = ({data}) => {
                     console.log({ event: "Received message", data });
+                    this.cardType = 'contactless';
                     this.cardPresented(data);
                 };
             },
@@ -216,6 +219,7 @@
             cardPresented: function (cardData) {
                 // Card is presented, process the data
                 let self = this;
+                this.attendance.source = 'kiosk';
                 console.log('first cardData: ' + cardData);
 
                 let pattTrackRaw = new RegExp('=(9[0-9]+)=');
@@ -224,6 +228,7 @@
                 if (this.isNumeric(cardData) && cardData.length == 9 && cardData[0] == '9') {
                     // Numeric nine-digit number starting with a nine
                     this.attendance.gtid = cardData;
+                    this.attendance.source += '-' + this.cardType;
                     console.log('numeric cardData: ' + cardData);
                     cardData = null;
                     this.submit();
@@ -233,6 +238,7 @@
                     console.log('raw cardData: ' + data);
                     cardData = null;
                     this.attendance.gtid = data;
+                    this.attendance.source += '-' + this.cardType;
                     this.submit();
                 } else if (pattError.test(cardData)) {
                     // Error message sent from card reader
@@ -406,6 +412,8 @@
                 this.attendance.attendable_id = '';
                 this.attendance.gtid = '';
                 this.stickToTeam = false;
+                this.cardType = null;
+                this.attendance.source = 'kiosk';
                 console.log('fields cleared');
             },
             clearGTID() {
