@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use App\Nova\Fields\Hidden;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
@@ -85,7 +86,7 @@ class User extends Resource
                 ->creationRules('unique:users,personal_email')
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
-            Number::make('GTID')
+            Hidden::make('GTID')
                 ->onlyOnDetail()
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
@@ -93,8 +94,9 @@ class User extends Resource
                     return $request->user()->can('read-users-gtid');
                 }),
 
-            Text::make('API Token')
+            Hidden::make('API Token')
                 ->onlyOnDetail()
+                ->monospaced()
                 ->canSee(function ($request) {
                     if ($request->resourceId == $request->user()->id) {
                         return true;
