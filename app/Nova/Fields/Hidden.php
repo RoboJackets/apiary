@@ -14,7 +14,7 @@ class Hidden extends Field
     public $component = 'hidden-field';
 
     /**
-     * Set a monospaced font
+     * Set a monospaced font.
      *
      * @return $this
      */
