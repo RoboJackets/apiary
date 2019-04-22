@@ -62,7 +62,7 @@ class AttendanceController extends Controller
         $gtid = $request->input('gtid');
 
         try {
-            $attExistingQ = Attendance::where($request->all())->whereDate('created_at', $date);
+            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))->whereDate('created_at', $date);
             $attExistingCount = $attExistingQ->count();
             if ($attExistingCount > 0) {
                 Log::debug(get_class().": Found a swipe on $date for $gtid - ignoring.");
