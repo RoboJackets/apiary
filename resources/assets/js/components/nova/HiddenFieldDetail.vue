@@ -14,9 +14,9 @@
 export default {
     props: [ 'resource', 'resourceName', 'resourceId', 'field' ],
 
-    data: () => {
+    data: () => ({
         expanded: false
-    },
+    }),
 
     methods: {
         toggle() {
