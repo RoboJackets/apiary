@@ -115,10 +115,10 @@ class RecruitingCampaignRecipientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update($recruiting_campaign_id, $recruiting_campaign_recipient_id, Request $request)
+    public function update($campaign_id, $recipient_id, Request $request)
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
-        $request['recruiting_campaign_id'] = $recruiting_campaign_id;
+        $request['recruiting_campaign_id'] = $campaign_id;
 
         $this->validate($request, [
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric|nullable',
@@ -127,8 +127,8 @@ class RecruitingCampaignRecipientController extends Controller
             'user_id' => 'exists:users,id|numeric|nullable',
         ]);
 
-        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
-            ->where('id', $recruiting_campaign_recipient_id)->first();
+        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
+            ->where('id', $recipient_id)->first();
 
         $rcr->update($request->all());
 
