@@ -142,10 +142,10 @@ class RecruitingCampaignRecipientController extends Controller
      * @param  int $recruiting_campaign_recipient_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($recruiting_campaign_id, $recruiting_campaign_recipient_id)
+    public function destroy($campaign_id, $recipient_id)
     {
-        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
-            ->where('id', $recruiting_campaign_recipient_id)->first();
+        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
+            ->where('id', $recipient_id)->first();
         $rcr->delete();
 
         return response()->json(['status' => 'success'], 200);
