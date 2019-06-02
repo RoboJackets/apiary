@@ -15,15 +15,29 @@
     </rule>
     <rule ref="rulesets/design.xml">
         <exclude name="NumberOfChildren"/>
+        <exclude name="CouplingBetweenObjects"/>
     </rule>
-    <rule ref="rulesets/unusedcode.xml" />
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedFormalParameter"/>
+    </rule>
     <rule ref="rulesets/naming.xml">
         <exclude name="ShortVariable"/>
+        <exclude name="LongVariable"/>
         <exclude name="BooleanGetMethodName"/>
+    </rule>
+    <rule ref="rulesets/design.xml/CouplingBetweenObjects">
+        <properties>
+            <property name="minimum" value="20"/>
+        </properties>
     </rule>
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
             <property name="exceptions" value="id"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="30"/>
         </properties>
     </rule>
 </ruleset>
