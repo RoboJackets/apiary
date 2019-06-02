@@ -22,7 +22,7 @@ class SendRecruitingEmail extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $visit = RecruitingVisit::where('recruiting_email', $address)->first();
+        $visit = RecruitingVisit::where('recruiting_email', $models->first()->recruiting_email)->first();
         Notification::send($visit, new GeneralInterestNotification());
     }
 

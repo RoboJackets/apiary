@@ -27,6 +27,8 @@ class Attendable extends Filter
      * Create new Attendable filter.
      *
      * @param  bool  $includeEvents
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct($includeEvents = true)
     {

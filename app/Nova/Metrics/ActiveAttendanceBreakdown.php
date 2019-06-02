@@ -30,6 +30,8 @@ class ActiveAttendanceBreakdown extends Partition
      * Create a new ActiveAttendanceBreakdown metric.
      *
      * @param  bool  $showAllTime
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct($showAllTime = false)
     {

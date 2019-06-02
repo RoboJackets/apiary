@@ -90,19 +90,19 @@ class RecruitingCampaignRecipientController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show($recruiting_campaign_id, $recruiting_campaign_recipient_id, Request $request)
+    public function show($campaign_id, $recipient_id, Request $request)
     {
         // Add $r_c_i and $id to $request to allow for validation
-        $request['recruiting_campaign_id'] = $recruiting_campaign_id;
-        $request['id'] = $recruiting_campaign_recipient_id;
+        $request['recruiting_campaign_id'] = $campaign_id;
+        $request['id'] = $recipient_id;
 
         $this->validate($request, [
             'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
             'id' => 'exists:recruiting_campaign_recipients,id|numeric',
         ]);
 
-        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $recruiting_campaign_id)
-            ->where('id', $recruiting_campaign_recipient_id)->first();
+        $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
+            ->where('id', $recipient_id)->first();
 
         return response()->json(['status' => 'success', 'recipient' => new RCRResource($rcr)], 200);
     }

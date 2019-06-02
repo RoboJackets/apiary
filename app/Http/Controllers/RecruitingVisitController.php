@@ -153,7 +153,7 @@ class RecruitingVisitController extends Controller
                 echo "Deleting $count Responses for Visit $visit->id<br/>\n";
                 foreach ($visit->recruitingResponses as $response) {
                     echo "Deleting Response $response->response<br/>\n";
-                    $deletedRows = RecruitingResponse::where('recruiting_visit_id', $visit->id)->delete();
+                    RecruitingResponse::where('recruiting_visit_id', $visit->id)->delete();
                 }
                 $visit->delete();
             }

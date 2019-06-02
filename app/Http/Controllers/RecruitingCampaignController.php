@@ -119,7 +119,7 @@ class RecruitingCampaignController extends Controller
         $rc = RecruitingCampaign::where('id', $id)->first();
         $rcr_q = RecruitingCampaignRecipient::where('recruiting_campaign_id', $id)->whereNull('notified_at');
         $rcr_count = $rcr_q->count();
-        $rcr_chunk = $rcr_q->chunk(30, function ($chunk) use (&$delay_hours) {
+        $rcr_q->chunk(30, function ($chunk) use (&$delay_hours) {
             $when = Carbon::now()->addHours($delay_hours);
             Log::debug(get_class().": Scheduling chunk for delivery in $delay_hours hours at $when");
 
