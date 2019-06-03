@@ -222,7 +222,7 @@ class Team extends Resource
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function indexQuery(NovaRequest $request, Builder $query): Builder
+    public static function indexQuery(NovaRequest $request, $query): Builder
     {
         return $request->user()->cant('read-teams-hidden') ? $query->where('visible', 1) : $query;
     }
@@ -237,7 +237,7 @@ class Team extends Resource
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function relatableQuery(NovaRequest $request, Builder $query): Builder
+    public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         return $request->user()->cant('read-teams-hidden') ? $query->where('visible', 1) : $query;
     }

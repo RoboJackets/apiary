@@ -74,7 +74,7 @@ class DuesTransaction extends Resource
                 })
                 ->exceptOnForms(),
 
-            Currency::make('Payment Due', function (): void {
+            Currency::make('Payment Due', function () {
                 if ($this->is_paid) {
                     return;
                 }

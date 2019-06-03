@@ -47,7 +47,7 @@ class Attendable extends Filter
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, Builder $query, string $value): Builder
+    public function apply(Request $request, $query, $value): Builder
     {
         $parts = explode(',', $value);
         $attendableType = $parts[0];
