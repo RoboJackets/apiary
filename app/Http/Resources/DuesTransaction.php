@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
 namespace App\Http\Resources;
 
@@ -8,7 +8,6 @@ use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Payment as PaymentResource;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
-use Illuminate\Http\Request;
 
 class DuesTransaction extends JsonResource
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
 namespace App\Http\Resources;
 
@@ -8,7 +8,6 @@ use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
 use App\Http\Resources\RecruitingCampaignRecipient as RecruitingCampaignRecipientResource;
-use Illuminate\Http\Request;
 
 class RecruitingCampaign extends JsonResource
 {

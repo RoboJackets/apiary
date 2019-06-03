@@ -1,13 +1,12 @@
 <?php declare(strict_types = 1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
 namespace App\Http\Resources;
 
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Event as EventResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Request;
 
 class Rsvp extends JsonResource
 {
