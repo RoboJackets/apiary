@@ -4,6 +4,8 @@
 
     <config name="installed_paths" value="../../slevomat/coding-standard"/>
 
+    <file>.</file>
+
     <exclude-pattern>vendor</exclude-pattern>
     <exclude-pattern>database</exclude-pattern>
     <exclude-pattern>node_modules</exclude-pattern>
