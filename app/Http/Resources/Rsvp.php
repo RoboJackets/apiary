@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Resources;
 
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Event as EventResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
 
 class Rsvp extends JsonResource
 {
@@ -14,7 +15,7 @@ class Rsvp extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             // Attributes

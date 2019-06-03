@@ -17,5 +17,5 @@ mix.js(['resources/assets/js/app.js'], 'public/js/app.js')
   .sass('resources/assets/sass/nova/global.scss', 'public/css/nova.css');
 
 if (mix.inProduction()) {
-  mix.version();
+    mix.version();
 }

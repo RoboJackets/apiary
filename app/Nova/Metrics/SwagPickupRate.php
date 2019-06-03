@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Metrics;
 
@@ -15,27 +15,27 @@ class SwagPickupRate extends Value
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
-        return Nova::humanize($this->swagType).' Pickup Rate';
+        return Nova::humanize($this->swagType) . ' Pickup Rate';
     }
 
     /**
      * Which type of swag we're looking at, either 'shirt' or 'polo'.
      *
-     * @var bool
+     * @var string
      */
     protected $swagType;
 
     /**
      * Create a new SwagPickupRate metric. swagType can be either 'shirt' or 'polo'.
      *
-     * @param  bool  $swagType
+     * @param string  $swagType
      */
-    public function __construct($swagType)
+    public function __construct(string $swagType)
     {
         if (! in_array($swagType, ['shirt', 'polo'])) {
-            \Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
+            \Log::error('Invalid swag type given to SwagPickupRate metric: "' . $swagType . '"');
             abort(400, 'Invalid swag type');
 
             return;
@@ -53,18 +53,18 @@ class SwagPickupRate extends Value
     public function calculate(Request $request)
     {
         $package = DuesPackage::where('id', $request->resourceId)->first();
-        $eligible = $this->swagType == 'shirt' ? $package->eligible_for_shirt : $package->eligible_for_polo;
+        $eligible = 'shirt' === $this->swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
 
         if (! $eligible) {
             return $this->result('n/a');
         }
 
         $result = DuesTransaction::where('dues_package_id', $request->resourceId)
-            ->selectRaw('`swag_'.$this->swagType.'_provided` is not null as provided')
+            ->selectRaw('`swag_' . $this->swagType . '_provided` is not null as provided')
             ->selectRaw('count(id) as aggregate')
             ->groupBy('provided')
             ->get()
-            ->mapWithKeys(function ($item) {
+            ->mapWithKeys(static function ($item): array {
                 return [$item->provided ? 'true' : 'false' => $item->aggregate];
             })->toArray();
 
@@ -74,14 +74,18 @@ class SwagPickupRate extends Value
         if ($hasAnyPickedUp && $hasAnyNotPickedUp) {
             $value = sprintf('%.1f', ($result['true'] / ($result['true'] + $result['false']) * 100));
 
-            return $this->result($value.'%');
-        } elseif ($hasAnyPickedUp) {
-            return $this->result('100%');
-        } elseif ($hasAnyNotPickedUp) {
-            return $this->result('0%');
-        } else {
-            return $this->result('No transactions');
+            return $this->result($value . '%');
         }
+
+        if ($hasAnyPickedUp) {
+            return $this->result('100%');
+        }
+
+        if ($hasAnyNotPickedUp) {
+            return $this->result('0%');
+        }
+
+        return $this->result('No transactions');
     }
 
     /**
@@ -89,19 +93,9 @@ class SwagPickupRate extends Value
      *
      * @return array
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [];
-    }
-
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
     }
 
     /**
@@ -109,8 +103,8 @@ class SwagPickupRate extends Value
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
-        return 'swag-pickup-rate-'.$this->swagType;
+        return 'swag-pickup-rate-' . $this->swagType;
     }
 }

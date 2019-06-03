@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
@@ -28,7 +28,7 @@ class DuesPackage extends Resource
      *
      * @return string
      */
-    public static function label()
+    public static function label(): string
     {
         return 'Dues Packages';
     }
@@ -38,7 +38,7 @@ class DuesPackage extends Resource
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function singularLabel(): string
     {
         return 'Dues Package';
     }
@@ -65,7 +65,7 @@ class DuesPackage extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             Text::make('Name')
@@ -114,9 +114,10 @@ class DuesPackage extends Resource
                     ->rules('required'),
             ]),
 
-            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)->canSee(function ($request) {
-                return $request->user()->can('read-dues-transactions');
-            }),
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
 
             new Panel('Metadata', $this->metaFields()),
         ];
@@ -150,46 +151,46 @@ class DuesPackage extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [
             (new TotalCollections())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-payments');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-payments');
                 }),
             (new PaymentMethodBreakdown())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-payments');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-payments');
                 }),
             (new SwagPickupRate('shirt'))
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-dues-transactions');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-dues-transactions');
                 }),
             (new SwagPickupRate('polo'))
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-dues-transactions');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('shirt'))
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-dues-transactions');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('polo'))
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-dues-transactions');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('shirt'))
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-dues-transactions');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('polo'))
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->can('read-dues-transactions');
+                ->canSee(static function (Request $request): bool {
+                        return $request->user()->can('read-dues-transactions');
                 }),
         ];
     }
@@ -200,7 +201,7 @@ class DuesPackage extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -211,7 +212,7 @@ class DuesPackage extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -222,7 +223,7 @@ class DuesPackage extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

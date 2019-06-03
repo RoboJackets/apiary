@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -17,7 +17,7 @@ class EventPolicy
      * @param  \App\Event  $event
      * @return mixed
      */
-    public function view(User $user, Event $event)
+    public function view(User $user, Event $event): bool
     {
         // Normal users have this, but Nova in general is limited by access-nova
         return $user->can('read-events');
@@ -29,7 +29,7 @@ class EventPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->can('read-events');
     }
@@ -40,7 +40,7 @@ class EventPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->can('create-events');
     }
@@ -52,7 +52,7 @@ class EventPolicy
      * @param  \App\Event  $event
      * @return mixed
      */
-    public function update(User $user, Event $event)
+    public function update(User $user, Event $event): bool
     {
         return $user->can('update-events');
     }
@@ -64,7 +64,7 @@ class EventPolicy
      * @param  \App\Event  $event
      * @return mixed
      */
-    public function delete(User $user, Event $event)
+    public function delete(User $user, Event $event): bool
     {
         return $user->can('delete-events');
     }
@@ -76,7 +76,7 @@ class EventPolicy
      * @param  \App\Event  $event
      * @return mixed
      */
-    public function restore(User $user, Event $event)
+    public function restore(User $user, Event $event): bool
     {
         return $user->can('create-events');
     }
@@ -88,7 +88,7 @@ class EventPolicy
      * @param  \App\Event  $event
      * @return mixed
      */
-    public function forceDelete(User $user, Event $event)
+    public function forceDelete(User $user, Event $event): bool
     {
         return false;
     }

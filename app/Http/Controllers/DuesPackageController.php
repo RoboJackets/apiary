@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Http\Controllers;
 
@@ -6,6 +8,7 @@ use App\DuesPackage;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
+use Illuminate\Http\JsonResponse;
 
 class DuesPackageController extends Controller
 {
@@ -23,9 +26,10 @@ class DuesPackageController extends Controller
      * Display a listing of the resource.
      *
      * @param $request Request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->get();
@@ -37,9 +41,10 @@ class DuesPackageController extends Controller
      * Display a listing of active DuesPackages.
      *
      * @param $request Request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function indexActive(Request $request)
+    public function indexActive(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->active()->get();
@@ -51,13 +56,15 @@ class DuesPackageController extends Controller
      * Display a listing of DuesPackages that are available for purchase.
      *
      * @param $request Request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function indexAvailable(Request $request)
+    public function indexAvailable(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))
-            ->availableForPurchase()->get();
+            ->availableForPurchase()
+            ->get();
 
         return response()->json(['status' => 'success', 'dues_packages' => DuesPackageResource::collection($packages)]);
     }
@@ -65,10 +72,11 @@ class DuesPackageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
             'name' => 'required|string',
@@ -91,38 +99,40 @@ class DuesPackageController extends Controller
         if (is_numeric($package->id)) {
             $dbp = DuesPackage::findOrFail($package->id);
 
-            return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource(($dbp))], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+            return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($dbp)], 201);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
     }
 
     /**
      * Display the specified resource.
      *
      * @param $request Request
-     * @param  int $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, int $id): JsonResponse
     {
         $include = $request->input('include');
         $package = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->find($id);
         if ($package) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $this->validate($request, [
             'name' => 'string',
@@ -134,35 +144,36 @@ class DuesPackageController extends Controller
         ]);
 
         $package = DuesPackage::find($id);
-        if ($package) {
-            $package->update($request->all());
-        } else {
+        if (!$package) {
             return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);
         }
+
+        $package->update($request->all());
 
         $package = DuesPackage::find($package->id);
         if ($package) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $package = DuesPackage::find($id);
-        $deleted = $package->delete();
-        if ($deleted) {
+        if ($package->delete()) {
             return response()->json(['status' => 'success', 'message' => 'DuesPackage deleted.']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'DuesPackage does not exist or was previously deleted.', ], 422);
         }
+
+        return response()->json(['status' => 'error',
+            'message' => 'DuesPackage does not exist or was previously deleted.',
+        ], 422);
     }
 }

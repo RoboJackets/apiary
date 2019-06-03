@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -17,7 +17,7 @@ class NotificationTemplatePolicy
      * @param  \App\NotificationTemplate  $notificationTemplate
      * @return mixed
      */
-    public function view(User $user, NotificationTemplate $notificationTemplate)
+    public function view(User $user, NotificationTemplate $notificationTemplate): bool
     {
         return $user->can('send-notifications') || $user->can('manage-notification-templates');
     }
@@ -28,7 +28,7 @@ class NotificationTemplatePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->can('send-notifications') || $user->can('manage-notification-templates');
     }
@@ -39,7 +39,7 @@ class NotificationTemplatePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->can('manage-notification-templates');
     }
@@ -51,7 +51,7 @@ class NotificationTemplatePolicy
      * @param  \App\NotificationTemplate  $notificationTemplate
      * @return mixed
      */
-    public function update(User $user, NotificationTemplate $notificationTemplate)
+    public function update(User $user, NotificationTemplate $notificationTemplate): bool
     {
         return $user->can('manage-notification-templates');
     }
@@ -63,7 +63,7 @@ class NotificationTemplatePolicy
      * @param  \App\NotificationTemplate  $notificationTemplate
      * @return mixed
      */
-    public function delete(User $user, NotificationTemplate $notificationTemplate)
+    public function delete(User $user, NotificationTemplate $notificationTemplate): bool
     {
         return $user->can('manage-notification-templates');
     }
@@ -75,7 +75,7 @@ class NotificationTemplatePolicy
      * @param  \App\NotificationTemplate  $notificationTemplate
      * @return mixed
      */
-    public function restore(User $user, NotificationTemplate $notificationTemplate)
+    public function restore(User $user, NotificationTemplate $notificationTemplate): bool
     {
         return $user->can('manage-notification-templates');
     }
@@ -87,7 +87,7 @@ class NotificationTemplatePolicy
      * @param  \App\NotificationTemplate  $notificationTemplate
      * @return mixed
      */
-    public function forceDelete(User $user, NotificationTemplate $notificationTemplate)
+    public function forceDelete(User $user, NotificationTemplate $notificationTemplate): bool
     {
         return false;
     }

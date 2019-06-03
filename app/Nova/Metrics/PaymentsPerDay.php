@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Metrics;
 
@@ -16,8 +16,7 @@ class PaymentsPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->countByDays($request, Payment::class)
-            ->showLatestValue();
+        return $this->countByDays($request, Payment::class)->showLatestValue();
     }
 
     /**
@@ -25,7 +24,7 @@ class PaymentsPerDay extends Trend
      *
      * @return array
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             30 => '30 Days',
@@ -39,21 +38,11 @@ class PaymentsPerDay extends Trend
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'transactions-per-day';
     }

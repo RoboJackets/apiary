@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Metrics;
 
@@ -23,51 +23,43 @@ class PaymentMethodBreakdown extends Partition
      */
     public function calculate(Request $request)
     {
-        return $this->result(Payment::where('payable_type', 'App\DuesTransaction')
-            ->where('amount', '>', 0)
-            ->whereIn('payable_id', function ($q) use ($request) {
-                $q->select('id')
-                    ->from('dues_transactions')
-                    ->where('dues_package_id', $request->resourceId)
-                    ->whereNull('deleted_at');
-            })->select('method')
-            ->selectRaw('count(payments.id) as aggregate')
-            ->groupBy('method')
-            ->orderBy('aggregate', 'desc')
-            ->get()
-            ->mapWithKeys(function ($item) {
-                $key = $item->method;
-                switch ($item->method) {
-                    case 'cash':
-                        $key = 'Cash';
-                        break;
-                    case 'check':
-                        $key = 'Check';
-                        break;
-                    case 'swipe':
-                        $key = 'Swiped Card';
-                        break;
-                    case 'square':
-                        $key = 'Square (Online)';
-                        break;
-                    case 'squarecash':
-                        $key = 'Square Cash';
-                        break;
-                }
+        return $this->result(
+                Payment::where('payable_type', 'App\DuesTransaction')
+                    ->where('amount', '>', 0)
+                    ->whereIn('payable_id', static function (Builder $q) use ($request): void {
+                        $q->select('id')
+                            ->from('dues_transactions')
+                            ->where('dues_package_id', $request->resourceId)
+                            ->whereNull('deleted_at');
+                    })
+                    ->select('method')
+                    ->selectRaw('count(payments.id) as aggregate')
+                    ->groupBy('method')
+                    ->orderBy('aggregate', 'desc')
+                    ->get()
+                    ->mapWithKeys(static function ($item): array {
+                        $key = $item->method;
+                        switch ($item->method) {
+                            case 'cash':
+                                $key = 'Cash';
+                                break;
+                            case 'check':
+                                $key = 'Check';
+                                break;
+                            case 'swipe':
+                                $key = 'Swiped Card';
+                                break;
+                            case 'square':
+                                $key = 'Square (Online)';
+                                break;
+                            case 'squarecash':
+                                $key = 'Square Cash';
+                                break;
+                        }
 
-                return [$key => $item->aggregate];
-            })->toArray()
+                        return [$key => $item->aggregate];
+                    })->toArray()
         );
-    }
-
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
     }
 
     /**
@@ -75,7 +67,7 @@ class PaymentMethodBreakdown extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'payment-method-breakdown';
     }

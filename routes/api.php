@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 use Illuminate\Http\Request;
 
@@ -13,14 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('v1/user', function (Request $request) {
+Route::middleware('auth:api')->get('v1/user', static function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token', 'auth.cas.force']], function () {
-
+Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token', 'auth.cas.force']], static function (): void {
     // Recruiting (Formerly known as FASET)
-    Route::group(['prefix' => 'recruiting', 'as' => 'recruiting.'], function () {
+    Route::group(['prefix' => 'recruiting', 'as' => 'recruiting.'], static function (): void {
         Route::post('/', 'RecruitingVisitController@store')->name('store');
         Route::get('/', 'RecruitingVisitController@index')->name('index');
         Route::resource(
@@ -36,7 +35,7 @@ Route::group(['prefix' => 'v1/', 'as' => 'api.v1.', 'middleware' => ['auth.token
     });
 
     // Notifications
-    Route::group(['prefix' => 'notification', 'as' => 'notification.'], function () {
+    Route::group(['prefix' => 'notification', 'as' => 'notification.'], static function (): void {
         Route::get('send', 'NotificationController@sendNotification')->name('send');
         Route::post('manual', 'NotificationController@sendNotificationManual')->name('manual');
         Route::resource('templates', 'NotificationTemplateController', ['except' => ['create', 'edit']]);

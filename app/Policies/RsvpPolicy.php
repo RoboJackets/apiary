@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -17,7 +17,7 @@ class RsvpPolicy
      * @param  \App\Rsvp  $rsvp
      * @return mixed
      */
-    public function view(User $user, Rsvp $rsvp)
+    public function view(User $user, Rsvp $rsvp): bool
     {
         return $user->can('read-rsvps');
     }
@@ -28,7 +28,7 @@ class RsvpPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return false;
     }
@@ -40,7 +40,7 @@ class RsvpPolicy
      * @param  \App\Rsvp  $rsvp
      * @return mixed
      */
-    public function update(User $user, Rsvp $rsvp)
+    public function update(User $user, Rsvp $rsvp): bool
     {
         return false;
     }
@@ -52,7 +52,7 @@ class RsvpPolicy
      * @param  \App\Rsvp  $rsvp
      * @return mixed
      */
-    public function delete(User $user, Rsvp $rsvp)
+    public function delete(User $user, Rsvp $rsvp): bool
     {
         return $user->can('delete-rsvps');
     }
@@ -64,7 +64,7 @@ class RsvpPolicy
      * @param  \App\Rsvp  $rsvp
      * @return mixed
      */
-    public function restore(User $user, Rsvp $rsvp)
+    public function restore(User $user, Rsvp $rsvp): bool
     {
         return $user->hasRole('admin');
     }
@@ -76,7 +76,7 @@ class RsvpPolicy
      * @param  \App\Rsvp  $rsvp
      * @return mixed
      */
-    public function forceDelete(User $user, Rsvp $rsvp)
+    public function forceDelete(User $user, Rsvp $rsvp): bool
     {
         return false;
     }

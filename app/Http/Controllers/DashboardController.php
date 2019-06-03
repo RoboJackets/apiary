@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -10,7 +10,8 @@ class DashboardController extends Controller
     /**
      * Returns view with data for the user dashboard.
      *
-     * @param Request $request
+     * @param  Request $request
+     *
      * @return mixed
      */
     public function index(Request $request)
@@ -22,10 +23,10 @@ class DashboardController extends Controller
 
         //User is "new" if they don't have any transactions, or they have never paid dues
         $paidTxn = count(DuesTransaction::paid()->where('user_id', $user->id)->get());
-        $isNew = ($user->dues->count() == 0 || ($user->dues->count() >= 1 && $paidTxn == 0));
+        $isNew = (0 === $user->dues->count() || ($user->dues->count() >= 1 && 0 === $paidTxn));
 
         //User needs a transaction if they don't have one for an active dues package
-        $needsTransaction = (DuesTransaction::current()->where('user_id', $user->id)->count() == 0);
+        $needsTransaction = (0 === DuesTransaction::current()->where('user_id', $user->id)->count());
 
         //User needs a payment if they don't have enough payments to cover their pending dues transaction
         //Don't change this to use ->count(). It won't work - trust me.
@@ -49,7 +50,8 @@ class DashboardController extends Controller
             'packageEnd' => $packageEnd,
             'firstPayment' => $firstPayment,
             'preferredName' => $preferredName,
-            'isNew' => $isNew, ];
+            'isNew' => $isNew,
+        ];
 
         return view('welcome', $data);
     }

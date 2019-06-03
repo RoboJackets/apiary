@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Notifications;
 
@@ -12,22 +12,12 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     use Queueable;
 
     /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }
@@ -38,7 +28,7 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return Mailable
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): Mailable
     {
         // Get data to pass to the mailable
         $email = $notifiable->routeNotificationForMail();
@@ -59,10 +49,9 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
-            //
         ];
     }
 }

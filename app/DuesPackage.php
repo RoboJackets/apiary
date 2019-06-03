@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App;
 
 use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class DuesPackage extends Model
 {
@@ -62,10 +63,10 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include DuesPackages available for purchase.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeAvailableForPurchase($query)
+    public function scopeAvailableForPurchase(Builder $query): Builder
     {
         return $query->where('available_for_purchase', 1);
     }
@@ -73,10 +74,10 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include active DuesPackages.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('effective_start', '<', date('Y-m-d H:i:s'))
             ->where('effective_end', '>', date('Y-m-d H:i:s'));
@@ -85,10 +86,10 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include access active DuesPackages.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeAccessActive($query)
+    public function scopeAccessActive(Builder $query): Builder
     {
         return $query->where('access_start', '<', date('Y-m-d H:i:s'))
             ->where('access_end', '>', date('Y-m-d H:i:s'));
@@ -99,7 +100,7 @@ class DuesPackage extends Model
      *
      * @return bool
      */
-    public function getIsActiveAttribute()
+    public function getIsActiveAttribute(): bool
     {
         $now = new \DateTime();
         $start = new \DateTime($this->effective_start);
@@ -113,7 +114,7 @@ class DuesPackage extends Model
      *
      * @return bool
      */
-    public function getIsAccessActiveAttribute()
+    public function getIsAccessActiveAttribute(): bool
     {
         $now = new \DateTime();
         $start = new \DateTime($this->access_start);
@@ -124,9 +125,10 @@ class DuesPackage extends Model
 
     /**
      * Map of relationships to permissions for dynamic inclusion.
+     *
      * @return array
      */
-    public function getRelationshipPermissionMap()
+    public function getRelationshipPermissionMap(): array
     {
         return [
             'transactions' => 'dues-transactions',

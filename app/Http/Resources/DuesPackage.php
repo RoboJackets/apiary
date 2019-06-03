@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use Illuminate\Http\Request;
 
 class DuesPackage extends JsonResource
 {
@@ -13,7 +14,7 @@ class DuesPackage extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,

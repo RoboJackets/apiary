@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
+use App\DuesTransaction as ADT;
 
 class DuesTransaction extends Resource
 {
@@ -27,7 +28,7 @@ class DuesTransaction extends Resource
      *
      * @return string
      */
-    public static function label()
+    public static function label(): string
     {
         return 'Dues Transactions';
     }
@@ -37,7 +38,7 @@ class DuesTransaction extends Resource
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function singularLabel(): string
     {
         return 'Dues Transaction';
     }
@@ -48,26 +49,33 @@ class DuesTransaction extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
-            ID::make()->sortable(),
+            ID::make()
+                ->sortable(),
 
             BelongsTo::make('Paid By', 'user', 'App\\Nova\\User')
                 ->searchable(),
 
             BelongsTo::make('Dues Package', 'package', 'App\\Nova\\DuesPackage'),
 
-            Text::make('Status')->resolveUsing(function ($str) {
-                return ucfirst($str);
-            })->exceptOnForms(),
+            Text::make('Status')
+                ->resolveUsing(static function (string $str): string {
+                    return ucfirst($str);
+                })
+                ->exceptOnForms(),
 
             Currency::make('Payment Due', function () {
                 if ($this->is_paid) {
                     return;
-                } elseif (null === $this->package) {
+                }
+
+                if (null === $this->package) {
                     return;
-                } elseif (! $this->package->is_active) {
+                }
+
+                if (! $this->package->is_active) {
                     return;
                 }
 
@@ -82,25 +90,27 @@ class DuesTransaction extends Resource
             Text::make('Polo Status', 'swag_polo_status')
                 ->onlyOnIndex(),
 
-            new Panel('T-Shirt Distribution',
+            new Panel(
+                'T-Shirt Distribution',
                 [
                     Text::make('Status', 'swag_shirt_status')
                         ->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_shirt_provided')
                         ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swagShirtProvidedBy', 'App\\Nova\\User')
+                    BelongsTo::make('Distributed By', 'swagShirtProvidedBy', User::class)
                         ->help('The user that recorded the payment')
                         ->onlyOnDetail(),
                 ]
             ),
 
-            new Panel('Polo Distribution',
+            new Panel(
+                'Polo Distribution',
                 [
                     Text::make('Status', 'swag_polo_status')
                         ->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
                         ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swagPoloProvidedBy', 'App\\Nova\\User')
+                    BelongsTo::make('Distributed By', 'swagPoloProvidedBy', User::class)
                         ->help('The user that recorded the payment')
                         ->onlyOnDetail(),
                 ]
@@ -113,7 +123,7 @@ class DuesTransaction extends Resource
         ];
     }
 
-    protected function metaFields()
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Created', 'created_at')
@@ -130,7 +140,7 @@ class DuesTransaction extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [];
     }
@@ -141,20 +151,16 @@ class DuesTransaction extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
-        if ($request->user()->can('read-teams-membership')) {
-            return [
-                new Filters\DuesTransactionTeam,
-                new Filters\DuesTransactionPaymentStatus,
-                new Filters\DuesTransactionSwagStatus,
-            ];
-        } else {
-            return [
-                new Filters\DuesTransactionPaymentStatus,
-                new Filters\DuesTransactionSwagStatus,
-            ];
-        }
+        return $request->user()->can('read-teams-membership') ? [
+            new Filters\DuesTransactionTeam(),
+            new Filters\DuesTransactionPaymentStatus(),
+            new Filters\DuesTransactionSwagStatus(),
+        ] : [
+            new Filters\DuesTransactionPaymentStatus(),
+            new Filters\DuesTransactionSwagStatus(),
+        ];
     }
 
     /**
@@ -163,7 +169,7 @@ class DuesTransaction extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -174,60 +180,73 @@ class DuesTransaction extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [
-            (new Actions\DistributeShirt)
-                ->canSee(function ($request) {
-                    $transaction = \App\DuesTransaction::find($request->resourceId);
-                    if (null !== $transaction) {
-                        if (! $transaction->package->eligible_for_shirt) {
-                            return false;
-                        } elseif (! $transaction->is_paid) {
-                            return false;
-                        } elseif (null !== $transaction->swag_shirt_provided) {
-                            return false;
-                        }
+            (new Actions\DistributeShirt())->canSee(static function (Request $request): bool {
+                $transaction = \App\DuesTransaction::find($request->resourceId);
+
+                if (null !== $transaction) {
+                    if (! $transaction->package->eligible_for_shirt) {
+                        return false;
                     }
 
-                    return $request->user()->can('distribute-swag');
-                })->canRun(function ($request, $dues_transaction) {
-                    return $request->user()->can('distribute-swag');
-                }),
-            (new Actions\DistributePolo)
-                ->canSee(function ($request) {
-                    $transaction = \App\DuesTransaction::find($request->resourceId);
-                    if (null !== $transaction) {
-                        if (! $transaction->package->eligible_for_polo) {
-                            return false;
-                        } elseif (! $transaction->is_paid) {
-                            return false;
-                        } elseif (null !== $transaction->swag_polo_provided) {
-                            return false;
-                        }
+                    if (! $transaction->is_paid) {
+                        return false;
                     }
 
-                    return $request->user()->can('distribute-swag');
-                })->canRun(function ($request, $dues_transaction) {
-                    return $request->user()->can('distribute-swag');
-                }),
-            (new Actions\AddPayment)
-                ->canSee(function ($request) {
-                    $transaction = \App\DuesTransaction::find($request->resourceId);
-                    if (null !== $transaction) {
-                        if ($transaction->user()->get()->first()->id === $request->user()->id) {
-                            return false;
-                        } elseif ($transaction->is_paid) {
-                            return false;
-                        } elseif (! $transaction->package->is_active) {
-                            return false;
-                        }
+                    if (null !== $transaction->swag_shirt_provided) {
+                        return false;
+                    }
+                }
+
+                return $request->user()->can('distribute-swag');
+            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+                return $request->user()->can('distribute-swag');
+            }),
+            (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
+                $transaction = \App\DuesTransaction::find($request->resourceId);
+
+                if (null !== $transaction) {
+                    if (! $transaction->package->eligible_for_polo) {
+                        return false;
                     }
 
-                    return $request->user()->can('create-payments');
-                })->canRun(function ($request, $dues_transaction) {
-                    return $request->user()->can('create-payments') && ($dues_transaction->user()->get()->first()->id != $request->user()->id);
-                }),
+                    if (! $transaction->is_paid) {
+                        return false;
+                    }
+
+                    if (null !== $transaction->swag_polo_provided) {
+                        return false;
+                    }
+                }
+
+                return $request->user()->can('distribute-swag');
+            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+                return $request->user()->can('distribute-swag');
+            }),
+            (new Actions\AddPayment())->canSee(static function (Request $request): bool {
+                $transaction = \App\DuesTransaction::find($request->resourceId);
+
+                if (null !== $transaction) {
+                    if ($transaction->user()->get()->first()->id === $request->user()->id) {
+                        return false;
+                    }
+
+                    if ($transaction->is_paid) {
+                        return false;
+                    }
+
+                    if (! $transaction->package->is_active) {
+                        return false;
+                    }
+                }
+
+                return $request->user()->can('create-payments');
+            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+                return $request->user()->can('create-payments')
+                    && ($dues_transaction->user()->get()->first()->id !== $request->user()->id);
+            }),
         ];
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
+use Illuminate\Http\JsonResponse;
 
 class RoleController extends Controller
 {
@@ -19,7 +20,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $roles = Role::all();
 
@@ -32,10 +33,10 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
-            'name'=>'required|unique:roles',
+            'name' => 'required|unique:roles',
         ]);
 
         $role = new Role();
@@ -49,8 +50,9 @@ class RoleController extends Controller
                 Bugsnag::notifyException($e);
 
                 return response()->json(['status' => 'error',
-                    'message' => $e->getMessage(), ], 422);
-            } catch (\Exception $e) {
+                    'message' => $e->getMessage(),
+                ], 422);
+            } catch (\Throwable $e) {
                 Bugsnag::notifyException($e);
 
                 return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
@@ -68,7 +70,7 @@ class RoleController extends Controller
      * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function show($name)
+    public function show(string $name): JsonResponse
     {
         try {
             $role = Role::findByName($name)->with('permissions')->first();
@@ -76,7 +78,7 @@ class RoleController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
@@ -92,7 +94,7 @@ class RoleController extends Controller
      * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $name)
+    public function update(Request $request, string $name): JsonResponse
     {
         try {
             $role = Role::findByName($name);
@@ -100,7 +102,7 @@ class RoleController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
@@ -122,7 +124,7 @@ class RoleController extends Controller
                 Bugsnag::notifyException($e);
 
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 Bugsnag::notifyException($e);
 
                 return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
@@ -140,7 +142,7 @@ class RoleController extends Controller
      * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function destroy($name)
+    public function destroy(string $name): JsonResponse
     {
         try {
             $role = Role::findByName($name);
@@ -148,7 +150,7 @@ class RoleController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
@@ -162,11 +164,11 @@ class RoleController extends Controller
     /**
      * Assigns roles to users.
      *
-     * @param string $name
-     * @param Request $request
+     * @param  string $name
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function assign($name, Request $request)
+    public function assign(string $name, Request $request): JsonResponse
     {
         try {
             $role = Role::findByName($name);
@@ -174,7 +176,7 @@ class RoleController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
@@ -182,16 +184,17 @@ class RoleController extends Controller
 
         if (! $request->filled('users')) {
             return response()->json(['status' => 'error',
-                'message' => 'You must specify users to assign to a role.', ], 422);
+                'message' => 'You must specify users to assign to a role.',
+            ], 422);
         }
 
         foreach ($request->input('users') as $user) {
             $dbUser = User::findByIdentifier($user)->first();
-            if ($dbUser) {
-                $dbUser->assignRole($role);
-            } else {
+            if (!$dbUser) {
                 return response()->json(['status' => 'error', 'message' => "User '$user' not found."], 422);
             }
+
+            $dbUser->assignRole($role);
         }
 
         return response()->json(['status' => 'success']);

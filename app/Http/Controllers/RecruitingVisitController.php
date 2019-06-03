@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Http\Controllers;
 
@@ -10,6 +12,7 @@ use App\Traits\AuthorizeInclude;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
+use Illuminate\Http\JsonResponse;
 
 class RecruitingVisitController extends Controller
 {
@@ -24,9 +27,9 @@ class RecruitingVisitController extends Controller
         $this->middleware('permission:update-recruiting-visits', ['only' => ['dedup']]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        Log::debug(get_class().': Pre-Validation Data', $request->all());
+        Log::debug(self::class . ': Pre-Validation Data', $request->all());
         $validator = Validator::make($request->all(), [
             'recruiting_email' => 'required|email|max:255',
             'recruiting_name' => 'required|max:255',
@@ -39,18 +42,18 @@ class RecruitingVisitController extends Controller
         try {
             DB::beginTransaction();
             $personInfo = $request->only(['recruiting_email', 'recruiting_name']);
-            Log::debug(get_class().': New Visit Data (Pre-Store)', $personInfo);
+            Log::debug(self::class . ': New Visit Data (Pre-Store)', $personInfo);
             $visit = RecruitingVisit::create($personInfo);
 
             $recruitingResponses = $request->only('recruiting_responses')['recruiting_responses'];
-            Log::debug(get_class().': New Visit Response Data (Pre-Store)', $recruitingResponses);
+            Log::debug(self::class . ': New Visit Response Data (Pre-Store)', $recruitingResponses);
 
             foreach ($recruitingResponses as $response) {
                 $visit->recruitingResponses()->create(['response' => $response]);
             }
 
             DB::commit();
-            Log::info(get_class().'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
+            Log::info(self::class . 'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {
@@ -65,11 +68,12 @@ class RecruitingVisitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id RecruitingVisit ID Number
-     * @param Request $request
+     * @param  int $id RecruitingVisit ID Number
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show(int $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $requestingUser = $request->user();
@@ -80,9 +84,10 @@ class RecruitingVisitController extends Controller
 
         $requestedUser = $visit->user;
         //Enforce users only viewing their own RecruitingVisit (read-recruiting-visits-own)
-        if ($requestingUser->cant('read-recruiting-visits') && $requestingUser->id != $requestedUser->id) {
+        if ($requestingUser->cant('read-recruiting-visits') && $requestingUser->id !== $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to view this RecruitingVisit.', ], 403);
+                'message' => 'Forbidden - You do not have permission to view this RecruitingVisit.',
+            ], 403);
         }
 
         return response()->json(['status' => 'success', 'visit' => new RecruitingVisitResource($visit)]);
@@ -95,7 +100,7 @@ class RecruitingVisitController extends Controller
      * @param  int $id RecruitingVisit Id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         //Update only included fields
         $this->validate($request, [
@@ -111,9 +116,10 @@ class RecruitingVisitController extends Controller
         $requestingUser = $request->user();
         $requestedUser = $visit->user;
         //Enforce users only updating themselves (update-users-own)
-        if ($requestingUser->cant('update-recruiting-visits') && $requestingUser->id != $requestedUser->id) {
+        if ($requestingUser->cant('update-recruiting-visits') && $requestingUser->id !== $requestedUser->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this RecruitingVisit.', ], 403);
+                'message' => 'Forbidden - You do not have permission to update this RecruitingVisit.',
+            ], 403);
         }
 
         $visit->update($request->all());
@@ -127,11 +133,7 @@ class RecruitingVisitController extends Controller
         }
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $visits = RecruitingVisit::with($this->authorizeInclude(RecruitingVisit::class, $include))->get();
@@ -139,7 +141,7 @@ class RecruitingVisitController extends Controller
         return response()->json(['status' => 'success', 'visits' => RecruitingVisitResource::collection($visits)]);
     }
 
-    public function dedup()
+    public function dedup(): void
     {
         $visits = RecruitingVisit::all();
         $emails = [];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Actions;
 
@@ -34,7 +34,7 @@ class ResetApiToken extends Action
             $model->save();
         }
 
-        return Action::message('The API token'.(count($models) == 1 ? ' was' : 's were').' reset!');
+        return Action::message('The API token' . (1 === count($models) ? ' was' : 's were') . ' reset!');
     }
 
     /**
@@ -42,7 +42,7 @@ class ResetApiToken extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return [];
     }

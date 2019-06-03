@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Actions;
 
@@ -33,7 +33,7 @@ class OverrideAccess extends Action
             $user->save();
         }
 
-        return Action::message('The access override'.(count($users) == 1 ? ' was' : 's were').' saved!');
+        return Action::message('The access override' . (1 === count($users) ? ' was' : 's were') . ' saved!');
     }
 
     /**
@@ -41,11 +41,10 @@ class OverrideAccess extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return [
-            DateTime::make('Override Expiration', 'access_override_until')
-                ->rules('required'),
+            DateTime::make('Override Expiration', 'access_override_until')->rules('required'),
         ];
     }
 

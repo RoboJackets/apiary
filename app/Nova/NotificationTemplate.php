@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
-use App\User;
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -24,7 +23,7 @@ class NotificationTemplate extends Resource
      *
      * @return string
      */
-    public static function label()
+    public static function label(): string
     {
         return 'Notification Templates';
     }
@@ -34,7 +33,7 @@ class NotificationTemplate extends Resource
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function singularLabel(): string
     {
         return 'Notification Template';
     }
@@ -63,11 +62,10 @@ class NotificationTemplate extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
-            Text::make('Name')
-                ->rules('required', 'max:255')
+            Text::make('Name')->rules('required', 'max:255')
                 ->sortable(),
 
             new Panel('Email Content', $this->basicFields()),
@@ -113,7 +111,7 @@ class NotificationTemplate extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [];
     }
@@ -124,7 +122,7 @@ class NotificationTemplate extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -135,7 +133,7 @@ class NotificationTemplate extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -146,7 +144,7 @@ class NotificationTemplate extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

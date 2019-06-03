@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
@@ -6,7 +6,6 @@ use Laravel\Nova\Panel;
 use App\Nova\Fields\Hidden;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
@@ -17,6 +16,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
+use App\User as AU;
 
 class User extends Resource
 {
@@ -53,7 +53,7 @@ class User extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             Text::make('Username', 'uid')
@@ -90,14 +90,14 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 }),
 
             Hidden::make('API Token')
                 ->onlyOnDetail()
                 ->monospaced()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     if ($request->resourceId == $request->user()->id) {
                         return true;
                     } else {
@@ -130,38 +130,41 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            HasMany::make('Recruiting Visits', 'recruitingVisits')->canSee(function ($request) {
-                if ($request->resourceId == $request->user()->id) {
-                    return $request->user()->can('read-recruiting-visits-own');
-                } else {
-                    return $request->user()->can('read-recruiting-visits');
-                }
-            }),
+            HasMany::make('Recruiting Visits', 'recruitingVisits')
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId == $request->user()->id) {
+                        return $request->user()->can('read-recruiting-visits-own');
+                    } else {
+                        return $request->user()->can('read-recruiting-visits');
+                    }
+                }),
 
-            BelongsToMany::make('Teams')->canSee(function ($request) {
-                if ($request->resourceId == $request->user()->id) {
-                    return $request->user()->can('read-teams-membership-own');
-                } else {
-                    return $request->user()->can('read-teams-membership');
-                }
-            }),
+            BelongsToMany::make('Teams')
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId == $request->user()->id) {
+                        return $request->user()->can('read-teams-membership-own');
+                    } else {
+                        return $request->user()->can('read-teams-membership');
+                    }
+                }),
 
-            HasMany::make('Attendance')->canSee(function ($request) {
-                if ($request->resourceId == $request->user()->id) {
-                    return $request->user()->can('read-attendance-own');
-                } else {
-                    return $request->user()->can('read-attendance');
-                }
-            }),
+            HasMany::make('Attendance')
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId == $request->user()->id) {
+                        return $request->user()->can('read-attendance-own');
+                    } else {
+                        return $request->user()->can('read-attendance');
+                    }
+                }),
 
             HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
-            ->canSee(function ($request) {
-                if ($request->resourceId == $request->user()->id) {
-                    return $request->user()->can('read-dues-transactions-own');
-                } else {
-                    return $request->user()->can('read-dues-transactions');
-                }
-            }),
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId == $request->user()->id) {
+                        return $request->user()->can('read-dues-transactions-own');
+                    } else {
+                        return $request->user()->can('read-dues-transactions');
+                    }
+                }),
 
             new Panel('Metadata', $this->metaFields()),
         ];
@@ -172,13 +175,13 @@ class User extends Resource
         return [
             Text::make('Emergency Contact Name')
                 ->hideFromIndex()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-emergency_contact');
                 }),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
                 ->hideFromIndex()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-emergency_contact');
                 }),
         ];
@@ -217,13 +220,15 @@ class User extends Resource
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
 
-            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)->canSee(function ($request) {
-                return $request->user()->hasRole('admin');
-            }),
+            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                }),
 
-            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)->canSee(function ($request) {
-                return $request->user()->hasRole('admin');
-            }),
+            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                }),
         ];
     }
 
@@ -233,22 +238,22 @@ class User extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [
             (new MemberSince())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-payments');
                 }),
             (new TotalAttendance())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
             (new PrimaryTeam())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
         ];
@@ -260,12 +265,12 @@ class User extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [
-            new Filters\UserActive,
-            new Filters\UserType,
-            new Filters\UserTeam,
+            new Filters\UserActive(),
+            new Filters\UserType(),
+            new Filters\UserTeam(),
         ];
     }
 
@@ -275,7 +280,7 @@ class User extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -286,33 +291,36 @@ class User extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [
-            (new Actions\SyncAccess)
-                ->canSee(function ($request) {
+            (new Actions\SyncAccess())
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
-                })->canRun(function ($request, $user) {
-                    return $request->user()->hasRole('admin');
-                }),
-            (new Actions\OverrideAccess)
-                ->canSee(function ($request) {
-                    return $request->user()->hasRole('admin');
-                })->canRun(function ($request, $user) {
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
-            (new Actions\ResetApiToken)
-                ->canSee(function ($request) {
-                    return true;
-                })->canRun(function ($request, $user) {
-                    return $request->user()->hasRole('admin') || ($request->user()->id == $user->id);
+            (new Actions\OverrideAccess())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin');
                 }),
-            (new Actions\ExportGtid)
-                ->canSee(function ($request) {
+            (new Actions\ResetApiToken())
+                ->canSee(static function (Request $request): bool {
+                        return true;
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
+                }),
+            (new Actions\ExportGtid())
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 }),
-            (new Actions\ExportUsername)
-                ->canSee(function ($request) {
+            (new Actions\ExportUsername())
+                ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->can('read-users');
                 }),
         ];

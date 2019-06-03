@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Resources;
 
@@ -10,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Permission as PermissionResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
+use Illuminate\Http\Request;
 
 class User extends JsonResource
 {
@@ -19,7 +20,7 @@ class User extends JsonResource
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             // Attributes
@@ -66,11 +67,7 @@ class User extends JsonResource
         ];
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return bool
-     */
-    protected function requestingSelf($request)
+    protected function requestingSelf(Request $request): bool
     {
         return $request->user()->id === $this->id;
     }

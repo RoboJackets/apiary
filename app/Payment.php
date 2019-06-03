@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App;
 
@@ -46,7 +46,7 @@ class Payment extends Model
      *
      * @return string
      */
-    public function getMethodPresentationAttribute()
+    public function getMethodPresentationAttribute(): string
     {
         $valueMap = [
             'cash' => 'Cash',
@@ -58,18 +58,15 @@ class Payment extends Model
 
         $method = $this->method;
 
-        if (array_key_exists($method, $valueMap)) {
-            return $valueMap[$this->method];
-        } else {
-            return;
-        }
+        return array_key_exists($method, $valueMap) ? $valueMap[$this->method] : '';
     }
 
     /**
      * Map of relationships to permissions for dynamic inclusion.
+     *
      * @return array
      */
-    public function getRelationshipPermissionMap()
+    public function getRelationshipPermissionMap(): array
     {
         return [
             'user' => 'users',

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Jobs;
 
@@ -20,7 +20,7 @@ class DuesPackageExpiration implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(DuesPackage $package)
+    public function __construct(DuesPackage $package): void
     {
         $this->package = $package;
     }
@@ -30,7 +30,7 @@ class DuesPackageExpiration implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         foreach ($this->package->transactions as $transaction) {
             PushToJedi::dispatch($transaction->user)->onQueue('jedi');

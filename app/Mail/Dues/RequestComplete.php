@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Mail\Dues;
 
@@ -15,8 +15,6 @@ class RequestComplete extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct($uid, $duesPackage)
     {
@@ -31,12 +29,11 @@ class RequestComplete extends Mailable
      */
     public function build()
     {
-        return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->withSwiftMessage(function ($message) {
-                        $message->getHeaders()
-                            ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
-                    })
-                    ->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
-                    ->markdown('mail.dues.requestcomplete');
+        return $this
+            ->from('noreply@my.robojackets.org', 'RoboJackets')
+            ->withSwiftMessage(static function ($message): void {
+                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
+            })->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
+            ->markdown('mail.dues.requestcomplete');
     }
 }

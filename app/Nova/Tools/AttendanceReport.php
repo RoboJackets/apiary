@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Tools;
 
-use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
+use Illuminate\View\View;
 
 class AttendanceReport extends Tool
 {
@@ -12,7 +12,7 @@ class AttendanceReport extends Tool
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // CSS and JS are included globally as they're mixed globally
     }
@@ -22,7 +22,7 @@ class AttendanceReport extends Tool
      *
      * @return \Illuminate\View\View
      */
-    public function renderNavigation()
+    public function renderNavigation(): View
     {
         return view('nova/attendancereportnav');
     }

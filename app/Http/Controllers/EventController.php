@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\Event as EventResource;
+use Illuminate\Http\JsonResponse;
 
 class EventController extends Controller
 {
@@ -26,10 +27,11 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $request Request
+     * @param  $request Request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $events = Event::with($this->authorizeInclude(Event::class, $include))->get();
@@ -41,9 +43,10 @@ class EventController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         // Default to currently logged-in user
         if (isset($request->organizer) && ! $request->filled('organizer_id')) {
@@ -82,11 +85,12 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @param Request $request
+     * @param  int $id
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show(int $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $event = Event::with($this->authorizeInclude(Event::class, $include))->find($id);
@@ -103,9 +107,10 @@ class EventController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $requestingUser = $request->user();
         $event = Event::find($id);
@@ -115,9 +120,11 @@ class EventController extends Controller
 
         $requestedUser = $event->organizer;
         //Enforce users only viewing themselves (read-users-own)
-        if ($requestingUser->cant('update-events') && $requestingUser->id != $requestedUser->id) {
-            return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this Event.', ], 403);
+        if ($requestingUser->cant('update-events') && $requestingUser->id !== $requestedUser->id) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Forbidden - You do not have permission to update this Event.',
+            ], 403);
         }
 
         if ($request->filled('organizer') && ! $request->filled('organizer_id')) {
@@ -157,8 +164,7 @@ class EventController extends Controller
     public function destroy($id)
     {
         $event = Event::find($id);
-        $deleted = $event->delete();
-        if ($deleted) {
+        if ($event->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         } else {
             return response()->json(['status' => 'error',

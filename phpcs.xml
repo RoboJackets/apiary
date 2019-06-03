@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+    <ruleset name="PHP Checks Default Ruleset" namespace="Kberzinch\Php-Checks">
+    <description>The default rule set used by PHP Checks</description>
+
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
+
+    <exclude-pattern>vendor</exclude-pattern>
+    <exclude-pattern>database</exclude-pattern>
+    <exclude-pattern>node_modules</exclude-pattern>
+    <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>*.blade.php</exclude-pattern>
+    <exclude-pattern>bootstrap/cache</exclude-pattern>
+
+    <rule ref="PSR12"/>
+
+    <rule ref="Generic.Arrays.ArrayIndent"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+    <rule ref="Generic.Classes.DuplicateClassName"/>
+
+    <rule ref="Generic.CodeAnalysis"/>
+
+    <rule ref="Generic.Commenting"/>
+
+    <rule ref="Generic.ControlStructures"/>
+
+    <rule ref="Generic.Files.ByteOrderMark"/>
+    <rule ref="Generic.Files.EndFileNewline"/>
+    <rule ref="Generic.Files.InlineHTML"/>
+    <rule ref="Generic.Files.OneObjectStructurePerFile"/>
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+
+    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <rule ref="Generic.Formatting.SpaceBeforeCast"/>
+
+    <rule ref="Generic.Functions.CallTimePassByReference"/>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+
+    <rule ref="Generic.NamingConventions"/>
+
+    <rule ref="Generic.PHP.BacktickOperator"/>
+    <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag"/>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Generic.PHP.DisallowAlternativePHPTags"/>
+    <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+    <rule ref="Generic.PHP.DiscourageGoto"/>
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="sizeof" value="count"/>
+                <element key="delete" value="unset"/>
+                <element key="print" value="echo"/>
+                <element key="is_null" value="null"/>
+                <element key="create_function" value="null"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+    <rule ref="Generic.PHP.LowerCaseType"/>
+    <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <rule ref="Generic.PHP.SAPIUsage"/>
+
+    <rule ref="Generic.Strings"/>
+
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
+    <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
+    <rule ref="Generic.WhiteSpace.ScopeIndent"/>
+
+    <rule ref="Generic.VersionControl.GitMergeConflict"/>
+
+    <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
+
+    <rule ref="PEAR.Files.IncludingFile"/>
+
+    <rule ref="PEAR.Functions.ValidDefaultValue"/>
+
+    <rule ref="SlevomatCodingStandard.Arrays"/>
+
+    <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+
+    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures">
+        <exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Exceptions"/>
+
+    <rule ref="SlevomatCodingStandard.Functions">
+        <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.NamespaceSpacing">
+        <properties>
+            <property name="linesCountAfterNamespace" value="1"/>
+            <property name="linesCountBeforeNamespace" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing">
+        <properties>
+            <property name="linesCountAfterLastUse" value="1"/>
+            <property name="linesCountBeforeFirstUse" value="1"/>
+            <property name="linesCountBetweenUseTypes" value="0"/>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Operators">
+        <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators"/>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.PHP"/>
+
+    <rule ref="SlevomatCodingStandard.TypeHints"/>
+
+    <rule ref="Squiz.Arrays">
+        <exclude name="Squiz.Arrays.ArrayDeclaration"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration"/>
+    </rule>
+
+    <rule ref="Squiz.Classes"/>
+
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+
+    <rule ref="Squiz.Functions.FunctionDuplicateArgument"/>
+    <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
+
+    <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
+
+    <rule ref="Squiz.Operators.ComparisonOperatorUsage">
+        <exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
+        <exclude name="Squiz.Operators.ComparisonOperatorUsage.NotAllowed"/>
+    </rule>
+    <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
+
+    <rule ref="Squiz.PHP.CommentedOutCode"/>
+    <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
+    <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
+    <rule ref="Squiz.PHP.DiscouragedFunctions"/>
+    <rule ref="Squiz.PHP.EmbeddedPhp"/>
+    <rule ref="Squiz.PHP.Eval"/>
+    <rule ref="Squiz.PHP.InnerFunctions"/>
+    <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
+    <rule ref="Squiz.PHP.NonExecutableCode"/>
+
+    <rule ref="Squiz.Scope"/>
+
+    <rule ref="Squiz.Strings">
+        <exclude name="Squiz.Strings.ConcatenationSpacing.PaddingFound"/>
+    </rule>
+
+    <rule ref="Squiz.WhiteSpace">
+        <exclude name="Squiz.WhiteSpace.FunctionSpacing"/>
+        <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
+        <exclude name="Squiz.WhiteSpace.MemberVarSpacing"/>
+        <exclude name="Squiz.WhiteSpace.ObjectOperatorSpacing.Before"/>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.FunctionSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+            <property name="spacingBeforeFirst" value="0"/>
+            <property name="spacingAfterLast" value="0"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.MemberVarSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+            <property name="spacingBeforeFirst" value="0"/>
+        </properties>
+    </rule>
+</ruleset>

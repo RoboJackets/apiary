@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RecruitingCampaignRecipient;
 use App\Http\Resources\RecruitingCampaignRecipient as RCRResource;
+use Illuminate\Http\JsonResponse;
 
 class RecruitingCampaignRecipientController extends Controller
 {
@@ -16,11 +17,12 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param int $recruiting_campaign_id
-     * @param \Illuminate\Http\Request $request
+     * @param  int $recruiting_campaign_id
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index($recruiting_campaign_id, Request $request)
+    public function index(int $recruiting_campaign_id, Request $request): JsonResponse
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $recruiting_campaign_id;
@@ -29,8 +31,7 @@ class RecruitingCampaignRecipientController extends Controller
         ]);
 
         $include = $request->input('include');
-        $rcr = RecruitingCampaignRecipient::with($this->authorizeInclude(RecruitingCampaignRecipient::class, $include))
-            ->where('recruiting_campaign_id', $recruiting_campaign_id)->get();
+        $rcr = RecruitingCampaignRecipient::with($this->authorizeInclude(RecruitingCampaignRecipient::class, $include))->where('recruiting_campaign_id', $recruiting_campaign_id)->get();
 
         return response()->json(['status' => 'success', 'recipients' => RCRResource::collection($rcr)]);
     }
@@ -40,9 +41,10 @@ class RecruitingCampaignRecipientController extends Controller
      *
      * @param  int $recruiting_campaign_id
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store($recruiting_campaign_id, Request $request)
+    public function store(int $recruiting_campaign_id, Request $request): JsonResponse
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $recruiting_campaign_id;
@@ -79,18 +81,20 @@ class RecruitingCampaignRecipientController extends Controller
         }
 
         return response()->json(['status' => 'success',
-            'recipients' => ['added' => $added_addresses, 'duplicate' => $duplicate_addresses], ], 201);
+            'recipients' => ['added' => $added_addresses, 'duplicate' => $duplicate_addresses],
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $recruiting_campaign_id
+     * @param  int $recruiting_campaign_id
      * @param  int $recruiting_campaign_recipient_id
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($campaign_id, $recipient_id, Request $request)
+    public function show($campaign_id, $recipient_id, Request $request): JsonResponse
     {
         // Add $r_c_i and $id to $request to allow for validation
         $request['recruiting_campaign_id'] = $campaign_id;
@@ -102,7 +106,8 @@ class RecruitingCampaignRecipientController extends Controller
         ]);
 
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
-            ->where('id', $recipient_id)->first();
+            ->where('id', $recipient_id)
+            ->first();
 
         return response()->json(['status' => 'success', 'recipient' => new RCRResource($rcr)], 200);
     }
@@ -113,9 +118,10 @@ class RecruitingCampaignRecipientController extends Controller
      * @param  int $recruiting_campaign_id
      * @param  int $recruiting_campaign_recipient_id
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update($campaign_id, $recipient_id, Request $request)
+    public function update($campaign_id, $recipient_id, Request $request): JsonResponse
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $campaign_id;
@@ -128,7 +134,8 @@ class RecruitingCampaignRecipientController extends Controller
         ]);
 
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
-            ->where('id', $recipient_id)->first();
+            ->where('id', $recipient_id)
+            ->first();
 
         $rcr->update($request->all());
 
@@ -140,12 +147,14 @@ class RecruitingCampaignRecipientController extends Controller
      *
      * @param  int $recruiting_campaign_id
      * @param  int $recruiting_campaign_recipient_id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($campaign_id, $recipient_id)
+    public function destroy($campaign_id, $recipient_id): JsonResponse
     {
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
-            ->where('id', $recipient_id)->first();
+            ->where('id', $recipient_id)
+            ->first();
         $rcr->delete();
 
         return response()->json(['status' => 'success'], 200);

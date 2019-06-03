@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Nova\Actions;
 
@@ -32,27 +34,27 @@ class DistributeShirt extends Action
                         $model->save();
                     } else {
                         $this->markAsFailed($model, null);
-                        if (count($models) === 1) {
+                        if (1 === count($models)) {
                             return Action::danger('T-shirt already picked up.');
-                        } else {
-                            $failures[] = $model->id;
                         }
+
+                        $failures[] = $model->id;
                     }
                 } else {
                     $this->markAsFailed($model, null);
-                    if (count($models) === 1) {
+                    if (1 === count($models)) {
                         return Action::danger('This transaction is not yet paid.');
-                    } else {
-                        $failures[] = $model->id;
                     }
+
+                    $failures[] = $model->id;
                 }
             } else {
                 $this->markAsFailed($model, null);
-                if (count($models) === 1) {
+                if (1 === count($models)) {
                     return Action::danger('The associated package is not eligible for a shirt.');
-                } else {
-                    $failures[] = $model->id;
                 }
+
+                $failures[] = $model->id;
             }
         }
         if (count($failures) > 0) {
@@ -61,9 +63,9 @@ class DistributeShirt extends Action
             } else {
                 return Action::danger('No selected dues transactions are currently eligible for a shirt.');
             }
-        } else {
-            return Action::message('T-shirt'.(count($models) === 1 ? '' : 's').' marked as picked up!');
         }
+
+        return Action::message('T-shirt' . (1 === count($models) ? '' : 's') . ' marked as picked up!');
     }
 
     /**
@@ -71,7 +73,7 @@ class DistributeShirt extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return [];
     }

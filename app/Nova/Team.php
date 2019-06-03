@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
@@ -17,6 +16,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Metrics\AttendancePerWeek;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use Illuminate\Database\Eloquent\Builder;
 
 class Team extends Resource
 {
@@ -50,7 +50,7 @@ class Team extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             Text::make('Name')
@@ -72,13 +72,15 @@ class Team extends Resource
 
             new Panel('Metadata', $this->metaFields()),
 
-            BelongsToMany::make('User', 'members')->canSee(function ($request) {
-                return $request->user()->can('read-teams-membership') && $request->user()->can('read-users');
-            }),
+            BelongsToMany::make('User', 'members')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-teams-membership') && $request->user()->can('read-users');
+                }),
 
-            HasMany::make('Attendance')->canSee(function ($request) {
-                return $request->user()->can('read-attendance');
-            }),
+            HasMany::make('Attendance')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
@@ -131,29 +133,29 @@ class Team extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [
             (new TotalTeamMembers())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-teams-membership');
                 }),
             (new ActiveMembers())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-teams-membership');
                 }),
             (new AttendancePerWeek())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
             (new ActiveAttendanceBreakdown())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
-                }),
+            }),
         ];
     }
 
@@ -163,7 +165,7 @@ class Team extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -174,7 +176,7 @@ class Team extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -185,7 +187,7 @@ class Team extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }
@@ -197,13 +199,9 @@ class Team extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function indexQuery(NovaRequest $request, Builder $query): Builder
     {
-        if (! $request->user()->can('read-teams-hidden')) {
-            return $query->where('visible', 1);
-        } else {
-            return $query;
-        }
+        return $request->user()->cant('read-teams-hidden') ? $query->where('visible', 1) : $query;
     }
 
     /**
@@ -215,12 +213,8 @@ class Team extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function relatableQuery(NovaRequest $request, $query)
+    public static function relatableQuery(NovaRequest $request, Builder $query): Builder
     {
-        if (! $request->user()->can('read-teams-hidden')) {
-            return $query->where('visible', 1);
-        } else {
-            return $query;
-        }
+        return $request->user()->cant('read-teams-hidden') ? $query->where('visible', 1) : $query;
     }
 }

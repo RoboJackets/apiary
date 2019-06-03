@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -10,6 +10,8 @@ use Illuminate\Database\QueryException;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\View;
 
 class TeamController extends Controller
 {
@@ -27,19 +29,20 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $teamsQ = Team::with($this->authorizeInclude(Team::class, $include));
-        $teams = (\Auth::user()->can('read-teams-hidden')) ? $teamsQ->get() : $teamsQ->visible()->get();
+        $teams = \Auth::user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
 
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
     }
 
-    public function indexWeb()
+    public function indexWeb(): View
     {
         $teams = Team::visible()->orderBy('name', 'asc')->get();
 
@@ -59,9 +62,10 @@ class TeamController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
             'name' => 'required|string|unique:teams',
@@ -93,37 +97,43 @@ class TeamController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int  $id
-     * @param Request $request
+     * @param  int  $id
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show(int $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $team = Team::with($this->authorizeInclude(Team::class, $include))
-            ->where('id', $id)->orWhere('slug', $id)->first();
+            ->where('id', $id)
+            ->orWhere('slug', $id)
+            ->first();
 
-        if ($team && $team->visible == false && \Auth::user()->cant('read-teams-hidden')) {
-            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
-        } elseif ($team) {
-            return response()->json(['status' => 'success', 'team' => new TeamResource($team)]);
-        } else {
+        if ($team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
+
+        if ($team) {
+            return response()->json(['status' => 'success', 'team' => new TeamResource($team)]);
+        }
+
+        return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
     }
 
     /**
      * Returns a list of all members of the given team.
      *
-     * @param $id integer Team ID
+     * @param  $id integer Team ID
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showMembers($id)
+    public function showMembers($id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
 
-        if ($team && $team->visible == false && \Auth::user()->cant('read-teams-hidden')) {
+        if ($team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -135,12 +145,13 @@ class TeamController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || ($team->visible == false && \Auth::user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -174,11 +185,12 @@ class TeamController extends Controller
     /**
      * Updates membership of the given team.
      *
-     * @param Request $request
-     * @param $id integer
+     * @param  Request $request
+     * @param  $id integer
+     *
      * @return \Illuminate\Http\Response
      */
-    public function updateMembers(Request $request, $id)
+    public function updateMembers(Request $request, $id): JsonResponse
     {
         $requestingUser = $request->user();
 
@@ -188,25 +200,27 @@ class TeamController extends Controller
         ]);
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || ($team->visible == false && \Auth::user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
         //Enforce users only updating themselves (update-teams-membership-own)
-        if ($requestingUser->cant('update-teams') && $requestingUser->id != $request->input('user_id')) {
+        if ($requestingUser->cant('update-teams') && $requestingUser->id !== $request->input('user_id')) {
             return response()->json(['status' => 'error',
-                'message' => 'no_priv_for_target_user', ], 403);
+                'message' => 'no_priv_for_target_user',
+            ], 403);
         }
 
         //Enforce updating membership via self-service only for eligible teams
-        if ($requestingUser->cant('update-teams') && $team->self_serviceable == false) {
+        if ($requestingUser->cant('update-teams') && false === $team->self_serviceable) {
             return response()->json(['status' => 'error',
-                'message' => 'self_service_disabled', ], 403);
+                'message' => 'self_service_disabled',
+            ], 403);
         }
 
         try {
             $user = User::find($request->input('user_id'));
-            if ($request->input('action') == 'join') {
+            if ('join' === $request->input('action')) {
                 $team->members()->syncWithoutDetaching($user);
             } else {
                 $team->members()->detach($user);
@@ -227,13 +241,13 @@ class TeamController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        $deleted = $team->delete();
-        if ($deleted) {
+        if ($team->delete()) {
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
         } else {
             return response()->json(['status' => 'error',

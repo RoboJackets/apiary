@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Actions;
 
-use Laravel\Nova\Actions\Action;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class ExportGtid extends DownloadExcel

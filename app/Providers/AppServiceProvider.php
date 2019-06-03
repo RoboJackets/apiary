@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Providers;
 
@@ -8,7 +8,6 @@ use App\DuesPackage;
 use Laravel\Horizon\Horizon;
 use App\Observers\UserObserver;
 use App\Observers\PaymentObserver;
-use Illuminate\Support\Facades\Auth;
 use App\Observers\DuesPackageObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\Resource;
@@ -20,20 +19,23 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Resource::withoutWrapping();
 
-        Horizon::auth(function () {
-            if (auth()->guard('web')->user() instanceof User &&
-                auth()->guard('web')->user()->can('access-horizon')) {
+        Horizon::auth(static function () {
+            if (auth()->guard('web')->user() instanceof User
+                && auth()->guard('web')->user()->can('access-horizon')
+            ) {
                 return true;
-            } elseif (auth()->guard('web')->user() == null) {
+            }
+
+            if (null === auth()->guard('web')->user()) {
                 // Theoretically, this should never happen since we're calling the CAS middleware before this.
                 return abort(401, 'Authentication Required');
-            } else {
-                return abort(403, 'Forbidden');
             }
+
+            return abort(403, 'Forbidden');
         });
 
         User::observe(UserObserver::class);
@@ -46,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
         $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);

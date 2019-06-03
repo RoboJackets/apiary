@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Nova\Metrics;
 
@@ -41,7 +43,7 @@ class TotalAttendance extends Value
      *
      * @return array
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             -1 => 'All',
@@ -54,21 +56,11 @@ class TotalAttendance extends Value
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'total-attendance';
     }

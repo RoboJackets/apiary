@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 use Laravel\Nova\Http\Middleware\Authorize;
 use Laravel\Nova\Http\Middleware\BootTools;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -20,7 +20,7 @@ class NotificationController extends Controller
     public function sendNotification()
     {
         $hours = 0;
-        RecruitingVisit::chunk(30, function ($chunk) use (&$hours) {
+        RecruitingVisit::chunk(30, static function ($chunk) use (&$hours): void {
             $when = Carbon::now()->addHours($hours);
             Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
             $hours++;
@@ -47,7 +47,7 @@ class NotificationController extends Controller
         $chunks = array_chunk($emails, 30);
         foreach ($chunks as $chunk) {
             $when = Carbon::now()->addHours($hours);
-            if ($template_type == 'recruiting') {
+            if ('recruiting' === $template_type) {
                 foreach ($chunk as $address) {
                     $visit = RecruitingVisit::where('recruiting_email', $address)->first();
                     if (isset($visit->id)) {
@@ -58,7 +58,7 @@ class NotificationController extends Controller
                     }
                 }
                 $hours++;
-            } elseif ($template_type == 'database') {
+            } elseif ('database' === $template_type) {
                 foreach ($chunk as $address) {
                     Mail::to($address)->send(new DatabaseMailable($template_id, null));
                     $found[] = $address;

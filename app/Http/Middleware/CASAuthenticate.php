@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 /**
  * Created by PhpStorm.
  * User: kberz
@@ -12,6 +13,8 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CASAuthenticate
 {
@@ -33,7 +36,7 @@ class CASAuthenticate
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         //Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
@@ -42,27 +45,29 @@ class CASAuthenticate
                 $user = $this->createOrUpdateCASUser($request);
                 if (is_a($user, \App\User::class)) {
                     Auth::login($user);
-                } elseif (is_a($user, "Illuminate\Http\Response")) {
+                } elseif (is_a($user, Response::class)) {
                     return $user;
-                } else {
-                    return response(view(
-                        'errors.generic',
-                        [
-                            'error_code' => 500,
-                            'error_message' => 'Unknown error authenticating with CAS',
-                        ]
-                    ), 500);
                 }
-            } elseif ($this->cas->isAuthenticated() && Auth::check()) {
+
+                return response(view(
+                    'errors.generic',
+                    [
+                        'error_code' => 500,
+                        'error_message' => 'Unknown error authenticating with CAS',
+                    ]
+                ), 500);
+            }
+
+            if ($this->cas->isAuthenticated() && Auth::check()) {
                 //User is authenticated and already has an existing session
                 return $next($request);
-            } else {
-                //User is not authenticated and does not have an existing session
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response('Unauthorized', 401);
-                }
-                $this->cas->authenticate();
             }
+
+            //User is not authenticated and does not have an existing session
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized', 401);
+            }
+            $this->cas->authenticate();
         }
 
         //User is authenticated through the API guard (I guess? Moving this into an else() broke sessions)

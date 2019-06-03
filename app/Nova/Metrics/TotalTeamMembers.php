@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Metrics;
 
@@ -22,21 +22,11 @@ class TotalTeamMembers extends Value
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'total-team-members';
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Metrics;
 
@@ -23,31 +23,23 @@ class RsvpSourceBreakdown extends Partition
      */
     public function calculate(Request $request)
     {
-        return $this->result(Rsvp::where('event_id', $request->resourceId)
-            ->leftJoin('recruiting_visits', 'source', '=', 'visit_token')
-            ->selectRaw('if(recruiting_visits.id, "Recruiting Email", source) as rsvpsource')
-            ->selectRaw('count(rsvps.id) as aggregate')
-            ->groupBy('rsvpsource')
-            ->orderBy('aggregate', 'desc')
-            ->get()
-            ->mapWithKeys(function ($item) {
-                if ($item->rsvpsource) {
-                    return [$item->rsvpsource => $item->aggregate];
-                } else {
-                    return ['<unknown>' => $item->aggregate];
-                }
-            })->toArray()
+        return $this->result(
+            Rsvp::where('event_id', $request->resourceId)
+                ->leftJoin('recruiting_visits', 'source', '=', 'visit_token')
+                ->selectRaw('if(recruiting_visits.id, "Recruiting Email", source) as rsvpsource')
+                ->selectRaw('count(rsvps.id) as aggregate')
+                ->groupBy('rsvpsource')
+                ->orderBy('aggregate', 'desc')
+                ->get()
+                ->mapWithKeys(static function ($item): array {
+                    if ($item->rsvpsource) {
+                        return [$item->rsvpsource => $item->aggregate];
+                    } else {
+                        return ['<unknown>' => $item->aggregate];
+                    }
+                })
+                ->toArray()
         );
-    }
-
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
     }
 
     /**
@@ -55,7 +47,7 @@ class RsvpSourceBreakdown extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'rsvp-source-breakdown';
     }

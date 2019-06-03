@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Actions;
 
@@ -50,7 +50,7 @@ class AddPayment extends Action
         }
 
         // shouldn't happen but might if someone is abusing the API
-        if (Auth::user()->cant('create-payments-'.$fields->method)) {
+        if (Auth::user()->cant('create-payments-' . $fields->method)) {
             $this->markAsFailed($models->first(), null);
 
             return Action::danger(
@@ -61,28 +61,28 @@ class AddPayment extends Action
         $package_amount = round($models->first()->package->cost, 2);
         $entered_amount = round($fields->amount, 2);
 
-        if ($fields->method === 'square' || $fields->method === 'swipe') {
+        if ('square' === $fields->method || 'swipe' === $fields->method) {
             if ($entered_amount !== round($package_amount + 3, 2)) {
                 if ($entered_amount === $package_amount) {
                     $this->markAsFailed($models->first(), null);
 
                     return Action::danger(
-                        'Missing expected transaction fee - total should be '.round($package_amount + 3, 2).', '.$entered_amount.' entered.'
-                    );
-                } else {
-                    $this->markAsFailed($models->first(), null);
-
-                    return Action::danger(
-                        'Unexpected amount '.$entered_amount.' entered - should be '.round($package_amount + 3, 2)
+                        'Missing expected transaction fee - total should be ' . round($package_amount + 3, 2) . ', ' . $entered_amount . ' entered.'
                     );
                 }
+
+                $this->markAsFailed($models->first(), null);
+
+                return Action::danger(
+                    'Unexpected amount ' . $entered_amount . ' entered - should be ' . round($package_amount + 3, 2)
+                );
             }
         } else {
             if ($entered_amount !== $package_amount) {
                 $this->markAsFailed($models->first(), null);
 
                 return Action::danger(
-                    'Unexpected amount '.$entered_amount.' entered - should be '.$package_amount
+                    'Unexpected amount ' . $entered_amount . ' entered - should be ' . $package_amount
                 );
             }
         }
@@ -106,7 +106,7 @@ class AddPayment extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         $payment_methods = [
             'cash' => 'Cash',
@@ -119,9 +119,11 @@ class AddPayment extends Action
         $allowed_payment_methods = [];
 
         foreach ($payment_methods as $code => $display) {
-            if (Auth::user()->can('create-payments-'.$code)) {
-                $allowed_payment_methods[$code] = $display;
+            if (Auth::user()->cant('create-payments-' . $code)) {
+                continue;
             }
+
+            $allowed_payment_methods[$code] = $display;
         }
 
         return [

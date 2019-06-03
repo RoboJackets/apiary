@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Filters;
 
 use R64\Filters\DateFilter;
 use Illuminate\Http\Request;
-use Laravel\Nova\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class DateFrom extends DateFilter
 {
@@ -16,7 +16,7 @@ class DateFrom extends DateFilter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, Builder $query, string $value): Builder
     {
         return $query->whereDate('created_at', '>=', $value);
     }
@@ -27,7 +27,7 @@ class DateFrom extends DateFilter
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         return [
             'dateFormat' => 'Y-m-d',

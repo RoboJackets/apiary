@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 /**
  * Created by PhpStorm.
  * User: kberz
@@ -10,10 +11,10 @@ namespace App\Http\Middleware;
 
 use phpCAS;
 use Closure;
-use App\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
+use Illuminate\Http\Request;
 
 class CASCheck
 {
@@ -35,7 +36,7 @@ class CASCheck
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         phpCAS::checkAuthentication();
         if (! Auth::check()) {
@@ -43,21 +44,21 @@ class CASCheck
                 $user = $this->createOrUpdateCASUser($request);
                 if (is_a($user, \App\User::class)) {
                     Auth::login($user);
-                } elseif (is_a($user, "Illuminate\Http\Response")) {
+                } elseif (is_a($user, 'Illuminate\Http\Response')) {
                     return $user;
-                } else {
-                    return response(view(
-                        'errors.generic',
-                        [
-                            'error_code' => 500,
-                            'error_message' => 'Unknown error authenticating with CAS',
-                        ]
-                    ), 500);
                 }
-            } else {
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response('Unauthorized', 401);
-                }
+
+                return response(view(
+                    'errors.generic',
+                    [
+                        'error_code' => 500,
+                        'error_message' => 'Unknown error authenticating with CAS',
+                    ]
+                ), 500);
+            }
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized', 401);
             }
         }
         //User is authenticated, no update needed or already updated

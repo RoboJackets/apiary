@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Resources;
 
@@ -6,6 +6,7 @@ use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
+use Illuminate\Http\Request;
 
 class RecruitingCampaignRecipient extends JsonResource
 {
@@ -15,7 +16,7 @@ class RecruitingCampaignRecipient extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             // Attributes

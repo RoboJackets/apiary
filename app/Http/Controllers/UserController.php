@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -9,6 +9,7 @@ use App\Traits\AuthorizeInclude;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\User as UserResource;
+use \Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -26,10 +27,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $users = User::with($this->authorizeInclude(User::class, $include))->get();
@@ -42,10 +44,11 @@ class UserController extends Controller
      * Accepts GTID, First/Preferred Name, and Username (uid)
      * GTID returns first result, others return all matching (wildcard).
      *
-     * @param Request $request
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search(Request $request)
+    public function search(Request $request): JsonResponse
     {
         if (! $request->filled('keyword')) {
             return response()->json(['status' => 'error', 'error' => 'Missing keyword'], 422);
@@ -54,7 +57,7 @@ class UserController extends Controller
         if (is_numeric($keyword)) {
             $results = User::where('gtid', $keyword)->get();
         } else {
-            $keyword = '%'.$request->input('keyword').'%';
+            $keyword = '%' . $request->input('keyword') . '%';
             $results = User::where('uid', 'LIKE', $keyword)
                 ->orWhere('first_name', 'LIKE', $keyword)
                 ->orWhere('preferred_name', 'LIKE', $keyword)
@@ -68,11 +71,12 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validations = [
             'uid' => 'required|unique:users|max:127',
@@ -125,9 +129,9 @@ class UserController extends Controller
             $dbUser = User::findOrFail($user->id)->makeVisible('api_token');
 
             return response()->json(['status' => 'success', 'user' => $dbUser], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
     }
 
     /**
@@ -135,30 +139,32 @@ class UserController extends Controller
      *
      * @param  int $id
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show(int $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
         if ($user) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
-            if ($requestingUser->cant('read-users') && $requestingUser->id != $user->id) {
+            if ($requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
                 return response()->json(['status' => 'error',
-                    'message' => 'Forbidden - You do not have permission to view this User.', ], 403);
+                    'message' => 'Forbidden - You do not have permission to view this User.',
+                ], 403);
             }
 
             //Show API tokens only to admins and the users themselves
             //TODO: Replace this with something better
-            if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
+            if ($requestingUser->id === $user->id || $requestingUser->hasRole('admin')) {
                 $user = $user->makeVisible('api_token');
             }
 
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
     }
 
     /**
@@ -166,9 +172,10 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(int $id, Request $request): JsonResponse
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
@@ -177,16 +184,17 @@ class UserController extends Controller
         }
 
         //Enforce users only updating themselves (update-users-own)
-        if ($requestingUser->cant('update-users') && $requestingUser->id != $user->id) {
+        if ($requestingUser->cant('update-users') && $requestingUser->id !== $user->id) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to update this User.', ], 403);
+                'message' => 'Forbidden - You do not have permission to update this User.',
+            ], 403);
         }
 
         //Update only included fields
         $validatedFields = $this->validate($request, [
             'slack_id' => ['max:21', 'nullable', Rule::unique('users')->ignore($user->id)],
             'personal_email' => ['max:255', 'nullable', Rule::unique('users')->ignore($user->id)],
-            'first_name'=> 'max:127',
+            'first_name' => 'max:127',
             'last_name' => 'max:127',
             'middle_name' => 'max:127',
             'preferred_name' => 'max:127',
@@ -207,8 +215,9 @@ class UserController extends Controller
         //This is deliberately doing a separate update/save of the user model because `api_token` MUST
         //be prevented from mass assignment, otherwise weird things will happen when you `PUT` a User
         //while authenticating with an API token.
-        if ($request->input('generateToken') &&
-            ($requestingUser->hasRole('admin') || $requestingUser->id == $user->id)) {
+        if ($request->input('generateToken')
+            && ($requestingUser->hasRole('admin') || $requestingUser->id === $user->id)
+        ) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
             $user->save();
         }
@@ -224,7 +233,7 @@ class UserController extends Controller
 
         //Show API tokens only to admins and the users themselves
         //TODO: Replace this with something better
-        if ($requestingUser->id == $user->id || $requestingUser->hasRole('admin')) {
+        if ($requestingUser->id === $user->id || $requestingUser->hasRole('admin')) {
             $user = $user->makeVisible('api_token');
         }
 
@@ -239,13 +248,13 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $user = User::findByIdentifier($id)->first();
-        $deleted = $user->delete();
-        if ($deleted) {
+        if ($user->delete()) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         } else {
             return response()->json(['status' => 'error',

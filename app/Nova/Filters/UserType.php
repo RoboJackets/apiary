@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserType extends Filter
 {
@@ -22,7 +23,7 @@ class UserType extends Filter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, Builder $query, string $value): Builder
     {
         return $query->role($value);
     }
@@ -33,7 +34,7 @@ class UserType extends Filter
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         return [
             'Administrator' => 'admin',

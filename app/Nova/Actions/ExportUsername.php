@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Actions;
 
-use Laravel\Nova\Actions\Action;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class ExportUsername extends DownloadExcel
@@ -23,9 +22,7 @@ class ExportUsername extends DownloadExcel
 
     public function __construct()
     {
-        $this->withFilename('Members.csv')
-            ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
-            ->only('uid');
+        $this->withFilename('Members.csv')->withWriterType(\Maatwebsite\Excel\Excel::CSV)->only('uid');
     }
 
     /**

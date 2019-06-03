@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Nova\Metrics;
 
@@ -17,9 +19,7 @@ class MemberSince extends Value
     public function calculate(Request $request)
     {
         // Same logic as in DashboardController
-        $transaction = DuesTransaction::paid()
-            ->where('user_id', $request->resourceId)
-            ->with('package')->first();
+        $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
 
         if ($transaction) {
             // The date must be passed in as the prefix, or the non-numeric characters will be stripped and it will be
@@ -36,19 +36,9 @@ class MemberSince extends Value
      *
      * @return array
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [];
-    }
-
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
     }
 
     /**
@@ -56,7 +46,7 @@ class MemberSince extends Value
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'member-since';
     }

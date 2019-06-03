@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Jobs;
 
@@ -21,7 +21,7 @@ class PushToJedi implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user): void
     {
         $this->user = $user;
     }
@@ -31,7 +31,7 @@ class PushToJedi implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         if (null === config('jedi.endpoint') || null === config('jedi.token')) {
             return;
@@ -51,8 +51,8 @@ class PushToJedi implements ShouldQueue
         $client = new Client(
             [
                 'headers' => [
-                    'User-Agent' => 'Apiary on '.config('app.url'),
-                    'Authorization' => 'Bearer '.config('jedi.token'),
+                    'User-Agent' => 'Apiary on ' . config('app.url'),
+                    'Authorization' => 'Bearer ' . config('jedi.token'),
                 ],
             ]
         );
@@ -61,7 +61,7 @@ class PushToJedi implements ShouldQueue
 
         if (200 !== $response->getStatusCode()) {
             throw new \Exception(
-                'Sending data to JEDI failed with HTTP response code '.$response->getStatusCode()
+                'Sending data to JEDI failed with HTTP response code ' . $response->getStatusCode()
             );
         }
     }

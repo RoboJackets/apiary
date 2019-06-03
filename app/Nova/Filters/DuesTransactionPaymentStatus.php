@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class DuesTransactionPaymentStatus extends BooleanFilter
 {
@@ -22,13 +23,9 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, Builder $query, array $value): Builder
     {
-        if ($value['pending']) {
-            return $query->pending();
-        } else {
-            return $query;
-        }
+        return $value['pending'] ? $query->pending() : $query;
     }
 
     /**
@@ -37,7 +34,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         return [
             'Only Pending' => 'pending',

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Providers;
 
@@ -12,6 +12,7 @@ use Laravel\Nova\Events\ServingNova;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use App\User;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -22,12 +23,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
-        Nova::serving(function (ServingNova $event) {
-            Nova::script('apiary-custom', __DIR__.'/../../public/js/nova.js');
-            Nova::style('apiary-custom', __DIR__.'/../../public/css/nova.css');
+        Nova::serving(static function (ServingNova $event): void {
+            Nova::script('apiary-custom', __DIR__ . '/../../public/js/nova.js');
+            Nova::style('apiary-custom', __DIR__ . '/../../public/css/nova.css');
         });
     }
 
@@ -36,12 +37,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return void
      */
-    protected function routes()
+    protected function routes(): void
     {
-        Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+        Nova::routes()->withAuthenticationRoutes()->withPasswordResetRoutes()->register();
     }
 
     /**
@@ -51,9 +49,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return void
      */
-    protected function gate()
+    protected function gate(): void
     {
-        Gate::define('viewNova', function ($user) {
+        Gate::define('viewNova', static function (User $user): bool {
             return $user->can('access-nova');
         });
     }
@@ -63,14 +61,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return array
      */
-    protected function cards()
+    protected function cards(): array
     {
         return [
-            new PaymentsPerDay,
-            new ActiveMembers,
-            new AttendancePerWeek,
-            new ActiveAttendanceBreakdown,
-            new MakeAWish,
+            new PaymentsPerDay(),
+            new ActiveMembers(),
+            new AttendancePerWeek(),
+            new ActiveAttendanceBreakdown(),
+            new MakeAWish(),
         ];
     }
 
@@ -79,13 +77,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return array
      */
-    public function tools()
+    public function tools(): array
     {
         return [
-            (new \Vyuldashev\NovaPermission\NovaPermissionTool())->canSee(function ($request) {
+            (new \Vyuldashev\NovaPermission\NovaPermissionTool())->canSee(static function (Request $request): bool {
                 return $request->user()->hasRole('admin');
             }),
-            (new AttendanceReport())->canSee(function ($request) {
+            (new AttendanceReport())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-attendance');
             }),
         ];
@@ -96,8 +94,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
     }
 }

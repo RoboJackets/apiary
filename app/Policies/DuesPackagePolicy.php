@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -17,7 +17,7 @@ class DuesPackagePolicy
      * @param  \App\DuesPackage  $duesPackage
      * @return mixed
      */
-    public function view(User $user, DuesPackage $duesPackage)
+    public function view(User $user, DuesPackage $duesPackage): bool
     {
         // Normal users have this, but Nova in general is limited by access-nova
         return $user->can('read-dues-packages');
@@ -29,7 +29,7 @@ class DuesPackagePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->can('read-dues-packages');
     }
@@ -40,7 +40,7 @@ class DuesPackagePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->can('create-dues-packages');
     }
@@ -52,7 +52,7 @@ class DuesPackagePolicy
      * @param  \App\DuesPackage  $duesPackage
      * @return mixed
      */
-    public function update(User $user, DuesPackage $duesPackage)
+    public function update(User $user, DuesPackage $duesPackage): bool
     {
         return $user->can('update-dues-packages');
     }
@@ -64,7 +64,7 @@ class DuesPackagePolicy
      * @param  \App\DuesPackage  $duesPackage
      * @return mixed
      */
-    public function delete(User $user, DuesPackage $duesPackage)
+    public function delete(User $user, DuesPackage $duesPackage): bool
     {
         return $user->can('delete-dues-packages');
     }
@@ -76,7 +76,7 @@ class DuesPackagePolicy
      * @param  \App\DuesPackage  $duesPackage
      * @return mixed
      */
-    public function restore(User $user, DuesPackage $duesPackage)
+    public function restore(User $user, DuesPackage $duesPackage): bool
     {
         return $user->can('create-dues-packages');
     }
@@ -88,7 +88,7 @@ class DuesPackagePolicy
      * @param  \App\DuesPackage  $duesPackage
      * @return mixed
      */
-    public function forceDelete(User $user, DuesPackage $duesPackage)
+    public function forceDelete(User $user, DuesPackage $duesPackage): bool
     {
         return false;
     }

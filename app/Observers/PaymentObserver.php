@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Observers;
 
@@ -7,7 +7,7 @@ use App\Jobs\PushToJedi;
 
 class PaymentObserver
 {
-    public function saved(Payment $payment)
+    public function saved(Payment $payment): void
     {
         PushToJedi::dispatch($payment->payable->user)->onQueue('jedi');
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -17,7 +17,7 @@ class AttendancePolicy
      * @param  \App\Attendance  $attendance
      * @return mixed
      */
-    public function view(User $user, Attendance $attendance)
+    public function view(User $user, Attendance $attendance): bool
     {
         return $user->can('read-attendance');
     }
@@ -28,7 +28,7 @@ class AttendancePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->can('read-attendance');
     }
@@ -39,7 +39,7 @@ class AttendancePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         // Attendance should be created in the old admin interface for now.
         return false;
@@ -52,7 +52,7 @@ class AttendancePolicy
      * @param  \App\Attendance  $attendance
      * @return mixed
      */
-    public function update(User $user, Attendance $attendance)
+    public function update(User $user, Attendance $attendance): bool
     {
         return false;
     }
@@ -64,7 +64,7 @@ class AttendancePolicy
      * @param  \App\Attendance  $attendance
      * @return mixed
      */
-    public function delete(User $user, Attendance $attendance)
+    public function delete(User $user, Attendance $attendance): bool
     {
         return $user->can('delete-attendance');
     }
@@ -76,7 +76,7 @@ class AttendancePolicy
      * @param  \App\Attendance  $attendance
      * @return mixed
      */
-    public function restore(User $user, Attendance $attendance)
+    public function restore(User $user, Attendance $attendance): bool
     {
         return $user->hasRole('admin');
     }
@@ -88,7 +88,7 @@ class AttendancePolicy
      * @param  \App\Attendance  $attendance
      * @return mixed
      */
-    public function forceDelete(User $user, Attendance $attendance)
+    public function forceDelete(User $user, Attendance $attendance): bool
     {
         return false;
     }

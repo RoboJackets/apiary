@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserActive extends Filter
 {
@@ -22,13 +23,9 @@ class UserActive extends Filter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, Builder $query, string $value): Builder
     {
-        if ($value === 'yes') {
-            return $query->active();
-        } else {
-            return $query->inactive();
-        }
+        return 'yes' === $value ? $query->active() : $query->inactive();
     }
 
     /**
@@ -37,7 +34,7 @@ class UserActive extends Filter
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         return [
             'Yes' => 'yes',

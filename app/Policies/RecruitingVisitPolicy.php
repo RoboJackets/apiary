@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -17,7 +17,7 @@ class RecruitingVisitPolicy
      * @param  \App\RecruitingVisit  $resource
      * @return mixed
      */
-    public function view(User $user, RecruitingVisit $resource)
+    public function view(User $user, RecruitingVisit $resource): bool
     {
         return $user->can('read-recruiting-visits');
     }
@@ -28,7 +28,7 @@ class RecruitingVisitPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->can('read-recruiting-visits');
     }
@@ -39,7 +39,7 @@ class RecruitingVisitPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return false; // not in nova
     }
@@ -51,7 +51,7 @@ class RecruitingVisitPolicy
      * @param  \App\RecruitingVisit  $resource
      * @return mixed
      */
-    public function update(User $user, RecruitingVisit $resource)
+    public function update(User $user, RecruitingVisit $resource): bool
     {
         return $user->can('update-recruiting-visits');
     }
@@ -63,7 +63,7 @@ class RecruitingVisitPolicy
      * @param  \App\RecruitingVisit  $resource
      * @return mixed
      */
-    public function delete(User $user, RecruitingVisit $resource)
+    public function delete(User $user, RecruitingVisit $resource): bool
     {
         return $user->can('delete-recruiting-visits');
     }
@@ -75,7 +75,7 @@ class RecruitingVisitPolicy
      * @param  \App\RecruitingVisit  $resource
      * @return mixed
      */
-    public function restore(User $user, RecruitingVisit $resource)
+    public function restore(User $user, RecruitingVisit $resource): bool
     {
         return $user->can('delete-recruiting-visits');
     }
@@ -87,7 +87,7 @@ class RecruitingVisitPolicy
      * @param  \App\RecruitingVisit  $resource
      * @return mixed
      */
-    public function forceDelete(User $user, RecruitingVisit $resource)
+    public function forceDelete(User $user, RecruitingVisit $resource): bool
     {
         return false;
     }

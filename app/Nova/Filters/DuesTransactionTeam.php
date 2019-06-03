@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Filters;
 
 use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class DuesTransactionTeam extends Filter
 {
@@ -30,9 +31,10 @@ class DuesTransactionTeam extends Filter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, Builder $query, $value): Builder
     {
-        return $query->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')
+        return $query
+            ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')
             ->where('team_user.team_id', '=', $value);
     }
 
@@ -42,15 +44,14 @@ class DuesTransactionTeam extends Filter
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         $teams = [];
         if ($request->user()->can('read-teams')) {
             $teams = Team::where('attendable', 1)
-                ->when($request->user()->cant('read-teams-hidden'), function ($query) {
+                ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
-                })->get()
-                ->mapWithKeys(function ($item) {
+                })->get()->mapWithKeys(static function (array $item): array {
                     return [$item['name'] => $item['id']];
                 })->toArray();
         }

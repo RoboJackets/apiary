@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class PermissionMiddleware
 {
@@ -14,18 +15,19 @@ class PermissionMiddleware
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $permission)
+    public function handle(Request $request, Closure $next, $permission)
     {
         if (Auth::guest() && $request->ajax()) {
             return response()->json(['status' => 'error',
-                'message' => 'Unauthorized - You must authenticate to perform this action.', ], 401);
-        } elseif (Auth::guest()) {
+                'message' => 'Unauthorized - You must authenticate to perform this action.',
+            ], 401);
+        }
+
+        if (Auth::guest()) {
             abort(403);
         }
 
-        $permissions = is_array($permission)
-            ? $permission
-            : explode('|', $permission);
+        $permissions = is_array($permission) ? $permission : explode('|', $permission);
 
         foreach ($permissions as $permission) {
             if (Auth::user()->can($permission)) {
@@ -35,9 +37,10 @@ class PermissionMiddleware
 
         if ($request->ajax()) {
             return response()->json(['status' => 'error',
-                'message' => 'Forbidden - You do not have permission to perform this action.', ], 403);
-        } else {
-            abort(403);
+                'message' => 'Forbidden - You do not have permission to perform this action.',
+            ], 403);
         }
+
+        abort(403);
     }
 }

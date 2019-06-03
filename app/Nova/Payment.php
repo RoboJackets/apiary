@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
@@ -36,7 +36,7 @@ class Payment extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         $payment_methods = [
             'cash' => 'Cash',
@@ -47,7 +47,8 @@ class Payment extends Resource
         ];
 
         return [
-            ID::make()->sortable(),
+            ID::make()
+                ->sortable(),
 
             MorphTo::make('Paid For', 'payable')
                 ->types([
@@ -68,7 +69,7 @@ class Payment extends Resource
                 ->onlyOnDetail()
                 ->sortable(),
 
-            BelongsTo::make('Recorded By', 'user', 'App\\Nova\\User')
+            BelongsTo::make('Recorded By', 'user', User::class)
                 ->help('The user that recorded the payment')
                 ->sortable(),
 
@@ -97,7 +98,7 @@ class Payment extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [];
     }
@@ -108,7 +109,7 @@ class Payment extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -119,7 +120,7 @@ class Payment extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -130,7 +131,7 @@ class Payment extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

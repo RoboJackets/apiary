@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Http\Controllers;
 
@@ -13,11 +15,12 @@ use App\Events\PaymentSuccess;
 use SquareConnect\ApiException;
 use SquareConnect\Configuration;
 use SquareConnect\Api\CheckoutApi;
-use SquareConnect\Model\Transaction;
 use SquareConnect\Api\TransactionsApi;
 use SquareConnect\Model\CreateOrderRequest;
 use SquareConnect\Model\CreateCheckoutRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class PaymentController extends Controller
 {
@@ -35,7 +38,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $payments = Payment::all();
 
@@ -48,12 +51,13 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $currentUser = auth()->user();
 
-        if (! $request->filled('recorded_by') ||
-            $currentUser->cant('update-payments')) {
+        if (! $request->filled('recorded_by')
+            || $currentUser->cant('update-payments')
+        ) {
             $request['recorded_by'] = $currentUser->id;
         }
 
@@ -65,7 +69,7 @@ class PaymentController extends Controller
             'payable_id' => 'required|numeric',
         ]);
 
-        if ($currentUser->cant('create-payments-'.$request->input('method'))) {
+        if ($currentUser->cant('create-payments-' . $request->input('method'))) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -90,15 +94,15 @@ class PaymentController extends Controller
             event(new PaymentSuccess($dbPayment));
 
             return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
     }
 
     /**
      * Handles payment request from user-facing UI.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return mixed
      */
     public function storeUser(Request $request)
@@ -111,7 +115,7 @@ class PaymentController extends Controller
         $amount = null;
         $email = $user->gt_email;
 
-        if ($request->method() == 'POST') {
+        if ('POST' === $request->method()) {
             $this->validate($request, [
                 'payable_type' => 'required|string',
                 'payable_id' => 'required|numeric',
@@ -123,15 +127,16 @@ class PaymentController extends Controller
 
             //Find the most recent DuesTransaction without a payment attempt
             $transactWithoutPmt = DuesTransaction::doesntHave('payment')
-                ->where('user_id', $user->id)->latest('updated_at')->first();
+                ->where('user_id', $user->id)
+                ->latest('updated_at')
+                ->first();
 
             //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
             // and that have not passed the effective end
             $transactZeroPmt = DuesTransaction::where('user_id', $user->id)
-                ->whereHas('package', function ($q) {
+                ->whereHas('package', static function ($q): void {
                     $q->whereDate('effective_end', '>=', date('Y-m-d'));
-                })
-                ->whereHas('payment', function ($q) {
+                })->whereHas('payment', static function ($q): void {
                     $q->where('amount', 0.00);
                     $q->where('method', 'square');
                 })->first();
@@ -142,31 +147,32 @@ class PaymentController extends Controller
                 $payable = $transactWithoutPmt;
             } else {
                 //No transactions found without payment
-                Log::warning(get_class().': No eligible Dues Transaction found for payment.');
+                Log::warning(self::class . ': No eligible Dues Transaction found for payment.');
 
                 return response(view(
                     'errors.generic',
-                    ['error_code' => 400,
-                    'error_message' => 'No eligible Dues Transaction found for payment.',
+                    [
+                        'error_code' => 400,
+                        'error_message' => 'No eligible Dues Transaction found for payment.',
                     ]
                 ), 400);
             }
 
             $amount = $payable->package->cost;
-            $name = 'Dues - '.$payable->package->name;
+            $name = 'Dues - ' . $payable->package->name;
             $email = $user->gt_email;
         }
 
         if (! $payable) {
-            if ($payable_type == \App\DuesTransaction::class) {
+            if (\App\DuesTransaction::class === $payable_type) {
                 $payable = DuesTransaction::find($payable_id);
                 $amount = $payable->package->amount;
-                $name = 'Dues - '.$payable->package->name;
+                $name = 'Dues - ' . $payable->package->name;
                 $email = $user->gt_email;
-            } elseif ($payable_type == \App\Event::class) {
+            } elseif (\App\Event::class === $payable_type) {
                 $payable = Event::find($payable_id);
                 $amount = $payable->price;
-                $name = 'Event - '.$payable->name;
+                $name = 'Event - ' . $payable->name;
                 $email = $user->gt_email;
             } else {
                 return response()->json(['status' => 'error', 'error' => 'Invalid Payable Type'], 400);
@@ -188,18 +194,19 @@ class PaymentController extends Controller
         }
 
         $squareResult = $this->createSquareCheckout($name, $amount, $email, $payment, true);
-        if (is_a($squareResult, "Illuminate\Http\RedirectResponse")) {
+        if (is_a($squareResult, RedirectResponse::class)) {
             return $squareResult;
-        } else {
-            Log::error(get_class()." - Error Creating Square Checkout - $squareResult");
-
-            return response(view(
-                'errors.generic',
-                ['error_code' => 500,
-                'error_message' => 'Unable to process Square Checkout request.',
-                ]
-            ), 500);
         }
+
+        Log::error(self::class . " - Error Creating Square Checkout - $squareResult");
+
+        return response(view(
+            'errors.generic',
+            [
+                'error_code' => 500,
+                'error_message' => 'Unable to process Square Checkout request.',
+            ]
+        ), 500);
     }
 
     /**
@@ -208,7 +215,7 @@ class PaymentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): JsonResponse
     {
         $payment = Payment::find($id);
         if ($payment) {
@@ -225,7 +232,7 @@ class PaymentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $this->validate($request, [
             'amount' => 'numeric',
@@ -234,11 +241,11 @@ class PaymentController extends Controller
         ]);
 
         $payment = Payment::find($id);
-        if ($payment) {
-            $payment->update($request->all());
-        } else {
+        if (!$payment) {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
         }
+
+        $payment->update($request->all());
 
         $payment = Payment::find($payment->id);
         if ($payment) {
@@ -254,11 +261,10 @@ class PaymentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $payment = Payment::find($id);
-        $deleted = $payment->delete();
-        if ($deleted) {
+        if ($payment->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Payment deleted.']);
         } else {
             return response()->json(['status' => 'error',
@@ -283,7 +289,7 @@ class PaymentController extends Controller
 
         $line_items = [
             [
-                'name' => ($name) ?: 'Miscellaneous Payment',
+                'name' => $name ?: 'Miscellaneous Payment',
                 'quantity' => '1',
                 'base_price_money' => [
                     'amount' => (int) $amount * 100,
@@ -293,8 +299,7 @@ class PaymentController extends Controller
         ];
 
         if ($addFee) {
-            $line_items[] =
-            [
+            $line_items[] = [
                 'name' => 'Transaction Fee',
                 'quantity' => '1',
                 'base_price_money' => [
@@ -325,7 +330,7 @@ class PaymentController extends Controller
             $message = $e->getResponseBody()->errors[0]->detail;
 
             return $message;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
 
             return $e->getMessage();
@@ -352,7 +357,7 @@ class PaymentController extends Controller
 
         //If we don't, something fishy is going on.
         if ($validator->fails()) {
-            Log::warning(get_class().' - Missing parameter in Square response');
+            Log::warning(self::class . ' - Missing parameter in Square response');
 
             return response(view(
                 'errors.generic',
@@ -369,9 +374,9 @@ class PaymentController extends Controller
 
         //Check to make sure the reference ID is "PMTXXXX"
         $payment_id = substr($client_txn_id, 3);
-        Log::debug(get_class()." - Stripping Reference ID '$client_txn_id' to '$payment_id'");
-        if (! is_numeric($payment_id) || substr($client_txn_id, 0, 3) != 'PMT') {
-            Log::error(get_class()." - Invalid Payment ID in Square response '$payment_id'");
+        Log::debug(self::class . " - Stripping Reference ID '$client_txn_id' to '$payment_id'");
+        if (! is_numeric($payment_id) || 'PMT' !== substr($client_txn_id, 0, 3)) {
+            Log::error(self::class . " - Invalid Payment ID in Square response '$payment_id'");
 
             return response(view(
                 'errors.generic',
@@ -385,7 +390,7 @@ class PaymentController extends Controller
         //Find the payment
         $payment = Payment::find($payment_id);
         if (! $payment) {
-            Log::warning(get_class()." - Error locating Payment '$payment_id'");
+            Log::warning(self::class . " - Error locating Payment '$payment_id'");
 
             return response(view(
                 'errors.generic',
@@ -395,11 +400,11 @@ class PaymentController extends Controller
                 ]
             ), 500);
         }
-        Log::debug(get_class()." - Found Payment '$payment_id'");
+        Log::debug(self::class . " - Found Payment '$payment_id'");
 
         //Check if the payment has already been processed
-        if ($payment->amount != 0 || $payment->checkout_id != null) {
-            Log::warning(get_class()." - Payment Already Processed '$payment_id'");
+        if (0 !== $payment->amount || null !== $payment->checkout_id) {
+            Log::warning(self::class . " - Payment Already Processed '$payment_id'");
 
             return response(view(
                 'errors.generic',
@@ -445,7 +450,7 @@ class PaymentController extends Controller
         $proc_fee = $tenders[0]->getProcessingFeeMoney()->getAmount() / 100;
         $created_at = $square_txn->getTransaction()->getCreatedAt();
         Log::debug(
-            get_class()." - Square Transaction Details for '$server_txn_id'",
+            self::class . " - Square Transaction Details for '$server_txn_id'",
             ['Amount' => $amount, 'Txn Date' => $created_at, 'Processing Fee' => $proc_fee]
         );
 
@@ -453,10 +458,10 @@ class PaymentController extends Controller
         $payable = $payment->payable;
         $expected_amount = $payable->getPayableAmount();
         $difference = $amount - $expected_amount;
-        if ($difference != 3) {
+        if (3 !== $difference) {
             $message = "Payment Discrepancy Found for ID $payment->id";
             $data = ['Expected' => $expected_amount, 'Actual' => $amount, 'Server Txn ID' => $server_txn_id];
-            Log::error(get_class().' - '.$message, $data);
+            Log::error(self::class . ' - ' . $message, $data);
 
             return response(view(
                 'errors.generic',
@@ -478,7 +483,7 @@ class PaymentController extends Controller
         //Notify user of successful payment
         $payment->payable->user->notify(new Confirm($payment));
 
-        Log::debug(get_class()."Payment $payment->id Updated Successfully");
+        Log::debug(self::class . "Payment $payment->id Updated Successfully");
 
         alert()->success("We've received your payment", 'Success!');
 
@@ -490,24 +495,25 @@ class PaymentController extends Controller
     /**
      * Queries Square Transaction API for transaction details.
      *
-     * @param TransactionsApi $client
-     * @param string $location
-     * @param string $server_txn_id
+     * @param  TransactionsApi $client
+     * @param  string $location
+     * @param  string $server_txn_id
+     *
      * @return \Exception|\SquareConnect\Model\RetrieveTransactionResponse
      */
-    protected function getSquareTransaction(TransactionsApi $client, $location, $server_txn_id)
+    protected function getSquareTransaction(TransactionsApi $client, string $location, string $server_txn_id)
     {
         try {
-            Log::debug(get_class()." - Querying Square for Transaction '$server_txn_id'");
+            Log::debug(self::class . " - Querying Square for Transaction '$server_txn_id'");
             $square_txn = $client->retrieveTransaction($location, $server_txn_id);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $error = $e->getMessage();
             $error = is_array($error) ? $error : [$error];
-            Log::debug(get_class().' - Error querying Square transaction', $error);
+            Log::debug(self::class . ' - Error querying Square transaction', $error);
 
             return $e;
         }
-        Log::debug(get_class()." - Retrieved Square Transaction '$server_txn_id'");
+        Log::debug(self::class . " - Retrieved Square Transaction '$server_txn_id'");
 
         return $square_txn;
     }

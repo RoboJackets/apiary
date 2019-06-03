@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Lenses;
 
@@ -11,6 +11,7 @@ use App\Nova\Filters\Attendable;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\LensRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 class RecentInactiveUsers extends Lens
 {
@@ -21,16 +22,19 @@ class RecentInactiveUsers extends Lens
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
-    public static function query(LensRequest $request, $query)
+    public static function query(LensRequest $request, Builder $query): Builder
     {
-        return $request->withOrdering($request->withFilters(
-            $query->whereDoesntHave('attendee', function ($q) {
-                $q->active();
-            })->where('attendable_type', 'App\Team')
-            ->whereBetween('created_at', [now()->subDays(14)->startOfDay(), now()])
-            ->select('gtid', 'attendable_id', 'attendable_type')
-            ->distinct()
-        ));
+        return $request->withOrdering(
+                $request->withFilters(
+                    $query->whereDoesntHave('attendee', static function (Builder $q): void {
+                        $q->active();
+                    })
+                    ->where('attendable_type', 'App\Team')
+                    ->whereBetween('created_at', [now()->subDays(14)->startOfDay(), now()])
+                    ->select('gtid', 'attendable_id', 'attendable_type')
+                    ->distinct()
+            )
+        );
     }
 
     /**
@@ -39,19 +43,15 @@ class RecentInactiveUsers extends Lens
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             Text::make('GTID')
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 })->resolveUsing(function ($gtid) {
                     // Hide GTID when the attendee is known
-                    if ($this->attendee) {
-                        return '—';
-                    } else {
-                        return $gtid;
-                    }
+                    return $this->attendee ? '—' : $gtid;
                 }),
 
             BelongsTo::make('User', 'attendee', 'App\Nova\User'),
@@ -70,7 +70,7 @@ class RecentInactiveUsers extends Lens
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [
             new Attendable(false),
@@ -82,7 +82,7 @@ class RecentInactiveUsers extends Lens
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'recent-inactive-users';
     }

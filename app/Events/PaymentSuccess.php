@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Events;
 
@@ -17,9 +17,10 @@ class PaymentSuccess
      * Create a new event instance.
      *
      * @param \App\Payment $payment
+     *
      * @return void
      */
-    public function __construct(Payment $payment)
+    public function __construct(Payment $payment): void
     {
         $this->payment = $payment;
     }

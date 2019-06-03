@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App;
 
@@ -43,7 +43,7 @@ class RecruitingVisit extends Model
      *
      * @return string
      */
-    public function routeNotificationForMail()
+    public function routeNotificationForMail(): string
     {
         return $this->recruiting_email;
     }
@@ -60,9 +60,10 @@ class RecruitingVisit extends Model
 
     /**
      * Map of relationships to permissions for dynamic inclusion.
+     *
      * @return array
      */
-    public function getRelationshipPermissionMap()
+    public function getRelationshipPermissionMap(): array
     {
         return [
             'recruitingResponses' => 'recruiting-responses',

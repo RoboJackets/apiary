@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Notifications\Dues;
 
@@ -15,8 +15,6 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     public function __construct($duesPackage)
     {
@@ -29,7 +27,7 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }
@@ -40,7 +38,7 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return Mailable
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): Mailable
     {
         return (new Mailable($notifiable->uid, $this->duesPackage))->to($notifiable->gt_email);
     }
@@ -51,10 +49,9 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
-            //
         ];
     }
 }

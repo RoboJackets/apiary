@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Actions;
 
@@ -31,7 +31,7 @@ class SendRecruitingEmail extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return [];
     }

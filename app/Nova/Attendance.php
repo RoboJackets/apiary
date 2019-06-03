@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
@@ -16,6 +16,7 @@ use App\Nova\Filters\UserActiveAttendance;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Builder;
 
 class Attendance extends Resource
 {
@@ -31,7 +32,7 @@ class Attendance extends Resource
      *
      * @return string
      */
-    public static function label()
+    public static function label(): string
     {
         return 'Attendance';
     }
@@ -41,7 +42,7 @@ class Attendance extends Resource
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function singularLabel(): string
     {
         return 'Attendance Record';
     }
@@ -51,7 +52,7 @@ class Attendance extends Resource
      *
      * @return string
      */
-    public static function uriKey()
+    public static function uriKey(): string
     {
         return 'attendance';
     }
@@ -76,21 +77,17 @@ class Attendance extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             Text::make('GTID')
                 ->sortable()
                 ->rules('required', 'max:255')
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
-                })->resolveUsing(function ($gtid) {
+                })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
-                    if ($this->attendee) {
-                        return '—';
-                    } else {
-                        return $gtid;
-                    }
+                    return $this->attendee ? '—' : $gtid;
                 }),
 
             BelongsTo::make('User', 'attendee'),
@@ -132,7 +129,7 @@ class Attendance extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [];
     }
@@ -143,13 +140,13 @@ class Attendance extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [
-            new Attendable,
-            new UserActiveAttendance,
-            new DateFrom,
-            new DateTo,
+            new Attendable(),
+            new UserActiveAttendance(),
+            new DateFrom(),
+            new DateTo(),
         ];
     }
 
@@ -159,10 +156,10 @@ class Attendance extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [
-            (new RecentInactiveUsers)->canSee(function ($request) {
+            (new RecentInactiveUsers())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-attendance');
             }),
         ];
@@ -174,7 +171,7 @@ class Attendance extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }
@@ -187,7 +184,7 @@ class Attendance extends Resource
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function authorizeToView(Request $request)
+    public function authorizeToView(Request $request): void
     {
         if ($request instanceof LensRequest) {
             throw new AuthorizationException();
@@ -201,11 +198,11 @@ class Attendance extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    public function authorizedToView(Request $request)
+    public function authorizedToView(Request $request): bool
     {
         // This method, and those like it, is a gross way to remove the buttons from the row in the
         // RecentInactiveUsers lens, as they do not work on aggregated rows like that lens uses.
-        return ($request instanceof LensRequest) ? false : parent::authorizedToView($request);
+        return $request instanceof LensRequest ? false : parent::authorizedToView($request);
     }
 
     /**
@@ -216,7 +213,7 @@ class Attendance extends Resource
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function authorizeToDelete(Request $request)
+    public function authorizeToDelete(Request $request): void
     {
         if ($request instanceof LensRequest) {
             throw new AuthorizationException();
@@ -230,31 +227,8 @@ class Attendance extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    public function authorizedToDelete(Request $request)
+    public function authorizedToDelete(Request $request): bool
     {
-        return ($request instanceof LensRequest) ? false : parent::authorizedToDelete($request);
-    }
-
-    /**
-     * Build an "index" query for the team resource to hide hidden teams.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        if (! $request->user()->can('read-teams-hidden')) {
-            /*
-            return $query->whereExists(function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('teams')
-                    ->where('visible', 1);
-            });
-             */
-            return $query;
-        } else {
-            return $query;
-        }
+        return $request instanceof LensRequest ? false : parent::authorizedToDelete($request);
     }
 }

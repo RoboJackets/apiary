@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Filters;
 
@@ -6,6 +6,7 @@ use App\Team;
 use App\Event;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class Attendable extends Filter
 {
@@ -26,11 +27,11 @@ class Attendable extends Filter
     /**
      * Create new Attendable filter.
      *
-     * @param  bool  $includeEvents
+     * @param bool  $includeEvents
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function __construct($includeEvents = true)
+    public function __construct(bool $includeEvents = true)
     {
         $this->includeEvents = $includeEvents;
     }
@@ -43,7 +44,7 @@ class Attendable extends Filter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, Builder $query, string $value): Builder
     {
         $parts = explode(',', $value);
         $attendableType = $parts[0];
@@ -61,25 +62,24 @@ class Attendable extends Filter
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         // Get all the teams and events (attendables), display them as "Team: <team name>" or "Event: <event name>"
         // Store the value as "App\Team,##" or "App\Event,##", where ## is the ID
         $teams = [];
         if ($request->user()->can('read-teams')) {
             $teams = Team::where('attendable', 1)
-                ->when($request->user()->cant('read-teams-hidden'), function ($query) {
+                ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
-                })->get()
-                ->mapWithKeys(function ($item) {
-                    return ['Team: '.$item['name'] => 'App\Team,'.$item['id']];
+                })->get()->mapWithKeys(static function (array $item): array {
+                    return ['Team: ' . $item['name'] => 'App\Team,' . $item['id']];
                 })->toArray();
         }
 
         $events = [];
         if ($this->includeEvents && $request->user()->can('read-events')) {
-            $events = Event::all()->mapWithKeys(function ($item) {
-                return ['Event: '.$item['name'] => 'App\Event,'.$item['id']];
+            $events = Event::all()->mapWithKeys(static function ($item) {
+                return ['Event: ' . $item['name'] => 'App\Event,' . $item['id']];
             })->toArray();
         }
 

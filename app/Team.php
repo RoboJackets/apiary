@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App;
 
@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
+use Illuminate\Database\Eloquent\Builder;
 
 class Team extends Model
 {
@@ -46,10 +47,10 @@ class Team extends Model
     /**
      * Scope a query to only include attendable teams.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeAttendable($query)
+    public function scopeAttendable(Builder $query): Builder
     {
         return $query->where('attendable', true);
     }
@@ -57,10 +58,10 @@ class Team extends Model
     /**
      * Scope a query to only include visible teams.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisible($query)
+    public function scopeVisible(Builder $query): Builder
     {
         return $query->where('visible', true);
     }
@@ -68,10 +69,10 @@ class Team extends Model
     /**
      * Scope a query to only include self-serviceable teams.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSelfServiceable($query)
+    public function scopeSelfServiceable(Builder $query): Builder
     {
         return $query->where('self_serviceable', true);
     }
@@ -79,18 +80,17 @@ class Team extends Model
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
-        return SlugOptions::create()
-            ->generateSlugsFrom(['name'])
-            ->saveSlugsTo('slug');
+        return SlugOptions::create()->generateSlugsFrom(['name'])->saveSlugsTo('slug');
     }
 
     /**
      * Map of relationships to permissions for dynamic inclusion.
+     *
      * @return array
      */
-    public function getRelationshipPermissionMap()
+    public function getRelationshipPermissionMap(): array
     {
         return [
             'members' => 'teams-membership',

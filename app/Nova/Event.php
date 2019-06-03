@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
@@ -44,17 +44,16 @@ class Event extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             Text::make('Event Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            (new BelongsTo('Organizer', 'organizer', 'App\Nova\User'))
+            (new BelongsTo('Organizer', 'organizer', User::class))
                 ->searchable()
                 ->rules('required')
-                // default to self
                 ->help('The organizer of the event'),
 
             DateTime::make('Start Time')
@@ -77,12 +76,12 @@ class Event extends Resource
             new Panel('Metadata', $this->metaFields()),
 
             HasMany::make('RSVPs')
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-rsvps');
                 }),
 
             HasMany::make('Attendance')
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
         ];
@@ -105,17 +104,17 @@ class Event extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [
             (new RsvpSourceBreakdown())
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-rsvps');
                 }),
             (new ActiveAttendanceBreakdown(true))
                 ->onlyOnDetail()
-                ->canSee(function ($request) {
+                ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
         ];
@@ -127,7 +126,7 @@ class Event extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -138,7 +137,7 @@ class Event extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -149,7 +148,7 @@ class Event extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova;
 
@@ -24,7 +24,7 @@ class RecruitingVisit extends Resource
      *
      * @return string
      */
-    public static function label()
+    public static function label(): string
     {
         return 'Recruiting Visits';
     }
@@ -34,7 +34,7 @@ class RecruitingVisit extends Resource
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function singularLabel(): string
     {
         return 'Recruiting Visit';
     }
@@ -69,7 +69,7 @@ class RecruitingVisit extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             Text::make('Name', 'recruiting_name')
@@ -115,7 +115,7 @@ class RecruitingVisit extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [];
     }
@@ -126,7 +126,7 @@ class RecruitingVisit extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -137,7 +137,7 @@ class RecruitingVisit extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -148,7 +148,7 @@ class RecruitingVisit extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

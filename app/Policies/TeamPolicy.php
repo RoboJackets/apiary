@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -17,13 +17,9 @@ class TeamPolicy
      * @param  \App\Team  $team
      * @return mixed
      */
-    public function view(User $user, Team $team)
+    public function view(User $user, Team $team): bool
     {
-        if (! $team->visible) {
-            return $user->can('read-teams-hidden');
-        } else {
-            return $user->can('read-teams');
-        }
+        return $team->visible ? $user->can('read-teams') : $user->can('read-teams-hidden');
     }
 
     /**
@@ -32,7 +28,7 @@ class TeamPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->can('read-teams');
     }
@@ -43,7 +39,7 @@ class TeamPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->can('create-teams');
     }
@@ -55,15 +51,13 @@ class TeamPolicy
      * @param  \App\Team  $team
      * @return mixed
      */
-    public function update(User $user, Team $team)
+    public function update(User $user, Team $team): bool
     {
         if ($user->can('update-teams')) {
             return true;
-        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
-            return true;
-        } else {
-            return false;
         }
+
+        return (null !== $team->projectManager) && $team->projectManager->is($user);
     }
 
     /**
@@ -73,7 +67,7 @@ class TeamPolicy
      * @param  \App\Team  $team
      * @return mixed
      */
-    public function delete(User $user, Team $team)
+    public function delete(User $user, Team $team): bool
     {
         return $user->can('delete-teams');
     }
@@ -85,7 +79,7 @@ class TeamPolicy
      * @param  \App\Team  $team
      * @return mixed
      */
-    public function restore(User $user, Team $team)
+    public function restore(User $user, Team $team): bool
     {
         return $user->can('create-teams');
     }
@@ -97,7 +91,7 @@ class TeamPolicy
      * @param  \App\Team  $team
      * @return mixed
      */
-    public function forceDelete(User $user, Team $team)
+    public function forceDelete(User $user, Team $team): bool
     {
         return false;
     }
@@ -110,19 +104,25 @@ class TeamPolicy
      * @param  \App\User  $userResource
      * @return mixed
      */
-    public function attachUser(User $user, Team $team, User $userResource)
+    public function attachUser(User $user, Team $team, User $userResource): bool
     {
         if ($team->members->contains('id', $userResource->id)) {
             return false;
-        } elseif (! $team->visible && $user->cant('read-teams-hidden')) {
-            return false;
-        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
-            return true;
-        } elseif ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
-            return true;
-        } else {
-            return $user->can('update-teams-membership');
         }
+
+        if (! $team->visible && $user->cant('read-teams-hidden')) {
+            return false;
+        }
+
+        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        }
+
+        if ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
+            return true;
+        }
+
+        return $user->can('update-teams-membership');
     }
 
     /**
@@ -133,17 +133,21 @@ class TeamPolicy
      * @param  \App\User  $userResource
      * @return mixed
      */
-    public function attachAnyUser(User $user, Team $team)
+    public function attachAnyUser(User $user, Team $team): bool
     {
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
-        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
-            return true;
-        } elseif ($user->can('update-teams-membership-own') && $team->self_serviceable && ! $team->members->contains('id', $user->id)) {
-            return true;
-        } else {
-            return $user->can('update-teams-membership');
         }
+
+        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        }
+
+        if ($user->can('update-teams-membership-own') && $team->self_serviceable && ! $team->members->contains('id', $user->id)) {
+            return true;
+        }
+
+        return $user->can('update-teams-membership');
     }
 
     /**
@@ -154,16 +158,20 @@ class TeamPolicy
      * @param  \App\User  $userResource
      * @return mixed
      */
-    public function detachUser(User $user, Team $team, User $userResource)
+    public function detachUser(User $user, Team $team, User $userResource): bool
     {
         if (! $team->visible && $user->cant('read-teams-hidden')) {
             return false;
-        } elseif ((null !== $team->projectManager) && $team->projectManager->is($user)) {
-            return true;
-        } elseif ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
-            return true;
-        } else {
-            return $user->can('update-teams-membership');
         }
+
+        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+            return true;
+        }
+
+        if ($user->can('update-teams-membership-own') && $user->is($userResource) && $team->self_serviceable) {
+            return true;
+        }
+
+        return $user->can('update-teams-membership');
     }
 }

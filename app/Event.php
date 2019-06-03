@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App;
 
@@ -57,7 +57,7 @@ class Event extends Model
      */
     public function getPayableAmount()
     {
-        return ($this->price) ?: null;
+        return $this->price ?: null;
     }
 
     /**
@@ -70,9 +70,10 @@ class Event extends Model
 
     /**
      * Map of relationships to permissions for dynamic inclusion.
+     *
      * @return array
      */
-    public function getRelationshipPermissionMap()
+    public function getRelationshipPermissionMap(): array
     {
         return [
             'organizer' => 'users',

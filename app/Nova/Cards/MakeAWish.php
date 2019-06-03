@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Cards;
 
@@ -18,7 +18,7 @@ class MakeAWish extends Card
      *
      * @return string
      */
-    public function component()
+    public function component(): string
     {
         return 'makeawish';
     }

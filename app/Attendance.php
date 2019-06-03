@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Attendance extends Model
 {
@@ -48,15 +49,12 @@ class Attendance extends Model
      *
      * @param $query mixed
      * @param $date string Date to start search
+     *
      * @return mixed
      */
-    public function scopeStart($query, $date)
+    public function scopeStart(Builder $query, string $date): Builder
     {
-        if ($date == null) {
-            return;
-        } else {
-            return $query->whereDate('created_at', '>=', $date);
-        }
+        return $query->whereDate('created_at', '>=', $date);
     }
 
     /**
@@ -64,22 +62,20 @@ class Attendance extends Model
      *
      * @param $query mixed
      * @param $date string Date to start search
+     *
      * @return mixed
      */
-    public function scopeEnd($query, $date)
+    public function scopeEnd(Builder $query, string $date): Builder
     {
-        if ($date == null) {
-            return;
-        } else {
-            return $query->whereDate('created_at', '<=', $date);
-        }
+        return $query->whereDate('created_at', '<=', $date);
     }
 
     /**
      * Map of relationships to permissions for dynamic inclusion.
-     * @return array
+     *
+     * @return array<string, string>
      */
-    public function getRelationshipPermissionMap()
+    public function getRelationshipPermissionMap(): array
     {
         return [
             'attendee' => 'users',

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Nova\Metrics;
 
@@ -27,7 +27,7 @@ class PrimaryTeam extends Value
             // For the purposes of this, the spring semester runs January - April, summer runs May - July, and fall
             // runs August - December
             $date = now()->startOfDay();
-            if ($request->range == -1) {
+            if (-1 === $request->range) {
                 // Find start of semester date
                 if ($date->month <= 4) {
                     $date = $date->month(1)->day(1);
@@ -36,7 +36,7 @@ class PrimaryTeam extends Value
                 } else {
                     $date = $date->month(8)->day(1);
                 }
-            } elseif ($request->range == -2) {
+            } elseif (-2 === $request->range) {
                 // Find the most recent August 1
                 $date = $date->month(8)->day(1);
                 if ($date->greaterThan(now())) {
@@ -50,12 +50,13 @@ class PrimaryTeam extends Value
 
         $teams = $teams->groupBy('attendable_id')
             ->select('attendable_id', DB::raw('count(*) as count'))
-            ->get()->toArray();
+            ->get()
+            ->toArray();
 
         $max = 0;
         $maxTeamIDs = [];
         foreach ($teams as $item) {
-            if ($item['count'] == $max) {
+            if ($item['count'] === $max) {
                 $maxTeamIDs[] = $item['attendable_id'];
             } elseif ($item['count'] > $max) {
                 $max = $item['count'];
@@ -63,13 +64,13 @@ class PrimaryTeam extends Value
             }
         }
 
-        if (count($maxTeamIDs) == 0) {
+        if (0 === count($maxTeamIDs)) {
             return $this->result('No attendance');
-        } else {
-            $names = Team::whereIn('id', $maxTeamIDs)->get()->pluck('name')->toArray();
-
-            return $this->result(implode(', ', $names));
         }
+
+        $names = Team::whereIn('id', $maxTeamIDs)->get()->pluck('name')->toArray();
+
+        return $this->result(implode(', ', $names));
     }
 
     /**
@@ -77,7 +78,7 @@ class PrimaryTeam extends Value
      *
      * @return array
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             -1 => 'This Semester',
@@ -89,21 +90,11 @@ class PrimaryTeam extends Value
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'primary-team';
     }

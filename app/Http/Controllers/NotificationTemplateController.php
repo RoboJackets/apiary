@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\NotificationTemplate;
 use App\Traits\AuthorizeInclude;
 use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
+use Illuminate\Http\JsonResponse;
 
 class NotificationTemplateController extends Controller
 {
@@ -19,10 +20,11 @@ class NotificationTemplateController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
         $nt = NotificationTemplate::with($this->authorizeInclude(NotificationTemplate::class, $include))->get();
@@ -34,9 +36,10 @@ class NotificationTemplateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
             'name' => 'required|string',
@@ -57,11 +60,12 @@ class NotificationTemplateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int  $id
-     * @param Request $request
+     * @param  int  $id
+     * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show(int $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $nt = NotificationTemplate::with($this->authorizeInclude(NotificationTemplate::class, $include))->find($id);
@@ -77,9 +81,10 @@ class NotificationTemplateController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $nt = NotificationTemplate::find($id);
         if (! $nt) {
@@ -100,17 +105,16 @@ class NotificationTemplateController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $nt = NotificationTemplate::find($id);
-        if ($nt) {
-            $nt->delete();
-
+        if ($nt->delete()) {
             return response()->json(['status' => 'success', 'message' => 'model_deleted']);
-        } else {
-            return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
         }
+
+        return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
     }
 }
