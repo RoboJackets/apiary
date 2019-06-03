@@ -34,7 +34,7 @@ class DuesTransactionTeam extends Filter
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, Builder $query, string $value): Builder
+    public function apply(Request $request, $query, $value): Builder
     {
         return $query
             ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')

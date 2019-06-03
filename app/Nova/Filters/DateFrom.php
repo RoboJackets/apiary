@@ -19,7 +19,7 @@ class DateFrom extends DateFilter
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, Builder $query, string $value): Builder
+    public function apply(Request $request, $query, $value): Builder
     {
         return $query->whereDate('created_at', '>=', $value);
     }

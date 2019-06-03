@@ -34,7 +34,7 @@ class UserTeam extends Filter
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, Builder $query, string $value): Builder
+    public function apply(Request $request, $query, $value): Builder
     {
         return $query->whereHas('teams', static function (Builder $query) use ($value): void {
             $query->where('teams.id', '=', $value);

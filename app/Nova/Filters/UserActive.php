@@ -26,7 +26,7 @@ class UserActive extends Filter
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, Builder $query, string $value): Builder
+    public function apply(Request $request, $query, $value): Builder
     {
         return 'yes' === $value ? $query->active() : $query->inactive();
     }

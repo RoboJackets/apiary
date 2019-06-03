@@ -25,7 +25,7 @@ class RecentInactiveUsers extends Lens
      *
      * @return Builder
      */
-    public static function query(LensRequest $request, Builder $query): Builder
+    public static function query(LensRequest $request, $query): Builder
     {
         return $request->withOrdering(
             $request->withFilters(

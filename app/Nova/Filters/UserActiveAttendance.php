@@ -26,7 +26,7 @@ class UserActiveAttendance extends Filter
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, Builder $query, string $value): Builder
+    public function apply(Request $request, $query, $value): Builder
     {
         if ('yes' === $value) {
             return $query->whereHas('attendee', static function (Builder $q): void {
