@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Request
+use Illuminate\Http\Request;
 
 class Payment extends JsonResource
 {

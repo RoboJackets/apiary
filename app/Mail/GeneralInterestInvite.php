@@ -15,10 +15,8 @@ class GeneralInterestInvite extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
-    public function __construct($visit_token): void
+    public function __construct($visit_token)
     {
         $this->app_url = url('/');
         $this->visit_token = $visit_token;

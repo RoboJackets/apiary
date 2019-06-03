@@ -17,10 +17,8 @@ class DuesPackageExpiration implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
-    public function __construct(DuesPackage $package): void
+    public function __construct(DuesPackage $package)
     {
         $this->package = $package;
     }

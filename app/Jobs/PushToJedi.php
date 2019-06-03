@@ -18,10 +18,8 @@ class PushToJedi implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
-    public function __construct(User $user): void
+    public function __construct(User $user)
     {
         $this->user = $user;
     }

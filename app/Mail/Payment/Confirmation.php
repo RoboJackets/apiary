@@ -15,10 +15,8 @@ class Confirmation extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
-    public function __construct($uid, $payment): void
+    public function __construct($uid, $payment)
     {
         $this->uid = $uid;
         $this->payment = $payment;

@@ -17,10 +17,8 @@ class PaymentSuccess
      * Create a new event instance.
      *
      * @param \App\Payment $payment
-     *
-     * @return void
      */
-    public function __construct(Payment $payment): void
+    public function __construct(Payment $payment)
     {
         $this->payment = $payment;
     }
