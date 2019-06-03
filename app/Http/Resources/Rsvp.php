@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Http\Resources;
 
 use App\Http\Resources\User as UserResource;
@@ -12,8 +14,9 @@ class Rsvp extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<string,mixed>
      */
     public function toArray(Request $request): array
     {

@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Policies;
 
 use App\Team;
@@ -13,9 +15,10 @@ class UserPolicy
     /**
      * Determine whether the user can view the user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function view(User $user, User $userResource): bool
     {
@@ -25,8 +28,9 @@ class UserPolicy
     /**
      * Determine whether the user can view any users.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -36,8 +40,9 @@ class UserPolicy
     /**
      * Determine whether the user can create users.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function create(User $user): bool
     {
@@ -47,9 +52,10 @@ class UserPolicy
     /**
      * Determine whether the user can update the user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function update(User $user, User $userResource): bool
     {
@@ -59,9 +65,10 @@ class UserPolicy
     /**
      * Determine whether the user can delete the user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function delete(User $user, User $userResource): bool
     {
@@ -71,9 +78,10 @@ class UserPolicy
     /**
      * Determine whether the user can restore the user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function restore(User $user, User $userResource): bool
     {
@@ -83,9 +91,10 @@ class UserPolicy
     /**
      * Determine whether the user can permanently delete the user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function forceDelete(User $user, User $userResource): bool
     {
@@ -95,10 +104,11 @@ class UserPolicy
     /**
      * Determine whether the user can attach a team to a user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $userResource
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $userResource
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function attachTeam(User $user, User $userResource, Team $team): bool
     {
@@ -124,10 +134,11 @@ class UserPolicy
     /**
      * Determine whether the user can attach a team to a user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $userResource
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $userResource
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function attachAnyTeam(User $user, User $userResource): bool
     {
@@ -154,10 +165,11 @@ class UserPolicy
     /**
      * Determine whether the user can detach a team from a user.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $userResource
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\User  $userResource
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function detachTeam(User $user, User $userResource, Team $team): bool
     {

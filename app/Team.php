@@ -11,6 +11,9 @@ use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Team extends Model
 {
@@ -19,7 +22,7 @@ class Team extends Model
     /**
      * The attributes that are not mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [
         'id',
@@ -31,7 +34,7 @@ class Team extends Model
     /**
      *  Get the Users that are members of this Team.
      */
-    public function members()
+    public function members(): BelongsToMany
     {
         return $this->belongsToMany(\App\User::class)->withTimestamps();
     }
@@ -39,7 +42,7 @@ class Team extends Model
     /**
      * Get all of the team's attendance.
      */
-    public function attendance()
+    public function attendance(): MorphMany
     {
         return $this->morphMany(\App\Attendance::class, 'attendable');
     }
@@ -47,7 +50,8 @@ class Team extends Model
     /**
      * Scope a query to only include attendable teams.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAttendable(Builder $query): Builder
@@ -58,7 +62,8 @@ class Team extends Model
     /**
      * Scope a query to only include visible teams.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeVisible(Builder $query): Builder
@@ -69,7 +74,8 @@ class Team extends Model
     /**
      * Scope a query to only include self-serviceable teams.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSelfServiceable(Builder $query): Builder
@@ -88,7 +94,7 @@ class Team extends Model
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getRelationshipPermissionMap(): array
     {
@@ -98,7 +104,7 @@ class Team extends Model
         ];
     }
 
-    public function projectManager()
+    public function projectManager(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'project_manager_id');
     }

@@ -7,6 +7,7 @@ use Laravel\Nova\Nova;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
 
 class SwagPickupRate extends Value
 {
@@ -47,10 +48,11 @@ class SwagPickupRate extends Value
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         $package = DuesPackage::where('id', $request->resourceId)->first();
         $eligible = 'shirt' === $this->swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
@@ -86,16 +88,6 @@ class SwagPickupRate extends Value
         }
 
         return $this->result('No transactions');
-    }
-
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges(): array
-    {
-        return [];
     }
 
     /**

@@ -7,16 +7,18 @@ namespace App\Nova\Metrics;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
 
 class MemberSince extends Value
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         // Same logic as in DashboardController
         $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
@@ -26,19 +28,9 @@ class MemberSince extends Value
             // treated as a number. This is ugly but works. See
             // vendor/laravel/nova/resources/js/components/Metrics/Base/ValueMetric.vue line 124.
             return $this->result('')->prefix(date('F j, Y', strtotime($transaction->created_at)));
-        } else {
-            return $this->result('n/a');
         }
-    }
 
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges(): array
-    {
-        return [];
+        return $this->result('n/a');
     }
 
     /**

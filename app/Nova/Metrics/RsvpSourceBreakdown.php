@@ -5,6 +5,7 @@ namespace App\Nova\Metrics;
 use App\Rsvp;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
+use Laravel\Nova\Metrics\ValueResult;
 
 class RsvpSourceBreakdown extends Partition
 {
@@ -18,10 +19,11 @@ class RsvpSourceBreakdown extends Partition
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         return $this->result(
             Rsvp::where('event_id', $request->resourceId)
@@ -32,11 +34,10 @@ class RsvpSourceBreakdown extends Partition
                 ->orderBy('aggregate', 'desc')
                 ->get()
                 ->mapWithKeys(static function ($item): array {
-                    if ($item->rsvpsource) {
+                    if (null !== $item->rsvpsource) {
                         return [$item->rsvpsource => $item->aggregate];
-                    } else {
-                        return ['<unknown>' => $item->aggregate];
                     }
+                    return ['<unknown>' => $item->aggregate];
                 })
                 ->toArray()
         );

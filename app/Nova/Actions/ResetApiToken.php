@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
@@ -23,11 +25,12 @@ class ResetApiToken extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     * @param \Laravel\Nova\Fields\ActionFields  $fields
+     * @param \Illuminate\Support\Collection  $models
+     *
+     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
         foreach ($models as $model) {
             $model->api_token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -40,7 +43,7 @@ class ResetApiToken extends Action
     /**
      * Get the fields available on the action.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(): array
     {

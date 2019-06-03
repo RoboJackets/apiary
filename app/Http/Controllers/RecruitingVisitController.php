@@ -68,8 +68,8 @@ class RecruitingVisitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id RecruitingVisit ID Number
-     * @param  Request $request
+     * @param int $id RecruitingVisit ID Number
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -96,8 +96,9 @@ class RecruitingVisitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id RecruitingVisit Id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id RecruitingVisit Id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, int $id): JsonResponse
@@ -128,9 +129,9 @@ class RecruitingVisitController extends Controller
 
         if ($visit) {
             return response()->json(['status' => 'success', 'visit' => new RecruitingVisitResource($visit)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
     }
 
     public function index(Request $request): JsonResponse
@@ -146,15 +147,15 @@ class RecruitingVisitController extends Controller
         $visits = RecruitingVisit::all();
         $emails = [];
         foreach ($visits as $visit) {
-            echo "Processing Visit $visit->id<br/>\n";
+            echo 'Processing Visit ' . $visit->id . "<br/>\n";
             if (! in_array($visit->recruiting_email, $emails)) {
                 $emails[] = $visit->recruiting_email;
             } else {
-                echo "Deleting Visit $visit->id<br/>\n";
+                echo 'Deleting Visit ' . $visit->id . "<br/>\n";
                 $count = RecruitingResponse::where('recruiting_visit_id', $visit->id)->count();
-                echo "Deleting $count Responses for Visit $visit->id<br/>\n";
+                echo 'Deleting ' . $count . ' Responses for Visit ' . $visit->id . "<br/>\n";
                 foreach ($visit->recruitingResponses as $response) {
-                    echo "Deleting Response $response->response<br/>\n";
+                    echo 'Deleting Response ' . $response->response . "<br/>\n";
                     RecruitingResponse::where('recruiting_visit_id', $visit->id)->delete();
                 }
                 $visit->delete();

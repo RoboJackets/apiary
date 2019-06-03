@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova\Filters;
 
 use App\Team;
@@ -39,9 +41,10 @@ class Attendable extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $value
+     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string  $value
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply(Request $request, Builder $query, string $value): Builder
@@ -59,8 +62,9 @@ class Attendable extends Filter
     /**
      * Get the filter's available options.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<string,string>
      */
     public function options(Request $request): array
     {

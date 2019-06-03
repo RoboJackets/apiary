@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
@@ -59,7 +61,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the cards that should be displayed on the Nova dashboard.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Card>
      */
     protected function cards(): array
     {
@@ -75,7 +77,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the tools that should be listed in the Nova sidebar.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Tool>
      */
     public function tools(): array
     {

@@ -9,6 +9,7 @@ use App\RecruitingVisit;
 use Illuminate\Http\Request;
 use App\Mail\DatabaseMailable;
 use App\Notifications\GeneralInterestNotification;
+use Illuminate\Http\JsonResponse;
 
 class NotificationController extends Controller
 {
@@ -17,7 +18,7 @@ class NotificationController extends Controller
         $this->middleware(['permission:send-notifications']);
     }
 
-    public function sendNotification()
+    public function sendNotification(): JsonResponse
     {
         $hours = 0;
         RecruitingVisit::chunk(30, static function ($chunk) use (&$hours): void {
@@ -29,7 +30,7 @@ class NotificationController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function sendNotificationManual(Request $request)
+    public function sendNotificationManual(Request $request): JsonResponse
     {
         $this->validate($request, [
             'emails' => 'required',

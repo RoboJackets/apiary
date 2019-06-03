@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
@@ -16,11 +18,12 @@ class SendRecruitingEmail extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     * @param \Laravel\Nova\Fields\ActionFields  $fields
+     * @param \Illuminate\Support\Collection  $models
+     *
+     * @return void
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): void
     {
         $visit = RecruitingVisit::where('recruiting_email', $models->first()->recruiting_email)->first();
         Notification::send($visit, new GeneralInterestNotification());
@@ -29,7 +32,7 @@ class SendRecruitingEmail extends Action
     /**
      * Get the fields available on the action.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(): array
     {

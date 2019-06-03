@@ -11,6 +11,11 @@ class PaymentSuccess
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * The payment of interest
+     *
+     * @var \App\Payment
+     */
     public $payment;
 
     /**

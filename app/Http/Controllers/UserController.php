@@ -9,7 +9,7 @@ use App\Traits\AuthorizeInclude;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\User as UserResource;
-use \Illuminate\Http\JsonResponse;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -27,7 +27,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -44,7 +44,7 @@ class UserController extends Controller
      * Accepts GTID, First/Preferred Name, and Username (uid)
      * GTID returns first result, others return all matching (wildcard).
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -70,7 +70,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      *
@@ -137,8 +137,8 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     * @param  \Illuminate\Http\Request $request
+     * @param int $id
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -156,7 +156,6 @@ class UserController extends Controller
             }
 
             //Show API tokens only to admins and the users themselves
-            //TODO: Replace this with something better
             if ($requestingUser->id === $user->id || $requestingUser->hasRole('admin')) {
                 $user = $user->makeVisible('api_token');
             }
@@ -170,8 +169,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -232,22 +231,20 @@ class UserController extends Controller
         $user = User::find($user->id);
 
         //Show API tokens only to admins and the users themselves
-        //TODO: Replace this with something better
         if ($requestingUser->id === $user->id || $requestingUser->hasRole('admin')) {
             $user = $user->makeVisible('api_token');
         }
 
         if ($user) {
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
+        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -256,9 +253,13 @@ class UserController extends Controller
         $user = User::findByIdentifier($id)->first();
         if ($user->delete()) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'User does not exist or was previously deleted.', ], 422);
         }
+        return response()->json(
+            [
+                'status' => 'error',
+                'message' => 'User does not exist or was previously deleted.',
+            ],
+            422
+        );
     }
 }

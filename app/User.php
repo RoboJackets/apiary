@@ -10,6 +10,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -23,7 +26,7 @@ class User extends Authenticatable
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = [
         'name',
@@ -36,7 +39,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var array<string>
      */
     protected $dates = [
         'created_at',
@@ -49,7 +52,7 @@ class User extends Authenticatable
     /**
      * The attributes that are not mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [
         'id',
@@ -74,50 +77,50 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<string>
      */
     protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
 
     /**
      *  Get the recruiting visits associated with this user.
      */
-    public function recruitingVisits()
+    public function recruitingVisits(): HasMany
     {
-        return $this->hasMany(\App\RecruitingVisit::class);
+        return $this->hasMany(RecruitingVisit::class);
     }
 
     /**
      *  Get the attendance records associated with this user.
      */
-    public function attendance()
+    public function attendance(): HasMany
     {
-        return $this->hasMany(\App\Attendance::class, 'gtid', 'gtid');
+        return $this->hasMany(Attendance::class, 'gtid', 'gtid');
     }
 
     /**
      *  Get the teams that this user manages.
      */
-    public function manages()
+    public function manages(): HasMany
     {
-        return $this->hasMany(\App\Team::class, 'project_manager_id');
+        return $this->hasMany(Team::class, 'project_manager_id');
     }
 
     /**
      *  Get the Teams that this User is a member of.
      */
-    public function teams()
+    public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(\App\Team::class)->withTimestamps();
+        return $this->belongsToMany(Team::class)->withTimestamps();
     }
 
     /**
      * Check membership status for a given team.
      *
-     * @param  $team Team ID
+     * @param \App\Team $team Team ID
      *
      * @return bool Whether or not user is a member of the given team
      */
-    public function memberOfTeam($team): bool
+    public function memberOfTeam(Team $team): bool
     {
         return $this->teams->contains($team);
     }
@@ -125,7 +128,7 @@ class User extends Authenticatable
     /**
      * Get the name associated with the User.
      */
-    public function getNameAttribute()
+    public function getNameAttribute(): string
     {
         $first = $this->preferred_name ?: $this->first_name;
 
@@ -135,7 +138,7 @@ class User extends Authenticatable
     /**
      * Get the preferred first name associated with the User.
      */
-    public function getPreferredFirstNameAttribute()
+    public function getPreferredFirstNameAttribute(): string
     {
         return $this->preferred_name ?: $this->first_name;
     }
@@ -143,7 +146,7 @@ class User extends Authenticatable
     /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
      */
-    public function setPreferredFirstNameAttribute($preferred_name): void
+    public function setPreferredFirstNameAttribute(string $preferred_name): void
     {
         $this->attributes['preferred_name'] = $preferred_name === $this->first_name ? null : $preferred_name;
     }
@@ -151,7 +154,7 @@ class User extends Authenticatable
     /**
      * Get the full name associated with the User.
      */
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return implode(' ', array_filter([$this->first_name, $this->middle_name, $this->last_name]));
     }
@@ -159,41 +162,41 @@ class User extends Authenticatable
     /*
      * Get the DuesTransactions belonging to the User
      */
-    public function dues()
+    public function dues(): HasMany
     {
-        return $this->hasMany(\App\DuesTransaction::class);
+        return $this->hasMany(DuesTransaction::class);
     }
 
     /*
      * Get the DuesTransactions belonging to the User
      */
-    public function duesTransactions()
+    public function duesTransactions(): HasMany
     {
-        return $this->hasMany(\App\DuesTransaction::class);
+        return $this->hasMany(DuesTransaction::class);
     }
 
     /*
      * Get the DuesTransactions belonging to the User
      */
-    public function paidDues()
+    public function paidDues(): HasMany
     {
-        return $this->hasMany(\App\DuesTransaction::class)->paid();
+        return $this->hasMany(DuesTransaction::class)->paid();
     }
 
     /**
      * Get the events organized by the User.
      */
-    public function events()
+    public function events(): HasMany
     {
-        return $this->hasMany(\App\Event::class, 'organizer_id');
+        return $this->hasMany(Event::class, 'organizer_id');
     }
 
     /**
      * Get the RSVPs belonging to the User.
      */
-    public function rsvps()
+    public function rsvps(): HasMany
     {
-        return $this->hasMany(\App\Rsvp::class);
+        return $this->hasMany(Rsvp::class);
     }
 
     /**
@@ -207,12 +210,12 @@ class User extends Authenticatable
         return $this->gt_email ?? $this->personal_email;
     }
 
-    public function getAuthIdentifierName()
+    public function getAuthIdentifierName(): string
     {
         return 'id';
     }
 
-    public function getAuthIdentifier()
+    public function getAuthIdentifier(): int
     {
         return $this->id;
     }
@@ -227,10 +230,14 @@ class User extends Authenticatable
         throw new \BadMethodCallException('Not implemented');
     }
 
+    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+
     public function setRememberToken($value): void
     {
         throw new \BadMethodCallException('Not implemented');
     }
+
+    // phpcs:enable
 
     public function getRememberTokenName(): void
     {
@@ -240,7 +247,7 @@ class User extends Authenticatable
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getRelationshipPermissionMap(): array
     {
@@ -278,8 +285,8 @@ class User extends Authenticatable
     /**
      * Scope a query to automatically determine user identifier.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $type
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $id
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -305,8 +312,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $type
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -322,8 +328,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $type
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -339,8 +344,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $type
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -356,8 +360,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $type
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -370,7 +373,7 @@ class User extends Authenticatable
         });
     }
 
-    public function accessOverrideBy()
+    public function accessOverrideBy(): BelongsTo
     {
         return $this->belongsTo(self::class, 'access_override_by_id');
     }

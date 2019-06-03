@@ -257,9 +257,8 @@ class DuesTransactionController extends Controller
         $transact = new DuesTransactionResource($transact);
         if ($transact) {
             return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
         }
+        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
     }
 
     /**
@@ -274,9 +273,13 @@ class DuesTransactionController extends Controller
         $transact = DuesTransaction::find($id);
         if ($transact->delete()) {
             return response()->json(['status' => 'success', 'message' => 'DuesTransaction deleted.']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'DuesTransaction does not exist or was previously deleted.', ], 422);
         }
+        return response()->json(
+            [
+                'status' => 'error',
+                'message' => 'DuesTransaction does not exist or was previously deleted.',
+            ],
+            422
+        );
     }
 }

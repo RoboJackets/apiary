@@ -10,7 +10,3 @@
 | by your tool's "Authorize" middleware by default. Now, go build!
 |
 */
-
-// Route::get('/endpoint', function (Request $request) {
-//     //
-// });

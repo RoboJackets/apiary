@@ -5,16 +5,18 @@ namespace App\Nova\Metrics;
 use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
 
 class TotalCollections extends Value
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         $query = Payment::where('payable_type', 'App\DuesTransaction')
             ->whereIn('payable_id', static function (Builder $q) use ($request): void {
@@ -33,7 +35,7 @@ class TotalCollections extends Value
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int,string>
      */
     public function ranges(): array
     {

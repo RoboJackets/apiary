@@ -1,11 +1,6 @@
 <?php declare(strict_types = 1);
 
-/**
- * Created by PhpStorm.
- * User: ross
- * Date: 11/4/17
- * Time: 9:30 AM.
- */
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Traits;
 
@@ -17,6 +12,11 @@ use Spatie\Permission\Models\Role;
 
 trait CreateOrUpdateCASUser
 {
+    /**
+     * CAS library interface
+     *
+     * @var \Subfission\Cas\CasManager
+     */
     protected $cas;
 
     public function __construct()
@@ -24,6 +24,7 @@ trait CreateOrUpdateCASUser
         $this->cas = app('cas');
     }
 
+    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
     public function createOrUpdateCASUser(Request $request)
     {
         $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
@@ -74,19 +75,19 @@ trait CreateOrUpdateCASUser
             if ($role) {
                 $user->assignRole($role);
             } else {
-                Log::error(self::class . "Role 'non-member' not found for assignment to $user->uid.");
+                Log::error(self::class . "Role 'non-member' not found for assignment to " . $user->uid);
             }
         }
 
         //Role update based on active status (in case it didn't happen elsewhere)
         if ($user->is_active && $user->hasRole('non-member')) {
-            Log::info(self::class . ": Updating role membership for $user->uid");
+            Log::info(self::class . ': Updating role membership for ' . $user->uid);
             $user->removeRole('non-member');
             $role_member = Role::where('name', 'member')->first();
             if ($role_member && ! $user->hasRole('member')) {
                 $user->assignRole($role_member);
             } else {
-                Log::error(self::class . ": Role 'member' not found for assignment to $user->uid.");
+                Log::error(self::class . ": Role 'member' not found for assignment to " . $user->uid);
             }
         }
 
@@ -111,7 +112,7 @@ trait CreateOrUpdateCASUser
                 $addedAnyTeams = true;
             }
             if ($addedAnyTeams) {
-                Log::info(self::class . ": Updating team membership for $user->uid from OrgSync.");
+                Log::info(self::class . ': Updating team membership for ' . $user->uid . ' from OrgSync.');
             }
         }
 

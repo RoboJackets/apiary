@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use App\DuesTransaction;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     /**
      * Returns view with data for the user dashboard.
      *
-     * @param  Request $request
+     * @param Request $request
      *
-     * @return mixed
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         //User needs a transaction if they don't have one for an active dues package
         $user = $request->user();

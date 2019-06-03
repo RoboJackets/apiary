@@ -5,6 +5,8 @@ namespace App;
 use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Payment extends Model
 {
@@ -14,21 +16,21 @@ class Payment extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['method_presentation'];
 
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = ['id'];
 
     /**
      * Get all of the owning payable models.
      */
-    public function payable()
+    public function payable(): MorphTo
     {
         return $this->morphTo();
     }
@@ -36,7 +38,7 @@ class Payment extends Model
     /**
      * Get the User associated with the Payment model.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'recorded_by');
     }
@@ -64,7 +66,7 @@ class Payment extends Model
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getRelationshipPermissionMap(): array
     {

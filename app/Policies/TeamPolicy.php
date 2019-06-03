@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Policies;
 
 use App\Team;
@@ -13,9 +15,10 @@ class TeamPolicy
     /**
      * Determine whether the user can view the team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function view(User $user, Team $team): bool
     {
@@ -25,8 +28,9 @@ class TeamPolicy
     /**
      * Determine whether the user can view any teams.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -36,8 +40,9 @@ class TeamPolicy
     /**
      * Determine whether the user can create teams.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User  $user
+     *
+     * @return bool
      */
     public function create(User $user): bool
     {
@@ -47,9 +52,10 @@ class TeamPolicy
     /**
      * Determine whether the user can update the team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function update(User $user, Team $team): bool
     {
@@ -63,9 +69,10 @@ class TeamPolicy
     /**
      * Determine whether the user can delete the team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function delete(User $user, Team $team): bool
     {
@@ -75,9 +82,10 @@ class TeamPolicy
     /**
      * Determine whether the user can restore the team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function restore(User $user, Team $team): bool
     {
@@ -87,9 +95,10 @@ class TeamPolicy
     /**
      * Determine whether the user can permanently delete the team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     *
+     * @return bool
      */
     public function forceDelete(User $user, Team $team): bool
     {
@@ -99,10 +108,11 @@ class TeamPolicy
     /**
      * Determine whether the user can attach a user to a team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @param  \App\User  $userResource
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     * @param \App\User  $userResource
+     *
+     * @return bool
      */
     public function attachUser(User $user, Team $team, User $userResource): bool
     {
@@ -128,10 +138,11 @@ class TeamPolicy
     /**
      * Determine whether the user can attach a user to a team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @param  \App\User  $userResource
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     * @param \App\User  $userResource
+     *
+     * @return bool
      */
     public function attachAnyUser(User $user, Team $team): bool
     {
@@ -143,7 +154,10 @@ class TeamPolicy
             return true;
         }
 
-        if ($user->can('update-teams-membership-own') && $team->self_serviceable && ! $team->members->contains('id', $user->id)) {
+        if ($user->can('update-teams-membership-own')
+            && $team->self_serviceable
+            && ! $team->members->contains('id', $user->id)
+        ) {
             return true;
         }
 
@@ -153,10 +167,11 @@ class TeamPolicy
     /**
      * Determine whether the user can detach a user from a team.
      *
-     * @param  \App\User  $user
-     * @param  \App\Team  $team
-     * @param  \App\User  $userResource
-     * @return mixed
+     * @param \App\User  $user
+     * @param \App\Team  $team
+     * @param \App\User  $userResource
+     *
+     * @return bool
      */
     public function detachUser(User $user, Team $team, User $userResource): bool
     {

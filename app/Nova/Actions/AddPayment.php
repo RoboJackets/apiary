@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Strings.UnnecessaryStringConcat.Found
+
 namespace App\Nova\Actions;
 
 use App\Payment;
@@ -21,15 +23,17 @@ class AddPayment extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     * @param \Laravel\Nova\Fields\ActionFields  $fields
+     * @param \Illuminate\Support\Collection  $models
+     *
+     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
         if (count($models) > 1) {
             return Action::danger(
-                'Payments cannot be entered for more than one transaction at a time. Contact the developers if you think this is unreasonable.'
+                'Payments cannot be entered for more than one transaction at a time. Contact the developers if '
+                . 'you think this is unreasonable.'
             );
         }
 
@@ -67,7 +71,8 @@ class AddPayment extends Action
                     $this->markAsFailed($models->first(), null);
 
                     return Action::danger(
-                        'Missing expected transaction fee - total should be ' . round($package_amount + 3, 2) . ', ' . $entered_amount . ' entered.'
+                        'Missing expected transaction fee - total should be '
+                        . round($package_amount + 3, 2) . ', ' . $entered_amount . ' entered.'
                     );
                 }
 
@@ -104,7 +109,7 @@ class AddPayment extends Action
     /**
      * Get the fields available on the action.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(): array
     {

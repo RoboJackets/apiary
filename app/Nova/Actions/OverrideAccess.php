@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
@@ -18,11 +20,12 @@ class OverrideAccess extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     * @param \Laravel\Nova\Fields\ActionFields  $fields
+     * @param \Illuminate\Support\Collection  $models
+     *
+     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $users)
+    public function handle(ActionFields $fields, Collection $users): array
     {
         foreach ($users as $user) {
             if ($user->id === Auth::user()->id) {
@@ -39,7 +42,7 @@ class OverrideAccess extends Action
     /**
      * Get the fields available on the action.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(): array
     {

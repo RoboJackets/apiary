@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -11,8 +13,10 @@ class PermissionMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @param mixed $permission Permissions to authenticate
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next, $permission)

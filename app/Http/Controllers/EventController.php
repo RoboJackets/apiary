@@ -27,7 +27,7 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  $request Request
+     * @param $request Request
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,7 +42,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -77,16 +77,15 @@ class EventController extends Controller
 
         if (is_numeric($event->id)) {
             return response()->json(['status' => 'success', 'event' => $event], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
+        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     * @param  Request $request
+     * @param int $id
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -97,16 +96,15 @@ class EventController extends Controller
 
         if ($event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
         }
+        return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -156,19 +154,22 @@ class EventController extends Controller
         $event = Event::find($id);
         if ($event->id) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
+        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $event = Event::find($id);
         if ($event->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'event_not_found', ], 422);
         }
+        return response()->json(
+            [
+                'status' => 'error',
+                'message' => 'event_not_found',
+            ],
+            422
+        );
     }
 }

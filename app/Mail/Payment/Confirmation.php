@@ -5,20 +5,24 @@ namespace App\Mail\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Payment;
 
 class Confirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $uid;
+    /**
+     * The Payment object of interest
+     *
+     * @var Payment
+     */
     public $payment;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($uid, $payment)
+    public function __construct(Payment $payment)
     {
-        $this->uid = $uid;
         $this->payment = $payment;
     }
 

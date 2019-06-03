@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Http\Controllers;
 
@@ -28,7 +28,7 @@ class RecruitingCampaignController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  $request Request
+     * @param $request Request
      *
      * @return \Illuminate\Http\Response
      */
@@ -43,7 +43,7 @@ class RecruitingCampaignController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -83,7 +83,7 @@ class RecruitingCampaignController extends Controller
         $added_recipient_emails = [];
         foreach ($visits as $v) {
             if (in_array($v->recruiting_email, $added_recipient_emails)) {
-                Log::info(self::class . ": Email '$v->recruiting_email' already in the list. Ignoring.'");
+                Log::info(self::class . ': Email ' . $v->recruiting_email . ' already in the list. Ignoring.');
             } else {
                 // Add new recipient
                 $rcr = new RecruitingCampaignRecipient();
@@ -98,7 +98,9 @@ class RecruitingCampaignController extends Controller
 
                 // Add to array for dedup
                 $added_recipient_emails[] = $v->recruiting_email;
-                Log::info(self::class . ": Added email '$v->recruiting_email' as recipient for campaign $rc->id");
+                Log::info(
+                    self::class . ': Added email ' . $v->recruiting_email . ' as recipient for campaign ' . $rc->id
+                );
             }
         }
 
@@ -106,26 +108,26 @@ class RecruitingCampaignController extends Controller
 
         if (is_numeric($db_rc->id)) {
             return response()->json(['status' => 'success', 'campaign' => new RecruitingCampaignResource($db_rc)], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
     /**
      * Create queue entries for email send.
      *
-     * @param  $id integer
+     * @param $id integer
      *
      * @return \Illuminate\Http\Response
      */
-    public function queue($id): JsonResponse
+    public function queue(int $id): JsonResponse
     {
         $delay_hours = 0;
         $rcr_q = RecruitingCampaignRecipient::where('recruiting_campaign_id', $id)->whereNull('notified_at');
         $rcr_count = $rcr_q->count();
         $rcr_q->chunk(30, static function ($chunk) use (&$delay_hours): void {
             $when = Carbon::now()->addHours($delay_hours);
-            Log::debug(self::class . ": Scheduling chunk for delivery in $delay_hours hours at $when");
+            Log::debug(self::class . ': Scheduling chunk for delivery in ' . $delay_hours . ' hours at ' . $when);
 
             // This accepts an array ($chunk) of "Notifiable" models, so it's 30 at once like M A G I C
             Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
@@ -142,7 +144,7 @@ class RecruitingCampaignController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\RecruitingCampaign  $recruitingCampaign
+     * @param \App\RecruitingCampaign  $recruitingCampaign
      *
      * @return \Illuminate\Http\Response
      */
@@ -156,8 +158,8 @@ class RecruitingCampaignController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RecruitingCampaign  $recruitingCampaign
+     * @param \Illuminate\Http\Request  $request
+     * @param \App\RecruitingCampaign  $recruitingCampaign
      *
      * @return \Illuminate\Http\Response
      */
@@ -169,7 +171,7 @@ class RecruitingCampaignController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RecruitingCampaign  $recruitingCampaign
+     * @param \App\RecruitingCampaign  $recruitingCampaign
      *
      * @return \Illuminate\Http\Response
      */

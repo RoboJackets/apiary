@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova\Lenses;
 
 use App\Nova\Team;
@@ -18,17 +20,18 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param  \Laravel\Nova\Http\Requests\LensRequest  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return mixed
+     * @param \Laravel\Nova\Http\Requests\LensRequest  $request
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     *
+     * @return Builder
      */
     public static function query(LensRequest $request, Builder $query): Builder
     {
         return $request->withOrdering(
-                $request->withFilters(
-                    $query->whereDoesntHave('attendee', static function (Builder $q): void {
+            $request->withFilters(
+                $query->whereDoesntHave('attendee', static function (Builder $q): void {
                         $q->active();
-                    })
+                })
                     ->where('attendable_type', 'App\Team')
                     ->whereBetween('created_at', [now()->subDays(14)->startOfDay(), now()])
                     ->select('gtid', 'attendable_id', 'attendable_type')
@@ -40,8 +43,9 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the fields available to the lens.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(Request $request): array
     {
@@ -67,8 +71,9 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the filters available for the lens.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
     {

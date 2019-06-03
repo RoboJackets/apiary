@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Http\Controllers;
 
@@ -66,14 +66,15 @@ class AttendanceController extends Controller
         $gtid = $request->input('gtid');
 
         try {
-            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))->whereDate('created_at', $date);
+            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
+                ->whereDate('created_at', $date);
             $attExistingCount = $attExistingQ->count();
             if ($attExistingCount > 0) {
-                Log::debug(self::class . ": Found a swipe on $date for $gtid - ignoring.");
+                Log::debug(self::class . ': Found a swipe on ' . $date . ' for ' . $gtid . ' - ignoring.');
                 $att = $attExistingQ->first();
                 $code = 200;
             } else {
-                Log::debug(self::class . ": No swipe yet on $date for $gtid - saving.");
+                Log::debug(self::class . ': No swipe yet on ' . $date . ' for ' . $gtid . ' - saving.');
                 $att = Attendance::create($request->all());
                 $code = 201;
             }
@@ -95,20 +96,20 @@ class AttendanceController extends Controller
      * Display the specified resource.
      *
      * @param \Illuminate\Http\Request  $request
-     * @param $id integer Resource ID
+     * @param int $id Resource ID
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id): JsonResponse
+    public function show(Request $request, int $id): JsonResponse
     {
         $include = $request->input('include');
         $user = auth()->user();
         $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($id);
-        if ($att && ($att->gtid == $user->gtid || $user->can('read-attendance'))) {
+        if ($att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
     }
 
     /**
@@ -135,20 +136,20 @@ class AttendanceController extends Controller
 
         if ($att) {
             return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request  $request
-     * @param $id integer Resource ID
+     * @param int $id Resource ID
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
         $this->validate($request, [
             'attendable_type' => 'string',
@@ -179,19 +180,20 @@ class AttendanceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Illuminate\Http\Request  $request
-     * @param $id integer Resource ID
+     * @param int $id Resource ID
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $att = Attendance::find($id);
         if ($att->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Attendance deleted.']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'Attendance does not exist or was previously deleted.', ], 422);
         }
+
+        return response()->json(['status' => 'error',
+            'message' => 'Attendance does not exist or was previously deleted.',
+        ], 422);
     }
 
     /**

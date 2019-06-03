@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
@@ -48,7 +50,7 @@ class NotificationTemplate extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'name',
@@ -59,8 +61,9 @@ class NotificationTemplate extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(Request $request): array
     {
@@ -74,7 +77,12 @@ class NotificationTemplate extends Resource
         ];
     }
 
-    protected function basicFields()
+    /**
+     * Notification fields
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function basicFields(): array
     {
         return [
             Text::make('Subject')
@@ -87,7 +95,12 @@ class NotificationTemplate extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp and creator fields
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
 
@@ -108,8 +121,9 @@ class NotificationTemplate extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
     {
@@ -119,8 +133,9 @@ class NotificationTemplate extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
     {
@@ -130,8 +145,9 @@ class NotificationTemplate extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
     {
@@ -141,8 +157,9 @@ class NotificationTemplate extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
     public function actions(Request $request): array
     {

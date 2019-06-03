@@ -30,7 +30,8 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request): JsonResponse
@@ -67,7 +68,8 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string  $name
+     * @param string  $name
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(string $name): JsonResponse
@@ -90,8 +92,9 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $name
+     * @param \Illuminate\Http\Request  $request
+     * @param string  $name
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $name): JsonResponse
@@ -139,7 +142,8 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $name
+     * @param string  $name
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(string $name): JsonResponse
@@ -164,8 +168,9 @@ class RoleController extends Controller
     /**
      * Assigns roles to users.
      *
-     * @param  string $name
-     * @param  Request $request
+     * @param string $name
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function assign(string $name, Request $request): JsonResponse
@@ -191,7 +196,7 @@ class RoleController extends Controller
         foreach ($request->input('users') as $user) {
             $dbUser = User::findByIdentifier($user)->first();
             if (!$dbUser) {
-                return response()->json(['status' => 'error', 'message' => "User '$user' not found."], 422);
+                return response()->json(['status' => 'error', 'message' => 'User ' . $user . ' not found.'], 422);
             }
 
             $dbUser->assignRole($role);

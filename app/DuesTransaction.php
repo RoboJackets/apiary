@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class DuesTransaction extends Model
 {
@@ -13,14 +15,14 @@ class DuesTransaction extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['status', 'swag_polo_status', 'swag_shirt_status'];
 
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [
         'id',
@@ -30,7 +32,7 @@ class DuesTransaction extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var array<string>
      */
     protected $dates = [
         'created_at',
@@ -43,7 +45,7 @@ class DuesTransaction extends Model
     /**
      * Get the Payment associated with the DuesTransaction model.
      */
-    public function payment()
+    public function payment(): MorphMany
     {
         return $this->morphMany(\App\Payment::class, 'payable');
     }
@@ -51,7 +53,7 @@ class DuesTransaction extends Model
     /**
      * Get the DuesPackage associated with the DuesTransaction model.
      */
-    public function package()
+    public function package(): BelongsTo
     {
         return $this->belongsTo(\App\DuesPackage::class, 'dues_package_id');
     }
@@ -59,7 +61,7 @@ class DuesTransaction extends Model
     /**
      * Get the User associated with the DuesTransaction model.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(\App\User::class);
     }
@@ -67,7 +69,7 @@ class DuesTransaction extends Model
     /**
      * Get the User associated with the swag_shirt_providedBy field on the DuesTransaction model.
      */
-    public function swagShirtProvidedBy()
+    public function swagShirtProvidedBy(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'swag_shirt_providedBy', 'id');
     }
@@ -75,7 +77,7 @@ class DuesTransaction extends Model
     /**
      * Get the User associated with the swag_polo_providedBy field on the DuesTransaction model.
      */
-    public function swagPoloProvidedBy()
+    public function swagPoloProvidedBy(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'swag_polo_providedBy', 'id');
     }
@@ -83,7 +85,7 @@ class DuesTransaction extends Model
     /**
      * Alias the generalize form of the Transaction for Polymorphic Reasons.
      */
-    public function for()
+    public function for(): BelongsTo
     {
         return $this->package();
     }
@@ -145,7 +147,7 @@ class DuesTransaction extends Model
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getRelationshipPermissionMap(): array
     {
@@ -289,8 +291,8 @@ class DuesTransaction extends Model
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount()
+    public function getPayableAmount(): float
     {
-        return $this->package->cost ?: null;
+        return $this->package->cost;
     }
 }

@@ -6,6 +6,7 @@ use App\User;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
+use Laravel\Nova\Metrics\ValueResult;
 
 class ShirtSizeBreakdown extends Partition
 {
@@ -46,10 +47,11 @@ class ShirtSizeBreakdown extends Partition
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         $column = 'shirt' === $this->swagType ? 'shirt_size' : 'polo_size';
 

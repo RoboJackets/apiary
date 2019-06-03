@@ -19,10 +19,10 @@ var form = new Vue({
         submit: function () {
             'use strict';
             var formData = new FormData(event.target), values = formData.getAll('heardfrom'), result = {};
-            result['recruiting_email'] = formData.get('recruiting-email');
-            result['recruiting_name'] = formData.get('recruiting-name');
-            result['recruiting_responses'] = [];
-            result['created_at'] = new Date();
+            result.recruiting_email = formData.get('recruiting-email');
+            result.recruiting_name = formData.get('recruiting-name');
+            result.recruiting_responses = [];
+            result.created_at = new Date();
             if (values.includes('other')) {
                 values.splice(values.indexOf('other'), 1);
                 let otherText = formData.get('heardfrom-other-text');
@@ -30,7 +30,7 @@ var form = new Vue({
                     values.push(otherText);
                 }
             }
-            result['recruiting_responses'] = values;
+            result.recruiting_responses = values;
             worker.postMessage(JSON.stringify(result));
 
             swal({

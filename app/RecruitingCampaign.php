@@ -14,7 +14,7 @@ class RecruitingCampaign extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [
         'id',
@@ -54,7 +54,7 @@ class RecruitingCampaign extends Model
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getRelationshipPermissionMap(): array
     {

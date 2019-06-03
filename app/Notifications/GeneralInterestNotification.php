@@ -1,8 +1,11 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\GeneralInterestInvite as Mailable;
@@ -14,10 +17,9 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @return array<string>
      */
-    public function via($notifiable): array
+    public function via(Notifiable $notifiable): array
     {
         return ['mail'];
     }
@@ -25,10 +27,11 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param Notifiable  $notifiable
+     *
      * @return Mailable
      */
-    public function toMail($notifiable): Mailable
+    public function toMail(Notifiable $notifiable): Mailable
     {
         // Get data to pass to the mailable
         $email = $notifiable->routeNotificationForMail();
@@ -46,12 +49,10 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @return array<string,string>
      */
-    public function toArray($notifiable): array
+    public function toArray(Notifiable $notifiable): array
     {
-        return [
-        ];
+        return [];
     }
 }

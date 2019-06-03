@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
@@ -21,6 +23,11 @@ class Payment extends Resource
      */
     public static $model = 'App\\Payment';
 
+    /**
+     * Fields to eager load on index
+     *
+     * @var array<string>
+     */
     public static $with = ['user'];
 
     /**
@@ -33,8 +40,9 @@ class Payment extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(Request $request): array
     {
@@ -73,7 +81,7 @@ class Payment extends Resource
                 ->help('The user that recorded the payment')
                 ->sortable(),
 
-            TextArea::make('Notes')
+            Textarea::make('Notes')
                 ->onlyOnDetail()
                 ->alwaysShow(),
 
@@ -81,7 +89,12 @@ class Payment extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp fields
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Created', 'created_at')
@@ -95,8 +108,9 @@ class Payment extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
     {
@@ -106,8 +120,9 @@ class Payment extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
     {
@@ -117,8 +132,9 @@ class Payment extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
     public function lenses(Request $request): array
     {
@@ -128,8 +144,9 @@ class Payment extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
     public function actions(Request $request): array
     {

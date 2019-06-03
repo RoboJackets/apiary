@@ -5,20 +5,24 @@ namespace App\Mail\Dues;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\DuesPackage;
 
 class RequestComplete extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $uid;
+    /**
+     * The DuesPackage selected
+     *
+     * @var DuesPackage
+     */
     public $duesPackage;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($uid, $duesPackage)
+    public function __construct(DuesPackage $duesPackage)
     {
-        $this->uid = $uid;
         $this->duesPackage = $duesPackage;
     }
 

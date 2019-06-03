@@ -6,16 +6,18 @@ use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
 
 class ActiveMembers extends Value
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         if ($request->resourceId) {
             $count = Team::where('id', $request->resourceId)

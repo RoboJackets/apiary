@@ -5,16 +5,18 @@ namespace App\Nova\Metrics;
 use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
+use Laravel\Nova\Metrics\ValueResult;
 
 class PaymentsPerDay extends Trend
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         return $this->countByDays($request, Payment::class)->showLatestValue();
     }
@@ -22,7 +24,7 @@ class PaymentsPerDay extends Trend
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int|string,string>
      */
     public function ranges(): array
     {

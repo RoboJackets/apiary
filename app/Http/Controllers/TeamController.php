@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Http\Controllers;
 
 use App\Team;
@@ -29,7 +31,7 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -61,7 +63,7 @@ class TeamController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -89,16 +91,16 @@ class TeamController extends Controller
 
         if (is_numeric($team->id)) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @param  Request $request
+     * @param int  $id
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -124,7 +126,7 @@ class TeamController extends Controller
     /**
      * Returns a list of all members of the given team.
      *
-     * @param  $id integer Team ID
+     * @param mixed $id integer Team ID
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -143,8 +145,8 @@ class TeamController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request  $request
+     * @param int  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -177,16 +179,16 @@ class TeamController extends Controller
 
         if (is_numeric($team->id)) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
     /**
      * Updates membership of the given team.
      *
-     * @param  Request $request
-     * @param  $id integer
+     * @param Request $request
+     * @param mixed $id integer
      *
      * @return \Illuminate\Http\Response
      */
@@ -240,7 +242,7 @@ class TeamController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -249,9 +251,14 @@ class TeamController extends Controller
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if ($team->delete()) {
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'team_not_found', ], 422);
         }
+
+        return response()->json(
+            [
+                'status' => 'error',
+                'message' => 'team_not_found',
+            ],
+            422
+        );
     }
 }

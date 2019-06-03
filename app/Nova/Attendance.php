@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
@@ -14,9 +16,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Lenses\RecentInactiveUsers;
 use App\Nova\Filters\UserActiveAttendance;
 use Laravel\Nova\Http\Requests\LensRequest;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\Builder;
 
 class Attendance extends Resource
 {
@@ -67,15 +67,16 @@ class Attendance extends Resource
     /**
      * The relationships that should be eager loaded on index queries.
      *
-     * @var array
+     * @var array<string>
      */
     public static $with = ['recorded', 'attendee'];
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(Request $request): array
     {
@@ -112,7 +113,12 @@ class Attendance extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp fields
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Created', 'created_at')
@@ -126,8 +132,9 @@ class Attendance extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
     {
@@ -137,8 +144,9 @@ class Attendance extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
     {
@@ -153,8 +161,9 @@ class Attendance extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
     {
@@ -168,8 +177,9 @@ class Attendance extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
     public function actions(Request $request): array
     {
@@ -179,7 +189,8 @@ class Attendance extends Resource
     /**
      * Determine if the current user can view the given resource or throw an exception.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
+     *
      * @return void
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -195,7 +206,8 @@ class Attendance extends Resource
     /**
      * Determine if the current user can view the given resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
+     *
      * @return bool
      */
     public function authorizedToView(Request $request): bool
@@ -208,7 +220,8 @@ class Attendance extends Resource
     /**
      * Determine if the current user can delete the given resource or throw an exception.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
+     *
      * @return void
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -224,7 +237,8 @@ class Attendance extends Resource
     /**
      * Determine if the current user can delete the given resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
+     *
      * @return bool
      */
     public function authorizedToDelete(Request $request): bool

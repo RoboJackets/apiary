@@ -15,14 +15,14 @@ class DuesPackage extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = ['id'];
 
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = [
         'is_active',
@@ -32,7 +32,7 @@ class DuesPackage extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @var array<string>
      */
     protected $dates = [
         'created_at',
@@ -47,7 +47,7 @@ class DuesPackage extends Model
     /**
      * Get the DuesTransaction associated with the DuesPackage model.
      */
-    public function duesTransactions()
+    public function duesTransactions(): HasMany
     {
         return $this->hasMany(\App\DuesTransaction::class);
     }
@@ -55,7 +55,7 @@ class DuesPackage extends Model
     /**
      * Get the DuesTransaction associated with the DuesPackage model.
      */
-    public function transactions()
+    public function transactions(): HasMany
     {
         return $this->hasMany(\App\DuesTransaction::class);
     }
@@ -63,7 +63,8 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include DuesPackages available for purchase.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAvailableForPurchase(Builder $query): Builder
@@ -74,7 +75,8 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include active DuesPackages.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $query): Builder
@@ -86,7 +88,8 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include access active DuesPackages.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAccessActive(Builder $query): Builder
@@ -126,7 +129,7 @@ class DuesPackage extends Model
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getRelationshipPermissionMap(): array
     {

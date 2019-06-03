@@ -8,16 +8,18 @@ use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Metrics\ValueResult;
 
 class PrimaryTeam extends Value
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         $teams = Attendance::where('gtid', $gtid)
@@ -76,7 +78,7 @@ class PrimaryTeam extends Value
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int,string>
      */
     public function ranges(): array
     {

@@ -1,11 +1,6 @@
 <?php declare(strict_types = 1);
 
-/**
- * Created by PhpStorm.
- * User: kberz
- * Date: 6/18/2017
- * Time: 7:34 PM.
- */
+// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Http\Middleware;
 
@@ -20,7 +15,18 @@ class CASCheck
 {
     use CreateOrUpdateCASUser;
 
+    /**
+     * Auth facade
+     *
+     * @var \Illuminate\Support\Facades\Auth
+     */
     protected $auth;
+
+    /**
+     * CAS library interface
+     *
+     * @var \Subfission\Cas\CasManager
+     */
     protected $cas;
 
     public function __construct(Guard $auth)
@@ -32,8 +38,9 @@ class CASCheck
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)

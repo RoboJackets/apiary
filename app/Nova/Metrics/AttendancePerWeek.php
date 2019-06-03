@@ -6,16 +6,18 @@ use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Metrics\ValueResult;
 
 class AttendancePerWeek extends Trend
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         // This is slightly hacky, but it works. Otherwise, responses with a created date of midnight (as created by
         // some forms) were pushed back to the previous day in the metric. This acts like we're in GMT while
@@ -35,7 +37,8 @@ class AttendancePerWeek extends Trend
 
         // Aggregate based on counting distinct values in the gtid column
         $column = DB::raw('distinct attendance.gtid');
-        $result = $this->aggregate($request, $query, Trend::BY_WEEKS, 'count', $column, 'created_at')->showLatestValue();
+        $result = $this->aggregate($request, $query, Trend::BY_WEEKS, 'count', $column, 'created_at')
+            ->showLatestValue();
 
         $request->timezone = $originalTimezone;
 
@@ -45,7 +48,7 @@ class AttendancePerWeek extends Trend
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int,string>
      */
     public function ranges(): array
     {

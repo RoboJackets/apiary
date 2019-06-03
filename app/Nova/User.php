@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
@@ -37,7 +39,7 @@ class User extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'uid',
@@ -50,8 +52,9 @@ class User extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(Request $request): array
     {
@@ -98,11 +101,10 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->monospaced()
                 ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId == $request->user()->id) {
+                    if ($request->resourceId === $request->user()->id) {
                         return true;
-                    } else {
-                        return $request->user()->can('read-users-api_token');
                     }
+                    return $request->user()->can('read-users-api_token');
                 }),
 
             Text::make('Phone Number', 'phone')
@@ -132,45 +134,46 @@ class User extends Resource
 
             HasMany::make('Recruiting Visits', 'recruitingVisits')
                 ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId == $request->user()->id) {
+                    if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-recruiting-visits-own');
-                    } else {
-                        return $request->user()->can('read-recruiting-visits');
                     }
+                    return $request->user()->can('read-recruiting-visits');
                 }),
 
             BelongsToMany::make('Teams')
                 ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId == $request->user()->id) {
+                    if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-teams-membership-own');
-                    } else {
-                        return $request->user()->can('read-teams-membership');
                     }
+                    return $request->user()->can('read-teams-membership');
                 }),
 
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId == $request->user()->id) {
+                    if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-attendance-own');
-                    } else {
-                        return $request->user()->can('read-attendance');
                     }
+                    return $request->user()->can('read-attendance');
                 }),
 
             HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
                 ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId == $request->user()->id) {
+                    if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-dues-transactions-own');
-                    } else {
-                        return $request->user()->can('read-dues-transactions');
                     }
+                    return $request->user()->can('read-dues-transactions');
                 }),
 
             new Panel('Metadata', $this->metaFields()),
         ];
     }
 
-    protected function emergencyFields()
+    /**
+     * Emergency contact information
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function emergencyFields(): array
     {
         return [
             Text::make('Emergency Contact Name')
@@ -187,7 +190,12 @@ class User extends Resource
         ];
     }
 
-    protected function swagFields()
+    /**
+     * Swag information
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function swagFields(): array
     {
         $shirt_sizes = [
             's' => 'Small',
@@ -211,7 +219,12 @@ class User extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp fields
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Account Created', 'created_at')
@@ -235,8 +248,9 @@ class User extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
     {
@@ -262,8 +276,9 @@ class User extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
     {
@@ -277,8 +292,9 @@ class User extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
     {
@@ -288,8 +304,9 @@ class User extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
     public function actions(Request $request): array
     {
@@ -310,7 +327,7 @@ class User extends Resource
                 }),
             (new Actions\ResetApiToken())
                 ->canSee(static function (Request $request): bool {
-                        return true;
+                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 })
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);

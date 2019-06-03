@@ -13,6 +13,11 @@ class DuesPackageExpiration implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * The dues package that will expire
+     *
+     * @var \App\DuesPackage
+     */
     private $package;
 
     /**

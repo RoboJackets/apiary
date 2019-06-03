@@ -29,7 +29,8 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request): JsonResponse
@@ -44,14 +45,14 @@ class PermissionController extends Controller
         $permission->save();
 
         $roles = $request->input('roles');
-        if (! empty($roles)) {
+        if (is_array($roles)) {
             foreach ($roles as $role) {
                 try {
                     $dbRole = Role::findByName($role);
                 } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
                     Bugsnag::notifyException($e);
 
-                    return response()->json(['status' => 'error', 'message' => "Role '$role' not found."], 404);
+                    return response()->json(['status' => 'error', 'message' => 'Role ' . $role . ' not found.'], 404);
                 } catch (\Throwable $e) {
                     Bugsnag::notifyException($e);
 
@@ -69,7 +70,8 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string  $name
+     * @param string  $name
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(string $name): JsonResponse
@@ -80,7 +82,7 @@ class PermissionController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error',
-                'message' => "Permission '$name' not found.",
+                'message' => 'Permission ' . $name . ' not found.',
             ], 404);
         } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
@@ -94,8 +96,9 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $name
+     * @param \Illuminate\Http\Request  $request
+     * @param string  $name
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $name): JsonResponse
@@ -108,7 +111,7 @@ class PermissionController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error',
-                'message' => "Permission '$name' not found.",
+                'message' => 'Permission ' . $name . ' not found.',
             ], 404);
         } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
@@ -124,7 +127,8 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $name
+     * @param int  $name
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(int $name): JsonResponse
@@ -136,7 +140,7 @@ class PermissionController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error',
-                'message' => "Permission '$name' not found.",
+                'message' => 'Permission ' . $name . ' not found.',
             ], 404);
         } catch (\Throwable $e) {
             Bugsnag::notifyException($e);

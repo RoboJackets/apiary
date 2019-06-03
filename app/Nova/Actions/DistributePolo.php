@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Nova\Actions;
 
@@ -18,11 +18,12 @@ class DistributePolo extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     * @param \Laravel\Nova\Fields\ActionFields  $fields
+     * @param \Illuminate\Support\Collection  $models
+     *
+     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
         $failures = [];
         foreach ($models as $model) {
@@ -59,10 +60,12 @@ class DistributePolo extends Action
         }
         if (count($failures) > 0) {
             if (count($models) > count($failures)) {
-                return Action::danger('Some selected dues transactions are currently not eligible for a polo: '.implode(', ', $failures));
-            } else {
-                return Action::danger('No selected dues transactions are currently eligible for a polo.');
+                return Action::danger(
+                    'Some selected dues transactions are currently not eligible for a polo: ' . implode(', ', $failures)
+                );
             }
+
+            return Action::danger('No selected dues transactions are currently eligible for a polo.');
         }
 
         return Action::message('Polo' . (1 === count($models) ? '' : 's') . ' marked as picked up!');
@@ -71,7 +74,7 @@ class DistributePolo extends Action
     /**
      * Get the fields available on the action.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(): array
     {

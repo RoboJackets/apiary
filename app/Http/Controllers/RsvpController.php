@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
+
 namespace App\Http\Controllers;
 
 use Auth;
@@ -29,7 +31,7 @@ class RsvpController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -44,7 +46,7 @@ class RsvpController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -65,8 +67,8 @@ class RsvpController extends Controller
     /**
      * Stores a user-submitted RSVP resource.
      *
-     * @param  Event $event
-     * @param  Request $request
+     * @param Event $event
+     * @param Request $request
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      *
@@ -93,7 +95,7 @@ class RsvpController extends Controller
             $token = $request->input('token');
             $recruitingVisit = RecruitingVisit::where('visit_token', $token)->first();
 
-            if (! is_null($recruitingVisit) && ! is_null($user)) {
+            if (null !== $recruitingVisit && null !== $user) {
                 $recruitingVisit['user_id'] = $user->id;
                 $recruitingVisit->save();
             }
@@ -101,7 +103,7 @@ class RsvpController extends Controller
 
         $rsvp = new Rsvp();
 
-        if (! is_null($user)) {
+        if (null !== user) {
             $rsvp->user_id = $user->id;
         }
 
@@ -119,8 +121,8 @@ class RsvpController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -143,7 +145,7 @@ class RsvpController extends Controller
         return response()->json(['status' => 'error', 'message' => 'method_not_implemented'], 501);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
@@ -161,9 +163,10 @@ class RsvpController extends Controller
 
         if ($rsvp->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'event_not_found', ], 422);
         }
+
+        return response()->json(['status' => 'error',
+            'message' => 'event_not_found',
+        ], 422);
     }
 }

@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
@@ -15,8 +17,13 @@ class RecruitingVisit extends Resource
      *
      * @var string
      */
-    public static $model = 'App\RecruitingVisit';
+    public static $model = \App\RecruitingVisit::class;
 
+    /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
     public static $with = ['user'];
 
     /**
@@ -49,7 +56,7 @@ class RecruitingVisit extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'recruiting_name',
@@ -66,8 +73,9 @@ class RecruitingVisit extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(Request $request): array
     {
@@ -86,7 +94,12 @@ class RecruitingVisit extends Resource
         ];
     }
 
-    protected function trackingFields()
+    /**
+     * Tracking fields
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function trackingFields(): array
     {
         return [
             Text::make('Visit Token')
@@ -98,7 +111,12 @@ class RecruitingVisit extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp fields
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Created', 'created_at')
@@ -112,8 +130,9 @@ class RecruitingVisit extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
     {
@@ -123,8 +142,9 @@ class RecruitingVisit extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
     {
@@ -134,8 +154,9 @@ class RecruitingVisit extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
     {
@@ -145,8 +166,9 @@ class RecruitingVisit extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
     public function actions(Request $request): array
     {
