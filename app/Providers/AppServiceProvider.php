@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Resource::withoutWrapping();
 
-        Horizon::auth(static function () {
+        Horizon::auth(static function (): bool {
             if (auth()->guard('web')->user() instanceof User
                 && auth()->guard('web')->user()->can('access-horizon')
             ) {

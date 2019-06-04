@@ -40,7 +40,7 @@ class DatabaseMailable extends Mailable
         }
 
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(function ($message) {
+            ->withSwiftMessage(static function (Mailable $message): void {
                 $message->getHeaders()
                     ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');
             })

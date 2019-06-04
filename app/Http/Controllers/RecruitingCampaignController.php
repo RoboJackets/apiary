@@ -14,6 +14,7 @@ use App\RecruitingCampaign;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use App\RecruitingCampaignRecipient;
 use Illuminate\Database\QueryException;
 use App\Notifications\GeneralInterestNotification;
@@ -128,7 +129,7 @@ class RecruitingCampaignController extends Controller
         $delay_hours = 0;
         $rcr_q = RecruitingCampaignRecipient::where('recruiting_campaign_id', $id)->whereNull('notified_at');
         $rcr_count = $rcr_q->count();
-        $rcr_q->chunk(30, static function ($chunk) use (&$delay_hours): void {
+        $rcr_q->chunk(30, static function (Collection $chunk) use (&$delay_hours): void {
             $when = Carbon::now()->addHours($delay_hours);
             Log::debug(self::class.': Scheduling chunk for delivery in '.$delay_hours.' hours at '.$when);
 

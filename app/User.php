@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
@@ -320,7 +321,7 @@ class User extends Authenticatable
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->whereHas('dues', static function ($q): void {
+        return $query->whereHas('dues', static function (QueryBuilder $q): void {
             $q->paid()->current();
         });
     }
@@ -336,7 +337,7 @@ class User extends Authenticatable
      */
     public function scopeInactive(Builder $query): Builder
     {
-        return $query->whereDoesntHave('dues', static function ($q): void {
+        return $query->whereDoesntHave('dues', static function (QueryBuilder $q): void {
             $q->paid()->current();
         });
     }
@@ -352,7 +353,7 @@ class User extends Authenticatable
      */
     public function scopeAccessActive(Builder $query): Builder
     {
-        return $query->whereHas('dues', static function ($q): void {
+        return $query->whereHas('dues', static function (QueryBuilder $q): void {
             $q->paid()->accessCurrent();
         })->orwhere('access_override_until', '>=', date('Y-m-d H:i:s'));
     }
@@ -368,9 +369,9 @@ class User extends Authenticatable
      */
     public function scopeAccessInactive(Builder $query): Builder
     {
-        return $query->whereDoesntHave('dues', static function ($q): void {
+        return $query->whereDoesntHave('dues', static function (QueryBuilder $q): void {
             $q->paid()->accessCurrent();
-        })->where(static function ($query): void {
+        })->where(static function (QueryBuilder $query): void {
             $query->where('access_override_until', '<=', date('Y-m-d H:i:s'))->orWhereNull('access_override_until');
         });
     }

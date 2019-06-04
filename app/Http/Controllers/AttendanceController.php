@@ -12,7 +12,9 @@ use App\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Query\Builder;
 use App\Http\Resources\Attendance as AttendanceResource;
 
 class AttendanceController extends Controller
@@ -224,7 +226,7 @@ class AttendanceController extends Controller
             ->groupBy('day')
             ->orderBy('day', 'asc')
             ->get()
-            ->mapWithKeys(static function ($item) use ($numberOfWeeks) {
+            ->mapWithKeys(static function (object $item) use ($numberOfWeeks): array {
                 return [substr($item->day, 1) => $item->aggregate / $numberOfWeeks];
             });
 
@@ -239,7 +241,7 @@ class AttendanceController extends Controller
         $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week,'
                 .'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
             ->where('attendable_type', 'App\Team')
-            ->when($user->cant('read-teams-hidden'), static function ($query): void {
+            ->when($user->cant('read-teams-hidden'), static function (Builder $query): void {
                 $query->where('visible', 1);
             })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
             ->groupBy('week', 'attendable_id')
@@ -256,7 +258,7 @@ class AttendanceController extends Controller
         }
 
         // Return only the team ID/name, the day, and the count of records on that day
-        $attendanceByTeam = $attendanceByTeam->map(static function ($item) {
+        $attendanceByTeam = $attendanceByTeam->map(static function (Collection $item): Collection {
             return $item->pluck('aggregate', 'week');
         });
 

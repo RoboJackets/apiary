@@ -11,6 +11,7 @@ use App\RecruitingVisit;
 use Illuminate\Http\Request;
 use App\Mail\DatabaseMailable;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use App\Notifications\GeneralInterestNotification;
 
 class NotificationController extends Controller
@@ -23,7 +24,7 @@ class NotificationController extends Controller
     public function sendNotification(): JsonResponse
     {
         $hours = 0;
-        RecruitingVisit::chunk(30, static function ($chunk) use (&$hours): void {
+        RecruitingVisit::chunk(30, static function (Collection $chunk) use (&$hours): void {
             $when = Carbon::now()->addHours($hours);
             Notification::send($chunk, (new GeneralInterestNotification())->delay($when));
             $hours++;

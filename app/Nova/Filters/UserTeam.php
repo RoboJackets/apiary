@@ -58,8 +58,8 @@ class UserTeam extends Filter
                 ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
                 })->get()
-                ->mapWithKeys(static function (object $item): array {
-                    return [$item['name'] => $item['id']];
+                ->mapWithKeys(static function (Team $item): array {
+                    return [$item->name => $item->id];
                 })->toArray();
         }
 

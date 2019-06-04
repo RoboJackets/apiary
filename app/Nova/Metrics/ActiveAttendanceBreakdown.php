@@ -73,7 +73,7 @@ class ActiveAttendanceBreakdown extends Partition
             ->groupBy('active')
             ->orderByRaw('aggregate desc, active desc')
             ->get()
-            ->mapWithKeys(static function ($item): array {
+            ->mapWithKeys(static function (object $item): array {
                 $key = $item->active;
                 if (! $item->active) {
                     $key = 'Inactive';

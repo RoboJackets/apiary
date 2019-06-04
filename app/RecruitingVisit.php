@@ -41,7 +41,7 @@ class RecruitingVisit extends Model
      *
      * @return bool          Whether the save succeeded
      */
-    public function save(array $options = [])
+    public function save(array $options = []): bool
     {
         if (! isset($this->visit_token) && '' !== $this->visit_token) {
             // Store 20 char secure random token

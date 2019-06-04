@@ -55,7 +55,7 @@ class RecentInactiveUsers extends Lens
             Text::make('GTID')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
-                })->resolveUsing(function ($gtid) {
+                })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
                     return $this->attendee ? '—' : $gtid;
                 }),

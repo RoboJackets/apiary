@@ -35,7 +35,7 @@ class RsvpSourceBreakdown extends Partition
                 ->groupBy('rsvpsource')
                 ->orderBy('aggregate', 'desc')
                 ->get()
-                ->mapWithKeys(static function ($item): array {
+                ->mapWithKeys(static function (object $item): array {
                     if (null !== $item->rsvpsource) {
                         return [$item->rsvpsource => $item->aggregate];
                     }

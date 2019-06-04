@@ -68,7 +68,7 @@ class SwagPickupRate extends Value
             ->selectRaw('count(id) as aggregate')
             ->groupBy('provided')
             ->get()
-            ->mapWithKeys(static function ($item): array {
+            ->mapWithKeys(static function (object $item): array {
                 return [$item->provided ? 'true' : 'false' => $item->aggregate];
             })->toArray();
 

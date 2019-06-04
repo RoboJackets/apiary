@@ -19,6 +19,7 @@ use SquareConnect\Configuration;
 use Illuminate\Http\JsonResponse;
 use SquareConnect\Api\CheckoutApi;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Query\Builder;
 use SquareConnect\Api\TransactionsApi;
 use Illuminate\Database\QueryException;
 use SquareConnect\Model\CreateOrderRequest;
@@ -140,9 +141,9 @@ class PaymentController extends Controller
             //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
             // and that have not passed the effective end
             $transactZeroPmt = DuesTransaction::where('user_id', $user->id)
-                ->whereHas('package', static function ($q): void {
+                ->whereHas('package', static function (Builder $q): void {
                     $q->whereDate('effective_end', '>=', date('Y-m-d'));
-                })->whereHas('payment', static function ($q): void {
+                })->whereHas('payment', static function (Builder $q): void {
                     $q->where('amount', 0.00);
                     $q->where('method', 'square');
                 })->first();

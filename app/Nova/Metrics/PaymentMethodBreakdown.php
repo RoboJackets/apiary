@@ -42,7 +42,7 @@ class PaymentMethodBreakdown extends Partition
                     ->groupBy('method')
                     ->orderBy('aggregate', 'desc')
                     ->get()
-                    ->mapWithKeys(static function ($item): array {
+                    ->mapWithKeys(static function (Payment $item): array {
                         $key = $item->method;
                         switch ($item->method) {
                             case 'cash':

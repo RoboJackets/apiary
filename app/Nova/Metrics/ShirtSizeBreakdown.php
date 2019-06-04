@@ -63,7 +63,7 @@ class ShirtSizeBreakdown extends Partition
             ->selectRaw('count('.$column.') as aggregate')
             ->when(
                 $request->resourceId,
-                static function (Eloquent $query, int $resourceId) {
+                static function (Eloquent $query, int $resourceId): Eloquent {
                     // When on the detail page, look at the particular package
                     return $query->whereHas('dues', static function (Eloquent $q) use ($resourceId): Eloquent {
                         return $q->where('dues_package_id', $resourceId)->paid();
@@ -77,7 +77,7 @@ class ShirtSizeBreakdown extends Partition
             ->groupBy('size')
             ->orderBy('size')
             ->get()
-            ->mapWithKeys(static function ($item) {
+            ->mapWithKeys(static function (object $item): array {
                 $shirt_sizes = [
                     's' => 'Small',
                     'm' => 'Medium',

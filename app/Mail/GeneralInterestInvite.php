@@ -44,7 +44,7 @@ class GeneralInterestInvite extends Mailable
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(static function ($message): void {
+            ->withSwiftMessage(static function (Mailable $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <hello@robojackets.org>');
             })->subject('RoboJackets General Interest Event - RSVP Requested')
             ->markdown('mail.generalinterest.invite');

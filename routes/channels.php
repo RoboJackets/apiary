@@ -12,7 +12,3 @@ declare(strict_types=1);
 | used to check if an authenticated user can listen to the channel.
 |
 */
-
-Broadcast::channel('App.User.{id}', static function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});

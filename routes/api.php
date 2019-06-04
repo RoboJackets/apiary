@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\User;
 use Illuminate\Http\Request;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('v1/user', static function (Request $request) {
+Route::middleware('auth:api')->get('v1/user', static function (Request $request): User {
     return $request->user();
 });
 

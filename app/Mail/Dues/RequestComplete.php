@@ -37,7 +37,7 @@ class RequestComplete extends Mailable
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(static function ($message): void {
+            ->withSwiftMessage(static function (Mailable $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
             })->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
             ->markdown('mail.dues.requestcomplete');
