@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
@@ -76,6 +78,7 @@ class ActiveAttendanceBreakdown extends Partition
                 if (! $item->active) {
                     $key = 'Inactive';
                 }
+
                 return [$key => $item->aggregate];
             })->toArray();
 

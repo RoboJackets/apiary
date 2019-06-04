@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Strings.UnnecessaryStringConcat.Found
 
@@ -33,7 +35,7 @@ class AddPayment extends Action
         if (count($models) > 1) {
             return Action::danger(
                 'Payments cannot be entered for more than one transaction at a time. Contact the developers if '
-                . 'you think this is unreasonable.'
+                .'you think this is unreasonable.'
             );
         }
 
@@ -54,7 +56,7 @@ class AddPayment extends Action
         }
 
         // shouldn't happen but might if someone is abusing the API
-        if (Auth::user()->cant('create-payments-' . $fields->method)) {
+        if (Auth::user()->cant('create-payments-'.$fields->method)) {
             $this->markAsFailed($models->first(), 'Not authorized to accept that payment method');
 
             return Action::danger(
@@ -72,14 +74,14 @@ class AddPayment extends Action
 
                     return Action::danger(
                         'Missing expected transaction fee - total should be '
-                        . round($package_amount + 3, 2) . ', ' . $entered_amount . ' entered.'
+                        .round($package_amount + 3, 2).', '.$entered_amount.' entered.'
                     );
                 }
 
                 $this->markAsFailed($models->first(), 'Unexpected amount (card transaction)');
 
                 return Action::danger(
-                    'Unexpected amount ' . $entered_amount . ' entered - should be ' . round($package_amount + 3, 2)
+                    'Unexpected amount '.$entered_amount.' entered - should be '.round($package_amount + 3, 2)
                 );
             }
         } else {
@@ -87,7 +89,7 @@ class AddPayment extends Action
                 $this->markAsFailed($models->first(), 'Unexpected amount (non-card transaction)');
 
                 return Action::danger(
-                    'Unexpected amount ' . $entered_amount . ' entered - should be ' . $package_amount
+                    'Unexpected amount '.$entered_amount.' entered - should be '.$package_amount
                 );
             }
         }
@@ -124,7 +126,7 @@ class AddPayment extends Action
         $allowed_payment_methods = [];
 
         foreach ($payment_methods as $code => $display) {
-            if (Auth::user()->cant('create-payments-' . $code)) {
+            if (Auth::user()->cant('create-payments-'.$code)) {
                 continue;
             }
 

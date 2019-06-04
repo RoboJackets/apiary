@@ -1,19 +1,21 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Http\Controllers;
 
+use Throwable;
 use Validator;
 use App\RecruitingVisit;
 use App\RecruitingResponse;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
-use Illuminate\Http\JsonResponse;
-use Throwable;
 
 class RecruitingVisitController extends Controller
 {
@@ -30,7 +32,7 @@ class RecruitingVisitController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        Log::debug(self::class . ': Pre-Validation Data', $request->all());
+        Log::debug(self::class.': Pre-Validation Data', $request->all());
         $validator = Validator::make($request->all(), [
             'recruiting_email' => 'required|email|max:255',
             'recruiting_name' => 'required|max:255',
@@ -43,18 +45,18 @@ class RecruitingVisitController extends Controller
         try {
             DB::beginTransaction();
             $personInfo = $request->only(['recruiting_email', 'recruiting_name']);
-            Log::debug(self::class . ': New Visit Data (Pre-Store)', $personInfo);
+            Log::debug(self::class.': New Visit Data (Pre-Store)', $personInfo);
             $visit = RecruitingVisit::create($personInfo);
 
             $recruitingResponses = $request->only('recruiting_responses')['recruiting_responses'];
-            Log::debug(self::class . ': New Visit Response Data (Pre-Store)', $recruitingResponses);
+            Log::debug(self::class.': New Visit Response Data (Pre-Store)', $recruitingResponses);
 
             foreach ($recruitingResponses as $response) {
                 $visit->recruitingResponses()->create(['response' => $response]);
             }
 
             DB::commit();
-            Log::info(self::class . 'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
+            Log::info(self::class.'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
 
             return response()->json(['status' => 'success']);
         } catch (Throwable $e) {
@@ -148,15 +150,15 @@ class RecruitingVisitController extends Controller
         $visits = RecruitingVisit::all();
         $emails = [];
         foreach ($visits as $visit) {
-            echo 'Processing Visit ' . $visit->id . "<br/>\n";
+            echo 'Processing Visit '.$visit->id."<br/>\n";
             if (! in_array($visit->recruiting_email, $emails)) {
                 $emails[] = $visit->recruiting_email;
             } else {
-                echo 'Deleting Visit ' . $visit->id . "<br/>\n";
+                echo 'Deleting Visit '.$visit->id."<br/>\n";
                 $count = RecruitingResponse::where('recruiting_visit_id', $visit->id)->count();
-                echo 'Deleting ' . $count . ' Responses for Visit ' . $visit->id . "<br/>\n";
+                echo 'Deleting '.$count.' Responses for Visit '.$visit->id."<br/>\n";
                 foreach ($visit->recruitingResponses as $response) {
-                    echo 'Deleting Response ' . $response->response . "<br/>\n";
+                    echo 'Deleting Response '.$response->response."<br/>\n";
                     RecruitingResponse::where('recruiting_visit_id', $visit->id)->delete();
                 }
                 $visit->delete();

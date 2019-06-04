@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
@@ -6,8 +8,8 @@ use App\User;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
-use Laravel\Nova\Metrics\PartitionResult;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Nova\Metrics\PartitionResult;
 
 class ShirtSizeBreakdown extends Partition
 {
@@ -18,7 +20,7 @@ class ShirtSizeBreakdown extends Partition
      */
     public function name(): string
     {
-        return Nova::humanize($this->swagType) . ' Sizes';
+        return Nova::humanize($this->swagType).' Sizes';
     }
 
     /**
@@ -36,7 +38,7 @@ class ShirtSizeBreakdown extends Partition
     public function __construct(string $swagType)
     {
         if (! in_array($swagType, ['shirt', 'polo'])) {
-            \Log::error('Invalid swag type given to ShirtSizeBreakdown metric: "' . $swagType . '"');
+            \Log::error('Invalid swag type given to ShirtSizeBreakdown metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
 
             return;
@@ -57,19 +59,19 @@ class ShirtSizeBreakdown extends Partition
         $column = 'shirt' === $this->swagType ? 'shirt_size' : 'polo_size';
 
         return $this->result(
-            User::select($column . ' as size')
-            ->selectRaw('count(' . $column . ') as aggregate')
+            User::select($column.' as size')
+            ->selectRaw('count('.$column.') as aggregate')
             ->when(
                 $request->resourceId,
                 static function (Builder $query, int $resourceId) {
-                        // When on the detail page, look at the particular package
-                        return $query->whereHas('dues', static function (Builder $q) use ($resourceId): Builder {
-                            return $q->where('dues_package_id', $resourceId)->paid();
-                        });
+                    // When on the detail page, look at the particular package
+                    return $query->whereHas('dues', static function (Builder $q) use ($resourceId): Builder {
+                        return $q->where('dues_package_id', $resourceId)->paid();
+                    });
                 },
                 static function (Builder $query): Builder {
-                        // When on the index, just look at all active users
-                        return $query->active();
+                    // When on the index, just look at all active users
+                    return $query->active();
                 }
             )
             ->groupBy('size')
@@ -97,6 +99,6 @@ class ShirtSizeBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return $this->swagType . '-size-breakdown';
+        return $this->swagType.'-size-breakdown';
     }
 }

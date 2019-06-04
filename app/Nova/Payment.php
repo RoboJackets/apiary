@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
@@ -24,7 +26,7 @@ class Payment extends Resource
     public static $model = 'App\\Payment';
 
     /**
-     * Fields to eager load on index
+     * Fields to eager load on index.
      *
      * @var array<string>
      */
@@ -90,7 +92,7 @@ class Payment extends Resource
     }
 
     /**
-     * Timestamp fields
+     * Timestamp fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */

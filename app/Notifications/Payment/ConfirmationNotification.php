@@ -1,22 +1,24 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Notifications\Payment;
 
+use App\User;
+use App\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\Payment\Confirmation as Mailable;
-use App\Payment;
-use App\User;
 
 class ConfirmationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
-     * The payment that was completed
+     * The payment that was completed.
      *
      * @var \App\Payment
      */

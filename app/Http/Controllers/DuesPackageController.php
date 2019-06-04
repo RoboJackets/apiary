@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
@@ -7,9 +9,9 @@ namespace App\Http\Controllers;
 use App\DuesPackage;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
-use App\Http\Resources\DuesPackage as DuesPackageResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Resources\DuesPackage as DuesPackageResource;
 
 class DuesPackageController extends Controller
 {
@@ -155,7 +157,7 @@ class DuesPackageController extends Controller
         ]);
 
         $package = DuesPackage::find($id);
-        if (!$package) {
+        if (! $package) {
             return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);
         }
 

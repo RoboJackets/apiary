@@ -1,22 +1,24 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Notifications\Dues;
 
+use App\User;
+use App\DuesPackage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\Dues\RequestComplete as Mailable;
-use App\DuesPackage;
-use App\User;
 
 class RequestCompleteNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
-     * The dues package that was requested
+     * The dues package that was requested.
      *
      * @var \App\DuesPackage
      */

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Events;
 
@@ -12,7 +14,7 @@ class PaymentSuccess
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The payment of interest
+     * The payment of interest.
      *
      * @var \App\Payment
      */

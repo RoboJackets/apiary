@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App;
 
@@ -33,7 +35,7 @@ class RecruitingVisit extends Model
     // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
 
     /**
-     * Save the model to the database
+     * Save the model to the database.
      *
      * @param array<string,string>  $options
      *
@@ -41,7 +43,7 @@ class RecruitingVisit extends Model
      */
     public function save(array $options = [])
     {
-        if (!isset($this->visit_token) && '' !== $this->visit_token) {
+        if (! isset($this->visit_token) && '' !== $this->visit_token) {
             // Store 20 char secure random token
             $this->visit_token = strtr(base64_encode(random_bytes(15)), '+/=', '-_.');
         }
@@ -70,7 +72,7 @@ class RecruitingVisit extends Model
     }
 
     /**
-     * The attributes that are mass assignable
+     * The attributes that are mass assignable.
      *
      * @var array<string>
      */

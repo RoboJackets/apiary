@@ -16,7 +16,9 @@
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>bootstrap/cache</exclude-pattern>
 
-    <rule ref="PSR12"/>
+    <rule ref="PSR12">
+        <exclude name="PSR12.Operators.OperatorSpacing"/>
+    </rule>
 
     <rule ref="Generic.Arrays.ArrayIndent"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
@@ -134,6 +136,14 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.PHP"/>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <properties>
+            <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
+            <property name="newlinesCountAfterDeclare" value="2"/>
+            <property name="spacesCountAroundEqualsSign" value="0"/>
+        </properties>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints"/>
 

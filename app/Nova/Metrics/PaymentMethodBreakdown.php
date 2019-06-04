@@ -1,12 +1,14 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
 use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
-use Laravel\Nova\Metrics\PartitionResult;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Nova\Metrics\PartitionResult;
 
 class PaymentMethodBreakdown extends Partition
 {

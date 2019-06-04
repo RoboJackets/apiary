@@ -1,18 +1,20 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Mail\Dues;
 
+use App\DuesPackage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\DuesPackage;
 
 class RequestComplete extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
-     * The DuesPackage selected
+     * The DuesPackage selected.
      *
      * @var DuesPackage
      */

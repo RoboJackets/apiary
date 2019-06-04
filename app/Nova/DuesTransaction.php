@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
@@ -8,11 +10,11 @@ use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use App\DuesTransaction as ADT;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
-use App\DuesTransaction as ADT;
 
 class DuesTransaction extends Resource
 {
@@ -132,7 +134,7 @@ class DuesTransaction extends Resource
     }
 
     /**
-     * Timestamp fields
+     * Timestamp fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */

@@ -1,10 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
 namespace App\Http\Resources;
 
 use Auth;
+use Illuminate\Http\Request;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\Event as EventResource;
@@ -12,7 +15,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Permission as PermissionResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
-use Illuminate\Http\Request;
 
 class User extends JsonResource
 {

@@ -1,15 +1,16 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Traits;
 
-use Auth;
 use Log;
+use Auth;
 
 trait AuthorizeInclude
 {
-
     /**
      * Given an array or comma-separated string of requested relationships to be included,
      * return an array of those allowed based on the requester's permissions.
@@ -28,20 +29,20 @@ trait AuthorizeInclude
 
         $allowedInclude = [];
         $uid = Auth::user()->uid;
-        Log::debug(__METHOD__ . ': Checking authorization of ' . $uid . ' for ' . $class);
+        Log::debug(__METHOD__.': Checking authorization of '.$uid.' for '.$class);
 
         // Get permission mapping from the target model class
         $model = new $class();
         if (method_exists($model, 'getRelationshipPermissionMap')) {
             $relationPermMap = $model->getRelationshipPermissionMap();
         } else {
-            Log::notice(__METHOD__ . ': No relationship permission map for ' . $class . ', assuming default naming');
+            Log::notice(__METHOD__.': No relationship permission map for '.$class.', assuming default naming');
             $relationPermMap = [];
         }
 
-        if (!is_string($requestedInclude)) {
+        if (! is_string($requestedInclude)) {
             $type = gettype($requestedInclude);
-            Log::warning(__METHOD__ . ': Received invalid ' . $type . ' of relationships to include');
+            Log::warning(__METHOD__.': Received invalid '.$type.' of relationships to include');
 
             return [];
         }
@@ -58,14 +59,14 @@ trait AuthorizeInclude
                 $permission = $this->camelToDashed($include);
             }
 
-            if (Auth::user()->cant('read-' . $permission)) {
+            if (Auth::user()->cant('read-'.$permission)) {
                 continue;
             }
 
             $allowedInclude[] = $include;
         }
         Log::debug(
-            __METHOD__ . ': Authorized of ' . $uid . ' completed for ' . $class . ' - ' . json_encode($allowedInclude)
+            __METHOD__.': Authorized of '.$uid.' completed for '.$class.' - '.json_encode($allowedInclude)
         );
 
         return $allowedInclude;

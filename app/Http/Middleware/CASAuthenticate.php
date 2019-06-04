@@ -1,29 +1,31 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class CASAuthenticate
 {
     use CreateOrUpdateCASUser;
 
     /**
-     * Auth facade
+     * Auth facade.
      *
      * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 
     /**
-     * CAS library interface
+     * CAS library interface.
      *
      * @var \Subfission\Cas\CasManager
      */

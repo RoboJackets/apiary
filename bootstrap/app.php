@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 /*
 |--------------------------------------------------------------------------
@@ -11,7 +13,7 @@
 |
 */
 
-$realpath = realpath(__DIR__ . '/../');
+$realpath = realpath(__DIR__.'/../');
 
 if (false === $realpath) {
     throw new Exception('realpath returned false');

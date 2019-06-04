@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
@@ -12,8 +14,8 @@ use Laravel\Nova\Lenses\Lens;
 use App\Nova\Filters\Attendable;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Http\Requests\LensRequest;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Nova\Http\Requests\LensRequest;
 
 class RecentInactiveUsers extends Lens
 {
@@ -30,7 +32,7 @@ class RecentInactiveUsers extends Lens
         return $request->withOrdering(
             $request->withFilters(
                 $query->whereDoesntHave('attendee', static function (Builder $q): void {
-                        $q->active();
+                    $q->active();
                 })
                     ->where('attendable_type', 'App\Team')
                     ->whereBetween('created_at', [now()->subDays(14)->startOfDay(), now()])

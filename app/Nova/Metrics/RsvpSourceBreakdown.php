@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
@@ -37,6 +39,7 @@ class RsvpSourceBreakdown extends Partition
                     if (null !== $item->rsvpsource) {
                         return [$item->rsvpsource => $item->aggregate];
                     }
+
                     return ['<unknown>' => $item->aggregate];
                 })
                 ->toArray()

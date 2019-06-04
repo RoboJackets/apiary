@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 return [
 
@@ -26,7 +28,7 @@ return [
     |
     */
 
-    'prefix' => env('HORIZON_PREFIX', env('APP_NAME', 'apiary') . ':' . env('APP_ENV', 'prod') . ':'),
+    'prefix' => env('HORIZON_PREFIX', env('APP_NAME', 'apiary').':'.env('APP_ENV', 'prod').':'),
 
     /*
     |--------------------------------------------------------------------------
