@@ -138,6 +138,8 @@ class User extends Authenticatable
         return implode(' ', [$first, $this->last_name]);
     }
 
+    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
+
     /**
      * Get the preferred first name associated with the User.
      */
@@ -146,6 +148,10 @@ class User extends Authenticatable
         return null !== $this->preferred_name ? $this->preferred_name : $this->first_name;
     }
 
+    // phpcs:enable
+
+    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+
     /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
      */
@@ -153,6 +159,8 @@ class User extends Authenticatable
     {
         $this->attributes['preferred_name'] = $preferred_name === $this->first_name ? null : $preferred_name;
     }
+
+    // phpcs:enable
 
     /**
      * Get the full name associated with the User.
