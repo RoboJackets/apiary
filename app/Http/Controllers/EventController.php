@@ -94,7 +94,7 @@ class EventController extends Controller
         $include = $request->input('include');
         $event = Event::with($this->authorizeInclude(Event::class, $include))->find($id);
 
-        if ($event) {
+        if (null !== $event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)]);
         }
         return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);

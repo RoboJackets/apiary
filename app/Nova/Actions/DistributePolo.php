@@ -34,7 +34,7 @@ class DistributePolo extends Action
                         $model->swag_polo_providedBy = \Auth::user()->id;
                         $model->save();
                     } else {
-                        $this->markAsFailed($model, null);
+                        $this->markAsFailed($model, 'Already picked up');
                         if (1 === count($models)) {
                             return Action::danger('Polo already picked up.');
                         }
@@ -42,7 +42,7 @@ class DistributePolo extends Action
                         $failures[] = $model->id;
                     }
                 } else {
-                    $this->markAsFailed($model, null);
+                    $this->markAsFailed($model, 'Not yet paid');
                     if (1 === count($models)) {
                         return Action::danger('This transaction is not yet paid.');
                     }
@@ -50,7 +50,7 @@ class DistributePolo extends Action
                     $failures[] = $model->id;
                 }
             } else {
-                $this->markAsFailed($model, null);
+                $this->markAsFailed($model, 'Not eligible');
                 if (1 === count($models)) {
                     return Action::danger('The associated package is not eligible for a polo.');
                 }

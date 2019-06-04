@@ -39,8 +39,6 @@ class DashboardController extends Controller
             $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end));
             $firstPayment = date('F j, Y', strtotime($firstPaidTransact->payment->first()->created_at));
         } else {
-            $firstPaidTransact = null;
-            $lastPaidTransact = null;
             $packageEnd = null;
             $firstPayment = null;
         }

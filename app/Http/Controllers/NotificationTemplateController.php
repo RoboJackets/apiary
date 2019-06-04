@@ -69,7 +69,7 @@ class NotificationTemplateController extends Controller
     {
         $include = $request->input('include');
         $nt = NotificationTemplate::with($this->authorizeInclude(NotificationTemplate::class, $include))->find($id);
-        if ($nt) {
+        if (null !== $nt) {
             return response()->json(['status' => 'success', 'template' => new NotificationTemplateResource($nt)]);
         }
         return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);

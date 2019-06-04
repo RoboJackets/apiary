@@ -83,9 +83,11 @@ class RsvpController extends Controller
             cas()->authenticate();
         }
 
+        $source = null;
+
         $now = new \DateTime();
         $end = isset($event->end_time) ? new \DateTime($event->end_time) : null;
-        if ($end && $end <= $now) {
+        if (null !== $end && $end <= $now) {
             return view('rsvp.ended')->with(['event' => $event]);
         }
 
@@ -96,7 +98,7 @@ class RsvpController extends Controller
             $recruitingVisit = RecruitingVisit::where('visit_token', $token)->first();
 
             if (null !== $recruitingVisit && null !== $user) {
-                $recruitingVisit['user_id'] = $user->id;
+                $recruitingVisit->user_id = $user->id;
                 $recruitingVisit->save();
             }
         }

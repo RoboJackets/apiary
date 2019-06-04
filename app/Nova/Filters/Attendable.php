@@ -65,6 +65,8 @@ class Attendable extends Filter
      * @param \Illuminate\Http\Request  $request
      *
      * @return array<string,string>
+     *
+     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function options(Request $request): array
     {

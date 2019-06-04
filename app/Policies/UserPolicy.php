@@ -116,7 +116,7 @@ class UserPolicy
             return false;
         }
 
-        if (! $team->visible && $user->cant('read-teams-hidden')) {
+        if (false === $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
 
@@ -172,7 +172,7 @@ class UserPolicy
      */
     public function detachTeam(User $user, User $userResource, Team $team): bool
     {
-        if (! $team->visible && $user->cant('read-teams-hidden')) {
+        if (false === $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
 

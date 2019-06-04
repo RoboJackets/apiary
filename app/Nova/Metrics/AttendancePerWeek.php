@@ -6,7 +6,7 @@ use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
 use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Metrics\ValueResult;
+use Laravel\Nova\Metrics\TrendResult;
 
 class AttendancePerWeek extends Trend
 {
@@ -15,9 +15,9 @@ class AttendancePerWeek extends Trend
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Laravel\Nova\Metrics\ValueResult
+     * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function calculate(Request $request): ValueResult
+    public function calculate(Request $request): TrendResult
     {
         // This is slightly hacky, but it works. Otherwise, responses with a created date of midnight (as created by
         // some forms) were pushed back to the previous day in the metric. This acts like we're in GMT while

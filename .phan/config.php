@@ -8,8 +8,9 @@ return [
     ],
 
     'exclude_analysis_directory_list' => [
-        'vendor/',
         'database/',
+        'resources/views/vendor/',
+        'vendor/',
     ],
 
     'suppress_issue_types' => [
@@ -20,6 +21,8 @@ return [
         'PhanPluginMixedKeyNoKey',
         'PhanPluginNonBoolInLogicalArith',
         'PhanPossiblyFalseTypeArgumentInternal',
+        'PhanPossiblyNullTypeArgument',
+        'PhanReadOnlyProtectedProperty',
         'PhanUndeclaredClassMethod',
         'PhanUndeclaredFunction',
         'PhanUndeclaredFunctionInCallable',
@@ -39,22 +42,22 @@ return [
 
     'allow_missing_properties' => true,
     'backward_compatibility_checks' => false,
+    'dead_code_detection' => true,
     'enable_include_path_checks' => true,
     'strict_method_checking' => true,
     'strict_param_checking' => true,
     'strict_return_checking' => true,
-    'dead_code_detection' => true,
 
     'plugins' => [
-        'DollarDollarPlugin',
         'AlwaysReturnPlugin',
+        'DollarDollarPlugin',
         'DuplicateArrayKeyPlugin',
+        'DuplicateExpressionPlugin',
+        'NonBoolBranchPlugin',
+        'NonBoolInLogicalArithPlugin',
         'PregRegexCheckerPlugin',
         'PrintfCheckerPlugin',
         'UnreachableCodePlugin',
-        'NonBoolBranchPlugin',
-        'NonBoolInLogicalArithPlugin',
-        'DuplicateExpressionPlugin',
         'UnusedSuppressionPlugin',
     ],
 ];

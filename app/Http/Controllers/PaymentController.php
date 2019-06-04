@@ -114,8 +114,8 @@ class PaymentController extends Controller
         $payable = null;
         $payable_type = null;
         $payable_id = null;
-        $name = null;
-        $amount = null;
+        $name = '';
+        $amount = 0;
         $email = $user->gt_email;
         $transactZeroPmt = null;
 
@@ -167,7 +167,7 @@ class PaymentController extends Controller
             $email = $user->gt_email;
         }
 
-        if (! $payable) {
+        if (null !== $payable) {
             if (\App\DuesTransaction::class === $payable_type) {
                 $payable = DuesTransaction::find($payable_id);
                 $amount = $payable->package->amount;
@@ -183,7 +183,7 @@ class PaymentController extends Controller
             }
         }
 
-        if ($transactZeroPmt) {
+        if (null !== $transactZeroPmt) {
             $payment = $transactZeroPmt->payment[0];
             $payment->unique_id = bin2hex(openssl_random_pseudo_bytes(10));
             $payment->save();

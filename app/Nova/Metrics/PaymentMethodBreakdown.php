@@ -5,7 +5,7 @@ namespace App\Nova\Metrics;
 use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
-use Laravel\Nova\Metrics\ValueResult;
+use Laravel\Nova\Metrics\PartitionResult;
 use Illuminate\Database\Eloquent\Builder;
 
 class PaymentMethodBreakdown extends Partition
@@ -22,9 +22,9 @@ class PaymentMethodBreakdown extends Partition
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Laravel\Nova\Metrics\ValueResult
+     * @return \Laravel\Nova\Metrics\PartitionResult
      */
-    public function calculate(Request $request): ValueResult
+    public function calculate(Request $request): PartitionResult
     {
         return $this->result(
             Payment::where('payable_type', 'App\DuesTransaction')

@@ -99,12 +99,12 @@ class TeamController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int  $id
+     * @param string  $id
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(int $id, Request $request): JsonResponse
+    public function show(string $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $team = Team::with($this->authorizeInclude(Team::class, $include))
@@ -112,11 +112,11 @@ class TeamController extends Controller
             ->orWhere('slug', $id)
             ->first();
 
-        if ($team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
+        if (null !== $team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        if ($team) {
+        if (null !== $team) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)]);
         }
 
@@ -126,11 +126,11 @@ class TeamController extends Controller
     /**
      * Returns a list of all members of the given team.
      *
-     * @param mixed $id integer Team ID
+     * @param string $id integer Team ID
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showMembers($id): JsonResponse
+    public function showMembers(string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
@@ -146,11 +146,11 @@ class TeamController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request  $request
-     * @param int  $id
+     * @param string  $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
@@ -188,11 +188,11 @@ class TeamController extends Controller
      * Updates membership of the given team.
      *
      * @param Request $request
-     * @param mixed $id integer
+     * @param string $id integer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateMembers(Request $request, $id): JsonResponse
+    public function updateMembers(Request $request, string $id): JsonResponse
     {
         $requestingUser = $request->user();
 
@@ -242,11 +242,11 @@ class TeamController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int  $id
+     * @param string  $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if ($team->delete()) {

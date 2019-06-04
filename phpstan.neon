@@ -56,6 +56,4 @@ parameters:
     - '#Cannot call method .+ on Illuminate\\Contracts\\Auth\\Authenticatable\|null#'
     - '#Cannot call method .+ on SquareConnect\\Model\\RetrieveTransactionResponse\|Throwable\|null#'
     - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) should return [a-zA-Z0-9\\]+\\?[a-zA-Z0-9\\]+ but returns [a-zA-Z0-9\\]+\|?\\?[a-zA-Z0-9\\]+#'
-    - '#Parameter .+ of method .+ has invalid typehint type Laravel\\Scout\\Builder#'
     - '#Result of && is always false.#'
-    - '#Return typehint of method .+ has invalid type Laravel\\Scout\\Builder#'

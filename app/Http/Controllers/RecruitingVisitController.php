@@ -79,7 +79,7 @@ class RecruitingVisitController extends Controller
         $include = $request->input('include');
         $requestingUser = $request->user();
         $visit = RecruitingVisit::with($this->authorizeInclude(RecruitingVisit::class, $include))->find($id);
-        if (! $visit) {
+        if (null === $visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
 
@@ -128,7 +128,7 @@ class RecruitingVisitController extends Controller
 
         $visit = RecruitingVisit::with(['recruitingResponses'])->find($id);
 
-        if ($visit) {
+        if (null === $visit) {
             return response()->json(['status' => 'success', 'visit' => new RecruitingVisitResource($visit)]);
         }
 

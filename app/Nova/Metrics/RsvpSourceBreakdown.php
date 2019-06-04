@@ -5,7 +5,7 @@ namespace App\Nova\Metrics;
 use App\Rsvp;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
-use Laravel\Nova\Metrics\ValueResult;
+use Laravel\Nova\Metrics\PartitionResult;
 
 class RsvpSourceBreakdown extends Partition
 {
@@ -21,9 +21,9 @@ class RsvpSourceBreakdown extends Partition
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Laravel\Nova\Metrics\ValueResult
+     * @return \Laravel\Nova\Metrics\PartitionResult
      */
-    public function calculate(Request $request): ValueResult
+    public function calculate(Request $request): PartitionResult
     {
         return $this->result(
             Rsvp::where('event_id', $request->resourceId)

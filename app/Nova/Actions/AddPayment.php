@@ -38,7 +38,7 @@ class AddPayment extends Action
         }
 
         if ($models->first()->is_paid) {
-            $this->markAsFailed($models->first(), null);
+            $this->markAsFailed($models->first(), 'Transaction already paid in full');
 
             return Action::danger(
                 'Transaction already paid in full. New transaction was not saved.'
@@ -46,7 +46,7 @@ class AddPayment extends Action
         }
 
         if (! $models->first()->package->is_active) {
-            $this->markAsFailed($models->first(), null);
+            $this->markAsFailed($models->first(), 'Package no longer active');
 
             return Action::danger(
                 'Associated package is no longer active.'
@@ -55,7 +55,7 @@ class AddPayment extends Action
 
         // shouldn't happen but might if someone is abusing the API
         if (Auth::user()->cant('create-payments-' . $fields->method)) {
-            $this->markAsFailed($models->first(), null);
+            $this->markAsFailed($models->first(), 'Not authorized to accept that payment method');
 
             return Action::danger(
                 'You do not have permission to accept that payment method. Please contact a developer.'
@@ -68,7 +68,7 @@ class AddPayment extends Action
         if ('square' === $fields->method || 'swipe' === $fields->method) {
             if ($entered_amount !== round($package_amount + 3, 2)) {
                 if ($entered_amount === $package_amount) {
-                    $this->markAsFailed($models->first(), null);
+                    $this->markAsFailed($models->first(), 'Missing transaction fee');
 
                     return Action::danger(
                         'Missing expected transaction fee - total should be '
@@ -76,7 +76,7 @@ class AddPayment extends Action
                     );
                 }
 
-                $this->markAsFailed($models->first(), null);
+                $this->markAsFailed($models->first(), 'Unexpected amount (card transaction)');
 
                 return Action::danger(
                     'Unexpected amount ' . $entered_amount . ' entered - should be ' . round($package_amount + 3, 2)
@@ -84,7 +84,7 @@ class AddPayment extends Action
             }
         } else {
             if ($entered_amount !== $package_amount) {
-                $this->markAsFailed($models->first(), null);
+                $this->markAsFailed($models->first(), 'Unexpected amount (non-card transaction)');
 
                 return Action::danger(
                     'Unexpected amount ' . $entered_amount . ' entered - should be ' . $package_amount

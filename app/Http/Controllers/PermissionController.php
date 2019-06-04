@@ -127,11 +127,11 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int  $name
+     * @param string $name
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $name): JsonResponse
+    public function destroy(string $name): JsonResponse
     {
         try {
             $permission = Permission::findByName($name);

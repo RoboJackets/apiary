@@ -18,6 +18,8 @@ class PermissionMiddleware
      * @param mixed $permission Permissions to authenticate
      *
      * @return mixed
+     *
+     * @suppress PhanPluginAlwaysReturnMethod
      */
     public function handle(Request $request, Closure $next, $permission)
     {

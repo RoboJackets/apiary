@@ -101,7 +101,7 @@ class UserController extends Controller
         $this->validate($request, $validations);
 
         $user = new User();
-        if ($request->input('generateToken')) {
+        if (isset($request->input('generateToken'))) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
             unset($validations['generateToken']);
         }
@@ -137,12 +137,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param string $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(int $id, Request $request): JsonResponse
+    public function show(string $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
@@ -169,12 +169,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param string $id
      * @param \Illuminate\Http\Request $request
-     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(int $id, Request $request): JsonResponse
+    public function update(string $id, Request $request): JsonResponse
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
@@ -214,7 +214,7 @@ class UserController extends Controller
         //This is deliberately doing a separate update/save of the user model because `api_token` MUST
         //be prevented from mass assignment, otherwise weird things will happen when you `PUT` a User
         //while authenticating with an API token.
-        if ($request->input('generateToken')
+        if (isset($request->input('generateToken')))
             && ($requestingUser->hasRole('admin') || $requestingUser->id === $user->id)
         ) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -244,11 +244,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param string $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(string $id): JsonResponse
     {
         $user = User::findByIdentifier($id)->first();
         if ($user->delete()) {

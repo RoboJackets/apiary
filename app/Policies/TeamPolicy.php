@@ -120,7 +120,7 @@ class TeamPolicy
             return false;
         }
 
-        if (! $team->visible && $user->cant('read-teams-hidden')) {
+        if (false === $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
 
@@ -145,7 +145,7 @@ class TeamPolicy
      */
     public function attachAnyUser(User $user, Team $team): bool
     {
-        if (! $team->visible && $user->cant('read-teams-hidden')) {
+        if (false === $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
 
@@ -174,7 +174,7 @@ class TeamPolicy
      */
     public function detachUser(User $user, Team $team, User $userResource): bool
     {
-        if (! $team->visible && $user->cant('read-teams-hidden')) {
+        if (false === $team->visible && $user->cant('read-teams-hidden')) {
             return false;
         }
 

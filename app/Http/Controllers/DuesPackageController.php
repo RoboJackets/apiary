@@ -128,7 +128,7 @@ class DuesPackageController extends Controller
     {
         $include = $request->input('include');
         $package = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->find($id);
-        if ($package) {
+        if (null !== $package) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
         }
 

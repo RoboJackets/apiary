@@ -6,7 +6,7 @@ use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
-use Laravel\Nova\Metrics\ValueResult;
+use Laravel\Nova\Metrics\PartitionResult;
 
 class ActiveAttendanceBreakdown extends Partition
 {
@@ -44,9 +44,9 @@ class ActiveAttendanceBreakdown extends Partition
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Laravel\Nova\Metrics\ValueResult
+     * @return \Laravel\Nova\Metrics\PartitionResult
      */
-    public function calculate(Request $request): ValueResult
+    public function calculate(Request $request): PartitionResult
     {
         // If a user is found, this will give "Active" in the active column, otherwise the column will be null
         $query = Attendance::selectRaw('count(distinct gtid) as aggregate')

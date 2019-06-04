@@ -105,7 +105,7 @@ class AttendanceController extends Controller
         $include = $request->input('include');
         $user = auth()->user();
         $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($id);
-        if ($att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
+        if (null !== $att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
 
@@ -210,7 +210,7 @@ class AttendanceController extends Controller
         ]);
 
         $user = auth()->user();
-        $numberOfWeeks = $request->input('range', 52);
+        $numberOfWeeks = intval($request->input('range', '52'));
         $startDay = now()->subWeeks($numberOfWeeks)->startOfDay();
         $endDay = now();
 

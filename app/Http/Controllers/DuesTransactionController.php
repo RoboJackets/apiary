@@ -199,7 +199,7 @@ class DuesTransactionController extends Controller
         $requestingUser = $request->user();
         $include = $request->input('include');
         $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->find($id);
-        if (! $transact) {
+        if (null !== $transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
 
