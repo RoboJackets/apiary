@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use Notification;
+use App\RecruitingVisit;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
@@ -41,4 +43,11 @@ class SendRecruitingEmail extends Action
     {
         return [];
     }
+
+    /**
+     * Indicates if this action is only available on the resource detail view.
+     *
+     * @var bool
+     */
+    public $onlyOnDetail = true;
 }

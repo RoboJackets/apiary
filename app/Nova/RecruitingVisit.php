@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\SendRecruitingEmail;
 
 class RecruitingVisit extends Resource
 {
@@ -174,6 +175,8 @@ class RecruitingVisit extends Resource
      */
     public function actions(Request $request): array
     {
-        return [];
+        return [
+            new SendRecruitingEmail(),
+        ];
     }
 }

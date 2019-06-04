@@ -272,7 +272,7 @@ class DuesTransaction extends Model
      */
     public function scopeCurrent(Builder $query): Builder
     {
-        return $query->whereHas('package', static function (QueryBuilder $q): void {
+        return $query->whereHas('package', static function (Builder $q): void {
             $q->active();
         });
     }
@@ -287,7 +287,7 @@ class DuesTransaction extends Model
      */
     public function scopeAccessCurrent(Builder $query): Builder
     {
-        return $query->whereHas('package', static function (QueryBuilder $q): void {
+        return $query->whereHas('package', static function (Builder $q): void {
             $q->accessActive();
         });
     }
