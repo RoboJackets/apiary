@@ -8,7 +8,6 @@ use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 
 class TotalCollections extends Value
