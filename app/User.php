@@ -145,7 +145,7 @@ class User extends Authenticatable
      */
     public function getPreferredFirstNameAttribute()
     {
-        return null !== $this->preferred_name ? $this->preferred_name : $this->first_name;
+        return $this->preferred_name ?? $this->first_name;
     }
 
     // phpcs:enable
