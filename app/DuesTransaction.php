@@ -7,6 +7,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -191,7 +192,7 @@ class DuesTransaction extends Model
             'dues_transactions.*',
             'dues_packages.eligible_for_shirt',
             'dues_packages.eligible_for_polo'
-        )->join('dues_packages', static function (QueryBuilder $j): void {
+        )->join('dues_packages', static function (JoinClause $j): void {
             $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
                 ->where(static function (QueryBuilder $q): void {
                     $q->where('dues_packages.eligible_for_shirt', '=', true)
@@ -201,7 +202,7 @@ class DuesTransaction extends Model
                                 ->where('dues_transactions.swag_polo_provided', '=', null);
                         });
                 });
-        })->leftJoin('payments', static function (QueryBuilder $j): void {
+        })->leftJoin('payments', static function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                 ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                 ->where('payments.deleted_at', '=', null);
@@ -221,7 +222,7 @@ class DuesTransaction extends Model
     {
         return $query->select(
             'dues_transactions.*'
-        )->leftJoin('payments', static function (QueryBuilder $j): void {
+        )->leftJoin('payments', static function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                     ->where('payments.deleted_at', '=', null);
@@ -252,7 +253,7 @@ class DuesTransaction extends Model
     {
         return $query->select(
             'dues_transactions.*'
-        )->leftJoin('payments', static function (QueryBuilder $j): void {
+        )->leftJoin('payments', static function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                     ->where('payments.deleted_at', '=', null);
