@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      *
      * @return void
+     *
+     * @suppress PhanPluginAlwaysReturnFunction
      */
     public function boot(): void
     {
