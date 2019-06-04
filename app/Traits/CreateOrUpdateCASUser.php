@@ -26,8 +26,7 @@ trait CreateOrUpdateCASUser
         $this->cas = app('cas');
     }
 
-    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
-    public function createOrUpdateCASUser(Request $request)
+    public function createOrUpdateCASUser(Request $request): User
     {
         $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
         // Attributes that will be split by commas when masquerading
@@ -48,13 +47,7 @@ trait CreateOrUpdateCASUser
 
         foreach ($attrs as $attr) {
             if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
-                return response(view(
-                    'errors.generic',
-                    [
-                        'error_code' => 500,
-                        'error_message' => 'Missing/invalid attributes from CAS',
-                    ]
-                ), 500);
+                throw new Exception("Missing attributes from CAS");
             }
         }
 

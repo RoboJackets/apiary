@@ -51,19 +51,7 @@ class CASCheck
         if (! Auth::check()) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser($request);
-                if (is_a($user, \App\User::class)) {
-                    Auth::login($user);
-                } elseif (is_a($user, 'Illuminate\Http\Response')) {
-                    return $user;
-                }
-
-                return response(view(
-                    'errors.generic',
-                    [
-                        'error_code' => 500,
-                        'error_message' => 'Unknown error authenticating with CAS',
-                    ]
-                ), 500);
+                Auth::login($user);
             }
 
             if ($request->ajax() || $request->wantsJson()) {

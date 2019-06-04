@@ -52,19 +52,7 @@ class CASAuthenticate
             // Run the user update only if they don't have an active session
             if ($this->cas->isAuthenticated() && ! Auth::check()) {
                 $user = $this->createOrUpdateCASUser($request);
-                if (is_a($user, \App\User::class)) {
-                    Auth::login($user);
-                } elseif (is_a($user, Response::class)) {
-                    return $user;
-                }
-
-                return response(view(
-                    'errors.generic',
-                    [
-                        'error_code' => 500,
-                        'error_message' => 'Unknown error authenticating with CAS',
-                    ]
-                ), 500);
+                Auth::login($user);
             }
 
             if ($this->cas->isAuthenticated() && Auth::check()) {
