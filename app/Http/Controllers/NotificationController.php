@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -8,8 +10,8 @@ use Carbon\Carbon;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;
 use App\Mail\DatabaseMailable;
-use App\Notifications\GeneralInterestNotification;
 use Illuminate\Http\JsonResponse;
+use App\Notifications\GeneralInterestNotification;
 
 class NotificationController extends Controller
 {

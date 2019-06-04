@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Jobs;
 
@@ -15,7 +17,7 @@ class PushToJedi implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The user that will be sent to JEDI
+     * The user that will be sent to JEDI.
      *
      * @var \App\User
      */
@@ -54,8 +56,8 @@ class PushToJedi implements ShouldQueue
         $client = new Client(
             [
                 'headers' => [
-                    'User-Agent' => 'Apiary on ' . config('app.url'),
-                    'Authorization' => 'Bearer ' . config('jedi.token'),
+                    'User-Agent' => 'Apiary on '.config('app.url'),
+                    'Authorization' => 'Bearer '.config('jedi.token'),
                 ],
             ]
         );
@@ -64,7 +66,7 @@ class PushToJedi implements ShouldQueue
 
         if (200 !== $response->getStatusCode()) {
             throw new \Exception(
-                'Sending data to JEDI failed with HTTP response code ' . $response->getStatusCode()
+                'Sending data to JEDI failed with HTTP response code '.$response->getStatusCode()
             );
         }
     }

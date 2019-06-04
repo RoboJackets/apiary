@@ -1,10 +1,14 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Providers;
 
+use App\User;
 use Laravel\Nova\Nova;
+use Illuminate\Http\Request;
 use App\Nova\Cards\MakeAWish;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\PaymentsPerDay;
@@ -14,8 +18,6 @@ use Laravel\Nova\Events\ServingNova;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use App\User;
-use Illuminate\Http\Request;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -30,8 +32,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
         Nova::serving(static function (ServingNova $event): void {
-            Nova::script('apiary-custom', __DIR__ . '/../../public/js/nova.js');
-            Nova::style('apiary-custom', __DIR__ . '/../../public/css/nova.css');
+            Nova::script('apiary-custom', __DIR__.'/../../public/js/nova.js');
+            Nova::style('apiary-custom', __DIR__.'/../../public/css/nova.css');
         });
     }
 

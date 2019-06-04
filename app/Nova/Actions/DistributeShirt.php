@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
@@ -62,14 +64,14 @@ class DistributeShirt extends Action
             if (count($models) > count($failures)) {
                 return Action::danger(
                     'Some selected dues transactions are currently not eligible for a shirt: '
-                    . implode(', ', $failures)
+                    .implode(', ', $failures)
                 );
             }
 
             return Action::danger('No selected dues transactions are currently eligible for a shirt.');
         }
 
-        return Action::message('T-shirt' . (1 === count($models) ? '' : 's') . ' marked as picked up!');
+        return Action::message('T-shirt'.(1 === count($models) ? '' : 's').' marked as picked up!');
     }
 
     /**

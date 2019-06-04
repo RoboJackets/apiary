@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
@@ -11,11 +13,11 @@ use App\RecruitingVisit;
 use App\RecruitingCampaign;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
 use App\RecruitingCampaignRecipient;
+use Illuminate\Database\QueryException;
 use App\Notifications\GeneralInterestNotification;
 use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Database\QueryException;
 
 class RecruitingCampaignController extends Controller
 {
@@ -84,7 +86,7 @@ class RecruitingCampaignController extends Controller
         $added_recipient_emails = [];
         foreach ($visits as $v) {
             if (in_array($v->recruiting_email, $added_recipient_emails)) {
-                Log::info(self::class . ': Email ' . $v->recruiting_email . ' already in the list. Ignoring.');
+                Log::info(self::class.': Email '.$v->recruiting_email.' already in the list. Ignoring.');
             } else {
                 // Add new recipient
                 $rcr = new RecruitingCampaignRecipient();
@@ -100,7 +102,7 @@ class RecruitingCampaignController extends Controller
                 // Add to array for dedup
                 $added_recipient_emails[] = $v->recruiting_email;
                 Log::info(
-                    self::class . ': Added email ' . $v->recruiting_email . ' as recipient for campaign ' . $rc->id
+                    self::class.': Added email '.$v->recruiting_email.' as recipient for campaign '.$rc->id
                 );
             }
         }
@@ -128,7 +130,7 @@ class RecruitingCampaignController extends Controller
         $rcr_count = $rcr_q->count();
         $rcr_q->chunk(30, static function ($chunk) use (&$delay_hours): void {
             $when = Carbon::now()->addHours($delay_hours);
-            Log::debug(self::class . ': Scheduling chunk for delivery in ' . $delay_hours . ' hours at ' . $when);
+            Log::debug(self::class.': Scheduling chunk for delivery in '.$delay_hours.' hours at '.$when);
 
             // This accepts an array ($chunk) of "Notifiable" models, so it's 30 at once like M A G I C
             Notification::send($chunk, (new GeneralInterestNotification())->delay($when));

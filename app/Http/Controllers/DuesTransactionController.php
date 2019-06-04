@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
@@ -7,10 +9,10 @@ namespace App\Http\Controllers;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
-use App\Http\Resources\DuesTransaction as DuesTransactionResource;
-use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 
 class DuesTransactionController extends Controller
 {
@@ -132,14 +134,14 @@ class DuesTransactionController extends Controller
         //Also set "providedBy" for each swag item to the submitting user
         $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];
         foreach ($swagItems as $item) {
-            if (!$request->exists($item)) {
+            if (! $request->exists($item)) {
                 continue;
             }
 
             $provided = $request->input($item);
             if (null !== $provided && true === $provided) {
                 $now = date('Y-m-d H:i:s');
-                $request->merge([$item => $now, $item . 'By' => $request->user()->id]);
+                $request->merge([$item => $now, $item.'By' => $request->user()->id]);
             } else {
                 //Remove the parameter from the request to avoid overwriting existing data
                 unset($request[$item]);
@@ -239,14 +241,14 @@ class DuesTransactionController extends Controller
         //Also set "providedBy" for each swag item to the submitting user
         $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];
         foreach ($swagItems as $item) {
-            if (!$request->exists($item)) {
+            if (! $request->exists($item)) {
                 continue;
             }
 
             $provided = $request->input($item);
             if (null !== $provided && true === $provided) {
                 $now = date('Y-m-d H:i:s');
-                $request->merge([$item => $now, $item . 'By' => $request->user()->id]);
+                $request->merge([$item => $now, $item.'By' => $request->user()->id]);
             } else {
                 //Remove the parameter from the request to avoid overwriting existing data
                 unset($request[$item]);
@@ -254,7 +256,7 @@ class DuesTransactionController extends Controller
         }
 
         $transact = DuesTransaction::find($id);
-        if (!$transact) {
+        if (! $transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
 
@@ -279,6 +281,7 @@ class DuesTransactionController extends Controller
         if ($transact->delete()) {
             return response()->json(['status' => 'success', 'message' => 'DuesTransaction deleted.']);
         }
+
         return response()->json(
             [
                 'status' => 'error',

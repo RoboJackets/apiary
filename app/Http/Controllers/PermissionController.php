@@ -1,11 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Http\JsonResponse;
 
 class PermissionController extends Controller
 {
@@ -52,7 +54,7 @@ class PermissionController extends Controller
                 } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
                     Bugsnag::notifyException($e);
 
-                    return response()->json(['status' => 'error', 'message' => 'Role ' . $role . ' not found.'], 404);
+                    return response()->json(['status' => 'error', 'message' => 'Role '.$role.' not found.'], 404);
                 } catch (\Throwable $e) {
                     Bugsnag::notifyException($e);
 
@@ -82,7 +84,7 @@ class PermissionController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error',
-                'message' => 'Permission ' . $name . ' not found.',
+                'message' => 'Permission '.$name.' not found.',
             ], 404);
         } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
@@ -111,7 +113,7 @@ class PermissionController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error',
-                'message' => 'Permission ' . $name . ' not found.',
+                'message' => 'Permission '.$name.' not found.',
             ], 404);
         } catch (\Throwable $e) {
             Bugsnag::notifyException($e);
@@ -140,7 +142,7 @@ class PermissionController extends Controller
             Bugsnag::notifyException($e);
 
             return response()->json(['status' => 'error',
-                'message' => 'Permission ' . $name . ' not found.',
+                'message' => 'Permission '.$name.' not found.',
             ], 404);
         } catch (\Throwable $e) {
             Bugsnag::notifyException($e);

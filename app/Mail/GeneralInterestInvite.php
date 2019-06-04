@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Mail;
 
@@ -11,14 +13,14 @@ class GeneralInterestInvite extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The URL for this application
+     * The URL for this application.
      *
      * @var string
      */
     public $app_url;
 
     /**
-     * The token for this recruiting visit
+     * The token for this recruiting visit.
      *
      * @var string
      */

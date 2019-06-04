@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -7,9 +9,9 @@ use App\User;
 use App\Event;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\Event as EventResource;
-use Illuminate\Http\JsonResponse;
 
 class EventController extends Controller
 {
@@ -78,6 +80,7 @@ class EventController extends Controller
         if (is_numeric($event->id)) {
             return response()->json(['status' => 'success', 'event' => $event], 201);
         }
+
         return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
@@ -97,6 +100,7 @@ class EventController extends Controller
         if (null !== $event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)]);
         }
+
         return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
     }
 
@@ -155,6 +159,7 @@ class EventController extends Controller
         if ($event->id) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
         }
+
         return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
@@ -164,6 +169,7 @@ class EventController extends Controller
         if ($event->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }
+
         return response()->json(
             [
                 'status' => 'error',

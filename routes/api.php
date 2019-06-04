@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 use Illuminate\Http\Request;
 
@@ -27,7 +29,7 @@ Route::group(
         ],
     ],
     static function (): void {
-    // Recruiting (Formerly known as FASET)
+        // Recruiting (Formerly known as FASET)
         Route::group(['prefix' => 'recruiting', 'as' => 'recruiting.'], static function (): void {
             Route::post('/', 'RecruitingVisitController@store')->name('store');
             Route::get('/', 'RecruitingVisitController@index')->name('index');
@@ -43,14 +45,14 @@ Route::group(
             Route::put('{id}', 'RecruitingVisitController@update')->name('update');
         });
 
-    // Notifications
+        // Notifications
         Route::group(['prefix' => 'notification', 'as' => 'notification.'], static function (): void {
             Route::get('send', 'NotificationController@sendNotification')->name('send');
             Route::post('manual', 'NotificationController@sendNotificationManual')->name('manual');
             Route::resource('templates', 'NotificationTemplateController', ['except' => ['create', 'edit']]);
         });
 
-    // Misc Resources
+        // Misc Resources
         Route::post('attendance/search', 'AttendanceController@search')->name('attendance.search');
         Route::get('attendance/statistics', 'AttendanceController@statistics')->name('attendance.statistics');
         Route::resource('attendance', 'AttendanceController', ['except' => ['create', 'edit']]);
@@ -60,23 +62,23 @@ Route::group(
         Route::resource('rsvps', 'RsvpController', ['except' => ['create', 'edit']]);
         Route::resource('payments', 'PaymentController', ['except' => ['create', 'edit']]);
 
-    // Dues Packages
+        // Dues Packages
         Route::get('dues/packages/active', 'DuesPackageController@indexActive');
         Route::get('dues/packages/available', 'DuesPackageController@indexAvailable');
         Route::resource('dues/packages', 'DuesPackageController', ['except' => ['create', 'edit']]);
 
-    // Dues Transactions
+        // Dues Transactions
         Route::get('dues/transactions/paid', 'DuesTransactionController@indexPaid');
         Route::get('dues/transactions/pending', 'DuesTransactionController@indexPending');
         Route::get('dues/transactions/pendingSwag', 'DuesTransactionController@indexPendingSwag');
         Route::resource('dues/transactions', 'DuesTransactionController', ['except' => ['create', 'edit']]);
 
-    // Roles + Permissions
+        // Roles + Permissions
         Route::post('roles/{id}/assign', 'RoleController@assign');
         Route::resource('roles', 'RoleController', ['except' => 'create', 'edit']);
         Route::resource('permissions', 'PermissionController', ['except' => 'create', 'edit']);
 
-    // Teams
+        // Teams
         Route::get('teams/{id}/members', 'TeamController@showMembers')->name('teams.show.members');
         Route::post('teams/{id}/members', 'TeamController@updateMembers')->name('teams.update.members');
         Route::resource('teams', 'TeamController', ['except' => ['create', 'edit']]);

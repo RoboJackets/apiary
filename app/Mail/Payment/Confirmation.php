@@ -1,18 +1,20 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Mail\Payment;
 
+use App\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Payment;
 
 class Confirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
-     * The Payment object of interest
+     * The Payment object of interest.
      *
      * @var Payment
      */

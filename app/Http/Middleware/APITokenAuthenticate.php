@@ -1,18 +1,20 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
-use Illuminate\Http\Request;
 
 class APITokenAuthenticate
 {
     /**
-     * Auth factory
+     * Auth factory.
      *
      * @var \Illuminate\Contracts\Auth\Factory
      */

@@ -1,12 +1,14 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Role;
 use Illuminate\Http\JsonResponse;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -195,8 +197,8 @@ class RoleController extends Controller
 
         foreach ($request->input('users') as $user) {
             $dbUser = User::findByIdentifier($user)->first();
-            if (!$dbUser) {
-                return response()->json(['status' => 'error', 'message' => 'User ' . $user . ' not found.'], 422);
+            if (! $dbUser) {
+                return response()->json(['status' => 'error', 'message' => 'User '.$user.' not found.'], 422);
             }
 
             $dbUser->assignRole($role);

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Strings.UnnecessaryStringConcat.Found
 
@@ -9,9 +11,9 @@ use Bugsnag;
 use App\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\Attendance as AttendanceResource;
-use Illuminate\Http\JsonResponse;
 
 class AttendanceController extends Controller
 {
@@ -70,11 +72,11 @@ class AttendanceController extends Controller
                 ->whereDate('created_at', $date);
             $attExistingCount = $attExistingQ->count();
             if ($attExistingCount > 0) {
-                Log::debug(self::class . ': Found a swipe on ' . $date . ' for ' . $gtid . ' - ignoring.');
+                Log::debug(self::class.': Found a swipe on '.$date.' for '.$gtid.' - ignoring.');
                 $att = $attExistingQ->first();
                 $code = 200;
             } else {
-                Log::debug(self::class . ': No swipe yet on ' . $date . ' for ' . $gtid . ' - saving.');
+                Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
                 $att = Attendance::create($request->all());
                 $code = 201;
             }
@@ -235,7 +237,7 @@ class AttendanceController extends Controller
 
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
         $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week,'
-                . 'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
+                .'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
             ->where('attendable_type', 'App\Team')
             ->when($user->cant('read-teams-hidden'), static function ($query): void {
                 $query->where('visible', 1);

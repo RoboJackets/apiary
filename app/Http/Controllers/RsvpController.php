@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
@@ -11,9 +13,9 @@ use App\Event;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
 use App\Http\Resources\Rsvp as RsvpResource;
 use App\Http\Resources\Event as EventResource;
-use Illuminate\Http\JsonResponse;
 
 class RsvpController extends Controller
 {

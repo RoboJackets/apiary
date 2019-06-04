@@ -1,9 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Nova;
 
+use App\User as AU;
 use Laravel\Nova\Panel;
 use App\Nova\Fields\Hidden;
 use Illuminate\Http\Request;
@@ -18,7 +21,6 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
-use App\User as AU;
 
 class User extends Resource
 {
@@ -104,6 +106,7 @@ class User extends Resource
                     if ($request->resourceId === $request->user()->id) {
                         return true;
                     }
+
                     return $request->user()->can('read-users-api_token');
                 }),
 
@@ -137,6 +140,7 @@ class User extends Resource
                     if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-recruiting-visits-own');
                     }
+
                     return $request->user()->can('read-recruiting-visits');
                 }),
 
@@ -145,6 +149,7 @@ class User extends Resource
                     if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-teams-membership-own');
                     }
+
                     return $request->user()->can('read-teams-membership');
                 }),
 
@@ -153,6 +158,7 @@ class User extends Resource
                     if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-attendance-own');
                     }
+
                     return $request->user()->can('read-attendance');
                 }),
 
@@ -161,6 +167,7 @@ class User extends Resource
                     if ($request->resourceId === $request->user()->id) {
                         return $request->user()->can('read-dues-transactions-own');
                     }
+
                     return $request->user()->can('read-dues-transactions');
                 }),
 
@@ -169,7 +176,7 @@ class User extends Resource
     }
 
     /**
-     * Emergency contact information
+     * Emergency contact information.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -191,7 +198,7 @@ class User extends Resource
     }
 
     /**
-     * Swag information
+     * Swag information.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -220,7 +227,7 @@ class User extends Resource
     }
 
     /**
-     * Timestamp fields
+     * Timestamp fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */

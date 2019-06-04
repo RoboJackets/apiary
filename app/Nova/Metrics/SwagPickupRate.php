@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
@@ -18,7 +20,7 @@ class SwagPickupRate extends Value
      */
     public function name(): string
     {
-        return Nova::humanize($this->swagType) . ' Pickup Rate';
+        return Nova::humanize($this->swagType).' Pickup Rate';
     }
 
     /**
@@ -36,7 +38,7 @@ class SwagPickupRate extends Value
     public function __construct(string $swagType)
     {
         if (! in_array($swagType, ['shirt', 'polo'])) {
-            \Log::error('Invalid swag type given to SwagPickupRate metric: "' . $swagType . '"');
+            \Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
 
             return;
@@ -62,7 +64,7 @@ class SwagPickupRate extends Value
         }
 
         $result = DuesTransaction::where('dues_package_id', $request->resourceId)
-            ->selectRaw('`swag_' . $this->swagType . '_provided` is not null as provided')
+            ->selectRaw('`swag_'.$this->swagType.'_provided` is not null as provided')
             ->selectRaw('count(id) as aggregate')
             ->groupBy('provided')
             ->get()
@@ -76,7 +78,7 @@ class SwagPickupRate extends Value
         if ($hasAnyPickedUp && $hasAnyNotPickedUp) {
             $value = sprintf('%.1f', ($result['true'] / ($result['true'] + $result['false']) * 100));
 
-            return $this->result($value . '%');
+            return $this->result($value.'%');
         }
 
         if ($hasAnyPickedUp) {
@@ -97,6 +99,6 @@ class SwagPickupRate extends Value
      */
     public function uriKey(): string
     {
-        return 'swag-pickup-rate-' . $this->swagType;
+        return 'swag-pickup-rate-'.$this->swagType;
     }
 }

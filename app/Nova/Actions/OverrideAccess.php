@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
@@ -36,7 +38,7 @@ class OverrideAccess extends Action
             $user->save();
         }
 
-        return Action::message('The access override' . (1 === count($users) ? ' was' : 's were') . ' saved!');
+        return Action::message('The access override'.(1 === count($users) ? ' was' : 's were').' saved!');
     }
 
     /**

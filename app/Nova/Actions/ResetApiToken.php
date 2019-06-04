@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
@@ -37,7 +39,7 @@ class ResetApiToken extends Action
             $model->save();
         }
 
-        return Action::message('The API token' . (1 === count($models) ? ' was' : 's were') . ' reset!');
+        return Action::message('The API token'.(1 === count($models) ? ' was' : 's were').' reset!');
     }
 
     /**

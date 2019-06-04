@@ -1,12 +1,14 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NotificationTemplate;
 use App\Traits\AuthorizeInclude;
-use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
 
 class NotificationTemplateController extends Controller
 {
@@ -72,6 +74,7 @@ class NotificationTemplateController extends Controller
         if (null !== $nt) {
             return response()->json(['status' => 'success', 'template' => new NotificationTemplateResource($nt)]);
         }
+
         return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
     }
 

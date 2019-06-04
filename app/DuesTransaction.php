@@ -1,10 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -189,7 +191,7 @@ class DuesTransaction extends Model
             'dues_packages.eligible_for_shirt',
             'dues_packages.eligible_for_polo'
         )->join('dues_packages', static function ($j): void {
-                $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
+            $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
                 ->where(static function ($q): void {
                     $q->where('dues_packages.eligible_for_shirt', '=', true)
                         ->where('dues_transactions.swag_shirt_provided', '=', null)
@@ -219,7 +221,7 @@ class DuesTransaction extends Model
         return $query->select(
             'dues_transactions.*'
         )->leftJoin('payments', static function ($j): void {
-                $j->on('payments.payable_id', '=', 'dues_transactions.id')
+            $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                     ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
@@ -250,7 +252,7 @@ class DuesTransaction extends Model
         return $query->select(
             'dues_transactions.*'
         )->leftJoin('payments', static function ($j): void {
-                $j->on('payments.payable_id', '=', 'dues_transactions.id')
+            $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', \App\DuesTransaction::class)
                     ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')

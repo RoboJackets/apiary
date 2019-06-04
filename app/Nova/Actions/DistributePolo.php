@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
@@ -61,14 +63,14 @@ class DistributePolo extends Action
         if (count($failures) > 0) {
             if (count($models) > count($failures)) {
                 return Action::danger(
-                    'Some selected dues transactions are currently not eligible for a polo: ' . implode(', ', $failures)
+                    'Some selected dues transactions are currently not eligible for a polo: '.implode(', ', $failures)
                 );
             }
 
             return Action::danger('No selected dues transactions are currently eligible for a polo.');
         }
 
-        return Action::message('Polo' . (1 === count($models) ? '' : 's') . ' marked as picked up!');
+        return Action::message('Polo'.(1 === count($models) ? '' : 's').' marked as picked up!');
     }
 
     /**

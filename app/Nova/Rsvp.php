@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
@@ -87,7 +89,7 @@ class Rsvp extends Resource
     }
 
     /**
-     * Metadata fields
+     * Metadata fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -106,7 +108,7 @@ class Rsvp extends Resource
     }
 
     /**
-     * Timestamp fields
+     * Timestamp fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */

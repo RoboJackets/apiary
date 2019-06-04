@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
@@ -62,7 +64,7 @@ class NotificationTemplate extends Resource
      * Get the fields displayed by the resource.
      *
      * @param \Illuminate\Http\Request  $request
-
+     *
      * @return array<mixed>
      */
     public function fields(Request $request): array
@@ -78,7 +80,7 @@ class NotificationTemplate extends Resource
     }
 
     /**
-     * Notification fields
+     * Notification fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -96,7 +98,7 @@ class NotificationTemplate extends Resource
     }
 
     /**
-     * Timestamp and creator fields
+     * Timestamp and creator fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */

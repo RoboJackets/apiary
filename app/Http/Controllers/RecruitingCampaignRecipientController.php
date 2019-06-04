@@ -1,11 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\RecruitingCampaignRecipient;
 use App\Http\Resources\RecruitingCampaignRecipient as RCRResource;
-use Illuminate\Http\JsonResponse;
 
 class RecruitingCampaignRecipientController extends Controller
 {

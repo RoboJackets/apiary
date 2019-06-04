@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
@@ -127,7 +129,7 @@ class DuesPackage extends Resource
     }
 
     /**
-     * Swag information
+     * Swag information.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -143,7 +145,7 @@ class DuesPackage extends Resource
     }
 
     /**
-     * Timestamp fields
+     * Timestamp fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -171,40 +173,40 @@ class DuesPackage extends Resource
             (new TotalCollections())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-payments');
+                    return $request->user()->can('read-payments');
                 }),
             (new PaymentMethodBreakdown())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-payments');
+                    return $request->user()->can('read-payments');
                 }),
             (new SwagPickupRate('shirt'))
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-dues-transactions');
                 }),
             (new SwagPickupRate('polo'))
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('shirt'))
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('polo'))
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('shirt'))
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-dues-transactions');
                 }),
             (new ShirtSizeBreakdown('polo'))
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-dues-transactions');
                 }),
         ];
     }

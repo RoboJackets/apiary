@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
@@ -6,14 +8,14 @@ namespace App\Http\Controllers;
 
 use App\Team;
 use App\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
-use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
 
 class TeamController extends Controller
 {

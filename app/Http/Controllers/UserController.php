@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -6,10 +8,10 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\User as UserResource;
-use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -57,7 +59,7 @@ class UserController extends Controller
         if (is_numeric($keyword)) {
             $results = User::where('gtid', $keyword)->get();
         } else {
-            $keyword = '%' . $request->input('keyword') . '%';
+            $keyword = '%'.$request->input('keyword').'%';
             $results = User::where('uid', 'LIKE', $keyword)
                 ->orWhere('first_name', 'LIKE', $keyword)
                 ->orWhere('preferred_name', 'LIKE', $keyword)
@@ -238,6 +240,7 @@ class UserController extends Controller
         if ($user) {
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         }
+
         return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
     }
 
@@ -254,6 +257,7 @@ class UserController extends Controller
         if ($user->delete()) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         }
+
         return response()->json(
             [
                 'status' => 'error',

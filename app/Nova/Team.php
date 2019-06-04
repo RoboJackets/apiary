@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
@@ -16,9 +18,9 @@ use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\TotalTeamMembers;
 use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Metrics\AttendancePerWeek;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
-use Illuminate\Database\Eloquent\Builder;
 
 class Team extends Resource
 {
@@ -88,7 +90,7 @@ class Team extends Resource
     }
 
     /**
-     * Communication-related fields
+     * Communication-related fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -111,7 +113,7 @@ class Team extends Resource
     }
 
     /**
-     * App internal fields
+     * App internal fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -130,7 +132,7 @@ class Team extends Resource
     }
 
     /**
-     * Timestamp fields
+     * Timestamp fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
