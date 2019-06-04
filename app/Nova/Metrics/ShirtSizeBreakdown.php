@@ -70,7 +70,7 @@ class ShirtSizeBreakdown extends Partition
                         return $q->where('dues_package_id', $resourceId)->paid();
                     });
                 },
-                static function (Builder $query): Builder {
+                static function (Eloquent $query): Eloquent {
                     // When on the index, just look at all active users
                     return $query->active();
                 }
