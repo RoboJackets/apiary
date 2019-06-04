@@ -25,7 +25,6 @@ parameters:
     - '#Call to an undefined method [a-zA-Z\|\\]+::view\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::visible\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::where\(\)#'
-    - '#Call to an undefined method [a-zA-Z\|\\]+::whereHas\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::with\(\)#'
     - '#Call to an undefined method Illuminate\\Contracts\\Auth\\Factory|Illuminate\\Contracts\\Auth\\Guard::user\(\)#'
     - '#Call to an undefined method Illuminate\\Contracts\\Routing\\ResponseFactory\|Illuminate\\Http\\Response::json\(\)#'

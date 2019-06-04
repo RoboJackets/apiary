@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DuesTransactionPaymentStatus extends BooleanFilter
 {
@@ -26,9 +25,9 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param array<string>  $value
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return mixed
      */
-    public function apply(Request $request, $query, $value): HasMany
+    public function apply(Request $request, $query, $value)
     {
         return $value['pending'] ? $query->pending() : $query;
     }
