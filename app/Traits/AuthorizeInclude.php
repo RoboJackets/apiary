@@ -1,5 +1,7 @@
 <?php declare(strict_types = 1);
 
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Traits;
 
 use Auth;
@@ -7,7 +9,6 @@ use Log;
 
 trait AuthorizeInclude
 {
-    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
     /**
      * Given an array or comma-separated string of requested relationships to be included,

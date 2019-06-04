@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use Illuminate\Http\JsonResponse;
-use Exception;
+use Throwable;
 
 class RecruitingVisitController extends Controller
 {
@@ -57,7 +57,7 @@ class RecruitingVisitController extends Controller
             Log::info(self::class . 'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
 
             return response()->json(['status' => 'success']);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             Bugsnag::notifyException($e);
             DB::rollback();
             Log::error('New Recruiting visit save failed', ['error' => $e->getMessage()]);
