@@ -9,6 +9,7 @@ use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder as Eloquent;
 use Laravel\Nova\Metrics\PartitionResult;
 
 class ShirtSizeBreakdown extends Partition
@@ -65,7 +66,7 @@ class ShirtSizeBreakdown extends Partition
                 $request->resourceId,
                 static function (Builder $query, int $resourceId) {
                     // When on the detail page, look at the particular package
-                    return $query->whereHas('dues', static function (Builder $q) use ($resourceId): Builder {
+                    return $query->whereHas('dues', static function (Eloquent $q) use ($resourceId): Builder {
                         return $q->where('dues_package_id', $resourceId)->paid();
                     });
                 },
