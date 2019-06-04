@@ -14,7 +14,7 @@ use Laravel\Nova\Lenses\Lens;
 use App\Nova\Filters\Attendable;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\BelongsTo;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use Laravel\Nova\Http\Requests\LensRequest;
 
 class RecentInactiveUsers extends Lens

@@ -9,7 +9,7 @@ namespace App\Nova\Filters;
 use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 
 class DuesTransactionTeam extends Filter
 {
@@ -57,7 +57,7 @@ class DuesTransactionTeam extends Filter
             $teams = Team::where('attendable', 1)
                 ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
-                })->get()->mapWithKeys(static function (array $item): array {
+                })->get()->mapWithKeys(static function ($item): array {
                     return [$item['name'] => $item['id']];
                 })->toArray();
         }

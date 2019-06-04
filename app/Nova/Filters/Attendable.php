@@ -79,7 +79,7 @@ class Attendable extends Filter
             $teams = Team::where('attendable', 1)
                 ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
-                })->get()->mapWithKeys(static function (array $item): array {
+                })->get()->mapWithKeys(static function ($item): array {
                     return ['Team: '.$item['name'] => 'App\Team,'.$item['id']];
                 })->toArray();
         }

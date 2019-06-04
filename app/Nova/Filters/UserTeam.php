@@ -9,7 +9,7 @@ namespace App\Nova\Filters;
 use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 
 class UserTeam extends Filter
 {
