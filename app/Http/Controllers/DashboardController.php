@@ -38,8 +38,11 @@ class DashboardController extends Controller
         if (! $isNew) {
             $firstPaidTransact = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->first();
             $lastPaidTransact = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->get()->last();
-            $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end));
-            $firstPayment = date('F j, Y', strtotime($firstPaidTransact->payment->first()->created_at));
+            $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end->toDateTimeString()));
+            $firstPayment = date(
+                'F j, Y',
+                strtotime($firstPaidTransact->payment->first()->created_at->toDateTimeString())
+            );
         } else {
             $packageEnd = null;
             $firstPayment = null;
