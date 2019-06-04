@@ -140,7 +140,6 @@ class TeamPolicy
      *
      * @param \App\User  $user
      * @param \App\Team  $team
-     * @param \App\User  $userResource
      *
      * @return bool
      */

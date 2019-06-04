@@ -54,7 +54,7 @@ class User extends Resource
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return array<\Laravel\Nova\Fields\Field>
+     * @return array<mixed>
      */
     public function fields(Request $request): array
     {
@@ -327,7 +327,7 @@ class User extends Resource
                 }),
             (new Actions\ResetApiToken())
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
+                    return true;
                 })
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);

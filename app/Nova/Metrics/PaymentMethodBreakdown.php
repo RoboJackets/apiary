@@ -6,6 +6,7 @@ use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\ValueResult;
+use Illuminate\Database\Eloquent\Builder;
 
 class PaymentMethodBreakdown extends Partition
 {

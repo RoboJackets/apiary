@@ -15,6 +15,7 @@ use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use App\User;
+use Illuminate\Http\Request;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {

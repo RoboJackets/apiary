@@ -29,7 +29,7 @@ class AttendanceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -44,7 +44,7 @@ class AttendanceController extends Controller
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -98,7 +98,7 @@ class AttendanceController extends Controller
      * @param \Illuminate\Http\Request  $request
      * @param int $id Resource ID
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, int $id): JsonResponse
     {
@@ -117,7 +117,7 @@ class AttendanceController extends Controller
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request): JsonResponse
     {
@@ -147,7 +147,7 @@ class AttendanceController extends Controller
      * @param \Illuminate\Http\Request  $request
      * @param int $id Resource ID
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {
@@ -182,7 +182,7 @@ class AttendanceController extends Controller
      * @param \Illuminate\Http\Request  $request
      * @param int $id Resource ID
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, int $id): JsonResponse
     {
@@ -201,7 +201,7 @@ class AttendanceController extends Controller
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function statistics(Request $request): JsonResponse
     {

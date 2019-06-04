@@ -18,7 +18,7 @@ class CASAuthenticate
     /**
      * Auth facade
      *
-     * @var \Illuminate\Support\Facades\Auth
+     * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 

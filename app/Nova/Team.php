@@ -51,7 +51,7 @@ class Team extends Resource
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return array<\Laravel\Nova\Fields\Field>
+     * @return array<mixed>
      */
     public function fields(Request $request): array
     {

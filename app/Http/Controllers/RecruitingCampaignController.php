@@ -15,6 +15,7 @@ use App\RecruitingCampaignRecipient;
 use App\Notifications\GeneralInterestNotification;
 use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Database\QueryException;
 
 class RecruitingCampaignController extends Controller
 {
@@ -28,9 +29,9 @@ class RecruitingCampaignController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $request Request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -45,7 +46,7 @@ class RecruitingCampaignController extends Controller
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -116,9 +117,9 @@ class RecruitingCampaignController extends Controller
     /**
      * Create queue entries for email send.
      *
-     * @param $id integer
+     * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function queue(int $id): JsonResponse
     {
@@ -146,7 +147,7 @@ class RecruitingCampaignController extends Controller
      *
      * @param \App\RecruitingCampaign  $recruitingCampaign
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(RecruitingCampaign $recruitingCampaign): JsonResponse
     {
@@ -161,7 +162,7 @@ class RecruitingCampaignController extends Controller
      * @param \Illuminate\Http\Request  $request
      * @param \App\RecruitingCampaign  $recruitingCampaign
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, RecruitingCampaign $recruitingCampaign): JsonResponse
     {
@@ -173,7 +174,7 @@ class RecruitingCampaignController extends Controller
      *
      * @param \App\RecruitingCampaign  $recruitingCampaign
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(RecruitingCampaign $recruitingCampaign): JsonResponse
     {

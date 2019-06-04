@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use Illuminate\Http\JsonResponse;
+use Exception;
 
 class RecruitingVisitController extends Controller
 {
@@ -71,7 +72,7 @@ class RecruitingVisitController extends Controller
      * @param int $id RecruitingVisit ID Number
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -99,7 +100,7 @@ class RecruitingVisitController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int $id RecruitingVisit Id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {

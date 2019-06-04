@@ -93,9 +93,9 @@ class DuesTransaction extends Model
     /**
      * Get the status flag for the Transaction.
      *
-     * @return bool
+     * @return string
      */
-    public function getStatusAttribute(): bool
+    public function getStatusAttribute(): string
     {
         if (null === $this->package || ! $this->package->is_active) {
             return 'expired';

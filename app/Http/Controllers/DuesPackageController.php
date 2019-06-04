@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Database\QueryException;
 
 class DuesPackageController extends Controller
 {
@@ -35,9 +36,9 @@ class DuesPackageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $request Request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -50,9 +51,9 @@ class DuesPackageController extends Controller
     /**
      * Display a listing of active DuesPackages.
      *
-     * @param $request Request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexActive(Request $request): JsonResponse
     {
@@ -65,9 +66,9 @@ class DuesPackageController extends Controller
     /**
      * Display a listing of DuesPackages that are available for purchase.
      *
-     * @param $request Request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexAvailable(Request $request): JsonResponse
     {
@@ -82,9 +83,9 @@ class DuesPackageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -118,10 +119,10 @@ class DuesPackageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $request Request
+     * @param Request $request
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, int $id): JsonResponse
     {
@@ -140,7 +141,7 @@ class DuesPackageController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {
@@ -173,7 +174,7 @@ class DuesPackageController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {

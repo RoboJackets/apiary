@@ -10,6 +10,7 @@ use App\Traits\AuthorizeInclude;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Database\QueryException;
 
 class DuesTransactionController extends Controller
 {
@@ -33,9 +34,9 @@ class DuesTransactionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $request Request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -49,7 +50,9 @@ class DuesTransactionController extends Controller
     /**
      * Display a listing of paid resources.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexPaid(Request $request): JsonResponse
     {
@@ -63,7 +66,9 @@ class DuesTransactionController extends Controller
     /**
      * Display a listing of pending resources.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexPending(Request $request): JsonResponse
     {
@@ -77,7 +82,9 @@ class DuesTransactionController extends Controller
     /**
      * Display a listing of swag pending resources.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexPendingSwag(Request $request): JsonResponse
     {
@@ -95,7 +102,7 @@ class DuesTransactionController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -185,7 +192,7 @@ class DuesTransactionController extends Controller
      * @param int $id
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -216,7 +223,7 @@ class DuesTransactionController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {
@@ -255,10 +262,8 @@ class DuesTransactionController extends Controller
 
         $transact = DuesTransaction::find($transact->id);
         $transact = new DuesTransactionResource($transact);
-        if ($transact) {
-            return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
-        }
-        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+
+        return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
     }
 
     /**
@@ -266,7 +271,7 @@ class DuesTransactionController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {

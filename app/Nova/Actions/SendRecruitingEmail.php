@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Notifications\GeneralInterestNotification;
 
 class SendRecruitingEmail extends Action
 {

@@ -13,8 +13,8 @@ trait AuthorizeInclude
      * Given an array or comma-separated string of requested relationships to be included,
      * return an array of those allowed based on the requester's permissions.
      *
-     * @param $class string Class
-     * @param $requestedInclude array of relationship names
+     * @param string $class Class
+     * @param mixed $requestedInclude array of relationship names
      *
      * @return array<string> relationships to include
      */

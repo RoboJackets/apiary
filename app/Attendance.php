@@ -53,8 +53,8 @@ class Attendance extends Model
     /**
      * Scope query to start at given date.
      *
-     * @param $query mixed
-     * @param $date string Date to start search
+     * @param Builder $query
+     * @param string $date Date to start search
      *
      * @return Builder
      */
@@ -66,8 +66,8 @@ class Attendance extends Model
     /**
      * Scope query to end at given date.
      *
-     * @param $query mixed
-     * @param $date string Date to start search
+     * @param Builder $query
+     * @param string $date Date to start search
      *
      * @return Builder
      */

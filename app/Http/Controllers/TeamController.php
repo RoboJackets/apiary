@@ -13,7 +13,7 @@ use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\View;
+use Illuminate\View\View;
 
 class TeamController extends Controller
 {
@@ -33,7 +33,7 @@ class TeamController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -65,7 +65,7 @@ class TeamController extends Controller
      *
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -102,7 +102,7 @@ class TeamController extends Controller
      * @param int  $id
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -148,7 +148,7 @@ class TeamController extends Controller
      * @param \Illuminate\Http\Request  $request
      * @param int  $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {
@@ -190,7 +190,7 @@ class TeamController extends Controller
      * @param Request $request
      * @param mixed $id integer
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateMembers(Request $request, $id): JsonResponse
     {
@@ -244,7 +244,7 @@ class TeamController extends Controller
      *
      * @param int  $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {

@@ -7,6 +7,7 @@ use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\ValueResult;
+use Illuminate\Database\Eloquent\Builder;
 
 class ShirtSizeBreakdown extends Partition
 {

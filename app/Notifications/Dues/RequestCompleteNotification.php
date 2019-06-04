@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\Dues\RequestComplete as Mailable;
 use App\DuesPackage;
+use App\User;
 
 class RequestCompleteNotification extends Notification implements ShouldQueue
 {
@@ -32,11 +33,11 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param Notifiable  $notifiable
+     * @param User  $notifiable
      *
      * @return array<string>
      */
-    public function via(Notifiable $notifiable): array
+    public function via(User $notifiable): array
     {
         return ['mail'];
     }
@@ -44,11 +45,11 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param Notifiable  $notifiable
+     * @param User  $notifiable
      *
      * @return Mailable
      */
-    public function toMail(Notifiable $notifiable): Mailable
+    public function toMail(User $notifiable): Mailable
     {
         return (new Mailable($this->duesPackage))->to($notifiable->gt_email);
     }
@@ -56,11 +57,11 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param Notifiable  $notifiable
+     * @param User  $notifiable
      *
      * @return array<string,string>
      */
-    public function toArray(Notifiable $notifiable): array
+    public function toArray(User $notifiable): array
     {
         return [];
     }

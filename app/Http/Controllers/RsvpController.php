@@ -33,7 +33,7 @@ class RsvpController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -48,7 +48,7 @@ class RsvpController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -103,7 +103,7 @@ class RsvpController extends Controller
 
         $rsvp = new Rsvp();
 
-        if (null !== user) {
+        if (null !== $user) {
             $rsvp->user_id = $user->id;
         }
 
@@ -124,7 +124,7 @@ class RsvpController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {

@@ -20,7 +20,7 @@ class RecruitingCampaignRecipientController extends Controller
      * @param int $recruiting_campaign_id
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(int $recruiting_campaign_id, Request $request): JsonResponse
     {
@@ -43,7 +43,7 @@ class RecruitingCampaignRecipientController extends Controller
      * @param int $recruiting_campaign_id
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(int $recruiting_campaign_id, Request $request): JsonResponse
     {
@@ -93,7 +93,7 @@ class RecruitingCampaignRecipientController extends Controller
      * @param int $recipient_id
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $campaign_id, int $recipient_id, Request $request): JsonResponse
     {
@@ -120,7 +120,7 @@ class RecruitingCampaignRecipientController extends Controller
      * @param int $recipient_id
      * @param \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(int $campaign_id, int $recipient_id, Request $request): JsonResponse
     {
@@ -149,7 +149,7 @@ class RecruitingCampaignRecipientController extends Controller
      * @param int $campaign_id
      * @param int $recipient_id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $campaign_id, int $recipient_id): JsonResponse
     {

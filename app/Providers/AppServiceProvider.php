@@ -32,10 +32,10 @@ class AppServiceProvider extends ServiceProvider
 
             if (null === auth()->guard('web')->user()) {
                 // Theoretically, this should never happen since we're calling the CAS middleware before this.
-                return abort(401, 'Authentication Required');
+                abort(401, 'Authentication Required');
             }
 
-            return abort(403, 'Forbidden');
+            abort(403, 'Forbidden');
         });
 
         User::observe(UserObserver::class);

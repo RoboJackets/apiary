@@ -19,7 +19,7 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
      *
      * @return array<string>
      */
-    public function via(Notifiable $notifiable): array
+    public function via($notifiable): array
     {
         return ['mail'];
     }
@@ -27,11 +27,11 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param Notifiable  $notifiable
+     * @param mixed $notifiable
      *
      * @return Mailable
      */
-    public function toMail(Notifiable $notifiable): Mailable
+    public function toMail($notifiable): Mailable
     {
         // Get data to pass to the mailable
         $email = $notifiable->routeNotificationForMail();
@@ -49,9 +49,11 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
+     * @param mixed $notifiable
+     *
      * @return array<string,string>
      */
-    public function toArray(Notifiable $notifiable): array
+    public function toArray($notifiable): array
     {
         return [];
     }

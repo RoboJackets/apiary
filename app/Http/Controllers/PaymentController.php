@@ -21,6 +21,7 @@ use SquareConnect\Model\CreateCheckoutRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\QueryException;
 
 class PaymentController extends Controller
 {
@@ -36,7 +37,7 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
     {
@@ -50,7 +51,7 @@ class PaymentController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -116,6 +117,7 @@ class PaymentController extends Controller
         $name = null;
         $amount = null;
         $email = $user->gt_email;
+        $transactZeroPmt = null;
 
         if ('POST' === $request->method()) {
             $this->validate($request, [
@@ -216,7 +218,7 @@ class PaymentController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id): JsonResponse
     {
@@ -234,7 +236,7 @@ class PaymentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {
@@ -264,7 +266,7 @@ class PaymentController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {
@@ -283,7 +285,7 @@ class PaymentController extends Controller
      *
      * @param string $name Name of line item
      * @param int $amount Amount in *whole* dollars to be paid (excluding fees!)
-     * @param string $emailEmail address for Square Receipt
+     * @param string $email Email address for Square Receipt
      * @param \App\Payment $payment Payment Model
      * @param bool $addFee Adds $3.00 transaction fee if true
      *
@@ -344,11 +346,9 @@ class PaymentController extends Controller
             return $e->getMessage();
         }
 
-        if ($checkout) {
-            $payment->checkout_id = $checkout['checkout']['id'];
+        $payment->checkout_id = $checkout['checkout']['id'];
 
-            return redirect($checkout['checkout']['checkout_page_url']);
-        }
+        return redirect($checkout['checkout']['checkout_page_url']);
     }
 
     /**
@@ -431,6 +431,8 @@ class PaymentController extends Controller
         $token = config('payment.square.token');
         Configuration::getDefaultConfiguration()->setAccessToken($token);
 
+        $square_txn = null;
+
         //Query Square API to get authoritative data
         //See #284 for reasoning for loop
         $counter = 0;
@@ -509,7 +511,7 @@ class PaymentController extends Controller
      * @param string $location
      * @param string $server_txn_id
      *
-     * @return \Exception|\SquareConnect\Model\RetrieveTransactionResponse
+     * @return \Throwable|\SquareConnect\Model\RetrieveTransactionResponse
      */
     protected function getSquareTransaction(TransactionsApi $client, string $location, string $server_txn_id)
     {

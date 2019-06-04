@@ -16,7 +16,7 @@ class UserPolicy
      * Determine whether the user can view the user.
      *
      * @param \App\User  $user
-     * @param \App\User  $user
+     * @param \App\User  $userResource
      *
      * @return bool
      */
@@ -53,7 +53,7 @@ class UserPolicy
      * Determine whether the user can update the user.
      *
      * @param \App\User  $user
-     * @param \App\User  $user
+     * @param \App\User  $userResource
      *
      * @return bool
      */
@@ -66,7 +66,7 @@ class UserPolicy
      * Determine whether the user can delete the user.
      *
      * @param \App\User  $user
-     * @param \App\User  $user
+     * @param \App\User  $userResource
      *
      * @return bool
      */
@@ -79,7 +79,7 @@ class UserPolicy
      * Determine whether the user can restore the user.
      *
      * @param \App\User  $user
-     * @param \App\User  $user
+     * @param \App\User  $userResource
      *
      * @return bool
      */
@@ -92,7 +92,7 @@ class UserPolicy
      * Determine whether the user can permanently delete the user.
      *
      * @param \App\User  $user
-     * @param \App\User  $user
+     * @param \App\User  $userResource
      *
      * @return bool
      */
@@ -136,7 +136,6 @@ class UserPolicy
      *
      * @param \App\User  $user
      * @param \App\User  $userResource
-     * @param \App\Team  $team
      *
      * @return bool
      */
