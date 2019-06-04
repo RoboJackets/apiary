@@ -11,6 +11,7 @@ use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Exception;
 
 trait CreateOrUpdateCASUser
 {
@@ -47,7 +48,7 @@ trait CreateOrUpdateCASUser
 
         foreach ($attrs as $attr) {
             if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
-                throw new Exception("Missing attributes from CAS");
+                throw new Exception('Missing attributes from CAS');
             }
         }
 
