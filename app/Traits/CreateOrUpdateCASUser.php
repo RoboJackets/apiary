@@ -9,9 +9,9 @@ namespace App\Traits;
 use Log;
 use App\Team;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Exception;
 
 trait CreateOrUpdateCASUser
 {
