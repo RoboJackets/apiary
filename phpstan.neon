@@ -26,7 +26,6 @@ parameters:
     - '#Call to an undefined method [a-zA-Z\|\\]+::visible\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::where\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::with\(\)#'
-    - '#Call to an undefined method Illuminate\\Database\\Query\\Builder::accessActive\(\)#'
     - '#Call to an undefined method Illuminate\\Contracts\\Auth\\Factory|Illuminate\\Contracts\\Auth\\Guard::user\(\)#'
     - '#Call to an undefined method Illuminate\\Contracts\\Routing\\ResponseFactory\|Illuminate\\Http\\Response::json\(\)#'
     - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::[a-zA-Z]+\(\)#'
