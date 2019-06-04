@@ -101,7 +101,7 @@ class UserController extends Controller
         $this->validate($request, $validations);
 
         $user = new User();
-        if (isset($request->input('generateToken'))) {
+        if (null !== $request->input('generateToken')) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
             unset($validations['generateToken']);
         }

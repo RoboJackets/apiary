@@ -167,7 +167,7 @@ class PaymentController extends Controller
             $email = $user->gt_email;
         }
 
-        if (null !== $payable) {
+        if (null === $payable) {
             if (\App\DuesTransaction::class === $payable_type) {
                 $payable = DuesTransaction::find($payable_id);
                 $amount = $payable->package->amount;
