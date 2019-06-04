@@ -214,7 +214,7 @@ class UserController extends Controller
         //This is deliberately doing a separate update/save of the user model because `api_token` MUST
         //be prevented from mass assignment, otherwise weird things will happen when you `PUT` a User
         //while authenticating with an API token.
-        if (isset($request->input('generateToken'))
+        if (null !== $request->input('generateToken'))
             && ($requestingUser->hasRole('admin') || $requestingUser->id === $user->id)
         ) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
