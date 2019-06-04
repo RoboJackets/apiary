@@ -141,15 +141,15 @@ class User extends Authenticatable
     /**
      * Get the preferred first name associated with the User.
      */
-    public function getPreferredFirstNameAttribute(): string
+    public function getPreferredFirstNameAttribute()
     {
-        return $this->preferred_name ?: $this->first_name;
+        return null !== $this->preferred_name ? $this->preferred_name : $this->first_name;
     }
 
     /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
      */
-    public function setPreferredFirstNameAttribute(string $preferred_name): void
+    public function setPreferredFirstNameAttribute($preferred_name): void
     {
         $this->attributes['preferred_name'] = $preferred_name === $this->first_name ? null : $preferred_name;
     }
