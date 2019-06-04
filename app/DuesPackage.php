@@ -109,8 +109,8 @@ class DuesPackage extends Model
     public function getIsActiveAttribute(): bool
     {
         $now = new \DateTime();
-        $start = new \DateTime($this->effective_start);
-        $end = new \DateTime($this->effective_end);
+        $start = $this->effective_start;
+        $end = $this->effective_end;
 
         return ($start <= $now) && ($end >= $now);
     }
@@ -123,8 +123,8 @@ class DuesPackage extends Model
     public function getIsAccessActiveAttribute(): bool
     {
         $now = new \DateTime();
-        $start = new \DateTime($this->access_start);
-        $end = new \DateTime($this->access_end);
+        $start = $this->access_start;
+        $end = $this->access_end;
 
         return ($start <= $now) && ($end >= $now);
     }
