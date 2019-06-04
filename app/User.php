@@ -220,12 +220,12 @@ class User extends Authenticatable
         return $this->id;
     }
 
-    public function getAuthPassword(): void
+    public function getAuthPassword(): string
     {
         throw new \BadMethodCallException('Not implemented');
     }
 
-    public function getRememberToken(): void
+    public function getRememberToken(): string
     {
         throw new \BadMethodCallException('Not implemented');
     }
@@ -239,7 +239,7 @@ class User extends Authenticatable
 
     // phpcs:enable
 
-    public function getRememberTokenName(): void
+    public function getRememberTokenName(): string
     {
         throw new \BadMethodCallException('Not implemented');
     }
