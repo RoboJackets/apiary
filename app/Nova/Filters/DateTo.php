@@ -8,7 +8,7 @@ namespace App\Nova\Filters;
 
 use R64\Filters\DateFilter;
 use Illuminate\Http\Request;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class DateTo extends DateFilter
 {
