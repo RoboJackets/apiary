@@ -8,7 +8,7 @@ use App\DuesPackage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Swift\Mime\SimpleMimeEntity;
+use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class RequestComplete extends Mailable
 {

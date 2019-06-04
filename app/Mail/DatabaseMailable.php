@@ -6,7 +6,7 @@ use App\NotificationTemplate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Swift\Mime\SimpleMimeEntity;
+use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class DatabaseMailable extends Mailable
 {

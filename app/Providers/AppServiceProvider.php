@@ -20,14 +20,12 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      *
      * @return void
-     *
-     * @suppress PhanPluginAlwaysReturnFunction
      */
     public function boot(): void
     {
         Resource::withoutWrapping();
 
-        Horizon::auth(static function (): bool {
+        Horizon::auth(static function () {
             if (auth()->guard('web')->user() instanceof User
                 && auth()->guard('web')->user()->can('access-horizon')
             ) {

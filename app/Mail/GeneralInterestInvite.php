@@ -7,7 +7,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Swift\Mime\SimpleMimeEntity;
+use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class GeneralInterestInvite extends Mailable
 {
