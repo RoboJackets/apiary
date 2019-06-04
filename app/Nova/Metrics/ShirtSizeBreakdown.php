@@ -64,9 +64,9 @@ class ShirtSizeBreakdown extends Partition
             ->selectRaw('count('.$column.') as aggregate')
             ->when(
                 $request->resourceId,
-                static function (Builder $query, int $resourceId) {
+                static function (Eloquent $query, int $resourceId) {
                     // When on the detail page, look at the particular package
-                    return $query->whereHas('dues', static function (Eloquent $q) use ($resourceId): Builder {
+                    return $query->whereHas('dues', static function (Eloquent $q) use ($resourceId): Eloquent {
                         return $q->where('dues_package_id', $resourceId)->paid();
                     });
                 },

@@ -8,7 +8,7 @@ use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
-use Illuminate\Database\Eloquent\Builder as Eloquent;
+use Illuminate\Database\Query\Builder;
 
 class TotalCollections extends Value
 {
@@ -22,7 +22,7 @@ class TotalCollections extends Value
     public function calculate(Request $request): ValueResult
     {
         $query = Payment::where('payable_type', 'App\DuesTransaction')
-            ->whereIn('payable_id', static function (Eloquent $q) use ($request): void {
+            ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')
                     ->where('dues_package_id', $request->resourceId)

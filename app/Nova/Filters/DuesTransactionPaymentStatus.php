@@ -8,7 +8,7 @@ namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DuesTransactionPaymentStatus extends BooleanFilter
 {
@@ -28,7 +28,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(Request $request, $query, $value): HasMany
     {
         return $value['pending'] ? $query->pending() : $query;
     }

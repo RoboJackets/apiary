@@ -8,6 +8,7 @@ use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 
 class PaymentMethodBreakdown extends Partition
@@ -31,7 +32,7 @@ class PaymentMethodBreakdown extends Partition
         return $this->result(
             Payment::where('payable_type', 'App\DuesTransaction')
                     ->where('amount', '>', 0)
-                    ->whereIn('payable_id', static function (Eloquent $q) use ($request): void {
+                    ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                         $q->select('id')
                             ->from('dues_transactions')
                             ->where('dues_package_id', $request->resourceId)
