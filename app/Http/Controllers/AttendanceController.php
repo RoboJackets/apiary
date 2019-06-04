@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use Illuminate\Database\QueryException;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\QueryException;
 use App\Http\Resources\Attendance as AttendanceResource;
 
 class AttendanceController extends Controller
