@@ -6,6 +6,7 @@ use App\NotificationTemplate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Swift\Mime\SimpleMimeEntity;
 
 class DatabaseMailable extends Mailable
 {
@@ -40,7 +41,7 @@ class DatabaseMailable extends Mailable
         }
 
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(static function (Mailable $message): void {
+            ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
                 $message->getHeaders()
                     ->addTextHeader('Reply-To', 'RoboJackets <info@robojackets.org>');
             })
