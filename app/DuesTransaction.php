@@ -106,7 +106,8 @@ class DuesTransaction extends Model
         }
 
         if (0 === $this->payment->count()
-            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())) {
+            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())
+        ) {
             return 'pending';
         }
 
