@@ -6,9 +6,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRecruitingCampaignRequest;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use App\RecruitingCampaign;
@@ -16,9 +13,12 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use App\RecruitingCampaignRecipient;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\GeneralInterestNotification;
+use App\Http\Requests\StoreRecruitingCampaignRequest;
 use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
 
 class RecruitingCampaignController extends Controller

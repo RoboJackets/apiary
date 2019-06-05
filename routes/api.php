@@ -72,8 +72,8 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
 
         // Roles + Permissions
         Route::post('roles/{id}/assign', 'RoleController@assign');
-        Route::resource('roles', 'RoleController', [ 'edit']);
-        Route::resource('permissions', 'PermissionController', [ 'edit']);
+        Route::resource('roles', 'RoleController', ['edit']);
+        Route::resource('permissions', 'PermissionController', ['edit']);
 
         // Teams
         Route::get('teams/{id}/members', 'TeamController@showMembers')->name('teams.show.members');

@@ -6,13 +6,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateDuesTransactionRequest;
-use App\Http\Requests\StoreDuesTransactionRequest;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreDuesTransactionRequest;
+use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 
@@ -110,7 +110,6 @@ class DuesTransactionController extends Controller
      */
     public function store(StoreDuesTransactionRequest $request): JsonResponse
     {
-
         $user = $request->user();
         $user_id = $request->input('user_id');
 

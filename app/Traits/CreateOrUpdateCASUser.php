@@ -6,12 +6,12 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use Illuminate\Support\Facades\Log;
 use App\Team;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
 
 trait CreateOrUpdateCASUser
 {

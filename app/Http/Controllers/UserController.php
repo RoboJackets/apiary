@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -12,6 +11,7 @@ use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller

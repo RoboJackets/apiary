@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateNotificationTemplateRequest;
-use App\Http\Requests\StoreNotificationTemplateRequest;
 use Illuminate\Http\Request;
 use App\NotificationTemplate;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\StoreNotificationTemplateRequest;
+use App\Http\Requests\UpdateNotificationTemplateRequest;
 use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
 
 class NotificationTemplateController extends Controller
@@ -45,7 +45,6 @@ class NotificationTemplateController extends Controller
      */
     public function store(StoreNotificationTemplateRequest $request): JsonResponse
     {
-
         $nt = new NotificationTemplate();
         $nt->name = $request->input('name');
         $nt->subject = $request->input('subject');
@@ -89,7 +88,6 @@ class NotificationTemplateController extends Controller
         if (! $nt) {
             return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
         }
-
 
         $nt->update($request->all());
 

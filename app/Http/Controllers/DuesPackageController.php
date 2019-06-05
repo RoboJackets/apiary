@@ -6,13 +6,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateDuesPackageRequest;
-use App\Http\Requests\StoreDuesPackageRequest;
 use App\DuesPackage;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreDuesPackageRequest;
+use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 
 class DuesPackageController extends Controller
@@ -93,7 +93,6 @@ class DuesPackageController extends Controller
      */
     public function store(StoreDuesPackageRequest $request): JsonResponse
     {
-
         try {
             $package = DuesPackage::create($request->all());
         } catch (QueryException $e) {
@@ -141,7 +140,6 @@ class DuesPackageController extends Controller
      */
     public function update(UpdateDuesPackageRequest $request, int $id): JsonResponse
     {
-
         $package = DuesPackage::find($id);
         if (! $package) {
             return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);

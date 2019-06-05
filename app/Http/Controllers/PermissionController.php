@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePermissionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Requests\StorePermissionRequest;
 
 class PermissionController extends Controller
 {
@@ -38,7 +38,6 @@ class PermissionController extends Controller
      */
     public function store(StorePermissionRequest $request): JsonResponse
     {
-
         $name = $request->input('name');
         $permission = new Permission();
         $permission->name = $name;

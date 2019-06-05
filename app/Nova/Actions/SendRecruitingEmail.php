@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use Illuminate\Support\Facades\Notification;
 use App\RecruitingVisit;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
@@ -14,6 +13,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\GeneralInterestNotification;
 
 class SendRecruitingEmail extends Action

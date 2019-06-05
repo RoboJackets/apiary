@@ -6,19 +6,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StatisticsAttendanceRequest;
-use App\Http\Requests\UpdateAttendanceRequest;
-use App\Http\Requests\SearchAttendanceRequest;
-use App\Http\Requests\StoreAttendanceRequest;
-use Illuminate\Support\Facades\Log;
 use Bugsnag;
 use App\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\SearchAttendanceRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
+use App\Http\Requests\StatisticsAttendanceRequest;
 use App\Http\Resources\Attendance as AttendanceResource;
 
 class AttendanceController extends Controller
@@ -58,7 +58,6 @@ class AttendanceController extends Controller
     {
         $include = $request->input('include');
         unset($request['include']);
-
 
         $request['recorded_by'] = $request->user()->id;
 
@@ -146,7 +145,6 @@ class AttendanceController extends Controller
      */
     public function update(UpdateAttendanceRequest $request, int $id): JsonResponse
     {
-
         $att = Attendance::find($id);
         if ($att) {
             try {
@@ -193,7 +191,6 @@ class AttendanceController extends Controller
      */
     public function statistics(StatisticsAttendanceRequest $request): JsonResponse
     {
-
         $user = $request->user();
         $numberOfWeeks = intval($request->input('range', '52'));
         $startDay = now()->subWeeks($numberOfWeeks)->startOfDay();

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SendNotificationManualNotificationRequest;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;
 use App\Mail\DatabaseMailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\GeneralInterestNotification;
+use App\Http\Requests\SendNotificationManualNotificationRequest;
 
 class NotificationController extends Controller
 {
@@ -36,7 +36,6 @@ class NotificationController extends Controller
 
     public function sendNotificationManual(SendNotificationManualNotificationRequest $request): JsonResponse
     {
-
         $template_type = $request->input('template_type');
         $template_id = $request->input('template_id');
 

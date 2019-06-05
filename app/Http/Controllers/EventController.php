@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateEventRequest;
-use App\Http\Requests\StoreEventRequest;
 use Bugsnag;
 use App\User;
 use App\Event;
@@ -13,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\Event as EventResource;
 
 class EventController extends Controller
@@ -59,7 +59,6 @@ class EventController extends Controller
         } elseif (! $request->filled('organizer_id')) {
             $request['organizer_id'] = $request->user()->id;
         }
-
 
         try {
             $event = Event::create($request->all());
@@ -128,7 +127,6 @@ class EventController extends Controller
         } elseif (! $request->filled('organizer_id')) {
             $request['organizer_id'] = $request->user()->id;
         }
-
 
         try {
             $event->update($request->all());

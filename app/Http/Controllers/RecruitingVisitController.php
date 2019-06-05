@@ -6,9 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateRecruitingVisitRequest;
 use Throwable;
-use Illuminate\Support\Facades\Validator;
 use App\RecruitingVisit;
 use App\RecruitingResponse;
 use Illuminate\Http\Request;
@@ -16,6 +14,8 @@ use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateRecruitingVisitRequest;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
 class RecruitingVisitController extends Controller

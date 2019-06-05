@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateRecruitingCampaignRecipientRequest;
-use App\Http\Requests\ShowRecruitingCampaignRecipientRequest;
-use App\Http\Requests\StoreRecruitingCampaignRecipientRequest;
-use App\Http\Requests\IndexRecruitingCampaignRecipientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\RecruitingCampaignRecipient;
+use App\Http\Requests\ShowRecruitingCampaignRecipientRequest;
+use App\Http\Requests\IndexRecruitingCampaignRecipientRequest;
+use App\Http\Requests\StoreRecruitingCampaignRecipientRequest;
+use App\Http\Requests\UpdateRecruitingCampaignRecipientRequest;
 use App\Http\Resources\RecruitingCampaignRecipient as RCRResource;
 
 class RecruitingCampaignRecipientController extends Controller
@@ -52,7 +52,6 @@ class RecruitingCampaignRecipientController extends Controller
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $recruiting_campaign_id;
-
 
         // Used for response
         $added_addresses = [];
@@ -97,7 +96,6 @@ class RecruitingCampaignRecipientController extends Controller
         $request['recruiting_campaign_id'] = $campaign_id;
         $request['id'] = $recipient_id;
 
-
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
             ->where('id', $recipient_id)
             ->first();
@@ -118,7 +116,6 @@ class RecruitingCampaignRecipientController extends Controller
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $campaign_id;
-
 
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
             ->where('id', $recipient_id)
