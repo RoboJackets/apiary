@@ -28,16 +28,8 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slack_id' => [
-                'max:21',
-                'nullable',
-                Rule::unique('users'),
-            ],
-            'personal_email' => [
-                'max:255',
-                'nullable',
-                Rule::unique('users'),
-            ],
+            'slack_id' => 'unique:users|max:21|nullable',
+            'personal_email' => 'unique:users|max:255|nullable',
             'first_name' => 'max:127',
             'last_name' => 'max:127',
             'middle_name' => 'max:127',
