@@ -365,7 +365,7 @@ class PaymentController extends Controller
         Log::debug(self::class.' - Found Payment '.$payment_id);
 
         //Check if the payment has already been processed
-        if (0 !== $payment->amount) {
+        if (0 !== intval($payment->amount)) {
             Log::warning(self::class.' - Payment Already Processed '.$payment_id);
 
             return response(
