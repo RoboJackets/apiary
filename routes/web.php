@@ -17,16 +17,12 @@ Route::get('nova/logout', static function () {
     return redirect('logout');
 })->name('nova.logout');
 
-Route::group(['middleware' => 'auth.cas.force'], static function (): void {
+Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('/', 'DashboardController@index')->name('home');
 
-    Route::get('recruiting', static function () {
-        return view('recruiting/form');
-    });
+    Route::view('recruiting', 'recruiting/form');
 
-    Route::get('profile', static function () {
-        return view('users/userprofile', ['id' => auth()->user()->id]);
-    });
+    Route::view('profile', 'users/userprofile', ['id' => auth()->user()->id]);
 
     Route::prefix('dues')->group(static function (): void {
         Route::get('/', static function () {
@@ -37,7 +33,7 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
         Route::post('/pay', 'PaymentController@storeUser')->name('dues.pay');
     });
 
-    Route::group(['prefix' => 'teams', 'as' => 'teams.'], static function (): void {
+    Route::prefix('teams')->name('teams.')->group(static function (): void {
         Route::get('/', 'TeamController@indexWeb')->name('index');
     });
 
@@ -47,9 +43,7 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
 
     Route::prefix('admin')->group(static function (): void {
         Route::prefix('recruiting')->group(static function (): void {
-            Route::get('/', static function () {
-                return view('recruiting/recruitingadmin');
-            })->name('recruitingAdmin');
+            Route::view('/', 'recruiting/recruitingadmin')->name('recruitingAdmin');
 
             Route::get('{id}', static function ($id) {
                 return view('recruiting/recruitingedit', ['id' => $id]);
@@ -57,9 +51,7 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
         });
 
         Route::prefix('users')->group(static function (): void {
-            Route::get('/', static function () {
-                return view('users/useradmin');
-            })->name('usersAdmin');
+            Route::view('/', 'users/useradmin')->name('usersAdmin');
 
             Route::get('{id}', static function ($id) {
                 return view('users/useredit', ['id' => $id]);
@@ -67,13 +59,9 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
         });
 
         Route::prefix('events')->group(static function (): void {
-            Route::get('/', static function () {
-                return view('events.indexAdmin');
-            })->name('events.indexAdmin');
+            Route::view('/', 'events.indexAdmin')->name('events.indexAdmin');
 
-            Route::get('new', static function () {
-                return view('events.create');
-            })->name('events.create');
+            Route::view('new', 'events.create')->name('events.create');
 
             Route::get('{id}', static function ($id) {
                 return view('events.edit', ['id' => $id]);
@@ -81,13 +69,9 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
         });
 
         Route::prefix('dues')->group(static function (): void {
-            Route::get('/', static function () {
-                return view('dues/duesadmin');
-            })->name('duesAdmin');
+            Route::view('/', 'dues/duesadmin')->name('duesAdmin');
 
-            Route::get('/pending', static function () {
-                return view('dues/pendingduesadmin');
-            })->name('pendingDuesAdmin');
+            Route::view('/pending', 'dues/pendingduesadmin')->name('pendingDuesAdmin');
 
             Route::get('{id}', static function ($id) {
                 return view('dues/duestransaction', [
@@ -98,25 +82,17 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
         });
 
         Route::prefix('swag')->group(static function (): void {
-            Route::get('/', static function () {
-                return view('swag.swagIndex');
-            })->name('swag.index');
-            Route::get('pending', static function () {
-                return view('swag.swagPending');
-            })->name('swag.pending');
+            Route::view('/', 'swag.swagIndex')->name('swag.index');
+            Route::view('pending', 'swag.swagPending')->name('swag.pending');
             Route::get('{id}', static function ($id) {
                 return view('swag.swagTransaction', ['id' => $id]);
             })->name('swag.transaction');
         });
 
         Route::prefix('teams')->name('admin.teams.')->group(static function (): void {
-            Route::get('/', static function () {
-                return view('teams.indexAdmin');
-            })->name('index');
+            Route::view('/', 'teams.indexAdmin')->name('index');
 
-            Route::get('create', static function () {
-                return view('teams.create');
-            })->name('create');
+            Route::view('create', 'teams.create')->name('create');
 
             Route::get('{id}', static function ($id) {
                 return view('teams.edit', ['id' => $id]);
@@ -124,21 +100,15 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
         });
 
         Route::prefix('attendance')->group(static function (): void {
-            Route::get('/', static function () {
-                return view('attendance.admin');
-            })->name('attendance.admin');
+            Route::view('/', 'attendance.admin')->name('attendance.admin');
         });
 
         Route::prefix('notification')->name('admin.notification.')->group(static function (): void {
             // Templates
             Route::prefix('templates')->name('templates.')->group(static function (): void {
-                Route::get('/', static function () {
-                    return view('notification.templates.index');
-                })->name('index');
+                Route::view('/', 'notification.templates.index')->name('index');
 
-                Route::get('create', static function () {
-                    return view('notification.templates.create');
-                })->name('create');
+                Route::view('create', 'notification.templates.create')->name('create');
 
                 Route::get('{id}', static function ($id) {
                     return view('notification.templates.edit', ['id' => $id]);
@@ -150,9 +120,7 @@ Route::group(['middleware' => 'auth.cas.force'], static function (): void {
 
 Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check');
 
-Route::get('attendance/kiosk', static function () {
-    return view('attendance.kiosk');
-})->name('attendance.kiosk');
+Route::view('attendance/kiosk', 'attendance.kiosk')->name('attendance.kiosk');
 
 Route::get('login', static function () {
     return redirect()->intended();
@@ -163,6 +131,4 @@ Route::get('logout', static function (): void {
     cas()->logout(config('app.url'));
 })->name('logout');
 
-Route::get('privacy', static function () {
-    return view('privacy');
-});
+Route::view('privacy', 'privacy');
