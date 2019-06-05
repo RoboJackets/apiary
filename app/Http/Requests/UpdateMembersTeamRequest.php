@@ -21,7 +21,7 @@ class UpdateMembersTeamRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function rules(): array
     {
@@ -34,7 +34,7 @@ class UpdateMembersTeamRequest extends FormRequest
     /**
      * Get the error messages for the defined validation rules.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function messages(): array
     {

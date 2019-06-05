@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter,Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
+
 namespace App\Http\Controllers;
 
 use App\RecruitingCampaign;
@@ -96,8 +98,11 @@ class RecruitingCampaignRecipientController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(RecruitingCampaign $campaign, RecruitingCampaignRecipient $recipient, UpdateRecruitingCampaignRecipientRequest $request): JsonResponse
-    {
+    public function update(
+        RecruitingCampaign $campaign,
+        RecruitingCampaignRecipient $recipient,
+        UpdateRecruitingCampaignRecipientRequest $request
+    ): JsonResponse {
         $rcr = $recipient;
 
         $rcr->update($request->all());

@@ -105,7 +105,9 @@ class DuesTransaction extends Model
             return 'expired';
         }
 
-        if (0 === $this->payment->count() || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())) {
+        if (0 === $this->payment->count()
+            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())
+        ) {
             return 'pending';
         }
 

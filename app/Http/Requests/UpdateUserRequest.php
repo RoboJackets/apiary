@@ -21,7 +21,7 @@ class UpdateUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function rules(): array
     {
@@ -30,18 +30,34 @@ class UpdateUserRequest extends FormRequest
                 'max:21',
                 'nullable',
                 Rule::unique('users'),
-            ], 'personal_email' => [
+            ],
+            'personal_email' => [
                 'max:255',
                 'nullable',
                 Rule::unique('users'),
-            ], 'first_name' => 'max:127', 'last_name' => 'max:127', 'middle_name' => 'max:127', 'preferred_name' => 'max:127', 'phone' => 'max:15', 'emergency_contact_name' => 'max:255', 'emergency_contact_phone' => 'max:15', 'join_semester' => 'max:6', 'graduation_semester' => 'max:6', 'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable', 'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable', 'accept_safety_agreement => date|nullable', 'generateToken' => 'boolean', 'gender' => 'string|nullable', 'ethnicity' => 'string|nullable',
+            ],
+            'first_name' => 'max:127',
+            'last_name' => 'max:127',
+            'middle_name' => 'max:127',
+            'preferred_name' => 'max:127',
+            'phone' => 'max:15',
+            'emergency_contact_name' => 'max:255',
+            'emergency_contact_phone' => 'max:15',
+            'join_semester' => 'max:6',
+            'graduation_semester' => 'max:6',
+            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
+            'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
+            'accept_safety_agreement => date|nullable',
+            'generateToken' => 'boolean',
+            'gender' => 'string|nullable',
+            'ethnicity' => 'string|nullable',
         ];
     }
 
     /**
      * Get the error messages for the defined validation rules.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function messages(): array
     {
