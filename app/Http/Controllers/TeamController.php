@@ -44,7 +44,7 @@ class TeamController extends Controller
     {
         $include = $request->input('include');
         $teamsQ = Team::with($this->authorizeInclude(Team::class, $include));
-        $teams = \$request->user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
+        $teams = $request->user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
 
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
     }
@@ -107,7 +107,7 @@ class TeamController extends Controller
             ->orWhere('slug', $id)
             ->first();
 
-        if (null !== $team && false === $team->visible && \$request->user()->cant('read-teams-hidden')) {
+        if (null !== $team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -130,7 +130,7 @@ class TeamController extends Controller
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
 
-        if ($team && false === $team->visible && \$request->user()->cant('read-teams-hidden')) {
+        if ($team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -148,7 +148,7 @@ class TeamController extends Controller
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && \$request->user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -183,7 +183,7 @@ class TeamController extends Controller
 
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && \$request->user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
