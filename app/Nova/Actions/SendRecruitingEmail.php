@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use Notification;
+use Illuminate\Support\Facades\Notification;
 use App\RecruitingVisit;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;

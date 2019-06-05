@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Log;
+use Illuminate\Support\Facades\Log;
 use Bugsnag;
 use App\Attendance;
 use Illuminate\Http\Request;

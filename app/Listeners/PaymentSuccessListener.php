@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Listeners;
 
-use Log;
+use Illuminate\Support\Facades\Log;
 use App\DuesTransaction;
 use App\Events\PaymentSuccess;
 use Spatie\Permission\Models\Role;

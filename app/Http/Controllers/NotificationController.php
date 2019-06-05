@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Mail;
-use Notification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use Illuminate\Http\Request;

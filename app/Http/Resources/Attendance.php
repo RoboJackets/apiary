@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 

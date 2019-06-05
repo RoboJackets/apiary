@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use Log;
+use Illuminate\Support\Facades\Log;
 use App\Team;
 use App\User;
 use Exception;

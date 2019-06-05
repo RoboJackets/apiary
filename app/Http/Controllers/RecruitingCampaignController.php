@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Log;
-use Notification;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use App\RecruitingCampaign;

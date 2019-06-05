@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;

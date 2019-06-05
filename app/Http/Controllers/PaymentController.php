@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Log;
+use Illuminate\Support\Facades\Log;
 use Bugsnag;
 use App\Event;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\Payment;
 use App\DuesTransaction;
 use Illuminate\Http\Request;

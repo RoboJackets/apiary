@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Throwable;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\RecruitingVisit;
 use App\RecruitingResponse;
 use Illuminate\Http\Request;

@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Rsvp;
 use App\User;
 use App\Event;
