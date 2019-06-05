@@ -6,6 +6,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePaymentRequest;
+use App\Http\Requests\StoreUserPaymentRequest;
+use App\Http\Requests\StorePaymentRequest;
 use Illuminate\Support\Facades\Log;
 use Bugsnag;
 use App\Event;
@@ -56,7 +59,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StorePaymentRequest $request): JsonResponse
     {
         $currentUser = auth()->user();
 
@@ -66,13 +69,6 @@ class PaymentController extends Controller
             $request['recorded_by'] = $currentUser->id;
         }
 
-        $this->validate($request, [
-            'amount' => 'required|numeric',
-            'method' => 'required|string|in:cash,check,swipe,square,squarecash',
-            'recorded_by' => 'numeric|exists:users,id',
-            'payable_type' => 'required|string',
-            'payable_id' => 'required|numeric',
-        ]);
 
         if ($currentUser->cant('create-payments-'.$request->input('method'))) {
             return response()->json(
@@ -111,7 +107,7 @@ class PaymentController extends Controller
      *
      * @return mixed
      */
-    public function storeUser(Request $request)
+    public function storeUser(StoreUserPaymentRequest $request)
     {
         $user = auth()->user();
         $payable = null;
@@ -123,10 +119,6 @@ class PaymentController extends Controller
         $transactZeroPmt = null;
 
         if ('POST' === $request->method()) {
-            $this->validate($request, [
-                'payable_type' => 'required|string',
-                'payable_id' => 'required|numeric',
-            ]);
             $payable_type = $request->input('payable_type');
             $payable_id = $request->input('payable_id');
         } else {
@@ -241,13 +233,8 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdatePaymentRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'amount' => 'numeric',
-            'method' => 'string',
-            'recorded_by' => 'numeric|exists:users,id',
-        ]);
 
         $payment = Payment::find($id);
         if (! $payment) {

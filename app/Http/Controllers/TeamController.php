@@ -6,6 +6,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateMembersTeamRequest;
+use App\Http\Requests\UpdateTeamRequest;
+use App\Http\Requests\StoreTeamRequest;
 use App\Team;
 use App\User;
 use Illuminate\View\View;
@@ -69,18 +72,8 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreTeamRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string|unique:teams',
-            'description' => 'string|max:4096|nullable',
-            'attendable' => 'boolean',
-            'visible' => 'boolean',
-            'self_serviceable' => 'boolean',
-            'mailing_list_name' => 'string|nullable',
-            'slack_channel_id' => 'string|nullable',
-            'slack_channel_name' => 'string|nullable',
-        ]);
 
         try {
             $team = Team::create($request->all());
@@ -152,23 +145,13 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        $this->validate($request, [
-            'name' => 'string',
-            'description' => 'string|max:4096|nullable',
-            'attendable' => 'boolean',
-            'hidden' => 'boolean',
-            'self_serviceable' => 'boolean',
-            'mailing_list_name' => 'string|nullable',
-            'slack_channel_id' => 'string|nullable',
-            'slack_channel_name' => 'string|nullable',
-        ]);
 
         try {
             $team->update($request->all());
@@ -194,14 +177,10 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateMembers(Request $request, string $id): JsonResponse
+    public function updateMembers(UpdateMembersTeamRequest $request, string $id): JsonResponse
     {
         $requestingUser = $request->user();
 
-        $this->validate($request, [
-            'user_id' => 'required|numeric|exists:users,id',
-            'action' => 'required|in:join,leave',
-        ]);
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {

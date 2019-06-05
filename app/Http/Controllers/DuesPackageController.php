@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateDuesPackageRequest;
+use App\Http\Requests\StoreDuesPackageRequest;
 use App\DuesPackage;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
@@ -89,16 +91,8 @@ class DuesPackageController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreDuesPackageRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'eligible_for_shirt' => 'boolean',
-            'eligible_for_polo' => 'boolean',
-            'effective_start' => 'required|date',
-            'effective_end' => 'required|date',
-            'cost' => 'required|numeric',
-        ]);
 
         try {
             $package = DuesPackage::create($request->all());
@@ -145,16 +139,8 @@ class DuesPackageController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateDuesPackageRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'string',
-            'eligible_for_shirt' => 'boolean',
-            'eligible_for_polo' => 'boolean',
-            'effective_start' => 'date',
-            'effective_end' => 'date',
-            'cost' => 'numeric',
-        ]);
 
         $package = DuesPackage::find($id);
         if (! $package) {

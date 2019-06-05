@@ -6,6 +6,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StatisticsAttendanceRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
+use App\Http\Requests\SearchAttendanceRequest;
+use App\Http\Requests\StoreAttendanceRequest;
 use Illuminate\Support\Facades\Log;
 use Bugsnag;
 use App\Attendance;
@@ -50,18 +54,11 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreAttendanceRequest $request): JsonResponse
     {
         $include = $request->input('include');
         unset($request['include']);
 
-        $this->validate($request, [
-            'attendable_type' => 'required|string',
-            'attendable_id' => 'required|numeric',
-            'gtid' => 'required|numeric',
-            'source' => 'required|string',
-            'created_at' => 'date',
-        ]);
 
         $request['recorded_by'] = $request->user()->id;
 
@@ -123,15 +120,9 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search(Request $request): JsonResponse
+    public function search(SearchAttendanceRequest $request): JsonResponse
     {
         $include = $request->input('include');
-        $this->validate($request, [
-            'attendable_type' => 'required',
-            'attendable_id' => 'required|numeric',
-            'start_date' => 'date|nullable',
-            'end_date' => 'date|nullable',
-        ]);
 
         $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
             ->where('attendable_id', '=', $request->input('attendable_id'))
@@ -153,15 +144,8 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateAttendanceRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'attendable_type' => 'string',
-            'attendable_id' => 'numeric',
-            'gtid' => 'numeric|exists:users',
-            'source' => 'string',
-            'recorded_by' => 'numeric|exists:users',
-        ]);
 
         $att = Attendance::find($id);
         if ($att) {
@@ -207,11 +191,8 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function statistics(Request $request): JsonResponse
+    public function statistics(StatisticsAttendanceRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'range' => 'numeric|nullable',
-        ]);
 
         $user = auth()->user();
         $numberOfWeeks = intval($request->input('range', '52'));

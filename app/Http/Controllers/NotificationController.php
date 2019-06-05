@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendNotificationManualNotificationRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
@@ -33,13 +34,8 @@ class NotificationController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function sendNotificationManual(Request $request): JsonResponse
+    public function sendNotificationManual(SendNotificationManualNotificationRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'emails' => 'required',
-            'template_type' => 'required|in:recruiting,database',
-            'template_id' => 'numeric',
-        ]);
 
         $template_type = $request->input('template_type');
         $template_id = $request->input('template_id');

@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateDuesTransactionRequest;
+use App\Http\Requests\StoreDuesTransactionRequest;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
@@ -106,15 +108,8 @@ class DuesTransactionController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreDuesTransactionRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'swag_shirt_provided' => 'boolean|nullable',
-            'swag_polo_provided' => 'boolean|nullable',
-            'dues_package_id' => 'required|exists:dues_packages,id',
-            'payment_id' => 'exists:payments,id',
-            'user_id' => 'exists:users,id',
-        ]);
 
         $user = $request->user();
         $user_id = $request->input('user_id');
@@ -227,15 +222,8 @@ class DuesTransactionController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateDuesTransactionRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'swag_shirt_provided' => 'boolean|nullable',
-            'swag_polo_provided' => 'boolean|nullable',
-            'dues_package_id' => 'exists:dues_packages,id',
-            'payment_id' => 'exists:payments,id',
-            'user_id' => 'exists:users,id',
-        ]);
 
         //Translate boolean from client to time/date stamp for DB
         //Also set "providedBy" for each swag item to the submitting user

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -176,7 +177,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(string $id, Request $request): JsonResponse
+    public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
@@ -192,25 +193,7 @@ class UserController extends Controller
         }
 
         //Update only included fields
-        $validatedFields = $this->validate($request, [
-            'slack_id' => ['max:21', 'nullable', Rule::unique('users')->ignore($user->id)],
-            'personal_email' => ['max:255', 'nullable', Rule::unique('users')->ignore($user->id)],
-            'first_name' => 'max:127',
-            'last_name' => 'max:127',
-            'middle_name' => 'max:127',
-            'preferred_name' => 'max:127',
-            'phone' => 'max:15',
-            'emergency_contact_name' => 'max:255',
-            'emergency_contact_phone' => 'max:15',
-            'join_semester' => 'max:6',
-            'graduation_semester' => 'max:6',
-            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'accept_safety_agreement => date|nullable',
-            'generateToken' => 'boolean',
-            'gender' => 'string|nullable',
-            'ethnicity' => 'string|nullable',
-        ]);
+        $validatedFields = $request->validated();
 
         //Generate an API token for the user if requested *AND* the requesting user is self or admin
         //This is deliberately doing a separate update/save of the user model because `api_token` MUST

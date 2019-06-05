@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateEventRequest;
+use App\Http\Requests\StoreEventRequest;
 use Bugsnag;
 use App\User;
 use App\Event;
@@ -48,7 +50,7 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreEventRequest $request): JsonResponse
     {
         // Default to currently logged-in user
         if (isset($request->organizer) && ! $request->filled('organizer_id')) {
@@ -58,15 +60,6 @@ class EventController extends Controller
             $request['organizer_id'] = auth()->user()->id;
         }
 
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'cost' => 'numeric',
-            'allow_anonymous_rsvp' => 'required|boolean',
-            'organizer_id' => 'exists:users,id',
-            'location' => 'max:255',
-            'start_time' => 'date',
-            'end_time' => 'date',
-        ]);
 
         try {
             $event = Event::create($request->all());
@@ -112,7 +105,7 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateEventRequest $request, int $id): JsonResponse
     {
         $requestingUser = $request->user();
         $event = Event::find($id);
@@ -136,15 +129,6 @@ class EventController extends Controller
             $request['organizer_id'] = auth()->user()->id;
         }
 
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'price' => 'numeric|nullable',
-            'allow_anonymous_rsvp' => 'required|boolean',
-            'organizer_id' => 'required|exists:users,id',
-            'location' => 'max:255|nullable',
-            'start_time' => 'date|nullable',
-            'end_time' => 'date|nullable',
-        ]);
 
         try {
             $event->update($request->all());

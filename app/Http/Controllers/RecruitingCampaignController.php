@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRecruitingCampaignRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
@@ -51,14 +52,8 @@ class RecruitingCampaignController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreRecruitingCampaignRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'notification_template_id' => 'numeric|exists:notification_templates,id',
-            'start_date' => 'date|required',
-            'end_date' => 'date|required',
-        ]);
 
         // Store the campaign
         // Yes, I know there is an easier way to do this.

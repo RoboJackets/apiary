@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateNotificationTemplateRequest;
+use App\Http\Requests\StoreNotificationTemplateRequest;
 use Illuminate\Http\Request;
 use App\NotificationTemplate;
 use App\Traits\AuthorizeInclude;
@@ -41,13 +43,8 @@ class NotificationTemplateController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreNotificationTemplateRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'subject' => 'required|string',
-            'body_markdown' => 'required',
-        ]);
 
         $nt = new NotificationTemplate();
         $nt->name = $request->input('name');
@@ -86,17 +83,13 @@ class NotificationTemplateController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateNotificationTemplateRequest $request, int $id): JsonResponse
     {
         $nt = NotificationTemplate::find($id);
         if (! $nt) {
             return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
         }
 
-        $this->validate($request, [
-            'name' => 'string',
-            'subject' => 'string',
-        ]);
 
         $nt->update($request->all());
 

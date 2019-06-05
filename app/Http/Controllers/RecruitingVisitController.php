@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateRecruitingVisitRequest;
 use Throwable;
 use Illuminate\Support\Facades\Validator;
 use App\RecruitingVisit;
@@ -104,13 +105,9 @@ class RecruitingVisitController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateRecruitingVisitRequest $request, int $id): JsonResponse
     {
         //Update only included fields
-        $this->validate($request, [
-            'recruiting_name' => 'max:127',
-            'recruiting_email' => 'email|max:127',
-        ]);
 
         $visit = RecruitingVisit::find($id);
         if (! $visit) {

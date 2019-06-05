@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateRecruitingCampaignRecipientRequest;
+use App\Http\Requests\ShowRecruitingCampaignRecipientRequest;
+use App\Http\Requests\StoreRecruitingCampaignRecipientRequest;
+use App\Http\Requests\IndexRecruitingCampaignRecipientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\RecruitingCampaignRecipient;
@@ -24,13 +28,10 @@ class RecruitingCampaignRecipientController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(int $recruiting_campaign_id, Request $request): JsonResponse
+    public function index(int $recruiting_campaign_id, IndexRecruitingCampaignRecipientRequest $request): JsonResponse
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $recruiting_campaign_id;
-        $this->validate($request, [
-            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
-        ]);
 
         $include = $request->input('include');
         $rcr = RecruitingCampaignRecipient::with($this->authorizeInclude(RecruitingCampaignRecipient::class, $include))
@@ -47,18 +48,11 @@ class RecruitingCampaignRecipientController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(int $recruiting_campaign_id, Request $request): JsonResponse
+    public function store(int $recruiting_campaign_id, StoreRecruitingCampaignRecipientRequest $request): JsonResponse
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $recruiting_campaign_id;
 
-        $this->validate($request, [
-            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
-            'recipients' => 'required|array',
-            'recipients.*.email_address' => 'required',
-            'recipients.*.recruiting_visit_id' => 'exists:recruiting_visits,id|numeric',
-            'recipients.*.user_id' => 'exists:users,id|numeric',
-        ]);
 
         // Used for response
         $added_addresses = [];
@@ -97,16 +91,12 @@ class RecruitingCampaignRecipientController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(int $campaign_id, int $recipient_id, Request $request): JsonResponse
+    public function show(int $campaign_id, int $recipient_id, ShowRecruitingCampaignRecipientRequest $request): JsonResponse
     {
         // Add $r_c_i and $id to $request to allow for validation
         $request['recruiting_campaign_id'] = $campaign_id;
         $request['id'] = $recipient_id;
 
-        $this->validate($request, [
-            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric',
-            'id' => 'exists:recruiting_campaign_recipients,id|numeric',
-        ]);
 
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
             ->where('id', $recipient_id)
@@ -124,17 +114,11 @@ class RecruitingCampaignRecipientController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(int $campaign_id, int $recipient_id, Request $request): JsonResponse
+    public function update(int $campaign_id, int $recipient_id, UpdateRecruitingCampaignRecipientRequest $request): JsonResponse
     {
         // Add $r_c_i to $request to allow for validation of campaign existence
         $request['recruiting_campaign_id'] = $campaign_id;
 
-        $this->validate($request, [
-            'recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric|nullable',
-            'email_address' => 'nullable',
-            'recruiting_visit_id' => 'exists:recruiting_visits,id|nullable',
-            'user_id' => 'exists:users,id|numeric|nullable',
-        ]);
 
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
             ->where('id', $recipient_id)

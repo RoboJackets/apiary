@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePermissionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
@@ -35,11 +36,8 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StorePermissionRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|unique:permissions',
-        ]);
 
         $name = $request->input('name');
         $permission = new Permission();
