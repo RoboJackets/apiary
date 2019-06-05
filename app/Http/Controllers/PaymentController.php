@@ -428,7 +428,7 @@ class PaymentController extends Controller
         $payable = $payment->payable;
         $expected_amount = $payable->getPayableAmount();
         $difference = $amount - $expected_amount;
-        if (3 !== $difference) {
+        if (3 !== intval($difference)) {
             $message = 'Payment Discrepancy Found for ID '.$payment->id;
             $data = ['Expected' => $expected_amount, 'Actual' => $amount, 'Server Txn ID' => $server_txn_id];
             Log::error(self::class.' - '.$message, $data);
