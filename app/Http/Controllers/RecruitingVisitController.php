@@ -31,18 +31,8 @@ class RecruitingVisitController extends Controller
         $this->middleware('permission:update-recruiting-visits', ['only' => ['dedup']]);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreRecruitingVisitRequest $request): JsonResponse
     {
-        Log::debug(self::class.': Pre-Validation Data', $request->all());
-        $validator = Validator::make($request->all(), [
-            'recruiting_email' => 'required|email|max:255',
-            'recruiting_name' => 'required|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'errors' => $validator->errors()->all()], 422);
-        }
-
         try {
             DB::beginTransaction();
             $personInfo = $request->only(['recruiting_email', 'recruiting_name']);

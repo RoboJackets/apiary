@@ -52,14 +52,6 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
-        // Default to currently logged-in user
-        if (isset($request->organizer) && ! $request->filled('organizer_id')) {
-            $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
-            unset($request['organizer']);
-        } elseif (! $request->filled('organizer_id')) {
-            $request['organizer_id'] = $request->user()->id;
-        }
-
         try {
             $event = Event::create($request->all());
         } catch (QueryException $e) {
@@ -119,13 +111,6 @@ class EventController extends Controller
                 'status' => 'error',
                 'message' => 'Forbidden - You do not have permission to update this Event.',
             ], 403);
-        }
-
-        if ($request->filled('organizer') && ! $request->filled('organizer_id')) {
-            $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
-            unset($request['organizer']);
-        } elseif (! $request->filled('organizer_id')) {
-            $request['organizer_id'] = $request->user()->id;
         }
 
         try {

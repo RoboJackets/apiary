@@ -26,7 +26,7 @@ class StorePaymentRequest extends FormRequest
         return [
                 'amount'       => 'required|numeric',
                 'method'       => 'required|string|in:cash,check,swipe,square,squarecash',
-                'recorded_by'  => 'numeric|exists:users,id',
+                'recorded_by'  => 'required|numeric|exists:users,id',
                 'payable_type' => 'required|string',
                 'payable_id'   => 'required|numeric',
                ];

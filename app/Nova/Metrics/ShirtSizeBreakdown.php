@@ -8,6 +8,7 @@ use App\User;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
+use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\PartitionResult;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 
@@ -38,7 +39,7 @@ class ShirtSizeBreakdown extends Partition
     public function __construct(string $swagType)
     {
         if (! in_array($swagType, ['shirt', 'polo'])) {
-            \Log::error('Invalid swag type given to ShirtSizeBreakdown metric: "'.$swagType.'"');
+            Log::error('Invalid swag type given to ShirtSizeBreakdown metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
 
             return;

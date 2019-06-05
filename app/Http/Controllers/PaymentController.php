@@ -61,16 +61,7 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
-        $currentUser = $request->user();
-
-        if (! $request->filled('recorded_by')
-            || $currentUser->cant('update-payments')
-        ) {
-            $request['recorded_by'] = $currentUser->id;
-        }
-
-
-        if ($currentUser->cant('create-payments-'.$request->input('method'))) {
+        if ($request->user()->cant('create-payments-'.$request->input('method'))) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -118,52 +109,45 @@ class PaymentController extends Controller
         $email = $user->gt_email;
         $transactZeroPmt = null;
 
-        if ('POST' === $request->method()) {
-            $payable_type = $request->input('payable_type');
-            $payable_id = $request->input('payable_id');
+        //Find the most recent DuesTransaction without a payment attempt
+        $transactWithoutPmt = DuesTransaction::doesntHave('payment')
+            ->where('user_id', $user->id)
+            ->latest('updated_at')
+            ->first();
+
+        //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
+        // and that have not passed the effective end
+        $transactZeroPmt = DuesTransaction::where('user_id', $user->id)
+            ->whereHas('package', static function (Builder $q): void {
+                $q->whereDate('effective_end', '>=', date('Y-m-d'));
+            })->whereHas('payment', static function (Builder $q): void {
+                $q->where('amount', 0.00);
+                $q->where('method', 'square');
+            })->first();
+
+        if ($transactZeroPmt) {
+            $payable = $transactZeroPmt;
+        } elseif ($transactWithoutPmt) {
+            $payable = $transactWithoutPmt;
         } else {
-            //Assuming DuesTransaction for now
+            //No transactions found without payment
+            Log::warning(self::class.': No eligible Dues Transaction found for payment.');
 
-            //Find the most recent DuesTransaction without a payment attempt
-            $transactWithoutPmt = DuesTransaction::doesntHave('payment')
-                ->where('user_id', $user->id)
-                ->latest('updated_at')
-                ->first();
-
-            //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
-            // and that have not passed the effective end
-            $transactZeroPmt = DuesTransaction::where('user_id', $user->id)
-                ->whereHas('package', static function (Builder $q): void {
-                    $q->whereDate('effective_end', '>=', date('Y-m-d'));
-                })->whereHas('payment', static function (Builder $q): void {
-                    $q->where('amount', 0.00);
-                    $q->where('method', 'square');
-                })->first();
-
-            if ($transactZeroPmt) {
-                $payable = $transactZeroPmt;
-            } elseif ($transactWithoutPmt) {
-                $payable = $transactWithoutPmt;
-            } else {
-                //No transactions found without payment
-                Log::warning(self::class.': No eligible Dues Transaction found for payment.');
-
-                return response(
-                    view(
-                        'errors.generic',
-                        [
-                            'error_code' => 400,
-                            'error_message' => 'No eligible Dues Transaction found for payment.',
-                        ]
-                    ),
-                    400
-                );
-            }
-
-            $amount = $payable->package->cost;
-            $name = 'Dues - '.$payable->package->name;
-            $email = $user->gt_email;
+            return response(
+                view(
+                    'errors.generic',
+                    [
+                        'error_code' => 400,
+                        'error_message' => 'No eligible Dues Transaction found for payment.',
+                    ]
+                ),
+                400
+            );
         }
+
+        $amount = $payable->package->cost;
+        $name = 'Dues - '.$payable->package->name;
+        $email = $user->gt_email;
 
         if (null === $payable) {
             if (\App\DuesTransaction::class === $payable_type) {

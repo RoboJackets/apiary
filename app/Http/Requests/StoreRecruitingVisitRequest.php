@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRecruitingCampaignRecipientRequest extends FormRequest
+class StoreRecruitingVisitRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +24,8 @@ class UpdateRecruitingCampaignRecipientRequest extends FormRequest
     public function rules()
     {
         return [
-                'email_address'          => 'nullable',
-                'user_id'                => 'exists:users,id|numeric|nullable',
-               ];
-    }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [];
+            'recruiting_email' => 'required|email|max:255',
+            'recruiting_name' => 'required|max:255',
+        ];
     }
 }

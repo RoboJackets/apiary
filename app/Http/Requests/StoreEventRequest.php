@@ -27,7 +27,7 @@ class StoreEventRequest extends FormRequest
                 'name'                 => 'required|max:255',
                 'cost'                 => 'numeric',
                 'allow_anonymous_rsvp' => 'required|boolean',
-                'organizer_id'         => 'exists:users,id',
+                'organizer_id'         => 'required|exists:users,id',
                 'location'             => 'max:255',
                 'start_time'           => 'date',
                 'end_time'             => 'date',

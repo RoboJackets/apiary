@@ -27,7 +27,7 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
             Route::post('/', 'RecruitingVisitController@store')->name('store');
             Route::get('/', 'RecruitingVisitController@index')->name('index');
             Route::resource(
-                'campaigns/{campaign_id}/recipients',
+                'campaigns/{campaign}/recipients',
                 'RecruitingCampaignRecipientController')->except('create', 'edit');
             Route::get('campaigns/{id}/queue', 'RecruitingCampaignController@queue')->name('campaigns.queue');
             Route::resource('campaigns', 'RecruitingCampaignController')->except('create', 'edit');
