@@ -127,7 +127,7 @@ class PaymentController extends Controller
 
         if (null !== $transactZeroPmt) {
             $payable = $transactZeroPmt;
-        } elseif ($transactWithoutPmt) {
+        } elseif (null !== $transactWithoutPmt) {
             $payable = $transactWithoutPmt;
         } else {
             //No transactions found without payment
@@ -148,22 +148,6 @@ class PaymentController extends Controller
         $amount = $payable->package->cost;
         $name = 'Dues - '.$payable->package->name;
         $email = $user->gt_email;
-
-        if (null === $payable) {
-            if (\App\DuesTransaction::class === $payable_type) {
-                $payable = DuesTransaction::find($payable_id);
-                $amount = $payable->package->amount;
-                $name = 'Dues - '.$payable->package->name;
-                $email = $user->gt_email;
-            } elseif (\App\Event::class === $payable_type) {
-                $payable = Event::find($payable_id);
-                $amount = $payable->price;
-                $name = 'Event - '.$payable->name;
-                $email = $user->gt_email;
-            } else {
-                return response()->json(['status' => 'error', 'error' => 'Invalid Payable Type'], 400);
-            }
-        }
 
         if (null !== $transactZeroPmt) {
             $payment = $transactZeroPmt->payment[0];

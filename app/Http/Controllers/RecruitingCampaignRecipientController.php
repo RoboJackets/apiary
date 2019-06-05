@@ -79,8 +79,8 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param App\RecruitingCampaign $campaign
-     * @param App\RecruitingCampaignRecipient $recipient
+     * @param \App\RecruitingCampaign $campaign
+     * @param \App\RecruitingCampaignRecipient $recipient
      *
      * @return \Illuminate\Http\JsonResponse
      */
