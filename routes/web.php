@@ -22,9 +22,9 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::view('recruiting', 'recruiting/form');
 
-     Route::get('profile', static function () {
+    Route::get('profile', static function () {
         return view('users/userprofile', ['id' => auth()->user()->id]);
-     });
+    });
 
     Route::prefix('dues')->group(static function (): void {
         Route::get('/', static function () {

@@ -6,12 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdatePaymentRequest;
-use App\Http\Requests\StoreUserPaymentRequest;
-use App\Http\Requests\StorePaymentRequest;
-use Illuminate\Support\Facades\Log;
 use Bugsnag;
-use Illuminate\Support\Facades\Validator;
 use App\Payment;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
@@ -20,11 +15,16 @@ use SquareConnect\ApiException;
 use SquareConnect\Configuration;
 use Illuminate\Http\JsonResponse;
 use SquareConnect\Api\CheckoutApi;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Query\Builder;
 use SquareConnect\Api\TransactionsApi;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StorePaymentRequest;
+use App\Http\Requests\UpdatePaymentRequest;
 use SquareConnect\Model\CreateOrderRequest;
+use App\Http\Requests\StoreUserPaymentRequest;
 use SquareConnect\Model\CreateCheckoutRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
 

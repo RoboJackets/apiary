@@ -6,19 +6,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateMembersTeamRequest;
-use App\Http\Requests\UpdateTeamRequest;
-use App\Http\Requests\StoreTeamRequest;
 use App\Team;
 use App\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\StoreTeamRequest;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\UpdateTeamRequest;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
+use App\Http\Requests\UpdateMembersTeamRequest;
 
 class TeamController extends Controller
 {
@@ -151,7 +151,6 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-
         try {
             $team->update($request->all());
         } catch (QueryException $e) {
@@ -179,7 +178,6 @@ class TeamController extends Controller
     public function updateMembers(UpdateMembersTeamRequest $request, string $id): JsonResponse
     {
         $requestingUser = $request->user();
-
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {

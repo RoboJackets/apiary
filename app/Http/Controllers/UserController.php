@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
-use Illuminate\Database\QueryException;
 use App\Http\Requests\StoreUserRequest;
+use Illuminate\Database\QueryException;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 
