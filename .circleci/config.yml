@@ -6,6 +6,8 @@ jobs:
     working_directory: ~/apiary
     steps:
       - checkout
+      - run: sudo apt update
+      - run: sudo apt install libpng-dev
       - run:
           name: Install PHP extensions
           command: sudo docker-php-ext-install zip pcntl bcmath gd
