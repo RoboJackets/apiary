@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install PHP extensions
+          command: sudo docker-php-ext-install zip
+      - run:
           name: Update Composer
           command: sudo composer self-update
       - restore_cache:
