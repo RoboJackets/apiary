@@ -126,7 +126,7 @@ class DuesTransaction extends Resource
                 ]
             ),
 
-            MorphMany::make('Payments', 'payment', 'App\Nova\Payment')
+            MorphMany::make('Payments', 'payment', 'App\\Nova\\Payment')
                 ->onlyOnDetail(),
 
             new Panel('Metadata', $this->metaFields()),

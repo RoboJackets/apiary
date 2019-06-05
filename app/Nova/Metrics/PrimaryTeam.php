@@ -25,7 +25,7 @@ class PrimaryTeam extends Value
     {
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         $teams = Attendance::where('gtid', $gtid)
-            ->where('attendable_type', 'App\Team');
+            ->where('attendable_type', 'App\\Team');
 
         if (is_numeric($request->range) && $request->range >= -2) {
             // For the purposes of this, the spring semester runs January - April, summer runs May - July, and fall
