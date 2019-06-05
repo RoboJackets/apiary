@@ -21,12 +21,6 @@ Route::middleware('auth:api')->get('v1/user', static function (Request $request)
 });
 
 Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force')->group(
-    [
-        'middleware' => [
-            'auth.token',
-            'auth.cas.force',
-        ],
-    ],
     static function (): void {
         // Recruiting (Formerly known as FASET)
         Route::prefix('recruiting')->name('recruiting.')->group(static function (): void {
