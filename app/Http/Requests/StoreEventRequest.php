@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class StoreEventRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,17 +23,17 @@ class StoreEventRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'name'                 => 'required|max:255',
-                'cost'                 => 'numeric',
-                'allow_anonymous_rsvp' => 'required|boolean',
-                'organizer_id'         => 'required|exists:users,id',
-                'location'             => 'max:255',
-                'start_time'           => 'date',
-                'end_time'             => 'date',
-               ];
+            'name'                 => 'required|max:255',
+            'cost'                 => 'numeric',
+            'allow_anonymous_rsvp' => 'required|boolean',
+            'organizer_id'         => 'required|exists:users,id',
+            'location'             => 'max:255',
+            'start_time'           => 'date',
+            'end_time'             => 'date',
+        ];
     }
 
     /**
@@ -39,7 +41,7 @@ class StoreEventRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

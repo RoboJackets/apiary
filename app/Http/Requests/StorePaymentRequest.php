@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class StorePaymentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,15 +23,15 @@ class StorePaymentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'amount'       => 'required|numeric',
-                'method'       => 'required|string|in:cash,check,swipe,square,squarecash',
-                'recorded_by'  => 'required|numeric|exists:users,id',
-                'payable_type' => 'required|string',
-                'payable_id'   => 'required|numeric',
-               ];
+            'amount'       => 'required|numeric',
+            'method'       => 'required|string|in:cash,check,swipe,square,squarecash',
+            'recorded_by'  => 'required|numeric|exists:users,id',
+            'payable_type' => 'required|string',
+            'payable_id'   => 'required|numeric',
+        ];
     }
 
     /**
@@ -37,7 +39,7 @@ class StorePaymentRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class UpdateNotificationTemplateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,12 +23,12 @@ class UpdateNotificationTemplateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'name'    => 'string',
-                'subject' => 'string',
-               ];
+            'name'    => 'string',
+            'subject' => 'string',
+        ];
     }
 
     /**
@@ -34,7 +36,7 @@ class UpdateNotificationTemplateRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

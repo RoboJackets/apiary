@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class UpdateAttendanceRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,15 +23,15 @@ class UpdateAttendanceRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'attendable_type' => 'string',
-                'attendable_id'   => 'numeric',
-                'gtid'            => 'numeric|exists:users',
-                'source'          => 'string',
-                'recorded_by'     => 'numeric|exists:users',
-               ];
+            'attendable_type' => 'string',
+            'attendable_id'   => 'numeric',
+            'gtid'            => 'numeric|exists:users',
+            'source'          => 'string',
+            'recorded_by'     => 'numeric|exists:users',
+        ];
     }
 
     /**
@@ -37,7 +39,7 @@ class UpdateAttendanceRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

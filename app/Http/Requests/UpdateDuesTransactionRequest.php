@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class UpdateDuesTransactionRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,15 +23,15 @@ class UpdateDuesTransactionRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'swag_shirt_provided' => 'boolean|nullable',
-                'swag_polo_provided'  => 'boolean|nullable',
-                'dues_package_id'     => 'exists:dues_packages,id',
-                'payment_id'          => 'exists:payments,id',
-                'user_id'             => 'exists:users,id',
-               ];
+            'swag_shirt_provided' => 'boolean|nullable',
+            'swag_polo_provided'  => 'boolean|nullable',
+            'dues_package_id'     => 'exists:dues_packages,id',
+            'payment_id'          => 'exists:payments,id',
+            'user_id'             => 'exists:users,id',
+        ];
     }
 
     /**
@@ -37,7 +39,7 @@ class UpdateDuesTransactionRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

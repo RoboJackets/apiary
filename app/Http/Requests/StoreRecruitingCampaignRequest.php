@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class StoreRecruitingCampaignRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,14 +23,14 @@ class StoreRecruitingCampaignRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'name'                     => 'required|string',
-                'notification_template_id' => 'numeric|exists:notification_templates,id',
-                'start_date'               => 'date|required',
-                'end_date'                 => 'date|required',
-               ];
+            'name'                     => 'required|string',
+            'notification_template_id' => 'numeric|exists:notification_templates,id',
+            'start_date'               => 'date|required',
+            'end_date'                 => 'date|required',
+        ];
     }
 
     /**
@@ -36,7 +38,7 @@ class StoreRecruitingCampaignRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

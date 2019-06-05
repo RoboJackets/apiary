@@ -201,7 +201,6 @@ class PaymentController extends Controller
      */
     public function update(UpdatePaymentRequest $request, int $id): JsonResponse
     {
-
         $payment = Payment::find($id);
         if (! $payment) {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
@@ -332,7 +331,8 @@ class PaymentController extends Controller
                         'error_code' => 400,
                         'error_message' => 'Missing parameter in Square response.',
                     ]
-                ), 400
+                ),
+                400
             );
         }
 
@@ -353,7 +353,8 @@ class PaymentController extends Controller
                         'error_code' => 422,
                         'error_message' => 'Invalid Payment ID in Square response.',
                     ]
-                ), 422
+                ),
+                422
             );
         }
 
@@ -386,7 +387,8 @@ class PaymentController extends Controller
                         'error_code' => 409,
                         'error_message' => 'Payment already processed.',
                     ]
-                ), 409
+                ),
+                409
             );
         }
 

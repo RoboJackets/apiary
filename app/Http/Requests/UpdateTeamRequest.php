@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class UpdateTeamRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,18 +23,18 @@ class UpdateTeamRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'name'               => 'string',
-                'description'        => 'string|max:4096|nullable',
-                'attendable'         => 'boolean',
-                'hidden'             => 'boolean',
-                'self_serviceable'   => 'boolean',
-                'mailing_list_name'  => 'string|nullable',
-                'slack_channel_id'   => 'string|nullable',
-                'slack_channel_name' => 'string|nullable',
-               ];
+            'name'               => 'string',
+            'description'        => 'string|max:4096|nullable',
+            'attendable'         => 'boolean',
+            'hidden'             => 'boolean',
+            'self_serviceable'   => 'boolean',
+            'mailing_list_name'  => 'string|nullable',
+            'slack_channel_id'   => 'string|nullable',
+            'slack_channel_name' => 'string|nullable',
+        ];
     }
 
     /**
@@ -40,7 +42,7 @@ class UpdateTeamRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

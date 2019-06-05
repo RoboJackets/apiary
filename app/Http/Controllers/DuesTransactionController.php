@@ -223,7 +223,6 @@ class DuesTransactionController extends Controller
      */
     public function update(UpdateDuesTransactionRequest $request, int $id): JsonResponse
     {
-
         //Translate boolean from client to time/date stamp for DB
         //Also set "providedBy" for each swag item to the submitting user
         $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];

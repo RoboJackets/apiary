@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class UpdatePaymentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,13 +23,13 @@ class UpdatePaymentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'amount'      => 'numeric',
-                'method'      => 'string',
-                'recorded_by' => 'numeric|exists:users,id',
-               ];
+            'amount'      => 'numeric',
+            'method'      => 'string',
+            'recorded_by' => 'numeric|exists:users,id',
+        ];
     }
 
     /**
@@ -35,7 +37,7 @@ class UpdatePaymentRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

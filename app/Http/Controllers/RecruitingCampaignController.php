@@ -54,7 +54,6 @@ class RecruitingCampaignController extends Controller
      */
     public function store(StoreRecruitingCampaignRequest $request): JsonResponse
     {
-
         // Store the campaign
         // Yes, I know there is an easier way to do this.
         $rc = new RecruitingCampaign();

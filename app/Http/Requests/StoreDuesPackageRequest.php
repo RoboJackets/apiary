@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class StoreDuesPackageRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,16 +23,16 @@ class StoreDuesPackageRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-                'name'               => 'required|string',
-                'eligible_for_shirt' => 'boolean',
-                'eligible_for_polo'  => 'boolean',
-                'effective_start'    => 'required|date',
-                'effective_end'      => 'required|date',
-                'cost'               => 'required|numeric',
-               ];
+            'name'               => 'required|string',
+            'eligible_for_shirt' => 'boolean',
+            'eligible_for_polo'  => 'boolean',
+            'effective_start'    => 'required|date',
+            'effective_end'      => 'required|date',
+            'cost'               => 'required|numeric',
+        ];
     }
 
     /**
@@ -38,7 +40,7 @@ class StoreDuesPackageRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

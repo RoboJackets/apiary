@@ -74,7 +74,6 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request): JsonResponse
     {
-
         try {
             $team = Team::create($request->all());
         } catch (QueryException $e) {

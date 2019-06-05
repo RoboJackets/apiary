@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class IndexRecruitingCampaignRecipientRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +23,7 @@ class IndexRecruitingCampaignRecipientRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return ['recruiting_campaign_id' => 'exists:recruiting_campaigns,id|numeric'];
     }
@@ -31,7 +33,7 @@ class IndexRecruitingCampaignRecipientRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }
