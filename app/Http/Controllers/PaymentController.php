@@ -24,6 +24,7 @@ use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use SquareConnect\Model\CreateOrderRequest;
 use SquareConnect\Model\CreateCheckoutRequest;
+use Illuminate\Database\Eloquent\Builder as Eloquent;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
 
 class PaymentController extends Controller
@@ -108,9 +109,9 @@ class PaymentController extends Controller
         //Find Dues Transactions with failed/canceled/abandoned ($0) payment attempts
         // and that have not passed the effective end
         $transactZeroPmt = DuesTransaction::where('user_id', $user->id)
-            ->whereHas('package', static function (Builder $q): void {
+            ->whereHas('package', static function (Eloquent $q): void {
                 $q->whereDate('effective_end', '>=', date('Y-m-d'));
-            })->whereHas('payment', static function (Builder $q): void {
+            })->whereHas('payment', static function (Eloquent $q): void {
                 $q->where('amount', 0.00);
                 $q->where('method', 'square');
             })->first();
