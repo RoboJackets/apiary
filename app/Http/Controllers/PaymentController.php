@@ -61,7 +61,7 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
-        $currentUser = auth()->user();
+        $currentUser = $request->user();
 
         if (! $request->filled('recorded_by')
             || $currentUser->cant('update-payments')
@@ -109,7 +109,7 @@ class PaymentController extends Controller
      */
     public function storeUser(StoreUserPaymentRequest $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
         $payable = null;
         $payable_type = null;
         $payable_id = null;

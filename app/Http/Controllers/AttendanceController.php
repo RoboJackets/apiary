@@ -104,7 +104,7 @@ class AttendanceController extends Controller
     public function show(Request $request, int $id): JsonResponse
     {
         $include = $request->input('include');
-        $user = auth()->user();
+        $user = $request->user();
         $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($id);
         if (null !== $att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
@@ -194,7 +194,7 @@ class AttendanceController extends Controller
     public function statistics(StatisticsAttendanceRequest $request): JsonResponse
     {
 
-        $user = auth()->user();
+        $user = $request->user();
         $numberOfWeeks = intval($request->input('range', '52'));
         $startDay = now()->subWeeks($numberOfWeeks)->startOfDay();
         $endDay = now();

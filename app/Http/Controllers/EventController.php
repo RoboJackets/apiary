@@ -57,7 +57,7 @@ class EventController extends Controller
             $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
             unset($request['organizer']);
         } elseif (! $request->filled('organizer_id')) {
-            $request['organizer_id'] = auth()->user()->id;
+            $request['organizer_id'] = $request->user()->id;
         }
 
 
@@ -126,7 +126,7 @@ class EventController extends Controller
             $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
             unset($request['organizer']);
         } elseif (! $request->filled('organizer_id')) {
-            $request['organizer_id'] = auth()->user()->id;
+            $request['organizer_id'] = $request->user()->id;
         }
 
 

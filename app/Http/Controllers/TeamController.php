@@ -44,19 +44,19 @@ class TeamController extends Controller
     {
         $include = $request->input('include');
         $teamsQ = Team::with($this->authorizeInclude(Team::class, $include));
-        $teams = \Auth::user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
+        $teams = \$request->user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
 
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
     }
 
-    public function indexWeb(): View
+    public function indexWeb(Request $request): View
     {
         $teams = Team::visible()->orderBy('name', 'asc')->get();
 
         // Send only what's necessary to the front end
-        $user_id = auth()->user()->id;
+        $user_id = $request->user()->id;
         // Lazy load the teams relationship and send the `id`s over
-        $user_teams = auth()->user()->teams;
+        $user_teams = $request->user()->teams;
         $user = [
             'id' => $user_id,
             'teams' => $user_teams,
@@ -107,7 +107,7 @@ class TeamController extends Controller
             ->orWhere('slug', $id)
             ->first();
 
-        if (null !== $team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
+        if (null !== $team && false === $team->visible && \$request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -125,12 +125,12 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showMembers(string $id): JsonResponse
+    public function showMembers(Request $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
 
-        if ($team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
+        if ($team && false === $team->visible && \$request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -148,7 +148,7 @@ class TeamController extends Controller
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && \$request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -183,7 +183,7 @@ class TeamController extends Controller
 
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && \$request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 

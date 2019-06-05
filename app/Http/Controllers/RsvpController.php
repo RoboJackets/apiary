@@ -80,8 +80,8 @@ class RsvpController extends Controller
     {
         // Get the user to store, if present
         // If not present and required, redirect to CAS
-        $user = auth()->user();
-        if (! $event->allow_anonymous_rsvp && ! Auth::check()) {
+        $user = $request->user();
+        if (! $event->allow_anonymous_rsvp && ! $request->user()) {
             cas()->authenticate();
         }
 
