@@ -60,7 +60,7 @@ class RecentInactiveUsers extends Lens
                     return $this->attendee ? '—' : $gtid;
                 }),
 
-            BelongsTo::make('User', 'attendee', User::class),
+            BelongsTo::make('User', 'attendee', \App\Nova\User::class),
 
             MorphTo::make('Attended', 'attendable')
                 ->types([

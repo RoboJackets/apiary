@@ -7,9 +7,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\RecruitingCampaign;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\RecruitingCampaignRecipient;
-use App\Http\Requests\IndexRecruitingCampaignRecipientRequest;
 use App\Http\Requests\StoreRecruitingCampaignRecipientRequest;
 use App\Http\Requests\UpdateRecruitingCampaignRecipientRequest;
 use App\Http\Resources\RecruitingCampaignRecipient as RCRResource;
