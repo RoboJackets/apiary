@@ -93,11 +93,11 @@ class PaymentController extends Controller
     /**
      * Handles payment request from user-facing UI.
      *
-     * @param \App\Http\Requests\StoreUserPaymentRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return mixed
      */
-    public function storeUser(StoreUserPaymentRequest $request)
+    public function storeUser(Request $request)
     {
         $user = $request->user();
 
@@ -287,21 +287,11 @@ class PaymentController extends Controller
             'redirect_url' => route('payments.complete'),
         ]);
 
-        try {
-            Configuration::getDefaultConfiguration()->setAccessToken($token);
-            $checkout = $api->createCheckout($location, $checkout_request);
-        } catch (ApiException $e) {
-            Bugsnag::notifyException($e);
-            $message = $e->getResponseBody()->errors[0]->detail;
-
-            return $message;
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return $e->getMessage();
-        }
+        Configuration::getDefaultConfiguration()->setAccessToken($token);
+        $checkout = $api->createCheckout($location, $checkout_request);
 
         $payment->checkout_id = $checkout['checkout']['id'];
+        $payment->save();
 
         return redirect($checkout['checkout']['checkout_page_url']);
     }
