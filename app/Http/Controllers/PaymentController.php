@@ -151,10 +151,10 @@ class PaymentController extends Controller
                 return response(view(
                     'errors.generic',
                     [
-                        'error_code' => 400,
+                        'error_code' => ,
                         'error_message' => 'No eligible Dues Transaction found for payment.',
                     ]
-                ), 400);
+                ), );
             }
 
             $amount = $payable->package->cost;
@@ -202,10 +202,10 @@ class PaymentController extends Controller
         return response(view(
             'errors.generic',
             [
-                'error_code' => 500,
+                'error_code' => ,
                 'error_message' => 'Unable to process Square Checkout request.',
             ]
-        ), 500);
+        ), );
     }
 
     /**
@@ -365,7 +365,7 @@ class PaymentController extends Controller
                     'error_code' => 400,
                     'error_message' => 'Missing parameter in Square response.',
                 ]
-            ), 500);
+            ), );
         }
 
         $checkout_id = $request->input('checkoutId');
@@ -384,7 +384,7 @@ class PaymentController extends Controller
                     'error_code' => 422,
                     'error_message' => 'Invalid Payment ID in Square response.',
                 ]
-            ), 500);
+            ), );
         }
 
         //Find the payment
@@ -398,7 +398,7 @@ class PaymentController extends Controller
                     'error_code' => 404,
                     'error_message' => 'Unable to locate payment.',
                 ]
-            ), 500);
+            ), );
         }
         Log::debug(self::class.' - Found Payment '.$payment_id);
 
@@ -412,7 +412,7 @@ class PaymentController extends Controller
                     'error_code' => 409,
                     'error_message' => 'Payment already processed.',
                 ]
-            ), 500);
+            ), );
         }
 
         //Prepare Square API Call
@@ -441,10 +441,10 @@ class PaymentController extends Controller
             return response(view(
                 'errors.generic',
                 [
-                    'error_code' => 500,
+                    'error_code' => ,
                     'error_message' => 'Error querying Square transaction',
                 ]
-            ), 500);
+            ), );
         }
 
         $tenders = $square_txn->getTransaction()->getTenders();
@@ -471,7 +471,7 @@ class PaymentController extends Controller
                     'error_code' => 409,
                     'error_message' => 'Payment discrepancy found. Please contact the Treasurer for assistance.',
                 ]
-            ), 500);
+            ), );
         }
 
         $payment->amount = $amount;
