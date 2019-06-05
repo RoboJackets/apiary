@@ -14,7 +14,6 @@ use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreRecruitingVisitRequest;
 use App\Http\Requests\UpdateRecruitingVisitRequest;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;

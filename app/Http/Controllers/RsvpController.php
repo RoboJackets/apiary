@@ -13,7 +13,6 @@ use App\RecruitingVisit;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Rsvp as RsvpResource;
 use App\Http\Resources\Event as EventResource;
 
@@ -81,7 +80,7 @@ class RsvpController extends Controller
         // Get the user to store, if present
         // If not present and required, redirect to CAS
         $user = $request->user();
-        if (! $event->allow_anonymous_rsvp && ! $request->user()) {
+        if (false === $event->allow_anonymous_rsvp && null === $request->user()) {
             cas()->authenticate();
         }
 

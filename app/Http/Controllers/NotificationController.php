@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\RecruitingVisit;
-use Illuminate\Http\Request;
 use App\Mail\DatabaseMailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;

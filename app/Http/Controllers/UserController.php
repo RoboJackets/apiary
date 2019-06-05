@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;

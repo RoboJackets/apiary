@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\RecruitingCampaign;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\RecruitingCampaignRecipient;
-use App\Http\Requests\ShowRecruitingCampaignRecipientRequest;
 use App\Http\Requests\IndexRecruitingCampaignRecipientRequest;
 use App\Http\Requests\StoreRecruitingCampaignRecipientRequest;
 use App\Http\Requests\UpdateRecruitingCampaignRecipientRequest;
@@ -33,7 +31,7 @@ class RecruitingCampaignRecipientController extends Controller
     {
         $include = $request->input('include');
         $rcr = RecruitingCampaignRecipient::with($this->authorizeInclude(RecruitingCampaignRecipient::class, $include))
-            ->where('recruiting_campaign_id', $$campaign->id)->get();
+            ->where('recruiting_campaign_id', $campaign->id)->get();
 
         return response()->json(['status' => 'success', 'recipients' => RCRResource::collection($rcr)]);
     }

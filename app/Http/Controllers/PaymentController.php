@@ -11,7 +11,6 @@ use App\Http\Requests\StoreUserPaymentRequest;
 use App\Http\Requests\StorePaymentRequest;
 use Illuminate\Support\Facades\Log;
 use Bugsnag;
-use App\Event;
 use Illuminate\Support\Facades\Validator;
 use App\Payment;
 use App\DuesTransaction;
@@ -102,12 +101,6 @@ class PaymentController extends Controller
     {
         $user = $request->user();
         $payable = null;
-        $payable_type = null;
-        $payable_id = null;
-        $name = '';
-        $amount = 0;
-        $email = $user->gt_email;
-        $transactZeroPmt = null;
 
         //Find the most recent DuesTransaction without a payment attempt
         $transactWithoutPmt = DuesTransaction::doesntHave('payment')

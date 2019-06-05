@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Bugsnag;
-use App\User;
 use App\Event;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
