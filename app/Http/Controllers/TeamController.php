@@ -68,7 +68,7 @@ class TeamController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreTeamRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -140,7 +140,7 @@ class TeamController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\UpdateTeamRequest  $request
      * @param string  $id
      *
      * @return \Illuminate\Http\JsonResponse
@@ -172,7 +172,7 @@ class TeamController extends Controller
     /**
      * Updates membership of the given team.
      *
-     * @param Request $request
+     * @param \App\Http\Requests\UpdateMembersTeamRequest $request
      * @param string $id integer
      *
      * @return \Illuminate\Http\JsonResponse

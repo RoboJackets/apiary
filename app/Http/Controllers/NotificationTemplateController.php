@@ -39,7 +39,7 @@ class NotificationTemplateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreNotificationTemplateRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -77,7 +77,7 @@ class NotificationTemplateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\UpdateNotificationTemplateRequest  $request
      * @param int  $id
      *
      * @return \Illuminate\Http\JsonResponse

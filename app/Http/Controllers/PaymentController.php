@@ -55,7 +55,7 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StorePaymentRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -94,7 +94,7 @@ class PaymentController extends Controller
     /**
      * Handles payment request from user-facing UI.
      *
-     * @param Request $request
+     * @param \App\Http\Requests\StoreUserPaymentRequest $request
      *
      * @return mixed
      */
@@ -125,7 +125,7 @@ class PaymentController extends Controller
                 $q->where('method', 'square');
             })->first();
 
-        if ($transactZeroPmt) {
+        if (null !== $transactZeroPmt) {
             $payable = $transactZeroPmt;
         } elseif ($transactWithoutPmt) {
             $payable = $transactWithoutPmt;
@@ -218,7 +218,7 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdatePaymentRequest $request
      * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse

@@ -104,7 +104,7 @@ class DuesTransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreDuesTransactionRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -216,7 +216,7 @@ class DuesTransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateDuesTransactionRequest $request
      * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse

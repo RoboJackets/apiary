@@ -25,7 +25,7 @@ class RecruitingCampaignRecipientController extends Controller
      * Display a listing of the resource.
      *
      * @param \App\RecruitingCampaign $campaign
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\IndexRecruitingCampaignRecipientRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -42,7 +42,7 @@ class RecruitingCampaignRecipientController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\RecruitingCampaign $campaign
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreRecruitingCampaignRecipientRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -79,8 +79,8 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $campaign_id
-     * @param int $recipient_id
+     * @param App\RecruitingCampaign $campaign
+     * @param App\RecruitingCampaignRecipient $recipient
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -92,9 +92,9 @@ class RecruitingCampaignRecipientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param int $campaign_id
-     * @param int $recipient_id
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\RecruitingCampaign $campaign
+     * @param \App\RecruitingCampaignRecipient $recipient
+     * @param \App\Http\Requests\UpdateRecruitingCampaignRecipientRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

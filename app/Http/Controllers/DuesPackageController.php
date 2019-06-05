@@ -87,7 +87,7 @@ class DuesPackageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param \App\Http\Requests\StoreDuesPackageRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -133,7 +133,7 @@ class DuesPackageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\UpdateDuesPackageRequest $request
      * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse

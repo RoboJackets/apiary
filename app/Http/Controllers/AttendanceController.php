@@ -50,7 +50,7 @@ class AttendanceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreAttendanceRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -115,7 +115,7 @@ class AttendanceController extends Controller
     /**
      * Searches attendance records for specified data.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\SearchAttendanceRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -138,7 +138,7 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\UpdateAttendanceRequest  $request
      * @param int $id Resource ID
      *
      * @return \Illuminate\Http\JsonResponse
@@ -185,7 +185,7 @@ class AttendanceController extends Controller
     /**
      * Give a summary of attendance from the given time period.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StatisticsAttendanceRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

@@ -11,6 +11,7 @@ use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 
@@ -73,7 +74,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreUserRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      *
@@ -82,11 +83,11 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): JsonResponse
     {
         $user = new User();
-        if (null !== $request->input('generateToken')) {
+        if (true === $request->input('generateToken')) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
-            unset($validations['generateToken']);
         }
-        foreach ($validations as $key => $value) {
+
+        foreach ($request->rules() as $key => $value) {
             $user->$key = $request->input($key);
         }
 
@@ -151,7 +152,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param string $id
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateUserRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

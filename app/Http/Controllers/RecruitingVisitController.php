@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreRecruitingVisitRequest;
 use App\Http\Requests\UpdateRecruitingVisitRequest;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
@@ -90,7 +91,7 @@ class RecruitingVisitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateRecruitingVisitRequest $request
      * @param int $id RecruitingVisit Id
      *
      * @return \Illuminate\Http\JsonResponse
