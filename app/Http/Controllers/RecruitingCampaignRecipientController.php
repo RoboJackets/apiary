@@ -25,11 +25,11 @@ class RecruitingCampaignRecipientController extends Controller
      * Display a listing of the resource.
      *
      * @param \App\RecruitingCampaign $campaign
-     * @param \App\Http\Requests\IndexRecruitingCampaignRecipientRequest $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(RecruitingCampaign $campaign, IndexRecruitingCampaignRecipientRequest $request): JsonResponse
+    public function index(RecruitingCampaign $campaign, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $rcr = RecruitingCampaignRecipient::with($this->authorizeInclude(RecruitingCampaignRecipient::class, $include))

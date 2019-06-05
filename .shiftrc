@@ -1,5 +1,2 @@
-[php]
-phpcs = "phpcs.xml"
-
 [laravel]
 resourceful_controllers = false

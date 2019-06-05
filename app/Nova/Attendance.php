@@ -101,7 +101,7 @@ class Attendance extends Resource
                     Team::class,
                 ]),
 
-            BelongsTo::make('Recorded By', 'recorded', \App\Nova\User::class)
+            BelongsTo::make('Recorded By', 'recorded', User::class)
                 ->help('The user that recorded the swipe'),
 
             DateTime::make('Time', 'created_at')
