@@ -100,7 +100,6 @@ class PaymentController extends Controller
     public function storeUser(StoreUserPaymentRequest $request)
     {
         $user = $request->user();
-        $payable = null;
 
         //Find the most recent DuesTransaction without a payment attempt
         $transactWithoutPmt = DuesTransaction::doesntHave('payment')
