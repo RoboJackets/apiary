@@ -11,7 +11,6 @@ use App\Payment;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use App\Events\PaymentSuccess;
-use SquareConnect\ApiException;
 use SquareConnect\Configuration;
 use Illuminate\Http\JsonResponse;
 use SquareConnect\Api\CheckoutApi;
@@ -24,7 +23,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use SquareConnect\Model\CreateOrderRequest;
-use App\Http\Requests\StoreUserPaymentRequest;
 use SquareConnect\Model\CreateCheckoutRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
 
