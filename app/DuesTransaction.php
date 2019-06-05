@@ -204,7 +204,7 @@ class DuesTransaction extends Model
                 });
         })->leftJoin('payments', static function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                ->where('payments.payable_type', '=', \App\DuesTransaction::class)
+                ->where('payments.payable_type', '=', self::class)
                 ->where('payments.deleted_at', '=', null);
         })->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
@@ -224,7 +224,7 @@ class DuesTransaction extends Model
             'dues_transactions.*'
         )->leftJoin('payments', static function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
+                    ->where('payments.payable_type', '=', self::class)
                     ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
@@ -255,7 +255,7 @@ class DuesTransaction extends Model
             'dues_transactions.*'
         )->leftJoin('payments', static function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
+                    ->where('payments.payable_type', '=', self::class)
                     ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')

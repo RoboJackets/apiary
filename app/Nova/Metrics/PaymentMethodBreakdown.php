@@ -47,18 +47,23 @@ class PaymentMethodBreakdown extends Partition
                         switch ($item->method) {
                             case 'cash':
                                 $key = 'Cash';
+
                                 break;
                             case 'check':
                                 $key = 'Check';
+
                                 break;
                             case 'swipe':
                                 $key = 'Swiped Card';
+
                                 break;
                             case 'square':
                                 $key = 'Square (Online)';
+
                                 break;
                             case 'squarecash':
                                 $key = 'Square Cash';
+
                                 break;
                         }
 
