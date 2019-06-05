@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install PHP extensions
-          command: sudo docker-php-ext-install zip
+          command: sudo docker-php-ext-install zip pcntl bcmath gd
       - run:
           name: Update Composer
           command: sudo composer self-update
