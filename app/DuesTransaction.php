@@ -105,7 +105,7 @@ class DuesTransaction extends Model
             return 'expired';
         }
 
-        if (0 === $this->payment->count() || $this->payment->sum('amount') < $this->getPayableAmount()) {
+        if (0 === $this->payment->count() || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())) {
             return 'pending';
         }
 
@@ -295,7 +295,7 @@ class DuesTransaction extends Model
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount(): float
+    public function getPayableAmount(): string
     {
         return $this->package->cost;
     }
