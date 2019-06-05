@@ -153,7 +153,7 @@ class PaymentController extends Controller
             $payable->payment()->save($payment);
         }
 
-        $squareResult = $this->createSquareCheckout($name, $amount, $email, $payment, true);
+        $squareResult = $this->createSquareCheckout($name, intval($amount), $email, $payment, true);
         if (is_a($squareResult, RedirectResponse::class)) {
             return $squareResult;
         }
@@ -255,7 +255,7 @@ class PaymentController extends Controller
                 'name' => $name ?: 'Miscellaneous Payment',
                 'quantity' => '1',
                 'base_price_money' => [
-                    'amount' => (int) $amount * 100,
+                    'amount' => $amount * 100,
                     'currency' => 'USD',
                 ],
             ],
