@@ -23,7 +23,7 @@ class Payment extends Resource
      *
      * @var string
      */
-    public static $model = 'App\\Payment';
+    public static $model = \App\Payment::class;
 
     /**
      * Fields to eager load on index.

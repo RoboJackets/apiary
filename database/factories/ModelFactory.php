@@ -80,7 +80,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Payment::class, function (Faker\Generator $faker) {
     return [
         'payable_id' => $faker->numberBetween($min = 0, $max = 200),
-        'payable_type' => $faker->randomElement($array = ['App\\DuesTransaction', 'App\\Event']),
+        'payable_type' => $faker->randomElement($array = [\App\DuesTransaction::class, \App\Event::class]),
         'amount' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'processing_fee' => (string) $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'method' => 'square',

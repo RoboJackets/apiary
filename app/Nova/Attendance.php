@@ -27,7 +27,7 @@ class Attendance extends Resource
      *
      * @var string
      */
-    public static $model = 'App\\Attendance';
+    public static $model = \App\Attendance::class;
 
     /**
      * Get the displayble label of the resource.
@@ -101,7 +101,7 @@ class Attendance extends Resource
                     Team::class,
                 ]),
 
-            BelongsTo::make('Recorded By', 'recorded', 'App\\Nova\\User')
+            BelongsTo::make('Recorded By', 'recorded', \App\Nova\User::class)
                 ->help('The user that recorded the swipe'),
 
             DateTime::make('Time', 'created_at')
