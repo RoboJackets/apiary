@@ -16,7 +16,6 @@ use Illuminate\Http\JsonResponse;
 use SquareConnect\Api\CheckoutApi;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Database\Query\Builder;
 use SquareConnect\Api\TransactionsApi;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
