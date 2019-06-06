@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Bugsnag;
-use App\User;
 use App\Event;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\Event as EventResource;
 
 class EventController extends Controller
@@ -44,30 +45,12 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreEventRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreEventRequest $request): JsonResponse
     {
-        // Default to currently logged-in user
-        if (isset($request->organizer) && ! $request->filled('organizer_id')) {
-            $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
-            unset($request['organizer']);
-        } elseif (! $request->filled('organizer_id')) {
-            $request['organizer_id'] = auth()->user()->id;
-        }
-
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'cost' => 'numeric',
-            'allow_anonymous_rsvp' => 'required|boolean',
-            'organizer_id' => 'exists:users,id',
-            'location' => 'max:255',
-            'start_time' => 'date',
-            'end_time' => 'date',
-        ]);
-
         try {
             $event = Event::create($request->all());
         } catch (QueryException $e) {
@@ -107,12 +90,12 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateEventRequest $request
      * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateEventRequest $request, int $id): JsonResponse
     {
         $requestingUser = $request->user();
         $event = Event::find($id);
@@ -128,23 +111,6 @@ class EventController extends Controller
                 'message' => 'Forbidden - You do not have permission to update this Event.',
             ], 403);
         }
-
-        if ($request->filled('organizer') && ! $request->filled('organizer_id')) {
-            $request['organizer_id'] = User::findByIdentifier($request->organizer)->first()->id;
-            unset($request['organizer']);
-        } elseif (! $request->filled('organizer_id')) {
-            $request['organizer_id'] = auth()->user()->id;
-        }
-
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'price' => 'numeric|nullable',
-            'allow_anonymous_rsvp' => 'required|boolean',
-            'organizer_id' => 'required|exists:users,id',
-            'location' => 'max:255|nullable',
-            'start_time' => 'date|nullable',
-            'end_time' => 'date|nullable',
-        ]);
 
         try {
             $event->update($request->all());

@@ -84,7 +84,7 @@ return [
             ],
         ],
 
-        'staging' => [
+        'test' => [
             'supervisor-1' => [
                 'connection' => 'redis',
                 'queue' => ['default', 'jedi'],

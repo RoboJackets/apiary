@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Throwable;
-use Validator;
 use App\RecruitingVisit;
 use App\RecruitingResponse;
 use Illuminate\Http\Request;
@@ -15,6 +14,8 @@ use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\StoreRecruitingVisitRequest;
+use App\Http\Requests\UpdateRecruitingVisitRequest;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 
 class RecruitingVisitController extends Controller
@@ -30,18 +31,8 @@ class RecruitingVisitController extends Controller
         $this->middleware('permission:update-recruiting-visits', ['only' => ['dedup']]);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreRecruitingVisitRequest $request): JsonResponse
     {
-        Log::debug(self::class.': Pre-Validation Data', $request->all());
-        $validator = Validator::make($request->all(), [
-            'recruiting_email' => 'required|email|max:255',
-            'recruiting_name' => 'required|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'errors' => $validator->errors()->all()], 422);
-        }
-
         try {
             DB::beginTransaction();
             $personInfo = $request->only(['recruiting_email', 'recruiting_name']);
@@ -99,18 +90,14 @@ class RecruitingVisitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateRecruitingVisitRequest $request
      * @param int $id RecruitingVisit Id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateRecruitingVisitRequest $request, int $id): JsonResponse
     {
         //Update only included fields
-        $this->validate($request, [
-            'recruiting_name' => 'max:127',
-            'recruiting_email' => 'email|max:127',
-        ]);
 
         $visit = RecruitingVisit::find($id);
         if (! $visit) {

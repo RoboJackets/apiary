@@ -12,6 +12,7 @@ class DatabaseNotification extends Notification implements ShouldQueue
     use Queueable;
 
     public $template_id;
+
     public $metadata;
 
     /**

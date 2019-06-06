@@ -38,7 +38,7 @@ class PermissionMiddleware
         $permissions = is_array($permission) ? $permission : explode('|', $permission);
 
         foreach ($permissions as $permission) {
-            if (Auth::user()->can($permission)) {
+            if ($request->user()->can($permission)) {
                 return $next($request);
             }
         }

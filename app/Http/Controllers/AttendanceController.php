@@ -6,15 +6,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Log;
 use Bugsnag;
 use App\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\SearchAttendanceRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
+use App\Http\Requests\StatisticsAttendanceRequest;
 use App\Http\Resources\Attendance as AttendanceResource;
 
 class AttendanceController extends Controller
@@ -46,22 +50,14 @@ class AttendanceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreAttendanceRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreAttendanceRequest $request): JsonResponse
     {
         $include = $request->input('include');
         unset($request['include']);
-
-        $this->validate($request, [
-            'attendable_type' => 'required|string',
-            'attendable_id' => 'required|numeric',
-            'gtid' => 'required|numeric',
-            'source' => 'required|string',
-            'created_at' => 'date',
-        ]);
 
         $request['recorded_by'] = $request->user()->id;
 
@@ -107,7 +103,7 @@ class AttendanceController extends Controller
     public function show(Request $request, int $id): JsonResponse
     {
         $include = $request->input('include');
-        $user = auth()->user();
+        $user = $request->user();
         $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($id);
         if (null !== $att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
@@ -119,19 +115,13 @@ class AttendanceController extends Controller
     /**
      * Searches attendance records for specified data.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\SearchAttendanceRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search(Request $request): JsonResponse
+    public function search(SearchAttendanceRequest $request): JsonResponse
     {
         $include = $request->input('include');
-        $this->validate($request, [
-            'attendable_type' => 'required',
-            'attendable_id' => 'required|numeric',
-            'start_date' => 'date|nullable',
-            'end_date' => 'date|nullable',
-        ]);
 
         $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
             ->where('attendable_id', '=', $request->input('attendable_id'))
@@ -148,21 +138,13 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\UpdateAttendanceRequest  $request
      * @param int $id Resource ID
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateAttendanceRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'attendable_type' => 'string',
-            'attendable_id' => 'numeric',
-            'gtid' => 'numeric|exists:users',
-            'source' => 'string',
-            'recorded_by' => 'numeric|exists:users',
-        ]);
-
         $att = Attendance::find($id);
         if ($att) {
             try {
@@ -203,17 +185,13 @@ class AttendanceController extends Controller
     /**
      * Give a summary of attendance from the given time period.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StatisticsAttendanceRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function statistics(Request $request): JsonResponse
+    public function statistics(StatisticsAttendanceRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'range' => 'numeric|nullable',
-        ]);
-
-        $user = auth()->user();
+        $user = $request->user();
         $numberOfWeeks = intval($request->input('range', '52'));
         $startDay = now()->subWeeks($numberOfWeeks)->startOfDay();
         $endDay = now();
@@ -221,7 +199,7 @@ class AttendanceController extends Controller
         // Get average attendance by day of week from the range given. Selects the weekday number and the weekday name
         // so it can be sorted more easily; the number is trimmed out in the map method
         $attendanceByDay = Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->where('attendable_type', 'App\Team')
+            ->where('attendable_type', \App\Team::class)
             ->selectRaw('date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
             ->groupBy('day')
             ->orderBy('day', 'asc')
@@ -231,7 +209,7 @@ class AttendanceController extends Controller
             });
 
         $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->where('attendable_type', 'App\Team')
+            ->where('attendable_type', \App\Team::class)
             ->selectRaw('date_format(created_at, \'%Y %U\') as week, count(distinct gtid) as aggregate')
             ->groupBy('week')
             ->get()
@@ -240,7 +218,7 @@ class AttendanceController extends Controller
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
         $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week,'
                 .'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
-            ->where('attendable_type', 'App\Team')
+            ->where('attendable_type', \App\Team::class)
             ->when($user->cant('read-teams-hidden'), static function (Builder $query): void {
                 $query->where('visible', 1);
             })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')

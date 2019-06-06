@@ -6,11 +6,12 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
@@ -72,42 +73,20 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreUserRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreUserRequest $request): JsonResponse
     {
-        $validations = [
-            'uid' => 'required|unique:users|max:127',
-            'gtid' => 'required|unique:users|max:10',
-            'slack_id' => 'unique:users|max:21|nullable',
-            'gt_email' => 'required|unique:users|max:255',
-            'personal_email' => 'unique:users|max:255|nullable',
-            'first_name' => 'required|max:127',
-            'middle_name' => 'max:127',
-            'last_name' => 'required|max:127',
-            'preferred_name' => 'max:127',
-            'phone' => 'max:15',
-            'emergency_contact_name' => 'max:255',
-            'emergency_contact_phone' => 'max:15',
-            'join_semester' => 'max:6',
-            'graduation_semester' => 'max:6',
-            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'accept_safety_agreement' => 'date|nullable',
-            'generateToken' => 'boolean',
-        ];
-        $this->validate($request, $validations);
-
         $user = new User();
-        if (null !== $request->input('generateToken')) {
+        if (true === $request->input('generateToken')) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
-            unset($validations['generateToken']);
         }
-        foreach ($validations as $key => $value) {
+
+        foreach ($request->rules() as $key => $value) {
             $user->$key = $request->input($key);
         }
 
@@ -172,11 +151,11 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param string $id
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateUserRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(string $id, Request $request): JsonResponse
+    public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
@@ -192,25 +171,7 @@ class UserController extends Controller
         }
 
         //Update only included fields
-        $validatedFields = $this->validate($request, [
-            'slack_id' => ['max:21', 'nullable', Rule::unique('users')->ignore($user->id)],
-            'personal_email' => ['max:255', 'nullable', Rule::unique('users')->ignore($user->id)],
-            'first_name' => 'max:127',
-            'last_name' => 'max:127',
-            'middle_name' => 'max:127',
-            'preferred_name' => 'max:127',
-            'phone' => 'max:15',
-            'emergency_contact_name' => 'max:255',
-            'emergency_contact_phone' => 'max:15',
-            'join_semester' => 'max:6',
-            'graduation_semester' => 'max:6',
-            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'accept_safety_agreement => date|nullable',
-            'generateToken' => 'boolean',
-            'gender' => 'string|nullable',
-            'ethnicity' => 'string|nullable',
-        ]);
+        $validatedFields = $request->validated();
 
         //Generate an API token for the user if requested *AND* the requesting user is self or admin
         //This is deliberately doing a separate update/save of the user model because `api_token` MUST

@@ -13,7 +13,9 @@ class DatabaseMailable extends Mailable
     use Queueable, SerializesModels;
 
     public $app_url;
+
     public $template_id;
+
     public $metadata;
 
     /**

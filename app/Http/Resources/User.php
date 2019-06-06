@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\Event as EventResource;
