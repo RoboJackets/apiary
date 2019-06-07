@@ -12,6 +12,7 @@ return [
     | This value is the name of your application. This value is used when the
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
+    |
     */
 
     'name' => env('APP_NAME', 'Apiary'),
@@ -23,7 +24,7 @@ return [
     |
     | This value determines the "environment" your application is currently
     | running in. This may determine how you prefer to configure various
-    | services your application utilizes. Set this in your ".env" file.
+    | services the application utilizes. Set this in your ".env" file.
     |
     */
 
@@ -68,6 +69,8 @@ return [
 
     'dev_url' => env('APP_DEV_URL', 'https://github.com/RoboJackets/apiary'),
 
+    'asset_url' => env('ASSET_URL', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -106,6 +109,19 @@ return [
     */
 
     'fallback_locale' => 'en',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Faker Locale
+    |--------------------------------------------------------------------------
+    |
+    | This locale will be used by the Faker PHP library when generating fake
+    | data for your database seeds. For example, this will be used to get
+    | localized telephone numbers, street address information and more.
+    |
+    */
+
+    'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -173,14 +189,12 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AuthServiceProvider::class,
         App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\NovaServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
         Spatie\Permission\PermissionServiceProvider::class,
-
     ],
 
     /*
@@ -232,9 +246,7 @@ return [
         'Cas' => Subfission\Cas\Facades\Cas::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
-
     ],
 
     'ga-ua' => env('GA_UA', 'UA-XXXXX-Y'),
-
 ];
