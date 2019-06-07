@@ -12,7 +12,7 @@
     "JoshOldenburg"
   ],
   "ignoreDeps": [
-    "laravel/framework
+    "laravel/framework"
   ],
   "prHourlyLimit": 1,
   "rebaseStalePrs": true,
