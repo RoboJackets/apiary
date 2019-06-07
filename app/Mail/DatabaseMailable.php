@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification
 // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
 namespace App\Mail;
 
@@ -18,21 +19,21 @@ class DatabaseMailable extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The URL for this instance of the application
+     * The URL for this instance of the application.
      *
      * @var string
      */
     public $app_url;
 
     /**
-     * The ID of the template that will be sent
+     * The ID of the template that will be sent.
      *
      * @var int
      */
     public $template_id;
 
     /**
-     * The metadata to pass to the template
+     * The metadata to pass to the template.
      *
      * @var array
      */
@@ -41,7 +42,7 @@ class DatabaseMailable extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(int $template_id, array $metadata)
+    public function __construct(int $template_id, $metadata)
     {
         $this->app_url = url('/');
         $this->template_id = $template_id;

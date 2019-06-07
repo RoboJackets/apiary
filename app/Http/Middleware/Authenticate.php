@@ -17,6 +17,8 @@ class Authenticate extends Middleware
      * @param \Illuminate\Http\Request  $request
      *
      * @return mixed
+     *
+     * @suppress PhanPluginAlwaysReturnMethod
      */
     protected function redirectTo($request)
     {

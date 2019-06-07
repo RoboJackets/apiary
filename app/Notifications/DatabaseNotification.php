@@ -21,14 +21,14 @@ class DatabaseNotification extends Notification implements ShouldQueue
     use Queueable;
 
     /**
-     * The ID of the template that will be sent
+     * The ID of the template that will be sent.
      *
      * @var int
      */
     public $template_id;
 
     /**
-     * The metadata to pass to the template
+     * The metadata to pass to the template.
      *
      * @var array
      */
