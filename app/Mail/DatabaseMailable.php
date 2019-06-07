@@ -41,6 +41,8 @@ class DatabaseMailable extends Mailable
 
     /**
      * Create a new message instance.
+     *
+     * @suppress PhanTypeMismatchProperty
      */
     public function __construct(int $template_id, $metadata)
     {
