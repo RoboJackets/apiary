@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
         'auth.token' => \App\Http\Middleware\APITokenAuthenticate::class,
     ];
+
     /**
      * The priority-sorted list of middleware.
      *
