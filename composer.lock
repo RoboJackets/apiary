@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "569cde1d056b96ade1767eaa7d6fe2c8",
+    "content-hash": "6899f098f544b0cc3e45202d0a2b5adc",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
