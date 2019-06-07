@@ -16,6 +16,7 @@
     <exclude-pattern>/public/js/</exclude-pattern>
     <exclude-pattern>/storage/framework/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
+    <exclude-pattern>/_ide_helper.php</exclude-pattern>
 
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>

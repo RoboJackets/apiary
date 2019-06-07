@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification
+
 namespace App\Mail;
 
 use App\NotificationTemplate;
@@ -12,10 +17,25 @@ class DatabaseMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * The URL for this instance of the application
+     *
+     * @var string
+     */
     public $app_url;
 
+    /**
+     * The ID of the template that will be sent
+     *
+     * @var int
+     */
     public $template_id;
 
+    /**
+     * The metadata to pass to the template
+     *
+     * @var array
+     */
     public $metadata;
 
     /**
@@ -23,7 +43,7 @@ class DatabaseMailable extends Mailable
      *
      * @return void
      */
-    public function __construct($template_id, $metadata)
+    public function __construct(int $template_id, array $metadata): void
     {
         $this->app_url = url('/');
         $this->template_id = $template_id;
