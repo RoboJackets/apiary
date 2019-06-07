@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6899f098f544b0cc3e45202d0a2b5adc",
+    "content-hash": "660201a46179d99fb27b04751ace80e7",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
-            "version": "0.1.1",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/64robots/nova-date-filter.git",
-                "reference": "ffa5fb52f1f4448c625c8af88193e7caa823f43c"
+                "reference": "b6bb806c70928035f879776d49e3ee47137b9fb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/64robots/nova-date-filter/zipball/ffa5fb52f1f4448c625c8af88193e7caa823f43c",
-                "reference": "ffa5fb52f1f4448c625c8af88193e7caa823f43c",
+                "url": "https://api.github.com/repos/64robots/nova-date-filter/zipball/b6bb806c70928035f879776d49e3ee47137b9fb9",
+                "reference": "b6bb806c70928035f879776d49e3ee47137b9fb9",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
                 "laravel",
                 "nova"
             ],
-            "time": "2018-10-15T06:18:02+00:00"
+            "time": "2018-11-26T08:36:54+00:00"
         },
         {
             "name": "apereo/phpcas",
