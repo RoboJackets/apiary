@@ -40,10 +40,8 @@ class DatabaseMailable extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
-    public function __construct(int $template_id, array $metadata): void
+    public function __construct(int $template_id, array $metadata)
     {
         $this->app_url = url('/');
         $this->template_id = $template_id;
