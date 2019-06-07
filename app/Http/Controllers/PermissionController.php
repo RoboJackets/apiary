@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Requests\StorePermissionRequest;
 
 class PermissionController extends Controller
 {
@@ -31,16 +32,12 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StorePermissionRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StorePermissionRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|unique:permissions',
-        ]);
-
         $name = $request->input('name');
         $permission = new Permission();
         $permission->name = $name;

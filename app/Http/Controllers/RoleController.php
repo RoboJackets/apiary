@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
+use App\Http\Requests\StoreRoleRequest;
 
 class RoleController extends Controller
 {
@@ -32,16 +33,12 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreRoleRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreRoleRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles',
-        ]);
-
         $role = new Role();
         $role->name = $request->input('name');
         $role->save();

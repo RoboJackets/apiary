@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreDuesPackageRequest;
+use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 
 class DuesPackageController extends Controller
@@ -85,21 +87,12 @@ class DuesPackageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param \App\Http\Requests\StoreDuesPackageRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreDuesPackageRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'eligible_for_shirt' => 'boolean',
-            'eligible_for_polo' => 'boolean',
-            'effective_start' => 'required|date',
-            'effective_end' => 'required|date',
-            'cost' => 'required|numeric',
-        ]);
-
         try {
             $package = DuesPackage::create($request->all());
         } catch (QueryException $e) {
@@ -140,22 +133,13 @@ class DuesPackageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateDuesPackageRequest $request
      * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateDuesPackageRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'string',
-            'eligible_for_shirt' => 'boolean',
-            'eligible_for_polo' => 'boolean',
-            'effective_start' => 'date',
-            'effective_end' => 'date',
-            'cost' => 'numeric',
-        ]);
-
         $package = DuesPackage::find($id);
         if (! $package) {
             return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);

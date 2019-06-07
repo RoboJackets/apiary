@@ -29,7 +29,7 @@ class PaymentMethodBreakdown extends Partition
     public function calculate(Request $request): PartitionResult
     {
         return $this->result(
-            Payment::where('payable_type', 'App\DuesTransaction')
+            Payment::where('payable_type', \App\DuesTransaction::class)
                     ->where('amount', '>', 0)
                     ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                         $q->select('id')
@@ -47,18 +47,23 @@ class PaymentMethodBreakdown extends Partition
                         switch ($item->method) {
                             case 'cash':
                                 $key = 'Cash';
+
                                 break;
                             case 'check':
                                 $key = 'Check';
+
                                 break;
                             case 'swipe':
                                 $key = 'Swiped Card';
+
                                 break;
                             case 'square':
                                 $key = 'Square (Online)';
+
                                 break;
                             case 'squarecash':
                                 $key = 'Square Cash';
+
                                 break;
                         }
 

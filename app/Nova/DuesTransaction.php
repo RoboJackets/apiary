@@ -65,10 +65,10 @@ class DuesTransaction extends Resource
             ID::make()
                 ->sortable(),
 
-            BelongsTo::make('Paid By', 'user', 'App\\Nova\\User')
+            BelongsTo::make('Paid By', 'user', User::class)
                 ->searchable(),
 
-            BelongsTo::make('Dues Package', 'package', 'App\\Nova\\DuesPackage'),
+            BelongsTo::make('Dues Package', 'package', DuesPackage::class),
 
             Text::make('Status')
                 ->resolveUsing(static function (string $str): string {
@@ -126,7 +126,7 @@ class DuesTransaction extends Resource
                 ]
             ),
 
-            MorphMany::make('Payments', 'payment', 'App\Nova\Payment')
+            MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
 
             new Panel('Metadata', $this->metaFields()),

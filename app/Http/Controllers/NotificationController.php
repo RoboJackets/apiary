@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Mail;
-use Notification;
 use Carbon\Carbon;
 use App\RecruitingVisit;
-use Illuminate\Http\Request;
 use App\Mail\DatabaseMailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\GeneralInterestNotification;
+use App\Http\Requests\SendNotificationManualNotificationRequest;
 
 class NotificationController extends Controller
 {
@@ -33,14 +33,8 @@ class NotificationController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function sendNotificationManual(Request $request): JsonResponse
+    public function sendNotificationManual(SendNotificationManualNotificationRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'emails' => 'required',
-            'template_type' => 'required|in:recruiting,database',
-            'template_id' => 'numeric',
-        ]);
-
         $template_type = $request->input('template_type');
         $template_id = $request->input('template_id');
 

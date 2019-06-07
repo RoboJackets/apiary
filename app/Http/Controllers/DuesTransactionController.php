@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\StoreDuesTransactionRequest;
+use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 
@@ -102,20 +104,12 @@ class DuesTransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreDuesTransactionRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreDuesTransactionRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'swag_shirt_provided' => 'boolean|nullable',
-            'swag_polo_provided' => 'boolean|nullable',
-            'dues_package_id' => 'required|exists:dues_packages,id',
-            'payment_id' => 'exists:payments,id',
-            'user_id' => 'exists:users,id',
-        ]);
-
         $user = $request->user();
         $user_id = $request->input('user_id');
 
@@ -222,21 +216,13 @@ class DuesTransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\UpdateDuesTransactionRequest $request
      * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateDuesTransactionRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'swag_shirt_provided' => 'boolean|nullable',
-            'swag_polo_provided' => 'boolean|nullable',
-            'dues_package_id' => 'exists:dues_packages,id',
-            'payment_id' => 'exists:payments,id',
-            'user_id' => 'exists:users,id',
-        ]);
-
         //Translate boolean from client to time/date stamp for DB
         //Also set "providedBy" for each swag item to the submitting user
         $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];

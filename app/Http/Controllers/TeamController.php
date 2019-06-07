@@ -12,10 +12,13 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\StoreTeamRequest;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\UpdateTeamRequest;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
+use App\Http\Requests\UpdateMembersTeamRequest;
 
 class TeamController extends Controller
 {
@@ -41,19 +44,19 @@ class TeamController extends Controller
     {
         $include = $request->input('include');
         $teamsQ = Team::with($this->authorizeInclude(Team::class, $include));
-        $teams = \Auth::user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
+        $teams = $request->user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
 
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
     }
 
-    public function indexWeb(): View
+    public function indexWeb(Request $request): View
     {
         $teams = Team::visible()->orderBy('name', 'asc')->get();
 
         // Send only what's necessary to the front end
-        $user_id = auth()->user()->id;
+        $user_id = $request->user()->id;
         // Lazy load the teams relationship and send the `id`s over
-        $user_teams = auth()->user()->teams;
+        $user_teams = $request->user()->teams;
         $user = [
             'id' => $user_id,
             'teams' => $user_teams,
@@ -65,23 +68,12 @@ class TeamController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreTeamRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreTeamRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string|unique:teams',
-            'description' => 'string|max:4096|nullable',
-            'attendable' => 'boolean',
-            'visible' => 'boolean',
-            'self_serviceable' => 'boolean',
-            'mailing_list_name' => 'string|nullable',
-            'slack_channel_id' => 'string|nullable',
-            'slack_channel_name' => 'string|nullable',
-        ]);
-
         try {
             $team = Team::create($request->all());
         } catch (QueryException $e) {
@@ -114,7 +106,7 @@ class TeamController extends Controller
             ->orWhere('slug', $id)
             ->first();
 
-        if (null !== $team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
+        if (null !== $team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -132,12 +124,12 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showMembers(string $id): JsonResponse
+    public function showMembers(Request $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
 
-        if ($team && false === $team->visible && \Auth::user()->cant('read-teams-hidden')) {
+        if ($team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -147,28 +139,17 @@ class TeamController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\UpdateTeamRequest  $request
      * @param string  $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
-
-        $this->validate($request, [
-            'name' => 'string',
-            'description' => 'string|max:4096|nullable',
-            'attendable' => 'boolean',
-            'hidden' => 'boolean',
-            'self_serviceable' => 'boolean',
-            'mailing_list_name' => 'string|nullable',
-            'slack_channel_id' => 'string|nullable',
-            'slack_channel_name' => 'string|nullable',
-        ]);
 
         try {
             $team->update($request->all());
@@ -189,22 +170,17 @@ class TeamController extends Controller
     /**
      * Updates membership of the given team.
      *
-     * @param Request $request
+     * @param \App\Http\Requests\UpdateMembersTeamRequest $request
      * @param string $id integer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateMembers(Request $request, string $id): JsonResponse
+    public function updateMembers(UpdateMembersTeamRequest $request, string $id): JsonResponse
     {
         $requestingUser = $request->user();
 
-        $this->validate($request, [
-            'user_id' => 'required|numeric|exists:users,id',
-            'action' => 'required|in:join,leave',
-        ]);
-
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && \Auth::user()->cant('update-teams-hidden'))) {
+        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
