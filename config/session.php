@@ -20,7 +20,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'redis'),
+    'driver' => env('SESSION_DRIVER', 'file'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 240),
+    'lifetime' => env('SESSION_LIFETIME', 120),
 
     'expire_on_close' => false,
 
@@ -74,7 +74,7 @@ return [
     |
     */
 
-    'connection' => null,
+    'connection' => env('SESSION_CONNECTION', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -100,7 +100,7 @@ return [
     |
     */
 
-    'store' => null,
+    'store' => env('SESSION_STORE', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +195,7 @@ return [
     | Supported: "lax", "strict"
     |
     */
+
     'same_site' => 'lax',
 
 ];
