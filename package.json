@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "axios": "0.19.0",
-    "chartist": "0.11.0",
+    "chartist": "0.11.2",
     "chartist-plugin-legend": "0.6.2",
     "chartist-plugin-pointlabels": "0.0.6",
     "datatables.net": "1.10.19",
