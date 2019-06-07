@@ -27,7 +27,7 @@ jobs:
             - vendor
       - run:
           name: Check for env() being used outside config/
-          command: sh -c "! git grep ""env\("" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/composer.lock'"
+          command: sh -c "! git grep ""env("" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/composer.lock'"
       - run: php artisan config:cache
       - restore_cache:
           keys:
