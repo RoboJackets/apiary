@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "labels": [
+    "area / devOps",
+    "priority / low",
+    "status / code review",
+    "type / technical debt"
+  ],
+  "reviewers": [
+    "JoshOldenburg"
+  ],
+  "ignoreDeps": [
+    "laravel/framework"
+  ],
+  "prHourlyLimit": 1,
+  "rebaseStalePrs": true,
+  "vulnerabilityAlerts": {
+    "labels": [
+      "area / devOps",
+      "priority / high",
+      "status / code review",
+      "type / technical debt"
+    ]
+  }
+}
