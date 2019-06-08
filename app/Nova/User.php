@@ -84,7 +84,6 @@ class User extends Resource
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
             Hidden::make('GTID')
-                ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 }),
