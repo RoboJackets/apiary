@@ -84,6 +84,14 @@ class User extends Resource
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
             Hidden::make('GTID')
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-gtid');
+                }),
+
+            // Hidden fields can't be edited, so add this field on the forms so it can be edited for service accounts
+            Text::make('GTID')
+                ->onlyOnForms()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 }),
