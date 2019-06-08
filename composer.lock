@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "217571053bf56626ea3f64d58a8d53d7",
+    "content-hash": "365433eefd04cba62a7eeb92ec8b65bc",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
@@ -2073,21 +2073,21 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v1.3.2",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "a88243f3f9bcc02ae0e96ebdce512e467839db09"
+                "reference": "bba766e6f8f3ecff8d1e8728ff647006f242f6ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-a88243f3f9bcc02ae0e96ebdce512e467839db09-zip-93b4e7.zip",
-                "reference": "a88243f3f9bcc02ae0e96ebdce512e467839db09",
-                "shasum": "98626947825e137307cc7c9dc05a2455abe5ec21"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-bba766e6f8f3ecff8d1e8728ff647006f242f6ef-zip-729ee5.zip",
+                "reference": "bba766e6f8f3ecff8d1e8728ff647006f242f6ef",
+                "shasum": "92ee6106c9fb5dd83f2bcdfb51393ca4cb43532c"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
-                "illuminate/support": "5.6.*|5.7.*",
+                "illuminate/support": "^5.7.15 | 5.8.*",
                 "moontoast/math": "^1.1",
                 "php": ">=7.1.0",
                 "spatie/once": "^1.1",
@@ -2095,15 +2095,15 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/database": "3.7.*",
-                "orchestra/testbench": "3.7.*",
-                "phpunit/phpunit": "^7.0",
+                "orchestra/database": "3.7.* | 3.8.*",
+                "orchestra/testbench": "3.7.* | 3.8.*",
+                "phpunit/phpunit": "^7.0 | ^8.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "2.0-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -2138,7 +2138,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-02-11T20:04:29+00:00"
+            "time": "2019-05-15T19:21:43+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
