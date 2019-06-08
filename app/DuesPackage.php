@@ -40,7 +40,6 @@ class DuesPackage extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
         'effective_start',
         'effective_end',
         'access_start',
