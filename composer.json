@@ -35,7 +35,7 @@
     },
     "require-dev": {
         "fzaninotto/faker": "1.8.0",
-        "mockery/mockery": "0.9.11",
+        "mockery/mockery": "1.2.2",
         "phpunit/phpunit": "6.5.14",
         "filp/whoops": "2.3.1",
         "nunomaduro/collision": "1.1.22"
