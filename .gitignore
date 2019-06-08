@@ -22,3 +22,5 @@ npm-debug.log
 auth.json
 .phpstorm.meta.php
 .idea_helper.php
+_ide_helper.php
+*.log
