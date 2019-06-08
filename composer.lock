@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38e14c9b700c630f8bf9bf81755295a7",
+    "content-hash": "18eb7ee4799dec5a211b0833e9b755e7",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
@@ -3501,25 +3501,25 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "3.0.3",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "8d050b197cfad9074ceae1968da6dfe08f1cc5d5"
+                "reference": "1609bb4bf10d585724c5ca6c148810e8ff6e6767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/8d050b197cfad9074ceae1968da6dfe08f1cc5d5",
-                "reference": "8d050b197cfad9074ceae1968da6dfe08f1cc5d5",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/1609bb4bf10d585724c5ca6c148810e8ff6e6767",
+                "reference": "1609bb4bf10d585724c5ca6c148810e8ff6e6767",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
-                "php": "^7.0"
+                "laravel/framework": "~5.8.0",
+                "php": "^7.2"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~8.7.0",
-                "phpunit/phpunit": "^6.3|^7.0|^8.0"
+                "orchestra/testbench": "~3.8.0",
+                "phpunit/phpunit": "^8.0"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Allows notifications to be sent via Slack"
@@ -3560,7 +3560,7 @@
                 "slack",
                 "spatie"
             ],
-            "time": "2019-02-27T09:37:03+00:00"
+            "time": "2019-02-27T09:42:15+00:00"
         },
         {
             "name": "spatie/laravel-permission",
