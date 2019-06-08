@@ -69,7 +69,6 @@ class User extends Resource
 
             Text::make('Preferred First Name')
                 ->sortable()
-                ->nullable()
                 ->rules('nullable', 'max:127'),
 
             Text::make('Legal First Name', 'first_name')
@@ -87,7 +86,6 @@ class User extends Resource
 
             Text::make('Personal Email')
                 ->hideFromIndex()
-                ->nullable()
                 ->rules('email', 'max:255', 'nullable')
                 ->creationRules('unique:users,personal_email')
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
@@ -121,7 +119,6 @@ class User extends Resource
 
             Text::make('Phone Number', 'phone')
                 ->hideFromIndex()
-                ->nullable()
                 ->rules('nullable', 'max:15'),
 
             Boolean::make('Active', 'is_active')
