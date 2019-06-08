@@ -62,28 +62,20 @@ class User extends Resource
     {
         return [
             Text::make('Username', 'uid')
-                ->sortable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->sortable(),
 
             Text::make('Preferred First Name')
                 ->sortable(),
 
             Text::make('Legal First Name', 'first_name')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
                 ->sortable()
                 ->rules('required', 'max:255'),
 
             Text::make('Last Name')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Georgia Tech Email', 'gt_email')
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+            Text::make('Georgia Tech Email', 'gt_email'),
 
             Text::make('Personal Email')
                 ->hideFromIndex()
@@ -93,8 +85,6 @@ class User extends Resource
 
             Hidden::make('GTID')
                 ->onlyOnDetail()
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 }),
