@@ -72,7 +72,7 @@ export default {
       })
       .catch(response => {
         console.log(response);
-        swal(
+        Swal.fire(
           'Connection Error',
           'Unable to load data. Check your internet connection or try refreshing the page.',
           'error'

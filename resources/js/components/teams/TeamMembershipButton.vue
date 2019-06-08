@@ -49,7 +49,7 @@ export default {
         .then(response => {
           if (response.status === 201 && data.action === 'join') {
             let text = "Make sure to join the team's Slack channel and mailing list to stay up-to-date.";
-            swal({
+            Swal.fire({
               type: 'success',
               title: 'You joined ' + this.team.name + '!',
               text: text,
@@ -57,7 +57,7 @@ export default {
             });
             this.user_teams.push(response.data.team);
           } else if (response.status === 201 && data.action === 'leave') {
-            swal({
+            Swal.fire({
               type: 'info',
               title: 'Goodbye!',
               text: 'You left ' + this.team.name + '.',
@@ -69,12 +69,12 @@ export default {
             }
           } else {
             console.log(response);
-            swal('Whoops!', 'Something went wrong. Please try again later.', 'error');
+            Swal.fire('Whoops!', 'Something went wrong. Please try again later.', 'error');
           }
         })
         .catch(response => {
           console.log(response);
-          swal(
+          Swal.fire(
             'Connection Error',
             'Unable to modify team membership. Check your internet connection or try refreshing the page.',
             'error'

@@ -147,7 +147,7 @@ export default {
       })
       .catch(response => {
         console.log(response);
-        swal(
+        Swal.fire(
           'Connection Error',
           'Unable to load data. Check your internet connection or try refreshing the page.',
           'error'
@@ -167,7 +167,7 @@ export default {
           this.hasError = true;
           this.feedback = '';
           console.log(response);
-          swal(
+          Swal.fire(
             'Connection Error',
             'Unable to save data. Check your internet connection or try refreshing the page.',
             'error'
@@ -191,7 +191,7 @@ export default {
             this.hasError = true;
             this.feedback = '';
             console.log(response);
-            swal(
+            Swal.fire(
               'Connection Error',
               'Unable to send email. Check your internet connection or try refreshing the page.',
               'error'
