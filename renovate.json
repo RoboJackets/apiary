@@ -14,7 +14,7 @@
   "ignoreDeps": [
     "laravel/framework"
   ],
-  "prHourlyLimit": 1,
+  "prConcurrentLimit": 1,
   "rebaseStalePrs": true,
   "vulnerabilityAlerts": {
     "labels": [
