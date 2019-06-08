@@ -12,7 +12,7 @@
   "devDependencies": {
     "bootstrap": "4.3.1",
     "cross-env": "5.2.0",
-    "laravel-mix": "2.1.14",
+    "laravel-mix": "4.0.16",
     "lodash": "4.17.11"
   },
   "dependencies": {
