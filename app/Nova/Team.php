@@ -29,7 +29,7 @@ class Team extends Resource
      *
      * @var string
      */
-    public static $model = 'App\Team';
+    public static $model = \App\Team::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

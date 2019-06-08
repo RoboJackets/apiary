@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\NotificationTemplate;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\StoreNotificationTemplateRequest;
+use App\Http\Requests\UpdateNotificationTemplateRequest;
 use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
 
 class NotificationTemplateController extends Controller
@@ -37,18 +39,12 @@ class NotificationTemplateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreNotificationTemplateRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreNotificationTemplateRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'subject' => 'required|string',
-            'body_markdown' => 'required',
-        ]);
-
         $nt = new NotificationTemplate();
         $nt->name = $request->input('name');
         $nt->subject = $request->input('subject');
@@ -81,22 +77,17 @@ class NotificationTemplateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\UpdateNotificationTemplateRequest  $request
      * @param int  $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateNotificationTemplateRequest $request, int $id): JsonResponse
     {
         $nt = NotificationTemplate::find($id);
         if (! $nt) {
             return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
         }
-
-        $this->validate($request, [
-            'name' => 'string',
-            'subject' => 'string',
-        ]);
 
         $nt->update($request->all());
 

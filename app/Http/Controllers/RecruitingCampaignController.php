@@ -6,8 +6,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Log;
-use Notification;
 use Carbon\Carbon;
 use App\RecruitingVisit;
 use App\RecruitingCampaign;
@@ -15,9 +13,12 @@ use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use App\RecruitingCampaignRecipient;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\GeneralInterestNotification;
+use App\Http\Requests\StoreRecruitingCampaignRequest;
 use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
 
 class RecruitingCampaignController extends Controller
@@ -47,19 +48,12 @@ class RecruitingCampaignController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StoreRecruitingCampaignRequest  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreRecruitingCampaignRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'notification_template_id' => 'numeric|exists:notification_templates,id',
-            'start_date' => 'date|required',
-            'end_date' => 'date|required',
-        ]);
-
         // Store the campaign
         // Yes, I know there is an easier way to do this.
         $rc = new RecruitingCampaign();

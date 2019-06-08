@@ -9,6 +9,7 @@ use Laravel\Nova\Nova;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\ValueResult;
 
 class SwagPickupRate extends Value
@@ -38,7 +39,7 @@ class SwagPickupRate extends Value
     public function __construct(string $swagType)
     {
         if (! in_array($swagType, ['shirt', 'polo'])) {
-            \Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
+            Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
 
             return;

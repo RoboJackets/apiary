@@ -54,7 +54,7 @@ class Attendable extends Filter
         $parts = explode(',', $value);
         $attendableType = $parts[0];
         $attendableID = $parts[1];
-        if (! in_array($attendableType, ['App\Event', 'App\Team']) || ! is_numeric($attendableID)) {
+        if (! in_array($attendableType, [\App\Event::class, \App\Team::class]) || ! is_numeric($attendableID)) {
             return $query;
         }
 
@@ -80,14 +80,14 @@ class Attendable extends Filter
                 ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
                 })->get()->mapWithKeys(static function (Team $item): array {
-                    return ['Team: '.$item->name => 'App\Team,'.$item->id];
+                    return ['Team: '.$item->name => 'App\\Team,'.$item->id];
                 })->toArray();
         }
 
         $events = [];
         if ($this->includeEvents && $request->user()->can('read-events')) {
             $events = Event::all()->mapWithKeys(static function (Event $item): array {
-                return ['Event: '.$item->name => 'App\Event,'.$item->id];
+                return ['Event: '.$item->name => 'App\\Event,'.$item->id];
             })->toArray();
         }
 

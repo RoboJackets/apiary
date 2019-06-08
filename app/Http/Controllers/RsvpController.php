@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Rsvp;
 use App\User;
 use App\Event;
@@ -80,8 +79,8 @@ class RsvpController extends Controller
     {
         // Get the user to store, if present
         // If not present and required, redirect to CAS
-        $user = auth()->user();
-        if (! $event->allow_anonymous_rsvp && ! Auth::check()) {
+        $user = $request->user();
+        if (false === $event->allow_anonymous_rsvp && null === $request->user()) {
             cas()->authenticate();
         }
 

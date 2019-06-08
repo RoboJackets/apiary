@@ -20,7 +20,7 @@ class NotificationTemplate extends Resource
      *
      * @var string
      */
-    public static $model = 'App\NotificationTemplate';
+    public static $model = \App\NotificationTemplate::class;
 
     /**
      * Get the displayble label of the resource.
