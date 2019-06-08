@@ -62,23 +62,32 @@ class User extends Resource
     {
         return [
             Text::make('Username', 'uid')
-                ->sortable(),
+                ->sortable()
+                ->rules('required', 'max:127')
+                ->creationRules('unique:users,uid')
+                ->updateRules('unique:users,uid,{{resourceId}}'),
 
             Text::make('Preferred First Name')
-                ->sortable(),
+                ->sortable()
+                ->nullable()
+                ->rules('nullable', 'max:127'),
 
             Text::make('Legal First Name', 'first_name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:127'),
 
             Text::make('Last Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:127'),
 
-            Text::make('Georgia Tech Email', 'gt_email'),
+            Text::make('Georgia Tech Email', 'gt_email')
+                ->rules('required', 'email')
+                ->creationRules('unique:users,gt_email')
+                ->updateRules('unique:users,gt_email,{{resourceId}}'),
 
             Text::make('Personal Email')
                 ->hideFromIndex()
+                ->nullable()
                 ->rules('email', 'max:255', 'nullable')
                 ->creationRules('unique:users,personal_email')
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
@@ -94,7 +103,10 @@ class User extends Resource
                 ->onlyOnForms()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
-                }),
+                })
+                ->rules('required', 'integer', 'min:900000000', 'max:999999999')
+                ->creationRules('unique:users,gtid')
+                ->updateRules('unique:users,gtid,{{resourceId}}'),
 
             Hidden::make('API Token')
                 ->onlyOnDetail()
@@ -108,7 +120,9 @@ class User extends Resource
                 }),
 
             Text::make('Phone Number', 'phone')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->nullable()
+                ->rules('nullable', 'max:15'),
 
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
