@@ -10,7 +10,7 @@ php artisan route:clear --no-interaction
 php artisan nova:publish --no-interaction
 php artisan horizon:assets --no-interaction
 php artisan cache:clear --no-interaction
-npm install --no-progress
+npm ci --no-progress
 npm run production --no-progress
 php artisan up
 php artisan horizon:terminate
