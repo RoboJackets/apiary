@@ -16,8 +16,8 @@ require('datatables.net-buttons/js/buttons.html5.js');
 require('datatables.net-buttons/js/buttons.print.js');
 
 //Import SweetAlert2 for nice alert dialogs
-import swal from 'sweetalert2';
-window.swal = swal;
+import Swal from 'sweetalert2';
+window.Swal = Swal;
 
 window.Vue = require('vue');
 

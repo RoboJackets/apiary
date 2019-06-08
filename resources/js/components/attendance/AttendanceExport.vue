@@ -137,7 +137,7 @@ export default {
         .then(response => {
           let rawTeams = response.data.teams;
           if (rawTeams.length < 1) {
-            swal('Bueller...Bueller...', 'No teams found.', 'warning');
+            Swal.fire('Bueller...Bueller...', 'No teams found.', 'warning');
           } else {
             let alphaTeams = response.data.teams.sort(function(a, b) {
               return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
@@ -149,13 +149,13 @@ export default {
         })
         .catch(error => {
           if (error.response.status === 403) {
-            swal({
+            Swal.fire({
               title: 'Whoops!',
               text: "You don't have permission to perform that action.",
               type: 'error',
             });
           } else {
-            swal(
+            Swal.fire(
               'Error',
               'Unable to process data. Check your internet connection or try refreshing the page.',
               'error'
@@ -177,7 +177,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          swal('Error', 'Unable to process data. Check your internet connection or try refreshing the page.', 'error');
+          Swal.fire('Error', 'Unable to process data. Check your internet connection or try refreshing the page.', 'error');
         });
 
       //Sort the table by date then by last name per CoC request

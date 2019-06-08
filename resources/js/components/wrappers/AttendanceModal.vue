@@ -138,13 +138,13 @@ export default {
           this.hasError = true;
           this.feedback = '';
           if (error.response.status == 403) {
-            swal({
+            Swal.fire({
               title: 'Whoops!',
               text: "You don't have permission to perform that action.",
               type: 'error',
             });
           } else {
-            swal(
+            Swal.fire(
               'Error',
               'Unable to process data. Check your internet connection or try refreshing the page.',
               'error'

@@ -116,7 +116,7 @@ export default {
       })
       .catch(response => {
         console.log(response);
-        swal(
+        Swal.fire(
           'Connection Error',
           'Unable to load dues packages. Check your internet connection or try refreshing the page.',
           'error'
@@ -144,7 +144,7 @@ export default {
             this.$emit('next');
           } else {
             console.log(error);
-            swal(
+            Swal.fire(
               'Connection Error',
               'Unable to save data. Check your internet connection or try refreshing the page.',
               'error'
