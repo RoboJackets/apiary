@@ -11,8 +11,13 @@
   "reviewers": [
     "JoshOldenburg"
   ],
-  "ignoreDeps": [
-    "laravel/framework"
+  "packageRules": [
+    {
+      "packageNames": [
+        "laravel/framework"
+      ],
+      "allowedVersions": "< 5.9"
+    }
   ],
   "prConcurrentLimit": 1,
   "rebaseStalePrs": true,
