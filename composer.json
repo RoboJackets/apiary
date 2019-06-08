@@ -34,11 +34,12 @@
         "vyuldashev/nova-permission": "1.7.0"
     },
     "require-dev": {
+        "beyondcode/laravel-dump-server": "1.2.2",
+        "filp/whoops": "2.3.1",
         "fzaninotto/faker": "1.8.0",
         "mockery/mockery": "1.2.2",
-        "filp/whoops": "2.3.1",
         "nunomaduro/collision": "^3.0",
-        "beyondcode/laravel-dump-server": "1.2.2",
+        "nunomaduro/larastan": "^0.3.17",
         "phpunit/phpunit": "^7.5"
     },
     "autoload": {

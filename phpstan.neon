@@ -6,6 +6,7 @@ parameters:
   includes:
     - %rootDir%/../phpstan-deprecated-rules/rules.neon
     - %rootDir%/../phpstan-strict-rules/rules.neon
+    - %currentWorkingDirectory%/vendor/nunomaduro/larastan/extension.neon
   ignoreErrors:
     - '#Access to an undefined property .+::\$[a-zA-Z]+#'
     - '#Access to protected property App\\Team::\$visible#'
