@@ -29,6 +29,8 @@ jobs:
           name: Check for env() being used outside config/
           command: sh -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/composer.lock'"
       - run: php artisan config:cache
+      - run: php artisan nova:publish --no-interaction
+      - run: php artisan horizon:assets --no-interaction
       - restore_cache:
           keys:
             - node-{{ .Environment.CACHE_VERSION }}-{{ checksum "package-lock.json" }}
