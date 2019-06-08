@@ -35,10 +35,10 @@
     },
     "require-dev": {
         "fzaninotto/faker": "1.8.0",
-        "mockery/mockery": "^1.0",
+        "mockery/mockery": "1.2.2",
         "filp/whoops": "2.3.1",
-        "nunomaduro/collision": "^2.0",
-        "beyondcode/laravel-dump-server": "^1.0"
+        "nunomaduro/collision": "2.1.1",
+        "beyondcode/laravel-dump-server": "1.2.2"
     },
     "autoload": {
         "classmap": [
