@@ -41,7 +41,6 @@ class DuesTransaction extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
         'swag_shirt_provided',
         'swag_polo_provided',
     ];

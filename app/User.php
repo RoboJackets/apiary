@@ -47,7 +47,6 @@ class User extends Authenticatable
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
         'accept_safety_agreement',
         'access_override_until',
     ];
