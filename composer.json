@@ -19,9 +19,9 @@
         "doctrine/dbal": "2.9.2",
         "fideloper/proxy": "4.1.0",
         "guzzlehttp/guzzle": "6.3.3",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "5.8.21",
         "laravel/horizon": "3.2.2",
-        "laravel/nova": "2.*",
+        "laravel/nova": "2.0.5",
         "laravel/tinker": "1.0.8",
         "maatwebsite/laravel-nova-excel": "1.1.4",
         "predis/predis": "1.1.1",
@@ -38,9 +38,9 @@
         "filp/whoops": "2.3.1",
         "fzaninotto/faker": "1.8.0",
         "mockery/mockery": "1.2.2",
-        "nunomaduro/collision": "^3.0",
-        "nunomaduro/larastan": "^0.3.17",
-        "phpunit/phpunit": "^7.5"
+        "nunomaduro/collision": "3.0.1",
+        "nunomaduro/larastan": "0.3.17",
+        "phpunit/phpunit": "7.5.12"
     },
     "autoload": {
         "classmap": [

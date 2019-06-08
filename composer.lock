@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18eb7ee4799dec5a211b0833e9b755e7",
+    "content-hash": "7fcbee252231325dfe2dabe65845ea2d",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
