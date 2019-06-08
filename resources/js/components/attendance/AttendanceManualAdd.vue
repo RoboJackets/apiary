@@ -105,7 +105,7 @@ export default {
         .then(response => {
           let rawTeams = response.data.teams;
           if (rawTeams.length < 1) {
-            swal('Bueller...Bueller...', 'No teams found.', 'warning');
+            Swal.fire('Bueller...Bueller...', 'No teams found.', 'warning');
           } else {
             let alphaTeams = response.data.teams.filter(function(item) {
               return item.attendable;
@@ -119,13 +119,13 @@ export default {
         })
         .catch(error => {
           if (error.response.status === 403) {
-            swal({
+            Swal.fire({
               title: 'Whoops!',
               text: "You don't have permission to perform that action.",
               type: 'error',
             });
           } else {
-            swal(
+            Swal.fire(
               'Error',
               'Unable to process data. Check your internet connection or try refreshing the page.',
               'error'
@@ -157,13 +157,13 @@ export default {
           this.hasError = true;
           this.feedback = '';
           if (error.response.status == 403) {
-            swal({
+            Swal.fire({
               title: 'Whoops!',
               text: "You don't have permission to perform that action.",
               type: 'error',
             });
           } else {
-            swal(
+            Swal.fire(
               'Error',
               'Unable to process data. Check your internet connection or try refreshing the page.',
               'error'

@@ -61,7 +61,7 @@
   <script src="{{ mix('/js/app.js') }}"></script>
   @if (Session::has('sweet_alert.alert'))
     <script>
-        swal({!! Session::pull('sweet_alert.alert') !!});
+        Swal.fire({!! Session::pull('sweet_alert.alert') !!});
     </script>
   @endif
 </html>

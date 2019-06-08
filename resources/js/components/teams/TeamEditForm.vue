@@ -223,7 +223,7 @@ export default {
           this.hasError = true;
           this.feedback = '';
           console.log(response);
-          swal('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
+          Swal.fire('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
         });
     },
     loadMembers() {
@@ -238,7 +238,7 @@ export default {
         })
         .catch(response => {
           console.log(response);
-          swal(
+          Swal.fire(
             'Connection Error',
             'Unable to load data. Check your internet connection or try refreshing the page.',
             'error'
@@ -247,7 +247,7 @@ export default {
     },
     deletePrompt() {
       let self = this;
-      swal({
+      Swal.fire({
         title: 'Are you sure?',
         text: 'Once deleted, you will not be able to recover this team!',
         type: 'warning',
@@ -266,7 +266,7 @@ export default {
         .delete(this.dataUrl)
         .then(response => {
           this.hasError = false;
-          swal({
+          Swal.fire({
             title: 'Deleted!',
             text: 'The team has been deleted.',
             type: 'success',
@@ -281,13 +281,13 @@ export default {
           this.hasError = true;
           this.feedback = '';
           if (error.response.status == 403) {
-            swal({
+            Swal.fire({
               title: 'Whoops!',
               text: "You don't have permission to perform that action.",
               type: 'error',
             });
           } else {
-            swal(
+            Swal.fire(
               'Error',
               'Unable to process data. Check your internet connection or try refreshing the page.',
               'error'
@@ -297,7 +297,7 @@ export default {
     },
     removeUserPrompt: function(name, user_id) {
       let self = this;
-      swal({
+      Swal.fire({
         title: 'Are you sure?',
         text: 'Once removed, you must manually re-add this user (' + name + ') to the team to re-join.',
         type: 'warning',
@@ -324,7 +324,7 @@ export default {
         .then(response => {
           this.hasError = false;
           this.loadMembers();
-          swal({
+          Swal.fire({
             title: 'Success!',
             text: 'Removed ' + name + ' from ' + this.team.name + '.',
             type: 'success',
@@ -335,13 +335,13 @@ export default {
           console.log('error: ' + error);
           this.hasError = true;
           if (error.response.status == 403) {
-            swal({
+            Swal.fire({
               title: 'Whoops!',
               text: "You don't have permission to perform that action.",
               type: 'error',
             });
           } else {
-            swal(
+            Swal.fire(
               'Error',
               'Unable to process data. Check your internet connection or try refreshing the page.',
               'error'

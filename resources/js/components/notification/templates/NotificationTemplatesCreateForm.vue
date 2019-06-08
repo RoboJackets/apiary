@@ -83,7 +83,7 @@ export default {
           this.hasError = true;
           this.feedback = '';
           console.log(response);
-          swal('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
+          Swal.fire('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
         });
     },
   },

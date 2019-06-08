@@ -222,7 +222,7 @@ export default {
       })
       .catch(response => {
         console.log(response);
-        swal(
+        Swal.fire(
           'Connection Error',
           'Unable to load data. Check your internet connection or try refreshing the page.',
           'error'
@@ -236,7 +236,7 @@ export default {
       })
       .catch(response => {
         console.log(response);
-        swal(
+        Swal.fire(
           'Connection Error',
           'Unable to load data. Check your internet connection or try refreshing the page.',
           'error'
@@ -275,7 +275,7 @@ export default {
           this.hasError = true;
           this.feedback = '';
           console.log(response);
-          swal('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
+          Swal.fire('Error', 'Unable to save data. Check your internet connection or try refreshing the page.', 'error');
         });
     },
     updateAttendance() {
@@ -286,7 +286,7 @@ export default {
         })
         .catch(response => {
           console.log(response);
-          swal(
+          Swal.fire(
             'Connection Error',
             'Unable to load data. Check your internet connection or try refreshing the page.',
             'error'
@@ -295,7 +295,7 @@ export default {
     },
     deletePrompt() {
       let self = this;
-      swal({
+      Swal.fire({
         title: 'Are you sure?',
         text: 'Once deleted, you will not be able to recover this event!',
         type: 'warning',
@@ -314,7 +314,7 @@ export default {
         .delete(this.dataUrl)
         .then(response => {
           this.hasError = false;
-          swal({
+          Swal.fire({
             title: 'Deleted!',
             text: 'The event has been deleted.',
             type: 'success',
@@ -329,13 +329,13 @@ export default {
           this.hasError = true;
           this.feedback = '';
           if (error.response.status == 403) {
-            swal({
+            Swal.fire({
               title: 'Whoops!',
               text: "You don't have permission to perform that action.",
               type: 'error',
             });
           } else {
-            swal(
+            Swal.fire(
               'Error',
               'Unable to process data. Check your internet connection or try refreshing the page.',
               'error'

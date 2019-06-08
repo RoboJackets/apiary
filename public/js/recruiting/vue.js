@@ -33,7 +33,7 @@ var form = new Vue({
             result.recruiting_responses = values;
             worker.postMessage(JSON.stringify(result));
 
-            swal({
+            Swal.fire({
                 title: "Success!",
                 text: "Thanks for stopping by!",
                 type: "success",

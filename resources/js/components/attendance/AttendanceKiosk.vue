@@ -58,7 +58,7 @@
                     .then(response => {
                         let rawTeams = response.data.teams;
                         if (rawTeams.length < 1) {
-                            swal('Bueller...Bueller...', 'No teams found.', 'warning');
+                            Swal.fire('Bueller...Bueller...', 'No teams found.', 'warning');
                         } else {
                             this.teams = response.data.teams.filter(function (item) {
                                 return item.visible && item.attendable;
@@ -71,7 +71,7 @@
                     })
                     .catch(error => {
                         if (error.response.status === 403) {
-                            swal({
+                            Swal.fire({
                                 title: 'Whoops!',
                                 text: "You don't have permission to perform that action.",
                                 type: 'error',
@@ -79,7 +79,7 @@
                         } else if (error.response.status === 401) {
                             this.tokenPrompt();
                         } else {
-                            swal(
+                            Swal.fire(
                                 'Error',
                                 'Unable to process data. Check your internet connection or try refreshing the page.',
                                 'error'
@@ -91,19 +91,19 @@
                 // Prompt for API token to be stored in local browser storage
                 let self = this;
 
-                swal({
+                Swal.fire({
                     title: 'Authentication',
                     text: 'Please provide an API token to process data',
                     input: 'text',
                 }).then(result => {
                     if (result === false) return false;
                     if (result === '') {
-                        swal.showValidationError('Token field is required!');
+                        Swal.showValidationError('Token field is required!');
                         return false;
                     }
                     localStorage.setItem('api_token', result.value);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('api_token');
-                    swal.close();
+                    Swal.close();
                     self.loadTeams();
                 });
             },
@@ -142,7 +142,7 @@
                     // Make NFC logo icon red
                     document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#FF0000');
 
-                    swal({
+                    Swal.fire({
                         title: 'Hmm...',
                         text: 'There was an error connecting to the contactless card reader.',
                         showCancelButton: true,
@@ -177,14 +177,14 @@
             stopSocketListening() {
                 let self = this;
                 this.socket.close();
-                swal('socket closed');
+                Swal.fire('socket closed');
             },
             clicked: function (event) {
                 //Remove focus from button
                 document.activeElement.blur();
                 // When a team button is clicked, show a prompt to swipe BuzzCard
                 this.attendance.attendable_id = event.target.id;
-                swal(this.getTeamSwalConfig(event.target.innerText));
+                Swal.fire(this.getTeamSwalConfig(event.target.innerText));
             },
             getTeamSwalConfig: function (teamName) {
                 // This method pulls from state (attendance.attendable_id) when teamName is not passed (or undefined)
@@ -198,7 +198,7 @@
                     title: 'Swipe or Tap your BuzzCard now',
                     html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
                     showCancelButton: true,
-                    allowOutsideClick: () => !swal.isLoading(),
+                    allowOutsideClick: () => !Swal.isLoading(),
                     showConfirmButton: false,
                     imageUrl: '/img/swipe-horiz-up.gif',
                     imageWidth: 450,
@@ -208,10 +208,10 @@
                     onOpen: () => {
                         // Remove focus from checkbox
                         document.activeElement.blur();
-                        swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
+                        Swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
                     },
                     onClose: () => {
-                        swal.getInput().removeEventListener("change", checkboxEventListener);
+                        Swal.getInput().removeEventListener("change", checkboxEventListener);
                         this.clearFields();
                     }
                 }
@@ -244,7 +244,7 @@
                     // Error message sent from card reader
                     console.log('error cardData: ' + pattError.exec(cardData));
                     cardData = null;
-                    swal({
+                    Swal.fire({
                         title: 'Hmm...',
                         text: 'There was an error reading your card. Please swipe again.',
                         showCancelButton: true,
@@ -255,10 +255,10 @@
                         }
                     })
                 } else {
-                    swal.close();
+                    Swal.close();
                     console.log('unknown cardData: ' + cardData);
                     cardData = null;
-                    swal({
+                    Swal.fire({
                         title: 'Hmm...',
                         html: 'Card format not recognized.<br/>Contact #it-helpdesk for assistance.',
                         showConfirmButton: true,
@@ -284,7 +284,7 @@
                             if (typeof response.data.user.roles === "undefined") {
                                 // Unable to read roles? That's an error.
                                 console.log('Error checking permissions via API');
-                                swal(
+                                Swal.fire(
                                     'Error',
                                     'Unable to validate permissions. Please contact #it-helpdesk for assistance.',
                                     'error'
@@ -293,7 +293,7 @@
                             } else if (response.data.user.roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
-                                swal({
+                                Swal.fire({
                                     title: "Administrator Options",
                                     input: 'select',
                                     inputOptions: {
@@ -324,7 +324,7 @@
                             } else {
                                 // Roles retried and the user is not an admin
                                 console.log('User is not an admin');
-                                swal({
+                                Swal.fire({
                                     title: 'Whoops!',
                                     text: 'Please select a team before swiping or tapping your BuzzCard',
                                     type: 'warning',
@@ -340,14 +340,14 @@
                             this.clearFields();
                             if (error.response.status === 404) {
                                 // User not known, but API call succeeded
-                                swal({
+                                Swal.fire({
                                     title: 'Whoops!',
                                     text: 'Please select a team before swiping or tapping your BuzzCard',
                                     type: 'warning',
                                     timer: 2000,
                                 });
                             } else {
-                                swal(
+                                Swal.fire(
                                     'Error',
                                     'Unable to process data. Check your internet connection or try refreshing the page.',
                                     'error'
@@ -357,13 +357,13 @@
                 } else {
                     // Submit attendance data
                     this.submitting = true;
-                    swal.showLoading();
+                    Swal.showLoading();
                     axios
                         .post(this.attendanceBaseUrl, this.attendance)
                         .then(response => {
                             this.hasError = false;
                             let attendeeName = (response.data.attendance.attendee.name || "Non-Member");
-                            swal({
+                            Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
@@ -371,7 +371,7 @@
                                 type: 'success',
                             }).then(() => {
                                 if (this.stickToTeam) {
-                                    swal(this.getTeamSwalConfig());
+                                    Swal.fire(this.getTeamSwalConfig());
                                 }
                             });
                             if (!this.stickToTeam) {
@@ -386,13 +386,13 @@
                             this.feedback = '';
                             this.clearFields();
                             if (error.response.status == 403) {
-                                swal({
+                                Swal.fire({
                                     title: 'Whoops!',
                                     text: "You don't have permission to perform that action.",
                                     type: 'error',
                                 });
                             } else {
-                                swal(
+                                Swal.fire(
                                     'Error',
                                     'Unable to process data. Check your internet connection or try refreshing the page.',
                                     'error'
@@ -401,7 +401,7 @@
                         })
                         .finally(() => {
                             this.submitting = false;
-                            swal.hideLoading();
+                            Swal.hideLoading();
                         });
                 }
 
