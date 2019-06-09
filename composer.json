@@ -30,7 +30,7 @@
         "spatie/laravel-sluggable": "2.1.8",
         "square/connect": "2.20190508.0",
         "subfission/cas": "dev-master",
-        "uxweb/sweet-alert": "1.4.3",
+        "uxweb/sweet-alert": "2.0.1",
         "vyuldashev/nova-permission": "1.7.0"
     },
     "require-dev": {
