@@ -33,7 +33,7 @@
     "sweetalert2": "8.12.0",
     "vue": "2.6.10",
     "vue-flatpickr-component": "8.1.2",
-    "vue-moment": "3.2.0",
+    "vue-moment": "4.0.0",
     "vue-select": "2.6.4",
     "vue-template-compiler": "2.6.10",
     "vuelidate": "0.7.4"
