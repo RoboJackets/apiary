@@ -12,12 +12,12 @@ body {
 }
 
 // Typeahead (v-select component) Styles
-.v-select.open .dropdown-toggle {
+.v-select.open .vs__dropdown-toggle {
   border-color: #5cb3fd;
   border-radius: 0;
 }
 
-.v-select .dropdown-toggle {
+.v-select .vs__dropdown-toggle {
   border-radius: 0 !important;
 }
 
