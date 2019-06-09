@@ -8,11 +8,10 @@ use App\Team;
 use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Value;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Metrics\ValueResult;
 
-class PrimaryTeam extends Value
+class PrimaryTeam extends TextMetric
 {
     /**
      * Calculate the value of the metric.
