@@ -48,67 +48,67 @@ Vue.use(VueMoment, {
  */
 
 // Form Fields
-Vue.component('term-input', require('./components/fields/TermInput.vue'));
-Vue.component('custom-radio-buttons', require('./components/fields/CustomRadioButtons.vue'));
-Vue.component('user-lookup', require('./components/fields/UserLookup.vue'));
+Vue.component('term-input', require('./components/fields/TermInput.vue').default);
+Vue.component('custom-radio-buttons', require('./components/fields/CustomRadioButtons.vue').default);
+Vue.component('user-lookup', require('./components/fields/UserLookup.vue').default);
 
 // Large Scale Components
-Vue.component('datatable', require('./components/Datatable.vue'));
-Vue.component('recruiting-admin-table', require('./components/wrappers/RecruitingAdminTable.vue'));
-Vue.component('recruiting-edit-form', require('./components/RecruitingEditForm.vue'));
-Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue'));
-Vue.component('user-edit-form', require('./components/UserEditForm.vue'));
-Vue.component('payment-instructions', require('./components/PaymentInstructions.vue'));
-Vue.component('accept-payment', require('./components/AcceptPayment.vue'));
+Vue.component('datatable', require('./components/Datatable.vue').default);
+Vue.component('recruiting-admin-table', require('./components/wrappers/RecruitingAdminTable.vue').default);
+Vue.component('recruiting-edit-form', require('./components/RecruitingEditForm.vue').default);
+Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue').default);
+Vue.component('user-edit-form', require('./components/UserEditForm.vue').default);
+Vue.component('payment-instructions', require('./components/PaymentInstructions.vue').default);
+Vue.component('accept-payment', require('./components/AcceptPayment.vue').default);
 
 // Attendance
-Vue.component('attendance-modal', require('./components/wrappers/AttendanceModal.vue'));
-Vue.component('attendance-kiosk', require('./components/attendance/AttendanceKiosk.vue'));
-Vue.component('attendance-export', require('./components/attendance/AttendanceExport.vue'));
-Vue.component('attendance-manual-add', require('./components/attendance/AttendanceManualAdd.vue'));
+Vue.component('attendance-modal', require('./components/wrappers/AttendanceModal.vue').default);
+Vue.component('attendance-kiosk', require('./components/attendance/AttendanceKiosk.vue').default);
+Vue.component('attendance-export', require('./components/attendance/AttendanceExport.vue').default);
+Vue.component('attendance-manual-add', require('./components/attendance/AttendanceManualAdd.vue').default);
 
 // Events
-Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue'));
-Vue.component('event-edit-form', require('./components/events/EventEditForm.vue'));
-Vue.component('event-create-form', require('./components/events/EventCreateForm.vue'));
+Vue.component('events-admin-table', require('./components/wrappers/EventsAdminTable.vue').default);
+Vue.component('event-edit-form', require('./components/events/EventEditForm.vue').default);
+Vue.component('event-create-form', require('./components/events/EventCreateForm.vue').default);
 
 // Dues
-Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue'));
-Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue'));
-Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue'));
-Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue'));
-Vue.component('demographics', require('./components/dues/Demographics.vue'));
+Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue').default);
+Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue').default);
+Vue.component('safety-agreement', require('./components/dues/SafetyAgreement.vue').default);
+Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue').default);
+Vue.component('demographics', require('./components/dues/Demographics.vue').default);
 
-Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.vue'));
-Vue.component('pending-dues-table', require('./components/wrappers/PendingDuesTable.vue'));
-Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue'));
-Vue.component('show-payments', require('./components/payments/ShowPayments.vue'));
+Vue.component('dues-admin-table', require('./components/wrappers/DuesAdminTable.vue').default);
+Vue.component('pending-dues-table', require('./components/wrappers/PendingDuesTable.vue').default);
+Vue.component('dues-transaction', require('./components/dues/DuesTransaction.vue').default);
+Vue.component('show-payments', require('./components/payments/ShowPayments.vue').default);
 
 // Swag
-Vue.component('swag-table', require('./components/wrappers/SwagTable.vue'));
-Vue.component('swag-transaction', require('./components/swag/SwagTransaction.vue'));
-Vue.component('distribute-swag', require('./components/swag/DistributeSwag.vue'));
+Vue.component('swag-table', require('./components/wrappers/SwagTable.vue').default);
+Vue.component('swag-transaction', require('./components/swag/SwagTransaction.vue').default);
+Vue.component('distribute-swag', require('./components/swag/DistributeSwag.vue').default);
 
 //Teams
-Vue.component('teams-admin-table', require('./components/wrappers/TeamsAdminTable.vue'));
-Vue.component('team-create-form', require('./components/teams/TeamCreateForm.vue'));
-Vue.component('team-edit-form', require('./components/teams/TeamEditForm.vue'));
-Vue.component('team-invite-modal', require('./components/teams/TeamInviteModal.vue'));
-Vue.component('team-card', require('./components/teams/TeamCard.vue'));
-Vue.component('team-membership-button', require('./components/teams/TeamMembershipButton.vue'));
+Vue.component('teams-admin-table', require('./components/wrappers/TeamsAdminTable.vue').default);
+Vue.component('team-create-form', require('./components/teams/TeamCreateForm.vue').default);
+Vue.component('team-edit-form', require('./components/teams/TeamEditForm.vue').default);
+Vue.component('team-invite-modal', require('./components/teams/TeamInviteModal.vue').default);
+Vue.component('team-card', require('./components/teams/TeamCard.vue').default);
+Vue.component('team-membership-button', require('./components/teams/TeamMembershipButton.vue').default);
 
 // Notifications
 Vue.component(
     'notification-templates-admin-table',
-    require('./components/notification/templates/NotificationTemplatesAdminTable.vue')
+    require('./components/notification/templates/NotificationTemplatesAdminTable.vue').default
 );
 Vue.component(
     'notification-templates-create-form',
-    require('./components/notification/templates/NotificationTemplatesCreateForm.vue')
+    require('./components/notification/templates/NotificationTemplatesCreateForm.vue').default
 );
 Vue.component(
     'notification-templates-edit-form',
-    require('./components/notification/templates/NotificationTemplatesEditForm.vue')
+    require('./components/notification/templates/NotificationTemplatesEditForm.vue').default
 );
 
 const app = new Vue({
