@@ -34,10 +34,10 @@
           @if (auth()->user())
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
-                <a class="nav-link vs__dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {{auth()->user()->name}}
                 </a>
-                <div class="vs__dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="/profile">Profile</a>
                   <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
                 </div>
