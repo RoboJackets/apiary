@@ -39,11 +39,18 @@ export default {
   mounted: function() {
     this.url = '/nova-api/' + this.resourceName + '/' + this.resourceId + '/metrics/' + this.card.uriKey;
 
+    if (this.card.ranges.length > 0) {
+      this.selectedRange = this.card.ranges[0].value;
+    }
+
     this.refresh();
   },
   methods: {
-    refresh: function() {
+    refresh: function(event) {
       this.loading = true;
+      if (event) {
+        this.selectedRange = event.target.value;
+      }
 
       var thisObj = this;
       Nova.request().get(this.url, this.card.ranges.length > 0 ? {params: {range: this.selectedRange}} : {}).then(function(response) {
