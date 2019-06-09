@@ -8,11 +8,10 @@ use App\DuesPackage;
 use Laravel\Nova\Nova;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Value;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\ValueResult;
 
-class SwagPickupRate extends Value
+class SwagPickupRate extends TextMetric
 {
     /**
      * Get the displayable name of the metric.
