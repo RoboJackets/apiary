@@ -11,8 +11,7 @@
   @include button-variant($rj-gold, $rj-gold);
 }
 
-@import 'vSelect' from 'vue-select`;
-@import 'vue-select/dist/vue-select.css';
+@import "vue-select/src/scss/vue-select.scss";
 
 // Custom Stylesheets
 @import 'user';
