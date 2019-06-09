@@ -28,8 +28,7 @@ class MemberSince extends TextMetric
             // The date must be passed in as the prefix, or the non-numeric characters will be stripped and it will be
             // treated as a number. This is ugly but works. See
             // vendor/laravel/nova/resources/js/components/Metrics/Base/ValueMetric.vue line 124.
-            return $this->result('This is a test');
-            return $this->result(date('F j, Y', strtotime($transaction->created_at->toDateTimeString())))->format('');
+            return $this->result(date('F j, Y', strtotime($transaction->created_at->toDateTimeString())));
         }
 
         return $this->result('n/a');
