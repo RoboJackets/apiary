@@ -87,7 +87,7 @@ class RsvpController extends Controller
         $source = null;
 
         $now = new \DateTime();
-        $end = isset($event->end_time) ? new \DateTime($event->end_time) : null;
+        $end = isset($event->end_time) ? new \DateTime($event->end_time->toDateTimeString()) : null;
         if (null !== $end && $end <= $now) {
             return view('rsvp.ended')->with(['event' => $event]);
         }
