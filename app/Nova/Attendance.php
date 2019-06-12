@@ -15,6 +15,7 @@ use App\Nova\Filters\Attendable;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\ExportAttendance;
 use App\Nova\Lenses\RecentInactiveUsers;
 use App\Nova\Filters\UserActiveAttendance;
 use Laravel\Nova\Http\Requests\LensRequest;
@@ -185,7 +186,13 @@ class Attendance extends Resource
      */
     public function actions(Request $request): array
     {
-        return [];
+        return [
+            (new ExportAttendance)->canSee(function ($request) {
+                return true;
+            })->canRun(function ($request, $user) {
+                return true;
+            }),
+        ];
     }
 
     /**
