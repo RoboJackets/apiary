@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57b8bb8ee1c5e9600ed1701a9f69ecea",
+    "content-hash": "c11000145d054ceff4f946e8bfc98477",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
@@ -3730,16 +3730,16 @@
         },
         {
             "name": "square/connect",
-            "version": "2.20190508.0",
+            "version": "2.20190612.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/connect-php-sdk.git",
-                "reference": "da592185d59b8ed80a02d5b2eba812e49eed793e"
+                "reference": "338f6d70fef7916527247e5fb822925aeb91eaa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/da592185d59b8ed80a02d5b2eba812e49eed793e",
-                "reference": "da592185d59b8ed80a02d5b2eba812e49eed793e",
+                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/338f6d70fef7916527247e5fb822925aeb91eaa4",
+                "reference": "338f6d70fef7916527247e5fb822925aeb91eaa4",
                 "shasum": ""
             },
             "require": {
@@ -3777,7 +3777,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2019-05-08T21:21:07+00:00"
+            "time": "2019-06-12T18:41:17+00:00"
         },
         {
             "name": "subfission/cas",
