@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c11000145d054ceff4f946e8bfc98477",
+    "content-hash": "256ac21865566cd361ca8400b2ce91b1",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
@@ -1978,20 +1978,21 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.0.5",
+            "version": "v2.0.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "bba766e6f8f3ecff8d1e8728ff647006f242f6ef"
+                "reference": "2803cb3cce6290f65949b96f0ef0503f7af56d79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-bba766e6f8f3ecff8d1e8728ff647006f242f6ef-zip-729ee5.zip",
-                "reference": "bba766e6f8f3ecff8d1e8728ff647006f242f6ef",
-                "shasum": "92ee6106c9fb5dd83f2bcdfb51393ca4cb43532c"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-2803cb3cce6290f65949b96f0ef0503f7af56d79-zip-c75772.zip",
+                "reference": "2803cb3cce6290f65949b96f0ef0503f7af56d79",
+                "shasum": "6522e4e54e9a2ac4e39e3ad291a1db3697f7ad40"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
+                "doctrine/dbal": "^2.9",
                 "illuminate/support": "^5.7.15 | 5.8.*",
                 "moontoast/math": "^1.1",
                 "php": ">=7.1.0",
@@ -2043,7 +2044,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-05-15T19:21:43+00:00"
+            "time": "2019-06-10T17:21:49+00:00"
         },
         {
             "name": "laravel/tinker",
