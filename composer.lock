@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac6a4274f56245554f569d980c396f68",
+    "content-hash": "a0f8632baf6693147180ad8995ad3d76",
     "packages": [
         {
             "name": "64robots/nova-date-filter",
@@ -1909,16 +1909,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "5a6a1744c7101ce509df79e4caa12198eff40faa"
+                "reference": "a6e4a89525e328ef8009509b8da02d0bc98f264f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/5a6a1744c7101ce509df79e4caa12198eff40faa",
-                "reference": "5a6a1744c7101ce509df79e4caa12198eff40faa",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/a6e4a89525e328ef8009509b8da02d0bc98f264f",
+                "reference": "a6e4a89525e328ef8009509b8da02d0bc98f264f",
                 "shasum": ""
             },
             "require": {
@@ -1974,7 +1974,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2019-06-04T13:52:41+00:00"
+            "time": "2019-06-14T12:32:39+00:00"
         },
         {
             "name": "laravel/nova",
