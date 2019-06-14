@@ -19,7 +19,7 @@
         "doctrine/dbal": "2.9.2",
         "fideloper/proxy": "4.1.0",
         "guzzlehttp/guzzle": "6.3.3",
-        "laravel/framework": "5.8.22",
+        "laravel/framework": "5.8.23",
         "laravel/horizon": "3.2.2",
         "laravel/nova": "2.0.6",
         "laravel/tinker": "1.0.8",
