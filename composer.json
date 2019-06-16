@@ -11,7 +11,6 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
-        "64robots/nova-date-filter": "0.3.2",
         "apereo/phpcas": "1.3.7",
         "barryvdh/laravel-ide-helper": "2.6.2",
         "bugsnag/bugsnag-laravel": "2.15.2",
@@ -19,9 +18,9 @@
         "doctrine/dbal": "2.9.2",
         "fideloper/proxy": "4.1.0",
         "guzzlehttp/guzzle": "6.3.3",
-        "laravel/framework": "5.8.22",
-        "laravel/horizon": "3.2.2",
-        "laravel/nova": "2.0.5",
+        "laravel/framework": "5.8.23",
+        "laravel/horizon": "3.2.3",
+        "laravel/nova": "2.0.6",
         "laravel/tinker": "1.0.8",
         "maatwebsite/laravel-nova-excel": "1.1.4",
         "predis/predis": "1.1.1",
@@ -40,7 +39,7 @@
         "mockery/mockery": "1.2.2",
         "nunomaduro/collision": "3.0.1",
         "nunomaduro/larastan": "0.3.17",
-        "phpunit/phpunit": "8.2.1"
+        "phpunit/phpunit": "8.2.2"
     },
     "autoload": {
         "classmap": [
