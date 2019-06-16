@@ -36,7 +36,6 @@ class ExportAttendance extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        // $collection = collect([['gtid'=>'903311111', 'today'=>'1'], ['gtid'=>'903311112', 'today'=>'2']]);
         $attendables = [];
 
         // Iterate over each GTID, transforming it into an array of attendables to counts, then ensure every row has all columns
@@ -52,19 +51,15 @@ class ExportAttendance extends Action
                 });
             });
 
-        \Log::debug('Before union', $collection->toArray());
-        \Log::debug('Attendables before unique', $attendables);
         // Get an array of all possible attendables with the value of 0 for each
         $attendables = collect($attendables)->unique()
             ->mapWithKeys(function ($attendable) {
                 return [$attendable => 0];
             });
-        \Log::debug('Attendables after unique', $attendables->toArray());
 
         $collection = $collection->map(function ($columns, $gtid) use ($attendables) {
                 return $columns->union($attendables)->prepend($gtid, 'GTID');
             });
-        \Log::debug('After union', $collection->toArray());
 
         $response = $collection->downloadExcel($this->filename, \Maatwebsite\Excel\Excel::CSV, true);
         if (!$response instanceof BinaryFileResponse || $response->isInvalid()) {
