@@ -40,7 +40,7 @@ class ExportAttendance extends Action
      *
      * @return array<string,string>
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(Generic.CodeAnalysis.UnusedFunctionParameter)
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
