@@ -54,14 +54,6 @@ class ExportAttendance extends Action
      */
     public function fields()
     {
-        return [
-            Date::make('Start Date')
-                ->format('MM/DD/YYYY')
-                ->help('Leave blank for two weeks ago'),
-
-            Date::make('End Date')
-                ->format('MM/DD/YYYY')
-                ->help('Leave blank for today'),
-        ];
+        return [];
     }
 }
