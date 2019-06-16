@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "002490f6958c8d88d7a554b66eb84849",
+    "content-hash": "9351f89ecc42e91fd9f2c9b4a427e853",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5382,16 +5382,16 @@
         },
         {
             "name": "vyuldashev/nova-permission",
-            "version": "v1.7.0",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vyuldashev/nova-permission.git",
-                "reference": "b68eee7d321955753adb2e830f89bfc66212de22"
+                "reference": "85cdf1144e7d2178d65af4f8b7ebe4fe258b84b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/b68eee7d321955753adb2e830f89bfc66212de22",
-                "reference": "b68eee7d321955753adb2e830f89bfc66212de22",
+                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/85cdf1144e7d2178d65af4f8b7ebe4fe258b84b4",
+                "reference": "85cdf1144e7d2178d65af4f8b7ebe4fe258b84b4",
                 "shasum": ""
             },
             "require": {
@@ -5421,7 +5421,7 @@
                 "nova",
                 "spatie-permission"
             ],
-            "time": "2019-05-14T22:11:13+00:00"
+            "time": "2019-06-16T20:08:56+00:00"
         }
     ],
     "packages-dev": [
