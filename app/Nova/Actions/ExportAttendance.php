@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+//
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Nova\Actions;
 
@@ -39,8 +41,6 @@ class ExportAttendance extends Action
      * @param \Illuminate\Support\Collection  $models
      *
      * @return array<string,string>
-     *
-     * @SuppressWarnings(Generic.CodeAnalysis.UnusedFunctionParameter)
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
