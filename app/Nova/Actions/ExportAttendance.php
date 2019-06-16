@@ -39,6 +39,8 @@ class ExportAttendance extends Action
      * @param \Illuminate\Support\Collection  $models
      *
      * @return array<string,string>
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
