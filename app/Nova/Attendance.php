@@ -188,9 +188,9 @@ class Attendance extends Resource
     {
         return [
             (new ExportAttendance)->canSee(function ($request) {
-                return true;
+                return $request->user()->can('read-attendance') && $request->user()->can('read-users-gtid');
             })->canRun(function ($request, $user) {
-                return true;
+                return $request->user()->can('read-attendance') && $request->user()->can('read-users-gtid');
             }),
         ];
     }
