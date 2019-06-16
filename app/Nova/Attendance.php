@@ -187,9 +187,9 @@ class Attendance extends Resource
     public function actions(Request $request): array
     {
         return [
-            (new ExportAttendance)->canSee(function ($request) {
+            (new ExportAttendance())->canSee(static function ($request) {
                 return $request->user()->can('read-attendance') && $request->user()->can('read-users-gtid');
-            })->canRun(function ($request, $user) {
+            })->canRun(static function ($request) {
                 return $request->user()->can('read-attendance') && $request->user()->can('read-users-gtid');
             }),
         ];
