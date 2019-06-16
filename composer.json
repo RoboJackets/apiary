@@ -30,7 +30,7 @@
         "square/connect": "2.20190612.0",
         "subfission/cas": "dev-master",
         "uxweb/sweet-alert": "2.0.1",
-        "vyuldashev/nova-permission": "1.7.0"
+        "vyuldashev/nova-permission": "1.8.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "1.2.2",
