@@ -26,7 +26,7 @@ class ExportAttendance extends Action
     public $availableForEntireResource = true;
 
     /**
-     * The exported filename
+     * The exported filename.
      *
      * @var string
      */
@@ -69,11 +69,11 @@ class ExportAttendance extends Action
         });
 
         $response = $collection->downloadExcel($this->filename, \Maatwebsite\Excel\Excel::CSV, true);
-        if (!$response instanceof BinaryFileResponse || $response->isInvalid()) {
+        if (! $response instanceof BinaryFileResponse || $response->isInvalid()) {
             return Action::danger('Error exporting attendance');
         }
 
-        $downloadURL = url('/nova-vendor/maatwebsite/laravel-nova-excel/download?') . http_build_query([
+        $downloadURL = url('/nova-vendor/maatwebsite/laravel-nova-excel/download?').http_build_query([
             'path' => $response->getFile()->getPathname(),
             'filename' => $this->filename,
         ]);
