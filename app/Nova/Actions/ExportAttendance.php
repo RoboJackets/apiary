@@ -52,6 +52,7 @@ class ExportAttendance extends Action
                 return $records->groupBy(static function ($item) use (&$attendables) {
                     $name = $item->attendable->name;
                     $attendables[] = $name;
+
                     return $name;
                 })->map(static function ($days) {
                     return $days->count();
@@ -77,6 +78,7 @@ class ExportAttendance extends Action
             'path' => $response->getFile()->getPathname(),
             'filename' => $this->filename,
         ]);
+
         return Action::download($downloadURL, $this->filename);
     }
 }
