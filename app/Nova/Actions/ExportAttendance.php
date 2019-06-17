@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Attendance;
 use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
@@ -49,25 +50,25 @@ class ExportAttendance extends Action
         // Iterate over each GTID, transforming it into an array of attendables to counts, then ensure every row has
         // all columns
         $collection = $models->groupBy('gtid')
-            ->map(static function ($records) use (&$attendables) {
+            ->map(static function (Collection $records) use (&$attendables): Collection {
                 // Group the attendance records for that GTID by the attendable
-                return $records->groupBy(static function ($item) use (&$attendables) {
+                return $records->groupBy(static function (Attendance $item) use (&$attendables): string {
                     $name = $item->attendable->name;
                     $attendables[] = $name;
 
                     return $name;
-                })->map(static function ($days) {
+                })->map(static function (Collection $days): int {
                     return $days->count();
                 });
             });
 
         // Get an array of all possible attendables with the value of 0 for each
         $attendables = collect($attendables)->unique()
-            ->mapWithKeys(static function ($attendable) {
+            ->mapWithKeys(static function (string $attendable): array {
                 return [$attendable => 0];
             });
 
-        $collection = $collection->map(static function ($columns, $gtid) use ($attendables) {
+        $collection = $collection->map(static function (Collection $columns, int $gtid) use ($attendables): Collection {
             return $columns->union($attendables)->prepend($gtid, 'GTID');
         });
 
