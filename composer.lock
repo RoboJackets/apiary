@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "feab6c636fe9ba1f20e5d57b6ffa90b3",
+    "content-hash": "c5da0fc5e94f2b64563a5c2656c67103",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2220,16 +2220,16 @@
         },
         {
             "name": "maatwebsite/laravel-nova-excel",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Nova-Excel.git",
-                "reference": "8294060d375898caa58bc0a92d177ead7b6ff8b2"
+                "reference": "90da3cde6da1e65e2e1cf015fe95c85558c532fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/8294060d375898caa58bc0a92d177ead7b6ff8b2",
-                "reference": "8294060d375898caa58bc0a92d177ead7b6ff8b2",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/90da3cde6da1e65e2e1cf015fe95c85558c532fa",
+                "reference": "90da3cde6da1e65e2e1cf015fe95c85558c532fa",
                 "shasum": ""
             },
             "require": {
@@ -2269,7 +2269,7 @@
                 "nova",
                 "phpspreadsheet"
             ],
-            "time": "2019-05-09T14:12:15+00:00"
+            "time": "2019-06-19T20:58:59+00:00"
         },
         {
             "name": "markbaker/complex",
