@@ -29,6 +29,13 @@ class ExportAttendance extends Action
     public $availableForEntireResource = true;
 
     /**
+     * Disables action log events for this action.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = true;
+
+    /**
      * The exported filename.
      *
      * @var string
