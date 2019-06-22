@@ -2,7 +2,7 @@
 
 cd "${0%/*}"
 
-composer install --no-interaction --no-progress --no-suggest --no-dev
+composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative
 php artisan migrate --no-interaction
 php artisan config:cache --no-interaction
 php artisan view:clear --no-interaction
