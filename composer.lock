@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "86c4aa87bb7915208ba4ae6de250143b",
+    "content-hash": "a9126e9fe281a218e36ef7f13a3a186a",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1719,16 +1719,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.8.25",
+            "version": "v5.8.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "7c5f0f5a0854aa559d122ab83f776a9e50406a24"
+                "reference": "1d8ec9afdedc79314c18715056b8143d7e1fac31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/7c5f0f5a0854aa559d122ab83f776a9e50406a24",
-                "reference": "7c5f0f5a0854aa559d122ab83f776a9e50406a24",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/1d8ec9afdedc79314c18715056b8143d7e1fac31",
+                "reference": "1d8ec9afdedc79314c18715056b8143d7e1fac31",
                 "shasum": ""
             },
             "require": {
@@ -1862,7 +1862,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-06-25T14:31:45+00:00"
+            "time": "2019-06-25T16:20:51+00:00"
         },
         {
             "name": "laravel/horizon",
