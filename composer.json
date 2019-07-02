@@ -20,7 +20,7 @@
         "guzzlehttp/guzzle": "6.3.3",
         "laravel/framework": "5.8.27",
         "laravel/horizon": "3.2.5",
-        "laravel/nova": "2.0.7",
+        "laravel/nova": "2.0.8",
         "laravel/tinker": "1.0.8",
         "maatwebsite/laravel-nova-excel": "1.1.5",
         "predis/predis": "1.1.1",

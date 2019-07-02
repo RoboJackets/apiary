@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ba2c7fe13aac09c2facf9cbdb8ce313",
+    "content-hash": "08d0cf34a8d96991b23c8024a4f72a61",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1939,17 +1939,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.0.7",
+            "version": "v2.0.8",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "17cb7df77a2d25d5caa78ddefb12192742738ff0"
+                "reference": "c348c911504baedf1da41d50fa2614a43d2f9397"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-17cb7df77a2d25d5caa78ddefb12192742738ff0-zip-fb1e0f.zip",
-                "reference": "17cb7df77a2d25d5caa78ddefb12192742738ff0",
-                "shasum": "22112bb27f3fbfd1fce277dd4812606e9579793a"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-c348c911504baedf1da41d50fa2614a43d2f9397-zip-f4ecea.zip",
+                "reference": "c348c911504baedf1da41d50fa2614a43d2f9397",
+                "shasum": "401c98dfdb5d4d9b2d73e8a2e5eeb6a50cb11458"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -2005,7 +2005,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-06-25T20:54:20+00:00"
+            "time": "2019-07-02T15:53:33+00:00"
         },
         {
             "name": "laravel/tinker",
