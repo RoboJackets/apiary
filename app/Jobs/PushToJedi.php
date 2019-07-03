@@ -17,7 +17,7 @@ class PushToJedi implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The queue this job will run on
+     * The queue this job will run on.
      *
      * @var string
      */
