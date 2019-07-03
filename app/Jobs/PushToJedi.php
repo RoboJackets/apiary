@@ -17,6 +17,13 @@ class PushToJedi implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * The queue this job will run on
+     *
+     * @var string
+     */
+    public $queue = 'jedi';
+
+    /**
      * The user that will be sent to JEDI.
      *
      * @var \App\User
@@ -43,7 +50,7 @@ class PushToJedi implements ShouldQueue
         }
 
         $send = [];
-        $send['uid'] = $this->user->uid;
+        $send['uid'] = strtolower($this->user->uid);
         $send['first_name'] = $this->user->preferred_first_name;
         $send['last_name'] = $this->user->last_name;
         $send['is_access_active'] = $this->user->is_access_active;
