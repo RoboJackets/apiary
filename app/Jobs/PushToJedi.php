@@ -17,13 +17,6 @@ class PushToJedi implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The queue this job will run on.
-     *
-     * @var string
-     */
-    public $queue = 'jedi';
-
-    /**
      * The user that will be sent to JEDI.
      *
      * @var \App\User
