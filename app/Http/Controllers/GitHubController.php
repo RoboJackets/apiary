@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -46,7 +50,7 @@ class GitHubController extends Controller
 
         $localUser->save();
 
-        alert()->success("Your GitHub account was successfully linked.", 'Success!');
+        alert()->success('Your GitHub account was successfully linked.', 'Success!');
 
         return redirect('/profile');
     }
