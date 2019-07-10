@@ -18,11 +18,11 @@ class GitHubController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => 400,
+                        'error_code' => ,
                         'error_message' => 'You already have a GitHub account linked.',
                     ]
                 ),
-                400
+                
             );
         }
 
@@ -38,11 +38,11 @@ class GitHubController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => 400,
+                        'error_code' => ,
                         'error_message' => 'You already have a GitHub account linked.',
                     ]
                 ),
-                400
+                
             );
         }
 
