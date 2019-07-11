@@ -59,6 +59,7 @@ class PushToJedi implements ShouldQueue
                 'headers' => [
                     'User-Agent' => 'Apiary on '.config('app.url'),
                     'Authorization' => 'Bearer '.config('jedi.token'),
+                    'Accept' => 'application/json',
                 ],
             ]
         );
