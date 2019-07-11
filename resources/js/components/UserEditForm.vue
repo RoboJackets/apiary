@@ -134,6 +134,20 @@
           </div>
         </div>
 
+        <h3>Linked Accounts</h3>
+
+        <div class="form-group row">
+          <label for="user-github" class="col-sm-2 col-form-label">GitHub</label>
+          <div class="col-sm-10 col-lg-4">
+            <div class="input-group">
+              <input v-model="user.github_username" type="text" readonly class="form-control" id="user-github" placeholder="No account linked">
+              <div class="input-group-append" v-if="!user.github_username">
+                <a href="/github" class="btn btn-secondary">Link Account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>

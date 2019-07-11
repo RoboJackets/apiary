@@ -47,6 +47,7 @@ class PushToJedi implements ShouldQueue
         $send['first_name'] = $this->user->preferred_first_name;
         $send['last_name'] = $this->user->last_name;
         $send['is_access_active'] = $this->user->is_access_active;
+        $send['github_username'] = $this->user->github_username;
         $send['teams'] = [];
 
         foreach ($this->user->teams as $team) {

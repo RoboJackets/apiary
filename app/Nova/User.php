@@ -125,6 +125,10 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
+            Text::make('GitHub Username', 'github_username')
+                ->hideFromIndex()
+                ->rules('nullable', 'max:40'),
+
             new Panel(
                 'System Access',
                 [
