@@ -2,8 +2,7 @@
 
 ## Supported Versions
 
-We are primarily concerned with versions that are deployed to a live environment.
-You can see which commits are live in each environment on [the deployments page](https://github.com/RoboJackets/apiary/deployments).
+We are primarily concerned with versions that are deployed to a live environment. In general, any deployment will be running the latest version of the code within one week of it being pushed to GitHub.
 
 ## Reporting a Vulnerability
 
