@@ -127,7 +127,9 @@ class User extends Resource
 
             Text::make('GitHub Username', 'github_username')
                 ->hideFromIndex()
-                ->rules('nullable', 'max:40'),
+                ->rules('nullable', 'max:39')
+                ->creationRules('unique:users,github_username')
+                ->updateRules('unique:users,github_username,{{resourceId}}'),
 
             new Panel(
                 'System Access',
