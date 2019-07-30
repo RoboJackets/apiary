@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b8c35234b0d5825ba8b3f8c607163b3c",
+    "content-hash": "44c84b79339c933d257a93726ae92424",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1817,16 +1817,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.2.6",
+            "version": "v3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "f65d71bb2f2d14442b76c7d34ffe3854776ae6ef"
+                "reference": "7268aad5003fbe264abce232976d66da156f2450"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/f65d71bb2f2d14442b76c7d34ffe3854776ae6ef",
-                "reference": "f65d71bb2f2d14442b76c7d34ffe3854776ae6ef",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/7268aad5003fbe264abce232976d66da156f2450",
+                "reference": "7268aad5003fbe264abce232976d66da156f2450",
                 "shasum": ""
             },
             "require": {
@@ -1834,9 +1834,9 @@
                 "ext-json": "*",
                 "ext-pcntl": "*",
                 "ext-posix": "*",
-                "illuminate/contracts": "~5.7.0|~5.8.0|~5.9.0",
-                "illuminate/queue": "~5.7.0|~5.8.0|~5.9.0",
-                "illuminate/support": "~5.7.0|~5.8.0|~5.9.0",
+                "illuminate/contracts": "~5.7.0|~5.8.0|^6.0",
+                "illuminate/queue": "~5.7.0|~5.8.0|^6.0",
+                "illuminate/support": "~5.7.0|~5.8.0|^6.0",
                 "php": ">=7.1.0",
                 "predis/predis": "^1.1",
                 "ramsey/uuid": "^3.5",
@@ -1882,7 +1882,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2019-07-11T21:11:11+00:00"
+            "time": "2019-07-30T15:28:48+00:00"
         },
         {
             "name": "laravel/nova",
