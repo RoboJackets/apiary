@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ef0562cc0b212ddd06dd56c961b0059",
+    "content-hash": "595cc1c033dbb25ea2e90f5f796bca85",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1819,16 +1819,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "7268aad5003fbe264abce232976d66da156f2450"
+                "reference": "02ddc3936c4b99f2d7914857a66ef432480876c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/7268aad5003fbe264abce232976d66da156f2450",
-                "reference": "7268aad5003fbe264abce232976d66da156f2450",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/02ddc3936c4b99f2d7914857a66ef432480876c4",
+                "reference": "02ddc3936c4b99f2d7914857a66ef432480876c4",
                 "shasum": ""
             },
             "require": {
@@ -1884,7 +1884,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2019-07-30T15:28:48+00:00"
+            "time": "2019-08-06T18:04:38+00:00"
         },
         {
             "name": "laravel/nova",
