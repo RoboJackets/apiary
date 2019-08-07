@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "595cc1c033dbb25ea2e90f5f796bca85",
+    "content-hash": "903dabb96f6d1b1bb719daeef076c59e",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1888,22 +1888,22 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.0.9",
+            "version": "2.0.10",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "bdf511caee87870af32fedbed2dfa94c0a6483d3"
+                "reference": "d61a6f1b331164bed3f31c92b96e0c11cc645b10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-bdf511caee87870af32fedbed2dfa94c0a6483d3-zip-c14654.zip",
-                "reference": "bdf511caee87870af32fedbed2dfa94c0a6483d3",
-                "shasum": "87d9fe60f4f9504ed615f25690a3cb20e303d9f6"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d61a6f1b331164bed3f31c92b96e0c11cc645b10-zip-00810f.zip",
+                "reference": "d61a6f1b331164bed3f31c92b96e0c11cc645b10",
+                "shasum": "c5eb4b7fc42ec13f341c645f0f2f37ddd05aa4d2"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
                 "doctrine/dbal": "^2.9",
-                "illuminate/support": "^5.7.15 | 5.8.*",
+                "illuminate/support": "^5.7.15 | 5.8.* | ^6.0",
                 "moontoast/math": "^1.1",
                 "php": ">=7.1.0",
                 "spatie/once": "^1.1",
@@ -1954,7 +1954,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-07-03T14:40:10+00:00"
+            "time": "2019-08-07T16:05:57+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
