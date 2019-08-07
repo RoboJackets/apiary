@@ -37,7 +37,7 @@
         "beyondcode/laravel-dump-server": "1.2.2",
         "filp/whoops": "2.5.0",
         "fzaninotto/faker": "1.8.0",
-        "mockery/mockery": "1.2.2",
+        "mockery/mockery": "1.2.3",
         "nunomaduro/collision": "3.0.1",
         "nunomaduro/larastan": "0.3.18",
         "phpunit/phpunit": "8.3.3"
