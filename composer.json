@@ -34,7 +34,7 @@
         "vyuldashev/nova-permission": "1.9.0"
     },
     "require-dev": {
-        "beyondcode/laravel-dump-server": "1.2.2",
+        "beyondcode/laravel-dump-server": "1.3.0",
         "filp/whoops": "2.5.0",
         "fzaninotto/faker": "1.8.0",
         "mockery/mockery": "1.2.3",
