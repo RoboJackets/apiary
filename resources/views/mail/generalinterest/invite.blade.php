@@ -15,12 +15,12 @@ The two sessions will cover the same content, so you should only attend one of t
 # RSVP
 Please RSVP to the session you want to attend using the link below so we know how many people to expect.
 
-@component('mail::button', ['url' => $app_url . "/events/7/rsvp?source=" . $visit_token])
-    RSVP for Tuesday, September 4 (6-8pm)
+@component('mail::button', ['url' => $app_url . "/events/17/rsvp?source=" . $visit_token])
+    RSVP for Tuesday, September 3 (6-8pm)
 @endcomponent
 
-@component('mail::button', ['url' => $app_url . "/events/8/rsvp?source=" . $visit_token])
-    RSVP for Wednesday, September 5 (6-8pm)
+@component('mail::button', ['url' => $app_url . "/events/18/rsvp?source=" . $visit_token])
+    RSVP for Wednesday, September 4 (6-8pm)
 @endcomponent
 
 Don't worry if you can't make it to either of these dates. We'll be sending out another email afterwards with all of the information we presented.
@@ -29,5 +29,5 @@ I look forward to seeing you all next week! If you have any questions in the mea
 
 Thank you for your interest in joining RoboJackets!
 
-Jason Gibson<br/>RoboJackets President
+Joe Spall<br/>RoboJackets President
 @endcomponent
