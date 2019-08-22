@@ -30,9 +30,10 @@ class SyncAccess extends Action
     public function handle(ActionFields $fields, Collection $models): void
     {
         foreach ($models as $user) {
-            if (Str::startsWith($user->uid, 'svc_') {
+            if (Str::startsWith($user->uid, 'svc_')) {
                 continue;
             }
+
             // I tried to make this class ShouldQueue so Nova would handle queueing
             // but was getting an exception. I think it's fine to run synchronously...?
             PushToJedi::dispatchNow($user);
