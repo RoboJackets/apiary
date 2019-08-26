@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Team;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -84,31 +83,6 @@ trait CreateOrUpdateCASUser
                 $user->assignRole($role_member);
             } else {
                 Log::error(self::class.": Role 'member' not found for assignment to ".$user->uid);
-            }
-        }
-
-        if (0 === $user->teams->count()) {
-            $orgsyncGroups = [];
-            foreach ($this->cas->getAttribute('gtPersonEntitlement') as $entitlement) {
-                if (0 !== strpos($entitlement, '/gt/departmental/studentlife/studentgroups/RoboJackets/')) {
-                    continue;
-                }
-
-                $orgsyncGroups[] = substr($entitlement, 55);
-            }
-
-            $addedAnyTeams = false;
-            foreach ($orgsyncGroups as $group) {
-                $team = Team::where('name', $group)->first();
-                if (null === $team) {
-                    continue;
-                }
-
-                $team->members()->syncWithoutDetaching($user);
-                $addedAnyTeams = true;
-            }
-            if ($addedAnyTeams) {
-                Log::info(self::class.': Updating team membership for '.$user->uid.' from OrgSync.');
             }
         }
 
