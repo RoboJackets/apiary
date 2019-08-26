@@ -110,6 +110,7 @@ class RecruitingVisit extends Resource
                 ->rules('required', 'max:255'),
 
             BelongsTo::make('User')
+                ->nullable()
                 ->searchable(),
         ];
     }
