@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6a9bcfabd75354686ebba1608feb8b6",
+    "content-hash": "b4113699f5de336942b95fdb22636581",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3832,16 +3832,16 @@
         },
         {
             "name": "square/connect",
-            "version": "2.20190710.0",
+            "version": "2.20190814.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/connect-php-sdk.git",
-                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643"
+                "reference": "d778579a9f42c06d4eb68bcd78e7371f1b2f8f94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
-                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
+                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/d778579a9f42c06d4eb68bcd78e7371f1b2f8f94",
+                "reference": "d778579a9f42c06d4eb68bcd78e7371f1b2f8f94",
                 "shasum": ""
             },
             "require": {
@@ -3879,7 +3879,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2019-07-10T17:03:51+00:00"
+            "time": "2019-08-23T19:44:40+00:00"
         },
         {
             "name": "subfission/cas",
@@ -8250,8 +8250,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
