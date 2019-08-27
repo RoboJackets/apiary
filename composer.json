@@ -20,7 +20,7 @@
         "laravel/framework": "5.8.34",
         "laravel/horizon": "3.3.2",
         "laravel/nova": "2.1.1",
-        "laravel/slack-notification-channel": "2.0.1",
+        "laravel/slack-notification-channel": "2.0.2",
         "laravel/socialite": "4.1.4",
         "laravel/tinker": "1.0.10",
         "maatwebsite/laravel-nova-excel": "1.1.5",
