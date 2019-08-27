@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ab256d7e26f6a54cf4332fab10f541f",
+    "content-hash": "673869429d2563430f3df4556a861fde",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1888,17 +1888,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.0.11",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "055b382736bf2726754e8dcd674b4a0101ab6ac9"
+                "reference": "1a3788eeba04c3627b772ab0a35bcb26b1f928d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-055b382736bf2726754e8dcd674b4a0101ab6ac9-zip-bcb2d5.zip",
-                "reference": "055b382736bf2726754e8dcd674b4a0101ab6ac9",
-                "shasum": "a0dde4bca15de2b3f06aa62043728ce485283a4d"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-1a3788eeba04c3627b772ab0a35bcb26b1f928d9-zip-74981f.zip",
+                "reference": "1a3788eeba04c3627b772ab0a35bcb26b1f928d9",
+                "shasum": "646fcce580ccbff631cc0e470617b8b52c2d26ad"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -1919,7 +1919,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -1954,7 +1954,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-08-13T17:17:17+00:00"
+            "time": "2019-08-22T20:07:38+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
