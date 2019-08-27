@@ -17,7 +17,7 @@
         "chelout/laravel-relationship-events": "1.0.0",
         "doctrine/dbal": "2.9.2",
         "guzzlehttp/guzzle": "6.3.3",
-        "laravel/framework": "5.8.32",
+        "laravel/framework": "5.8.34",
         "laravel/horizon": "3.3.0",
         "laravel/nova": "2.0.11",
         "laravel/slack-notification-channel": "2.0.1",
