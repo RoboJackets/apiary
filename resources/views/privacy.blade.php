@@ -20,7 +20,6 @@
                 <li>Your primary Georgia Tech email address</li>
                 <li>Your GTID number</li>
                 <li>Your Georgia Tech username</li>
-                <li>Your RoboJackets group assignnments in OrgSync</li>
             </ul>
             <p>RoboJackets may store the following information about you if you voluntarily provide it. You may opt out of this data collection by declining to provide it.</p>
             <ul>
