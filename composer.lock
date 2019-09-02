@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25183f3c815be638a268080d31e25de4",
+    "content-hash": "34267668f7f060b063fdb340b4e7aa6e",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3832,16 +3832,16 @@
         },
         {
             "name": "square/connect",
-            "version": "2.20190814.2",
+            "version": "2.20190710.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/connect-php-sdk.git",
-                "reference": "d778579a9f42c06d4eb68bcd78e7371f1b2f8f94"
+                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/d778579a9f42c06d4eb68bcd78e7371f1b2f8f94",
-                "reference": "d778579a9f42c06d4eb68bcd78e7371f1b2f8f94",
+                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
+                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
                 "shasum": ""
             },
             "require": {
@@ -3879,7 +3879,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2019-08-23T19:44:40+00:00"
+            "time": "2019-07-10T17:03:51+00:00"
         },
         {
             "name": "subfission/cas",
