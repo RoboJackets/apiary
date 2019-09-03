@@ -8,8 +8,8 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "build-apiary-nova-event-attendance": "cd nova-components/CollectAttendance && npm run dev",
-        "build-apiary-nova-event-attendance-prod": "cd nova-components/CollectAttendance && npm run prod"
+        "build-nova-collect-attendance": "cd nova-components/CollectAttendance && npm run dev",
+        "build-nova-collect-attendance-prod": "cd nova-components/CollectAttendance && npm run prod"
     },
     "devDependencies": {
         "bootstrap": "4.3.1",
