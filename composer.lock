@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34267668f7f060b063fdb340b4e7aa6e",
+    "content-hash": "b03aea83e2bea8a3df2b3d76f899425c",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -246,23 +246,23 @@
         },
         {
             "name": "bugsnag/bugsnag-laravel",
-            "version": "v2.16.0",
+            "version": "v2.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bugsnag/bugsnag-laravel.git",
-                "reference": "a9922063076eabb0ad8be73fc2999f4105b71d7a"
+                "reference": "761e9f9b5565c18fe1261c470beca2efa955e80d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/a9922063076eabb0ad8be73fc2999f4105b71d7a",
-                "reference": "a9922063076eabb0ad8be73fc2999f4105b71d7a",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/761e9f9b5565c18fe1261c470beca2efa955e80d",
+                "reference": "761e9f9b5565c18fe1261c470beca2efa955e80d",
                 "shasum": ""
             },
             "require": {
                 "bugsnag/bugsnag": "^3.17.0",
                 "bugsnag/bugsnag-psr-logger": "^1.4",
-                "illuminate/contracts": "^5.0",
-                "illuminate/support": "^5.0",
+                "illuminate/contracts": "^5.0|^6.0",
+                "illuminate/support": "^5.0|^6.0",
                 "monolog/monolog": "^1.12",
                 "php": ">=5.5"
             },
@@ -302,7 +302,7 @@
                 "logging",
                 "tracking"
             ],
-            "time": "2019-06-14T15:07:24+00:00"
+            "time": "2019-08-29T13:38:16+00:00"
         },
         {
             "name": "bugsnag/bugsnag-psr-logger",
@@ -3646,9 +3646,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
+                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
+                    "homepage": "https://spatie.be"
                 }
             ],
             "description": "Get notified when a queued job fails",
@@ -3764,9 +3764,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
+                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
+                    "homepage": "https://spatie.be"
                 }
             ],
             "description": "Generate slugs when saving Eloquent models",
@@ -3814,9 +3814,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
+                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
+                    "homepage": "https://spatie.be"
                 }
             ],
             "description": "A magic memoization function",
@@ -5403,8 +5403,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "email": "css_to_inline_styles@verkoyen.eu",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "css_to_inline_styles@verkoyen.eu"
                 }
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
