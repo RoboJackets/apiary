@@ -16,6 +16,8 @@ class ToolServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function boot(): void
     {
