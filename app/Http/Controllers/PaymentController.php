@@ -473,8 +473,6 @@ class PaymentController extends Controller
      * @param string $server_txn_id
      *
      * @return \Throwable|\SquareConnect\Model\RetrieveTransactionResponse
-     *
-     * @suppress PhanDeprecatedFunction
      */
     protected function getSquareTransaction(TransactionsApi $client, string $location, string $server_txn_id)
     {
