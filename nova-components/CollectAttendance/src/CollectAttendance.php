@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Robojackets\Apiary\Nova\CollectAttendance;
 
 use Laravel\Nova\ResourceTool;
@@ -11,7 +13,7 @@ class CollectAttendance extends ResourceTool
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return 'Collect Attendance';
     }
@@ -21,7 +23,7 @@ class CollectAttendance extends ResourceTool
      *
      * @return string
      */
-    public function component()
+    public function component(): string
     {
         return 'collect-attendance';
     }

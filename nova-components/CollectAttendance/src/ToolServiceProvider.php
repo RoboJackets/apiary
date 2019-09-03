@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace Robojackets\Apiary\Nova\CollectAttendance;
 
 use Laravel\Nova\Nova;
@@ -13,13 +17,13 @@ class ToolServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->app->booted(function () {
+        $this->app->booted(function (): void {
             $this->routes();
         });
 
-        Nova::serving(function (ServingNova $event) {
+        Nova::serving(static function (ServingNova $event): void {
             Nova::script('nova-collect-attendance', __DIR__.'/../dist/js/tool.js');
             Nova::style('nova-collect-attendance', __DIR__.'/../dist/css/tool.css');
         });
@@ -30,9 +34,8 @@ class ToolServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function routes()
+    protected function routes(): void
     {
-        //
     }
 
     /**
@@ -40,8 +43,7 @@ class ToolServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
     }
 }
