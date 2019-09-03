@@ -21,6 +21,7 @@ use App\Nova\Metrics\AttendancePerWeek;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use Robojackets\Apiary\Nova\CollectAttendance\CollectAttendance;
 
 class Team extends Resource
 {
@@ -85,6 +86,11 @@ class Team extends Resource
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
+                }),
+
+            CollectAttendance::make()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
                 }),
         ];
     }

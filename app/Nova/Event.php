@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Metrics\RsvpSourceBreakdown;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use Robojackets\Apiary\Nova\CollectAttendance\CollectAttendance;
 
 class Event extends Resource
 {
@@ -88,6 +89,11 @@ class Event extends Resource
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
+                }),
+
+            CollectAttendance::make()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
                 }),
         ];
     }
