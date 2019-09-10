@@ -97,6 +97,7 @@ class Team extends Resource
                             return false;
                         }
                     }
+
                     return $request->user()->can('create-attendance');
                 }),
         ];
