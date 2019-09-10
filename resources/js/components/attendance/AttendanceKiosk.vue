@@ -363,7 +363,7 @@
                         .post(this.attendanceBaseUrl, this.attendance)
                         .then(response => {
                             this.hasError = false;
-                            let attendeeName = (response.data.attendance.attendee.name || "Non-Member");
+                            let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
                             Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
