@@ -20,8 +20,8 @@ use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Metrics\AttendancePerWeek;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\ResourceTools\CollectAttendance;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
-use Robojackets\Apiary\Nova\CollectAttendance\CollectAttendance;
 
 class Team extends Resource
 {

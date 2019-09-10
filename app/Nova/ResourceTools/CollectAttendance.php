@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Robojackets\Apiary\Nova\CollectAttendance;
+namespace App\Nova\ResourceTools;
 
 use Laravel\Nova\ResourceTool;
 

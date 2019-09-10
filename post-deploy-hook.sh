@@ -12,6 +12,5 @@ php artisan horizon:assets --no-interaction
 php artisan cache:clear --no-interaction
 npm ci --no-progress
 npm run production --no-progress
-npm run build-nova-collect-attendance-prod --no-progress
 php artisan up
 php artisan horizon:terminate

@@ -15,8 +15,8 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Metrics\RsvpSourceBreakdown;
+use App\Nova\ResourceTools\CollectAttendance;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
-use Robojackets\Apiary\Nova\CollectAttendance\CollectAttendance;
 
 class Event extends Resource
 {
