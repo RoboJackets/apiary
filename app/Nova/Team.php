@@ -91,8 +91,14 @@ class Team extends Resource
 
             CollectAttendance::make()
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance')
-                        && AppTeam::find($request->resourceId)->attendable;
+                    if ($request->resourceId) {
+                        $resource = AppTeam::find($request->resourceId);
+                        if ($resource && ! $resource->attendable) {
+                            return false;
+                        }
+                    }
+
+                    return $request->user()->can('create-attendance');
                 }),
         ];
     }
