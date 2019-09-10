@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use App\Team as AppTeam;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
@@ -20,6 +21,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Metrics\AttendancePerWeek;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\ResourceTools\CollectAttendance;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Team extends Resource
@@ -85,6 +87,12 @@ class Team extends Resource
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
+                }),
+
+            CollectAttendance::make()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance')
+                        && AppTeam::find($request->resourceId)->attendable;
                 }),
         ];
     }
