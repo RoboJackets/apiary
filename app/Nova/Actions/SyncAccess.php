@@ -26,6 +26,8 @@ class SyncAccess extends Action
      * @param \Illuminate\Support\Collection  $models
      *
      * @return void
+     *
+     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function handle(ActionFields $fields, Collection $models): void
     {

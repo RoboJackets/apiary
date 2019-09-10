@@ -40,7 +40,7 @@ class PushToJedi implements ShouldQueue
     /**
      * A description of the event that caused the push to be run.
      *
-     * @var int
+     * @var string
      */
     private $model_event;
 
