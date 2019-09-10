@@ -36,7 +36,7 @@ class SyncAccess extends Action
 
             // I tried to make this class ShouldQueue so Nova would handle queueing
             // but was getting an exception. I think it's fine to run synchronously...?
-            PushToJedi::dispatchNow($user, 'App\Nova\Actions\SyncAccess', request()->user()->id, 'manual');
+            PushToJedi::dispatchNow($user, self::class, request()->user()->id, 'manual');
         }
     }
 

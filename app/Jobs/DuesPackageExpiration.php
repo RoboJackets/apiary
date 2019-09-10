@@ -38,7 +38,7 @@ class DuesPackageExpiration implements ShouldQueue
     public function handle(): void
     {
         foreach ($this->package->transactions as $transaction) {
-            PushToJedi::dispatch($transaction->user, 'App\DuesPackage', $this->package->id, 'expiration')
+            PushToJedi::dispatch($transaction->user, DuesPackage::class, $this->package->id, 'expiration')
                 ->onQueue('jedi');
         }
     }

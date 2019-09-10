@@ -11,7 +11,7 @@ class UserObserver
 {
     public function saved(User $user): void
     {
-        PushToJedi::dispatch($user, 'App\User', $user->id, 'saved')->onQueue('jedi');
+        PushToJedi::dispatch($user, User::class, $user->id, 'saved')->onQueue('jedi');
     }
 
     public function updated(User $user): void
@@ -20,7 +20,7 @@ class UserObserver
             return;
         }
 
-        PushToJedi::dispatch($user, 'App\User', $user->id, 'updated/access override expiration')
+        PushToJedi::dispatch($user, User::class, $user->id, 'updated/access override expiration')
             ->delay($user->access_override_until)->onQueue('jedi');
     }
 }
