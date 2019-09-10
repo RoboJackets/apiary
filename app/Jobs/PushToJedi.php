@@ -53,6 +53,7 @@ class PushToJedi implements ShouldQueue
         $this->model_class = $model_class;
         $this->model_id = $model_id;
         $this->model_event = $model_event;
+        $this->tries = 1;
     }
 
     /**
