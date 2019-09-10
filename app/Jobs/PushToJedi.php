@@ -24,11 +24,35 @@ class PushToJedi implements ShouldQueue
     private $user;
 
     /**
+     * The name of the class that caused the push to be run.
+     *
+     * @var string
+     */
+    private $model_class;
+
+    /**
+     * The ID of the model that caused the push to be run.
+     *
+     * @var int
+     */
+    private $model_id;
+
+    /**
+     * A description of the event that caused the push to be run.
+     *
+     * @var string
+     */
+    private $model_event;
+
+    /**
      * Create a new job instance.
      */
-    public function __construct(User $user)
+    public function __construct(User $user, string $model_class, int $model_id, string $model_event)
     {
         $this->user = $user;
+        $this->model_class = $model_class;
+        $this->model_id = $model_id;
+        $this->model_event = $model_event;
     }
 
     /**
@@ -48,6 +72,9 @@ class PushToJedi implements ShouldQueue
         $send['last_name'] = $this->user->last_name;
         $send['is_access_active'] = $this->user->is_access_active;
         $send['github_username'] = $this->user->github_username;
+        $send['model_class'] = $this->model_class;
+        $send['model_id'] = $this->model_id;
+        $send['model_event'] = $this->model_event;
         $send['teams'] = [];
 
         foreach ($this->user->teams as $team) {
