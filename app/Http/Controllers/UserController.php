@@ -57,13 +57,15 @@ class UserController extends Controller
             return response()->json(['status' => 'error', 'error' => 'Missing keyword'], 422);
         }
         $keyword = $request->input('keyword');
+        $include = $request->input('include');
         if (is_numeric($keyword)) {
-            $results = User::where('gtid', $keyword)->get();
+            $results = User::where('gtid', $keyword)->with($this->authorizeInclude(User::class, $include))->get();
         } else {
             $keyword = '%'.$request->input('keyword').'%';
             $results = User::where('uid', 'LIKE', $keyword)
                 ->orWhere('first_name', 'LIKE', $keyword)
                 ->orWhere('preferred_name', 'LIKE', $keyword)
+                ->with($this->authorizeInclude(User::class, $include))
                 ->get();
         }
 
