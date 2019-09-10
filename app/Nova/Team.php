@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use App\Team as AppTeam;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
@@ -90,7 +91,7 @@ class Team extends Resource
 
             CollectAttendance::make()
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
+                    return $request->user()->can('create-attendance') && AppTeam::find($request->resourceId)->attendable;
                 }),
         ];
     }
