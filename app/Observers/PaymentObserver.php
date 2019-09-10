@@ -11,6 +11,6 @@ class PaymentObserver
 {
     public function saved(Payment $payment): void
     {
-        PushToJedi::dispatch($payment->payable->user)->onQueue('jedi');
+        PushToJedi::dispatch($payment->payable->user, 'App\Payment', $payment->id, 'saved')->onQueue('jedi');
     }
 }
