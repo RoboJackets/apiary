@@ -282,7 +282,7 @@
                             }
                         })
                         .then(response => {
-                            if (typeof response.data.user.roles === "undefined") {
+                            if (response.data.users.length == 0 || typeof response.data.users[0].roles === "undefined") {
                                 // Unable to read roles? That's an error.
                                 console.log('Error checking permissions via API');
                                 Swal.fire(
@@ -291,7 +291,7 @@
                                     'error'
                                 );
                                 return false;
-                            } else if (response.data.user.roles.filter(role => role.name.toString() === "admin").length === 1) {
+                            } else if (response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
                                 Swal.fire({
