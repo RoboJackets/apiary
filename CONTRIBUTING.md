@@ -10,6 +10,6 @@ This project grew out of frustration with the limitations imposed by Georgia Tec
 
 While this is very directly a RoboJackets project, and designed for our specific use case, we've endeavored to make it generic enough for use by any student group at Georgia Tech facing similar challenges at our scale.
 
-##Management
+## Management
 
 As mentioned above, we use GitHub issue tracking to manage the project. Check out the Issues tab to see outstanding work, and feel free to ask questions on any existing issues if they're not clear. You can also discuss your own ideas here with other contributors!
