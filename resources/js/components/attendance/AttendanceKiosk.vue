@@ -275,13 +275,14 @@
                 if (this.attendance.attendable_id === '') {
                     // We have a valid card read and no team picked, check if user is an admin for hidden menu access
                     axios
-                        .get(this.usersBaseUrl + "/" + this.attendance.gtid, {
+                        .get(this.usersBaseUrl + "/search", {
                             params: {
-                                include: 'roles'
+                                include: 'roles',
+                                keyword: this.attendance.gtid,
                             }
                         })
                         .then(response => {
-                            if (typeof response.data.user.roles === "undefined") {
+                            if (response.data.users.length == 1 && typeof response.data.users[0].roles === "undefined") {
                                 // Unable to read roles? That's an error.
                                 console.log('Error checking permissions via API');
                                 Swal.fire(
@@ -290,7 +291,7 @@
                                     'error'
                                 );
                                 return false;
-                            } else if (response.data.user.roles.filter(role => role.name.toString() === "admin").length === 1) {
+                            } else if (response.data.users.length == 1 && response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
                                 Swal.fire({
@@ -362,7 +363,7 @@
                         .post(this.attendanceBaseUrl, this.attendance)
                         .then(response => {
                             this.hasError = false;
-                            let attendeeName = (response.data.attendance.attendee.name || "Non-Member");
+                            let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
                             Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
