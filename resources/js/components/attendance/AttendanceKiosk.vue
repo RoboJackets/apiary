@@ -275,9 +275,10 @@
                 if (this.attendance.attendable_id === '') {
                     // We have a valid card read and no team picked, check if user is an admin for hidden menu access
                     axios
-                        .get(this.usersBaseUrl + "/" + this.attendance.gtid, {
+                        .get(this.usersBaseUrl + "/search", {
                             params: {
-                                include: 'roles'
+                                include: 'roles',
+                                keyword: this.attendance.gtid,
                             }
                         })
                         .then(response => {
