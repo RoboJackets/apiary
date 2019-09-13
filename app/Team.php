@@ -120,6 +120,6 @@ class Team extends Model
      */
     public function routeNotificationForSlack($notification)
     {
-        return config('services.team_private_slack_webhooks.'.$this->id);
+        return config('services.team_slack_webhook_url');
     }
 }

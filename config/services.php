@@ -52,11 +52,5 @@ return [
         'redirect' => '/github/callback',
     ],
 
-    // TEAM_PRIVATE_SLACK_WEBHOOK_1=... becomes services.team_private_slack_webhooks.1=...
-    // This is the webhook for each team's private channel, where the team is identified by its id in the database
-    'team_private_slack_webhooks' => collect($_ENV)->filter(function ($value, $key) {
-        return Str::startsWith($key, 'TEAM_PRIVATE_SLACK_WEBHOOK_');
-    })->mapWithKeys(function ($value, $key) {
-        return [substr($key, strlen('TEAM_PRIVATE_SLACK_WEBHOOK_')) => $value];
-    })->toArray(),
+    'team_slack_webhook_url' => env('TEAM_SLACK_WEBHOOK_URL'),
 ];
