@@ -8,6 +8,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,7 +20,7 @@ use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 
 class Team extends Model
 {
-    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasBelongsToManyEvents, HasRelationshipObservables;
+    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasBelongsToManyEvents, HasRelationshipObservables, Notifiable;
 
     /**
      * The attributes that are not mass assignable.
@@ -109,5 +110,16 @@ class Team extends Model
     public function projectManager(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'project_manager_id');
+    }
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForSlack($notification)
+    {
+        return config('services.team_private_slack_webhooks.'.$this->id);
     }
 }
