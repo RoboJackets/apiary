@@ -302,7 +302,7 @@ class User extends Authenticatable
      */
     public function scopeFindByIdentifier(Builder $query, string $id): Builder
     {
-        if (is_numeric($id) && 9 === strlen($id) && 9 === $id[0]) {
+        if (is_numeric($id) && 9 === strlen($id) && '9' === $id[0]) {
             return $query->where('gtid', $id);
         }
 
