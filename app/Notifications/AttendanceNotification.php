@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Notifications\Messages\SlackAttachment;
 
 class AttendanceNotification extends Notification
 {
@@ -53,15 +54,17 @@ class AttendanceNotification extends Notification
 
         $inactiveNames = $knownAttendance->pluck('attendee')
             ->unique()
-            ->filter(static function ($user): bool {
+            ->filter(static function (User $user): bool {
                 return ! $user->is_active;
             })->pluck('name');
 
         $inactive = $inactiveNames->count() + $unknown;
 
         if ($unknown > 0) {
-            $inactiveNames = $inactiveNames->concat([$unknown.' '.Str::plural('person', $unknown).' who'
-                .(1 === $unknown ? ' has' : ' have').' never logged in to MyRoboJackets', ]);
+            $inactiveNames = $inactiveNames->concat([
+                $unknown.' '.Str::plural('person', $unknown).' who'.(1 === $unknown ? ' has' : ' have')
+                    .' never logged in to MyRoboJackets',
+            ]);
         }
 
         // e.g. 15 members attended last week.
@@ -80,7 +83,7 @@ class AttendanceNotification extends Notification
 
         if ($inactive > 0 && $duesPackageAvailable) {
             $slackMessage = $slackMessage->warning()
-                ->attachment(static function ($attachment) use ($inactiveTitle, $inactiveNames): void {
+                ->attachment(static function (SlackAttachment $attachment) use ($inactiveTitle, $inactiveNames): void {
                     $attachment->title($inactiveTitle)->content($inactiveNames);
                 });
         }
@@ -91,9 +94,11 @@ class AttendanceNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @return array
+     * @param Team $notifiable
+     *
+     * @return array<string,string>
      */
-    public function toArray(): array
+    public function toArray(Team $notifiable): array
     {
         return [];
     }

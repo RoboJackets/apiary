@@ -10,6 +10,7 @@ use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Notifications\Notification;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -115,9 +116,11 @@ class Team extends Model
     /**
      * Route notifications for the Slack channel.
      *
+     * @param Notification $notification
+     *
      * @return string
      */
-    public function routeNotificationForSlack(): string
+    public function routeNotificationForSlack(Notification $notification): string
     {
         return config('services.team_slack_webhook_url');
     }
