@@ -123,6 +123,10 @@ class Team extends Resource
             Text::make('Slack Channel ID')
                 ->hideFromIndex()
                 ->rules('max:255'),
+
+            Text::make('Slack Private Channel ID')
+                ->hideFromIndex()
+                ->rules('max:255'),
         ];
     }
 

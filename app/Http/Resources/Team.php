@@ -33,6 +33,7 @@ class Team extends JsonResource
             'mailing_list_name' => $this->mailing_list_name,
             'slack_channel_id' => $this->slack_channel_id,
             'slack_channel_name' => $this->slack_channel_name,
+            'slack_private_channel_id' => $this->slack_private_channel_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,

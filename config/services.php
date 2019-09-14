@@ -51,4 +51,6 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => '/github/callback',
     ],
+
+    'team_slack_webhook_url' => env('TEAM_SLACK_WEBHOOK_URL'),
 ];
