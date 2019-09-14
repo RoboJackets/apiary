@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\DuesPackage;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -46,6 +47,7 @@ class AttendanceNotification extends Notification
             ->selectRaw('count(distinct attendance.gtid) as aggregate')
             ->get()[0]->aggregate;
         $knownAttendance = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->has('attendee')->get();
+        $duesPackageAvailable = DuesPackage::availableForPurchase()->active()->count() > 0;
 
         $inactiveNames = $knownAttendance->pluck('attendee')
             ->unique()
@@ -74,7 +76,7 @@ class AttendanceNotification extends Notification
             ->to($team->slack_private_channel_id)
             ->content($message);
 
-        if ($inactive > 0) {
+        if ($inactive > 0 && $duesPackageAvailable) {
             $slackMessage = $slackMessage->warning()->attachment(function ($attachment) use ($inactiveTitle, $inactiveNames) {
                 $attachment->title($inactiveTitle)->content($inactiveNames);
             });
