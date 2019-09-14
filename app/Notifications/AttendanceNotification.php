@@ -24,7 +24,7 @@ class AttendanceNotification extends Notification
      */
     public function via(Team $notifiable): array
     {
-        return $notifiable->routeNotificationForSlack($this) && $notifiable->slack_private_channel_id) ? ['slack'] : [];
+        return $notifiable->routeNotificationForSlack($this) && $notifiable->slack_private_channel_id ? ['slack'] : [];
     }
 
     /**
