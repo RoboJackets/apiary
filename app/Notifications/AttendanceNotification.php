@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Notifications;
 
 use App\Team;
+use App\User;
 use App\DuesPackage;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
