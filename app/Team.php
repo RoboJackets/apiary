@@ -115,10 +115,9 @@ class Team extends Model
     /**
      * Route notifications for the Slack channel.
      *
-     * @param  \Illuminate\Notifications\Notification  $notification
      * @return string
      */
-    public function routeNotificationForSlack($notification)
+    public function routeNotificationForSlack()
     {
         return config('services.team_slack_webhook_url');
     }

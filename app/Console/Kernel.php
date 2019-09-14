@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        $schedule->job(new WeeklyAttendance)->weekly()->sundays()->at('11:00');
+        $schedule->job(new WeeklyAttendance())->weekly()->sundays()->at('11:00');
     }
 
     /**

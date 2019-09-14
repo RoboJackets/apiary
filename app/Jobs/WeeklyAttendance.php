@@ -24,7 +24,7 @@ class WeeklyAttendance implements ShouldQueue
     public function handle(): void
     {
         foreach (Team::where('attendable', 1)->get() as $team) {
-            $team->notify(new AttendanceNotification);
+            $team->notify(new AttendanceNotification());
         }
     }
 }

@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\DuesPackage;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackMessage;
 
 class AttendanceNotification extends Notification
@@ -16,10 +17,11 @@ class AttendanceNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param  App\Team  $notifiable
+     *
+     * @return array<string>
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         if ($notifiable->routeNotificationForSlack($this) && $notifiable->slack_private_channel_id) {
             return ['slack'];
@@ -31,12 +33,14 @@ class AttendanceNotification extends Notification
     /**
      * Get the Slack representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  App\Team  $team
+     *
      * @return SlackMessage
      */
-    public function toSlack($team)
+    public function toSlack($team): SlackMessage
     {
-        // e.g. today is Sunday, go back 7 days to last Sunday at the start of the day. Stop at yesterday at the end of the day.
+        // Today is Sunday, so go back 7 days to last Sunday at the start of the day.
+        // Stop at yesterday at the end of the day.
         $startDay = now()->subDays(7)->startOfDay();
         $endDay = now()->subDays(1)->endOfDay();
 
@@ -46,20 +50,21 @@ class AttendanceNotification extends Notification
         $unknown = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->doesntHave('attendee')
             ->selectRaw('count(distinct attendance.gtid) as aggregate')
             ->get()[0]->aggregate;
-        $knownAttendance = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->has('attendee')->get();
+        $knownAttendance = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->has('attendee')
+            ->get();
         $duesPackageAvailable = DuesPackage::availableForPurchase()->active()->count() > 0;
 
         $inactiveNames = $knownAttendance->pluck('attendee')
             ->unique()
-            ->filter(function ($user) {
+            ->filter(static function ($user): bool {
                 return ! $user->is_active;
             })->pluck('name');
 
         $inactive = $inactiveNames->count() + $unknown;
-        $active = $total - $inactive;
 
         if ($unknown > 0) {
-            $inactiveNames = $inactiveNames->concat([$unknown.' '.Str::plural('person', $unknown).' who'.($unknown == 1 ? ' has' : ' have').' never logged in to MyRoboJackets']);
+            $inactiveNames = $inactiveNames->concat([$unknown.' '.Str::plural('person', $unknown).' who'
+                .(1 === $unknown ? ' has' : ' have').' never logged in to MyRoboJackets']);
         }
 
         // e.g. 15 members attended last week.
@@ -68,18 +73,19 @@ class AttendanceNotification extends Notification
         // e.g. Of those attendees, the following 1 person has not paid dues.
         // e.g. Of those attendees, the following 3 people have not paid dues.
         $inactiveTitle = 'Of those attendees, the following '.$inactive.' '.Str::plural('person', $inactive);
-        $inactiveTitle = $inactiveTitle.($inactive == 1 ? ' has' : ' have').' not paid dues:';
+        $inactiveTitle .= (1 === $inactive ? ' has' : ' have').' not paid dues:';
         $inactiveNames = $inactiveNames->join(', ', ' and ');
 
-        $slackMessage = (new SlackMessage)
+        $slackMessage = (new SlackMessage())
             ->from(config('app.name'), ':robobuzz:')
             ->to($team->slack_private_channel_id)
             ->content($message);
 
         if ($inactive > 0 && $duesPackageAvailable) {
-            $slackMessage = $slackMessage->warning()->attachment(function ($attachment) use ($inactiveTitle, $inactiveNames) {
-                $attachment->title($inactiveTitle)->content($inactiveNames);
-            });
+            $slackMessage = $slackMessage->warning()
+                ->attachment(static function ($attachment) use ($inactiveTitle, $inactiveNames): void {
+                    $attachment->title($inactiveTitle)->content($inactiveNames);
+                });
         }
 
         return $slackMessage;
@@ -88,13 +94,10 @@ class AttendanceNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }
