@@ -117,7 +117,7 @@ class Team extends Model
      *
      * @return string
      */
-    public function routeNotificationForSlack()
+    public function routeNotificationForSlack(): string
     {
         return config('services.team_slack_webhook_url');
     }

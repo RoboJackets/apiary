@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
+use App\Team;
 use App\DuesPackage;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
@@ -17,27 +18,23 @@ class AttendanceNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  App\Team  $notifiable
+     * @param Team  $notifiable
      *
      * @return array<string>
      */
-    public function via($notifiable): array
+    public function via(Team $notifiable): array
     {
-        if ($notifiable->routeNotificationForSlack($this) && $notifiable->slack_private_channel_id) {
-            return ['slack'];
-        } else {
-            return [];
-        }
+        return $notifiable->routeNotificationForSlack($this) && $notifiable->slack_private_channel_id) ? ['slack'] : [];
     }
 
     /**
      * Get the Slack representation of the notification.
      *
-     * @param  App\Team  $team
+     * @param Team  $team
      *
      * @return SlackMessage
      */
-    public function toSlack($team): SlackMessage
+    public function toSlack(Team $team): SlackMessage
     {
         // Today is Sunday, so go back 7 days to last Sunday at the start of the day.
         // Stop at yesterday at the end of the day.
@@ -64,7 +61,7 @@ class AttendanceNotification extends Notification
 
         if ($unknown > 0) {
             $inactiveNames = $inactiveNames->concat([$unknown.' '.Str::plural('person', $unknown).' who'
-                .(1 === $unknown ? ' has' : ' have').' never logged in to MyRoboJackets']);
+                .(1 === $unknown ? ' has' : ' have').' never logged in to MyRoboJackets', ]);
         }
 
         // e.g. 15 members attended last week.
