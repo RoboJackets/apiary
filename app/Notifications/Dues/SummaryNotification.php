@@ -11,6 +11,7 @@ use App\DuesPackage;
 use App\DuesTransaction;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
+use App\Notifiables\TreasurerNotifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
@@ -65,14 +66,14 @@ class SummaryNotification extends Notification
         $num = $payments->count();
         $total = money_format('$%.2n', $payments->sum('amount'));
         $methods = $payments->groupBy('method')
-            ->sort(function (array<Payment> $a, array<Payment> $b) {
+            ->sort(function (array $a, array $b) {
                 // Sort by quantity descending
                 if (count($a) == count($b)) {
                     return 0;
                 }
 
                 return (count($a) > count($b)) ? -1 : 1;
-            })->mapWithKeys(static function (array<Payment> $payment, string $method) {
+            })->mapWithKeys(static function (array $payment, string $method) {
                 $paymentMethods = [
                     'cash' => 'cash',
                     'squarecash' => 'Square Cash',
@@ -84,14 +85,14 @@ class SummaryNotification extends Notification
                 return count($payment).' paid with '.$paymentMethods[$method];
             })->join(', ', ' and ');
         $packages = $payments->groupBy('package.name')
-            ->sort(function (array<Payment> $a, array<Payment> $b) {
+            ->sort(function (array $a, array $b) {
                 // Sort by quantity descending
                 if (count($a) == count($b)) {
                     return 0;
                 }
 
                 return (count($a) > count($b)) ? -1 : 1;
-            })->mapWithKeys(static function (array<Payment> $payment, string $package) {
+            })->mapWithKeys(static function (array $payment, string $package) {
                 return count($payment).' paid for '.$package;
             })->join(', ', ' and ');
 
