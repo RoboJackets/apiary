@@ -7,10 +7,12 @@ declare(strict_types=1);
 namespace App\Notifications\Dues;
 
 use App\User;
+use App\Payment;
 use App\DuesPackage;
 use App\DuesTransaction;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Collection;
 use App\Notifiables\TreasurerNotifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
@@ -35,9 +37,9 @@ class SummaryNotification extends Notification
     /**
      * Get the payments from yesterday.
      *
-     * @return array<Payment>
+     * @return Collection<Payment>
      */
-    private function getPayments(): array
+    public function getPayments(): Collection
     {
         // Get all of yesterday
         $startOfDay = now()->subDays(1)->startOfDay();
@@ -47,9 +49,10 @@ class SummaryNotification extends Notification
         // Nothing else will update it as far as I can tell.
         $payments = Payment::whereBetween('updated_at', [$startOfDay, $endOfDay])
             ->where('amount', '>', 0)
+            ->where('payable_type', DuesTransaction::class)
             ->get();
 
-        return $payments->toArray();
+        return $payments;
     }
 
     /**
@@ -62,18 +65,18 @@ class SummaryNotification extends Notification
     public function toSlack(TreasurerNotifiable $team): SlackMessage
     {
 
-        $payments = collect($this->getPayments());
+        $payments = $this->getPayments();
         $num = $payments->count();
         $total = money_format('$%.2n', $payments->sum('amount'));
         $methods = $payments->groupBy('method')
-            ->sort(function (array $a, array $b) {
+            ->sort(function (Collection $a, Collection $b) {
                 // Sort by quantity descending
-                if (count($a) == count($b)) {
+                if ($a->count() == $b->count()) {
                     return 0;
                 }
 
-                return (count($a) > count($b)) ? -1 : 1;
-            })->mapWithKeys(static function (array $payment, string $method) {
+                return ($a->count() > $b->count()) ? -1 : 1;
+            })->map(static function (Collection $payment, string $method) {
                 $paymentMethods = [
                     'cash' => 'cash',
                     'squarecash' => 'Square Cash',
@@ -82,26 +85,29 @@ class SummaryNotification extends Notification
                     'square' => 'Square Checkout',
                 ];
 
-                return count($payment).' paid with '.$paymentMethods[$method];
+                return $payment->count().' paid with '.$paymentMethods[$method];
             })->join(', ', ' and ');
-        $packages = $payments->groupBy('package.name')
-            ->sort(function (array $a, array $b) {
+        $packages = $payments->groupBy(function (Payment $payment) {
+                // We know it's a DuesTransaction because of filtering in getPayments. Include trashed because in some
+                // cases transactions can be trashed, but payments that aren't still refer to them.
+                return DuesTransaction::with('package')->withTrashed()->find($payment->payable_id)->package->name;
+            })->sort(function (Collection $a, Collection $b) {
                 // Sort by quantity descending
-                if (count($a) == count($b)) {
+                if ($a->count() == $b->count()) {
                     return 0;
                 }
 
-                return (count($a) > count($b)) ? -1 : 1;
-            })->mapWithKeys(static function (array $payment, string $package) {
-                return count($payment).' paid for '.$package;
+                return ($a->count() > $b->count()) ? -1 : 1;
+            })->map(static function (Collection $payment, string $package) {
+                return $payment->count().' paid for '.$package;
             })->join(', ', ' and ');
 
         $active = User::active()->count();
 
         // e.g. 12 members paid dues yesterday, totaling $1,155.00 collected. 11 paid with Square Checkout and 1 paid with a check. There are now 13 active members.
         $message = $num.' '.Str::plural('member', $num).' paid dues yesterday, totaling '.$total.' collected. ';
-        $message .= $methods.' '.$packages;
-        $message .= ' There '.(1 === $active ? 'is' : 'are').' now '.$active.' active '.Str::plural('member', $active);
+        $message .= $methods.'. '.$packages;
+        $message .= '. There '.(1 === $active ? 'is' : 'are').' now '.$active.' active '.Str::plural('member', $active);
         $message .= '.';
 
         return (new SlackMessage())
