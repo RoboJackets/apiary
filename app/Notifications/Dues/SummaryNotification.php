@@ -72,7 +72,7 @@ class SummaryNotification extends Notification
                     return 0;
                 }
 
-                return ($a->count() > $b->count()) ? -1 : 1;
+                return $a->count() > $b->count() ? -1 : 1;
             })->map(static function (Collection $payment, string $method) {
                 $paymentMethods = [
                     'cash' => 'cash',
@@ -94,14 +94,15 @@ class SummaryNotification extends Notification
                 return 0;
             }
 
-            return ($a->count() > $b->count()) ? -1 : 1;
+            return $a->count() > $b->count() ? -1 : 1;
         })->map(static function (Collection $payment, string $package) {
             return $payment->count().' paid for '.$package;
         })->join(', ', ' and ');
 
         $active = User::active()->count();
 
-        // e.g. 12 members paid dues yesterday, totaling $1,155.00 collected. 11 paid with Square Checkout and 1 paid with a check. There are now 13 active members.
+        // e.g. 12 members paid dues yesterday, totaling $1,155.00 collected. 11 paid with Square Checkout and 1 paid
+        // with a check. There are now 13 active members.
         $message = $num.' '.Str::plural('member', $num).' paid dues yesterday, totaling '.$total.' collected. ';
         $message .= $methods.'. '.$packages;
         $message .= '. There '.(1 === $active ? 'is' : 'are').' now '.$active.' active '.Str::plural('member', $active);
