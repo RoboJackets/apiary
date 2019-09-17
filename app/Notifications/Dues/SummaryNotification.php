@@ -8,7 +8,6 @@ namespace App\Notifications\Dues;
 
 use App\User;
 use App\Payment;
-use App\DuesPackage;
 use App\DuesTransaction;
 use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
@@ -16,7 +15,6 @@ use Illuminate\Support\Collection;
 use App\Notifiables\TreasurerNotifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
-use Illuminate\Notifications\Messages\SlackAttachment;
 
 class SummaryNotification extends Notification
 {
@@ -39,7 +37,7 @@ class SummaryNotification extends Notification
      *
      * @return Collection<Payment>
      */
-    public function getPayments(): Collection
+    private function getPayments(): Collection
     {
         // Get all of yesterday
         $startOfDay = now()->subDays(1)->startOfDay();
@@ -64,14 +62,13 @@ class SummaryNotification extends Notification
      */
     public function toSlack(TreasurerNotifiable $team): SlackMessage
     {
-
         $payments = $this->getPayments();
         $num = $payments->count();
         $total = money_format('$%.2n', $payments->sum('amount'));
         $methods = $payments->groupBy('method')
-            ->sort(function (Collection $a, Collection $b) {
+            ->sort(static function (Collection $a, Collection $b) {
                 // Sort by quantity descending
-                if ($a->count() == $b->count()) {
+                if ($a->count() === $b->count()) {
                     return 0;
                 }
 
@@ -88,19 +85,19 @@ class SummaryNotification extends Notification
                 return $payment->count().' paid with '.$paymentMethods[$method];
             })->join(', ', ' and ');
         $packages = $payments->groupBy(function (Payment $payment) {
-                // We know it's a DuesTransaction because of filtering in getPayments. Include trashed because in some
-                // cases transactions can be trashed, but payments that aren't still refer to them.
-                return DuesTransaction::with('package')->withTrashed()->find($payment->payable_id)->package->name;
-            })->sort(function (Collection $a, Collection $b) {
-                // Sort by quantity descending
-                if ($a->count() == $b->count()) {
-                    return 0;
-                }
+            // We know it's a DuesTransaction because of filtering in getPayments. Include trashed because in some
+            // cases transactions can be trashed, but payments that aren't still refer to them.
+            return DuesTransaction::with('package')->withTrashed()->find($payment->payable_id)->package->name;
+        })->sort(static function (Collection $a, Collection $b) {
+            // Sort by quantity descending
+            if ($a->count() === $b->count()) {
+                return 0;
+            }
 
-                return ($a->count() > $b->count()) ? -1 : 1;
-            })->map(static function (Collection $payment, string $package) {
-                return $payment->count().' paid for '.$package;
-            })->join(', ', ' and ');
+            return ($a->count() > $b->count()) ? -1 : 1;
+        })->map(static function (Collection $payment, string $package) {
+            return $payment->count().' paid for '.$package;
+        })->join(', ', ' and ');
 
         $active = User::active()->count();
 
@@ -118,7 +115,7 @@ class SummaryNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param Team $notifiable
+     * @param TreasurerNotifiable $notifiable
      *
      * @return array<string,string>
      */
