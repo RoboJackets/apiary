@@ -20,7 +20,7 @@ class TreasurerNotifiable
      *
      * @return string
      */
-    public function routeNotificationForSlack(Notification $notification): string
+    public function routeNotificationForSlack(Notification $notification): ?string
     {
         return config('services.treasurer_slack_webhook_url');
     }
@@ -32,7 +32,7 @@ class TreasurerNotifiable
      *
      * @return string
      */
-    public function routeNotificationForMail(Notification $notification): string
+    public function routeNotificationForMail(Notification $notification): ?string
     {
         return config('services.treasurer_email');
     }
