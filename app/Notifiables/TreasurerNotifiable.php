@@ -18,7 +18,7 @@ class TreasurerNotifiable
      *
      * @param \Illuminate\Notifications\Notification  $notification
      *
-     * @return string
+     * @return string|null
      */
     public function routeNotificationForSlack(Notification $notification): ?string
     {
@@ -30,7 +30,7 @@ class TreasurerNotifiable
      *
      * @param \Illuminate\Notifications\Notification  $notification
      *
-     * @return string
+     * @return string|null
      */
     public function routeNotificationForMail(Notification $notification): ?string
     {

@@ -120,7 +120,7 @@ class Team extends Model
      *
      * @param Notification $notification
      *
-     * @return string
+     * @return string|null
      */
     public function routeNotificationForSlack(Notification $notification): ?string
     {
