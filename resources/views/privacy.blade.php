@@ -30,9 +30,9 @@
                 <li>Your shirt and polo sizes</li>
                 <li>Your gender</li>
                 <li>Your ethnicity</li>
-                <li>Your resume</li>
+                <li>Your r&eacute;sum&eacute;</li>
             </ul>
-            <p>RoboJackets will only release information about you as strictly necessary to Georgia Tech campus departments performing work on our behalf, including but not limited to granting BuzzCard access to the shop, enrollment in SUMS, and reimbursement processing. RoboJackets will release the resumes of all active members to our sponsors.</p>
+            <p>RoboJackets will only release information about you as strictly necessary to Georgia Tech campus departments performing work on our behalf, including but not limited to granting BuzzCard access to the shop, enrollment in SUMS, and reimbursement processing. RoboJackets will release the r&eacute;sum&eacute;s of all active members to our sponsors.</p>
             <p>Demographic information may be reported in aggregate to current or potential sponsors.</p>
             <p>All other information will be released only to RoboJackets officers in the course of conducting business.</p>
         </div>
