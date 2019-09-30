@@ -64,3 +64,4 @@ parameters:
     - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) should return [a-zA-Z0-9\\]+\\?[a-zA-Z0-9\\]+ but returns [a-zA-Z0-9\\]+\|?\\?[a-zA-Z0-9\\]+#'
     - '#Result of && is always false.#'
     - '#Strict comparison using === between false and array will always evaluate to false#'
+    - '#Return type \(Illuminate\\Database\\Eloquent\\Relations\\HasMany\) of method App\\Nova\\Filters\\DuesTransactionTeam::apply\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\[a-zA-Z]+\\Filter::apply()#'

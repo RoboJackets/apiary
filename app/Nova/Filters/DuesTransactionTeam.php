@@ -36,6 +36,8 @@ class DuesTransactionTeam extends Filter
      * @param string  $value
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     *
+     * @suppress PhanParamSignatureMismatch
      */
     public function apply(Request $request, $query, $value): HasMany
     {
