@@ -378,7 +378,7 @@ class User extends Authenticatable
     {
         return $query->whereDoesntHave('dues', static function (Builder $q): void {
             $q->paid()->accessCurrent();
-        })->where(static function (QueryBuilder $query): void {
+        })->where(static function (Builder $query): void {
             $query->where('access_override_until', '<=', date('Y-m-d H:i:s'))->orWhereNull('access_override_until');
         });
     }
