@@ -9,7 +9,8 @@ namespace App\Nova\Filters;
 use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
-use Illuminate\Database\Eloquent\Relations\HasMany;;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DuesTransactionTeam extends Filter
 {
