@@ -9,7 +9,7 @@ namespace App\Nova\Filters;
 use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;;
 
 class DuesTransactionTeam extends Filter
 {
@@ -34,9 +34,9 @@ class DuesTransactionTeam extends Filter
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string  $value
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(Request $request, $query, $value): HasMany
     {
         return $query
             ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')
