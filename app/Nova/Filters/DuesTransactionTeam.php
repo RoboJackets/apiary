@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
 
 namespace App\Nova\Filters;
 
@@ -10,7 +10,6 @@ use App\Team;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DuesTransactionTeam extends Filter
 {
@@ -35,11 +34,9 @@ class DuesTransactionTeam extends Filter
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string  $value
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     *
-     * @suppress PhanParamSignatureMismatch
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value): HasMany
+    public function apply(Request $request, $query, $value)
     {
         return $query
             ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')
