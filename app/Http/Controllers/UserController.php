@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 
@@ -219,6 +220,80 @@ class UserController extends Controller
         $user = User::findByIdentifier($id)->first();
         if ($user->delete()) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
+        }
+
+        return response()->json(
+            [
+                'status' => 'error',
+                'message' => 'User does not exist or was previously deleted.',
+            ],
+            422
+        );
+    }
+
+    /**
+     * Show the user's resume.
+     *
+     * @param string $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showResume(string $id): JsonResponse
+    {
+        $user = User::findByIdentifier($id)->first();
+        if ($user) {
+            return response()->file('resumes/'.$user->uid);
+        }
+
+        return response()->json(
+            [
+                'status' => 'error',
+                'message' => 'User does not exist or was previously deleted.',
+            ],
+            422
+        );
+    }
+
+    /**
+     * Store the user's resume.
+     *
+     * @param string $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeResume(string $id): JsonResponse
+    {
+        // TODO: return a redirect for the user
+        // TODO: validate filetype is PDF
+        // TODO: validate user is active
+
+        $user = User::findByIdentifier($id)->first();
+        if ($user) {
+            // Store in the resumes folder with the user's username
+            $request->file('resume')->storeAs('resumes', $user->uid);
+        }
+
+        return response()->json(
+            [
+                'status' => 'error',
+                'message' => 'User does not exist or was previously deleted.',
+            ],
+            422
+        );
+    }
+
+    /**
+     * Delete the user's resume.
+     *
+     * @param string $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteResume(string $id): JsonResponse
+    {
+        $user = User::findByIdentifier($id)->first();
+        if ($user) {
+            Storage::delete('resumes/'.$user->uid);
         }
 
         return response()->json(
