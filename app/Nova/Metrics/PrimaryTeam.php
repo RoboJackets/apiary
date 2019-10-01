@@ -30,7 +30,8 @@ class PrimaryTeam extends TextMetric
             // For the purposes of this, the spring semester runs January - April, summer runs May - July, and fall
             // runs August - December
             $date = now()->startOfDay();
-            if (-1 === $request->range) {
+            $intrange = intval($request->range);
+            if (-1 === $intrange) {
                 // Find start of semester date
                 if ($date->month <= 4) {
                     $date = $date->month(1)->day(1);
@@ -39,14 +40,14 @@ class PrimaryTeam extends TextMetric
                 } else {
                     $date = $date->month(8)->day(1);
                 }
-            } elseif (-2 === $request->range) {
+            } elseif (-2 === $intrange) {
                 // Find the most recent August 1
                 $date = $date->month(8)->day(1);
                 if ($date->greaterThan(now())) {
                     $date = $date->subYear();
                 }
             } else {
-                $date = $date->subDays($request->range);
+                $date = $date->subDays($intrange);
             }
             $teams = $teams->whereBetween('created_at', [$date, now()]);
         }
