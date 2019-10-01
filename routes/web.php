@@ -40,7 +40,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     });
 
     Route::prefix('resume')->name('resume.')->group(static function (): void {
-        Route::get('/', 'ResumeController@indexWeb')->name('index');
+        return view('users/resume', ['id' => auth()->user()->id]);
     });
 
     Route::prefix('payments')->group(static function (): void {
