@@ -8,7 +8,6 @@ namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
-use Illuminate\Database\Eloquent\Builder;
 
 class UserAccessActive extends Filter
 {
@@ -26,7 +25,7 @@ class UserAccessActive extends Filter
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string  $value
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder|\Chelout\RelationshipEvents\BelongsToMany
      */
     public function apply(Request $request, $query, $value)
     {
