@@ -306,6 +306,7 @@ class User extends Resource
     {
         return [
             new Filters\UserActive(),
+            new Filters\UserAccessActive(),
             new Filters\UserType(),
             new Filters\UserTeam(),
         ];
