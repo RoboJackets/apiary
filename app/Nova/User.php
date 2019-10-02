@@ -10,6 +10,7 @@ use App\User as AU;
 use Laravel\Nova\Panel;
 use App\Nova\Fields\Hidden;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
@@ -131,6 +132,24 @@ class User extends Resource
                 ->rules('nullable', 'max:39')
                 ->creationRules('unique:users,github_username')
                 ->updateRules('unique:users,github_username,{{resourceId}}'),
+
+            File::make('Resume')
+                ->path('resumes')
+                ->store(function (Request $request, AU $user) {
+                    $request->file('resume')->storeAs('resumes', $user->uid);
+
+                    return [
+                        'resume_date' => now(),
+                    ];
+                })->delete(function (Request $request, AU $user, string $disk, string $path) {
+                    Storage::delete('resumes/'.$user->uid);
+
+                    return [
+                        'resume_date' => null,
+                    ];
+                }),
+
+            DateTime::make('Resume Uploaded At', 'resume_date'),
 
             new Panel(
                 'System Access',
