@@ -6,6 +6,7 @@ namespace App\Jobs;
 
 use App\Team;
 use Illuminate\Bus\Queueable;
+use App\Notifiables\CoreNotifiable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
