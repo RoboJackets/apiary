@@ -26,7 +26,7 @@ class NoAttendanceJediPush implements ShouldQueue
      */
     public function handle(): void
     {
-        $users = User::active()->whereDoesntHave('attendance', static function (Builder $query) {
+        $users = User::accessActive()->whereDoesntHave('attendance', static function (Builder $query) {
             $query->where('attendable_type', Team::class)->where('created_at', '>', now()->startOfDay()->subDays(28));
         });
         foreach ($users as $user) {
