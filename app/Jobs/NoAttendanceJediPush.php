@@ -27,8 +27,14 @@ class NoAttendanceJediPush implements ShouldQueue
     public function handle(): void
     {
         $users = User::accessActive()->whereDoesntHave('attendance', static function (Builder $query) {
-            $query->where('attendable_type', Team::class)->where('created_at', '>', now()->startOfDay()->subDays(28));
+            $query->where('attendable_type', Team::class)->where('created_at', '>', now()->startOfDay()->subDays(27));
+        })->whereHas('attendance', static function (Builder $query) {
+            $query->where('attendable_type', Team::class)->whereBetween('created_at', [
+                now()->startOfDay()->subDays(28),
+                now()->endOfDay()->subDays(28),
+            ]);
         });
+
         foreach ($users as $user) {
             PushToJedi::dispatch($user, self::class, -1, 'no_attendance')->onQueue('jedi');
         }
