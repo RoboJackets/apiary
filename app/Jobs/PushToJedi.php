@@ -80,11 +80,7 @@ class PushToJedi implements ShouldQueue
 
         $lastAttendance = $this->user->attendance()->where('attendable_type', Team::class)
             ->orderBy('created_at', 'desc')->first();
-        if ($lastAttendance) {
-            $send['last_attendance_time'] = $lastAttendance->created_at;
-        } else {
-            $send['last_attendance_time'] = null;
-        }
+        $send['last_attendance_time'] = $lastAttendance ? $lastAttendance->created_at : null;
 
         $send['teams'] = [];
         foreach ($this->user->teams as $team) {
