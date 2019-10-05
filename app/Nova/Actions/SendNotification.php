@@ -10,14 +10,9 @@ use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendNotification extends Action
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
-
     /**
      * Indicates if this action is only available on the resource detail view.
      *
@@ -34,7 +29,7 @@ class SendNotification extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        foreach($models as $model) {
+        foreach ($models as $model) {
             Mail::to($model->gt_email)->send(new DatabaseMailable($fields->template, null));
         }
 
