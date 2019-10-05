@@ -21,6 +21,10 @@
   ],
   "prConcurrentLimit": 1,
   "rebaseStalePrs": true,
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
   "vulnerabilityAlerts": {
     "labels": [
       "area / devOps",
