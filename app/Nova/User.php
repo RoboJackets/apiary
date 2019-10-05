@@ -363,6 +363,13 @@ class User extends Resource
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->can('read-users');
                 }),
+            (new Actions\SendNotification())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin');
+                }),
         ];
     }
 }
