@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use Illuminate\Support\Str;
 use App\NotificationTemplate;
 use App\Mail\DatabaseMailable;
 use Laravel\Nova\Fields\Select;
@@ -35,7 +36,7 @@ class SendNotification extends Action
             Mail::to($model->gt_email)->send(new DatabaseMailable($fields->template, null));
         }
 
-        return Action::message('Email'.(1 === count($models) ? '' : 's').' sent!');
+        return Action::message(Str::plural('Email', count($models)).' sent!');
     }
 
     /**

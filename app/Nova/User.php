@@ -365,10 +365,10 @@ class User extends Resource
                 }),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
+                    return $request->user()->can('send-notifications');
                 })
                 ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->hasRole('admin');
+                    return $request->user()->can('send-notifications');
                 }),
         ];
     }
