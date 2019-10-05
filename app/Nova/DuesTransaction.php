@@ -222,7 +222,7 @@ class DuesTransaction extends Resource
                 return $request->user()->can('distribute-swag');
             })->canRun(static function (Request $request, ADT $dues_transaction): bool {
                 return $request->user()->can('distribute-swag');
-            }),
+            })->showOnTableRow(),
             (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
                 $transaction = \App\DuesTransaction::find($request->resourceId);
 
@@ -243,7 +243,7 @@ class DuesTransaction extends Resource
                 return $request->user()->can('distribute-swag');
             })->canRun(static function (Request $request, ADT $dues_transaction): bool {
                 return $request->user()->can('distribute-swag');
-            }),
+            })->showOnTableRow(),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
                 $transaction = \App\DuesTransaction::find($request->resourceId);
 
@@ -265,7 +265,7 @@ class DuesTransaction extends Resource
             })->canRun(static function (Request $request, ADT $dues_transaction): bool {
                 return $request->user()->can('create-payments')
                     && ($dues_transaction->user()->get()->first()->id !== $request->user()->id);
-            }),
+            })->showOnTableRow(),
         ];
     }
 }
