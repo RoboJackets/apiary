@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f34084d21ebb052462eaf92ea11d1fe",
+    "content-hash": "6eadadc957b26ec4ac2726b864b55370",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2356,16 +2356,16 @@
         },
         {
             "name": "maatwebsite/laravel-nova-excel",
-            "version": "1.1.5",
+            "version": "1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Nova-Excel.git",
-                "reference": "90da3cde6da1e65e2e1cf015fe95c85558c532fa"
+                "reference": "2d6a4fb9fd41dc2c314773f268d5507c4d7c3253"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/90da3cde6da1e65e2e1cf015fe95c85558c532fa",
-                "reference": "90da3cde6da1e65e2e1cf015fe95c85558c532fa",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/2d6a4fb9fd41dc2c314773f268d5507c4d7c3253",
+                "reference": "2d6a4fb9fd41dc2c314773f268d5507c4d7c3253",
                 "shasum": ""
             },
             "require": {
@@ -2405,7 +2405,7 @@
                 "nova",
                 "phpspreadsheet"
             ],
-            "time": "2019-06-19T20:58:59+00:00"
+            "time": "2019-09-11T18:22:25+00:00"
         },
         {
             "name": "markbaker/complex",
@@ -2504,30 +2504,29 @@
         },
         {
             "name": "markbaker/matrix",
-            "version": "1.1.4",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarkBaker/PHPMatrix.git",
-                "reference": "6ea97472b5baf12119b4f31f802835b820dd6d64"
+                "reference": "5348c5a67e3b75cd209d70103f916a93b1f1ed21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/6ea97472b5baf12119b4f31f802835b820dd6d64",
-                "reference": "6ea97472b5baf12119b4f31f802835b820dd6d64",
+                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/5348c5a67e3b75cd209d70103f916a93b1f1ed21",
+                "reference": "5348c5a67e3b75cd209d70103f916a93b1f1ed21",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6.0|^7.0.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
-                "phpcompatibility/php-compatibility": "^8.0",
-                "phpdocumentor/phpdocumentor": "2.*",
-                "phploc/phploc": "2.*",
-                "phpmd/phpmd": "2.*",
-                "phpunit/phpunit": "^4.8.35|^5.4.0",
-                "sebastian/phpcpd": "2.*",
-                "squizlabs/php_codesniffer": "^3.3.0"
+                "dealerdirect/phpcodesniffer-composer-installer": "dev-master",
+                "phpcompatibility/php-compatibility": "dev-master",
+                "phploc/phploc": "^4",
+                "phpmd/phpmd": "dev-master",
+                "phpunit/phpunit": "^5.7",
+                "sebastian/phpcpd": "^3.0",
+                "squizlabs/php_codesniffer": "^3.0@dev"
             },
             "type": "library",
             "autoload": {
@@ -2570,7 +2569,7 @@
                 "matrix",
                 "vector"
             ],
-            "time": "2018-11-04T22:12:12+00:00"
+            "time": "2019-10-06T11:29:25+00:00"
         },
         {
             "name": "monolog/monolog",
