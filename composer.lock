@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "792e0aef7c43ee2ef71e2f1702d4d0c7",
+    "content-hash": "6d07e7074f18d6c9f1c614d68663cb74",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3600,24 +3600,24 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "1609bb4bf10d585724c5ca6c148810e8ff6e6767"
+                "reference": "8127afac1fe52c8a3c6d0ebf2a88476bd084831c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/1609bb4bf10d585724c5ca6c148810e8ff6e6767",
-                "reference": "1609bb4bf10d585724c5ca6c148810e8ff6e6767",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/8127afac1fe52c8a3c6d0ebf2a88476bd084831c",
+                "reference": "8127afac1fe52c8a3c6d0ebf2a88476bd084831c",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.8.0",
+                "laravel/framework": "~5.8.0|^6.0",
                 "php": "^7.2"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.8.0",
+                "orchestra/testbench": "~3.8.0|^4.0",
                 "phpunit/phpunit": "^8.0"
             },
             "suggest": {
@@ -3659,7 +3659,7 @@
                 "slack",
                 "spatie"
             ],
-            "time": "2019-02-27T09:42:15+00:00"
+            "time": "2019-09-04T07:04:51+00:00"
         },
         {
             "name": "spatie/laravel-permission",
