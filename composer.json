@@ -27,7 +27,7 @@
         "predis/predis": "1.1.1",
         "spatie/laravel-failed-job-monitor": "3.2.0",
         "spatie/laravel-permission": "2.38.0",
-        "spatie/laravel-sluggable": "2.1.8",
+        "spatie/laravel-sluggable": "2.2.1",
         "square/connect": "2.20190710.0",
         "subfission/cas": "dev-master",
         "uxweb/sweet-alert": "2.0.1",
