@@ -8,9 +8,7 @@
     "status / code review",
     "type / technical debt"
   ],
-  "reviewers": [
-    "JoshOldenburg"
-  ],
+  "reviewers": [],
   "packageRules": [
     {
       "packageNames": [
