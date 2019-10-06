@@ -1,0 +1,17 @@
+pull_request_rules:
+  - name: automatic merge for Renovate pull requests
+    conditions:
+      - author=renovate[bot]
+      - status-success
+        - CodeSniffer
+        - Composer Install
+        - Mess Detector
+        - PHPStan
+        - Phan
+        - Syntax
+        - ci/circleci
+        - continuous-integration/styleci/pr
+        - continuous-integration/styleci/push
+    actions:
+      merge:
+        method: merge
