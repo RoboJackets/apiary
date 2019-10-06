@@ -26,7 +26,7 @@ class GlobalAttendanceNotification extends Notification
      */
     public function via(CoreNotifiable $notifiable): array
     {
-        return $notifiable->routeNotificationForSlack($this) && $notifiable->slack_private_channel_id ? ['slack'] : [];
+        return $notifiable->routeNotificationForSlack($this) ? ['slack'] : [];
     }
 
     /**
