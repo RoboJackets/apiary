@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3084bd1963d94cb1b45da586931484b7",
+    "content-hash": "326a674da8d6c8323f437be1c333734d",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5531,16 +5531,16 @@
         },
         {
             "name": "vyuldashev/nova-permission",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vyuldashev/nova-permission.git",
-                "reference": "ea8012bbd429e4de458ee07f3907dc17ff924644"
+                "reference": "a5ae2521fe6b7e3c8e9242fe7801960960199e30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/ea8012bbd429e4de458ee07f3907dc17ff924644",
-                "reference": "ea8012bbd429e4de458ee07f3907dc17ff924644",
+                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/a5ae2521fe6b7e3c8e9242fe7801960960199e30",
+                "reference": "a5ae2521fe6b7e3c8e9242fe7801960960199e30",
                 "shasum": ""
             },
             "require": {
@@ -5549,6 +5549,9 @@
             },
             "type": "library",
             "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
                 "laravel": {
                     "providers": [
                         "Vyuldashev\\NovaPermission\\ToolServiceProvider"
@@ -5570,7 +5573,7 @@
                 "nova",
                 "spatie-permission"
             ],
-            "time": "2019-07-18T09:27:51+00:00"
+            "time": "2019-09-04T10:49:33+00:00"
         }
     ],
     "packages-dev": [
