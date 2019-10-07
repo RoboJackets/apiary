@@ -33,7 +33,7 @@ class SendNotification extends Action
     public function handle(ActionFields $fields, Collection $models): array
     {
         foreach ($models as $model) {
-            Mail::to($model->gt_email)->send(new DatabaseMailable($fields->template, null));
+            Mail::to($model->gt_email)->send(new DatabaseMailable(intval($fields->template), null));
         }
 
         return Action::message(Str::plural('Email', count($models)).' sent!');
