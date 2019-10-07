@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "326a674da8d6c8323f437be1c333734d",
+    "content-hash": "3c7d6647d2cfaeb462f7eee632bfd5e6",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7415,16 +7415,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.4.0",
+            "version": "8.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "57e5e77b62086033528ee1f4063ae03035f57894"
+                "reference": "366a4a0f2b971fd43b7c351d621e8dd7d7131869"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/57e5e77b62086033528ee1f4063ae03035f57894",
-                "reference": "57e5e77b62086033528ee1f4063ae03035f57894",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/366a4a0f2b971fd43b7c351d621e8dd7d7131869",
+                "reference": "366a4a0f2b971fd43b7c351d621e8dd7d7131869",
                 "shasum": ""
             },
             "require": {
@@ -7494,7 +7494,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-10-04T03:12:25+00:00"
+            "time": "2019-10-07T12:57:41+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
