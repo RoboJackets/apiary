@@ -47,9 +47,9 @@ class Attendable extends Filter
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string  $value
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(Request $request, $query, $value)
     {
         $parts = explode(',', $value);
         $attendableType = $parts[0];
