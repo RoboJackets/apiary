@@ -69,11 +69,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            Access Status
+                            Access Override
                         </h4>
                         <p class="card-text">
-                            While you do not have an active dues payment, you have a temporary access override to
-                            various RoboJackets-managed IT systems that will expire on {{ $overrideDate }}.
+                            While you have not paid dues for this semester, you have temporary access to RoboJackets
+                            systems until {{ $overrideDate }}. If you have questions or need an extension, please ask
+                            in #it-helpdesk.
                         </p>
                     </div>
                 </div>
