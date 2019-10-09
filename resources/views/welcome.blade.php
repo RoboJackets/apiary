@@ -11,7 +11,7 @@
     @endcomponent
 
     <div class="row">
-        <div class="col-sm-6 col-md-5 col-lg-5">
+        <div class="col-sm-6 col-md-3 col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">
@@ -60,6 +60,36 @@
                         </p>
                         <a style="margin-bottom: 0.5rem;display:block" href="/dues/pay">Pay Online Now</a>
                         <a href="/dues">Change Dues Term</a>
+                    </div>
+                </div>
+            </div>
+        @endif
+        @if($hasOverride)
+            <div class="col-sm-6 col-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Access Override
+                        </h4>
+                        <p class="card-text">
+                            While you have not paid dues for this semester, you have temporary access to RoboJackets
+                            systems until {{ $overrideDate }}. If you have questions or need an extension, please ask
+                            in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
+        @if($hasExpiredOverride)
+            <div class="col-sm-6 col-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Access Override
+                        </h4>
+                        <p class="card-text">
+                            Your temporary access to RoboJackets systems expired on {{ $overrideDate }}. If you have questions or need an extension, please ask in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
+                        </p>
                     </div>
                 </div>
             </div>
