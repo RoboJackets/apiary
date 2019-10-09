@@ -64,6 +64,21 @@
                 </div>
             </div>
         @endif
+        @if($hasOverride)
+            <div class="col-sm-6 col-md-5 col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Access Status
+                        </h4>
+                        <p class="card-text">
+                            While you do not have an active dues payment, you have access to various systems
+                            administered by RoboJackets IT until {{ $overrideDate }}.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
 
