@@ -51,7 +51,7 @@ class DashboardController extends Controller
         }
 
         $hasOverride = $user->access_override_until && $user->access_override_until > now();
-        $overrideDate = $user->access_override_until ? $user->access_override_until->format('m/d/Y') : 'n/a';
+        $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
 
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
