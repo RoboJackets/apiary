@@ -11,7 +11,7 @@
     @endcomponent
 
     <div class="row">
-        <div class="col-sm-6 col-md-5 col-lg-5">
+        <div class="col-sm-6 col-md-3 col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">
