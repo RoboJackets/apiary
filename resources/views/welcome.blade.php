@@ -65,15 +65,15 @@
             </div>
         @endif
         @if($hasOverride)
-            <div class="col-sm-6 col-md-5 col-lg-5">
+            <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
                             Access Status
                         </h4>
                         <p class="card-text">
-                            While you do not have an active dues payment, you have access to various systems
-                            administered by RoboJackets IT until {{ $overrideDate }}.
+                            While you do not have an active dues payment, you have a temporary access override to
+                            various systems administered by RoboJackets IT that will expire on {{ $overrideDate }}.
                         </p>
                     </div>
                 </div>
