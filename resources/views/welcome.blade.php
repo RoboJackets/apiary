@@ -73,7 +73,7 @@
                         </h4>
                         <p class="card-text">
                             While you do not have an active dues payment, you have a temporary access override to
-                            various systems administered by RoboJackets IT that will expire on {{ $overrideDate }}.
+                            various RoboJackets-managed IT systems that will expire on {{ $overrideDate }}.
                         </p>
                     </div>
                 </div>
