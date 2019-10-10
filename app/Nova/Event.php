@@ -79,6 +79,10 @@ class Event extends Resource
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
 
+            Text::make('RSVP URL', function () {
+                return route('events.rsvp', ['event' => $this->id]);
+            })->onlyOnDetail(),
+
             new Panel('Metadata', $this->metaFields()),
 
             HasMany::make('RSVPs')
