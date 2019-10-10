@@ -80,7 +80,7 @@ class Event extends Resource
 
             Text::make('RSVP URL', function () {
                 return route('events.rsvp', ['event' => $this->id]);
-            }),
+            })->onlyOnDetail(),
 
             new Panel('Metadata', $this->metaFields()),
 
