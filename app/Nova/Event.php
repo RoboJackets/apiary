@@ -73,7 +73,8 @@ class Event extends Resource
                 ->rules('max:255'),
 
             Currency::make('Cost')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->rules('required'),
 
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
