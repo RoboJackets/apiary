@@ -1,54 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
+
 namespace App\Nova\Metrics;
 
 use App\DuesTransaction;
 use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
 
-class MemberSince extends Value
+class MemberSince extends TextMetric
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         // Same logic as in DashboardController
-        $transaction = DuesTransaction::paid()
-            ->where('user_id', $request->resourceId)
-            ->with('package')->first();
+        $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
 
         if ($transaction) {
             // The date must be passed in as the prefix, or the non-numeric characters will be stripped and it will be
             // treated as a number. This is ugly but works. See
             // vendor/laravel/nova/resources/js/components/Metrics/Base/ValueMetric.vue line 124.
-            return $this->result('')->prefix(date('F j, Y', strtotime($transaction->created_at)));
-        } else {
-            return $this->result('n/a');
+            return $this->result(date('F j, Y', strtotime($transaction->created_at->toDateTimeString())));
         }
-    }
 
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges()
-    {
-        return [];
-    }
-
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
+        return $this->result('n/a');
     }
 
     /**
@@ -56,7 +39,7 @@ class MemberSince extends Value
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'member-since';
     }

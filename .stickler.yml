@@ -8,3 +8,6 @@ linters:
   sasslint:
   shellcheck:
     shell: bash
+files:
+  ignore:
+  - 'database/migrations/*'

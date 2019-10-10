@@ -1,16 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Strings.UnnecessaryStringConcat.Found
+
 namespace App\Http\Controllers;
 
-use Log;
 use Bugsnag;
-use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
+use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\Builder;
+use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\SearchAttendanceRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
+use App\Http\Requests\StatisticsAttendanceRequest;
+use App\Http\Resources\Attendance as AttendanceResource;
 
 class AttendanceController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware('permission:read-attendance', ['only' => ['index', 'search', 'statistics']]);
@@ -23,48 +37,44 @@ class AttendanceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        $attendance = Attendance::with('attendee')->get();
+        $include = $request->input('include');
+        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->get();
 
-        return response()->json(['status' => 'success', 'attendance' => $attendance]);
+        return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreAttendanceRequest  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreAttendanceRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'attendable_type' => 'required|string',
-            'attendable_id' => 'required|numeric',
-            'gtid' => 'required|numeric',
-            'source' => 'required|string',
-            'created_at' => 'date',
-        ]);
+        $include = $request->input('include');
+        unset($request['include']);
 
-        $wantsName = ($request->filled('includeName'));
         $request['recorded_by'] = $request->user()->id;
-        unset($request['includeName']);
 
         // Variables for comparison below
         $date = $request->input('created_at', date('Y-m-d'));
         $gtid = $request->input('gtid');
 
         try {
-            $attExistingQ = Attendance::where($request->all())->whereDate('created_at', $date);
+            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
+                ->whereDate('created_at', $date);
             $attExistingCount = $attExistingQ->count();
             if ($attExistingCount > 0) {
-                Log::debug(get_class().": Found a swipe on $date for $gtid - ignoring.");
+                Log::debug(self::class.': Found a swipe on '.$date.' for '.$gtid.' - ignoring.');
                 $att = $attExistingQ->first();
                 $code = 200;
             } else {
-                Log::debug(get_class().": No swipe yet on $date for $gtid - saving.");
+                Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
                 $att = Attendance::create($request->all());
                 $code = 201;
             }
@@ -75,79 +85,66 @@ class AttendanceController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        //Return user's name, if found and if requested
-        //This array merge is only okay until Fractal is implemented
-        if ($wantsName) {
-            $user = User::where('gtid', '=', $request->input('gtid'))->first();
-            $name = ($user) ? ['name' => $user->name] : ['name' => 'Non-Member'];
-            $att = array_merge($att->toArray(), $name);
-        }
+        // Yes this is kinda gross but it's the best that I could come up with
+        // This is mainly to allow for requesting the attendee relationship for showing the name on swipes
+        $dbAtt = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($att->id);
 
-        return response()->json(['status' => 'success', 'attendance' => $att], $code);
+        return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($dbAtt)], $code);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  $id integer Resource ID
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request  $request
+     * @param int $id Resource ID
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, int $id): JsonResponse
     {
-        $user = auth()->user();
-        $att = Attendance::find($id);
-        if ($att && ($att->gtid == $user->gtid || $user->can('read-attendance'))) {
-            return response()->json(['status' => 'success', 'attendance' => $att]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
+        $include = $request->input('include');
+        $user = $request->user();
+        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($id);
+        if (null !== $att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
+            return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
     }
 
     /**
      * Searches attendance records for specified data.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\SearchAttendanceRequest  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function search(Request $request)
+    public function search(SearchAttendanceRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'attendable_type' => 'required',
-            'attendable_id' => 'required|numeric',
-            'start_date' => 'date|nullable',
-            'end_date' => 'date|nullable',
-        ]);
+        $include = $request->input('include');
 
         $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
             ->where('attendable_id', '=', $request->input('attendable_id'))
             ->start($request->input('start_date'))->end($request->input('end_date'))
-            ->with('attendee')->get();
+            ->with($this->authorizeInclude(Attendance::class, $include))->get();
 
         if ($att) {
-            return response()->json(['status' => 'success', 'attendance' => $att]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
+            return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  $id integer Resource ID
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateAttendanceRequest  $request
+     * @param int $id Resource ID
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAttendanceRequest $request, int $id): JsonResponse
     {
-        $this->validate($request, [
-            'attendable_type' => 'string',
-            'attendable_id' => 'numeric',
-            'gtid' => 'numeric|exists:users',
-            'source' => 'string',
-            'recorded_by' => 'numeric|exists:users',
-        ]);
-
         $att = Attendance::find($id);
         if ($att) {
             try {
@@ -159,62 +156,60 @@ class AttendanceController extends Controller
                 return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
             }
 
-            return response()->json(['status' => 'success', 'attendance' => $att]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
+            return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
+
+        return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  $id integer Resource ID
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request  $request
+     * @param int $id Resource ID
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $att = Attendance::find($id);
-        $deleted = $att->delete();
-        if ($deleted) {
+        if ($att->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Attendance deleted.']);
-        } else {
-            return response()->json(['status' => 'error',
-                'message' => 'Attendance does not exist or was previously deleted.', ], 422);
         }
+
+        return response()->json(['status' => 'error',
+            'message' => 'Attendance does not exist or was previously deleted.',
+        ], 422);
     }
 
     /**
      * Give a summary of attendance from the given time period.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StatisticsAttendanceRequest  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function statistics(Request $request)
+    public function statistics(StatisticsAttendanceRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'range' => 'numeric|nullable',
-        ]);
-
-        $user = auth()->user();
-        $numberOfWeeks = $request->input('range', 52);
+        $user = $request->user();
+        $numberOfWeeks = intval($request->input('range', '52'));
         $startDay = now()->subWeeks($numberOfWeeks)->startOfDay();
         $endDay = now();
 
         // Get average attendance by day of week from the range given. Selects the weekday number and the weekday name
         // so it can be sorted more easily; the number is trimmed out in the map method
         $attendanceByDay = Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->where('attendable_type', 'App\Team')
+            ->where('attendable_type', \App\Team::class)
             ->selectRaw('date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
             ->groupBy('day')
             ->orderBy('day', 'asc')
             ->get()
-            ->mapWithKeys(function ($item) use ($numberOfWeeks) {
+            ->mapWithKeys(static function (object $item) use ($numberOfWeeks): array {
                 return [substr($item->day, 1) => $item->aggregate / $numberOfWeeks];
             });
 
         $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->where('attendable_type', 'App\Team')
+            ->where('attendable_type', \App\Team::class)
             ->selectRaw('date_format(created_at, \'%Y %U\') as week, count(distinct gtid) as aggregate')
             ->groupBy('week')
             ->get()
@@ -223,8 +218,8 @@ class AttendanceController extends Controller
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
         $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week,'
                 .'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
-            ->where('attendable_type', 'App\Team')
-            ->when($user->cant('read-teams-hidden'), function ($query) {
+            ->where('attendable_type', \App\Team::class)
+            ->when($user->cant('read-teams-hidden'), static function (Builder $query): void {
                 $query->where('visible', 1);
             })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
             ->groupBy('week', 'attendable_id')
@@ -241,7 +236,7 @@ class AttendanceController extends Controller
         }
 
         // Return only the team ID/name, the day, and the count of records on that day
-        $attendanceByTeam = $attendanceByTeam->map(function ($item) {
+        $attendanceByTeam = $attendanceByTeam->map(static function (Collection $item): Collection {
             return $item->pluck('aggregate', 'week');
         });
 

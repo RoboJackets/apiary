@@ -1,26 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail\Dues;
 
+use App\DuesPackage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class RequestComplete extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $uid;
+    /**
+     * The DuesPackage selected.
+     *
+     * @var DuesPackage
+     */
     public $duesPackage;
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
-    public function __construct($uid, $duesPackage)
+    public function __construct(DuesPackage $duesPackage)
     {
-        $this->uid = $uid;
         $this->duesPackage = $duesPackage;
     }
 
@@ -31,12 +36,11 @@ class RequestComplete extends Mailable
      */
     public function build()
     {
-        return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->withSwiftMessage(function ($message) {
-                        $message->getHeaders()
-                            ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
-                    })
-                    ->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
-                    ->markdown('mail.dues.requestcomplete');
+        return $this
+            ->from('noreply@my.robojackets.org', 'RoboJackets')
+            ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
+                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
+            })->subject('[RoboJackets] ACTION REQUIRED | Dues Form Received')
+            ->markdown('mail.dues.requestcomplete');
     }
 }

@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserActiveAttendance extends Filter
 {
@@ -17,31 +22,33 @@ class UserActiveAttendance extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $value
+     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string  $value
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, $query, $value): Builder
     {
-        if ($value === 'yes') {
-            return $query->whereHas('attendee', function ($q) {
-                $q->active();
-            });
-        } else {
-            return $query->whereDoesntHave('attendee', function ($q) {
+        if ('yes' === $value) {
+            return $query->whereHas('attendee', static function (Builder $q): void {
                 $q->active();
             });
         }
+
+        return $query->whereDoesntHave('attendee', static function (Builder $q): void {
+            $q->active();
+        });
     }
 
     /**
      * Get the filter's available options.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<string,string>
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         return [
             'Yes' => 'yes',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -74,17 +76,29 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['default', 'jedi'],
                 'balance' => 'simple',
-                'processes' => 10,
+                'processes' => 3,
                 'tries' => 3,
+                'block_for' => null,
             ],
         ],
 
-        'staging' => [
+        'test' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['default', 'jedi'],
+                'balance' => 'simple',
+                'processes' => 3,
+                'tries' => 1,
+                'block_for' => null,
+            ],
+        ],
+
+        'jedi-test' => [
+            'supervisor-1' => [
+                'connection' => 'redis',
+                'queue' => ['default', 'jedi'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
@@ -94,15 +108,17 @@ return [
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['default', 'jedi'],
                 'balance' => 'simple',
-                'processes' => 3,
-                'tries' => 3,
+                'processes' => 1,
+                'tries' => 1,
+                'block_for' => null,
             ],
         ],
     ],
 
     'middleware' => [
+        'web',
         'auth.cas.force',
     ],
 ];

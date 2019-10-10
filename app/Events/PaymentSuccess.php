@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Payment;
@@ -11,13 +13,17 @@ class PaymentSuccess
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * The payment of interest.
+     *
+     * @var \App\Payment
+     */
     public $payment;
 
     /**
      * Create a new event instance.
      *
      * @param \App\Payment $payment
-     * @return void
      */
     public function __construct(Payment $payment)
     {

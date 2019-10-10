@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Nova;
 
-use App\User;
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -17,14 +20,14 @@ class NotificationTemplate extends Resource
      *
      * @var string
      */
-    public static $model = 'App\NotificationTemplate';
+    public static $model = \App\NotificationTemplate::class;
 
     /**
      * Get the displayble label of the resource.
      *
      * @return string
      */
-    public static function label()
+    public static function label(): string
     {
         return 'Notification Templates';
     }
@@ -34,7 +37,7 @@ class NotificationTemplate extends Resource
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function singularLabel(): string
     {
         return 'Notification Template';
     }
@@ -49,7 +52,7 @@ class NotificationTemplate extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'name',
@@ -60,14 +63,14 @@ class NotificationTemplate extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<mixed>
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
-            Text::make('Name')
-                ->rules('required', 'max:255')
+            Text::make('Name')->rules('required', 'max:255')
                 ->sortable(),
 
             new Panel('Email Content', $this->basicFields()),
@@ -76,7 +79,12 @@ class NotificationTemplate extends Resource
         ];
     }
 
-    protected function basicFields()
+    /**
+     * Notification fields.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function basicFields(): array
     {
         return [
             Text::make('Subject')
@@ -89,7 +97,12 @@ class NotificationTemplate extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp and creator fields.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
 
@@ -110,10 +123,11 @@ class NotificationTemplate extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [];
     }
@@ -121,10 +135,11 @@ class NotificationTemplate extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -132,10 +147,11 @@ class NotificationTemplate extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -143,10 +159,11 @@ class NotificationTemplate extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -11,8 +13,14 @@
 |
 */
 
+$realpath = realpath(__DIR__.'/../');
+
+if (false === $realpath) {
+    throw new Exception('realpath returned false');
+}
+
 $app = new Illuminate\Foundation\Application(
-    realpath(__DIR__.'/../')
+    $realpath
 );
 
 /*

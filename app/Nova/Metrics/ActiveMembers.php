@@ -1,39 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
 
 class ActiveMembers extends Value
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         if ($request->resourceId) {
-            $count = Team::where('id', $request->resourceId)->get()->first()->members()->active()->count();
+            $count = Team::where('id', $request->resourceId)
+                ->get()
+                ->first()
+                ->members()
+                ->active()
+                ->count();
 
             return $this->result($count);
-        } else {
-            return $this->result(User::active()->count());
         }
-    }
 
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
+        return $this->result(User::active()->count());
     }
 
     /**
@@ -41,7 +40,7 @@ class ActiveMembers extends Value
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'active-members';
     }

@@ -1,7 +1,8 @@
 /*jslint browser:true devel:true*/
 /*global self, Promise, resolve*/
 
-function upload(data) {
+function upload(data)
+{
     "use strict";
     let xhr = new XMLHttpRequest();
     while (xhr.status !== 200) {

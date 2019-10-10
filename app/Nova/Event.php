@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
@@ -11,6 +15,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Metrics\RsvpSourceBreakdown;
+use App\Nova\ResourceTools\CollectAttendance;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Event extends Resource
@@ -20,7 +25,7 @@ class Event extends Resource
      *
      * @var string
      */
-    public static $model = 'App\Event';
+    public static $model = \App\Event::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,7 +37,7 @@ class Event extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'name',
@@ -41,33 +46,20 @@ class Event extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<mixed>
      */
-    public function fields(Request $request)
-    {
-        return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-
-            HasMany::make('RSVPs'),
-
-            HasMany::make('Attendance'),
-        ];
-    }
-
-    protected function basicFields()
+    public function fields(Request $request): array
     {
         return [
             Text::make('Event Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            (new BelongsTo('Organizer', 'organizer', 'App\Nova\User'))
+            (new BelongsTo('Organizer', 'organizer', User::class))
                 ->searchable()
                 ->rules('required')
-                // default to self
                 ->help('The organizer of the event'),
 
             DateTime::make('Start Time')
@@ -89,10 +81,32 @@ class Event extends Resource
             Text::make('RSVP URL', function () {
                 return route('events.rsvp', ['event' => $this->id]);
             }),
+
+            new Panel('Metadata', $this->metaFields()),
+
+            HasMany::make('RSVPs')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-rsvps');
+                }),
+
+            HasMany::make('Attendance')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-attendance');
+                }),
+
+            CollectAttendance::make()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                }),
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp fields.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Created', 'created_at')
@@ -106,24 +120,34 @@ class Event extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [
-            (new RsvpSourceBreakdown())->onlyOnDetail(),
-            (new ActiveAttendanceBreakdown(true))->onlyOnDetail(),
+            (new RsvpSourceBreakdown())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-rsvps');
+                }),
+            (new ActiveAttendanceBreakdown(true))
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -131,10 +155,11 @@ class Event extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -142,10 +167,11 @@ class Event extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

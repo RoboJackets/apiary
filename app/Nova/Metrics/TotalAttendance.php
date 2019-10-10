@@ -1,21 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
+
 namespace App\Nova\Metrics;
 
 use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
 
 class TotalAttendance extends Value
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         // This is slightly hacky, but it works. Otherwise, responses with a created date of midnight (as created by
         // some forms) were pushed back to the previous day in the metric. This acts like we're in GMT while
@@ -39,9 +45,9 @@ class TotalAttendance extends Value
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int,string>
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             -1 => 'All',
@@ -54,21 +60,11 @@ class TotalAttendance extends Value
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'total-attendance';
     }

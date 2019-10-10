@@ -1,16 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kberz
- * Date: 6/18/2017
- * Time: 7:34 PM.
- */
+
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Http\Middleware;
 
 use phpCAS;
 use Closure;
-use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
@@ -19,7 +17,18 @@ class CASCheck
 {
     use CreateOrUpdateCASUser;
 
+    /**
+     * Auth facade.
+     *
+     * @var \Illuminate\Contracts\Auth\Guard
+     */
     protected $auth;
+
+    /**
+     * CAS library interface.
+     *
+     * @var \Subfission\Cas\CasManager
+     */
     protected $cas;
 
     public function __construct(Guard $auth)
@@ -31,33 +40,22 @@ class CASCheck
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         phpCAS::checkAuthentication();
-        if (! Auth::check()) {
+        if (null === $request->user()) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser($request);
-                if (is_a($user, \App\User::class)) {
-                    Auth::login($user);
-                } elseif (is_a($user, "Illuminate\Http\Response")) {
-                    return $user;
-                } else {
-                    return response(view(
-                        'errors.generic',
-                        [
-                            'error_code' => 500,
-                            'error_message' => 'Unknown error authenticating with CAS',
-                        ]
-                    ), 500);
-                }
-            } else {
-                if ($request->ajax() || $request->wantsJson()) {
-                    return response('Unauthorized', 401);
-                }
+                Auth::login($user);
+            }
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized', 401);
             }
         }
         //User is authenticated, no update needed or already updated

@@ -1,32 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
+use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
+    use Actionable;
     use SoftDeletes;
 
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['method_presentation'];
 
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = ['id'];
 
     /**
      * Get all of the owning payable models.
      */
-    public function payable()
+    public function payable(): MorphTo
     {
         return $this->morphTo();
     }
@@ -34,7 +40,7 @@ class Payment extends Model
     /**
      * Get the User associated with the Payment model.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'recorded_by');
     }
@@ -44,7 +50,7 @@ class Payment extends Model
      *
      * @return string
      */
-    public function getMethodPresentationAttribute()
+    public function getMethodPresentationAttribute(): string
     {
         $valueMap = [
             'cash' => 'Cash',
@@ -56,10 +62,19 @@ class Payment extends Model
 
         $method = $this->method;
 
-        if (array_key_exists($method, $valueMap)) {
-            return $valueMap[$this->method];
-        } else {
-            return;
-        }
+        return array_key_exists($method, $valueMap) ? $valueMap[$this->method] : '';
+    }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     *
+     * @return array<string,string>
+     */
+    public function getRelationshipPermissionMap(): array
+    {
+        return [
+            'user' => 'users',
+            'payable' => 'dues-transactions',
+        ];
     }
 }

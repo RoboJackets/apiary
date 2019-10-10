@@ -1,21 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\DuesPackage;
 use Laravel\Nova\Nova;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Value;
+use Illuminate\Support\Facades\Log;
+use Laravel\Nova\Metrics\ValueResult;
 
-class SwagPickupRate extends Value
+class SwagPickupRate extends TextMetric
 {
     /**
      * Get the displayable name of the metric.
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return Nova::humanize($this->swagType).' Pickup Rate';
     }
@@ -23,19 +26,19 @@ class SwagPickupRate extends Value
     /**
      * Which type of swag we're looking at, either 'shirt' or 'polo'.
      *
-     * @var bool
+     * @var string
      */
     protected $swagType;
 
     /**
      * Create a new SwagPickupRate metric. swagType can be either 'shirt' or 'polo'.
      *
-     * @param  bool  $swagType
+     * @param string  $swagType
      */
-    public function __construct($swagType)
+    public function __construct(string $swagType)
     {
         if (! in_array($swagType, ['shirt', 'polo'])) {
-            \Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
+            Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
 
             return;
@@ -47,13 +50,14 @@ class SwagPickupRate extends Value
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         $package = DuesPackage::where('id', $request->resourceId)->first();
-        $eligible = $this->swagType == 'shirt' ? $package->eligible_for_shirt : $package->eligible_for_polo;
+        $eligible = 'shirt' === $this->swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
 
         if (! $eligible) {
             return $this->result('n/a');
@@ -64,7 +68,7 @@ class SwagPickupRate extends Value
             ->selectRaw('count(id) as aggregate')
             ->groupBy('provided')
             ->get()
-            ->mapWithKeys(function ($item) {
+            ->mapWithKeys(static function (object $item): array {
                 return [$item->provided ? 'true' : 'false' => $item->aggregate];
             })->toArray();
 
@@ -75,33 +79,17 @@ class SwagPickupRate extends Value
             $value = sprintf('%.1f', ($result['true'] / ($result['true'] + $result['false']) * 100));
 
             return $this->result($value.'%');
-        } elseif ($hasAnyPickedUp) {
-            return $this->result('100%');
-        } elseif ($hasAnyNotPickedUp) {
-            return $this->result('0%');
-        } else {
-            return $this->result('No transactions');
         }
-    }
 
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges()
-    {
-        return [];
-    }
+        if ($hasAnyPickedUp) {
+            return $this->result('100%');
+        }
 
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
+        if ($hasAnyNotPickedUp) {
+            return $this->result('0%');
+        }
+
+        return $this->result('No transactions');
     }
 
     /**
@@ -109,7 +97,7 @@ class SwagPickupRate extends Value
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'swag-pickup-rate-'.$this->swagType;
     }

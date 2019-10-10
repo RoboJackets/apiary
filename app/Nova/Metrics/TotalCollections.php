@@ -1,23 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\ValueResult;
+use Illuminate\Database\Query\Builder;
 
 class TotalCollections extends Value
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
-        $query = Payment::where('payable_type', 'App\DuesTransaction')
-            ->whereIn('payable_id', function ($q) use ($request) {
+        $query = Payment::where('payable_type', \App\DuesTransaction::class)
+            ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')
                     ->where('dues_package_id', $request->resourceId)
@@ -33,9 +38,9 @@ class TotalCollections extends Value
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int,string>
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             -1 => 'All',
@@ -47,21 +52,11 @@ class TotalCollections extends Value
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'total-collections';
     }

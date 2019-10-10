@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7-node-browsers
+    working_directory: ~/apiary
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install libpng-dev
+      - run:
+          name: Install PHP extensions
+          command: sudo docker-php-ext-install zip pcntl bcmath gd
+      - run:
+          name: Update Composer
+          command: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-{{ .Environment.CACHE_VERSION }}-{{ checksum "composer.lock" }}
+            - composer-{{ .Environment.CACHE_VERSION }}
+      - run:
+          name: Install Composer dependencies
+          command: composer install --no-interaction --no-progress --no-suggest --no-dev
+      - save_cache:
+          key: composer-{{ .Environment.CACHE_VERSION }}-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+          name: Check for env() being used outside config/
+          command: sh -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/composer.lock'"
+      - run: php artisan config:cache
+      - run: php artisan nova:publish --no-interaction
+      - run: php artisan horizon:assets --no-interaction
+      - run:
+          name: Install Node dependencies
+          command: npm ci --no-progress
+      - run:
+          name: Build assets
+          command: npm run production --no-progress

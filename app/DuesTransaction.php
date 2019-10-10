@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
-use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class DuesTransaction extends Model
 {
@@ -13,14 +19,14 @@ class DuesTransaction extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['status', 'swag_polo_status', 'swag_shirt_status'];
 
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [
         'id',
@@ -28,9 +34,21 @@ class DuesTransaction extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array<string>
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'swag_shirt_provided',
+        'swag_polo_provided',
+    ];
+
+    /**
      * Get the Payment associated with the DuesTransaction model.
      */
-    public function payment()
+    public function payment(): MorphMany
     {
         return $this->morphMany(\App\Payment::class, 'payable');
     }
@@ -38,7 +56,7 @@ class DuesTransaction extends Model
     /**
      * Get the DuesPackage associated with the DuesTransaction model.
      */
-    public function package()
+    public function package(): BelongsTo
     {
         return $this->belongsTo(\App\DuesPackage::class, 'dues_package_id');
     }
@@ -46,15 +64,31 @@ class DuesTransaction extends Model
     /**
      * Get the User associated with the DuesTransaction model.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(\App\User::class);
     }
 
     /**
+     * Get the User associated with the swag_shirt_providedBy field on the DuesTransaction model.
+     */
+    public function swagShirtProvidedBy(): BelongsTo
+    {
+        return $this->belongsTo(\App\User::class, 'swag_shirt_providedBy', 'id');
+    }
+
+    /**
+     * Get the User associated with the swag_polo_providedBy field on the DuesTransaction model.
+     */
+    public function swagPoloProvidedBy(): BelongsTo
+    {
+        return $this->belongsTo(\App\User::class, 'swag_polo_providedBy', 'id');
+    }
+
+    /**
      * Alias the generalize form of the Transaction for Polymorphic Reasons.
      */
-    public function for()
+    public function for(): BelongsTo
     {
         return $this->package();
     }
@@ -62,19 +96,21 @@ class DuesTransaction extends Model
     /**
      * Get the status flag for the Transaction.
      *
-     * @return bool
+     * @return string
      */
-    public function getStatusAttribute()
+    public function getStatusAttribute(): string
     {
-        if (! $this->package->is_active) {
+        if (null === $this->package || ! $this->package->is_active) {
             return 'expired';
-        } elseif ($this->payment->count() == 0) {
-            return 'pending';
-        } elseif ($this->payment->sum('amount') < $this->getPayableAmount()) {
-            return 'pending';
-        } else {
-            return 'paid';
         }
+
+        if (0 === $this->payment->count()
+            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())
+        ) {
+            return 'pending';
+        }
+
+        return 'paid';
     }
 
     /**
@@ -82,15 +118,17 @@ class DuesTransaction extends Model
      *
      * @return string
      */
-    public function getSwagPoloStatusAttribute()
+    public function getSwagPoloStatusAttribute(): string
     {
-        if ($this->package->eligible_for_polo && $this->swag_polo_provided == null) {
+        if (null === $this->package || $this->package->eligible_for_polo && null === $this->swag_polo_provided) {
             return 'Not Picked Up';
-        } elseif ($this->package->eligible_for_polo && $this->swag_polo_provided != null) {
-            return 'Picked Up';
-        } else {
-            return 'Not Eligible';
         }
+
+        if ($this->package->eligible_for_polo && null !== $this->swag_polo_provided) {
+            return 'Picked Up';
+        }
+
+        return 'Not Eligible';
     }
 
     /**
@@ -98,15 +136,32 @@ class DuesTransaction extends Model
      *
      * @return string
      */
-    public function getSwagShirtStatusAttribute()
+    public function getSwagShirtStatusAttribute(): string
     {
-        if ($this->package->eligible_for_shirt && $this->swag_shirt_provided == null) {
+        if (null === $this->package || $this->package->eligible_for_shirt && null === $this->swag_shirt_provided) {
             return 'Not Picked Up';
-        } elseif ($this->package->eligible_for_shirt && $this->swag_shirt_provided != null) {
-            return 'Picked Up';
-        } else {
-            return 'Not Eligible';
         }
+
+        if ($this->package->eligible_for_shirt && null !== $this->swag_shirt_provided) {
+            return 'Picked Up';
+        }
+
+        return 'Not Eligible';
+    }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     *
+     * @return array<string,string>
+     */
+    public function getRelationshipPermissionMap(): array
+    {
+        return [
+            'user' => 'users',
+            'package' => 'dues-packages',
+            'payment' => 'payments',
+            'user.teams' => 'teams-membership',
+        ];
     }
 
     /**
@@ -115,9 +170,10 @@ class DuesTransaction extends Model
      * for a currently active DuesPackage.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePending($query)
+    public function scopePending(Builder $query): Builder
     {
         return $query->current()->unpaid();
     }
@@ -128,34 +184,31 @@ class DuesTransaction extends Model
      * Note that you can't just chain the paid() scope to this because it breaks the joins.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePendingSwag($query)
+    public function scopePendingSwag(Builder $query): Builder
     {
         return $query->select(
             'dues_transactions.*',
             'dues_packages.eligible_for_shirt',
-            'dues_packages.eligible_for_polo',
-            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
-        )
-            ->join('dues_packages', function ($j) {
-                $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
-                ->where(function ($q) {
+            'dues_packages.eligible_for_polo'
+        )->join('dues_packages', static function (JoinClause $j): void {
+            $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
+                ->where(static function (QueryBuilder $q): void {
                     $q->where('dues_packages.eligible_for_shirt', '=', true)
                         ->where('dues_transactions.swag_shirt_provided', '=', null)
-                        ->orWhere(function ($q) {
+                        ->orWhere(static function (QueryBuilder $q): void {
                             $q->where('dues_packages.eligible_for_polo', '=', true)
                                 ->where('dues_transactions.swag_polo_provided', '=', null);
                         });
                 });
-            })
-            ->leftJoin('payments', function ($j) {
-                $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
-                    ->where('payments.deleted_at', '=', null);
-            })
-            ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
-            ->havingRaw('amountPaid >= dues_packages.cost');
+        })->leftJoin('payments', static function (JoinClause $j): void {
+            $j->on('payments.payable_id', '=', 'dues_transactions.id')
+                ->where('payments.payable_type', '=', self::class)
+                ->where('payments.deleted_at', '=', null);
+        })->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
+            ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
     }
 
     /**
@@ -163,24 +216,30 @@ class DuesTransaction extends Model
      * Paid defined as one or more payments whose total is equal to the payable amount.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePaid($query)
+    public function scopePaid(Builder $query): Builder
     {
-        $query = $query->select(
-            'dues_transactions.*',
-            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
-        )
-            ->leftJoin('payments', function ($j) {
-                $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
+        return $query->select(
+            'dues_transactions.*'
+        )->leftJoin('payments', static function (JoinClause $j): void {
+            $j->on('payments.payable_id', '=', 'dues_transactions.id')
+                    ->where('payments.payable_type', '=', self::class)
                     ->where('payments.deleted_at', '=', null);
-            })
-            ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
+        })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
-            ->havingRaw('amountPaid >= dues_packages.cost');
+            ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
+    }
 
-        return $query;
+    /**
+     * Get the is_paid flag for the DuesTransaction.
+     *
+     * @return bool
+     */
+    public function getIsPaidAttribute(): bool
+    {
+        return 0 !== self::where('dues_transactions.id', $this->id)->paid()->get()->count();
     }
 
     /**
@@ -188,42 +247,57 @@ class DuesTransaction extends Model
      * Unpaid defined as zero or more payments that are less than the payable amount.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeUnpaid($query)
+    public function scopeUnpaid(Builder $query): Builder
     {
         return $query->select(
-            'dues_transactions.*',
-            DB::raw("COALESCE(SUM(payments.amount),0.00) AS 'amountPaid'")
-        )
-            ->leftJoin('payments', function ($j) {
-                $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', \App\DuesTransaction::class)
+            'dues_transactions.*'
+        )->leftJoin('payments', static function (JoinClause $j): void {
+            $j->on('payments.payable_id', '=', 'dues_transactions.id')
+                    ->where('payments.payable_type', '=', self::class)
                     ->where('payments.deleted_at', '=', null);
-            })
-            ->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
+        })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
-            ->havingRaw('amountPaid < dues_packages.cost');
+            ->havingRaw('COALESCE(SUM(payments.amount),0.00) < dues_packages.cost');
     }
 
     /**
      * Scope a query to only include current transactions.
      * Current defined as belonging to an active DuesPackage.
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeCurrent($query)
+    public function scopeCurrent(Builder $query): Builder
     {
-        return $query->whereHas('package', function ($q) {
+        return $query->whereHas('package', static function (Builder $q): void {
             $q->active();
+        });
+    }
+
+    /**
+     * Scope a query to only include current transactions.
+     * Current defined as belonging to an active DuesPackage.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAccessCurrent(Builder $query): Builder
+    {
+        return $query->whereHas('package', static function (Builder $q): void {
+            $q->accessActive();
         });
     }
 
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount()
+    public function getPayableAmount(): string
     {
-        return ($this->package->cost) ?: null;
+        return $this->package->cost;
     }
 }

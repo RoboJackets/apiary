@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,11 +11,11 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js(['resources/assets/js/app.js'], 'public/js/app.js')
-  .sass('resources/assets/sass/app.scss', 'public/css/app.css')
-  .js(['resources/assets/js/nova.js'], 'public/js/nova.js')
-  .sass('resources/assets/sass/nova/global.scss', 'public/css/nova.css');
+mix.js(['resources/js/app.js'], 'public/js/app.js')
+  .sass('resources/sass/app.scss', 'public/css/app.css')
+  .js(['resources/js/nova.js'], 'public/js/nova.js')
+  .sass('resources/sass/nova/global.scss', 'public/css/nova.css');
 
 if (mix.inProduction()) {
-  mix.version();
+    mix.version();
 }

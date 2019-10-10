@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+
 namespace App\Nova\Filters;
 
 use App\Team;
 use App\Event;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class Attendable extends Filter
 {
@@ -26,9 +31,11 @@ class Attendable extends Filter
     /**
      * Create new Attendable filter.
      *
-     * @param  bool  $includeEvents
+     * @param bool  $includeEvents
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function __construct($includeEvents = true)
+    public function __construct(bool $includeEvents = true)
     {
         $this->includeEvents = $includeEvents;
     }
@@ -36,17 +43,18 @@ class Attendable extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $value
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string  $value
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function apply(Request $request, $query, $value)
     {
         $parts = explode(',', $value);
         $attendableType = $parts[0];
         $attendableID = $parts[1];
-        if (! in_array($attendableType, ['App\Event', 'App\Team']) || ! is_numeric($attendableID)) {
+        if (! in_array($attendableType, [\App\Event::class, \App\Team::class]) || ! is_numeric($attendableID)) {
             return $query;
         }
 
@@ -56,19 +64,32 @@ class Attendable extends Filter
     /**
      * Get the filter's available options.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<string,string>
+     *
+     * @suppress PhanPossiblyNonClassMethodCall
      */
-    public function options(Request $request)
+    public function options(Request $request): array
     {
         // Get all the teams and events (attendables), display them as "Team: <team name>" or "Event: <event name>"
         // Store the value as "App\Team,##" or "App\Event,##", where ## is the ID
-        $teams = Team::where('attendable', 1)->get()->mapWithKeys(function ($item) {
-            return ['Team: '.$item['name'] => 'App\Team,'.$item['id']];
-        })->toArray();
-        $events = $this->includeEvents ? Event::all()->mapWithKeys(function ($item) {
-            return ['Event: '.$item['name'] => 'App\Event,'.$item['id']];
-        })->toArray() : [];
+        $teams = [];
+        if ($request->user()->can('read-teams')) {
+            $teams = Team::where('attendable', 1)
+                ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
+                    $query->where('visible', 1);
+                })->get()->mapWithKeys(static function (Team $item): array {
+                    return ['Team: '.$item->name => 'App\\Team,'.$item->id];
+                })->toArray();
+        }
+
+        $events = [];
+        if ($this->includeEvents && $request->user()->can('read-events')) {
+            $events = Event::all()->mapWithKeys(static function (Event $item): array {
+                return ['Event: '.$item->name => 'App\\Event,'.$item->id];
+            })->toArray();
+        }
 
         return array_merge($teams, $events);
     }

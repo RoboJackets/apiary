@@ -1,17 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Nova;
 
+use App\User as AU;
 use Laravel\Nova\Panel;
+use App\Nova\Fields\Hidden;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use App\Nova\Metrics\TotalAttendance;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -23,7 +29,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = 'App\\User';
+    public static $model = \App\User::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -35,7 +41,7 @@ class User extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'uid',
@@ -43,57 +49,41 @@ class User extends Resource
         'last_name',
         'preferred_name',
         'gtid',
+        'github_username',
     ];
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<mixed>
      */
-    public function fields(Request $request)
-    {
-        return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Emergency Contact', $this->emergencyFields()),
-
-            new Panel('Swag', $this->swagFields()),
-
-            BelongsToMany::make('Teams'),
-
-            HasMany::make('Attendance'),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
+    public function fields(Request $request): array
     {
         return [
             Text::make('Username', 'uid')
                 ->sortable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->rules('required', 'max:127')
+                ->creationRules('unique:users,uid')
+                ->updateRules('unique:users,uid,{{resourceId}}'),
 
             Text::make('Preferred First Name')
-                ->sortable(),
+                ->sortable()
+                ->rules('nullable', 'max:127'),
 
             Text::make('Legal First Name', 'first_name')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:127'),
 
             Text::make('Last Name')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:127'),
 
             Text::make('Georgia Tech Email', 'gt_email')
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->rules('required', 'email')
+                ->creationRules('unique:users,gt_email')
+                ->updateRules('unique:users,gt_email,{{resourceId}}'),
 
             Text::make('Personal Email')
                 ->hideFromIndex()
@@ -101,35 +91,133 @@ class User extends Resource
                 ->creationRules('unique:users,personal_email')
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
-            Number::make('GTID')
+            Hidden::make('GTID')
                 ->onlyOnDetail()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-gtid');
+                }),
 
-            Text::make('API Token')
-                ->onlyOnDetail(),
+            // Hidden fields can't be edited, so add this field on the forms so it can be edited for service accounts
+            Text::make('GTID')
+                ->onlyOnForms()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-gtid');
+                })
+                ->rules('required', 'integer', 'min:900000000', 'max:999999999')
+                ->creationRules('unique:users,gtid')
+                ->updateRules('unique:users,gtid,{{resourceId}}'),
+
+            Hidden::make('API Token')
+                ->onlyOnDetail()
+                ->monospaced()
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId === $request->user()->id) {
+                        return true;
+                    }
+
+                    return $request->user()->can('read-users-api_token');
+                }),
 
             Text::make('Phone Number', 'phone')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->rules('nullable', 'max:15'),
 
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+
+            Text::make('GitHub Username', 'github_username')
+                ->hideFromIndex()
+                ->rules('nullable', 'max:39')
+                ->creationRules('unique:users,github_username')
+                ->updateRules('unique:users,github_username,{{resourceId}}'),
+
+            new Panel(
+                'System Access',
+                [
+                    Boolean::make('Active', 'is_access_active')
+                        ->onlyOnDetail(),
+
+                    DateTime::make('Override Expiration', 'access_override_until')
+                        ->onlyOnDetail(),
+
+                    BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
+                        ->onlyOnDetail(),
+                ]
+            ),
+
+            new Panel('Emergency Contact', $this->emergencyFields()),
+
+            new Panel('Swag', $this->swagFields()),
+
+            HasMany::make('Recruiting Visits', 'recruitingVisits')
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId === $request->user()->id) {
+                        return $request->user()->can('read-recruiting-visits-own');
+                    }
+
+                    return $request->user()->can('read-recruiting-visits');
+                }),
+
+            BelongsToMany::make('Teams')
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId === $request->user()->id) {
+                        return $request->user()->can('read-teams-membership-own');
+                    }
+
+                    return $request->user()->can('read-teams-membership');
+                }),
+
+            HasMany::make('Attendance')
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId === $request->user()->id) {
+                        return $request->user()->can('read-attendance-own');
+                    }
+
+                    return $request->user()->can('read-attendance');
+                }),
+
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
+                ->canSee(static function (Request $request): bool {
+                    if ($request->resourceId === $request->user()->id) {
+                        return $request->user()->can('read-dues-transactions-own');
+                    }
+
+                    return $request->user()->can('read-dues-transactions');
+                }),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
-    protected function emergencyFields()
+    /**
+     * Emergency contact information.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function emergencyFields(): array
     {
         return [
             Text::make('Emergency Contact Name')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-emergency_contact');
+                }),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-emergency_contact');
+                }),
         ];
     }
 
-    protected function swagFields()
+    /**
+     * Swag information.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function swagFields(): array
     {
         $shirt_sizes = [
             's' => 'Small',
@@ -153,7 +241,12 @@ class User extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp fields.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Account Created', 'created_at')
@@ -162,47 +255,71 @@ class User extends Resource
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
 
-            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class),
-            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class),
+            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                }),
+
+            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                }),
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [
-            (new MemberSince())->onlyOnDetail(),
-            (new TotalAttendance())->onlyOnDetail(),
-            (new PrimaryTeam())->onlyOnDetail(),
+            (new MemberSince())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new TotalAttendance())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-attendance');
+                }),
+            (new PrimaryTeam())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-attendance');
+                }),
         ];
     }
 
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [
-            new Filters\UserType,
-            new Filters\UserActive,
+            new Filters\UserActive(),
+            new Filters\UserAccessActive(),
+            new Filters\UserType(),
+            new Filters\UserTeam(),
         ];
     }
 
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -210,15 +327,49 @@ class User extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [
-            new Actions\ResetApiToken,
-            new Actions\ExportGtid,
-            new Actions\ExportUsername,
+            (new Actions\SyncAccess())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin');
+                }),
+            (new Actions\OverrideAccess())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin');
+                }),
+            (new Actions\ResetApiToken())
+                ->canSee(static function (Request $request): bool {
+                    return true;
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
+                }),
+            (new Actions\ExportGtid())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-gtid');
+                }),
+            (new Actions\ExportUsername())
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->can('read-users');
+                }),
+            (new Actions\SendNotification())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('send-notifications');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->can('send-notifications');
+                }),
         ];
     }
 }

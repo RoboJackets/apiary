@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravel\Nova\Http\Middleware\Authorize;
 use Laravel\Nova\Http\Middleware\BootTools;
 use Laravel\Nova\Http\Middleware\DispatchServingNovaEvent;
@@ -57,8 +59,8 @@ return [
     */
 
     'middleware' => [
-        \App\Http\Middleware\CASAuthenticate::class,
         'web',
+        \App\Http\Middleware\CASAuthenticate::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
         Authorize::class,

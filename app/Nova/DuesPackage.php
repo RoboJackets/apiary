@@ -1,15 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use App\Nova\Metrics\SwagPickupRate;
 use App\Nova\Metrics\TotalCollections;
+use App\Nova\Metrics\ShirtSizeBreakdown;
 use App\Nova\Metrics\PaymentMethodBreakdown;
 
 class DuesPackage extends Resource
@@ -19,14 +25,14 @@ class DuesPackage extends Resource
      *
      * @var string
      */
-    public static $model = 'App\DuesPackage';
+    public static $model = \App\DuesPackage::class;
 
     /**
      * Get the displayble label of the resource.
      *
      * @return string
      */
-    public static function label()
+    public static function label(): string
     {
         return 'Dues Packages';
     }
@@ -36,7 +42,7 @@ class DuesPackage extends Resource
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function singularLabel(): string
     {
         return 'Dues Package';
     }
@@ -51,7 +57,7 @@ class DuesPackage extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'name',
@@ -60,21 +66,11 @@ class DuesPackage extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<mixed>
      */
-    public function fields(Request $request)
-    {
-        return [
-            new Panel('Basic Information', $this->basicFields()),
-
-            new Panel('Swag', $this->swagFields()),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    protected function basicFields()
+    public function fields(Request $request): array
     {
         return [
             Text::make('Name')
@@ -101,10 +97,43 @@ class DuesPackage extends Resource
 
             Boolean::make('Available for Purchase')
                 ->sortable(),
+
+            new Panel('Swag', $this->swagFields()),
+
+            new Panel('Access', [
+                Boolean::make('Active', 'is_access_active')
+                    ->onlyOnDetail(),
+
+                DateTime::make('Start Date', 'access_start')
+                    ->onlyOnDetail(),
+
+                DateTime::make('End Date', 'access_end')
+                    ->onlyOnDetail(),
+
+                DateTime::make('Access Start Date', 'access_start')
+                    ->onlyOnForms()
+                    ->rules('required'),
+
+                DateTime::make('Access End Date', 'access_end')
+                    ->onlyOnForms()
+                    ->rules('required'),
+            ]),
+
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
-    protected function swagFields()
+    /**
+     * Swag information.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function swagFields(): array
     {
         return [
             Boolean::make('Eligible for T-Shirt', 'eligible_for_shirt')
@@ -115,7 +144,12 @@ class DuesPackage extends Resource
         ];
     }
 
-    protected function metaFields()
+    /**
+     * Timestamp fields.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function metaFields(): array
     {
         return [
             DateTime::make('Created', 'created_at')
@@ -129,26 +163,62 @@ class DuesPackage extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request)
+    public function cards(Request $request): array
     {
         return [
-            (new TotalCollections())->onlyOnDetail(),
-            (new PaymentMethodBreakdown())->onlyOnDetail(),
-            (new SwagPickupRate('shirt'))->onlyOnDetail(),
-            (new SwagPickupRate('polo'))->onlyOnDetail(),
+            (new TotalCollections())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new PaymentMethodBreakdown())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new SwagPickupRate('shirt'))
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new SwagPickupRate('polo'))
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('shirt'))
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('polo'))
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('shirt'))
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
+            (new ShirtSizeBreakdown('polo'))
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-dues-transactions');
+                }),
         ];
     }
 
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Filters\Filter>
      */
-    public function filters(Request $request)
+    public function filters(Request $request): array
     {
         return [];
     }
@@ -156,10 +226,11 @@ class DuesPackage extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Lenses\Lens>
      */
-    public function lenses(Request $request)
+    public function lenses(Request $request): array
     {
         return [];
     }
@@ -167,10 +238,11 @@ class DuesPackage extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request)
+    public function actions(Request $request): array
     {
         return [];
     }

@@ -1,21 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Metrics\TrendResult;
 
 class AttendancePerWeek extends Trend
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): TrendResult
     {
         // This is slightly hacky, but it works. Otherwise, responses with a created date of midnight (as created by
         // some forms) were pushed back to the previous day in the metric. This acts like we're in GMT while
@@ -30,12 +34,13 @@ class AttendancePerWeek extends Trend
             $query = (new Attendance())
                 ->newQuery()
                 ->where('attendable_id', $request->resourceId)
-                ->where('attendable_type', 'App\Team');
+                ->where('attendable_type', \App\Team::class);
         }
 
         // Aggregate based on counting distinct values in the gtid column
         $column = DB::raw('distinct attendance.gtid');
-        $result = $this->aggregate($request, $query, Trend::BY_WEEKS, 'count', $column, 'created_at')->showLatestValue();
+        $result = $this->aggregate($request, $query, Trend::BY_WEEKS, 'count', $column, 'created_at')
+            ->showLatestValue();
 
         $request->timezone = $originalTimezone;
 
@@ -45,9 +50,9 @@ class AttendancePerWeek extends Trend
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int,string>
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             8 => '2 Months',
@@ -58,21 +63,11 @@ class AttendancePerWeek extends Trend
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'attendance-per-week';
     }

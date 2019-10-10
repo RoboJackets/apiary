@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
+use App\DuesPackage;
 use App\DuesTransaction;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,9 +15,10 @@ class DashboardController extends Controller
      * Returns view with data for the user dashboard.
      *
      * @param Request $request
-     * @return mixed
+     *
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         //User needs a transaction if they don't have one for an active dues package
         $user = $request->user();
@@ -22,10 +27,11 @@ class DashboardController extends Controller
 
         //User is "new" if they don't have any transactions, or they have never paid dues
         $paidTxn = count(DuesTransaction::paid()->where('user_id', $user->id)->get());
-        $isNew = ($user->dues->count() == 0 || ($user->dues->count() >= 1 && $paidTxn == 0));
+        $isNew = (0 === $user->dues->count() || ($user->dues->count() >= 1 && 0 === $paidTxn));
 
         //User needs a transaction if they don't have one for an active dues package
-        $needsTransaction = (DuesTransaction::current()->where('user_id', $user->id)->count() == 0);
+        $needsTransaction = (0 === DuesTransaction::current()->where('user_id', $user->id)->count());
+        $needsTransaction = $needsTransaction && (DuesPackage::availableForPurchase()->count() > 0);
 
         //User needs a payment if they don't have enough payments to cover their pending dues transaction
         //Don't change this to use ->count(). It won't work - trust me.
@@ -34,14 +40,20 @@ class DashboardController extends Controller
         if (! $isNew) {
             $firstPaidTransact = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->first();
             $lastPaidTransact = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->get()->last();
-            $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end));
-            $firstPayment = date('F j, Y', strtotime($firstPaidTransact->payment->first()->created_at));
+            $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end->toDateTimeString()));
+            $firstPayment = date(
+                'F j, Y',
+                strtotime($firstPaidTransact->payment->first()->created_at->toDateTimeString())
+            );
         } else {
-            $firstPaidTransact = null;
-            $lastPaidTransact = null;
             $packageEnd = null;
             $firstPayment = null;
         }
+
+        $hasOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until > now();
+        $hasExpiredOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until < now()
+            && $user->access_override_until > now()->startOfDay()->subDays(14);
+        $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
 
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
@@ -49,7 +61,11 @@ class DashboardController extends Controller
             'packageEnd' => $packageEnd,
             'firstPayment' => $firstPayment,
             'preferredName' => $preferredName,
-            'isNew' => $isNew, ];
+            'isNew' => $isNew,
+            'hasOverride' => $hasOverride,
+            'hasExpiredOverride' => $hasExpiredOverride,
+            'overrideDate' => $overrideDate,
+        ];
 
         return view('welcome', $data);
     }

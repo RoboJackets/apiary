@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
+use Illuminate\Database\Query\Builder;
+use Laravel\Nova\Metrics\PartitionResult;
 
 class PaymentMethodBreakdown extends Partition
 {
@@ -18,56 +22,54 @@ class PaymentMethodBreakdown extends Partition
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
-    public function calculate(Request $request)
-    {
-        return $this->result(Payment::where('payable_type', 'App\DuesTransaction')
-            ->where('amount', '>', 0)
-            ->whereIn('payable_id', function ($q) use ($request) {
-                $q->select('id')
-                    ->from('dues_transactions')
-                    ->where('dues_package_id', $request->resourceId)
-                    ->whereNull('deleted_at');
-            })->select('method')
-            ->selectRaw('count(payments.id) as aggregate')
-            ->groupBy('method')
-            ->orderBy('aggregate', 'desc')
-            ->get()
-            ->mapWithKeys(function ($item) {
-                $key = $item->method;
-                switch ($item->method) {
-                    case 'cash':
-                        $key = 'Cash';
-                        break;
-                    case 'check':
-                        $key = 'Check';
-                        break;
-                    case 'swipe':
-                        $key = 'Swiped Card';
-                        break;
-                    case 'square':
-                        $key = 'Square (Online)';
-                        break;
-                    case 'squarecash':
-                        $key = 'Square Cash';
-                        break;
-                }
-
-                return [$key => $item->aggregate];
-            })->toArray()
-        );
-    }
-
-    /**
-     * Determine for how many minutes the metric should be cached.
+     * @param \Illuminate\Http\Request  $request
      *
-     * @return  \DateTimeInterface|\DateInterval|float|int
+     * @return \Laravel\Nova\Metrics\PartitionResult
      */
-    public function cacheFor()
+    public function calculate(Request $request): PartitionResult
     {
-        // return now()->addMinutes(5);
+        return $this->result(
+            Payment::where('payable_type', \App\DuesTransaction::class)
+                    ->where('amount', '>', 0)
+                    ->whereIn('payable_id', static function (Builder $q) use ($request): void {
+                        $q->select('id')
+                            ->from('dues_transactions')
+                            ->where('dues_package_id', $request->resourceId)
+                            ->whereNull('deleted_at');
+                    })
+                    ->select('method')
+                    ->selectRaw('count(payments.id) as aggregate')
+                    ->groupBy('method')
+                    ->orderBy('aggregate', 'desc')
+                    ->get()
+                    ->mapWithKeys(static function (Payment $item): array {
+                        $key = $item->method;
+                        switch ($item->method) {
+                            case 'cash':
+                                $key = 'Cash';
+
+                                break;
+                            case 'check':
+                                $key = 'Check';
+
+                                break;
+                            case 'swipe':
+                                $key = 'Swiped Card';
+
+                                break;
+                            case 'square':
+                                $key = 'Square (Online)';
+
+                                break;
+                            case 'squarecash':
+                                $key = 'Square Cash';
+
+                                break;
+                        }
+
+                        return [$key => $item->aggregate];
+                    })->toArray()
+        );
     }
 
     /**
@@ -75,7 +77,7 @@ class PaymentMethodBreakdown extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'payment-method-breakdown';
     }

@@ -1,51 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Payment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
+use Laravel\Nova\Metrics\TrendResult;
 
 class PaymentsPerDay extends Trend
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): TrendResult
     {
-        return $this->countByDays($request, Payment::class)
-            ->showLatestValue();
+        return $this->countByDays($request, Payment::class)->showLatestValue();
     }
 
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int|string,string>
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             30 => '30 Days',
             60 => '60 Days',
             90 => '90 Days',
             365 => '365 Days',
-            'MTD' => 'Month To Date',
-            'QTD' => 'Quarter To Date',
-            'YTD' => 'Year To Date',
         ];
-    }
-
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
     }
 
     /**
@@ -53,7 +43,7 @@ class PaymentsPerDay extends Trend
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'transactions-per-day';
     }

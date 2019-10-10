@@ -1,27 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail\Payment;
 
 use App\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class Confirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $uid;
+    /**
+     * The Payment object of interest.
+     *
+     * @var Payment
+     */
     public $payment;
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
-    public function __construct($uid, $payment)
+    public function __construct(Payment $payment)
     {
-        $this->uid = $uid;
         $this->payment = $payment;
     }
 
@@ -32,12 +36,11 @@ class Confirmation extends Mailable
      */
     public function build()
     {
-        return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->withSwiftMessage(function ($message) {
-                        $message->getHeaders()
-                            ->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
-                    })
-                    ->subject('[RoboJackets] Payment Processed')
-                    ->markdown('mail.payment.confirmation');
+        return $this
+            ->from('noreply@my.robojackets.org', 'RoboJackets')
+            ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
+                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
+            })->subject('[RoboJackets] Payment Processed')
+            ->markdown('mail.payment.confirmation');
     }
 }

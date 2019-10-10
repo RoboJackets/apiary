@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Notifications\Payment;
 
+use App\User;
+use App\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,14 +17,17 @@ class ConfirmationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * The payment that was completed.
+     *
+     * @var \App\Payment
+     */
     public $payment;
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
-    public function __construct($payment)
+    public function __construct(Payment $payment)
     {
         $this->payment = $payment;
     }
@@ -26,10 +35,11 @@ class ConfirmationNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param User  $notifiable
+     *
+     * @return array<string>
      */
-    public function via($notifiable)
+    public function via(User $notifiable): array
     {
         return ['mail'];
     }
@@ -37,24 +47,25 @@ class ConfirmationNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param User  $notifiable
+     *
      * @return Mailable
      */
-    public function toMail($notifiable)
+    public function toMail(User $notifiable): Mailable
     {
-        return (new Mailable($notifiable->uid, $this->payment))->to($notifiable->gt_email);
+        return (new Mailable($this->payment))->to($notifiable->gt_email);
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param User  $notifiable
+     *
+     * @return array<string,string>
      */
-    public function toArray($notifiable)
+    public function toArray(User $notifiable): array
     {
         return [
-            //
         ];
     }
 }

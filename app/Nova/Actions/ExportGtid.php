@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Actions;
 
-use Laravel\Nova\Actions\Action;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class ExportGtid extends DownloadExcel
@@ -28,4 +29,11 @@ class ExportGtid extends DownloadExcel
             ->only('first_name', 'last_name', 'gtid')
             ->withChunkCount(1000);
     }
+
+    /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
 }

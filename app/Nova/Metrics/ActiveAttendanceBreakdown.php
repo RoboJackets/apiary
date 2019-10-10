@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
+use Laravel\Nova\Metrics\PartitionResult;
 
 class ActiveAttendanceBreakdown extends Partition
 {
@@ -14,7 +17,7 @@ class ActiveAttendanceBreakdown extends Partition
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->showAllTime ? 'Active Attendees' : 'Attendees Last 4 Weeks';
     }
@@ -29,9 +32,11 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      *
-     * @param  bool  $showAllTime
+     * @param bool  $showAllTime
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function __construct($showAllTime = false)
+    public function __construct(bool $showAllTime = false)
     {
         $this->showAllTime = $showAllTime;
     }
@@ -39,17 +44,24 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\PartitionResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): PartitionResult
     {
+        // If a user is found, this will give "Active" in the active column, otherwise the column will be null
         $query = Attendance::selectRaw('count(distinct gtid) as aggregate')
-            // If a user is found, this will give "Active" in the active column, otherwise the column will be null
-            ->selectSub(User::whereRaw('attendance.gtid = users.gtid')->active()->selectRaw("'Active'"), 'active');
+            ->selectSub(
+                User::whereRaw('attendance.gtid = users.gtid')
+                    ->active()
+                    ->selectRaw("'Active'"),
+                'active'
+            );
 
         if ($request->resourceId) {
-            $query = $query->where('attendable_id', $request->resourceId)
+            $query = $query
+                ->where('attendable_id', $request->resourceId)
                 ->where('attendable_type', get_class($request->model()));
         }
 
@@ -57,10 +69,11 @@ class ActiveAttendanceBreakdown extends Partition
             $query = $query->whereBetween('created_at', [now()->subDays(28)->startOfDay(), now()]);
         }
 
-        $result = $query->groupBy('active')
+        $result = $query
+            ->groupBy('active')
             ->orderByRaw('aggregate desc, active desc')
             ->get()
-            ->mapWithKeys(function ($item) {
+            ->mapWithKeys(static function (object $item): array {
                 $key = $item->active;
                 if (! $item->active) {
                     $key = 'Inactive';
@@ -73,21 +86,11 @@ class ActiveAttendanceBreakdown extends Partition
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'active-attendance-breakdown';
     }

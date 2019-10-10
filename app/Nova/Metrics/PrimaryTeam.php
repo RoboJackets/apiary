@@ -1,33 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Team;
 use App\User;
 use App\Attendance;
 use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Value;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Metrics\ValueResult;
 
-class PrimaryTeam extends Value
+class PrimaryTeam extends TextMetric
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function calculate(Request $request)
+    public function calculate(Request $request): ValueResult
     {
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         $teams = Attendance::where('gtid', $gtid)
-            ->where('attendable_type', 'App\Team');
+            ->where('attendable_type', \App\Team::class);
 
         if (is_numeric($request->range) && $request->range >= -2) {
             // For the purposes of this, the spring semester runs January - April, summer runs May - July, and fall
             // runs August - December
             $date = now()->startOfDay();
-            if ($request->range == -1) {
+            $intrange = intval($request->range);
+            if (-1 === $intrange) {
                 // Find start of semester date
                 if ($date->month <= 4) {
                     $date = $date->month(1)->day(1);
@@ -36,26 +40,27 @@ class PrimaryTeam extends Value
                 } else {
                     $date = $date->month(8)->day(1);
                 }
-            } elseif ($request->range == -2) {
+            } elseif (-2 === $intrange) {
                 // Find the most recent August 1
                 $date = $date->month(8)->day(1);
                 if ($date->greaterThan(now())) {
                     $date = $date->subYear();
                 }
             } else {
-                $date = $date->subDays($request->range);
+                $date = $date->subDays($intrange);
             }
             $teams = $teams->whereBetween('created_at', [$date, now()]);
         }
 
         $teams = $teams->groupBy('attendable_id')
             ->select('attendable_id', DB::raw('count(*) as count'))
-            ->get()->toArray();
+            ->get()
+            ->toArray();
 
         $max = 0;
         $maxTeamIDs = [];
         foreach ($teams as $item) {
-            if ($item['count'] == $max) {
+            if ($item['count'] === $max) {
                 $maxTeamIDs[] = $item['attendable_id'];
             } elseif ($item['count'] > $max) {
                 $max = $item['count'];
@@ -63,21 +68,21 @@ class PrimaryTeam extends Value
             }
         }
 
-        if (count($maxTeamIDs) == 0) {
+        if (0 === count($maxTeamIDs)) {
             return $this->result('No attendance');
-        } else {
-            $names = Team::whereIn('id', $maxTeamIDs)->get()->pluck('name')->toArray();
-
-            return $this->result(implode(', ', $names));
         }
+
+        $names = Team::whereIn('id', $maxTeamIDs)->get()->pluck('name')->toArray();
+
+        return $this->result(implode(', ', $names));
     }
 
     /**
      * Get the ranges available for the metric.
      *
-     * @return array
+     * @return array<int,string>
      */
-    public function ranges()
+    public function ranges(): array
     {
         return [
             -1 => 'This Semester',
@@ -89,21 +94,11 @@ class PrimaryTeam extends Value
     }
 
     /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        // return now()->addMinutes(5);
-    }
-
-    /**
      * Get the URI key for the metric.
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'primary-team';
     }
