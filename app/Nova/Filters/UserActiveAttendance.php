@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
 
 namespace App\Nova\Filters;
 
@@ -31,12 +31,12 @@ class UserActiveAttendance extends Filter
     public function apply(Request $request, $query, $value): Builder
     {
         if ('yes' === $value) {
-            return $query->whereHas('attendee', static function (Builder $q): void {
+            return $query->whereHas('attendee', static function (Builder $q) {
                 $q->active();
             });
         }
 
-        return $query->whereDoesntHave('attendee', static function (Builder $q): void {
+        return $query->whereDoesntHave('attendee', static function (Builder $q) {
             $q->active();
         });
     }
