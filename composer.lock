@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6185f0aee971c865f62c4b9517117ded",
+    "content-hash": "4f8fabb700485647af5cbf5d6f69f3b6",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1887,17 +1887,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "ae0d40f92f77e06d64fa9f43c7daeeaeb828ed2f"
+                "reference": "4dae919af5c8038adf07d6ec55bbf07b560a6b4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-ae0d40f92f77e06d64fa9f43c7daeeaeb828ed2f-zip-ee5a49.zip",
-                "reference": "ae0d40f92f77e06d64fa9f43c7daeeaeb828ed2f",
-                "shasum": "4883cdcef409ab81b0ec17782895c20d699bfe3b"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-4dae919af5c8038adf07d6ec55bbf07b560a6b4c-zip-dcf811.zip",
+                "reference": "4dae919af5c8038adf07d6ec55bbf07b560a6b4c",
+                "shasum": "87535c62ee58dd7666b6502e043a440539e4e839"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -1953,7 +1953,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-10-01T17:44:14+00:00"
+            "time": "2019-10-15T19:49:38+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -4368,16 +4368,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v4.3.4",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "86c1c929f0a4b24812e1eb109262fc3372c8e9f2"
+                "reference": "5e575faa95548d0586f6bedaeabec259714e44d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/86c1c929f0a4b24812e1eb109262fc3372c8e9f2",
-                "reference": "86c1c929f0a4b24812e1eb109262fc3372c8e9f2",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/5e575faa95548d0586f6bedaeabec259714e44d1",
+                "reference": "5e575faa95548d0586f6bedaeabec259714e44d1",
                 "shasum": ""
             },
             "require": {
@@ -4413,7 +4413,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-14T12:26:46+00:00"
+            "time": "2019-09-16T11:29:48+00:00"
         },
         {
             "name": "symfony/http-foundation",
