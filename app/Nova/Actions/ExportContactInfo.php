@@ -27,7 +27,7 @@ class ExportContactInfo extends DownloadExcel
         $this->withFilename('MemberContactInfo.csv')
             ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
             ->only('name', 'gt_email', 'personal_email', 'phone')
-            ->withHeadings()
+            ->withHeadings('Name', 'GT Email', 'Personal Email', 'Phone Number')
             ->withChunkCount(1000);
     }
 
