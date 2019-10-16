@@ -39,7 +39,7 @@
         "fzaninotto/faker": "1.8.0",
         "mockery/mockery": "1.2.4",
         "nunomaduro/collision": "3.0.1",
-        "nunomaduro/larastan": "0.4.0",
+        "nunomaduro/larastan": "0.4.2",
         "phpunit/phpunit": "8.4.1"
     },
     "autoload": {
