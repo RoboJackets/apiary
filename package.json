@@ -29,7 +29,7 @@
     "jquery": "3.4.1",
     "jszip": "3.2.2",
     "moment": "2.24.0",
-    "popper.js": "1.15.0",
+    "popper.js": "1.16.0",
     "sweetalert2": "8.18.4",
     "vue": "2.6.10",
     "vue-flatpickr-component": "8.1.4",
