@@ -6,7 +6,6 @@ namespace App\Console;
 
 use App\Jobs\DailyDuesSummary;
 use App\Jobs\WeeklyAttendance;
-use App\Jobs\NoAttendanceJediPush;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
