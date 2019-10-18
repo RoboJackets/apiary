@@ -6,14 +6,14 @@ namespace App\Nova\Actions;
 
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-class ExportContactInfo extends DownloadExcel
+class ExportEmails extends DownloadExcel
 {
     /**
      * The displayable name of the action.
      *
      * @var string
      */
-    public $name = 'Export Contact Info';
+    public $name = 'Export Names and Emails';
 
     /**
      * Indicates if this action is available to run against the entire resource.
