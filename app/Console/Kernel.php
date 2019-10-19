@@ -8,6 +8,7 @@ use App\Jobs\DailyDuesSummary;
 use App\Jobs\WeeklyAttendance;
 use App\Jobs\NoAttendanceJediPush;
 use Illuminate\Console\Scheduling\Schedule;
+use Bugsnag\BugsnagLaravel\Commands\DeployCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -17,7 +18,9 @@ class Kernel extends ConsoleKernel
      *
      * @var array<string>
      */
-    protected $commands = [];
+    protected $commands = [
+        DeployCommand::class
+    ];
 
     /**
      * Define the application's command schedule.
