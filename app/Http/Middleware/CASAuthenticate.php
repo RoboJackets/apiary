@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
 use RoboJackets\ErrorPages\DuoOutage;
 use RoboJackets\ErrorPages\BadNetwork;
+use RoboJackets\ErrorPages\Unauthorized;
 use RoboJackets\ErrorPages\DuoNotEnabled;
 use RoboJackets\ErrorPages\EduroamNonGatech;
 use RoboJackets\ErrorPages\EduroamISSDisabled;
@@ -84,6 +85,12 @@ class CASAuthenticate
                         $masq_attrs[$attr] = explode(',', $masq_attrs[$attr]);
                     }
                     $this->cas->setAttributes($masq_attrs);
+                }
+
+                foreach ($attrs as $attr) {
+                    if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
+                        Unauthorized::render(0b110);
+                    }
                 }
 
                 if ('duo-two-factor' !== $this->cas->getAttribute('authn_method')) {
