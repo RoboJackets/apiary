@@ -27,3 +27,4 @@ auth.json
 .idea_helper.php
 _ide_helper.php
 *.log
+/error-pages-cache/

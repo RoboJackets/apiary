@@ -25,6 +25,8 @@
         "laravel/tinker": "1.0.10",
         "maatwebsite/laravel-nova-excel": "1.1.7",
         "predis/predis": "1.1.1",
+        "robojackets/error-pages": "^2.0",
+        "robojackets/network-check": "^1.0",
         "spatie/laravel-failed-job-monitor": "3.2.0",
         "spatie/laravel-permission": "2.38.0",
         "spatie/laravel-sluggable": "2.2.1",
@@ -65,6 +67,9 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
+        ],
+        "post-package-update": [
+            "rm -rf error-pages-cache"
         ]
     },
     "config": {
@@ -81,6 +86,10 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
+        },
+        {
+            "type": "composer",
+            "url": "https://packages.robojackets.org"
         }
     ]
 }
