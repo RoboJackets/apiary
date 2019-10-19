@@ -186,7 +186,7 @@ return [
     |
     */
 
-    'notify_release_stages' => env('BUGSNAG_NOTIFY_RELEASE_STAGES') ?? : explode(
+    'notify_release_stages' => env('BUGSNAG_NOTIFY_RELEASE_STAGES') ?? explode(
         ',',
         str_replace(' ', '', env('BUGSNAG_NOTIFY_RELEASE_STAGES'))
     ),
