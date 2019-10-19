@@ -8,16 +8,16 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use RoboJackets\NetworkCheck;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
+use RoboJackets\ErrorPages\DuoOutage;
 use RoboJackets\ErrorPages\BadNetwork;
 use RoboJackets\ErrorPages\DuoNotEnabled;
-use RoboJackets\ErrorPages\DuoOutage;
-use RoboJackets\ErrorPages\EduroamISSDisabled;
 use RoboJackets\ErrorPages\EduroamNonGatech;
+use RoboJackets\ErrorPages\EduroamISSDisabled;
 use RoboJackets\ErrorPages\UsernameContainsDomain;
-use RoboJackets\NetworkCheck;
 
 class CASAuthenticate
 {
