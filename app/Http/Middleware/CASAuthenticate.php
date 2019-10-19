@@ -16,8 +16,6 @@ use RoboJackets\ErrorPages\DuoNotEnabled;
 use RoboJackets\ErrorPages\DuoOutage;
 use RoboJackets\ErrorPages\EduroamISSDisabled;
 use RoboJackets\ErrorPages\EduroamNonGatech;
-use RoboJackets\ErrorPages\SystemError;
-use RoboJackets\ErrorPages\Unauthorized;
 use RoboJackets\ErrorPages\UsernameContainsDomain;
 use RoboJackets\NetworkCheck;
 
@@ -52,6 +50,8 @@ class CASAuthenticate
      * @param \Closure $next
      *
      * @return mixed
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression)
      */
     public function handle(Request $request, Closure $next)
     {
@@ -112,7 +112,9 @@ class CASAuthenticate
                     BadNetwork::render('GTvisitor', $username, phpCAS::getAttribute('eduPersonPrimaryAffiliation'));
                     exit;
                 }
-                if (NetworkCheck::EDUROAM_NON_GATECH_V4 === $network || NetworkCheck::EDUROAM_NON_GATECH_V6 === $network) {
+                if (NetworkCheck::EDUROAM_NON_GATECH_V4 === $network
+                    || NetworkCheck::EDUROAM_NON_GATECH_V6 === $network
+                ) {
                     EduroamNonGatech::render($username, phpCAS::getAttribute('eduPersonPrimaryAffiliation'));
                     exit;
                 }
