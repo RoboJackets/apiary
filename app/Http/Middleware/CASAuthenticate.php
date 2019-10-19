@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
 
 namespace App\Http\Middleware;
 
@@ -90,6 +91,7 @@ class CASAuthenticate
                 foreach ($attrs as $attr) {
                     if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
                         Unauthorized::render(0b110);
+                        exit;
                     }
                 }
 
