@@ -39,8 +39,10 @@ Route::middleware('auth.cas.force')->group(static function (): void {
         Route::get('/', 'TeamController@indexWeb')->name('index');
     });
 
-    Route::prefix('resume')->name('resume.')->group(static function (): void {
-        return view('users/resume', ['id' => auth()->user()->id]);
+    Route::prefix('resume')->name('resume')->group(static function (): void {
+        Route::get('/', static function () {
+            return view('users/resume', ['id' => auth()->user()->id]);
+        })->name('index');
     });
 
     Route::prefix('payments')->group(static function (): void {
