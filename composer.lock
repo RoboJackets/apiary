@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5714534587bf4a502956a22b890ac7f",
+    "content-hash": "2b8cd00a1c3f28798b25528a5cdd61bf",
     "packages": [
         {
             "name": "apereo/phpcas",
