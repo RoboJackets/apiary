@@ -65,6 +65,7 @@ class DashboardController extends Controller
             'hasOverride' => $hasOverride,
             'hasExpiredOverride' => $hasExpiredOverride,
             'overrideDate' => $overrideDate,
+            'needsResume' => true,
         ];
 
         return view('welcome', $data);
