@@ -71,7 +71,7 @@ class CASAuthenticate
                     exit;
                 }
 
-                $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
+                $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn', 'authn_method'];
                 // Attributes that will be split by commas when masquerading
                 $arrayAttrs = ['gtPersonEntitlement', 'gtAccountEntitlement'];
                 // Merge them together so we verify all attributes are present, even the array ones
@@ -89,7 +89,9 @@ class CASAuthenticate
                 }
 
                 foreach ($attrs as $attr) {
-                    if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
+                    if ((! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr))
+                        && 'authn_method' !== $attr
+                    ) {
                         Unauthorized::render(0b110);
                         exit;
                     }
