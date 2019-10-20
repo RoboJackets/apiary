@@ -28,3 +28,6 @@ auth.json
 _ide_helper.php
 *.log
 /error-pages-cache/
+.last_deployment_hash
+pause-monitoring.sh
+resume-monitoring.sh
