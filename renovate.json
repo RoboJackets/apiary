@@ -35,7 +35,7 @@
       "encrypted": {
         "password": "m4fVZTnuxkpRyuA3NoJZg2tXRawuBdt7IW21BXPWWaB7tzPxd2ck8U/9FHr3omnrnRAdCtvUILRxGcHlBN8uhQlxRyhfxchSgtlvDN5bVzBmzWp5VbKjWpuUxq2mU7ZqrYJJBtLP7SlwztOhZbRKjP5IscNgUWnbHGOPdhEsfbnUkfFXKm7eiQlzObnEvG/CN9nGn2auROi7q/xPqJ8aCKL/NeF6ZfLlYbjREjZaC6xwOaZeWIJtD6GQ8VRN9B0qeScsHP8hTzbRZ5Fe5CKL82yY5N998a7O8SXVNYNhIwKzrYHko5Vg/CpbC4ZXvXiRR33pNC36W4jqMA9wXo1rZw=="
       }
-    }
+    },
     {
       "domainName": "packages.robojackets.org",
       "username": "renovate",
