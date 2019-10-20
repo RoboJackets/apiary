@@ -94,7 +94,7 @@ class RecruitingVisit extends Resource
                 ->sortable()
                 ->rules('required', 'max:255', 'email'),
 
-            Text::make('Survey Responses', static function() use ($this_id)  {
+            Text::make('Survey Responses', static function () use ($this_id) {
                 return implode(', ', RecruitingResponse::where(
                     'recruiting_visit_id',
                     '=',
