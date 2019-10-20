@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f8fabb700485647af5cbf5d6f69f3b6",
+    "content-hash": "d5714534587bf4a502956a22b890ac7f",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3506,6 +3506,85 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
+            "name": "robojackets/error-pages",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.gatech.edu/RoboJackets/error-pages.git",
+                "reference": "ad32dc756eff9a5ae11b6efd1bb4fc621d42ac3a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.robojackets.org/dist/robojackets/error-pages/robojackets-error-pages-v2.0.0-229008.zip",
+                "reference": "ad32dc756eff9a5ae11b6efd1bb4fc621d42ac3a",
+                "shasum": "f995ee107a3de9549ae5fc258e1d24d425de0c09"
+            },
+            "require": {
+                "twig/twig": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RoboJackets\\ErrorPages\\": "src/"
+                }
+            },
+            "scripts": {
+                "post-install-cmd": [
+                    "rm composer.lock"
+                ],
+                "post-update-cmd": [
+                    "rm composer.lock"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kristaps Berzinch",
+                    "email": "kristapsberzinch@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Error pages shared across authentication plugins",
+            "homepage": "https://github.gatech.edu/RoboJackets/error-pages",
+            "time": "2019-09-21T21:59:14+00:00"
+        },
+        {
+            "name": "robojackets/network-check",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.gatech.edu/RoboJackets/network-check.git",
+                "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.robojackets.org/dist/robojackets/network-check/robojackets-network-check-v1.0.1-2a429c.zip",
+                "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c",
+                "shasum": "8cce208a5e00877ba3b6be080815925b9a4742c3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RoboJackets\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kristaps Berzinch",
+                    "email": "kristapsberzinch@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Determines what GT network a client is connected to",
+            "homepage": "https://github.gatech.edu/RoboJackets/network-check",
+            "time": "2019-09-18T23:54:27+00:00"
+        },
+        {
             "name": "seld/jsonlint",
             "version": "1.7.1",
             "source": {
@@ -5410,6 +5489,73 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v2.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5",
+                "reference": "ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "symfony/polyfill-ctype": "^1.8",
+                "symfony/polyfill-mbstring": "^1.3"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "symfony/debug": "^3.4|^4.2",
+                "symfony/phpunit-bridge": "^4.4@dev|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.12-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "https://twig.symfony.com/contributors",
+                    "role": "Contributors"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2019-10-17T07:34:53+00:00"
         },
         {
             "name": "uxweb/sweet-alert",

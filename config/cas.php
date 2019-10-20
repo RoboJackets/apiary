@@ -165,4 +165,6 @@ return [
     'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName', null),
     'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null),
     'cas_masquerade_gtPersonEntitlement' => env('CAS_MASQUERADE_gtPersonEntitlement', null),
+    'cas_masquerade_gtAccountEntitlement' => env('CAS_MASQUERADE_gtAccountEntitlement', null),
+    'cas_masquerade_authn_method' => env('CAS_MASQUERADE_authn_method', null),
 ];
