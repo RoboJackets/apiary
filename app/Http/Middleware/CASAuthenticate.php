@@ -71,7 +71,7 @@ class CASAuthenticate
                     exit;
                 }
 
-                $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn', 'authn_method'];
+                $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
                 // Attributes that will be split by commas when masquerading
                 $arrayAttrs = ['gtPersonEntitlement', 'gtAccountEntitlement'];
                 // Merge them together so we verify all attributes are present, even the array ones
