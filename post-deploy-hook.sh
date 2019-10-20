@@ -25,3 +25,5 @@ fi
 php artisan up
 php artisan horizon:terminate
 php artisan bugsnag:deploy --repository "https://github.com/RoboJackets/apiary" --revision $(git rev-parse HEAD) --builder "rj-dc-00"
+
+./resume-monitoring.sh
