@@ -11,7 +11,12 @@ php artisan nova:publish --no-interaction
 php artisan horizon:assets --no-interaction
 php artisan cache:clear --no-interaction
 
-LAST_DEPLOYMENT=$(cat .last_deployment_hash)
+if [ -f ".last_deployment_hash" ]; then
+    LAST_DEPLOYMENT=$(cat .last_deployment_hash)
+else
+    LAST_DEPLOYMENT=
+fi
+
 THIS_DEPLOYMENT=$(git rev-parse HEAD)
 
 if [ "$LAST_DEPLOYMENT" == "" ] || [ "$THIS_DEPLOYMENT" == "$LAST_DEPLOYMENT" ] || git diff --name-only $LAST_DEPLOYMENT $THIS_DEPLOYMENT | grep -q '^package-lock\.json$'; then
