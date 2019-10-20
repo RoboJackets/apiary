@@ -127,7 +127,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('github/callback', 'GitHubController@handleProviderCallback');
 });
 
-Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check');
+Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check')->name('events.rsvp');
 
 Route::view('attendance/kiosk', 'attendance.kiosk')->name('attendance.kiosk');
 

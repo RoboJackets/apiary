@@ -50,6 +50,11 @@ class DashboardController extends Controller
             $firstPayment = null;
         }
 
+        $hasOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until > now();
+        $hasExpiredOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until < now()
+            && $user->access_override_until > now()->startOfDay()->subDays(14);
+        $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
+
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
             'status' => $status,
@@ -57,6 +62,9 @@ class DashboardController extends Controller
             'firstPayment' => $firstPayment,
             'preferredName' => $preferredName,
             'isNew' => $isNew,
+            'hasOverride' => $hasOverride,
+            'hasExpiredOverride' => $hasExpiredOverride,
+            'overrideDate' => $overrideDate,
         ];
 
         return view('welcome', $data);

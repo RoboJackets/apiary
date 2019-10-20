@@ -6,14 +6,14 @@ namespace App\Nova\Actions;
 
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-class ExportGtid extends DownloadExcel
+class ExportEmails extends DownloadExcel
 {
     /**
      * The displayable name of the action.
      *
      * @var string
      */
-    public $name = 'Export Names and GTIDs';
+    public $name = 'Export Names and Emails';
 
     /**
      * Indicates if this action is available to run against the entire resource.
@@ -24,9 +24,10 @@ class ExportGtid extends DownloadExcel
 
     public function __construct()
     {
-        $this->withFilename('Members.csv')
+        $this->withFilename('MemberEmails.csv')
             ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
-            ->only('first_name', 'last_name', 'gtid')
+            ->only('preferred_first_name', 'last_name', 'gt_email')
+            ->withHeadings('First Name', 'Last Name', 'GT Email')
             ->withChunkCount(1000);
     }
 

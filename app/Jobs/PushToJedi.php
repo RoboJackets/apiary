@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Team;
 use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
@@ -76,8 +77,13 @@ class PushToJedi implements ShouldQueue
         $send['model_class'] = $this->model_class;
         $send['model_id'] = $this->model_id;
         $send['model_event'] = $this->model_event;
-        $send['teams'] = [];
 
+        $lastAttendance = $this->user->attendance()->where('attendable_type', Team::class)
+            ->orderBy('created_at', 'desc')->first();
+        $send['last_attendance_time'] = $lastAttendance ? $lastAttendance->created_at : null;
+        $send['last_attendance_id'] = $lastAttendance ? $lastAttendance->id : null;
+
+        $send['teams'] = [];
         foreach ($this->user->teams as $team) {
             $send['teams'][] = $team->name;
         }

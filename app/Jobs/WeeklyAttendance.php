@@ -6,15 +6,24 @@ namespace App\Jobs;
 
 use App\Team;
 use Illuminate\Bus\Queueable;
+use App\Notifiables\CoreNotifiable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Notifications\AttendanceNotification;
+use App\Notifications\TeamAttendanceNotification;
+use App\Notifications\GlobalAttendanceNotification;
 
 class WeeklyAttendance implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 1;
 
     /**
      * Execute the job.
@@ -24,7 +33,9 @@ class WeeklyAttendance implements ShouldQueue
     public function handle(): void
     {
         foreach (Team::where('attendable', 1)->get() as $team) {
-            $team->notify(new AttendanceNotification());
+            $team->notify(new TeamAttendanceNotification());
         }
+
+        (new CoreNotifiable())->notify(new GlobalAttendanceNotification());
     }
 }

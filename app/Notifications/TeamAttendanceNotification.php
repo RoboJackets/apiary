@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
 
-class AttendanceNotification extends Notification
+class TeamAttendanceNotification extends Notification
 {
     use Queueable;
 
@@ -70,8 +70,8 @@ class AttendanceNotification extends Notification
             ]);
         }
 
-        // e.g. 15 members attended last week.
-        $message = $total.' '.Str::plural('member', $total).' attended last week.';
+        // e.g. 15 members attended BattleBots last week.
+        $message = $total.' '.Str::plural('member', $total).' attended '.$team->name.' last week.';
 
         // e.g. Of those attendees, the following 1 person has not paid dues.
         // e.g. Of those attendees, the following 3 people have not paid dues.
