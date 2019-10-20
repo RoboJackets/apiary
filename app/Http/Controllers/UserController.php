@@ -26,6 +26,9 @@ class UserController extends Controller
         $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
         $this->middleware('permission:update-users|update-users-own', ['only' => ['update']]);
         $this->middleware('permission:delete-users', ['only' => ['destroy']]);
+        $this->middleware('permission:read-users-resume|read-users-own', ['only' => ['showResume']]);
+        $this->middleware('permission:update-users-resume|update-users-own', ['only' => ['storeResume']]);
+        $this->middleware('permission:delete-users-resume|update-users-own', ['only' => ['deleteResume']]);
     }
 
     /**
@@ -242,7 +245,7 @@ class UserController extends Controller
     {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
-            return response()->file('resumes/'.$user->uid);
+            return response()->file('resumes/'.$user->uid.'.pdf');
         }
 
         return response()->json(
@@ -268,9 +271,10 @@ class UserController extends Controller
         // TODO: validate user is active
 
         $user = User::findByIdentifier($id)->first();
+        \Log::debug('Path name of uploaded resume: '.$request->file('resume')->getPathname());
         if ($user) {
             // Store in the resumes folder with the user's username
-            $request->file('resume')->storeAs('resumes', $user->uid);
+            $request->file('resume')->storeAs('resumes', $user->uid.'.pdf');
         }
 
         return response()->json(
