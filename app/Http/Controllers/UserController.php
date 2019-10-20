@@ -291,17 +291,12 @@ class UserController extends Controller
      */
     public function deleteResume(string $id): JsonResponse
     {
-        $user = User::findByIdentifier($id)->first();
-        if ($user) {
-            Storage::delete('resumes/'.$user->uid);
-        }
-
         return response()->json(
             [
                 'status' => 'error',
-                'message' => 'User does not exist or was previously deleted.',
+                'message' => 'unimplemented',
             ],
-            422
+            501
         );
     }
 }
