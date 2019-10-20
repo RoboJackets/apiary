@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Laravel\Nova\Panel;
+use App\RecruitingResponse;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\DateTime;
@@ -82,6 +83,8 @@ class RecruitingVisit extends Resource
      */
     public function fields(Request $request): array
     {
+        $this_id = $this->id;
+
         return [
             Text::make('Name', 'recruiting_name')
                 ->sortable()
@@ -90,6 +93,14 @@ class RecruitingVisit extends Resource
             Text::make('Email', 'recruiting_email')
                 ->sortable()
                 ->rules('required', 'max:255', 'email'),
+
+            Text::make('Survey Responses', static function() use ($this_id)  {
+                return implode(', ', RecruitingResponse::where(
+                    'recruiting_visit_id',
+                    '=',
+                    $this_id
+                )->pluck('response')->toArray());
+            }),
 
             new Panel('Tracking Information', $this->trackingFields()),
 
