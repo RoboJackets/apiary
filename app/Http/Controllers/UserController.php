@@ -290,7 +290,7 @@ class UserController extends Controller
                 );
             }
 
-            $exifOutput = json_decode(implode(' ', $exifOutput), true);
+            $exifOutput = json_decode(implode(' ', $exifOutput), true)[0];
             $fileType = array_key_exists('FileType', $exifOutput) ? $exifOutput['FileType'] : null;
             $mimeType = array_key_exists('MIMEType', $exifOutput) ? $exifOutput['MIMEType'] : null;
             $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
