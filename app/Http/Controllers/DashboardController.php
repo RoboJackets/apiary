@@ -55,6 +55,8 @@ class DashboardController extends Controller
             && $user->access_override_until > now()->startOfDay()->subDays(14);
         $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
 
+        $needsResume = $user->is_active;
+
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
             'status' => $status,
@@ -65,7 +67,7 @@ class DashboardController extends Controller
             'hasOverride' => $hasOverride,
             'hasExpiredOverride' => $hasExpiredOverride,
             'overrideDate' => $overrideDate,
-            'needsResume' => true,
+            'needsResume' => $needsResume,
         ];
 
         return view('welcome', $data);
