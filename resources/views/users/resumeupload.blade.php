@@ -9,6 +9,6 @@ R&eacute;sum&eacute; | {{ config('app.name') }}
   R&eacute;sum&eacute;
 @endcomponent
 
-<resume-upload-form user-uid="{{$id}}"></resume-upload-form>
+<resume-upload-form user-uid="{{$id}}" message="{{session('resume_error')}}"></resume-upload-form>
 
 @endsection

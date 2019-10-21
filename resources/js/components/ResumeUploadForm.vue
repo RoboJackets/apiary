@@ -1,6 +1,9 @@
 <template>
   <div class="row">
     <div class="col-12">
+      <div class="alert alert-danger" role="alert" v-if="message">
+        {{ message }}
+      </div>
       <form id="resumeUploadForm" enctype="multipart/form-data" method="post" :action="actionUrl">
         <input type="hidden" name="redirect" value="true">
 
@@ -32,7 +35,7 @@
 
 <script>
 export default {
-  props: ['userUid'],
+  props: ['userUid', 'message'],
   data() {
     return {
       user: {},
