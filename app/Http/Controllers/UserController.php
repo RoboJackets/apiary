@@ -264,7 +264,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function storeResume(string $id): JsonResponse
+    public function storeResume(string $id, Request $request): JsonResponse
     {
         // TODO: return a redirect for the user
         // TODO: validate filetype is PDF
