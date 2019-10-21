@@ -297,7 +297,7 @@ class UserController extends Controller
             $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
 
             $valid = 'PDF' === $fileType && 'application/pdf' === $mimeType;
-            $pageCountValid = '1' === $pageCount;
+            $pageCountValid = 1 === $pageCount;
 
             if (!$valid || !$pageCountValid) {
                 \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '.$valid.', one page: '.$pageCountValid.')');
