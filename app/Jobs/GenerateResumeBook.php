@@ -9,6 +9,7 @@ namespace App\Jobs;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Adldap\Laravel\Facades\Adldap;
+use Illuminate\Support\Collection;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
@@ -74,11 +75,16 @@ class GenerateResumeBook implements ShouldQueue
 
         if (null !== $this->major) {
             $majors = $users->mapWithKeys(static function (User $user): array {
-                $ous = Adldap::search()->where('uid', '=', $user->uid)->select('uid', 'ou')->get()->pluck('ou')->pluck(0);
+                $ous = Adldap::search()
+                    ->where('uid', '=', $user->uid)
+                    ->select('uid', 'ou')
+                    ->get()
+                    ->pluck('ou')
+                    ->pluck(0);
 
                 return [$user->uid => $ous];
             });
-            $filteredUids = $majors->filter(function (string $ous, string $uid): bool {
+            $filteredUids = $majors->filter(function (Collection $ous, string $uid): bool {
                 return $ous->contains($this->major);
             })->keys();
         }
