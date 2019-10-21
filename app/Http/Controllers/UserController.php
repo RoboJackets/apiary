@@ -239,9 +239,9 @@ class UserController extends Controller
      *
      * @param string $id
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function showResume(string $id): JsonResponse
+    public function showResume(string $id)
     {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
