@@ -6,7 +6,6 @@ namespace App\Jobs;
 
 use App\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Carbon;
 use Adldap\Laravel\Facades\Adldap;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
@@ -73,6 +72,7 @@ class GenerateResumeBook implements ShouldQueue
                 $search = Adldap::search()->where('uid', '=', $user->uid)->select('uid', 'ou')->first();
                 $uid = $search['uid'][0];
                 $ou = $search['ou'][0];
+
                 return [$uid => $ou];
             });
             $filteredUids = $majors->filter(function (string $ou, string $uid): bool {
@@ -102,7 +102,7 @@ class GenerateResumeBook implements ShouldQueue
         exec($cmd, $gsOutput, $gsExit);
 
         if ($gsExit != 0) {
-            \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '. implode("\n", $gsOutput));
+            \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
             $this->path = null;
             throw new \Exception('gs did not exit cleanly, so the resume book could not be generated.');
         }

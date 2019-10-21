@@ -77,10 +77,11 @@ class ResumeController extends Controller
     {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
-            if (!$user->is_active) {
+            if (! $user->is_active) {
                 if ($request->has('redirect')) {
                     return redirect()->route('resume.index', ['resume_error' => 'inactive']);
                 }
+
                 return response()->json(
                     [
                         'status' => 'error',
@@ -105,16 +106,18 @@ class ResumeController extends Controller
             $pageCountValid = 1 === $pageCount;
             $exifErrorInvalidType = 'Unknown file type' === $exifError;
 
-            if (!$valid || !$pageCountValid) {
+            if (! $valid || ! $pageCountValid) {
                 \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '.$valid.', one page: '.$pageCountValid.', Error: '.$exifError.')');
                 $error = $valid ? 'resume_not_one_page' : 'resume_not_pdf';
-                if ($exifError && !$exifErrorInvalidType) {
+                if ($exifError && ! $exifErrorInvalidType) {
                     \Log::error('exiftool responded with unknown error');
                     $error = 'unknown_error';
                 }
+
                 if ($request->has('redirect')) {
                     return redirect()->route('resume.index', ['resume_error' => $error]);
                 }
+
                 return response()->json(
                     [
                         'status' => 'error',
@@ -133,6 +136,7 @@ class ResumeController extends Controller
             if ($request->has('redirect')) {
                 return redirect()->route('resume.index');
             }
+
             return response()->json(
                 [
                     'status' => 'success',

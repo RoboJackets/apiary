@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Actions\Action;
@@ -33,6 +32,7 @@ class GenerateResumeBook extends Action
     {
         $job = new GenerateJob($fields->major, $fields->resume_date_cutoff);
         $job->handle();
+
         return Action::download(route('api.v1.resumebook.show', ['datecode' => $job->datecode]), 'resume-book-'.$job->datecode.'.pdf');
     }
 

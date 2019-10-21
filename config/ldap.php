@@ -143,7 +143,7 @@ return [
                 |
                 */
 
-                'hosts' => [ 'whitepages.gatech.edu', ],
+                'hosts' => ['whitepages.gatech.edu'],
 
                 /*
                 |--------------------------------------------------------------------------
