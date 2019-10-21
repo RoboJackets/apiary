@@ -13,6 +13,7 @@ use App\Http\Requests\StoreUserRequest;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreResumeRequest;
 use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
@@ -261,19 +262,61 @@ class UserController extends Controller
      * Store the user's resume.
      *
      * @param string $id
+     * @param StoreResumeRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function storeResume(string $id, Request $request): JsonResponse
+    public function storeResume(string $id, StoreResumeRequest $request): JsonResponse
     {
-        // TODO: validate filetype is PDF
         // TODO: validate user is active
 
         $user = User::findByIdentifier($id)->first();
-        \Log::debug('Path name of uploaded resume: '.$request->file('resume')->getPathname());
         if ($user) {
+            $tempPath = $request->file('resume')->getPathname();
+            $exifReturn = -1;
+            $exifOutput = '';
+            exec('exiftool -json '.$tempPath, &$exifOutput, &$exifReturn);
+            if ($exifReturn != 0) {
+                \Log::error('exiftool returned an error code (status '.$exifReturn.').', ['exiftool_output' => $exifOutput]);
+                if ($request->has('redirect')) {
+                    return redirect()->route('resume.index')->with('resume_error', 'An unknown error occurred.');
+                }
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'unknown_error',
+                    ],
+                    500
+                );
+            }
+
+            $exifOutput = json_decode(implode(' ', $exifOutput), true);
+            $fileType = array_key_exists('FileType', $exifOutput) ? $exifOutput['FileType'] : null;
+            $mimeType = array_key_exists('MIMEType', $exifOutput) ? $exifOutput['MIMEType'] : null;
+            $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
+
+            $valid = 'PDF' === $fileType && 'application/pdf' === $mimeType;
+            $pageCountValid = '1' === $pageCount;
+
+            if (!$valid || !$pageCountValid) {
+                if ($request->has('redirect')) {
+                    $msg = $valid ? 'Your r&eacute;sum&eacute; must be one page long.' : 'Your r&eacute;sum&eacute; must be a PDF.';
+                    return redirect()->route('resume.index')->with('resume_error', $msg);
+                }
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => $valid ? 'resume_not_one_page' : 'resume_not_pdf',
+                    ],
+                    400
+                );
+            }
+
             // Store in the resumes folder with the user's username
             $request->file('resume')->storeAs('resumes', $user->uid.'.pdf');
+
+            $user->resume_date = now();
+            $user->save();
 
             if ($request->has('redirect')) {
                 return redirect()->route('resume.index');
