@@ -74,6 +74,7 @@ export default {
         'resume_not_one_page': 'Your r&eacute;sum&eacute; must be one page long.',
         'resume_not_pdf': 'Your r&eacute;sum&eacute; must be a PDF.',
         'inactive': 'You must be an active member to upload your r&eacute;sum&eacute;.',
+        'resume_required': 'You must attach a r&eacute;sum&eacute; to upload.',
       };
       return messages[this.message] || 'An unknown error occurred.';
     }

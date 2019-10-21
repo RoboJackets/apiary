@@ -91,7 +91,22 @@ class ResumeController extends Controller
                 );
             }
 
-            $tempPath = $request->file('resume')->getPathname();
+            $file = $request->file('resume');
+            if (null === $file || is_array($file)) {
+                if ($request->has('redirect')) {
+                    return redirect()->route('resume.index', ['resume_error' => 'resume_required']);
+                }
+
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'resume_required',
+                    ],
+                    400
+                );
+            }
+
+            $tempPath = $file->getPathname();
             $exifReturn = -1;
             $exifOutput = '';
             exec('exiftool -json '.escapeshellarg($tempPath), $exifOutput, $exifReturn);
@@ -128,7 +143,7 @@ class ResumeController extends Controller
             }
 
             // Store in the resumes folder with the user's username
-            $request->file('resume')->storeAs('resumes', $user->uid.'.pdf');
+            $file->storeAs('resumes', $user->uid.'.pdf');
 
             $user->resume_date = now();
             $user->save();

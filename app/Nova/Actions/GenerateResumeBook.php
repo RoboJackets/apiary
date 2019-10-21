@@ -26,9 +26,9 @@ class GenerateResumeBook extends Action
      * @param \Laravel\Nova\Fields\ActionFields  $fields
      * @param \Illuminate\Support\Collection  $models
      *
-     * @return void
+     * @return array
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
         $job = new GenerateJob($fields->major, $fields->resume_date_cutoff);
         $job->handle();
