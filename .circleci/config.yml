@@ -10,7 +10,7 @@ jobs:
       - run: sudo apt install libpng-dev
       - run:
           name: Install PHP extensions
-          command: sudo docker-php-ext-install zip pcntl bcmath gd
+          command: sudo docker-php-ext-install zip pcntl bcmath gd ldap
       - run:
           name: Update Composer
           command: sudo composer self-update
