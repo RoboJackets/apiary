@@ -118,13 +118,16 @@ class GenerateResumeBook implements ShouldQueue
             throw new \Exception('gs did not exit cleanly, so the resume book could not be generated.');
         }
 
-        $cmdExif = 'exiftool -Title="RoboJackets Resume Book" -Creator="MyRoboJackets" -Author="RoboJackets" '.escapeshellarg($this->path);
+        $cmdExif = 'exiftool -Title="RoboJackets Resume Book" -Creator="MyRoboJackets" -Author="RoboJackets" ';
+        $cmdExif .= escapeshellarg($this->path);
+        \Log::debug('Running shell command: '.$cmdExif);
         $exifOutput = [];
         $exifExit = -1;
         exec($cmdExif, $exifOutput, $exifExit);
 
-        if (0 !== $gsExit) {
-            \Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '.implode("\n", $exifOutput));
+        if (0 !== $exifExit) {
+            \Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '
+                .implode("\n", $exifOutput));
             $this->path = null;
             $this->datecode = null;
             throw new \Exception('exif did not exit cleanly, so the resume book could not be generated.');
