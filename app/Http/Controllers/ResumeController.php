@@ -125,7 +125,7 @@ class ResumeController extends Controller
             if (! $valid || ! $pageCountValid) {
                 \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '
                     .($valid ? 'true' : 'false').', one page: '.($pageCountValid ? 'true' : 'false').', Error: '
-                    .($exifError ? 'true' : 'false').')');
+                    .$exifError.')');
                 $error = $valid ? 'resume_not_one_page' : 'resume_not_pdf';
                 if ($exifError && ! $exifErrorInvalidType) {
                     \Log::error('exiftool responded with unknown error');
