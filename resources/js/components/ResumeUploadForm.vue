@@ -13,8 +13,8 @@
           <div class="col-sm-10 col-lg-4">
             <div class="input-group mb-3">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="resume" name="resume">
-                <label class="custom-file-label" for="resume">Choose file...</label>
+                <input type="file" class="custom-file-input" id="resume" name="resume" v-on:change="fileChange">
+                <label class="custom-file-label" for="resume">{{ fileLabel }}</label>
               </div>
             </div>
           </div>
@@ -40,6 +40,7 @@ export default {
       dataUrl: '',
       baseUrl: '/api/v1/users/',
       actionUrl: '',
+      fileLabel: 'Choose file...',
     };
   },
   mounted() {
@@ -78,6 +79,12 @@ export default {
       };
       return messages[this.message] || 'An unknown error occurred.';
     }
+  },
+  methods: {
+    fileChange: function(e) {
+      var fileName = e.target.files[0].name;
+      this.fileLabel = fileName || 'Choose file...';
+    },
   },
 };
 </script>
