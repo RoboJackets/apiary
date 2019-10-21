@@ -7,7 +7,7 @@
       <form id="resumeUploadForm" enctype="multipart/form-data" method="post" :action="actionUrl">
         <input type="hidden" name="redirect" value="true">
 
-        <p v-if="user.resume_date">You last uploaded your r&eactue;sum&eacute; on {{ user.resume_date }}. You can download it <a href="/resume/download">here</a>.</p>
+        <p v-if="hasResume">You last uploaded your r&eacute;sum&eacute; on {{ resumeDate }}. You can download it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
         <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
 
         <div class="form-group row">
@@ -16,7 +16,7 @@
             <div class="input-group mb-3">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" id="resume" name="resume">
-                <label class="custom-file-label" for="resume">Choose file</label>
+                <label class="custom-file-label" for="resume">Choose file...</label>
               </div>
             </div>
           </div>
@@ -24,16 +24,14 @@
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Upload</button>
-          <button type="button" class="btn btn-danger" @click="deletePrompt">Delete Existing R&eacute;sum&eacute;</button>
-          <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
         </div>
-
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment';
 export default {
   props: ['userUid', 'message'],
   data() {
@@ -63,7 +61,14 @@ export default {
         );
       });
   },
-  methods: {
+  computed: {
+    hasResume: function() {
+      return !!this.user.resume_date;
+    },
+    resumeDate: function() {
+      if (!this.hasResume) return '';
+      return moment(this.user.resume_date).format('dddd, MMMM Do, YYYY');
+    },
   },
 };
 </script>
