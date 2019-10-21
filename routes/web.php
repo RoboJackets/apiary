@@ -41,7 +41,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::prefix('resume')->name('resume.')->group(static function (): void {
         Route::get('/', static function () {
-            return view('users/resume', ['id' => auth()->user()->id]);
+            return view('users/resumeupload', ['id' => auth()->user()->id]);
         })->name('index');
     });
 
