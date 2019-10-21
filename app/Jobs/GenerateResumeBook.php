@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Jobs;
+
+use App\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Support\Carbon;
+use Adldap\Laravel\Facades\Adldap;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+
+class GenerateResumeBook implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The major (ou) to filter by, or null.
+     *
+     * @var string
+     */
+    private $major;
+
+    /**
+     * The cutoff date for resumes.
+     *
+     * @var Carbon
+     */
+    private $resume_date_cutoff;
+
+    /**
+     * The path to the resume book output file. Only valid after handle is complete.
+     *
+     * @var string
+     */
+    public $path;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(string $major, Carbon $resume_date_cutoff)
+    {
+        $this->major = $major;
+        $this->resume_date_cutoff = $resume_date_cutoff;
+        $this->path = null;
+        $this->tries = 1;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle(): void
+    {
+        $users = User::active()->whereNotNull('resume_date')->where('resume_date', '>', $this->resume_date_cutoff)->get();
+        $filteredUids = $users->pluck('uid');
+
+        if ($this->major) {
+            $majors = $users->mapWithKeys(static function (User $user): array {
+                $search = Adldap::search()->where('uid', '=', $user->uid)->select('uid', 'ou')->first();
+                $uid = $search['uid'][0];
+                $ou = $search['ou'][0];
+                return [$uid => $ou];
+            });
+            $filteredUids = $majors->filter(function (string $ou, string $uid): bool {
+                return $ou === $this->major;
+            })->keys();
+        }
+
+        $filenames = $filteredUids->map(function ($uid) {
+            return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
+        });
+
+        $now = now()->format('Y-m-d-Hi');
+        $this->path = Storage::disk('local')->path('resumes/resume-book-'.$now.'.pdf');
+        // Ghostscript: -q -dNOPAUSE -dBATCH for disabling interactivity, -sDEVICE= for setting output type, -dSAFER
+        // because the input is untrusted
+        $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($this->path).' ';
+        $cmd .= $filenames->join(' ');
+
+        \Log::debug('Running shell command: '.$cmd);
+        $gsOutput = [];
+        $gsExit = -1;
+        exec($cmd, $gsOutput, $gsExit);
+
+        if ($gsExit != 0) {
+            \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '. implode("\n", $gsOutput));
+            $this->path = null;
+            throw new Exception('gs did not exit cleanly, so the resume book could not be generated.');
+        }
+    }
+}
