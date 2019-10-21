@@ -91,6 +91,7 @@ class GenerateResumeBook implements ShouldQueue
 
         if (0 === $filteredUids->count()) {
             $this->path = null;
+            $this->datecode = null;
             throw new \Exception('There are no resumes to export!');
         }
 
@@ -113,7 +114,20 @@ class GenerateResumeBook implements ShouldQueue
         if (0 !== $gsExit) {
             \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
             $this->path = null;
+            $this->datecode = null;
             throw new \Exception('gs did not exit cleanly, so the resume book could not be generated.');
+        }
+
+        $cmdExif = 'exiftool -Title="RoboJackets Resume Book" -Creator="MyRoboJackets" -Author="RoboJackets" '.escapeshellarg($this->path);
+        $exifOutput = [];
+        $exifExit = -1;
+        exec($cmdExif, $exifOutput, $exifExit);
+
+        if (0 !== $gsExit) {
+            \Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '.implode("\n", $exifOutput));
+            $this->path = null;
+            $this->datecode = null;
+            throw new \Exception('exif did not exit cleanly, so the resume book could not be generated.');
         }
     }
 }
