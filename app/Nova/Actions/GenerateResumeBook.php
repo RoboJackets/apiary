@@ -33,7 +33,10 @@ class GenerateResumeBook extends Action
         $job = new GenerateJob($fields->major, $fields->resume_date_cutoff);
         $job->handle();
 
-        return Action::download(route('api.v1.resumebook.show', ['datecode' => $job->datecode]), 'resume-book-'.$job->datecode.'.pdf');
+        return Action::download(
+            route('api.v1.resumebook.show', ['datecode' => $job->datecode]),
+            'resume-book-'.$job->datecode.'.pdf'
+        );
     }
 
     /**

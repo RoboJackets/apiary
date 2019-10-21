@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+
 namespace App\Jobs;
 
 use App\User;
@@ -20,7 +22,7 @@ class GenerateResumeBook implements ShouldQueue
     /**
      * The major (ou) to filter by, or null.
      *
-     * @var string
+     * @var ?string
      */
     private $major;
 
@@ -34,14 +36,14 @@ class GenerateResumeBook implements ShouldQueue
     /**
      * The path to the resume book output file. Only valid after handle is complete.
      *
-     * @var string
+     * @var ?string
      */
     public $path;
 
     /**
      * The datecode in the name of the resume book output file. Only valid after handle is complete.
      *
-     * @var string
+     * @var ?string
      */
     public $datecode;
 
@@ -67,7 +69,7 @@ class GenerateResumeBook implements ShouldQueue
         $users = User::active()->whereNotNull('resume_date')->where('resume_date', '>', $this->resume_date_cutoff)->get();
         $filteredUids = $users->pluck('uid');
 
-        if ($this->major) {
+        if (null !== $this->major) {
             $majors = $users->mapWithKeys(static function (User $user): array {
                 $search = Adldap::search()->where('uid', '=', $user->uid)->select('uid', 'ou')->first();
                 $uid = $search['uid'][0];
@@ -85,7 +87,7 @@ class GenerateResumeBook implements ShouldQueue
             throw new \Exception('There are no resumes to export!');
         }
 
-        $filenames = $filteredUids->map(function ($uid) {
+        $filenames = $filteredUids->map(static function ($uid) {
             return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
         });
 
@@ -101,7 +103,7 @@ class GenerateResumeBook implements ShouldQueue
         $gsExit = -1;
         exec($cmd, $gsOutput, $gsExit);
 
-        if ($gsExit != 0) {
+        if (0 !== $gsExit) {
             \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
             $this->path = null;
             throw new \Exception('gs did not exit cleanly, so the resume book could not be generated.');

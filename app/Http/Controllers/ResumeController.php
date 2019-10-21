@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreResumeRequest;
@@ -122,7 +121,9 @@ class ResumeController extends Controller
             $exifErrorInvalidType = 'Unknown file type' === $exifError;
 
             if (! $valid || ! $pageCountValid) {
-                \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '.$valid.', one page: '.$pageCountValid.', Error: '.$exifError.')');
+                \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '
+                    .($valid ? 'true' : 'false').', one page: '.($pageCountValid ? 'true' : 'false').', Error: '
+                    .($exifError ? 'true' : 'false').')');
                 $error = $valid ? 'resume_not_one_page' : 'resume_not_pdf';
                 if ($exifError && ! $exifErrorInvalidType) {
                     \Log::error('exiftool responded with unknown error');
