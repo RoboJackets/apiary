@@ -66,7 +66,10 @@ class GenerateResumeBook implements ShouldQueue
      */
     public function handle(): void
     {
-        $users = User::active()->whereNotNull('resume_date')->where('resume_date', '>', $this->resume_date_cutoff)->get();
+        $users = User::active()
+            ->whereNotNull('resume_date')
+            ->where('resume_date', '>', $this->resume_date_cutoff)
+            ->get();
         $filteredUids = $users->pluck('uid');
 
         if (null !== $this->major) {

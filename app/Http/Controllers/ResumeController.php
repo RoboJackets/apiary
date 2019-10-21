@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+
 namespace App\Http\Controllers;
 
 use App\User;
@@ -51,7 +53,7 @@ class ResumeController extends Controller
      */
     public function showResumeBook(string $datecode)
     {
-        if (strlen(preg_replace('/[-0-9]/', '', $datecode))) {
+        if (strlen(preg_replace('/[-0-9]/', '', $datecode)) > 0) {
             return response()->json(
                 [
                     'status' => 'error',

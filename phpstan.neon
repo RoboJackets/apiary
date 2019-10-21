@@ -60,6 +60,7 @@ parameters:
     - '#Call to an undefined static method App\\User::accessActive\(\)#'
     - '#Call to an undefined static method App\\User::findByIdentifier\(\)#'
     - '#Call to an undefined static method Illuminate\\Support\\Facades\\DB::rollback\(\)#'
+    - '#Call to an undefined static method Adldap\\Laravel\\Facades\\Adldap::search\(\)#'
     - '#Call to static method [a-zA-Z]+\(\) on an unknown class [a-zA-Z0-9\\]+#'
     - '#Cannot access property .+ on Illuminate\\Contracts\\Auth\\Authenticatable\|null#'
     - '#Cannot call method .+ on Illuminate\\Contracts\\Auth\\Authenticatable\|null#'
