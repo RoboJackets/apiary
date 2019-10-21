@@ -268,10 +268,21 @@ class UserController extends Controller
      */
     public function storeResume(string $id, StoreResumeRequest $request)
     {
-        // TODO: validate user is active
-
         $user = User::findByIdentifier($id)->first();
         if ($user) {
+            if (!$user->is_active) {
+                if ($request->has('redirect')) {
+                    return redirect()->route('resume.index', ['resume_error' => 'inactive']);
+                }
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'inactive',
+                    ],
+                    400
+                );
+            }
+
             $tempPath = $request->file('resume')->getPathname();
             $exifReturn = -1;
             $exifOutput = '';
