@@ -275,7 +275,7 @@ class UserController extends Controller
             $tempPath = $request->file('resume')->getPathname();
             $exifReturn = -1;
             $exifOutput = '';
-            exec('exiftool -json '.$tempPath, $exifOutput, $exifReturn);
+            exec('exiftool -json '.escapeshellarg($tempPath), $exifOutput, $exifReturn);
             if ($exifReturn != 0) {
                 \Log::error('exiftool returned an error code (status '.$exifReturn.').', ['exiftool_output' => $exifOutput]);
                 if ($request->has('redirect')) {
@@ -291,6 +291,7 @@ class UserController extends Controller
             }
 
             $exifOutput = json_decode(implode(' ', $exifOutput), true)[0];
+            \Log::debug('exiftool output: '.print_r($exifOutput, true));
             $fileType = array_key_exists('FileType', $exifOutput) ? $exifOutput['FileType'] : null;
             $mimeType = array_key_exists('MIMEType', $exifOutput) ? $exifOutput['MIMEType'] : null;
             $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
