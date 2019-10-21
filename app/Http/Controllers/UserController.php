@@ -266,7 +266,6 @@ class UserController extends Controller
      */
     public function storeResume(string $id, Request $request): JsonResponse
     {
-        // TODO: return a redirect for the user
         // TODO: validate filetype is PDF
         // TODO: validate user is active
 
@@ -275,6 +274,16 @@ class UserController extends Controller
         if ($user) {
             // Store in the resumes folder with the user's username
             $request->file('resume')->storeAs('resumes', $user->uid.'.pdf');
+
+            if ($request->has('redirect')) {
+                return redirect()->route('resume.index');
+            }
+            return response()->json(
+                [
+                    'status' => 'success',
+                ],
+                200
+            );
         }
 
         return response()->json(
