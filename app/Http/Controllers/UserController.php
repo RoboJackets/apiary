@@ -276,32 +276,24 @@ class UserController extends Controller
             $exifReturn = -1;
             $exifOutput = '';
             exec('exiftool -json '.escapeshellarg($tempPath), $exifOutput, $exifReturn);
-            if ($exifReturn != 0) {
-                \Log::error('exiftool returned an error code (status '.$exifReturn.').', ['output' => $exifOutput]);
-                if ($request->has('redirect')) {
-                    return redirect()->route('resume.index', ['resume_error' => 'unknown_error']);
-                }
-                return response()->json(
-                    [
-                        'status' => 'error',
-                        'message' => 'unknown_error',
-                    ],
-                    500
-                );
-            }
 
             $exifOutput = json_decode(implode(' ', $exifOutput), true)[0];
-            \Log::debug('exiftool output: '.print_r($exifOutput, true));
             $fileType = array_key_exists('FileType', $exifOutput) ? $exifOutput['FileType'] : null;
             $mimeType = array_key_exists('MIMEType', $exifOutput) ? $exifOutput['MIMEType'] : null;
             $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
+            $exifError = array_key_exists('Error', $exifOutput) ? $exifOutput['Error'] : null;
 
-            $valid = 'PDF' === $fileType && 'application/pdf' === $mimeType;
+            $valid = null === $exifError && 'PDF' === $fileType && 'application/pdf' === $mimeType;
             $pageCountValid = 1 === $pageCount;
+            $exifErrorInvalidType = 'Unknown file type' === $exifError;
 
             if (!$valid || !$pageCountValid) {
-                \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '.$valid.', one page: '.$pageCountValid.')');
+                \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '.$valid.', one page: '.$pageCountValid.', Error: '.$exifError.')');
                 $error = $valid ? 'resume_not_one_page' : 'resume_not_pdf';
+                if ($exifError && !$exifErrorInvalidType) {
+                    \Log::error('exiftool responded with unknown error');
+                    $error = 'unknown_error';
+                }
                 if ($request->has('redirect')) {
                     return redirect()->route('resume.index', ['resume_error' => $error]);
                 }
