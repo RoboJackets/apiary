@@ -118,6 +118,7 @@ class GenerateResumeBook implements ShouldQueue
             throw new \Exception('gs did not exit cleanly, so the resume book could not be generated.');
         }
 
+        // This is not perfect! The original metadata is recoverable (exiftool can't remove it permanently).
         $cmdExif = 'exiftool -Title="RoboJackets Resume Book" -Creator="MyRoboJackets" -Author="RoboJackets" ';
         $cmdExif .= escapeshellarg($this->path);
         \Log::debug('Running shell command: '.$cmdExif);
