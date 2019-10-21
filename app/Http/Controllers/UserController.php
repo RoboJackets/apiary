@@ -275,7 +275,7 @@ class UserController extends Controller
             $tempPath = $request->file('resume')->getPathname();
             $exifReturn = -1;
             $exifOutput = '';
-            exec('exiftool -json '.$tempPath, &$exifOutput, &$exifReturn);
+            exec('exiftool -json '.$tempPath, $exifOutput, $exifReturn);
             if ($exifReturn != 0) {
                 \Log::error('exiftool returned an error code (status '.$exifReturn.').', ['exiftool_output' => $exifOutput]);
                 if ($request->has('redirect')) {
