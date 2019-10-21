@@ -4,9 +4,8 @@
       <form id="resumeUploadForm" enctype="multipart/form-data" method="post" :action="actionUrl">
         <input type="hidden" name="redirect" value="true">
 
-        <p v-if="lastUpload">You last uploaded your r&eactue;sum&eacute; on {{ lastUpload }}. You can download it <a href="/resume/download">here</a>.</p>
+        <p v-if="user.resume_date">You last uploaded your r&eactue;sum&eacute; on {{ user.resume_date }}. You can download it <a href="/resume/download">here</a>.</p>
         <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
-        <h3>Additional Information</h3>
 
         <div class="form-group row">
           <label for="user-preferredname" class="col-sm-2 col-form-label">R&eacute;sum&eacute;</label>
@@ -32,9 +31,6 @@
 </template>
 
 <script>
-import { alpha, email, maxLength, required } from 'vuelidate/lib/validators';
-import notGTEmail from '../customValidators/notGTEmail';
-
 export default {
   props: ['userUid'],
   data() {
@@ -65,37 +61,6 @@ export default {
       });
   },
   methods: {
-    submit() {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
-      }
-
-      delete this.user.dues;
-
-      axios
-        .put(this.dataUrl, this.user)
-        .then(response => {
-          this.hasError = false;
-          this.feedback = 'Saved!';
-          console.log('success');
-        })
-        .catch(response => {
-          this.hasError = true;
-          this.feedback = '';
-          console.log(response);
-          Swal.fire(
-            'Connection Error',
-            'Unable to save data. Check your internet connection or try refreshing the page.',
-            'error'
-          );
-        });
-    },
-  },
-  validations: {
-    user: {
-        // FIXME
-    },
   },
 };
 </script>
