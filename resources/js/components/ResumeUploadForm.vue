@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <form id="resumeUploadForm" method="post" :action="actionUrl">
+      <form id="resumeUploadForm" enctype="multipart/form-data" method="post" :action="actionUrl">
         <p v-if="lastUpload">You last uploaded your r&eactue;sum&eacute; on {{ lastUpload }}. You can download it <a href="/resume/download">here</a>.</p>
         <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
         <h3>Additional Information</h3>
