@@ -28,7 +28,7 @@ class GenerateResumeBook implements ShouldQueue
     /**
      * The cutoff date for resumes.
      *
-     * @var Carbon
+     * @var string
      */
     private $resume_date_cutoff;
 
@@ -40,13 +40,21 @@ class GenerateResumeBook implements ShouldQueue
     public $path;
 
     /**
+     * The datecode in the name of the resume book output file. Only valid after handle is complete.
+     *
+     * @var string
+     */
+    public $datecode;
+
+    /**
      * Create a new job instance.
      */
-    public function __construct(string $major, Carbon $resume_date_cutoff)
+    public function __construct(?string $major, string $resume_date_cutoff)
     {
         $this->major = $major;
         $this->resume_date_cutoff = $resume_date_cutoff;
         $this->path = null;
+        $this->datecode = null;
         $this->tries = 1;
     }
 
@@ -72,12 +80,17 @@ class GenerateResumeBook implements ShouldQueue
             })->keys();
         }
 
+        if (0 === $filteredUids->count()) {
+            $this->path = null;
+            throw new \Exception('There are no resumes to export!');
+        }
+
         $filenames = $filteredUids->map(function ($uid) {
             return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
         });
 
-        $now = now()->format('Y-m-d-Hi');
-        $this->path = Storage::disk('local')->path('resumes/resume-book-'.$now.'.pdf');
+        $this->datecode = now()->format('Y-m-d-Hi');
+        $this->path = Storage::disk('local')->path('resumes/resume-book-'.$this->datecode.'.pdf');
         // Ghostscript: -q -dNOPAUSE -dBATCH for disabling interactivity, -sDEVICE= for setting output type, -dSAFER
         // because the input is untrusted
         $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($this->path).' ';
@@ -91,7 +104,7 @@ class GenerateResumeBook implements ShouldQueue
         if ($gsExit != 0) {
             \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '. implode("\n", $gsOutput));
             $this->path = null;
-            throw new Exception('gs did not exit cleanly, so the resume book could not be generated.');
+            throw new \Exception('gs did not exit cleanly, so the resume book could not be generated.');
         }
     }
 }

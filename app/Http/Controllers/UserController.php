@@ -30,6 +30,7 @@ class UserController extends Controller
         $this->middleware('permission:read-users-resume|read-users-own', ['only' => ['showResume']]);
         $this->middleware('permission:update-users-resume|update-users-own', ['only' => ['storeResume']]);
         $this->middleware('permission:delete-users-resume|update-users-own', ['only' => ['deleteResume']]);
+        $this->middleware('permission:read-users-resume', ['only' => ['showResumeBook']]);
     }
 
     /**
@@ -256,6 +257,28 @@ class UserController extends Controller
             ],
             422
         );
+    }
+
+    /**
+     * Show a resume book.
+     *
+     * @param string $datecode
+     *
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function showResumeBook(string $datecode)
+    {
+        if (strlen(preg_replace('/[-0-9]/', '', $datecode))) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'invalid_datecode',
+                ],
+                400
+            );
+        }
+
+        return response()->file(Storage::disk('local')->path('resumes/resume-book-'.$datecode.'.pdf'));
     }
 
     /**
