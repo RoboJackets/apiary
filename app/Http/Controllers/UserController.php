@@ -277,9 +277,9 @@ class UserController extends Controller
             $exifOutput = '';
             exec('exiftool -json '.escapeshellarg($tempPath), $exifOutput, $exifReturn);
             if ($exifReturn != 0) {
-                \Log::error('exiftool returned an error code (status '.$exifReturn.').', ['exiftool_output' => $exifOutput]);
+                \Log::error('exiftool returned an error code (status '.$exifReturn.').', ['output' => $exifOutput]);
                 if ($request->has('redirect')) {
-                    return redirect()->route('resume.index')->with('resume_error', 'An unknown error occurred.');
+                    return redirect()->route('resume.index', ['resume_error' => 'unknown_error']);
                 }
                 return response()->json(
                     [
@@ -301,14 +301,14 @@ class UserController extends Controller
 
             if (!$valid || !$pageCountValid) {
                 \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '.$valid.', one page: '.$pageCountValid.')');
+                $error = $valid ? 'resume_not_one_page' : 'resume_not_pdf';
                 if ($request->has('redirect')) {
-                    $msg = $valid ? 'Your r&eacute;sum&eacute; must be one page long.' : 'Your r&eacute;sum&eacute; must be a PDF.';
-                    return redirect()->route('resume.index')->with('resume_error', $msg);
+                    return redirect()->route('resume.index', ['resume_error' => $error]);
                 }
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => $valid ? 'resume_not_one_page' : 'resume_not_pdf',
+                        'message' => $error,
                     ],
                     400
                 );

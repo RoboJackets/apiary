@@ -1,13 +1,11 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <div class="alert alert-danger" role="alert" v-if="message">
-        {{ message }}
-      </div>
+      <div class="alert alert-danger" role="alert" v-if="message" v-html="messageText"></div>
       <form id="resumeUploadForm" enctype="multipart/form-data" method="post" :action="actionUrl">
         <input type="hidden" name="redirect" value="true">
 
-        <p v-if="hasResume">You last uploaded your r&eacute;sum&eacute; on {{ resumeDate }}. You can download it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
+        <p v-if="hasResume">You last uploaded your r&eacute;sum&eacute; on {{ resumeDate }}. You can view it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
         <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
 
         <div class="form-group row">
@@ -69,6 +67,15 @@ export default {
       if (!this.hasResume) return '';
       return moment(this.user.resume_date).format('dddd, MMMM Do, YYYY');
     },
+    messageText: function() {
+      if (!this.message || this.message.length == 0) return '';
+
+      var messages = {
+        'resume_not_one_page': 'Your r&eacute;sum&eacute; must be one page long.',
+        'resume_not_pdf': 'Your r&eacute;sum&eacute; must be a PDF.',
+      };
+      return messages[this.message] || 'An unknown error occurred.';
+    }
   },
 };
 </script>
