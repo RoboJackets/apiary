@@ -245,7 +245,7 @@ class UserController extends Controller
     {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
-            return response()->file('resumes/'.$user->uid.'.pdf');
+            return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
         }
 
         return response()->json(
