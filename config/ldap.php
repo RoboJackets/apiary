@@ -101,7 +101,7 @@ return [
                 |
                 */
 
-                'schema' => Adldap\Schemas\ActiveDirectory::class,
+                'schema' => Adldap\Schemas\OpenLDAP::class,
 
                 /*
                 |--------------------------------------------------------------------------
@@ -143,7 +143,7 @@ return [
                 |
                 */
 
-                'hosts' => explode(' ', env('LDAP_HOSTS', 'corp-dc1.corp.acme.org corp-dc2.corp.acme.org')),
+                'hosts' => [ 'whitepages.gatech.edu', ],
 
                 /*
                 |--------------------------------------------------------------------------
@@ -183,7 +183,7 @@ return [
                 |
                 */
 
-                'base_dn' => env('LDAP_BASE_DN', 'dc=corp,dc=acme,dc=org'),
+                'base_dn' => env('LDAP_BASE_DN', 'dc=whitepages,dc=gatech,dc=edu'),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -198,8 +198,8 @@ return [
                 |
                 */
 
-                'username' => env('LDAP_USERNAME'),
-                'password' => env('LDAP_PASSWORD'),
+                'username' => env('LDAP_USERNAME', null),
+                'password' => env('LDAP_PASSWORD', null),
 
                 /*
                 |--------------------------------------------------------------------------
