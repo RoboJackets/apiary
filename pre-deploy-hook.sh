@@ -1,5 +1,7 @@
 #!/bin/bash
 
+date
+
 cd "${0%/*}"
 
 ./pause-monitoring.sh
