@@ -74,14 +74,12 @@ class GenerateResumeBook implements ShouldQueue
 
         if (null !== $this->major) {
             $majors = $users->mapWithKeys(static function (User $user): array {
-                $search = Adldap::search()->where('uid', '=', $user->uid)->select('uid', 'ou')->first();
-                $uid = $search['uid'][0];
-                $ou = $search['ou'][0];
+                $ous = Adldap::search()->where('uid', '=', $user->uid)->select('uid', 'ou')->get()->pluck('ou')->pluck(0);
 
-                return [$uid => $ou];
+                return [$user->uid => $ous];
             });
-            $filteredUids = $majors->filter(function (string $ou, string $uid): bool {
-                return $ou === $this->major;
+            $filteredUids = $majors->filter(function (string $ous, string $uid): bool {
+                return $ous->contains($this->major);
             })->keys();
         }
 
