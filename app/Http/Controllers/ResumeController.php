@@ -69,6 +69,7 @@ class ResumeController extends Controller
                 );
             }
 
+            // Make sure there's exactly one file
             $file = $request->file('resume');
             if (null === $file || is_array($file)) {
                 if ($request->has('redirect')) {
@@ -79,6 +80,21 @@ class ResumeController extends Controller
                     [
                         'status' => 'error',
                         'message' => 'resume_required',
+                    ],
+                    400
+                );
+            }
+
+            // 1MB file size limit
+            if ($file->getSize() > 1000000) {
+                if ($request->has('redirect')) {
+                    return redirect()->route('resume.index', ['resume_error' => 'too_big']);
+                }
+
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'too_big',
                     ],
                     400
                 );

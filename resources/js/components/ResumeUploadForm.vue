@@ -76,6 +76,7 @@ export default {
         'resume_not_pdf': 'Your r&eacute;sum&eacute; must be a PDF.',
         'inactive': 'You must be an active member to upload your r&eacute;sum&eacute;.',
         'resume_required': 'You must attach a r&eacute;sum&eacute; to upload.',
+        'too_big': 'Uploaded files must be smaller than 1MB.',
       };
       return messages[this.message] || 'An unknown error occurred.';
     }
