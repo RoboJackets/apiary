@@ -264,9 +264,9 @@ class UserController extends Controller
      * @param string $id
      * @param StoreResumeRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function storeResume(string $id, StoreResumeRequest $request): JsonResponse
+    public function storeResume(string $id, StoreResumeRequest $request)
     {
         // TODO: validate user is active
 
