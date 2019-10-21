@@ -299,6 +299,7 @@ class UserController extends Controller
             $pageCountValid = '1' === $pageCount;
 
             if (!$valid || !$pageCountValid) {
+                \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '.$valid.', one page: '.$pageCountValid.')');
                 if ($request->has('redirect')) {
                     $msg = $valid ? 'Your r&eacute;sum&eacute; must be one page long.' : 'Your r&eacute;sum&eacute; must be a PDF.';
                     return redirect()->route('resume.index')->with('resume_error', $msg);
