@@ -50,10 +50,10 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
         Route::resource('attendance', 'AttendanceController')->except('create', 'edit');
         Route::get('users/search', 'UserController@search');
         Route::resource('users', 'UserController')->except('create', 'edit');
-        Route::get('users/{id}/resume', 'ResumeController@showResume');
-        Route::post('users/{id}/resume', 'ResumeController@storeResume');
-        Route::delete('users/{id}/resume', 'ResumeController@deleteResume');
-        Route::get('resumebooks/{datecode}', 'ResumeController@showResumeBook')->name('resumebook.show');
+        Route::get('users/{id}/resume', 'ResumeController@show');
+        Route::post('users/{id}/resume', 'ResumeController@store');
+        Route::delete('users/{id}/resume', 'ResumeController@delete');
+        Route::get('resumebooks/{datecode}', 'ResumeBookController@show')->name('resumebook.show');
         Route::resource('events', 'EventController')->except('create', 'edit');
         Route::resource('rsvps', 'RsvpController')->except('create', 'edit');
         Route::resource('payments', 'PaymentController')->except('create', 'edit');

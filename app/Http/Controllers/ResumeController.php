@@ -15,10 +15,9 @@ class ResumeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read-users-resume|read-users-own', ['only' => ['showResume']]);
-        $this->middleware('permission:update-users-resume|update-users-own', ['only' => ['storeResume']]);
-        $this->middleware('permission:delete-users-resume|update-users-own', ['only' => ['deleteResume']]);
-        $this->middleware('permission:read-users-resume', ['only' => ['showResumeBook']]);
+        $this->middleware('permission:read-users-resume|read-users-own', ['only' => ['show']]);
+        $this->middleware('permission:update-users-resume|update-users-own', ['only' => ['store']]);
+        $this->middleware('permission:delete-users-resume|update-users-own', ['only' => ['delete']]);
     }
 
     /**
@@ -28,7 +27,7 @@ class ResumeController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function showResume(string $id)
+    public function show(string $id)
     {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
@@ -45,28 +44,6 @@ class ResumeController extends Controller
     }
 
     /**
-     * Show a resume book.
-     *
-     * @param string $datecode
-     *
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
-     */
-    public function showResumeBook(string $datecode)
-    {
-        if (strlen(preg_replace('/[-0-9]/', '', $datecode)) > 0) {
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'invalid_datecode',
-                ],
-                400
-            );
-        }
-
-        return response()->file(Storage::disk('local')->path('resumes/resume-book-'.$datecode.'.pdf'));
-    }
-
-    /**
      * Store the user's resume.
      *
      * @param string $id
@@ -74,7 +51,7 @@ class ResumeController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function storeResume(string $id, StoreResumeRequest $request)
+    public function store(string $id, StoreResumeRequest $request)
     {
         $user = User::findByIdentifier($id)->first();
         if ($user) {
@@ -179,7 +156,7 @@ class ResumeController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteResume(string $id): JsonResponse
+    public function delete(string $id): JsonResponse
     {
         return response()->json(
             [
