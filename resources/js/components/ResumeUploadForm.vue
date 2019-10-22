@@ -6,7 +6,7 @@
         <input type="hidden" name="redirect" value="true">
 
         <p v-if="hasResume">You last uploaded your r&eacute;sum&eacute; on {{ resumeDate }}. You can view it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
-        <p v-else>You do not have a r&eacute;sum&eacute; on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
+        <p v-else-if="loaded">You do not have a r&eacute;sum&eacute; on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
 
         <div class="form-group row">
           <label for="user-preferredname" class="col-sm-2 col-form-label">R&eacute;sum&eacute;</label>
@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     hasResume: function() {
-      return !!this.user.resume_date;
+      return !!this.user.resume_date && this.loaded;
     },
     resumeDate: function() {
       if (!this.hasResume) return '';
@@ -79,7 +79,11 @@ export default {
         'too_big': 'Uploaded files must be smaller than 1MB.',
       };
       return messages[this.message] || 'An unknown error occurred.';
-    }
+    },
+    loaded: function() {
+      // Pick an attribute users will always have
+      return !!this.user.name;
+    },
   },
   methods: {
     fileChange: function(e) {
