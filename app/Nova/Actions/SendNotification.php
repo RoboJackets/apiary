@@ -16,13 +16,6 @@ use Laravel\Nova\Fields\ActionFields;
 class SendNotification extends Action
 {
     /**
-     * Indicates if this action is only available on the resource detail view.
-     *
-     * @var bool
-     */
-    public $onlyOnDetail = true;
-
-    /**
      * Perform the action on the given models.
      *
      * @param \Laravel\Nova\Fields\ActionFields  $fields
