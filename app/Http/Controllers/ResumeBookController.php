@@ -18,13 +18,13 @@ class ResumeBookController extends Controller
     /**
      * Show a resume book.
      *
-     * @param string $datecode
+     * @param string $tag
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function show(string $datecode)
+    public function show(string $tag)
     {
-        if (strlen(preg_replace('/[-0-9]/', '', $datecode)) > 0) {
+        if (strlen(preg_replace('/[-0-9a-zA-Z]/', '', $tag)) > 0) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -34,6 +34,6 @@ class ResumeBookController extends Controller
             );
         }
 
-        return response()->file(Storage::disk('local')->path('resumes/resume-book-'.$datecode.'.pdf'));
+        return response()->file(Storage::disk('local')->path('resumes/robojackets-resume-book-'.$tag.'.pdf'));
     }
 }

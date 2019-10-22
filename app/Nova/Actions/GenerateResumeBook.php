@@ -34,8 +34,8 @@ class GenerateResumeBook extends Action
         $job->handle();
 
         return Action::download(
-            route('api.v1.resumebook.show', ['datecode' => $job->datecode]),
-            'resume-book-'.$job->datecode.'.pdf'
+            route('api.v1.resumebook.show', ['tag' => $job->datecode.($fields->major ? '-'.$fields->major : '')]),
+            basename($job->path)
         );
     }
 

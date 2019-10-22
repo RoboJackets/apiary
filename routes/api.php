@@ -53,7 +53,7 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
         Route::get('users/{id}/resume', 'ResumeController@show');
         Route::post('users/{id}/resume', 'ResumeController@store');
         Route::delete('users/{id}/resume', 'ResumeController@delete');
-        Route::get('resumebooks/{datecode}', 'ResumeBookController@show')->name('resumebook.show');
+        Route::get('resumebooks/{tag}', 'ResumeBookController@show')->name('resumebook.show');
         Route::resource('events', 'EventController')->except('create', 'edit');
         Route::resource('rsvps', 'RsvpController')->except('create', 'edit');
         Route::resource('payments', 'PaymentController')->except('create', 'edit');
