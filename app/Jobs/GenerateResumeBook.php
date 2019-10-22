@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Bus\Queueable;
 use Adldap\Laravel\Facades\Adldap;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
@@ -75,12 +76,14 @@ class GenerateResumeBook implements ShouldQueue
 
         if (null !== $this->major) {
             $majors = $users->mapWithKeys(static function (User $user): array {
-                $ous = Adldap::search()
-                    ->where('uid', '=', $user->uid)
-                    ->select('uid', 'ou')
-                    ->get()
-                    ->pluck('ou')
-                    ->pluck(0);
+                $ous = Cache::remember('whitepages_ou_'.$user->uid, now()->addDays(1), static function () use ($user) {
+                    return Adldap::search()
+                        ->where('uid', '=', $user->uid)
+                        ->select('uid', 'ou')
+                        ->get()
+                        ->pluck('ou')
+                        ->pluck(0);
+                });
 
                 return [$user->uid => $ous];
             });
