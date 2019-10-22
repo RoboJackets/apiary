@@ -133,22 +133,27 @@ class User extends Resource
                 ->creationRules('unique:users,github_username')
                 ->updateRules('unique:users,github_username,{{resourceId}}'),
 
-            File::make('Resume', function () {
-                return $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
-            })->path('resumes')
-                ->disk('local')
-                ->deletable(false)
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId === $request->user()->id) {
-                        return true;
-                    }
+            new Panel(
+                'Resume',
+                [
+                    File::make('Resume', function () {
+                        return $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
+                    })->path('resumes')
+                        ->disk('local')
+                        ->deletable(false)
+                        ->onlyOnDetail()
+                        ->canSee(static function (Request $request): bool {
+                            if ($request->resourceId === $request->user()->id) {
+                                return true;
+                            }
 
-                    return $request->user()->can('read-users-resume');
-                }),
+                            return $request->user()->can('read-users-resume');
+                        }),
 
-            DateTime::make('Resume Uploaded At', 'resume_date')
-                ->onlyOnDetail(),
+                    DateTime::make('Resume Uploaded At', 'resume_date')
+                        ->onlyOnDetail(),
+                ]
+            ),
 
             new Panel(
                 'System Access',
