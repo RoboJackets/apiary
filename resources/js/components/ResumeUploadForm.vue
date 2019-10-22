@@ -7,6 +7,7 @@
 
         <p v-if="hasResume">You last uploaded your resume on {{ resumeDate }}. You can view it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
         <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
+        <p>Your resume must be a one page long PDF. The maximum file size is 1MB.</p>
 
         <div class="form-group row">
           <label for="user-preferredname" class="col-sm-2 col-form-label">Resume</label>
