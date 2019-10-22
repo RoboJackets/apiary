@@ -1,12 +1,12 @@
 <template>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12" v-if="loaded && user.is_active">
       <div class="alert alert-danger" role="alert" v-if="message" v-html="messageText"></div>
       <form id="resumeUploadForm" enctype="multipart/form-data" method="post" :action="actionUrl">
         <input type="hidden" name="redirect" value="true">
 
         <p v-if="hasResume">You last uploaded your r&eacute;sum&eacute; on {{ resumeDate }}. You can view it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
-        <p v-else-if="loaded">You do not have a r&eacute;sum&eacute; on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
+        <p v-else>You do not have a r&eacute;sum&eacute; on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
 
         <div class="form-group row">
           <label for="user-preferredname" class="col-sm-2 col-form-label">R&eacute;sum&eacute;</label>
@@ -24,6 +24,9 @@
           <button type="submit" class="btn btn-primary">Upload</button>
         </div>
       </form>
+    </div>
+    <div class="col-12" v-else-if="loaded">
+      <p>A benefit of being an active member of RoboJackets is being a part of our r&eacute;sum&eacute; book we provide to sponsors. Once you pay dues, you will be able to upload your r&eacute;sum&eacute; here.</p>
     </div>
   </div>
 </template>
