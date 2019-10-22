@@ -23,7 +23,7 @@ if [ "$LAST_DEPLOYMENT" == "" ] || [ "$THIS_DEPLOYMENT" == "$LAST_DEPLOYMENT" ] 
     npm ci --no-progress
 fi
 
-if [ "$LAST_DEPLOYMENT" == "" ] || [ "$THIS_DEPLOYMENT" == "$LAST_DEPLOYMENT" ] || git diff --name-only $LAST_DEPLOYMENT $THIS_DEPLOYMENT | grep -q '^package-lock\.json$' || git diff --name-only $LAST_DEPLOYMENT $THIS_DEPLOYMENT | grep -q '.+\.[js|vue]$'; then
+if [ "$LAST_DEPLOYMENT" == "" ] || [ "$THIS_DEPLOYMENT" == "$LAST_DEPLOYMENT" ] || git diff --name-only $LAST_DEPLOYMENT $THIS_DEPLOYMENT | grep -q '^package-lock\.json$' || git diff --name-only $LAST_DEPLOYMENT $THIS_DEPLOYMENT | grep -qP '\.(?:js|vue)$'; then
     npm run production --no-progress
 fi
 
