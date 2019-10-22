@@ -10,6 +10,7 @@ use App\User as AU;
 use Laravel\Nova\Panel;
 use App\Nova\Fields\Hidden;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
@@ -131,6 +132,28 @@ class User extends Resource
                 ->rules('nullable', 'max:39')
                 ->creationRules('unique:users,github_username')
                 ->updateRules('unique:users,github_username,{{resourceId}}'),
+
+            new Panel(
+                'Resume',
+                [
+                    File::make('Resume', function () {
+                        return $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
+                    })->path('resumes')
+                        ->disk('local')
+                        ->deletable(false)
+                        ->onlyOnDetail()
+                        ->canSee(static function (Request $request): bool {
+                            if ($request->resourceId === $request->user()->id) {
+                                return true;
+                            }
+
+                            return $request->user()->can('read-users-resume');
+                        }),
+
+                    DateTime::make('Resume Uploaded At', 'resume_date')
+                        ->onlyOnDetail(),
+                ]
+            ),
 
             new Panel(
                 'System Access',
@@ -377,6 +400,13 @@ class User extends Resource
                 })
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->can('send-notifications');
+                }),
+            (new Actions\GenerateResumeBook())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-resume');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->can('read-users-resume') && $request->user()->id === $user->id;
                 }),
         ];
     }

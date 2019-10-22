@@ -56,6 +56,7 @@ class User extends JsonResource
                 'ethnicity' => $this->ethnicity,
             ]),
             'accept_safety_agreement' => $this->accept_safety_agreement,
+            'resume_date' => $this->resume_date,
             'is_active' => $this->is_active,
             'is_access_active' => $this->is_access_active,
             'github_username' => $this->github_username,

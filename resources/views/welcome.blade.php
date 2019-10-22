@@ -94,6 +94,21 @@
                 </div>
             </div>
         @endif
+        @if($needsResume)
+            <div class="col-sm-6 com-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Upload Your Resume
+                        </h4>
+                        <p class="card-text">
+                            A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors. Please make sure it is always up to date.
+                        </p>
+                        <a href="/resume">Upload Your Resume</a>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
 
