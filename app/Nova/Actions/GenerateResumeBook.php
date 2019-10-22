@@ -33,6 +33,10 @@ class GenerateResumeBook extends Action
         $job = new GenerateJob($fields->major, $fields->resume_date_cutoff);
         $job->handle();
 
+        if (null === $job->path) {
+            return Action::danger('An unknown error occurred.');
+        }
+
         return Action::download(
             route('api.v1.resumebook.show', ['tag' => $job->datecode.($fields->major ? '-'.$fields->major : '')]),
             basename($job->path)
