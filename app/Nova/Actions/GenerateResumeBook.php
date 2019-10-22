@@ -27,6 +27,8 @@ class GenerateResumeBook extends Action
      * @param \Illuminate\Support\Collection  $models
      *
      * @return array<string,string>
+     *
+     * @suppress PhanTypeMismatchArgumentNullableInternal
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
