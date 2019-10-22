@@ -99,12 +99,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            Upload Your R&eacute;sum&eacute;
+                            Upload Your Resume
                         </h4>
                         <p class="card-text">
-                            A benefit of being an active member of RoboJackets is being a part of our r&eacute;sum&eacute; book we provide to sponsors. Please make sure it is always up to date.
+                            A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors. Please make sure it is always up to date.
                         </p>
-                        <a href="/resume">Upload Your R&eacute;sum&eacute;</a>
+                        <a href="/resume">Upload Your Resume</a>
                     </div>
                 </div>
             </div>

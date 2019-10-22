@@ -5,11 +5,11 @@
       <form id="resumeUploadForm" enctype="multipart/form-data" method="post" :action="actionUrl">
         <input type="hidden" name="redirect" value="true">
 
-        <p v-if="hasResume">You last uploaded your r&eacute;sum&eacute; on {{ resumeDate }}. You can view it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
-        <p v-else>You do not have a r&eacute;sum&eacute; on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
+        <p v-if="hasResume">You last uploaded your resume on {{ resumeDate }}. You can view it <a :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
+        <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly to ensure they're always accurate.</p>
 
         <div class="form-group row">
-          <label for="user-preferredname" class="col-sm-2 col-form-label">R&eacute;sum&eacute;</label>
+          <label for="user-preferredname" class="col-sm-2 col-form-label">Resume</label>
           <div class="col-sm-10 col-lg-4">
             <div class="input-group mb-3">
               <div class="custom-file">
@@ -26,7 +26,7 @@
       </form>
     </div>
     <div class="col-12" v-else-if="loaded">
-      <p>A benefit of being an active member of RoboJackets is being a part of our r&eacute;sum&eacute; book we provide to sponsors. Once you pay dues, you will be able to upload your r&eacute;sum&eacute; here.</p>
+      <p>A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors. Once you pay dues, you will be able to upload your resume here.</p>
     </div>
   </div>
 </template>
@@ -75,10 +75,10 @@ export default {
       if (!this.message || this.message.length == 0) return '';
 
       var messages = {
-        'resume_not_one_page': 'Your r&eacute;sum&eacute; must be one page long.',
-        'resume_not_pdf': 'Your r&eacute;sum&eacute; must be a PDF.',
-        'inactive': 'You must be an active member to upload your r&eacute;sum&eacute;.',
-        'resume_required': 'You must attach a r&eacute;sum&eacute; to upload.',
+        'resume_not_one_page': 'Your resume must be one page long.',
+        'resume_not_pdf': 'Your resume must be a PDF.',
+        'inactive': 'You must be an active member to upload your resume.',
+        'resume_required': 'You must attach a resume to upload.',
         'too_big': 'Uploaded files must be smaller than 1MB.',
       };
       return messages[this.message] || 'An unknown error occurred.';

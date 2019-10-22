@@ -23,7 +23,7 @@
               <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
             </li>
             <li class="nav-item {{ $request->is('resume*') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('resume.index') }}">R&eacute;sum&eacute;</a>
+              <a class="nav-link" href="{{ route('resume.index') }}">Resume</a>
             </li>
 
             @can('access-nova')
