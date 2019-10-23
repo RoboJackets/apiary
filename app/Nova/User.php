@@ -127,11 +127,21 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            Text::make('GitHub Username', 'github_username')
-                ->hideFromIndex()
-                ->rules('nullable', 'max:39')
-                ->creationRules('unique:users,github_username')
-                ->updateRules('unique:users,github_username,{{resourceId}}'),
+            new Panel(
+                'Linked Accounts',
+                [
+                    Text::make('GitHub Username', 'github_username')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:39')
+                        ->creationRules('unique:users,github_username')
+                        ->updateRules('unique:users,github_username,{{resourceId}}'),
+
+                    Boolean::make('GitHub Invite Pending')
+                        ->hideFromIndex()
+                        ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
+                            .' This controls whether a card is displayed but not the user\'s actual access.'),
+                ]
+            ),
 
             new Panel(
                 'Resume',
@@ -166,11 +176,6 @@ class User extends Resource
 
                     BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
                         ->onlyOnDetail(),
-
-                    Boolean::make('GitHub Invite Pending')
-                        ->hideFromIndex()
-                        ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
-                            .' This controls whether a card is displayed but not the user\'s actual access.'),
                 ]
             ),
 
