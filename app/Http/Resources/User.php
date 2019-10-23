@@ -60,6 +60,7 @@ class User extends JsonResource
             'is_active' => $this->is_active,
             'is_access_active' => $this->is_access_active,
             'github_username' => $this->github_username,
+            'github_invite_pending' => $this->github_invite_pending,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,

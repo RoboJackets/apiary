@@ -166,6 +166,9 @@ class User extends Resource
 
                     BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
                         ->onlyOnDetail(),
+
+                    Boolean::make('GitHub Invite Pending')
+                        ->hideFromIndex(),
                 ]
             ),
 

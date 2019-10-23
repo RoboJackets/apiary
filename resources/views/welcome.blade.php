@@ -109,6 +109,21 @@
                 </div>
             </div>
         @endif
+        @if($githubInvitePending)
+            <div class="col-sm-6 com-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            GitHub Invite Pending
+                        </h4>
+                        <p class="card-text">
+                            You have been invited to RoboJackets' GitHub organization, but you must accept the invitation before you can access any repositories.
+                        </p>
+                        <a href="https://github.com/orgs/RoboJackets/invitation">Accept Your Invitation</a>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
 
