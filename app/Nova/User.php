@@ -168,7 +168,8 @@ class User extends Resource
                         ->onlyOnDetail(),
 
                     Boolean::make('GitHub Invite Pending')
-                        ->hideFromIndex(),
+                        ->hideFromIndex()
+                        ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary. This controls whether a card is displayed but not the user\'s actual access.'),
                 ]
             ),
 
