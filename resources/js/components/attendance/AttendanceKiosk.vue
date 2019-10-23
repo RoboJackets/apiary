@@ -224,6 +224,7 @@
 
                 let pattTrackRaw = new RegExp('=(9[0-9]+)=');
                 let pattError = new RegExp('[%;+][eE]\\?');
+                let pattTrackNFC = new RegExp('NFC-(9[0-9]+)');
 
                 if (this.isNumeric(cardData) && cardData.length == 9 && cardData[0] == '9') {
                     // Numeric nine-digit number starting with a nine
@@ -239,6 +240,14 @@
                     cardData = null;
                     this.attendance.gtid = data;
                     this.attendance.source += '-' + this.cardType;
+                    this.submit();
+                } else if (pattTrackNFC.test(cardData)) {
+                    // Raw (unformatted) data from track 2 of the magnetic stripe
+                    let data = pattTrackNFC.exec(cardData)[1];
+                    console.log('NFC-prefixed cardData: ' + data);
+                    cardData = null;
+                    this.attendance.gtid = data;
+                    this.attendance.source += '-contactless';
                     this.submit();
                 } else if (pattError.test(cardData)) {
                     // Error message sent from card reader
