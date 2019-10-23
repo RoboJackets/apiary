@@ -114,7 +114,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            GitHub Invite Pending
+                            GitHub Invitation Pending
                         </h4>
                         <p class="card-text">
                             You have been invited to RoboJackets' GitHub organization, but you must accept the invitation before you can access any repositories.
