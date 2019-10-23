@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Nova;
 
@@ -127,11 +127,21 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            Text::make('GitHub Username', 'github_username')
-                ->hideFromIndex()
-                ->rules('nullable', 'max:39')
-                ->creationRules('unique:users,github_username')
-                ->updateRules('unique:users,github_username,{{resourceId}}'),
+            new Panel(
+                'Linked Accounts',
+                [
+                    Text::make('GitHub Username', 'github_username')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:39')
+                        ->creationRules('unique:users,github_username')
+                        ->updateRules('unique:users,github_username,{{resourceId}}'),
+
+                    Boolean::make('GitHub Invite Pending')
+                        ->hideFromIndex()
+                        ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
+                            .' This controls whether a card is displayed but not the user\'s actual access.'),
+                ]
+            ),
 
             new Panel(
                 'Resume',

@@ -69,6 +69,7 @@ class DashboardController extends Controller
             'hasExpiredOverride' => $hasExpiredOverride,
             'overrideDate' => $overrideDate,
             'needsResume' => $needsResume,
+            'githubInvitePending' => $user->github_invite_pending,
         ];
 
         return view('welcome', $data);
