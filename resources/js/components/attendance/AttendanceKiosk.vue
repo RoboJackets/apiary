@@ -10,13 +10,12 @@
                 </div>
             </template>
         </div>
-        <div class="row">
+        <div class="row d-none">
             <div class="col-sm-1" style="padding-top: 20px">
                 <object id="nfc-logo" data="/img/nfc-logo.svg" type="image/svg+xml" style="max-width: 20px"></object>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -66,7 +65,7 @@
                                 return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
                             });
                             this.startKeyboardListening();
-                            this.startSocketListening();
+                            // this.startSocketListening();
                         }
                     })
                     .catch(error => {
