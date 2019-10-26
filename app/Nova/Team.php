@@ -131,7 +131,7 @@ class Team extends Resource
             Text::make('Google Group')
                 ->hideFromIndex()
                 ->help('The full email address for the Google Group.')
-                ->rules('max:255')
+                ->rules('max:255', 'nullable')
                 ->creationRules('unique:teams,google_group')
                 ->updateRules('unique:teams,google_group,{{resourceId}}'),
         ];
