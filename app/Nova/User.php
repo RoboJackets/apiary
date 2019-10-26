@@ -140,6 +140,12 @@ class User extends Resource
                         ->hideFromIndex()
                         ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
                             .' This controls whether a card is displayed but not the user\'s actual access.'),
+
+                    Text::make('Gmail Address', 'gmail_address')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:255', 'email')
+                        ->creationRules('unique:users,gmail_address')
+                        ->updateRules('unique:users,gmail_address,{{resourceId}}'),
                 ]
             ),
 

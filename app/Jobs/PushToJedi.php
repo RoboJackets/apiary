@@ -74,6 +74,7 @@ class PushToJedi implements ShouldQueue
         $send['last_name'] = $this->user->last_name;
         $send['is_access_active'] = $this->user->is_access_active;
         $send['github_username'] = $this->user->github_username;
+        $send['gmail_address'] = $this->user->gmail_address;
         $send['model_class'] = $this->model_class;
         $send['model_id'] = $this->model_id;
         $send['model_event'] = $this->model_event;

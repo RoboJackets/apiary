@@ -127,6 +127,9 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::get('github', 'GitHubController@redirectToProvider');
     Route::get('github/callback', 'GitHubController@handleProviderCallback');
+
+    Route::get('google', 'GoogleController@redirectToProvider');
+    Route::get('google/callback', 'GoogleController@handleProviderCallback');
 });
 
 Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check')->name('events.rsvp');
