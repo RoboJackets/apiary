@@ -10,13 +10,12 @@
                 </div>
             </template>
         </div>
-        <div class="row">
+        <div class="row d-none">
             <div class="col-sm-1" style="padding-top: 20px">
                 <object id="nfc-logo" data="/img/nfc-logo.svg" type="image/svg+xml" style="max-width: 20px"></object>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -66,7 +65,7 @@
                                 return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
                             });
                             this.startKeyboardListening();
-                            this.startSocketListening();
+                            // this.startSocketListening();
                         }
                     })
                     .catch(error => {
@@ -224,6 +223,7 @@
 
                 let pattTrackRaw = new RegExp('=(9[0-9]+)=');
                 let pattError = new RegExp('[%;+][eE]\\?');
+                let pattTrackNFC = new RegExp('NFC-(9[0-9]+)');
 
                 if (this.isNumeric(cardData) && cardData.length == 9 && cardData[0] == '9') {
                     // Numeric nine-digit number starting with a nine
@@ -239,6 +239,14 @@
                     cardData = null;
                     this.attendance.gtid = data;
                     this.attendance.source += '-' + this.cardType;
+                    this.submit();
+                } else if (pattTrackNFC.test(cardData)) {
+                    // Raw (unformatted) data from track 2 of the magnetic stripe
+                    let data = pattTrackNFC.exec(cardData)[1];
+                    console.log('NFC-prefixed cardData: ' + data);
+                    cardData = null;
+                    this.attendance.gtid = data;
+                    this.attendance.source += '-contactless';
                     this.submit();
                 } else if (pattError.test(cardData)) {
                     // Error message sent from card reader
