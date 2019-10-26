@@ -52,6 +52,12 @@ return [
         'redirect' => '/github/callback',
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => '/google/callback',
+    ],
+
     'team_slack_webhook_url' => env('TEAM_SLACK_WEBHOOK_URL'),
     'treasurer_slack_webhook_url' => env('TREASURER_SLACK_WEBHOOK_URL'),
     'treasurer_email' => env('TREASURER_EMAIL'),

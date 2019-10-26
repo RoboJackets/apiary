@@ -127,6 +127,13 @@ class Team extends Resource
             Text::make('Slack Private Channel ID')
                 ->hideFromIndex()
                 ->rules('max:255'),
+
+            Text::make('Google Group')
+                ->hideFromIndex()
+                ->help('The full email address for the Google Group.')
+                ->rules('max:255')
+                ->creationRules('unique:teams,google_group')
+                ->updateRules('unique:teams,google_group,{{resourceId}}'),
         ];
     }
 
