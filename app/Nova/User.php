@@ -336,6 +336,10 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
+            (new ResumesSubmitted())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-resume');
+                }),
         ];
     }
 
