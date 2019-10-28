@@ -20,6 +20,8 @@ Route::get('nova/logout', static function () {
 Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('/', 'DashboardController@index')->name('home');
 
+    Route::get('sums', 'SUMSController@index');
+
     Route::view('recruiting', 'recruiting/form');
 
     Route::get('profile', static function () {

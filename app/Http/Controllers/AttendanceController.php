@@ -64,6 +64,7 @@ class AttendanceController extends Controller
         // Variables for comparison below
         $date = $request->input('created_at', date('Y-m-d'));
         $gtid = $request->input('gtid');
+        $user = User::where('gtid', '=', $gtid)->first();
 
         try {
             $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
@@ -73,6 +74,10 @@ class AttendanceController extends Controller
                 Log::debug(self::class.': Found a swipe on '.$date.' for '.$gtid.' - ignoring.');
                 $att = $attExistingQ->first();
                 $code = 200;
+
+                if (null !== $user) {
+                    PushToJedi::dispatch($user, self::class, -1, 'duplicate-attendance');
+                }
             } else {
                 Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
                 $att = Attendance::create($request->all());

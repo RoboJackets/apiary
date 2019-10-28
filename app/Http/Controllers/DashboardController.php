@@ -58,6 +58,8 @@ class DashboardController extends Controller
         $needsResume = $user->is_active &&
             (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date);
 
+        $sumsAccessPending = $user->is_access_active && ! $user->exists_in_sums;
+
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
             'status' => $status,
@@ -70,6 +72,7 @@ class DashboardController extends Controller
             'overrideDate' => $overrideDate,
             'needsResume' => $needsResume,
             'githubInvitePending' => $user->github_invite_pending,
+            'sumsAccessPending' => $sumsAccessPending,
         ];
 
         return view('welcome', $data);

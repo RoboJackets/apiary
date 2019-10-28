@@ -62,6 +62,7 @@ class User extends JsonResource
             'github_username' => $this->github_username,
             'github_invite_pending' => $this->github_invite_pending,
             'gmail_address' => $this->gmail_address,
+            'exists_in_sums' => $this->exists_in_sums,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
