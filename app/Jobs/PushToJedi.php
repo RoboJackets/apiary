@@ -55,6 +55,7 @@ class PushToJedi implements ShouldQueue
         $this->model_id = $model_id;
         $this->model_event = $model_event;
         $this->tries = 1;
+        $this->queue = 'jedi';
     }
 
     /**
@@ -68,26 +69,24 @@ class PushToJedi implements ShouldQueue
             return;
         }
 
-        $send = [];
-        $send['uid'] = strtolower($this->user->uid);
-        $send['first_name'] = $this->user->preferred_first_name;
-        $send['last_name'] = $this->user->last_name;
-        $send['is_access_active'] = $this->user->is_access_active;
-        $send['github_username'] = $this->user->github_username;
-        $send['gmail_address'] = $this->user->gmail_address;
-        $send['model_class'] = $this->model_class;
-        $send['model_id'] = $this->model_id;
-        $send['model_event'] = $this->model_event;
-
         $lastAttendance = $this->user->attendance()->where('attendable_type', Team::class)
             ->orderBy('created_at', 'desc')->first();
-        $send['last_attendance_time'] = $lastAttendance ? $lastAttendance->created_at : null;
-        $send['last_attendance_id'] = $lastAttendance ? $lastAttendance->id : null;
 
-        $send['teams'] = [];
-        foreach ($this->user->teams as $team) {
-            $send['teams'][] = $team->name;
-        }
+        $send = [
+            'uid' => strtolower($this->user->uid),
+            'first_name' => $this->user->preferred_first_name,
+            'last_name' => $this->user->last_name,
+            'is_access_active' => $this->user->is_access_active,
+            'github_username' => $this->user->github_username,
+            'gmail_address' => $this->user->gmail_address,
+            'model_class' => $this->model_class,
+            'model_id' => $this->model_id,
+            'model_event' => $this->model_event,
+            'last_attendance_time' => $lastAttendance ? $lastAttendance->created_at : null,
+            'last_attendance_id' => $lastAttendance ? $lastAttendance->id : null,
+            'teams' => array_map(static function (Team $team): string { return $team->name; }, $this->user->teams),
+            'exists_in_sums' => $this->user->exists_in_sums,
+        ];
 
         $client = new Client(
             [

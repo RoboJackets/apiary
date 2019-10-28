@@ -124,6 +124,20 @@
                 </div>
             </div>
         @endif
+        @if($sumsAccessPending)
+            <div class="col-sm-6 com-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            SUMS Access Notice
+                        </h4>
+                        <p class="card-text">
+                            You don't have a SUMS account yet. If you will need access to machining equipment, <a href="https://sums.gatech.edu/Login2.aspx?LP=Users" target="_blank">log in to SUMS</a> to create an account, then <a href="/sums">request access</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
 
