@@ -48,16 +48,16 @@ class GitHubController extends Controller
 
         $localUser->github_username = Socialite::driver('github')->user()->getNickname();
 
-        $localUser->save();
+        $localUser->save(); // this will trigger a JEDI sync
 
         if ($localUser->is_access_active) {
             usleep(100000);
 
             $counter = 0;
             while ($counter < 20) {
-                $user->refresh(); // reloads attributes from database
+                $localUser->refresh(); // reloads attributes from database
 
-                if ($user->github_invite_pending) {
+                if ($localUser->github_invite_pending) {
                     break;
                 }
 
@@ -65,7 +65,7 @@ class GitHubController extends Controller
                 usleep($counter * 100000);
             }
 
-            if ($user->github_invite_pending) {
+            if ($localUser->github_invite_pending) {
                 return redirect('https://github.com/orgs/RoboJackets/invitation');
             }
         }
