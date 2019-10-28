@@ -58,7 +58,13 @@ class DashboardController extends Controller
         $needsResume = $user->is_active &&
             (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date);
 
-        $sumsAccessPending = $user->is_access_active && ! $user->exists_in_sums;
+        $lastAttendance = $user->attendance()->where('attendable_type', Team::class)
+            ->orderBy('created_at', 'desc')->first();
+
+        $sumsAccessPending = $user->is_access_active
+            && ! $user->exists_in_sums
+            && null !== $lastAttendance
+            && $lastAttendance->created_at < new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York');
 
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
