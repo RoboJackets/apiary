@@ -66,6 +66,8 @@ class DashboardController extends Controller
         $sumsAccessPending = $user->is_access_active
             && ! $user->exists_in_sums
             && null !== $lastAttendance
+            // Not sure if this is an actual problem
+            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
             && $lastAttendance->created_at < new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York');
 
         $data = ['needsTransaction' => $needsTransaction,
