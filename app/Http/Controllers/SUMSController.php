@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Team;
 use Carbon\Carbon;
+use App\Jobs\PushToJedi;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
