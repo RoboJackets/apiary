@@ -50,6 +50,26 @@ class GitHubController extends Controller
 
         $localUser->save();
 
+        if ($localUser->is_access_active) {
+            usleep(100000);
+
+            $counter = 0;
+            while ($counter < 20) {
+                $user->refresh(); // reloads attributes from database
+
+                if ($user->github_invite_pending) {
+                    break;
+                }
+
+                $counter++;
+                usleep($counter * 100000);
+            }
+
+            if ($user->github_invite_pending) {
+                return redirect('https://github.com/orgs/RoboJackets/invitation');
+            }
+        }
+
         alert()->success('Your GitHub account was successfully linked.', 'Success!');
 
         return redirect('/profile');
