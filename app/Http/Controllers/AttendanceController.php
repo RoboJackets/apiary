@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 use Bugsnag;
 use App\User;
 use App\Attendance;
+use App\Jobs\PushToJedi;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
