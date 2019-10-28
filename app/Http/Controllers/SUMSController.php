@@ -64,7 +64,7 @@ class SUMSController extends Controller
         usleep(100000);
 
         $counter = 0;
-        while ($counter < 10) {
+        while ($counter < 20) {
             $user->refresh(); // reloads attributes from database
 
             if ($user->exists_in_sums) {
