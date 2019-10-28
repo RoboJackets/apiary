@@ -51,7 +51,7 @@ class SUMSController extends Controller
                 'sums',
                 [
                     'message' => 'You already have access to SUMS. If you are not able to use equipment, please ask in'
-                    . ' #it-helpdesk in Slack.',
+                    .' #it-helpdesk in Slack.',
                 ]
             );
         }
@@ -77,18 +77,18 @@ class SUMSController extends Controller
                 'sums',
                 [
                     'message' => 'You have been successfully added to the RoboJackets group in SUMS. You should now be '
-                    . 'able to use the kiosk in the Common Machining Area. If you have any issues, please ask in '
-                    . '#it-helpdesk on Slack.',
-                ]
-            );
-        } else {
-            return view(
-                'sums',
-                [
-                    'message' => 'There was a problem processing your SUMS access. Please ask in '
-                    . '#it-helpdesk on Slack for further assistance.',
+                    .'able to use the kiosk in the Common Machining Area. If you have any issues, please ask in '
+                    .'#it-helpdesk on Slack.',
                 ]
             );
         }
+
+        return view(
+            'sums',
+            [
+                'message' => 'There was a problem processing your SUMS access. Please ask in '
+                .'#it-helpdesk on Slack for further assistance.',
+            ]
+        );
     }
 }
