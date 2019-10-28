@@ -63,12 +63,10 @@ class DashboardController extends Controller
         $lastAttendance = $user->attendance()->where('attendable_type', Team::class)
             ->orderBy('created_at', 'desc')->first();
 
-        $sumsAccessPending = $user->is_access_active
-            && ! $user->exists_in_sums
-            && null !== $lastAttendance
-            // Not sure if this is an actual problem
-            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
-            && $lastAttendance->created_at < new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York');
+        $sumsAccessPending = (true === $user->is_access_active)
+            && (false === $user->exists_in_sums)
+            && (null !== $lastAttendance)
+            && ($lastAttendance->created_at < new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York'));
 
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
