@@ -84,7 +84,9 @@ class PushToJedi implements ShouldQueue
             'model_event' => $this->model_event,
             'last_attendance_time' => $lastAttendance ? $lastAttendance->created_at : null,
             'last_attendance_id' => $lastAttendance ? $lastAttendance->id : null,
-            'teams' => array_map(static function (Team $team): string { return $team->name; }, $this->user->teams),
+            'teams' => array_map(static function (Team $team): string {
+                return $team->name;
+            }, $this->user->teams),
             'exists_in_sums' => $this->user->exists_in_sums,
         ];
 

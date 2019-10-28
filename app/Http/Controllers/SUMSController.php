@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Http\Controllers;
 
+use App\Team;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Team;
 
 class SUMSController extends Controller
 {
@@ -22,11 +25,11 @@ class SUMSController extends Controller
     {
         $user = $request->user();
 
-        if (!$user->is_access_active) {
+        if (! $user->is_access_active) {
             return view(
                 'sums',
                 [
-                    'message' => 'You have not paid dues, so you do not have access to SUMS right now.'
+                    'message' => 'You have not paid dues, so you do not have access to SUMS right now.',
                 ]
             );
         }
@@ -38,7 +41,7 @@ class SUMSController extends Controller
             return view(
                 'sums',
                 [
-                    'message' => 'You have not been to the shop recently, so you do not have access to SUMS right now.'
+                    'message' => 'You have not been to the shop recently, so you do not have access to SUMS right now.',
                 ]
             );
         }
@@ -48,7 +51,7 @@ class SUMSController extends Controller
                 'sums',
                 [
                     'message' => 'You already have access to SUMS. If you are not able to use equipment, please ask in'
-                    . ' #it-helpdesk in Slack.'
+                    . ' #it-helpdesk in Slack.',
                 ]
             );
         }
@@ -75,7 +78,7 @@ class SUMSController extends Controller
                 [
                     'message' => 'You have been successfully added to the RoboJackets group in SUMS. You should now be '
                     . 'able to use the kiosk in the Common Machining Area. If you have any issues, please ask in '
-                    . '#it-helpdesk on Slack.'
+                    . '#it-helpdesk on Slack.',
                 ]
             );
         } else {
@@ -83,7 +86,7 @@ class SUMSController extends Controller
                 'sums',
                 [
                     'message' => 'There was a problem processing your SUMS access. Please ask in '
-                    . '#it-helpdesk on Slack for further assistance.'
+                    . '#it-helpdesk on Slack for further assistance.',
                 ]
             );
         }
