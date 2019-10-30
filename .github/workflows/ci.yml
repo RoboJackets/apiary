@@ -1,0 +1,38 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - run: sudo apt update
+    - run: sudo apt install libpng-dev libldap2-dev
+    - name: Install PHP extensions
+      run: sudo docker-php-ext-install zip pcntl bcmath gd ldap
+    - name: Update Composer
+      run: sudo composer self-update
+    - name: Cache vendor directory
+      uses: actions/cache@preview
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --no-progress --no-suggest --no-dev
+    - name: Check for env() being used outside config/
+      run: sh -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/composer.lock'"
+    - run: php artisan config:cache
+    - run: php artisan nova:publish --no-interaction
+    - run: php artisan horizon:assets --no-interaction
+    - name: Store npm cache
+      uses: actions/cache@preview
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node
+    - name: Install Node dependencies
+      run: npm ci --no-progress
+    - name: Build assets
+      run: npm run production --no-progress
