@@ -325,7 +325,7 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-payments');
-                }),
+                })->help('This is the date on which they first paid dues.'),
             (new TotalAttendance())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
