@@ -10,6 +10,7 @@ use App\User;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use App\Nova\Cards\MakeAWish;
+use App\Nova\Dashboards\Jedi;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Tools\AttendanceReport;
@@ -101,5 +102,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function register(): void
     {
+    }
+
+    /**
+     * Get the extra dashboards that should be displayed on the Nova dashboard.
+     *
+     * @return array
+     */
+    protected function dashboards()
+    {
+        return [
+            new Jedi,
+        ];
     }
 }
