@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Bugsnag;
+use App\Team;
 use App\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
@@ -213,6 +214,22 @@ class AttendanceController extends Controller
                 return [substr($item->day, 1) => $item->aggregate / $numberOfWeeks];
             });
 
+        $attendanceByDayAndTeam = Attendance::whereBetween('created_at', [$startDay, $endDay])
+            ->where('attendable_type', \App\Team::class)
+            ->selectRaw('attendable_id, date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
+            ->groupBy('day', 'attendable_id')
+            ->orderBy('day', 'asc')
+            ->get()
+            ->groupBy('attendable_id')
+            ->mapWithKeys(static function (object $item, int $attendable_id) use ($numberOfWeeks, $user): array {
+                // If the user can't read teams only give them the attendable_id
+                $teamName = $user->can('read-teams') ? Team::find($attendable_id)->name : $attendable_id;
+
+                return [$teamName => $item->mapWithKeys(static function (object $day) use ($numberOfWeeks): array {
+                    return [substr($day, 0, 1) => $day->aggregate / $numberOfWeeks];
+                })];
+            });
+
         $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
             ->where('attendable_type', \App\Team::class)
             ->selectRaw('date_format(created_at, \'%Y %U\') as week, count(distinct gtid) as aggregate')
@@ -247,6 +264,7 @@ class AttendanceController extends Controller
 
         $statistics = [
             'averageDailyMembers' => $attendanceByDay,
+            'averageDailyMembersByTeam' => $attendanceByDayAndTeam,
             'averageWeeklyMembers' => $averageWeeklyAttendance,
             'byTeam' => $attendanceByTeam,
         ];
