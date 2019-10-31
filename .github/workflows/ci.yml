@@ -23,7 +23,7 @@ jobs:
       env:
         COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
     - name: Check for env() being used outside config/
-      run: bash -c "cd $GIT_WORKSPACE && ! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/composer.lock'"
+      run: bash -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/.github/workflows/ci.yml' ':!/composer.lock'"
     - run: php artisan config:cache
     - run: php artisan nova:publish --no-interaction
     - run: php artisan horizon:assets --no-interaction
