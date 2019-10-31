@@ -27,7 +27,7 @@ jobs:
     - run: php artisan config:cache
     - run: php artisan nova:publish --no-interaction
     - run: php artisan horizon:assets --no-interaction
-    - name: Store npm cache
+    - name: Cache npm
       uses: actions/cache@preview
       with:
         path: ~/.npm
