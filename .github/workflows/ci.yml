@@ -9,8 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - run: sudo apt update
-    - run: sudo apt install libpng-dev libldap2-dev php7.2-zip php7.2-bcmath php7.2-gd php7.2-ldap
     - name: Update Composer
       run: sudo composer self-update
     - name: Cache vendor directory
@@ -19,7 +17,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-composer
     - name: Install Composer dependencies
-      run: composer install --no-interaction --no-progress --no-suggest --no-dev
+      run: composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative --ignore-platform-reqs
       env:
         COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
     - name: Check for env() being used outside config/
