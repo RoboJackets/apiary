@@ -387,4 +387,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(self::class, 'access_override_by_id');
     }
+
+    public function googleAccounts(): BelongsToMany
+    {
+        return $this->belongsToMany(\App\GoogleAccount::class)->withTimestamps();
+    }
 }
