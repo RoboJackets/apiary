@@ -33,7 +33,7 @@
         "spatie/laravel-failed-job-monitor": "3.2.0",
         "spatie/laravel-sluggable": "2.2.1",
         "square/connect": "2.20190710.0",
-        "subfission/cas": "dev-master",
+        "regnilk/cas": "3.0",
         "uxweb/sweet-alert": "2.0.1"
     },
     "require-dev": {
@@ -92,6 +92,10 @@
         {
             "type": "composer",
             "url": "https://packages.robojackets.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/regnilk/cas"
         }
     ]
 }
