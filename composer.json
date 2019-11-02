@@ -34,7 +34,7 @@
         "spatie/laravel-sluggable": "2.2.1",
         "square/connect": "2.20190710.0",
         "regnilk/cas": "3.0",
-        "uxweb/sweet-alert": "2.0.1"
+        "uxweb/sweet-alert": "dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "1.3.0",
