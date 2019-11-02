@@ -62,8 +62,7 @@ class DuesTransaction extends Resource
     public function fields(Request $request): array
     {
         return [
-            ID::make()
-                ->sortable(),
+            ID::make(),
 
             BelongsTo::make('Paid By', 'user', User::class)
                 ->searchable(),

@@ -20,6 +20,8 @@ Route::get('nova/logout', static function () {
 Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('/', 'DashboardController@index')->name('home');
 
+    Route::get('sums', 'SUMSController@index');
+
     Route::view('recruiting', 'recruiting/form');
 
     Route::get('profile', static function () {
@@ -37,6 +39,12 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::prefix('teams')->name('teams.')->group(static function (): void {
         Route::get('/', 'TeamController@indexWeb')->name('index');
+    });
+
+    Route::prefix('resume')->name('resume.')->group(static function (): void {
+        Route::get('/', static function () {
+            return view('users/resumeupload', ['id' => auth()->user()->id]);
+        })->name('index');
     });
 
     Route::prefix('payments')->group(static function (): void {
@@ -121,9 +129,12 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::get('github', 'GitHubController@redirectToProvider');
     Route::get('github/callback', 'GitHubController@handleProviderCallback');
+
+    Route::get('google', 'GoogleController@redirectToProvider');
+    Route::get('google/callback', 'GoogleController@handleProviderCallback');
 });
 
-Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check');
+Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check')->name('events.rsvp');
 
 Route::view('attendance/kiosk', 'attendance.kiosk')->name('attendance.kiosk');
 

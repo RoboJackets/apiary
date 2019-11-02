@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Metrics\RsvpSourceBreakdown;
+use App\Nova\ResourceTools\CollectAttendance;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 
 class Event extends Resource
@@ -78,6 +79,10 @@ class Event extends Resource
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
 
+            Text::make('RSVP URL', function () {
+                return route('events.rsvp', ['event' => $this->id]);
+            })->onlyOnDetail(),
+
             new Panel('Metadata', $this->metaFields()),
 
             HasMany::make('RSVPs')
@@ -88,6 +93,11 @@ class Event extends Resource
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
+                }),
+
+            CollectAttendance::make()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
                 }),
         ];
     }

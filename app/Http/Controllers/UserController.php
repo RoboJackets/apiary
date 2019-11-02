@@ -65,6 +65,7 @@ class UserController extends Controller
             $results = User::where('uid', 'LIKE', $keyword)
                 ->orWhere('first_name', 'LIKE', $keyword)
                 ->orWhere('preferred_name', 'LIKE', $keyword)
+                ->orWhere('github_username', 'LIKE', $keyword)
                 ->with($this->authorizeInclude(User::class, $include))
                 ->get();
         }

@@ -7,10 +7,10 @@ jobs:
     steps:
       - checkout
       - run: sudo apt update
-      - run: sudo apt install libpng-dev
+      - run: sudo apt install libpng-dev libldap2-dev
       - run:
           name: Install PHP extensions
-          command: sudo docker-php-ext-install zip pcntl bcmath gd
+          command: sudo docker-php-ext-install zip pcntl bcmath gd ldap
       - run:
           name: Update Composer
           command: sudo composer self-update
@@ -27,7 +27,7 @@ jobs:
             - vendor
       - run:
           name: Check for env() being used outside config/
-          command: sh -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/composer.lock'"
+          command: sh -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/.github/workflows/ci.yml' ':!/composer.lock'"
       - run: php artisan config:cache
       - run: php artisan nova:publish --no-interaction
       - run: php artisan horizon:assets --no-interaction

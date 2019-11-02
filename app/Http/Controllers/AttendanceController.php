@@ -7,14 +7,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Bugsnag;
+use App\User;
 use App\Attendance;
+use App\Jobs\PushToJedi;
 use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\SearchAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
@@ -64,6 +66,7 @@ class AttendanceController extends Controller
         // Variables for comparison below
         $date = $request->input('created_at', date('Y-m-d'));
         $gtid = $request->input('gtid');
+        $user = User::where('gtid', '=', $gtid)->first();
 
         try {
             $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
@@ -73,6 +76,10 @@ class AttendanceController extends Controller
                 Log::debug(self::class.': Found a swipe on '.$date.' for '.$gtid.' - ignoring.');
                 $att = $attExistingQ->first();
                 $code = 200;
+
+                if (null !== $user) {
+                    PushToJedi::dispatch($user, self::class, -1, 'duplicate-attendance');
+                }
             } else {
                 Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
                 $att = Attendance::create($request->all());

@@ -26,6 +26,8 @@ class SyncAccess extends Action
      * @param \Illuminate\Support\Collection  $models
      *
      * @return void
+     *
+     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function handle(ActionFields $fields, Collection $models): void
     {
@@ -36,7 +38,12 @@ class SyncAccess extends Action
 
             // I tried to make this class ShouldQueue so Nova would handle queueing
             // but was getting an exception. I think it's fine to run synchronously...?
-            PushToJedi::dispatchNow($user);
+            PushToJedi::dispatchNow(
+                $user,
+                self::class,
+                request()->user()->id,
+                1 === count($models) ? 'manual' : 'manual_batch'
+            );
         }
     }
 

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
@@ -49,6 +48,7 @@ class User extends Authenticatable
         'updated_at',
         'accept_safety_agreement',
         'access_override_until',
+        'resume_date',
     ];
 
     /**
@@ -302,7 +302,7 @@ class User extends Authenticatable
      */
     public function scopeFindByIdentifier(Builder $query, string $id): Builder
     {
-        if (is_numeric($id) && 9 === strlen($id) && 9 === $id[0]) {
+        if (is_numeric($id) && 9 === strlen($id) && '9' === $id[0]) {
             return $query->where('gtid', $id);
         }
 
@@ -378,7 +378,7 @@ class User extends Authenticatable
     {
         return $query->whereDoesntHave('dues', static function (Builder $q): void {
             $q->paid()->accessCurrent();
-        })->where(static function (QueryBuilder $query): void {
+        })->where(static function (Builder $query): void {
             $query->where('access_override_until', '<=', date('Y-m-d H:i:s'))->orWhereNull('access_override_until');
         });
     }

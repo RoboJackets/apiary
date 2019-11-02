@@ -1,0 +1,36 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Update Composer
+      run: sudo composer self-update
+    - name: Cache vendor directory
+      uses: actions/cache@preview
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative --ignore-platform-reqs
+      env:
+        COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+    - name: Check for env() being used outside config/
+      run: bash -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/.github/workflows/ci.yml' ':!/composer.lock'"
+    - run: php artisan config:cache
+    - run: php artisan nova:publish --no-interaction
+    - run: php artisan horizon:assets --no-interaction
+    - name: Cache npm
+      uses: actions/cache@preview
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node
+    - name: Install Node dependencies
+      run: npm ci --no-progress
+    - name: Build assets
+      run: npm run production --no-progress

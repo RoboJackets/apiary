@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Team;
+use Carbon\Carbon;
 use App\DuesPackage;
 use App\DuesTransaction;
 use Illuminate\View\View;
@@ -50,6 +52,24 @@ class DashboardController extends Controller
             $firstPayment = null;
         }
 
+        $hasOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until > now();
+        $hasExpiredOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until < now()
+            && $user->access_override_until > now()->startOfDay()->subDays(14);
+        $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
+
+        $needsResume = $user->is_active &&
+            (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date);
+
+        $lastAttendance = $user->attendance()->where('attendable_type', Team::class)
+            ->orderBy('created_at', 'desc')->first();
+
+        $sumsAccessPending = $user->is_access_active
+            && ! $user->exists_in_sums
+            && null !== $lastAttendance
+            // Not sure if this is an actual problem
+            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
+            && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York');
+
         $data = ['needsTransaction' => $needsTransaction,
             'needsPayment' => $needsPayment,
             'status' => $status,
@@ -57,6 +77,12 @@ class DashboardController extends Controller
             'firstPayment' => $firstPayment,
             'preferredName' => $preferredName,
             'isNew' => $isNew,
+            'hasOverride' => $hasOverride,
+            'hasExpiredOverride' => $hasExpiredOverride,
+            'overrideDate' => $overrideDate,
+            'needsResume' => $needsResume,
+            'githubInvitePending' => $user->github_invite_pending,
+            'sumsAccessPending' => $sumsAccessPending,
         ];
 
         return view('welcome', $data);

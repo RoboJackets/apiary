@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Nova;
 
@@ -10,6 +10,7 @@ use App\User as AU;
 use Laravel\Nova\Panel;
 use App\Nova\Fields\Hidden;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
@@ -126,11 +127,54 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            Text::make('GitHub Username', 'github_username')
-                ->hideFromIndex()
-                ->rules('nullable', 'max:39')
-                ->creationRules('unique:users,github_username')
-                ->updateRules('unique:users,github_username,{{resourceId}}'),
+            new Panel(
+                'Linked Accounts',
+                [
+                    Text::make('GitHub Username', 'github_username')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:39')
+                        ->creationRules('unique:users,github_username')
+                        ->updateRules('unique:users,github_username,{{resourceId}}'),
+
+                    Boolean::make('GitHub Invite Pending')
+                        ->hideFromIndex()
+                        ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
+                            .' This controls whether a card is displayed but not the user\'s actual access.'),
+
+                    Text::make('Gmail Address', 'gmail_address')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:255', 'email')
+                        ->creationRules('unique:users,gmail_address')
+                        ->updateRules('unique:users,gmail_address,{{resourceId}}'),
+
+                    Boolean::make('SUMS', 'exists_in_sums')
+                        ->hideFromIndex()
+                        ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
+                            .' This controls whether a card is displayed but not the user\'s actual access.'),
+                ]
+            ),
+
+            new Panel(
+                'Resume',
+                [
+                    File::make('Resume', function () {
+                        return $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
+                    })->path('resumes')
+                        ->disk('local')
+                        ->deletable(false)
+                        ->onlyOnDetail()
+                        ->canSee(static function (Request $request): bool {
+                            if ($request->resourceId === $request->user()->id) {
+                                return true;
+                            }
+
+                            return $request->user()->can('read-users-resume');
+                        }),
+
+                    DateTime::make('Resume Uploaded At', 'resume_date')
+                        ->onlyOnDetail(),
+                ]
+            ),
 
             new Panel(
                 'System Access',
@@ -306,6 +350,7 @@ class User extends Resource
     {
         return [
             new Filters\UserActive(),
+            new Filters\UserAccessActive(),
             new Filters\UserType(),
             new Filters\UserTeam(),
         ];
@@ -361,6 +406,28 @@ class User extends Resource
             (new Actions\ExportUsername())
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->can('read-users');
+                }),
+            (new Actions\ExportEmails())
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->can('read-users');
+                }),
+            (new Actions\ExportContactInfo())
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->can('read-users');
+                }),
+            (new Actions\SendNotification())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('send-notifications');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->can('send-notifications');
+                }),
+            (new Actions\GenerateResumeBook())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-resume');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->can('read-users-resume') && $request->user()->id === $user->id;
                 }),
         ];
     }

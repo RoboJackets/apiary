@@ -45,6 +45,8 @@ class UpdateUserRequest extends FormRequest
             'generateToken' => 'boolean',
             'gender' => 'string|nullable',
             'ethnicity' => 'string|nullable',
+            'github_invite_pending' => 'boolean',
+            'exists_in_sums' => 'boolean',
         ];
     }
 

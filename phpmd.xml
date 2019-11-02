@@ -27,7 +27,7 @@
     </rule>
     <rule ref="rulesets/design.xml/CouplingBetweenObjects">
         <properties>
-            <property name="minimum" value="30"/>
+            <property name="minimum" value="40"/>
         </properties>
     </rule>
     <rule ref="rulesets/naming.xml/ShortVariable">

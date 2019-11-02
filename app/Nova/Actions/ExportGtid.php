@@ -13,7 +13,7 @@ class ExportGtid extends DownloadExcel
      *
      * @var string
      */
-    public $name = 'Export GTIDs';
+    public $name = 'Export Names and GTIDs';
 
     /**
      * Indicates if this action is available to run against the entire resource.

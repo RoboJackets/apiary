@@ -2,13 +2,17 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App;
 
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Notifications\Notification;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -19,7 +23,7 @@ use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 
 class Team extends Model
 {
-    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasBelongsToManyEvents, HasRelationshipObservables;
+    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasBelongsToManyEvents, HasRelationshipObservables, Notifiable;
 
     /**
      * The attributes that are not mass assignable.
@@ -109,5 +113,17 @@ class Team extends Model
     public function projectManager(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'project_manager_id');
+    }
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param Notification $notification
+     *
+     * @return string|null
+     */
+    public function routeNotificationForSlack(Notification $notification): ?string
+    {
+        return config('services.team_slack_webhook_url');
     }
 }

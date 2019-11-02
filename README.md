@@ -14,7 +14,7 @@ This project has been tailored to support the specific workflow of RoboJackets a
 ## Getting Help
 - For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) on Slack
 - For production support of MyRoboJackets, ask in [#it-helpdesk](https://robojackets.slack.com/app_redirect?channel=it-helpdesk) on Slack
-- API documentation can be found [here](https://myrobojackets.docs.stoplight.io/). Report any issues/inaccuracies through [GitHub](https://github.com/RoboJackets/apiary/issues/new).
+- API documentation can be found [here](https://myrobojackets.docs.apiary.io). Report any issues/inaccuracies through [GitHub](https://github.com/RoboJackets/apiary/issues/new).
 
 ## Getting Started with Local Development
 
@@ -37,7 +37,12 @@ This is a pretty conventional Laravel project, so we recommend following [the of
 
 You can install all of the required php extensions with:
 ```
-$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath php-curl php-gd php-zip
+$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath php-curl php-gd php-zip php-ldap
+```
+
+For the resume book functionality, you'll also need to install `exiftool` and Ghostscript:
+```
+$ sudo apt install exiftool ghostscript
 ```
 
 #### Database Encryption

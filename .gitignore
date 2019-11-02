@@ -21,9 +21,14 @@ npm-debug.log
 !/resources/views/vendor/nova/partials/user.blade.php
 !/resources/views/vendor/nova/partials/footer.blade.php
 /public/vendor/nova/
+/public/nova-assets
 /public/vendor/horizon/
 auth.json
 .phpstorm.meta.php
 .idea_helper.php
 _ide_helper.php
 *.log
+/error-pages-cache/
+.last_deployment_hash
+pause-monitoring.sh
+resume-monitoring.sh

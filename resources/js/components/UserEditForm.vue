@@ -148,6 +148,18 @@
           </div>
         </div>
 
+        <div class="form-group row">
+          <label for="user-google" class="col-sm-2 col-form-label">Google</label>
+          <div class="col-sm-10 col-lg-4">
+            <div class="input-group">
+              <input v-model="user.gmail_address" type="text" readonly class="form-control" id="user-google" placeholder="No account linked">
+              <div class="input-group-append" v-if="!user.gmail_address">
+                <a href="/google" class="btn btn-secondary">Link Account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>

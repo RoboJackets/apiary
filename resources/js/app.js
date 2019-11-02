@@ -58,6 +58,7 @@ Vue.component('recruiting-admin-table', require('./components/wrappers/Recruitin
 Vue.component('recruiting-edit-form', require('./components/RecruitingEditForm.vue').default);
 Vue.component('users-admin-table', require('./components/wrappers/UsersAdminTable.vue').default);
 Vue.component('user-edit-form', require('./components/UserEditForm.vue').default);
+Vue.component('resume-upload-form', require('./components/ResumeUploadForm.vue').default);
 Vue.component('payment-instructions', require('./components/PaymentInstructions.vue').default);
 Vue.component('accept-payment', require('./components/AcceptPayment.vue').default);
 
