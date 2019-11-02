@@ -6,15 +6,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Rsvp;
-use App\User;
 use App\Event;
-use App\RecruitingVisit;
-use Illuminate\Http\Request;
-use App\Traits\AuthorizeInclude;
-use Illuminate\Http\JsonResponse;
-use App\Http\Resources\Rsvp as RsvpResource;
 use App\Http\Resources\Event as EventResource;
+use App\Http\Resources\Rsvp as RsvpResource;
+use App\RecruitingVisit;
+use App\Rsvp;
+use App\Traits\AuthorizeInclude;
+use App\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class RsvpController extends Controller
 {

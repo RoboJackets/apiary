@@ -6,22 +6,22 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Bugsnag;
-use App\User;
 use App\Attendance;
+use App\Http\Requests\SearchAttendanceRequest;
+use App\Http\Requests\StatisticsAttendanceRequest;
+use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
+use App\Http\Resources\Attendance as AttendanceResource;
 use App\Jobs\PushToJedi;
-use Illuminate\Http\Request;
 use App\Traits\AuthorizeInclude;
+use App\User;
+use Bugsnag;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Database\QueryException;
-use Illuminate\Database\Eloquent\Builder;
-use App\Http\Requests\StoreAttendanceRequest;
-use App\Http\Requests\SearchAttendanceRequest;
-use App\Http\Requests\UpdateAttendanceRequest;
-use App\Http\Requests\StatisticsAttendanceRequest;
-use App\Http\Resources\Attendance as AttendanceResource;
 
 class AttendanceController extends Controller
 {

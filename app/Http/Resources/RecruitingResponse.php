@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class RecruitingResponse extends JsonResource
 {

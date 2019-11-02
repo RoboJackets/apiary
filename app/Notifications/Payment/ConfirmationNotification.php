@@ -6,12 +6,12 @@ declare(strict_types=1);
 
 namespace App\Notifications\Payment;
 
-use App\User;
-use App\Payment;
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\Payment\Confirmation as Mailable;
+use App\Payment;
+use App\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Notification;
 
 class ConfirmationNotification extends Notification implements ShouldQueue
 {

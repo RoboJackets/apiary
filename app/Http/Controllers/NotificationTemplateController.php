@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\NotificationTemplate;
-use App\Traits\AuthorizeInclude;
-use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StoreNotificationTemplateRequest;
 use App\Http\Requests\UpdateNotificationTemplateRequest;
 use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
+use App\NotificationTemplate;
+use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class NotificationTemplateController extends Controller
 {

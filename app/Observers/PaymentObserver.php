@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Payment;
 use App\Jobs\PushToJedi;
+use App\Payment;
 
 class PaymentObserver
 {

@@ -6,25 +6,25 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Bugsnag;
-use App\Payment;
 use App\DuesTransaction;
-use Illuminate\Http\Request;
 use App\Events\PaymentSuccess;
-use SquareConnect\Configuration;
-use Illuminate\Http\JsonResponse;
-use SquareConnect\Api\CheckoutApi;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\RedirectResponse;
-use SquareConnect\Api\TransactionsApi;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
-use SquareConnect\Model\CreateOrderRequest;
-use SquareConnect\Model\CreateCheckoutRequest;
-use Illuminate\Database\Eloquent\Builder as Eloquent;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
+use App\Payment;
+use Bugsnag;
+use Illuminate\Database\Eloquent\Builder as Eloquent;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use SquareConnect\Api\CheckoutApi;
+use SquareConnect\Api\TransactionsApi;
+use SquareConnect\Configuration;
+use SquareConnect\Model\CreateCheckoutRequest;
+use SquareConnect\Model\CreateOrderRequest;
 
 class PaymentController extends Controller
 {

@@ -6,8 +6,8 @@ namespace App\Listeners;
 
 use App\DuesTransaction;
 use App\Events\PaymentSuccess;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class PaymentSuccessListener
 {

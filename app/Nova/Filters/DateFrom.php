@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace App\Nova\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Filters\DateFilter;
-use Illuminate\Database\Eloquent\Builder;
 
 class DateFrom extends DateFilter
 {

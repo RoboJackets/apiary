@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Payment;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
-use Illuminate\Database\Query\Builder;
 
 class TotalCollections extends Value
 {

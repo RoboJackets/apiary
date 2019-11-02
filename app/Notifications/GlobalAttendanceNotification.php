@@ -7,11 +7,11 @@ declare(strict_types=1);
 namespace App\Notifications;
 
 use App\Attendance;
-use Illuminate\Support\Str;
-use Illuminate\Bus\Queueable;
 use App\Notifiables\CoreNotifiable;
-use Illuminate\Notifications\Notification;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Str;
 
 class GlobalAttendanceNotification extends Notification
 {

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\User;
-use App\Payment;
 use App\Attendance;
 use App\DuesPackage;
-use Laravel\Horizon\Horizon;
-use App\Observers\UserObserver;
-use App\Observers\PaymentObserver;
 use App\Observers\AttendanceObserver;
 use App\Observers\DuesPackageObserver;
-use Illuminate\Support\ServiceProvider;
+use App\Observers\PaymentObserver;
+use App\Observers\UserObserver;
+use App\Payment;
+use App\User;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {

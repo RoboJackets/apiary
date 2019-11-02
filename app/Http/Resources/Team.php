@@ -6,9 +6,9 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Attendance as AttendanceResource;
 use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Attendance as AttendanceResource;
 
 class Team extends JsonResource
 {

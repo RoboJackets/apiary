@@ -6,15 +6,15 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use App\DuesTransaction as ADT;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 class DuesTransaction extends Resource
 {

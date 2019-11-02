@@ -6,19 +6,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Team;
-use App\User;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Traits\AuthorizeInclude;
-use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StoreTeamRequest;
-use Illuminate\Database\QueryException;
+use App\Http\Requests\UpdateMembersTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
-use App\Http\Requests\UpdateMembersTeamRequest;
+use App\Team;
+use App\Traits\AuthorizeInclude;
+use App\User;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TeamController extends Controller
 {

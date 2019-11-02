@@ -6,16 +6,16 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Adldap\Laravel\Facades\Adldap;
 use App\User;
 use Illuminate\Bus\Queueable;
-use Adldap\Laravel\Facades\Adldap;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class GenerateResumeBook implements ShouldQueue
 {

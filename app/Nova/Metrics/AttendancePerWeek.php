@@ -6,8 +6,8 @@ namespace App\Nova\Metrics;
 
 use App\Attendance;
 use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Trend;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Metrics\Trend;
 use Laravel\Nova\Metrics\TrendResult;
 
 class AttendancePerWeek extends Trend

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Tools;
 
-use Laravel\Nova\Tool;
 use Illuminate\View\View;
+use Laravel\Nova\Tool;
 
 class AttendanceReport extends Tool
 {
