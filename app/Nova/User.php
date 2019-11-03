@@ -9,6 +9,7 @@ namespace App\Nova;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
+use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
 use App\User as AU;
 use Illuminate\Http\Request;
