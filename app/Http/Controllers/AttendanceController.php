@@ -228,7 +228,7 @@ class AttendanceController extends Controller
                 $teamName = $user->can('read-teams') ? Team::find($attendable_id)->name : $attendable_id;
 
                 return [$teamName => $item->mapWithKeys(static function (object $day) use ($numberOfWeeks): array {
-                    return [substr($day, 0, 1) => $day->aggregate / $numberOfWeeks];
+                    return [substr($day->day, 0, 1) => $day->aggregate / $numberOfWeeks];
                 })];
             });
 
