@@ -227,19 +227,21 @@ class AttendanceController extends Controller
                 // If the user can't read teams only give them the attendable_id
                 $teamName = $user->can('read-teams') ? Team::find($attendable_id)->name : $attendable_id;
 
-                return [$teamName => collect([
-                    'Sunday' => 0,
-                    'Monday' => 0,
-                    'Tuesday' => 0,
-                    'Wednesday' => 0,
-                    'Thursday' => 0,
-                    'Friday' => 0,
-                    'Saturday' => 0,
-                ])->merge($item->mapWithKeys(static function (object $day) use ($numberOfWeeks): array {
-                    return [
-                        substr($day->day, 1) => $day->aggregate / $numberOfWeeks,
-                    ];
-                }))];
+                return [
+                    $teamName => collect([
+                        'Sunday' => 0,
+                        'Monday' => 0,
+                        'Tuesday' => 0,
+                        'Wednesday' => 0,
+                        'Thursday' => 0,
+                        'Friday' => 0,
+                        'Saturday' => 0,
+                    ])->merge($item->mapWithKeys(static function (object $day) use ($numberOfWeeks): array {
+                        return [
+                            substr($day->day, 1) => $day->aggregate / $numberOfWeeks,
+                        ];
+                    })),
+                ];
             });
 
         $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
