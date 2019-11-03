@@ -228,18 +228,16 @@ class AttendanceController extends Controller
                 $teamName = $user->can('read-teams') ? Team::find($attendable_id)->name : $attendable_id;
 
                 return [$teamName => collect([
-                    '0Sunday' => 0,
-                    '1Monday' => 0,
-                    '2Tuesday' => 0,
-                    '3Wednesday' => 0,
-                    '4Thursday' => 0,
-                    '5Friday' => 0,
-                    '6Saturday' => 0,
+                    'Sunday' => 0,
+                    'Monday' => 0,
+                    'Tuesday' => 0,
+                    'Wednesday' => 0,
+                    'Thursday' => 0,
+                    'Friday' => 0,
+                    'Saturday' => 0,
                 ])->merge($item->mapWithKeys(static function (object $day) use ($numberOfWeeks): array {
-                    return [$day->day => $day->aggregate / $numberOfWeeks];
-                }))->mapWithKeys(static function (float $avg, string $day): array {
-                    return [substr($day, 0, 1) => $avg];
-                })];
+                    return [substr($day->day, 1) => $day->aggregate / $numberOfWeeks];
+                }))];
             });
 
         $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
