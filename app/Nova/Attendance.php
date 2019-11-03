@@ -143,7 +143,7 @@ class Attendance extends Resource
     public function cards(Request $request): array
     {
         return [
-            new AttendanceSourceBreakdown,
+            (new AttendanceSourceBreakdown())->width('1/2'),
         ];
     }
 
