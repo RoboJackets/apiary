@@ -7,8 +7,8 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Attendance;
-use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 

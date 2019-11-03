@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\User as UserResource;
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
 use App\Http\Resources\RecruitingCampaignRecipient as RecruitingCampaignRecipientResource;
+use App\Http\Resources\User as UserResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class RecruitingCampaign extends JsonResource
 {

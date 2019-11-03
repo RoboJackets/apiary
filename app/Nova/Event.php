@@ -6,17 +6,17 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\RsvpSourceBreakdown;
 use App\Nova\ResourceTools\CollectAttendance;
-use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 class Event extends Resource
 {

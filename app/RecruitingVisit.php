@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App;
 
-use Laravel\Nova\Actions\Actionable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Nova\Actions\Actionable;
 
 class RecruitingVisit extends Model
 {

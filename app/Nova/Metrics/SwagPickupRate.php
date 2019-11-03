@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\DuesPackage;
-use Laravel\Nova\Nova;
 use App\DuesTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\ValueResult;
+use Laravel\Nova\Nova;
 
 class SwagPickupRate extends TextMetric
 {

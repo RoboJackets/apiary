@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRoleRequest;
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
-use App\Http\Requests\StoreRoleRequest;
 
 class RoleController extends Controller
 {

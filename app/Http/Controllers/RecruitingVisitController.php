@@ -6,17 +6,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Throwable;
-use App\RecruitingVisit;
-use App\RecruitingResponse;
-use Illuminate\Http\Request;
-use App\Traits\AuthorizeInclude;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreRecruitingVisitRequest;
 use App\Http\Requests\UpdateRecruitingVisitRequest;
 use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
+use App\RecruitingResponse;
+use App\RecruitingVisit;
+use App\Traits\AuthorizeInclude;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class RecruitingVisitController extends Controller
 {

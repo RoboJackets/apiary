@@ -6,14 +6,14 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
+use App\DuesPackage;
 use App\Team;
 use App\User;
-use App\DuesPackage;
-use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
+use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Str;
 
 class TeamAttendanceNotification extends Notification
 {

@@ -6,12 +6,12 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use phpCAS;
-use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades\Auth;
 use App\Traits\CreateOrUpdateCASUser;
+use Closure;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use phpCAS;
 
 class CASCheck
 {

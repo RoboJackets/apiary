@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Console;
 
 use App\Jobs\DailyDuesSummary;
-use App\Jobs\WeeklyAttendance;
 use App\Jobs\NoAttendanceJediPush;
-use Illuminate\Console\Scheduling\Schedule;
+use App\Jobs\WeeklyAttendance;
 use Bugsnag\BugsnagLaravel\Commands\DeployCommand;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel

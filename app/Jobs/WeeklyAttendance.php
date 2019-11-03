@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Notifiables\CoreNotifiable;
+use App\Notifications\GlobalAttendanceNotification;
+use App\Notifications\TeamAttendanceNotification;
 use App\Team;
 use Illuminate\Bus\Queueable;
-use App\Notifiables\CoreNotifiable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Notifications\TeamAttendanceNotification;
-use App\Notifications\GlobalAttendanceNotification;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class WeeklyAttendance implements ShouldQueue
 {

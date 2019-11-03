@@ -1,7 +1,7 @@
 <?php
 
-use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Migrations\Migration;
+use Spatie\Permission\Models\Permission;
 
 class FixRsvpPermissionNaming extends Migration
 {

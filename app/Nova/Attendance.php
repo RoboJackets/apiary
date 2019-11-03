@@ -6,21 +6,21 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
-use App\Nova\Filters\DateTo;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use App\Nova\Filters\DateFrom;
-use App\Nova\Filters\Attendable;
-use Laravel\Nova\Fields\MorphTo;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Actions\ExportAttendance;
-use App\Nova\Lenses\RecentInactiveUsers;
+use App\Nova\Filters\Attendable;
+use App\Nova\Filters\DateFrom;
+use App\Nova\Filters\DateTo;
 use App\Nova\Filters\UserActiveAttendance;
-use Laravel\Nova\Http\Requests\LensRequest;
+use App\Nova\Lenses\RecentInactiveUsers;
 use App\Nova\Metrics\AttendanceSourceBreakdown;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\LensRequest;
+use Laravel\Nova\Panel;
 
 class Attendance extends Resource
 {
