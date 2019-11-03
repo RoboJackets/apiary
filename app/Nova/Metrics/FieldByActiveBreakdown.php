@@ -7,11 +7,11 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 
 abstract class FieldByActiveBreakdown extends Partition
 {

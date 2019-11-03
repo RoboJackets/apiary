@@ -113,6 +113,7 @@ class DuesTransaction extends Resource
                             'xxl' => 'XXL',
                             'xxxl' => 'XXXL',
                         ];
+
                         return $shirt_sizes[$this->user->shirt_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_shirt_provided')
@@ -137,6 +138,7 @@ class DuesTransaction extends Resource
                             'xxl' => 'XXL',
                             'xxxl' => 'XXXL',
                         ];
+
                         return $shirt_sizes[$this->user->polo_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')

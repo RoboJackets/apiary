@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Nova\Dashboards;
 
-use Laravel\Nova\Dashboard;
-use Illuminate\Http\Request;
-use App\Nova\Metrics\SUMSUsers;
 use App\Nova\Metrics\AccessOverrides;
 use App\Nova\Metrics\LinkedGitHubAccounts;
 use App\Nova\Metrics\LinkedGoogleAccounts;
 use App\Nova\Metrics\PendingGitHubInvitations;
+use App\Nova\Metrics\SUMSUsers;
+use Illuminate\Http\Request;
+use Laravel\Nova\Dashboard;
 
 class JEDI extends Dashboard
 {
