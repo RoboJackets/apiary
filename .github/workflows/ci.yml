@@ -49,7 +49,6 @@ jobs:
 
     - name: Install Node dependencies
       run: npm ci --no-progress
-      if: steps.npmcache.outputs.cache-hit != 'true'
 
     - name: Build assets
       run: npm run production --no-progress
