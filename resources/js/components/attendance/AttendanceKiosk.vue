@@ -194,7 +194,7 @@
                     }
                 }
                 return {
-                    title: 'Swipe or Tap your BuzzCard now',
+                    title: 'Tap or Swipe your BuzzCard now',
                     html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
                     showCancelButton: true,
                     allowOutsideClick: () => !Swal.isLoading(),
