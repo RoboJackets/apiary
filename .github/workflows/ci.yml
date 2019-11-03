@@ -15,7 +15,7 @@ jobs:
       uses: actions/cache@preview
       with:
         path: vendor
-        key: ${{ runner.os }}-composer
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
     - name: Install Composer dependencies
       run: composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative --ignore-platform-reqs
       env:
@@ -29,7 +29,7 @@ jobs:
       uses: actions/cache@preview
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-node
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
     - name: Install Node dependencies
       run: npm ci --no-progress
     - name: Build assets
