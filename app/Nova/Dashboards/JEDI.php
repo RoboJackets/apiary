@@ -17,24 +17,24 @@ class JEDI extends Dashboard
     /**
      * Get the cards for the dashboard.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Card>
      */
-    public function cards()
+    public function cards(): array
     {
         return [
-            (new AccessOverrides)->canSee(static function (Request $request): bool {
+            (new AccessOverrides())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
-            (new SUMSUsers)->canSee(static function (Request $request): bool {
+            (new SUMSUsers())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
-            (new LinkedGoogleAccounts)->canSee(static function (Request $request): bool {
+            (new LinkedGoogleAccounts())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
-            (new LinkedGitHubAccounts)->canSee(static function (Request $request): bool {
+            (new LinkedGitHubAccounts())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
-            (new PendingGitHubInvitations)->canSee(static function (Request $request): bool {
+            (new PendingGitHubInvitations())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
         ];

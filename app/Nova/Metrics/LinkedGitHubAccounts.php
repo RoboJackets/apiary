@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Trend;
-use Laravel\Nova\Metrics\TrendResult;
-
 class LinkedGitHubAccounts extends FieldByActiveBreakdown
 {
     /**

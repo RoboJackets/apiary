@@ -223,7 +223,7 @@ class AttendanceController extends Controller
             ->orderBy('day', 'asc')
             ->get()
             ->groupBy('attendable_id')
-            ->mapWithKeys(static function (object $item, int $attendable_id) use ($numberOfWeeks, $user): array {
+            ->mapWithKeys(static function (Collection $item, int $attendable_id) use ($numberOfWeeks, $user): array {
                 // If the user can't read teams only give them the attendable_id
                 $teamName = $user->can('read-teams') ? Team::find($attendable_id)->name : $attendable_id;
 
@@ -236,7 +236,9 @@ class AttendanceController extends Controller
                     'Friday' => 0,
                     'Saturday' => 0,
                 ])->merge($item->mapWithKeys(static function (object $day) use ($numberOfWeeks): array {
-                    return [substr($day->day, 1) => $day->aggregate / $numberOfWeeks];
+                    return [
+                        substr($day->day, 1) => $day->aggregate / $numberOfWeeks,
+                    ];
                 }))];
             });
 

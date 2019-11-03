@@ -29,20 +29,20 @@ class AttendanceSourceBreakdown extends Partition
     {
         return $this->count($request, Attendance::class, 'source')->label(static function (string $value): string {
             switch ($value) {
-            case 'kiosk':
-                return 'Kiosk (unknown type)';
-            case 'kiosk-contactless':
-                return 'Kiosk (contactless)';
-            case 'kiosk-magstripe':
-                return 'Kiosk (magstripe)';
-            case 'manual':
-                return 'Manual entry';
-            case 'MyRoboJackets':
-                return 'Swipe/contactless, not kiosk';
-            case null:
-                return 'Unknown';
-            default:
-                return ucfirst($value);
+                case 'kiosk':
+                    return 'Kiosk (unknown type)';
+                case 'kiosk-contactless':
+                    return 'Kiosk (contactless)';
+                case 'kiosk-magstripe':
+                    return 'Kiosk (magstripe)';
+                case 'manual':
+                    return 'Manual entry';
+                case 'MyRoboJackets':
+                    return 'Swipe/contactless, not kiosk';
+                case null:
+                    return 'Unknown';
+                default:
+                    return ucfirst($value);
             }
         });
     }

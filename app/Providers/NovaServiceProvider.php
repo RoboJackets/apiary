@@ -107,9 +107,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the extra dashboards that should be displayed on the Nova dashboard.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Dashboard>
      */
-    protected function dashboards()
+    protected function dashboards(): array
     {
         return [
             (new JEDI())->canSee(static function (Request $request): bool {

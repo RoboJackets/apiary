@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Nova\Metrics;
 
 use App\User;
-use App\Attendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 abstract class FieldByActiveBreakdown extends Partition
 {
@@ -38,13 +40,15 @@ abstract class FieldByActiveBreakdown extends Partition
      * @param \Illuminate\Http\Request  $request
      *
      * @return \Laravel\Nova\Metrics\PartitionResult
+     *
+     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function calculate(Request $request): PartitionResult
     {
         $result = $this->getQuery()
             ->get()
             ->groupBy('is_active')
-            ->mapWithKeys(static function (object $coll, int $key): array {
+            ->mapWithKeys(static function (Collection $coll, int $key): array {
                 $keyStr = 1 === $key ? 'Active' : 'Inactive';
 
                 return [$keyStr => $coll->count()];
