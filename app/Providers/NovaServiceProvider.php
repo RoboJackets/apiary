@@ -112,7 +112,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function dashboards()
     {
         return [
-            new Jedi,
+            (new Jedi())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            }),
         ];
     }
 }
