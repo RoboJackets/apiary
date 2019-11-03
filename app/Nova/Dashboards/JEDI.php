@@ -12,7 +12,7 @@ use App\Nova\Metrics\LinkedGitHubAccounts;
 use App\Nova\Metrics\LinkedGoogleAccounts;
 use App\Nova\Metrics\PendingGitHubInvitations;
 
-class Jedi extends Dashboard
+class JEDI extends Dashboard
 {
     /**
      * Get the cards for the dashboard.
