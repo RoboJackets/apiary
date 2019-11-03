@@ -42,13 +42,14 @@ jobs:
       uses: actions/cache@preview
       id: npmcache
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        path: node_modules
+        key: ${{ runner.os }}-nodemodules-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ runner.os }}-nodemodules-
 
     - name: Install Node dependencies
       run: npm ci --no-progress
+      if: steps.npmcache.outputs.cache-hit != 'true'
 
     - name: Build assets
       run: npm run production --no-progress
