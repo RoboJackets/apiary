@@ -55,7 +55,7 @@ jobs:
   AutoDeploy:
     runs-on: ubuntu-latest
     needs: CI
-    if: github.ref == 'master'
+    if: github.ref == 'refs/heads/master'
 
     steps:
     # This will run regardless of the success of other checks but the API call will only deploy on successful status.
