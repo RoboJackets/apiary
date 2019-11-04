@@ -15,7 +15,7 @@
       "packageNames": [
         "laravel/framework"
       ],
-      "allowedVersions": "< 5.9"
+      "allowedVersions": "< 7.0"
     }
   ],
   "prConcurrentLimit": 1,
