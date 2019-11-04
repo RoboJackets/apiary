@@ -73,6 +73,7 @@ jobs:
         {
             "ref": "${GITHUB_SHA}",
             "environment": "test",
-            "auto_merge": false
+            "auto_merge": false,
+            "required_contexts": ["CI", "CodeSniffer", "Composer Install", "Mess Detector", "PHPStan", "Phan", "Syntax", "continuous-integration/styleci/push"]
         }
         EOF
