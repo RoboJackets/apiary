@@ -383,6 +383,18 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * Scope a query to automatically include only members with access overrides.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeHasOverride(Builder $query): Builder
+    {
+        return $query->inactive()->where('access_override_until', '>', now());
+    }
+
     public function accessOverrideBy(): BelongsTo
     {
         return $this->belongsTo(self::class, 'access_override_by_id');

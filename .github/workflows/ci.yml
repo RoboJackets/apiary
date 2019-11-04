@@ -3,34 +3,52 @@ name: CI
 on: [push]
 
 jobs:
-  build:
+  CI:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
-    - name: Update Composer
-      run: sudo composer self-update
+
     - name: Cache vendor directory
       uses: actions/cache@preview
+      id: vendorcache
       with:
         path: vendor
-        key: ${{ runner.os }}-composer
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Update Composer
+      run: sudo composer self-update
+
     - name: Install Composer dependencies
       run: composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative --ignore-platform-reqs
+      # Must run despite the cache due to autoloader output
       env:
         COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
     - name: Check for env() being used outside config/
       run: bash -c "! git grep \"env(\" -- '.' ':!/config/' ':!/.circleci/config.yml' ':!/.github/workflows/ci.yml' ':!/composer.lock'"
+
     - run: php artisan config:cache
+
     - run: php artisan nova:publish --no-interaction
+
     - run: php artisan horizon:assets --no-interaction
+
     - name: Cache npm
       uses: actions/cache@preview
+      id: npmcache
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node
+        path: node_modules
+        key: ${{ runner.os }}-nodemodules-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nodemodules-
+
     - name: Install Node dependencies
       run: npm ci --no-progress
+      if: steps.npmcache.outputs.cache-hit != 'true'
+
     - name: Build assets
       run: npm run production --no-progress

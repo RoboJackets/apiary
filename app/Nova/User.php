@@ -9,6 +9,7 @@ namespace App\Nova;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
+use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
 use App\User as AU;
 use Illuminate\Http\Request;
@@ -335,6 +336,10 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
+                }),
+            (new ResumesSubmitted())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-resume');
                 }),
         ];
     }

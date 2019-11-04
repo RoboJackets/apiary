@@ -12,6 +12,7 @@ use App\Nova\Filters\DateFrom;
 use App\Nova\Filters\DateTo;
 use App\Nova\Filters\UserActiveAttendance;
 use App\Nova\Lenses\RecentInactiveUsers;
+use App\Nova\Metrics\AttendanceSourceBreakdown;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -141,7 +142,9 @@ class Attendance extends Resource
      */
     public function cards(Request $request): array
     {
-        return [];
+        return [
+            (new AttendanceSourceBreakdown())->width('1/2'),
+        ];
     }
 
     /**

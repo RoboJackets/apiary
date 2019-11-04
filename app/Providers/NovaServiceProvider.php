@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Nova\Cards\MakeAWish;
+use App\Nova\Dashboards\JEDI;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
@@ -101,5 +102,19 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function register(): void
     {
+    }
+
+    /**
+     * Get the extra dashboards that should be displayed on the Nova dashboard.
+     *
+     * @return array<\Laravel\Nova\Dashboard>
+     */
+    protected function dashboards(): array
+    {
+        return [
+            (new JEDI())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            }),
+        ];
     }
 }
