@@ -6,23 +6,23 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
-use App\Team as AppTeam;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\BelongsTo;
-use App\Nova\Metrics\ActiveMembers;
-use App\Nova\Metrics\TotalTeamMembers;
-use Laravel\Nova\Fields\BelongsToMany;
-use App\Nova\Metrics\AttendancePerWeek;
-use Illuminate\Database\Eloquent\Builder;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use App\Nova\ResourceTools\CollectAttendance;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use App\Nova\Metrics\ActiveMembers;
+use App\Nova\Metrics\AttendancePerWeek;
+use App\Nova\Metrics\TotalTeamMembers;
+use App\Nova\ResourceTools\CollectAttendance;
+use App\Team as AppTeam;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class Team extends Resource
 {

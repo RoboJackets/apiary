@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Team;
-use Carbon\Carbon;
 use App\DuesPackage;
 use App\DuesTransaction;
-use Illuminate\View\View;
+use App\Team;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {

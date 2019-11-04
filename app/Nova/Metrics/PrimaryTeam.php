@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Attendance;
 use App\Team;
 use App\User;
-use App\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Metrics\ValueResult;

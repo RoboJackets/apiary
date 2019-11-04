@@ -6,9 +6,9 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class Attendance extends JsonResource
 {

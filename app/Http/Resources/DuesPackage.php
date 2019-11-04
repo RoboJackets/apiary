@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class DuesPackage extends JsonResource
 {

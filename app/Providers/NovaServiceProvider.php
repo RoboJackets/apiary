@@ -6,17 +6,18 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\User;
-use Laravel\Nova\Nova;
-use Illuminate\Http\Request;
 use App\Nova\Cards\MakeAWish;
+use App\Nova\Dashboards\JEDI;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\ActiveMembers;
+use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Tools\AttendanceReport;
+use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
-use App\Nova\Metrics\AttendancePerWeek;
-use App\Nova\Metrics\ActiveAttendanceBreakdown;
+use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -101,5 +102,19 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function register(): void
     {
+    }
+
+    /**
+     * Get the extra dashboards that should be displayed on the Nova dashboard.
+     *
+     * @return array<\Laravel\Nova\Dashboard>
+     */
+    protected function dashboards(): array
+    {
+        return [
+            (new JEDI())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            }),
+        ];
     }
 }

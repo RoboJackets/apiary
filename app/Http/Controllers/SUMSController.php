@@ -7,11 +7,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Jobs\PushToJedi;
 use App\Team;
 use Carbon\Carbon;
-use App\Jobs\PushToJedi;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SUMSController extends Controller
 {

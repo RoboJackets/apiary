@@ -6,20 +6,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\RecruitingVisit;
-use App\RecruitingCampaign;
-use Illuminate\Http\Request;
-use App\Traits\AuthorizeInclude;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use App\RecruitingCampaignRecipient;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\GeneralInterestNotification;
 use App\Http\Requests\StoreRecruitingCampaignRequest;
 use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
+use App\Notifications\GeneralInterestNotification;
+use App\RecruitingCampaign;
+use App\RecruitingCampaignRecipient;
+use App\RecruitingVisit;
+use App\Traits\AuthorizeInclude;
+use Carbon\Carbon;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class RecruitingCampaignController extends Controller
 {

@@ -194,13 +194,16 @@
                     }
                 }
                 return {
-                    title: 'Swipe or Tap your BuzzCard now',
+                    title: 'Tap or Swipe your BuzzCard now',
                     html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
                     showCancelButton: true,
                     allowOutsideClick: () => !Swal.isLoading(),
                     showConfirmButton: false,
-                    imageUrl: '/img/swipe-horiz-up.gif',
-                    imageWidth: 450,
+                    imageUrl: '/img/contactless-24px.svg',
+                    imageWidth: 200,
+                    customClass: {
+                      'image': 'contactless-symbol-kiosk',
+                    },
                     input: 'checkbox',
                     inputValue: this.stickToTeam,
                     inputPlaceholder: 'Stick to this team',
@@ -208,6 +211,12 @@
                         // Remove focus from checkbox
                         document.activeElement.blur();
                         Swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
+                        var cardImg = document.createElement('img');
+                        cardImg.src = '/img/contactless-card-24px.svg';
+                        var cardDiv = document.createElement('div');
+                        cardDiv.className = 'animated-contactless-card';
+                        cardDiv.appendChild(cardImg);
+                        Swal.getHeader().insertBefore(cardDiv, Swal.getTitle());
                     },
                     onClose: () => {
                         Swal.getInput().removeEventListener("change", checkboxEventListener);

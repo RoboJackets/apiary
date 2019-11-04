@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\User;
-use Laravel\Nova\Nova;
+use Illuminate\Database\Eloquent\Builder as Eloquent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
-use Illuminate\Database\Eloquent\Builder as Eloquent;
+use Laravel\Nova\Nova;
 
 class ShirtSizeBreakdown extends Partition
 {

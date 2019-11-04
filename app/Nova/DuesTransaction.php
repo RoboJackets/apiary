@@ -6,15 +6,15 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use App\DuesTransaction as ADT;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 class DuesTransaction extends Resource
 {
@@ -104,10 +104,22 @@ class DuesTransaction extends Resource
                 [
                     Text::make('Status', 'swag_shirt_status')
                         ->onlyOnDetail(),
+                    Text::make('Size', function (): string {
+                        $shirt_sizes = [
+                            's' => 'Small',
+                            'm' => 'Medium',
+                            'l' => 'Large',
+                            'xl' => 'Extra-Large',
+                            'xxl' => 'XXL',
+                            'xxxl' => 'XXXL',
+                        ];
+
+                        return $shirt_sizes[$this->user->shirt_size];
+                    })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_shirt_provided')
                         ->onlyOnDetail(),
                     BelongsTo::make('Distributed By', 'swagShirtProvidedBy', User::class)
-                        ->help('The user that recorded the payment')
+                        ->help('The user that recorded the distribution of the t-shirt')
                         ->onlyOnDetail(),
                 ]
             ),
@@ -117,10 +129,22 @@ class DuesTransaction extends Resource
                 [
                     Text::make('Status', 'swag_polo_status')
                         ->onlyOnDetail(),
+                    Text::make('Size', function (): string {
+                        $shirt_sizes = [
+                            's' => 'Small',
+                            'm' => 'Medium',
+                            'l' => 'Large',
+                            'xl' => 'Extra-Large',
+                            'xxl' => 'XXL',
+                            'xxxl' => 'XXXL',
+                        ];
+
+                        return $shirt_sizes[$this->user->polo_size];
+                    })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
                         ->onlyOnDetail(),
                     BelongsTo::make('Distributed By', 'swagPoloProvidedBy', User::class)
-                        ->help('The user that recorded the payment')
+                        ->help('The user that recorded the distribution of the polo')
                         ->onlyOnDetail(),
                 ]
             ),

@@ -70,3 +70,31 @@ body {
 input.form-control.is-invalid ~ .invalid-feedback {
   display: block;
 }
+
+.contactless-symbol-kiosk.swal2-image {
+  margin-top: -10px;
+}
+
+.animated-contactless-card {
+  height: 150px;
+  margin-top: -40px;
+  line-height: 150px;
+}
+
+.animated-contactless-card img {
+  animation-duration: 1s;
+  animation-name: contactless-tap;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  vertical-align: bottom;
+}
+
+@keyframes contactless-tap {
+  from {
+    width: 100px;
+  }
+  to {
+    width: 150px;
+  }
+}

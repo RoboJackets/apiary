@@ -6,15 +6,15 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use Illuminate\Bus\Queueable;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Fields\DateTime;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Jobs\GenerateResumeBook as GenerateJob;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Text;
 
 class GenerateResumeBook extends Action
 {

@@ -7,14 +7,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\DuesTransaction;
-use Illuminate\Http\Request;
-use App\Traits\AuthorizeInclude;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Database\QueryException;
 use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
+use App\Traits\AuthorizeInclude;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class DuesTransactionController extends Controller
 {

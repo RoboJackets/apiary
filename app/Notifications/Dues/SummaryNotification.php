@@ -6,15 +6,15 @@ declare(strict_types=1);
 
 namespace App\Notifications\Dues;
 
-use App\User;
-use App\Payment;
 use App\DuesTransaction;
-use Illuminate\Support\Str;
-use Illuminate\Bus\Queueable;
-use Illuminate\Support\Collection;
 use App\Notifiables\TreasurerNotifiable;
-use Illuminate\Notifications\Notification;
+use App\Payment;
+use App\User;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class SummaryNotification extends Notification
 {

@@ -6,16 +6,16 @@ declare(strict_types=1);
 
 namespace App\Nova\Lenses;
 
-use App\Nova\Team;
 use App\Nova\Event;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Lenses\Lens;
 use App\Nova\Filters\Attendable;
-use Laravel\Nova\Fields\MorphTo;
-use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Team;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
+use Laravel\Nova\Lenses\Lens;
 
 class RecentInactiveUsers extends Lens
 {

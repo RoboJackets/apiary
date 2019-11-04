@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Event as EventResource;
+use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Rsvp extends JsonResource

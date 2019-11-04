@@ -6,15 +6,15 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Http\Resources\Event as EventResource;
+use App\Http\Resources\Permission as PermissionResource;
+use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
-use App\Http\Resources\Event as EventResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Permission as PermissionResource;
-use App\Http\Resources\DuesTransaction as DuesTransactionResource;
-use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
+use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {

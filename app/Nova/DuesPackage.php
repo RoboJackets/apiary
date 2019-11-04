@@ -6,17 +6,17 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\DateTime;
+use App\Nova\Metrics\PaymentMethodBreakdown;
+use App\Nova\Metrics\ShirtSizeBreakdown;
 use App\Nova\Metrics\SwagPickupRate;
 use App\Nova\Metrics\TotalCollections;
-use App\Nova\Metrics\ShirtSizeBreakdown;
-use App\Nova\Metrics\PaymentMethodBreakdown;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 class DuesPackage extends Resource
 {

@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreResumeRequest;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreResumeRequest;
 
 class ResumeController extends Controller
 {

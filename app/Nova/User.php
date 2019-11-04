@@ -6,22 +6,23 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\User as AU;
-use Laravel\Nova\Panel;
 use App\Nova\Fields\Hidden;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\File;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\MorphToMany;
+use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
+use App\User as AU;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 class User extends Resource
 {
@@ -335,6 +336,10 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
+                }),
+            (new ResumesSubmitted())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users-resume');
                 }),
         ];
     }

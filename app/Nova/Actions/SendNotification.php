@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use Illuminate\Support\Str;
-use App\NotificationTemplate;
 use App\Mail\DatabaseMailable;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Actions\Action;
+use App\NotificationTemplate;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Select;
 
 class SendNotification extends Action
 {

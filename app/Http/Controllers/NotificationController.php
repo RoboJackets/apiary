@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\RecruitingVisit;
+use App\Http\Requests\SendNotificationManualNotificationRequest;
 use App\Mail\DatabaseMailable;
+use App\Notifications\GeneralInterestNotification;
+use App\RecruitingVisit;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\GeneralInterestNotification;
-use App\Http\Requests\SendNotificationManualNotificationRequest;
 
 class NotificationController extends Controller
 {

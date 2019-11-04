@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\User;
 use App\NotificationTemplate;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class NotificationTemplatePolicy

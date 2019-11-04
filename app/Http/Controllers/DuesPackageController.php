@@ -7,13 +7,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\DuesPackage;
-use Illuminate\Http\Request;
-use App\Traits\AuthorizeInclude;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Database\QueryException;
 use App\Http\Requests\StoreDuesPackageRequest;
 use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
+use App\Traits\AuthorizeInclude;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class DuesPackageController extends Controller
 {

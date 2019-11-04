@@ -1,7 +1,7 @@
 <?php
 
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\Migrations\Migration;
+use Spatie\Permission\Models\Role;
 
 class AddTrainerRole extends Migration
 {

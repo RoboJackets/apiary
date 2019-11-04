@@ -6,13 +6,13 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Laravel\Nova\Panel;
+use App\Nova\Actions\SendRecruitingEmail;
 use App\RecruitingResponse;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
-use App\Nova\Actions\SendRecruitingEmail;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 class RecruitingVisit extends Resource
 {
