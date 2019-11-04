@@ -45,7 +45,7 @@ class JEDI extends Dashboard
      *
      * @return string
      */
-    public function uriKey(): string
+    public static function uriKey(): string
     {
         return 'jedi';
     }
