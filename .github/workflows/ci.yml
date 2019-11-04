@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  NodeCI:
+  CI:
 
     runs-on: ubuntu-latest
 
@@ -15,17 +15,16 @@ jobs:
       id: vendorcache
       with:
         path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-composer-
 
     - name: Update Composer
       run: sudo composer self-update
-      if: steps.vendorcache.outputs.cache-hit != 'true'
 
     - name: Install Composer dependencies
       run: composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative --ignore-platform-reqs
-      if: steps.vendorcache.outputs.cache-hit != 'true'
+      # Must run despite the cache due to autoloader output
       env:
         COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
@@ -43,7 +42,7 @@ jobs:
       id: npmcache
       with:
         path: node_modules
-        key: ${{ runner.os }}-nodemodules-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-nodemodules-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nodemodules-
 
