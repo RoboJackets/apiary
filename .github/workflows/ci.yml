@@ -58,6 +58,9 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     steps:
+    # TODO: Run this on a trigger
+    - name: Delay for other checks to finish
+      run: sleep 60s
     # This will run regardless of the success of other checks but the API call will only deploy on successful status.
     - name: Create deployment
       run: |
