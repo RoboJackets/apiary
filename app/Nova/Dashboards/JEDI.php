@@ -28,15 +28,15 @@ class JEDI extends Dashboard
             (new SUMSUsers())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
-            (new LinkedGoogleAccounts())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            }),
-            (new LinkedGitHubAccounts())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            }),
             (new PendingGitHubInvitations())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
+            (new LinkedGoogleAccounts())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            })->width('1/2'),
+            (new LinkedGitHubAccounts())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            })->width('1/2'),
         ];
     }
 
