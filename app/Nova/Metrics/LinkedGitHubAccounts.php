@@ -11,7 +11,7 @@ class LinkedGitHubAccounts extends FieldByActiveBreakdown
      */
     public function __construct()
     {
-        parent::__construct('github_username');
+        parent::__construct('github_username', true);
     }
 
     /**

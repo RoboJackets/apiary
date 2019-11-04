@@ -23,15 +23,24 @@ abstract class FieldByActiveBreakdown extends Partition
     protected $field_name;
 
     /**
-     * Create a new LinkedAccountsBreakdown metric.
+     * True to use the is_access_active instead of is_active value.
+     *
+     * @var string
+     */
+    protected $use_access_active;
+
+    /**
+     * Create a new FieldByActiveBreakdown metric.
      *
      * @param string  $field_name
+     * @param bool  $use_access_active
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function __construct(string $field_name)
+    public function __construct(string $field_name, bool $use_access_active = false)
     {
         $this->field_name = $field_name;
+        $this->use_access_active = $use_access_active;
     }
 
     /**
@@ -47,9 +56,12 @@ abstract class FieldByActiveBreakdown extends Partition
     {
         $result = $this->getQuery()
             ->get()
-            ->groupBy('is_active')
-            ->mapWithKeys(static function (Collection $coll, int $key): array {
+            ->groupBy($this->use_access_active ? 'is_access_active' : 'is_active')
+            ->mapWithKeys(function (Collection $coll, int $key): array {
                 $keyStr = 1 === $key ? 'Active' : 'Inactive';
+                if ($this->use_access_active) {
+                    $keyStr = 'Access '.$keyStr;
+                }
 
                 return [$keyStr => $coll->count()];
             })->toArray();

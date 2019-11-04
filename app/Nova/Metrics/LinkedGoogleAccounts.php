@@ -11,7 +11,7 @@ class LinkedGoogleAccounts extends FieldByActiveBreakdown
      */
     public function __construct()
     {
-        parent::__construct('gmail_address');
+        parent::__construct('gmail_address', true);
     }
 
     /**
