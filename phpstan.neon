@@ -58,7 +58,7 @@ parameters:
     - '#Call to an undefined static method App\\RecruitingVisit::chunk\(\)#'
     - '#Call to an undefined static method App\\DuesPackage::availableForPurchase\(\)#'
     - '#Call to an undefined static method App\\User::active\(\)#'
-    - '#Call to an undefined static method App\\User::inactive\(\)#'
+    - '#Call to an undefined static method App\\User::hasOverride\(\)#'
     - '#Call to an undefined static method App\\User::accessActive\(\)#'
     - '#Call to an undefined static method App\\User::findByIdentifier\(\)#'
     - '#Call to an undefined static method Illuminate\\Support\\Facades\\DB::rollback\(\)#'
