@@ -25,7 +25,7 @@ abstract class FieldByActiveBreakdown extends Partition
     /**
      * True to use the is_access_active instead of is_active value.
      *
-     * @var string
+     * @var bool
      */
     protected $use_access_active;
 
