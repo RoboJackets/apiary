@@ -63,7 +63,7 @@ jobs:
       run: |
         curl --silent --show-error --fail \
             -X POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments" \
-            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
             -H "Content-Type: text/json; charset=utf-8" \
             -H "Accept: application/json" \
             -d @- <<EOF
