@@ -22,7 +22,7 @@ class PendingGitHubInvitations extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        return $this->result(User::active()->where('exists_in_sums', 1)->count());
+        return $this->result(User::accessActive()->where('github_invite_pending', 1)->count());
     }
 
     /**
