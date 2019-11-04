@@ -15,7 +15,7 @@ jobs:
       id: vendorcache
       with:
         path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-composer-
 
@@ -42,7 +42,7 @@ jobs:
       id: npmcache
       with:
         path: node_modules
-        key: ${{ runner.os }}-nodemodules-${{ hashFiles('package-lock.json') }}
+        key: ${{ runner.os }}-nodemodules-${{ hashFiles('/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nodemodules-
 
