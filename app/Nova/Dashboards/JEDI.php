@@ -39,4 +39,14 @@ class JEDI extends Dashboard
             }),
         ];
     }
+
+    /**
+     * Get the URI key for the dashboard.
+     *
+     * @return string
+     */
+    public function uriKey(): string
+    {
+        return 'jedi';
+    }
 }
