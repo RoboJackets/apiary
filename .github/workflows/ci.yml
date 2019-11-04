@@ -64,16 +64,13 @@ jobs:
     # This will run regardless of the success of other checks but the API call will only deploy on successful status.
     - name: Create deployment
       run: |
-        curl --silent --show-error --fail \
-            -X POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments" \
-            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-            -H "Content-Type: text/json; charset=utf-8" \
-            -H "Accept: application/json" \
-            -d @- <<EOF
-        {
-            "ref": "${GITHUB_SHA}",
+        curl --request POST \
+        --url https://api.github.com/repos/${{ github.repository }}/deployments \
+        --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+        --header 'content-type: application/json' \
+        --data '{
+          "ref": "${{ github.sha }}",
             "environment": "test",
             "auto_merge": false,
             "required_contexts": ["CI", "CodeSniffer", "Composer Install", "Mess Detector", "PHPStan", "Phan", "Syntax", "continuous-integration/styleci/push"]
-        }
-        EOF
+          }'
