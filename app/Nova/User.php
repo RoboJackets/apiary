@@ -52,6 +52,7 @@ class User extends Resource
         'preferred_name',
         'gtid',
         'github_username',
+        'phone',
     ];
 
     /**
