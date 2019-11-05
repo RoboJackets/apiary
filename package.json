@@ -32,7 +32,7 @@
     "popper.js": "1.16.0",
     "sweetalert2": "8.19.0",
     "vue": "2.6.10",
-    "vue-flatpickr-component": "8.1.4",
+    "vue-flatpickr-component": "8.1.5",
     "vue-moment": "4.0.0",
     "vue-select": "3.2.0",
     "vue-template-compiler": "2.6.10",
