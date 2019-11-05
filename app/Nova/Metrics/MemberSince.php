@@ -25,7 +25,9 @@ class MemberSince extends TextMetric
         $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
 
         if ($transaction) {
-            return $this->result(date('F j, Y', strtotime($transaction->payment->updated_at->toDateTimeString())));
+            return $this->result(date('F j, Y', strtotime(
+                $transaction->payment()->where('amount', '>', 0)->first()->updated_at->toDateTimeString()
+            )));
         }
 
         return $this->result('n/a');
