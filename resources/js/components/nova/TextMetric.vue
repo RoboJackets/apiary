@@ -60,5 +60,14 @@ export default {
       });
     },
   },
+  watch: {
+    'resourceId': function() {
+      if (this.card.ranges.length > 0) {
+        this.selectedRange = this.card.ranges[0].value;
+      }
+
+      this.refresh(null);
+    },
+  },
 }
 </script>
