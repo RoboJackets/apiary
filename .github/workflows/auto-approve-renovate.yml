@@ -3,9 +3,9 @@ on: pull_request
 
 jobs:
   AutoApprove:
+    if: github.actor == 'renovate[bot]'
     runs-on: ubuntu-latest
     steps:
     - uses: hmarr/auto-approve-action@7782c7e
-      if: github.actor == 'renovate[bot]'
       with:
         github-token: "${{ secrets.GITHUB_TOKEN }}"
