@@ -16,8 +16,6 @@ parameters:
     - '#Call to an undefined method [a-zA-Z\\|]+::availableForPurchase\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::authorizeInclude\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::delete\(\)#'
-    - '#Call to an undefined method [a-zA-Z\|\\]+::find\(\)#'
-    - '#Call to an undefined method [a-zA-Z\|\\]+::get\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::givePermissionTo\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::intended\(\)#'
     - '#Call to an undefined method [a-zA-Z\|\\]+::paid\(\)#'

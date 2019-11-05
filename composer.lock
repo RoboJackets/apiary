@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f77dbb2d47711808498a14732ba5d51",
+    "content-hash": "4c3a7857d1fff2460ccb2c8cdb8eb53b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1795,16 +1795,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.0.3",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "56789e9dec750e0fbe8e9e6ae90a01a4e6887902"
+                "reference": "6d120a21ef0c69630e92dec67932ef434c746019"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/56789e9dec750e0fbe8e9e6ae90a01a4e6887902",
-                "reference": "56789e9dec750e0fbe8e9e6ae90a01a4e6887902",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6d120a21ef0c69630e92dec67932ef434c746019",
+                "reference": "6d120a21ef0c69630e92dec67932ef434c746019",
                 "shasum": ""
             },
             "require": {
@@ -1900,7 +1900,8 @@
                 "league/flysystem-sftp": "Required to use the Flysystem SFTP driver (^1.0).",
                 "moontoast/math": "Required to use ordered UUIDs (^1.1).",
                 "pda/pheanstalk": "Required to use the beanstalk queue driver (^4.0).",
-                "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^3.0).",
+                "psr/http-message": "Required to allow Storage::put to accept a StreamInterface (^1.0)",
+                "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0).",
                 "symfony/cache": "Required to PSR-6 cache bridge (^4.3.4).",
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^1.2).",
                 "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
@@ -1936,7 +1937,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-09-10T18:46:24+00:00"
+            "time": "2019-11-05T14:32:58+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2825,16 +2826,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.25.3",
+            "version": "2.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "d07636581795383e2fea2d711212d30f941f2039"
+                "reference": "e01ecc0b71168febb52ae1fdc1cfcc95428e604e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d07636581795383e2fea2d711212d30f941f2039",
-                "reference": "d07636581795383e2fea2d711212d30f941f2039",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e01ecc0b71168febb52ae1fdc1cfcc95428e604e",
+                "reference": "e01ecc0b71168febb52ae1fdc1cfcc95428e604e",
                 "shasum": ""
             },
             "require": {
@@ -2888,7 +2889,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-10-20T11:05:44+00:00"
+            "time": "2019-10-21T21:32:25+00:00"
         },
         {
             "name": "nikic/php-parser",
