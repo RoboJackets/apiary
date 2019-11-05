@@ -25,10 +25,7 @@ class MemberSince extends TextMetric
         $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
 
         if ($transaction) {
-            // The date must be passed in as the prefix, or the non-numeric characters will be stripped and it will be
-            // treated as a number. This is ugly but works. See
-            // vendor/laravel/nova/resources/js/components/Metrics/Base/ValueMetric.vue line 124.
-            return $this->result(date('F j, Y', strtotime($transaction->created_at->toDateTimeString())));
+            return $this->result(date('F j, Y', strtotime($transaction->payment->updated_at->toDateTimeString())));
         }
 
         return $this->result('n/a');
