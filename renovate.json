@@ -10,15 +10,8 @@
     "type / technical debt"
   ],
   "reviewers": [],
-  "packageRules": [
-    {
-      "packageNames": [
-        "laravel/framework"
-      ],
-      "allowedVersions": "< 7.0"
-    }
-  ],
   "prConcurrentLimit": 1,
+  "prHourlyLimit": 0,
   "rebaseStalePrs": true,
   "vulnerabilityAlerts": {
     "labels": [
