@@ -16,7 +16,9 @@ use App\Policies\DuesTransactionPolicy;
 use App\Policies\EventPolicy;
 use App\Policies\NotificationTemplatePolicy;
 use App\Policies\PaymentPolicy;
+use App\Policies\PermissionPolicy;
 use App\Policies\RecruitingVisitPolicy;
+use App\Policies\RolePolicy;
 use App\Policies\RsvpPolicy;
 use App\Policies\TeamPolicy;
 use App\Policies\UserPolicy;
@@ -25,6 +27,8 @@ use App\Rsvp;
 use App\Team;
 use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -44,6 +48,8 @@ class AuthServiceProvider extends ServiceProvider
         RecruitingVisit::class => RecruitingVisitPolicy::class,
         Payment::class => PaymentPolicy::class,
         DuesTransaction::class => DuesTransactionPolicy::class,
+        Role::class => RolePolicy::class,
+        Permission::class => PermissionPolicy::class,
     ];
 
     /**
