@@ -7,8 +7,8 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use App\User;
-use Spatie\Permission\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Spatie\Permission\Models\Role;
 
 class RolePolicy
 {
