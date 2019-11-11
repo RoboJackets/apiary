@@ -64,7 +64,7 @@ abstract class FieldByActiveBreakdown extends Partition
                 }
 
                 return [$keyStr => $coll->count()];
-            })->toArray();
+            })->sortKeys()->toArray();
 
         return $this->result($result);
     }
