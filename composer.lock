@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "856144a4259a1b7a45b0ac59d5c5b0d8",
+    "content-hash": "976a4c63880c15d81a1136e2b60b3856",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2010,17 +2010,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.6.0",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "7078f323275315e89f43534300b0f05125e31810"
+                "reference": "8476c492e8420d315d91cab15cac819e04422b42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-7078f323275315e89f43534300b0f05125e31810-zip-3a8975.zip",
-                "reference": "7078f323275315e89f43534300b0f05125e31810",
-                "shasum": "08621b8b8aaf3f67c817d4417f7f823d0c84b244"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-8476c492e8420d315d91cab15cac819e04422b42-zip-e6a5ec.zip",
+                "reference": "8476c492e8420d315d91cab15cac819e04422b42",
+                "shasum": "df6977c1206f1e943f7437f7676ccc748df460f0"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -2028,7 +2028,7 @@
                 "illuminate/support": "^5.7.15 | 5.8.* | ^6.0",
                 "moontoast/math": "^1.1",
                 "php": ">=7.1.0",
-                "spatie/once": "^1.1",
+                "spatie/once": "^1.1 | ^2.0",
                 "symfony/finder": "^4.0"
             },
             "require-dev": {
@@ -2076,7 +2076,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-10-29T17:42:57+00:00"
+            "time": "2019-11-12T20:23:10+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -4053,24 +4053,24 @@
         },
         {
             "name": "spatie/once",
-            "version": "1.1.0",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/once.git",
-                "reference": "26b52e4571882c526d0bc017f354d997d263a98e"
+                "reference": "d721d3ece6e6c2a847d82c247815ff8489233f8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/once/zipball/26b52e4571882c526d0bc017f354d997d263a98e",
-                "reference": "26b52e4571882c526d0bc017f354d997d263a98e",
+                "url": "https://api.github.com/repos/spatie/once/zipball/d721d3ece6e6c2a847d82c247815ff8489233f8b",
+                "reference": "d721d3ece6e6c2a847d82c247815ff8489233f8b",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "php": "^7.2"
             },
             "require-dev": {
-                "illuminate/support": "~5.3.0",
-                "phpunit/phpunit": "5.*"
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "autoload": {
@@ -4102,7 +4102,7 @@
                 "once",
                 "spatie"
             ],
-            "time": "2017-08-24T21:16:25+00:00"
+            "time": "2019-10-31T02:50:53+00:00"
         },
         {
             "name": "square/connect",
