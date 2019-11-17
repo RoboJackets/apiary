@@ -19,7 +19,7 @@ class AddWaiverPaymentMethodPermission extends Migration
         $p_create_payments_waiver = Permission::firstOrCreate(['name' => 'create-payments-waiver']);
 
         $r_admin = Role::firstOrCreate(['name' => 'admin']);
-        $r_admin->givePermissionTo($create_payments_waiver);
+        $r_admin->givePermissionTo($p_create_payments_waiver);
         $r_officer = Role::firstOrCreate(['name' => 'officer']);
         $r_officer->givePermissionTo($p_create_payments_waiver);
     }
