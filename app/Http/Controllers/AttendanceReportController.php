@@ -34,12 +34,8 @@ class AttendanceReportController extends Controller
             );
         }
 
-        $file = 'attendance-reports/'.$hash.'.csv';
-
-        $response = response()->file(Storage::disk('local')->path($file));
-
-        Storage::delete($file);
-
-        return $response;
+        return response()->download(
+            __DIR__.'/../../../storage/app/attendance-reports/'.$hash.'.csv'
+        )->deleteFileAfterSend(true);
     }
 }
