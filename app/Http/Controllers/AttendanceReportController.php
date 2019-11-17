@@ -8,7 +8,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 
-class ResumeBookController extends Controller
+class AttendanceReportController extends Controller
 {
     public function __construct()
     {

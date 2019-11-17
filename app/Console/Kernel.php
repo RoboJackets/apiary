@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Jobs\AttendanceReportCleanup;
 use App\Jobs\DailyDuesSummary;
 use App\Jobs\NoAttendanceJediPush;
 use App\Jobs\WeeklyAttendance;
