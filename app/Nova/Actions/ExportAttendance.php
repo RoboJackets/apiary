@@ -74,9 +74,9 @@ class ExportAttendance extends Action
 
         $file = 'public/attendance-reports/'.hash('sha256', random_bytes(64)).'.csv';
 
-        Storage::append($file, 'GTID,'.implode(',', $attendables->keys()->all()));
-
         $attendables_array = $attendables->sortKeys()->keys()->all();
+
+        Storage::append($file, 'GTID,'.implode(',', $attendables_array));
 
         foreach ($collection as $person) {
             $row = $person->get('GTID');
