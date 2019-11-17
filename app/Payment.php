@@ -34,6 +34,7 @@ class Payment extends Model
      * new methods added here.
      *
      * @var array<string,string>
+     *
      * @phan-suppress PhanReadOnlyPublicProperty
      */
     public static $methods = [
