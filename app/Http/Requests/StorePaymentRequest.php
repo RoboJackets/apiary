@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Payment;
 
 class StorePaymentRequest extends FormRequest
 {
@@ -27,7 +29,11 @@ class StorePaymentRequest extends FormRequest
     {
         return [
             'amount'       => 'required|numeric',
-            'method'       => 'required|string|in:cash,check,swipe,square,squarecash',
+            'method'       => [
+                'required',
+                'string',
+                Rule::in(array_keys(Payment::$method))
+            ],
             'recorded_by'  => 'required|numeric|exists:users,id',
             'payable_type' => 'required|string',
             'payable_id'   => 'required|numeric',

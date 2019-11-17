@@ -74,15 +74,7 @@ class SummaryNotification extends Notification
 
                 return $a->count() > $b->count() ? -1 : 1;
             })->map(static function (Collection $payment, string $method) {
-                $paymentMethods = [
-                    'cash' => 'cash',
-                    'squarecash' => 'Square Cash',
-                    'check' => 'a check',
-                    'swipe' => 'a swiped card',
-                    'square' => 'Square Checkout',
-                ];
-
-                return $payment->count().' paid with '.$paymentMethods[$method];
+                return $payment->count().' paid with '. Payment::$methods[$method];
             })->join(', ', ' and ');
         $packages = $payments->groupBy(static function (Payment $payment) {
             // We know it's a DuesTransaction because of filtering in getPayments. Include trashed because in some

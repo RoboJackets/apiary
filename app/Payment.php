@@ -30,6 +30,21 @@ class Payment extends Model
     protected $guarded = ['id'];
 
     /**
+     * All payment methods. Note that you probably want to also create a permission in the database for any
+     * new methods added here.
+     *
+     * @var array<string,string>
+     */
+    public static $methods = [
+        'cash' => 'Cash',
+        'squarecash' => 'Square Cash',
+        'check' => 'Check',
+        'swipe' => 'Swiped Card',
+        'square' => 'Square Checkout',
+        'waiver' => 'Waiver',
+    ];
+
+    /**
      * Get all of the owning payable models.
      */
     public function payable(): MorphTo
@@ -52,17 +67,7 @@ class Payment extends Model
      */
     public function getMethodPresentationAttribute(): string
     {
-        $valueMap = [
-            'cash' => 'Cash',
-            'squarecash' => 'Square Cash',
-            'check' => 'Check',
-            'swipe' => 'Swiped Card',
-            'square' => 'Square',
-        ];
-
-        $method = $this->method;
-
-        return array_key_exists($method, $valueMap) ? $valueMap[$this->method] : '';
+        return array_key_exists($this->method, $methods) ? $methods[$this->method] : '';
     }
 
     /**

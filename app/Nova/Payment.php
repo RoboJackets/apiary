@@ -48,14 +48,6 @@ class Payment extends Resource
      */
     public function fields(Request $request): array
     {
-        $payment_methods = [
-            'cash' => 'Cash',
-            'squarecash' => 'Square Cash',
-            'check' => 'Check',
-            'swipe' => 'Swiped Card',
-            'square' => 'Square Checkout',
-        ];
-
         return [
             ID::make()
                 ->sortable(),
@@ -66,7 +58,7 @@ class Payment extends Resource
                 ]),
 
             Select::make('Payment Method', 'method')
-                ->options($payment_methods)
+                ->options(self::$methods)
                 ->displayUsingLabels()
                 ->sortable(),
 
