@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Payment as AppPayment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -48,14 +49,6 @@ class Payment extends Resource
      */
     public function fields(Request $request): array
     {
-        $payment_methods = [
-            'cash' => 'Cash',
-            'squarecash' => 'Square Cash',
-            'check' => 'Check',
-            'swipe' => 'Swiped Card',
-            'square' => 'Square Checkout',
-        ];
-
         return [
             ID::make()
                 ->sortable(),
@@ -66,7 +59,7 @@ class Payment extends Resource
                 ]),
 
             Select::make('Payment Method', 'method')
-                ->options($payment_methods)
+                ->options(AppPayment::$methods)
                 ->displayUsingLabels()
                 ->sortable(),
 

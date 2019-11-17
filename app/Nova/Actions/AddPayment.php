@@ -115,17 +115,9 @@ class AddPayment extends Action
      */
     public function fields(): array
     {
-        $payment_methods = [
-            'cash' => 'Cash',
-            'squarecash' => 'Square Cash',
-            'check' => 'Check',
-            'swipe' => 'Swiped Card',
-            'square' => 'Square Checkout',
-        ];
-
         $allowed_payment_methods = [];
 
-        foreach ($payment_methods as $code => $display) {
+        foreach (Payment::$methods as $code => $display) {
             if (Auth::user()->cant('create-payments-'.$code)) {
                 continue;
             }

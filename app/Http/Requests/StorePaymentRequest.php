@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Payment;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePaymentRequest extends FormRequest
 {
@@ -21,13 +23,17 @@ class StorePaymentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,string|array<string|\Illuminate\Validation\Rules\In>>
      */
     public function rules(): array
     {
         return [
             'amount'       => 'required|numeric',
-            'method'       => 'required|string|in:cash,check,swipe,square,squarecash',
+            'method'       => [
+                'required',
+                'string',
+                Rule::in(array_keys(Payment::$methods)),
+            ],
             'recorded_by'  => 'required|numeric|exists:users,id',
             'payable_type' => 'required|string',
             'payable_id'   => 'required|numeric',
