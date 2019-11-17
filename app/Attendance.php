@@ -31,7 +31,7 @@ class Attendance extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array
+     * @var array<string>
      */
     protected $with = ['attendable'];
 

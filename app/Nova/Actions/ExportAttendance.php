@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportAttendance extends Action
 {
