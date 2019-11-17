@@ -72,7 +72,7 @@ class ExportAttendance extends Action
             return $columns->union($attendables)->sortKeys()->prepend($gtid, 'GTID');
         });
 
-        $file = 'public/attendance-reports/' . hash('sha256', random_bytes(64)) . '.csv';
+        $file = 'public/attendance-reports/'.hash('sha256', random_bytes(64)).'.csv';
 
         Storage::append($file, 'GTID,'.implode(',', $attendables->keys()->all()));
 
@@ -81,7 +81,7 @@ class ExportAttendance extends Action
         foreach ($collection as $person) {
             $row = $person->get('GTID');
             foreach ($attendables_array as $attendable) {
-                $row .= ',' . $person->get($attendable);
+                $row .= ','.$person->get($attendable);
             }
             Storage::append($file, $row);
         }
