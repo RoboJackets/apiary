@@ -8,9 +8,9 @@ namespace App\Nova\Actions;
 
 use App\Attendance;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportAttendance extends Action
 {
@@ -34,13 +34,6 @@ class ExportAttendance extends Action
      * @var bool
      */
     public $withoutActionEvents = true;
-
-    /**
-     * The exported filename.
-     *
-     * @var string
-     */
-    protected $filename = 'RoboJacketsAttendance.csv';
 
     /**
      * Perform the action on the given models.
@@ -76,19 +69,28 @@ class ExportAttendance extends Action
             });
 
         $collection = $collection->map(static function (Collection $columns, int $gtid) use ($attendables): Collection {
-            return $columns->union($attendables)->prepend($gtid, 'GTID');
+            return $columns->union($attendables)->sortKeys()->prepend($gtid, 'GTID');
         });
 
-        $response = $collection->downloadExcel($this->filename, \Maatwebsite\Excel\Excel::CSV, true);
-        if (! $response instanceof BinaryFileResponse || $response->isInvalid()) {
-            return Action::danger('Error exporting attendance');
+        $hash = hash('sha256', random_bytes(64));
+
+        $file = 'attendance-reports/'.$hash.'.csv';
+
+        $attendables_array = $attendables->sortKeys()->keys()->all();
+
+        Storage::append($file, 'GTID,'.implode(',', $attendables_array));
+
+        foreach ($collection as $person) {
+            $row = $person->get('GTID');
+            foreach ($attendables_array as $attendable) {
+                $row .= ','.$person->get($attendable);
+            }
+            Storage::append($file, $row);
         }
 
-        $downloadURL = url('/nova-vendor/maatwebsite/laravel-nova-excel/download?').http_build_query([
-            'path' => $response->getFile()->getPathname(),
-            'filename' => $this->filename,
-        ]);
-
-        return Action::download($downloadURL, $this->filename);
+        return Action::download(
+            route('api.v1.attendancereport.show', ['hash' => $hash]),
+            'RoboJacketsAttendance.csv'
+        );
     }
 }
