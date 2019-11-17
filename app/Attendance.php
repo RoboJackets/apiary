@@ -29,6 +29,13 @@ class Attendance extends Model
     protected $guarded = ['id'];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['attendable'];
+
+    /**
      * Get all of the owning attendable models.
      */
     public function attendable(): MorphTo

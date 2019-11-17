@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Jobs\AttendanceReportCleanup;
 use App\Jobs\DailyDuesSummary;
 use App\Jobs\NoAttendanceJediPush;
 use App\Jobs\WeeklyAttendance;
@@ -33,6 +34,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
+        $schedule->job(new AttendanceReportCleanup())->hourly();
         $schedule->job(new WeeklyAttendance())->weekly()->sundays()->at('11:00');
         $schedule->job(new DailyDuesSummary())->daily()->at('11:00');
         $schedule->job(new NoAttendanceJediPush())->daily()->at('10:00');
