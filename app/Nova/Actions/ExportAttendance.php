@@ -72,7 +72,9 @@ class ExportAttendance extends Action
             return $columns->union($attendables)->sortKeys()->prepend($gtid, 'GTID');
         });
 
-        $file = 'public/attendance-reports/'.hash('sha256', random_bytes(64)).'.csv';
+        $hash = hash('sha256', random_bytes(64));
+
+        $file = 'attendance-reports/'.$hash.'.csv';
 
         $attendables_array = $attendables->sortKeys()->keys()->all();
 
@@ -86,6 +88,9 @@ class ExportAttendance extends Action
             Storage::append($file, $row);
         }
 
-        return Action::download(Storage::url($file), 'RoboJacketsAttendance.csv');
+        return Action::download(
+            route('api.v1.attendancereport.show', ['hash' => $hash]),
+            'RoboJacketsAttendance.csv'
+        );
     }
 }
