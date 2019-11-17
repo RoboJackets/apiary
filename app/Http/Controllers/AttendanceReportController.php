@@ -34,11 +34,11 @@ class ResumeBookController extends Controller
             );
         }
 
-        $file = 'attendance-reports/'.$hash.'.csv'
+        $file = 'attendance-reports/'.$hash.'.csv';
 
         $response = response()->file(Storage::disk('local')->path($file));
 
-        Storage::delete($file)
+        Storage::delete($file);
 
         return $response;
     }
