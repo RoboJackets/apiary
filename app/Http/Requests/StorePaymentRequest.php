@@ -23,7 +23,7 @@ class StorePaymentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string|\Illuminate\Validation\Rules\In>
+     * @return array<string,string|array<string|\Illuminate\Validation\Rules\In>>
      */
     public function rules(): array
     {
