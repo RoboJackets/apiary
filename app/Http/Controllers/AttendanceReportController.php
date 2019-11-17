@@ -18,7 +18,7 @@ class AttendanceReportController extends Controller
     /**
      * Show a resume book.
      *
-     * @param string $tag
+     * @param string $hash
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
