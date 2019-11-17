@@ -67,7 +67,7 @@ class Payment extends Model
      */
     public function getMethodPresentationAttribute(): string
     {
-        return array_key_exists($this->method, $methods) ? $methods[$this->method] : '';
+        return array_key_exists($this->method, self::$methods) ? self::$methods[$this->method] : '';
     }
 
     /**

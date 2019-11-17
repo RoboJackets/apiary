@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Payment as AppPayment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -58,7 +59,7 @@ class Payment extends Resource
                 ]),
 
             Select::make('Payment Method', 'method')
-                ->options(self::$methods)
+                ->options(AppPayment::$methods)
                 ->displayUsingLabels()
                 ->sortable(),
 
