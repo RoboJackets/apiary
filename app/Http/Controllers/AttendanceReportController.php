@@ -33,7 +33,8 @@ class AttendanceReportController extends Controller
         }
 
         return response()->download(
-            __DIR__.'/../../../storage/app/attendance-reports/'.$hash.'.csv'
+            __DIR__.'/../../../storage/app/attendance-reports/'.$hash.'.csv',
+            'RoboJacketsAttendance.csv'
         )->deleteFileAfterSend(true);
     }
 }
