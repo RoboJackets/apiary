@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12fb050e1264b1cc20c785518e038d2f",
+    "content-hash": "a0faa927236f84fc9a1eda2efff8f933",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1941,16 +1941,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.4.2",
+            "version": "v3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "d3bbfd72413357a5c509b67eee93b67a5a94ba65"
+                "reference": "37226dd66318014fac20351b4cc7ca209dd4ccb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/d3bbfd72413357a5c509b67eee93b67a5a94ba65",
-                "reference": "d3bbfd72413357a5c509b67eee93b67a5a94ba65",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/37226dd66318014fac20351b4cc7ca209dd4ccb6",
+                "reference": "37226dd66318014fac20351b4cc7ca209dd4ccb6",
                 "shasum": ""
             },
             "require": {
@@ -2006,7 +2006,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2019-10-21T13:46:02+00:00"
+            "time": "2019-11-19T16:23:21+00:00"
         },
         {
             "name": "laravel/nova",
@@ -4347,7 +4347,7 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v4.3.7",
+            "version": "v4.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -5187,7 +5187,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v4.3.7",
+            "version": "v4.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
