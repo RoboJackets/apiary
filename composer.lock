@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "772436248eb6eacb6590000dba9a2a56",
+    "content-hash": "fee3941024d4d14d5cb6287944152f00",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4106,16 +4106,16 @@
         },
         {
             "name": "square/connect",
-            "version": "2.20190710.0",
+            "version": "2.20191120.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/connect-php-sdk.git",
-                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643"
+                "reference": "12053024c2a6ce3514594dfbf2ad0d630c304d78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
-                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
+                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/12053024c2a6ce3514594dfbf2ad0d630c304d78",
+                "reference": "12053024c2a6ce3514594dfbf2ad0d630c304d78",
                 "shasum": ""
             },
             "require": {
@@ -4153,7 +4153,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2019-07-10T17:03:51+00:00"
+            "time": "2019-11-21T00:19:47+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
