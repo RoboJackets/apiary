@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Attendance as AttendanceResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Permission as PermissionResource;
@@ -68,12 +69,13 @@ class User extends JsonResource
             'deleted_at' => $this->deleted_at,
 
             // Relationships
+            'attendance' => AttendanceResource::collection($this->whenLoaded('attendance')),
             'dues' => DuesTransactionResource::collection($this->whenLoaded('dues')),
             'events' => EventResource::collection($this->whenLoaded('events')),
-            'recruitingVisits' => RecruitingVisitResource::collection($this->whenLoaded('recruitingVisits')),
-            'teams' => TeamResource::collection($this->whenLoaded('teams')),
-            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
+            'recruitingVisits' => RecruitingVisitResource::collection($this->whenLoaded('recruitingVisits')),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'teams' => TeamResource::collection($this->whenLoaded('teams')),
         ];
     }
 
