@@ -12,6 +12,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpCAS;
 use RoboJackets\ErrorPages\BadNetwork;
 use RoboJackets\ErrorPages\DuoNotEnabled;
 use RoboJackets\ErrorPages\DuoOutage;
