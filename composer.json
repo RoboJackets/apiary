@@ -44,7 +44,7 @@
         "nunomaduro/collision": "3.0.1",
         "facade/ignition": "1.13.0",
         "nunomaduro/larastan": "0.4.3",
-        "phpunit/phpunit": "8.4.3"
+        "phpunit/phpunit": "8.5.0"
     },
     "autoload": {
         "classmap": [
