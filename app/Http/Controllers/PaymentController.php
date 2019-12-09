@@ -415,8 +415,10 @@ class PaymentController extends Controller
             );
         }
 
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall,PhanPossiblyUndeclaredMethod
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall,PhanPossiblyUndeclaredMethod
         $proc_fee = $tenders[0]->getProcessingFeeMoney()->getAmount() / 100;
         $created_at = $square_txn->getTransaction()->getCreatedAt();
         Log::debug(
