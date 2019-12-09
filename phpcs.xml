@@ -104,6 +104,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
     </rule>
+    <exclude name="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
 
     <rule ref="SlevomatCodingStandard.Exceptions"/>
 
