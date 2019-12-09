@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df03565e2d03640f78233f09b2a28d4d",
+    "content-hash": "82515d07566241b063df431a43bcc2a3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -474,26 +474,25 @@
         },
         {
             "name": "cakephp/chronos",
-            "version": "1.2.8",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "0292f06e8cc23fc82f0574889da2d8bf27b613c1"
+                "reference": "ba2bab98849e7bf29b02dd634ada49ab36472959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/0292f06e8cc23fc82f0574889da2d8bf27b613c1",
-                "reference": "0292f06e8cc23fc82f0574889da2d8bf27b613c1",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/ba2bab98849e7bf29b02dd634ada49ab36472959",
+                "reference": "ba2bab98849e7bf29b02dd634ada49ab36472959",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|^7"
+                "php": ">=5.6"
             },
             "require-dev": {
                 "athletic/athletic": "~0.1",
                 "cakephp/cakephp-codesniffer": "^3.0",
                 "phpbench/phpbench": "@dev",
-                "phpstan/phpstan": "^0.6.4",
                 "phpunit/phpunit": "<6.0 || ^7.0"
             },
             "type": "library",
@@ -527,7 +526,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-06-17T15:19:18+00:00"
+            "time": "2019-11-30T02:33:19+00:00"
         },
         {
             "name": "chelout/laravel-relationship-events",
@@ -2011,17 +2010,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.7.1",
+            "version": "v2.8.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "07f0f2f0bbe4166ef9ffb2f14ed9dc2b2401489b"
+                "reference": "f2d32be336a4b8b4bdc9247aacefc7a7a3c5101d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-07f0f2f0bbe4166ef9ffb2f14ed9dc2b2401489b-zip-f41491.zip",
-                "reference": "07f0f2f0bbe4166ef9ffb2f14ed9dc2b2401489b",
-                "shasum": "897bb5802a4fbb0b8983dc1fe5da146fa371cb83"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-f2d32be336a4b8b4bdc9247aacefc7a7a3c5101d-zip-1b8fd7.zip",
+                "reference": "f2d32be336a4b8b4bdc9247aacefc7a7a3c5101d",
+                "shasum": "33eb8e8f709a4a705d66967ce08a7f95a0d7d068"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -2077,7 +2076,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-11-13T17:21:13+00:00"
+            "time": "2019-11-26T20:49:09+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
