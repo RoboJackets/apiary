@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cabd53768d247bcf588b6ddda4733e87",
+    "content-hash": "5bf672f55edc49ac122cd4bbbb8d04a8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4017,25 +4017,25 @@
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "2.2.1",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "a51839b77a9f0fc8246b690b92b9339de464dc8a"
+                "reference": "04f6921a36d90acb01df433bc374a5f9c2a76734"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/a51839b77a9f0fc8246b690b92b9339de464dc8a",
-                "reference": "a51839b77a9f0fc8246b690b92b9339de464dc8a",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/04f6921a36d90acb01df433bc374a5f9c2a76734",
+                "reference": "04f6921a36d90acb01df433bc374a5f9c2a76734",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0|^6.0",
-                "illuminate/support": "~5.6.0|~5.7.0|~5.8.0|^6.0",
-                "php": "^7.2"
+                "illuminate/database": "^6.0",
+                "illuminate/support": "^6.0",
+                "php": "^7.4"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.6.0|~3.7.0|~3.8.0|^4.0"
+                "orchestra/testbench": "^4.0"
             },
             "type": "library",
             "autoload": {
@@ -4061,7 +4061,7 @@
                 "laravel-sluggable",
                 "spatie"
             ],
-            "time": "2019-09-16T09:37:47+00:00"
+            "time": "2019-12-06T10:02:18+00:00"
         },
         {
             "name": "spatie/once",
