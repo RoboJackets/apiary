@@ -66,9 +66,12 @@ class GenerateResumeBook implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Execute the job. IfStatementAssignment warnings are suppressed because PHPMD was failing despite there not being
+     * any of those. Yoda comparisons are required by PHPCS.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.IfStatementAssignment)
      */
     public function handle(): void
     {
