@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// @phan-file-suppress PhanStaticCallToNonStatic,PhanPossiblyNonClassMethodCall,PhanTypeMismatchArgument
 
 namespace App\Jobs;
 
@@ -72,7 +73,6 @@ class GenerateResumeBook implements ShouldQueue
      * @return void
      *
      * @SuppressWarnings(PHPMD.IfStatementAssignment)
-     * @suppress PhanStaticCallToNonStatic,PhanPossiblyNonClassMethodCall,PhanTypeMismatchArgument
      */
     public function handle(): void
     {
