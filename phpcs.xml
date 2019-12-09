@@ -101,6 +101,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaConditions"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
     </rule>
