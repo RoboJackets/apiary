@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -107,7 +108,7 @@ class DuesPackage extends Model
      */
     public function getIsActiveAttribute(): bool
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $start = $this->effective_start;
         $end = $this->effective_end;
 
@@ -121,7 +122,7 @@ class DuesPackage extends Model
      */
     public function getIsAccessActiveAttribute(): bool
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $start = $this->access_start;
         $end = $this->access_end;
 

@@ -6,6 +6,7 @@ namespace App\Jobs;
 
 use App\Team;
 use App\User;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -108,7 +109,7 @@ class PushToJedi implements ShouldQueue
         $response = $client->request('POST', config('jedi.endpoint'), ['json' => $send]);
 
         if (200 !== $response->getStatusCode()) {
-            throw new \Exception(
+            throw new Exception(
                 'Sending data to JEDI failed with HTTP response code '.$response->getStatusCode()
             );
         }

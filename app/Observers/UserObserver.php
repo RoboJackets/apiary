@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\Jobs\PushToJedi;
 use App\User;
+use DateTime;
 
 class UserObserver
 {
@@ -16,7 +17,7 @@ class UserObserver
 
     public function updated(User $user): void
     {
-        if (null === $user->access_override_until || $user->access_override_until <= new \DateTime()) {
+        if (null === $user->access_override_until || $user->access_override_until <= new DateTime()) {
             return;
         }
 
