@@ -20,6 +20,7 @@
 
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing"/>
     </rule>
 
     <rule ref="Generic.Arrays.ArrayIndent"/>

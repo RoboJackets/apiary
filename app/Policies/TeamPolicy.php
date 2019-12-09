@@ -155,8 +155,7 @@ class TeamPolicy
             return true;
         }
 
-        if (
-            $user->can('update-teams-membership-own')
+        if ($user->can('update-teams-membership-own')
             && $team->self_serviceable
             && ! $team->members->contains('id', $user->id)
         ) {
