@@ -17,7 +17,9 @@ use Laravel\Nova\Fields\ActionFields;
 
 class SyncAccess extends Action
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Perform the action on the given models.

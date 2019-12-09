@@ -16,7 +16,8 @@ use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class DatabaseMailable extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The URL for this instance of the application.

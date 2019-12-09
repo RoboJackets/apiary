@@ -19,7 +19,10 @@ use Illuminate\Support\Facades\Storage;
 
 class GenerateResumeBook implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The major (ou) to filter by, or null.

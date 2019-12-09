@@ -11,7 +11,9 @@ use Illuminate\Queue\SerializesModels;
 
 class PaymentSuccess
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * The payment of interest.

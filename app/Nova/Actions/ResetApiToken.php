@@ -15,7 +15,9 @@ use Laravel\Nova\Fields\ActionFields;
 
 class ResetApiToken extends Action
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The displayable name of the action.

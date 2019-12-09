@@ -15,7 +15,10 @@ use Illuminate\Queue\SerializesModels;
 
 class PushToJedi implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The user that will be sent to JEDI.
