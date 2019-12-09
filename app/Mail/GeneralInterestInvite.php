@@ -11,7 +11,8 @@ use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class GeneralInterestInvite extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The URL for this application.

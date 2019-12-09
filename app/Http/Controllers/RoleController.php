@@ -74,6 +74,7 @@ class RoleController extends Controller
     public function show(string $name): JsonResponse
     {
         try {
+            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             $role = Role::findByName($name)->with('permissions')->first();
         } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
             Bugsnag::notifyException($e);
@@ -116,11 +117,13 @@ class RoleController extends Controller
 
         if ($request->filled('name')) {
             $role->name = $request->input('name');
+            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             $role->save();
         }
 
         if ($request->filled('permissions')) {
             try {
+                // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
                 $role->syncPermissions($request->input('permissions'));
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
                 Bugsnag::notifyException($e);
@@ -159,6 +162,7 @@ class RoleController extends Controller
             return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
         }
 
+        // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
         $role->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Role deleted.'], 200);

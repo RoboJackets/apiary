@@ -23,7 +23,13 @@ use Spatie\Sluggable\SlugOptions;
 
 class Team extends Model
 {
-    use Actionable, SoftDeletes, HasSlug, HasManyEvents, HasBelongsToManyEvents, HasRelationshipObservables, Notifiable;
+    use Actionable;
+    use SoftDeletes;
+    use HasSlug;
+    use HasManyEvents;
+    use HasBelongsToManyEvents;
+    use HasRelationshipObservables;
+    use Notifiable;
 
     /**
      * The attributes that are not mass assignable.

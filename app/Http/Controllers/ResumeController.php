@@ -105,6 +105,7 @@ class ResumeController extends Controller
             $exifOutput = '';
             exec('exiftool -json '.escapeshellarg($tempPath), $exifOutput, $exifReturn);
 
+            // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
             $exifOutput = json_decode(implode(' ', $exifOutput), true)[0];
             $fileType = array_key_exists('FileType', $exifOutput) ? $exifOutput['FileType'] : null;
             $mimeType = array_key_exists('MIMEType', $exifOutput) ? $exifOutput['MIMEType'] : null;

@@ -57,6 +57,7 @@ class PermissionController extends Controller
 
                     return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
                 }
+                // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
                 $dbRole->givePermissionTo($permission->name);
             }
         }

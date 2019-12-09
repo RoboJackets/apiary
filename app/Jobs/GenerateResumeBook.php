@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// @phan-file-suppress PhanStaticCallToNonStatic,PhanPossiblyNonClassMethodCall,PhanTypeMismatchArgument
 
 namespace App\Jobs;
 
 use Adldap\Laravel\Facades\Adldap;
 use App\User;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,7 +21,10 @@ use Illuminate\Support\Facades\Storage;
 
 class GenerateResumeBook implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The major (ou) to filter by, or null.
@@ -62,9 +67,12 @@ class GenerateResumeBook implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Execute the job. IfStatementAssignment warnings are suppressed because PHPMD was failing despite there not being
+     * any of those. Yoda comparisons are required by PHPCS.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.IfStatementAssignment)
      */
     public function handle(): void
     {
@@ -95,7 +103,7 @@ class GenerateResumeBook implements ShouldQueue
         if (0 === $filteredUids->count()) {
             $this->path = null;
             $this->datecode = null;
-            throw new \Exception('There are no resumes to export!');
+            throw new Exception('There are no resumes to export!');
         }
 
         $filenames = $filteredUids->map(static function ($uid) {
@@ -120,7 +128,7 @@ class GenerateResumeBook implements ShouldQueue
             \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
             $this->path = null;
             $this->datecode = null;
-            throw new \Exception('gs did not exit cleanly, so the resume book could not be generated.');
+            throw new Exception('gs did not exit cleanly, so the resume book could not be generated.');
         }
 
         // This is not perfect! The original metadata is recoverable (exiftool can't remove it permanently).
@@ -136,7 +144,7 @@ class GenerateResumeBook implements ShouldQueue
                 .implode("\n", $exifOutput));
             $this->path = null;
             $this->datecode = null;
-            throw new \Exception('exif did not exit cleanly, so the resume book could not be generated.');
+            throw new Exception('exif did not exit cleanly, so the resume book could not be generated.');
         }
     }
 }

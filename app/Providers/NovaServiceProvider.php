@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Vyuldashev\NovaPermission\NovaPermissionTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -86,7 +87,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools(): array
     {
         return [
-            (new \Vyuldashev\NovaPermission\NovaPermissionTool())->canSee(static function (Request $request): bool {
+            (new NovaPermissionTool())->canSee(static function (Request $request): bool {
                 return $request->user()->hasRole('admin');
             }),
             (new AttendanceReport())->canSee(static function (Request $request): bool {

@@ -12,7 +12,8 @@ use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class Confirmation extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The Payment object of interest.

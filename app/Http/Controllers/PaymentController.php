@@ -415,9 +415,11 @@ class PaymentController extends Controller
             );
         }
 
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall,PhanPossiblyUndeclaredMethod
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
         $proc_fee = $tenders[0]->getProcessingFeeMoney()->getAmount() / 100;
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall,PhanPossiblyUndeclaredMethod
         $created_at = $square_txn->getTransaction()->getCreatedAt();
         Log::debug(
             self::class.' - Square Transaction Details for '.$server_txn_id,

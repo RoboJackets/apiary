@@ -20,6 +20,7 @@
 
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing"/>
     </rule>
 
     <rule ref="Generic.Arrays.ArrayIndent"/>
@@ -31,7 +32,9 @@
 
     <rule ref="Generic.Commenting"/>
 
-    <rule ref="Generic.ControlStructures"/>
+    <rule ref="Generic.ControlStructures">
+        <exclude name="Generic.ControlStructures.DisallowYodaConditions"/>
+    </rule>
 
     <rule ref="Generic.Files.ByteOrderMark"/>
     <rule ref="Generic.Files.EndFileNewline"/>
@@ -104,6 +107,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
     </rule>
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
 
     <rule ref="SlevomatCodingStandard.Exceptions"/>
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use BadMethodCallException;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
@@ -232,26 +233,26 @@ class User extends Authenticatable
 
     public function getAuthPassword(): string
     {
-        throw new \BadMethodCallException('Not implemented');
+        throw new BadMethodCallException('Not implemented');
     }
 
     public function getRememberToken(): string
     {
-        throw new \BadMethodCallException('Not implemented');
+        throw new BadMethodCallException('Not implemented');
     }
 
     // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
     public function setRememberToken($value): void
     {
-        throw new \BadMethodCallException('Not implemented');
+        throw new BadMethodCallException('Not implemented');
     }
 
     // phpcs:enable
 
     public function getRememberTokenName(): string
     {
-        throw new \BadMethodCallException('Not implemented');
+        throw new BadMethodCallException('Not implemented');
     }
 
     /**

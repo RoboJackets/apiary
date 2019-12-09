@@ -13,7 +13,10 @@ use Illuminate\Queue\SerializesModels;
 
 class DuesPackageExpiration implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The dues package that will expire.

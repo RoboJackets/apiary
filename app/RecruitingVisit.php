@@ -14,7 +14,8 @@ use Laravel\Nova\Actions\Actionable;
 class RecruitingVisit extends Model
 {
     use Actionable;
-    use Notifiable, SoftDeletes;
+    use Notifiable;
+    use SoftDeletes;
 
     /**
      *  Get the Recruiting Responses associated with this Recruiting Visit.

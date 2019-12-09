@@ -13,6 +13,7 @@ use App\RecruitingVisit;
 use App\Rsvp;
 use App\Traits\AuthorizeInclude;
 use App\User;
+use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -86,9 +87,10 @@ class RsvpController extends Controller
 
         $source = null;
 
-        $now = new \DateTime();
-        $end = isset($event->end_time) ? new \DateTime($event->end_time->toDateTimeString()) : null;
+        $now = new DateTime();
+        $end = isset($event->end_time) ? new DateTime($event->end_time->toDateTimeString()) : null;
         if (null !== $end && $end <= $now) {
+            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             return view('rsvp.ended')->with(['event' => $event]);
         }
 
@@ -118,6 +120,7 @@ class RsvpController extends Controller
 
         $rsvp->saveOrFail();
 
+        // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
         return view('rsvp.confirmation')->with(['event' => new EventResource($event)]);
     }
 
