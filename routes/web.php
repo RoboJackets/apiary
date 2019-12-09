@@ -25,11 +25,13 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::view('recruiting', 'recruiting/form');
 
     Route::get('profile', static function () {
+        // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
         return view('users/userprofile', ['id' => auth()->user()->id]);
     });
 
     Route::prefix('dues')->group(static function (): void {
         Route::get('/', static function () {
+            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             return auth()->user()->is_active ? response()->view('dues.alreadypaid', [], 400) : view('dues/payDues');
         })->name('payDues');
 
@@ -43,6 +45,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::prefix('resume')->name('resume.')->group(static function (): void {
         Route::get('/', static function () {
+            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             return view('users/resumeupload', ['id' => auth()->user()->id]);
         })->name('index');
     });
@@ -86,6 +89,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
             Route::get('{id}', static function ($id) {
                 return view('dues/duestransaction', [
                     'id' => $id,
+                    // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
                     'perms' => auth()->user()->getAllPermissions()->pluck('name')->all(),
                 ]);
             })->name('duesTransaction');

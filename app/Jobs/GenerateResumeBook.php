@@ -84,11 +84,14 @@ class GenerateResumeBook implements ShouldQueue
         if (null !== $this->major) {
             $majors = $users->mapWithKeys(static function (User $user): array {
                 $ous = Cache::remember('whitepages_ou_'.$user->uid, now()->addDays(1), static function () use ($user) {
+                    // @phan-ignore-next-line PhanStaticCallToNonStatic
                     return Adldap::search()
                         ->where('uid', '=', $user->uid)
                         ->select('uid', 'ou')
                         ->get()
+                        // @phan-ignore-next-line PhanPossiblyNonClassMethodCall
                         ->pluck('ou')
+                        // @phan-ignore-next-line PhanTypeMismatchArgument
                         ->pluck(0);
                 });
 

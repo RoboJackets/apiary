@@ -51,10 +51,12 @@ class TeamAttendanceNotification extends Notification
         $unknown = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->doesntHave('attendee')
             ->selectRaw('count(distinct attendance.gtid) as aggregate')
             ->get()[0]->aggregate;
+        $unknown = intval($unknown); // Silences Phan warnings
         $knownAttendance = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->has('attendee')
             ->get();
         $duesPackageAvailable = DuesPackage::availableForPurchase()->active()->count() > 0;
 
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         $inactiveNames = $knownAttendance->pluck('attendee')
             ->unique()
             ->filter(static function (User $user): bool {

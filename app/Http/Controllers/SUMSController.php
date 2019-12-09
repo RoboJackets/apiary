@@ -21,6 +21,8 @@ class SUMSController extends Controller
      * @param Request $request
      *
      * @return \Illuminate\View\View
+     *
+     * @suppress PhanTypeExpectedObjectPropAccessButGotNull
      */
     public function index(Request $request): View
     {

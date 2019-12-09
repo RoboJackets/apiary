@@ -62,6 +62,7 @@ class TeamController extends Controller
             'teams' => $user_teams,
         ];
 
+        // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
         return view('teams.index')->with(['teams' => $teams, 'user' => json_encode($user)]);
     }
 
