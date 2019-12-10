@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "805be7102cf06170fe58b6490c477175",
+    "content-hash": "1a659572d553977e0cde8ea7fcef5aa3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1941,16 +1941,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.4.3",
+            "version": "v3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "37226dd66318014fac20351b4cc7ca209dd4ccb6"
+                "reference": "7c36d24b200b60a059ab20f5b53f5bb6f4d2da40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/37226dd66318014fac20351b4cc7ca209dd4ccb6",
-                "reference": "37226dd66318014fac20351b4cc7ca209dd4ccb6",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/7c36d24b200b60a059ab20f5b53f5bb6f4d2da40",
+                "reference": "7c36d24b200b60a059ab20f5b53f5bb6f4d2da40",
                 "shasum": ""
             },
             "require": {
@@ -1958,9 +1958,9 @@
                 "ext-json": "*",
                 "ext-pcntl": "*",
                 "ext-posix": "*",
-                "illuminate/contracts": "~5.7.0|~5.8.0|^6.0|^7.0",
-                "illuminate/queue": "~5.7.0|~5.8.0|^6.0|^7.0",
-                "illuminate/support": "~5.7.0|~5.8.0|^6.0|^7.0",
+                "illuminate/contracts": "~5.7.0|~5.8.0|^6.0",
+                "illuminate/queue": "~5.7.0|~5.8.0|^6.0",
+                "illuminate/support": "~5.7.0|~5.8.0|^6.0",
                 "php": ">=7.1.0",
                 "predis/predis": "^1.1",
                 "ramsey/uuid": "^3.5",
@@ -1969,7 +1969,7 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^3.7|^4.0|^5.0",
+                "orchestra/testbench": "^3.7|^4.0",
                 "phpunit/phpunit": "^7.0|^8.0"
             },
             "type": "library",
@@ -2006,7 +2006,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2019-11-19T16:23:21+00:00"
+            "time": "2019-12-10T16:50:59+00:00"
         },
         {
             "name": "laravel/nova",
