@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a659572d553977e0cde8ea7fcef5aa3",
+    "content-hash": "32e2eae69678142127e02da87e8e25b8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2010,17 +2010,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.8.0",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "f2d32be336a4b8b4bdc9247aacefc7a7a3c5101d"
+                "reference": "ae003d81e37949a5d1184cfc0afdb3c7a16c6e83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-f2d32be336a4b8b4bdc9247aacefc7a7a3c5101d-zip-1b8fd7.zip",
-                "reference": "f2d32be336a4b8b4bdc9247aacefc7a7a3c5101d",
-                "shasum": "33eb8e8f709a4a705d66967ce08a7f95a0d7d068"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-ae003d81e37949a5d1184cfc0afdb3c7a16c6e83-zip-cdbb52.zip",
+                "reference": "ae003d81e37949a5d1184cfc0afdb3c7a16c6e83",
+                "shasum": "0f9a419ab65532c0092d3e7a6ad7f50f1d8b9fdf"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -2033,7 +2033,6 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/database": "3.7.* | 3.8.*",
                 "orchestra/testbench": "3.7.* | 3.8.*",
                 "phpunit/phpunit": "^7.0 | ^8.0",
                 "predis/predis": "^1.1"
@@ -2041,7 +2040,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -2076,7 +2075,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-11-26T20:49:09+00:00"
+            "time": "2019-12-10T20:11:21+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
