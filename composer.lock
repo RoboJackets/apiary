@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32e2eae69678142127e02da87e8e25b8",
+    "content-hash": "57bb1a4f6d64142310fbd37361f2fe47",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5932,16 +5932,16 @@
         },
         {
             "name": "vyuldashev/nova-permission",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vyuldashev/nova-permission.git",
-                "reference": "0358681af10b6db2921c4cf8ce76b5c6e4e22444"
+                "reference": "83baae916a65561cea00158d3210cd3698e7d4d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/0358681af10b6db2921c4cf8ce76b5c6e4e22444",
-                "reference": "0358681af10b6db2921c4cf8ce76b5c6e4e22444",
+                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/83baae916a65561cea00158d3210cd3698e7d4d0",
+                "reference": "83baae916a65561cea00158d3210cd3698e7d4d0",
                 "shasum": ""
             },
             "require": {
@@ -5974,7 +5974,7 @@
                 "nova",
                 "spatie-permission"
             ],
-            "time": "2019-11-19T23:43:09+00:00"
+            "time": "2019-12-11T09:31:57+00:00"
         }
     ],
     "packages-dev": [
