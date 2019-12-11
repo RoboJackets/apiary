@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03bd9dba7c64bd00e8a8637349cc9f38",
+    "content-hash": "9719bf22ab4ae8dab0436ac1e08b0f5d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2010,17 +2010,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.9.1",
+            "version": "v2.9.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "0160660f90d6e8e28892a62de3d51a29b519a766"
+                "reference": "a63196f3a4a6679efe4d6716327120739da87280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-0160660f90d6e8e28892a62de3d51a29b519a766-zip-d2407c.zip",
-                "reference": "0160660f90d6e8e28892a62de3d51a29b519a766",
-                "shasum": "985bd6d6c50ee0d51738cd4870976a83cbaf4fc8"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-a63196f3a4a6679efe4d6716327120739da87280-zip-53fb98.zip",
+                "reference": "a63196f3a4a6679efe4d6716327120739da87280",
+                "shasum": "7fd1c7a9dfbb72384399be64213ea219054a0369"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -2075,7 +2075,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2019-12-11T16:06:30+00:00"
+            "time": "2019-12-11T17:23:05+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
