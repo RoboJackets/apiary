@@ -32,7 +32,7 @@
         "robojackets/network-check": "1.0.1",
         "spatie/laravel-failed-job-monitor": "3.2.0",
         "spatie/laravel-sluggable": "2.2.1",
-        "square/connect": "2.20190710.0",
+        "square/connect": "2.20191217.0",
         "regnilk/cas": "3.0",
         "uxweb/sweet-alert": "dev-master"
     },
