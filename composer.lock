@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55ced0fc3eba139fee923b3675168758",
+    "content-hash": "53a046fce4abf800d1f8e15ec5480f9d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1941,16 +1941,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.4.4",
+            "version": "v3.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "7c36d24b200b60a059ab20f5b53f5bb6f4d2da40"
+                "reference": "025f953b4902a9b0b172e6d5fe19d0809701259e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/7c36d24b200b60a059ab20f5b53f5bb6f4d2da40",
-                "reference": "7c36d24b200b60a059ab20f5b53f5bb6f4d2da40",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/025f953b4902a9b0b172e6d5fe19d0809701259e",
+                "reference": "025f953b4902a9b0b172e6d5fe19d0809701259e",
                 "shasum": ""
             },
             "require": {
@@ -2006,7 +2006,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2019-12-10T16:50:59+00:00"
+            "time": "2019-12-23T19:45:03+00:00"
         },
         {
             "name": "laravel/nova",
@@ -5819,12 +5819,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/uxweb/sweet-alert.git",
-                "reference": "7cf30629eb6c07b887a61d1879631f32fb9376da"
+                "reference": "1a21479d3b3dd7ffe8233284d8f1048309b16f26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uxweb/sweet-alert/zipball/7cf30629eb6c07b887a61d1879631f32fb9376da",
-                "reference": "7cf30629eb6c07b887a61d1879631f32fb9376da",
+                "url": "https://api.github.com/repos/uxweb/sweet-alert/zipball/1a21479d3b3dd7ffe8233284d8f1048309b16f26",
+                "reference": "1a21479d3b3dd7ffe8233284d8f1048309b16f26",
                 "shasum": ""
             },
             "require": {
@@ -5872,7 +5872,7 @@
                 "notifier",
                 "sweet"
             ],
-            "time": "2019-09-05T15:04:11+00:00"
+            "time": "2019-12-23T18:08:06+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
