@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53a046fce4abf800d1f8e15ec5480f9d",
+    "content-hash": "5ec598cf16513e5b55a6c3c2a118b7f3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2478,16 +2478,16 @@
         },
         {
             "name": "maatwebsite/laravel-nova-excel",
-            "version": "1.1.7",
+            "version": "1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Nova-Excel.git",
-                "reference": "2d6a4fb9fd41dc2c314773f268d5507c4d7c3253"
+                "reference": "a566e849e4e4ede3b88c8579f65087d89a7a4830"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/2d6a4fb9fd41dc2c314773f268d5507c4d7c3253",
-                "reference": "2d6a4fb9fd41dc2c314773f268d5507c4d7c3253",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/a566e849e4e4ede3b88c8579f65087d89a7a4830",
+                "reference": "a566e849e4e4ede3b88c8579f65087d89a7a4830",
                 "shasum": ""
             },
             "require": {
@@ -2527,7 +2527,7 @@
                 "nova",
                 "phpspreadsheet"
             ],
-            "time": "2019-09-11T18:22:25+00:00"
+            "time": "2019-12-24T10:20:31+00:00"
         },
         {
             "name": "markbaker/complex",
@@ -3053,16 +3053,16 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "1.9.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "8dea03eaf60a349b6097e4bcad11f894668280df"
+                "reference": "1648dc9ebef6ebe0c5a172e16cf66732918416e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/8dea03eaf60a349b6097e4bcad11f894668280df",
-                "reference": "8dea03eaf60a349b6097e4bcad11f894668280df",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/1648dc9ebef6ebe0c5a172e16cf66732918416e0",
+                "reference": "1648dc9ebef6ebe0c5a172e16cf66732918416e0",
                 "shasum": ""
             },
             "require": {
@@ -3080,19 +3080,19 @@
                 "ext-zip": "*",
                 "ext-zlib": "*",
                 "markbaker/complex": "^1.4",
-                "markbaker/matrix": "^1.1",
+                "markbaker/matrix": "^1.2",
                 "php": "^7.1",
                 "psr/simple-cache": "^1.0"
             },
             "require-dev": {
-                "dompdf/dompdf": "^0.8.0",
-                "friendsofphp/php-cs-fixer": "@stable",
+                "dompdf/dompdf": "^0.8.3",
+                "friendsofphp/php-cs-fixer": "^2.16",
                 "jpgraph/jpgraph": "^4.0",
-                "mpdf/mpdf": "^7.0.0",
-                "phpcompatibility/php-compatibility": "^8.0",
+                "mpdf/mpdf": "^8.0",
+                "phpcompatibility/php-compatibility": "^9.3",
                 "phpunit/phpunit": "^7.5",
-                "squizlabs/php_codesniffer": "^3.3",
-                "tecnickcom/tcpdf": "^6.2"
+                "squizlabs/php_codesniffer": "^3.5",
+                "tecnickcom/tcpdf": "^6.3"
             },
             "suggest": {
                 "dompdf/dompdf": "Option for rendering PDF with PDF Writer",
@@ -3108,7 +3108,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1-or-later"
+                "MIT"
             ],
             "authors": [
                 {
@@ -3142,7 +3142,7 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2019-08-17T22:24:35+00:00"
+            "time": "2019-12-01T23:13:51+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -5819,12 +5819,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/uxweb/sweet-alert.git",
-                "reference": "1a21479d3b3dd7ffe8233284d8f1048309b16f26"
+                "reference": "dcca7154a851f362458f498e8dff26946344a778"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uxweb/sweet-alert/zipball/1a21479d3b3dd7ffe8233284d8f1048309b16f26",
-                "reference": "1a21479d3b3dd7ffe8233284d8f1048309b16f26",
+                "url": "https://api.github.com/repos/uxweb/sweet-alert/zipball/dcca7154a851f362458f498e8dff26946344a778",
+                "reference": "dcca7154a851f362458f498e8dff26946344a778",
                 "shasum": ""
             },
             "require": {
@@ -5833,7 +5833,8 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "mockery/mockery": "0.9.*",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "mockery/mockery": "^1.0",
                 "phpunit/phpunit": "^7.0"
             },
             "type": "library",
@@ -5872,7 +5873,7 @@
                 "notifier",
                 "sweet"
             ],
-            "time": "2019-12-23T18:08:06+00:00"
+            "time": "2019-12-24T08:36:16+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
