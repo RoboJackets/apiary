@@ -26,7 +26,7 @@
         "laravel/tinker": "1.0.10",
         "maatwebsite/laravel-nova-excel": "1.1.8",
         "predis/predis": "1.1.1",
-        "spatie/laravel-permission": "3.3.0",
+        "spatie/laravel-permission": "3.3.1",
         "vyuldashev/nova-permission": "2.4.1",
         "robojackets/error-pages": "2.0.0",
         "robojackets/network-check": "1.0.1",
