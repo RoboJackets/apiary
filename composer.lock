@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a5781929bddcc334ba9823528159103",
+    "content-hash": "ca1ff562e464923305371f8b46775f07",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3949,16 +3949,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "fa18db53513db2b4ea72e3eeda964853afc8dac9"
+                "reference": "fe0573ddb6fd95378eec67e401882564db830312"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/fa18db53513db2b4ea72e3eeda964853afc8dac9",
-                "reference": "fa18db53513db2b4ea72e3eeda964853afc8dac9",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/fe0573ddb6fd95378eec67e401882564db830312",
+                "reference": "fe0573ddb6fd95378eec67e401882564db830312",
                 "shasum": ""
             },
             "require": {
@@ -4013,7 +4013,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2019-12-27T19:05:39+00:00"
+            "time": "2019-12-28T13:22:00+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
