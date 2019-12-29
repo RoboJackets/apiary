@@ -7,11 +7,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Jobs\PushToJedi;
 use App\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class SUMSController extends Controller
 {
@@ -20,11 +18,11 @@ class SUMSController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      *
      * @suppress PhanTypeExpectedObjectPropAccessButGotNull
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $user = $request->user();
 
@@ -33,6 +31,15 @@ class SUMSController extends Controller
                 'sums',
                 [
                     'message' => 'You have not paid dues, so you do not have access to SUMS right now.',
+                ]
+            );
+        }
+
+        if (0 === count($user->teams)) {
+            return view(
+                'sums',
+                [
+                    'message' => 'You are not a member of any teams yet. Join a team first, then try again.',
                 ]
             );
         }
@@ -61,39 +68,6 @@ class SUMSController extends Controller
             );
         }
 
-        PushToJedi::dispatch($user, self::class, 1, 'sums-self-service-ux');
-
-        usleep(100000);
-
-        $counter = 0;
-        while ($counter < 20) {
-            $user->refresh(); // reloads attributes from database
-
-            if ($user->exists_in_sums) {
-                break;
-            }
-
-            $counter++;
-            usleep($counter * 100000);
-        }
-
-        if ($user->exists_in_sums) {
-            return view(
-                'sums',
-                [
-                    'message' => 'You have been successfully added to the RoboJackets group in SUMS. You should now be '
-                    .'able to use the kiosk in the Common Machining Area. If you have any issues, please ask in '
-                    .'#it-helpdesk on Slack.',
-                ]
-            );
-        }
-
-        return view(
-            'sums',
-            [
-                'message' => 'There was a problem processing your SUMS access. Please ask in '
-                .'#it-helpdesk on Slack for further assistance.',
-            ]
-        );
+        return redirect(config('jedi.host').'/self-service/sums');
     }
 }
