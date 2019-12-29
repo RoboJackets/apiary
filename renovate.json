@@ -10,6 +10,9 @@
     "type / technical debt"
   ],
   "reviewers": [],
+  "ignoreDeps": [
+    "square/connect"
+  ],
   "prConcurrentLimit": 1,
   "prHourlyLimit": 0,
   "rebaseStalePrs": true,
