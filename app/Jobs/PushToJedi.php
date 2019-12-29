@@ -111,7 +111,7 @@ class PushToJedi implements ShouldQueue
             ]
         );
 
-        $response = $client->request('POST', config('jedi.host') . '/api/v1/apiary', ['json' => $send]);
+        $response = $client->request('POST', config('jedi.host').'/api/v1/apiary', ['json' => $send]);
 
         if (200 !== $response->getStatusCode()) {
             throw new Exception(

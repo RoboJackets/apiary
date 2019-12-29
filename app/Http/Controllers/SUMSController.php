@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Jobs\PushToJedi;
 use App\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,11 +36,11 @@ class SUMSController extends Controller
             );
         }
 
-        if (0 === count($user->teams))  {
+        if (0 === count($user->teams)) {
             return view(
                 'sums',
                 [
-                    'message' => 'You are not a member of any teams yet. Join a team first, then try again.'
+                    'message' => 'You are not a member of any teams yet. Join a team first, then try again.',
                 ]
             );
         }
@@ -70,6 +69,6 @@ class SUMSController extends Controller
             );
         }
 
-        return redirect(config('jedi.host') . '/self-service/sums');
+        return redirect(config('jedi.host').'/self-service/sums');
     }
 }

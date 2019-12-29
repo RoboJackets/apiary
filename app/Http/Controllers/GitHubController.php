@@ -51,7 +51,7 @@ class GitHubController extends Controller
         $localUser->save(); // this will trigger a JEDI sync
 
         if ($localUser->is_access_active && 0 !== count($localUser->teams)) {
-            return redirect(config('jedi.host') . '/self-service/github');
+            return redirect(config('jedi.host').'/self-service/github');
         }
 
         alert()->success('Your GitHub account was successfully linked.', 'Success!');
