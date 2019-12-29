@@ -23,7 +23,7 @@ class SUMSController extends Controller
      *
      * @suppress PhanTypeExpectedObjectPropAccessButGotNull
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $user = $request->user();
 
