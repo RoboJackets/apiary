@@ -50,24 +50,8 @@ class GitHubController extends Controller
 
         $localUser->save(); // this will trigger a JEDI sync
 
-        if ($localUser->is_access_active) {
-            usleep(100000);
-
-            $counter = 0;
-            while ($counter < 20) {
-                $localUser->refresh(); // reloads attributes from database
-
-                if ($localUser->github_invite_pending) {
-                    break;
-                }
-
-                $counter++;
-                usleep($counter * 100000);
-            }
-
-            if ($localUser->github_invite_pending) {
-                return redirect('https://github.com/orgs/RoboJackets/invitation');
-            }
+        if ($localUser->is_access_active && 0 !== count($localUser->teams)) {
+            return redirect(config('jedi.host') . '/self-service/github');
         }
 
         alert()->success('Your GitHub account was successfully linked.', 'Success!');

@@ -37,6 +37,15 @@ class SUMSController extends Controller
             );
         }
 
+        if (0 === count($user->teams))  {
+            return view(
+                'sums',
+                [
+                    'message' => 'You are not a member of any teams yet. Join a team first, then try again.'
+                ]
+            );
+        }
+
         $lastAttendance = $user->attendance()->where('attendable_type', Team::class)
             ->orderBy('created_at', 'desc')->first();
 
@@ -61,39 +70,6 @@ class SUMSController extends Controller
             );
         }
 
-        PushToJedi::dispatch($user, self::class, 1, 'sums-self-service-ux');
-
-        usleep(100000);
-
-        $counter = 0;
-        while ($counter < 20) {
-            $user->refresh(); // reloads attributes from database
-
-            if ($user->exists_in_sums) {
-                break;
-            }
-
-            $counter++;
-            usleep($counter * 100000);
-        }
-
-        if ($user->exists_in_sums) {
-            return view(
-                'sums',
-                [
-                    'message' => 'You have been successfully added to the RoboJackets group in SUMS. You should now be '
-                    .'able to use the kiosk in the Common Machining Area. If you have any issues, please ask in '
-                    .'#it-helpdesk on Slack.',
-                ]
-            );
-        }
-
-        return view(
-            'sums',
-            [
-                'message' => 'There was a problem processing your SUMS access. Please ask in '
-                .'#it-helpdesk on Slack for further assistance.',
-            ]
-        );
+        return redirect(config('jedi.host') . '/self-service/sums');
     }
 }

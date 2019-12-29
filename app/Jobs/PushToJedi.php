@@ -69,7 +69,7 @@ class PushToJedi implements ShouldQueue
      */
     public function handle(): void
     {
-        if (null === config('jedi.endpoint') || null === config('jedi.token')) {
+        if (null === config('jedi.host') || null === config('jedi.token')) {
             return;
         }
 
@@ -89,11 +89,16 @@ class PushToJedi implements ShouldQueue
             'last_attendance_time' => $lastAttendance ? $lastAttendance->created_at : null,
             'last_attendance_id' => $lastAttendance ? $lastAttendance->id : null,
             'teams' => [],
+            'project_manager_of_teams' => [],
             'exists_in_sums' => $this->user->exists_in_sums,
         ];
 
         foreach ($this->user->teams as $team) {
             $send['teams'][] = $team->name;
+        }
+
+        foreach ($this->user->manages as $team) {
+            $send['project_manager_of_teams'][] = $team->name;
         }
 
         $client = new Client(
@@ -106,7 +111,7 @@ class PushToJedi implements ShouldQueue
             ]
         );
 
-        $response = $client->request('POST', config('jedi.endpoint'), ['json' => $send]);
+        $response = $client->request('POST', config('jedi.host') . '/api/v1/apiary', ['json' => $send]);
 
         if (200 !== $response->getStatusCode()) {
             throw new Exception(
