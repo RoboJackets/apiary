@@ -10,7 +10,6 @@ namespace App\Http\Controllers;
 use App\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class SUMSController extends Controller
 {
@@ -19,7 +18,7 @@ class SUMSController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      *
      * @suppress PhanTypeExpectedObjectPropAccessButGotNull
      */
