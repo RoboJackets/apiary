@@ -27,10 +27,7 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param \Laravel\Nova\Http\Requests\LensRequest  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     *
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public static function query(LensRequest $request, $query): Builder
     {
@@ -49,8 +46,6 @@ class RecentInactiveUsers extends Lens
 
     /**
      * Get the fields available to the lens.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
@@ -78,8 +73,6 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the filters available for the lens.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
@@ -91,8 +84,6 @@ class RecentInactiveUsers extends Lens
 
     /**
      * Get the URI key for the lens.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

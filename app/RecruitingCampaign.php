@@ -32,8 +32,6 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the user that owns the campaign.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function creator(): BelongsTo
     {
@@ -42,8 +40,6 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the template used in the campaign.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function template(): BelongsTo
     {
@@ -52,8 +48,6 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the recipients for this campaign.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function recipients(): HasMany
     {

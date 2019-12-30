@@ -15,10 +15,6 @@ class DashboardController extends Controller
 {
     /**
      * Returns view with data for the user dashboard.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\View\View
      */
     public function index(Request $request): View
     {

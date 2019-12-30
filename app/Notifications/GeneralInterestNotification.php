@@ -18,8 +18,6 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
      * @return array<string>
      */
     public function via($notifiable): array
@@ -29,10 +27,6 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param mixed $notifiable
-     *
-     * @return Mailable
      */
     public function toMail($notifiable): Mailable
     {
@@ -51,8 +45,6 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
 
     /**
      * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
      *
      * @return array<string,string>
      */

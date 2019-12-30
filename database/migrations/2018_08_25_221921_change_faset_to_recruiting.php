@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,10 +11,8 @@ class ChangeFasetToRecruiting extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Rename columns
         Schema::table('faset_visits', static function (Blueprint $table): void {
@@ -44,10 +44,8 @@ class ChangeFasetToRecruiting extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // Rename columns
         Schema::table('recruiting_visits', static function (Blueprint $table): void {

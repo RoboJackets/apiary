@@ -10,9 +10,17 @@ return [
     ],
 
     'exclude_analysis_directory_list' => [
+        'bootstrap/cache/',
         'database/',
-        'resources/views/vendor/',
+        'public/',
+        'resources/',
+        'storage/',
         'vendor/',
+    ],
+
+    'exclude_file_list' => [
+        '.phpstorm.meta.php',
+        '_ide_helper.php',
     ],
 
     'suppress_issue_types' => [
@@ -24,6 +32,7 @@ return [
         'PhanPluginNonBoolInLogicalArith',
         'PhanPossiblyFalseTypeArgumentInternal',
         'PhanPossiblyNullTypeArgument',
+        'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',
         'PhanUndeclaredClassMethod',
         'PhanUndeclaredFunction',
@@ -31,6 +40,7 @@ return [
         'PhanUndeclaredMethod',
         'PhanUnreferencedClass',
         'PhanUnreferencedClosure',
+        'PhanUnreferencedPHPDocProperty',
         'PhanUnreferencedProtectedProperty',
         'PhanUnreferencedPublicMethod',
         'PhanUnreferencedPublicProperty',
@@ -38,6 +48,7 @@ return [
         'PhanUnusedPublicMethodParameter',
         'PhanUnusedPublicNoOverrideMethodParameter',
         'PhanUnusedVariableValueOfForeachWithKey',
+        'PhanWriteOnlyPHPDocProperty',
         'PhanWriteOnlyProtectedProperty',
         'PhanWriteOnlyPublicProperty',
     ],
@@ -45,6 +56,7 @@ return [
     'allow_missing_properties' => true,
     'backward_compatibility_checks' => false,
     'dead_code_detection' => true,
+    'enable_extended_internal_return_type_plugins' => true,
     'enable_include_path_checks' => true,
     'strict_method_checking' => true,
     'strict_param_checking' => true,

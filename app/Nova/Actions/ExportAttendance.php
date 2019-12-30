@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
 
 namespace App\Nova\Actions;
 
@@ -45,7 +45,6 @@ class ExportAttendance extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Laravel\Nova\Fields\ActionFields  $fields
      * @param \Illuminate\Support\Collection<\App\Attendance>  $models
      *
      * @return array<string,string>

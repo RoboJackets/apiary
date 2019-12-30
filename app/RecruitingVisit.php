@@ -60,8 +60,6 @@ class RecruitingVisit extends Model
 
     /**
      * Route notifications for the mail channel.
-     *
-     * @return string
      */
     public function routeNotificationForMail(): string
     {

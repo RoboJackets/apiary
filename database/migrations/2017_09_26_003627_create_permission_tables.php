@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -7,10 +9,8 @@ class CreatePermissionTables extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         $tableNames = config('permission.table_names');
         $foreignKeys = config('permission.foreign_keys');
@@ -29,17 +29,20 @@ class CreatePermissionTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames): void {
-            $table->integer('permission_id')->unsigned();
-            $table->morphs('model');
+        Schema::create(
+            $tableNames['model_has_permissions'],
+            static function (Blueprint $table) use ($tableNames): void {
+                $table->integer('permission_id')->unsigned();
+                $table->morphs('model');
 
-            $table->foreign('permission_id')
-                ->references('id')
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
+                $table->foreign('permission_id')
+                    ->references('id')
+                    ->on($tableNames['permissions'])
+                    ->onDelete('cascade');
 
-            $table->primary(['permission_id', 'model_id', 'model_type']);
-        });
+                $table->primary(['permission_id', 'model_id', 'model_type']);
+            }
+        );
 
         Schema::create($tableNames['model_has_roles'], static function (Blueprint $table) use ($tableNames): void {
             $table->integer('role_id')->unsigned();
@@ -73,10 +76,8 @@ class CreatePermissionTables extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $tableNames = config('permission.table_names');
 

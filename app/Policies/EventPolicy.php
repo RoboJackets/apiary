@@ -16,11 +16,6 @@ class EventPolicy
 
     /**
      * Determine whether the user can view the event.
-     *
-     * @param \App\User  $user
-     * @param \App\Event  $event
-     *
-     * @return bool
      */
     public function view(User $user, Event $event): bool
     {
@@ -30,10 +25,6 @@ class EventPolicy
 
     /**
      * Determine whether the user can view any events.
-     *
-     * @param \App\User  $user
-     *
-     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -42,10 +33,6 @@ class EventPolicy
 
     /**
      * Determine whether the user can create events.
-     *
-     * @param \App\User  $user
-     *
-     * @return bool
      */
     public function create(User $user): bool
     {
@@ -54,11 +41,6 @@ class EventPolicy
 
     /**
      * Determine whether the user can update the event.
-     *
-     * @param \App\User  $user
-     * @param \App\Event  $event
-     *
-     * @return bool
      */
     public function update(User $user, Event $event): bool
     {
@@ -67,11 +49,6 @@ class EventPolicy
 
     /**
      * Determine whether the user can delete the event.
-     *
-     * @param \App\User  $user
-     * @param \App\Event  $event
-     *
-     * @return bool
      */
     public function delete(User $user, Event $event): bool
     {
@@ -80,11 +57,6 @@ class EventPolicy
 
     /**
      * Determine whether the user can restore the event.
-     *
-     * @param \App\User  $user
-     * @param \App\Event  $event
-     *
-     * @return bool
      */
     public function restore(User $user, Event $event): bool
     {
@@ -93,11 +65,6 @@ class EventPolicy
 
     /**
      * Determine whether the user can permanently delete the event.
-     *
-     * @param \App\User  $user
-     * @param \App\Event  $event
-     *
-     * @return bool
      */
     public function forceDelete(User $user, Event $event): bool
     {

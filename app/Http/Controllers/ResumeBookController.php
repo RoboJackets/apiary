@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +15,6 @@ class ResumeBookController extends Controller
 
     /**
      * Show a resume book.
-     *
-     * @param string $tag
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */

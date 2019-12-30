@@ -32,9 +32,6 @@ abstract class FieldByActiveBreakdown extends Partition
     /**
      * Create a new FieldByActiveBreakdown metric.
      *
-     * @param string  $field_name
-     * @param bool  $use_access_active
-     *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(string $field_name, bool $use_access_active = false)
@@ -46,10 +43,6 @@ abstract class FieldByActiveBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\PartitionResult
      *
      * @suppress PhanPossiblyNonClassMethodCall
      */

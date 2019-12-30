@@ -24,8 +24,6 @@ class NotificationTemplate extends Resource
 
     /**
      * Get the displayble label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
@@ -34,8 +32,6 @@ class NotificationTemplate extends Resource
 
     /**
      * Get the displayble singular label of the resource.
-     *
-     * @return string
      */
     public static function singularLabel(): string
     {
@@ -62,8 +58,6 @@ class NotificationTemplate extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<mixed>
      */
@@ -123,8 +117,6 @@ class NotificationTemplate extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
@@ -134,8 +126,6 @@ class NotificationTemplate extends Resource
 
     /**
      * Get the filters available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
@@ -147,8 +137,6 @@ class NotificationTemplate extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
@@ -158,8 +146,6 @@ class NotificationTemplate extends Resource
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,10 +10,8 @@ class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('users', static function (Blueprint $table): void {
             $table->increments('id');
@@ -36,7 +36,6 @@ class CreateUsersTable extends Migration
             // Swag info
             $table->enum('shirt_size', ['s', 'm', 'l', 'xl', 'xxl', 'xxxl'])->nullable();
             $table->enum('polo_size', ['s', 'm', 'l', 'xl', 'xxl', 'xxxl'])->nullable();
-            //TODO: Demographic/Career Information
             // Timestamps
             $table->softDeletes();
             $table->timestamps();
@@ -45,10 +44,8 @@ class CreateUsersTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('users');
     }

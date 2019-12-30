@@ -15,10 +15,6 @@ class SUMSUsers extends Value
 {
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\ValueResult
      */
     public function calculate(Request $request): ValueResult
     {
@@ -27,8 +23,6 @@ class SUMSUsers extends Value
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {
@@ -37,8 +31,6 @@ class SUMSUsers extends Value
 
     /**
      * Get the displayable name of the metric.
-     *
-     * @return string
      */
     public function name(): string
     {

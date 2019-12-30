@@ -23,10 +23,6 @@ class NotificationTemplateController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -38,10 +34,6 @@ class NotificationTemplateController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreNotificationTemplateRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreNotificationTemplateRequest $request): JsonResponse
     {
@@ -57,11 +49,6 @@ class NotificationTemplateController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param int  $id
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -76,11 +63,6 @@ class NotificationTemplateController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateNotificationTemplateRequest  $request
-     * @param int  $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateNotificationTemplateRequest $request, int $id): JsonResponse
     {
@@ -96,10 +78,6 @@ class NotificationTemplateController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int  $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {

@@ -15,10 +15,6 @@ class CoreNotifiable
 
     /**
      * Route notifications for the Slack channel.
-     *
-     * @param \Illuminate\Notifications\Notification  $notification
-     *
-     * @return string|null
      */
     public function routeNotificationForSlack(Notification $notification): ?string
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Spatie\Permission\Models\Role;
 
@@ -7,10 +9,8 @@ class AddTrainerRole extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Reset cached roles and permissions
         app()['cache']->forget('spatie.permission.cache');
@@ -22,15 +22,15 @@ class AddTrainerRole extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $role = Role::where('name', 'trainer')->first();
 
-        if (null !== $role) {
-            $role->delete();
+        if (null === $role) {
+            return;
         }
+
+        $role->delete();
     }
 }

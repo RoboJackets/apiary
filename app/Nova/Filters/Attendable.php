@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-
 namespace App\Nova\Filters;
 
 use App\Event;
@@ -31,8 +29,6 @@ class Attendable extends Filter
     /**
      * Create new Attendable filter.
      *
-     * @param bool  $includeEvents
-     *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(bool $includeEvents = true)
@@ -43,13 +39,10 @@ class Attendable extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param \Illuminate\Http\Request  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string  $value
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $value
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, $query, $value): Builder
     {
         $parts = explode(',', $value);
         $attendableType = $parts[0];
@@ -63,8 +56,6 @@ class Attendable extends Filter
 
     /**
      * Get the filter's available options.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<string,string>
      *

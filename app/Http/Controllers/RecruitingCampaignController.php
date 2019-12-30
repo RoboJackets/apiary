@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
 
 namespace App\Http\Controllers;
 
@@ -33,10 +33,6 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -48,10 +44,6 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreRecruitingCampaignRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreRecruitingCampaignRequest $request): JsonResponse
     {
@@ -110,10 +102,6 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Create queue entries for email send.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function queue(int $id): JsonResponse
     {
@@ -138,10 +126,6 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param \App\RecruitingCampaign  $recruitingCampaign
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(RecruitingCampaign $recruitingCampaign): JsonResponse
     {
@@ -150,25 +134,21 @@ class RecruitingCampaignController extends Controller
         return response()->json(['status' => 'success', 'campaign' => $rc]);
     }
 
+    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request  $request
-     * @param \App\RecruitingCampaign  $recruitingCampaign
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, RecruitingCampaign $recruitingCampaign): JsonResponse
     {
         return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
     }
 
+    // phpcs:enable
+
     /**
      * Remove the specified resource from storage.
-     *
-     * @param \App\RecruitingCampaign  $recruitingCampaign
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(RecruitingCampaign $recruitingCampaign): JsonResponse
     {

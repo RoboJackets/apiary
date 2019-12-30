@@ -30,10 +30,6 @@ class UserController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -47,10 +43,6 @@ class UserController extends Controller
      * Searches for a resource based upon a keyword
      * Accepts GTID, First/Preferred Name, and Username (uid)
      * GTID returns first result, others return all matching (wildcard).
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request): JsonResponse
     {
@@ -76,10 +68,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreUserRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
@@ -121,11 +109,6 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param string $id
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id, Request $request): JsonResponse
     {
@@ -153,11 +136,6 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param string $id
-     * @param \App\Http\Requests\UpdateUserRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
@@ -211,10 +189,6 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param string $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id): JsonResponse
     {

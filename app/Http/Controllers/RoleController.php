@@ -21,8 +21,6 @@ class RoleController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
     {
@@ -33,10 +31,6 @@ class RoleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreRoleRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreRoleRequest $request): JsonResponse
     {
@@ -67,10 +61,6 @@ class RoleController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param string  $name
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $name): JsonResponse
     {
@@ -92,11 +82,6 @@ class RoleController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request  $request
-     * @param string  $name
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, string $name): JsonResponse
     {
@@ -144,10 +129,6 @@ class RoleController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param string  $name
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $name): JsonResponse
     {
@@ -171,11 +152,6 @@ class RoleController extends Controller
 
     /**
      * Assigns roles to users.
-     *
-     * @param string $name
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function assign(string $name, Request $request): JsonResponse
     {

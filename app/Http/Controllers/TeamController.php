@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeamRequest;
@@ -35,10 +33,6 @@ class TeamController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -68,10 +62,6 @@ class TeamController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreTeamRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreTeamRequest $request): JsonResponse
     {
@@ -93,11 +83,6 @@ class TeamController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param string  $id
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id, Request $request): JsonResponse
     {
@@ -120,10 +105,6 @@ class TeamController extends Controller
 
     /**
      * Returns a list of all members of the given team.
-     *
-     * @param string $id integer Team ID
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function showMembers(Request $request, string $id): JsonResponse
     {
@@ -139,11 +120,6 @@ class TeamController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateTeamRequest  $request
-     * @param string  $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
@@ -166,11 +142,6 @@ class TeamController extends Controller
 
     /**
      * Updates membership of the given team.
-     *
-     * @param \App\Http\Requests\UpdateMembersTeamRequest $request
-     * @param string $id integer
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function updateMembers(UpdateMembersTeamRequest $request, string $id): JsonResponse
     {
@@ -219,10 +190,6 @@ class TeamController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param string  $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id): JsonResponse
     {

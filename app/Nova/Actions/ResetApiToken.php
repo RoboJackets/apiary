@@ -29,7 +29,6 @@ class ResetApiToken extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Laravel\Nova\Fields\ActionFields  $fields
      * @param \Illuminate\Support\Collection<\App\User>  $models
      *
      * @return array<string,string>

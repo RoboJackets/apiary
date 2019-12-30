@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Controllers;
 
 use App\DuesTransaction;
@@ -41,8 +38,6 @@ class PaymentController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
     {
@@ -53,10 +48,6 @@ class PaymentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StorePaymentRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
@@ -88,10 +79,6 @@ class PaymentController extends Controller
 
     /**
      * Handles payment request from user-facing UI.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return mixed
      */
     public function storeUser(Request $request)
     {
@@ -172,10 +159,6 @@ class PaymentController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id): JsonResponse
     {
@@ -189,11 +172,6 @@ class PaymentController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdatePaymentRequest $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdatePaymentRequest $request, int $id): JsonResponse
     {
@@ -214,10 +192,6 @@ class PaymentController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {
@@ -239,8 +213,6 @@ class PaymentController extends Controller
      * @param string $email Email address for Square Receipt
      * @param \App\Payment $payment Payment Model
      * @param bool $addFee Adds $3.00 transaction fee if true
-     *
-     * @return mixed
      */
     public function createSquareCheckout(string $name, int $amount, string $email, Payment $payment, bool $addFee)
     {
@@ -294,8 +266,6 @@ class PaymentController extends Controller
 
     /**
      * Processes Square redirect after completed checkout transaction.
-     *
-     * @return mixed
      */
     public function handleSquareResponse(Request $request)
     {
@@ -467,10 +437,6 @@ class PaymentController extends Controller
 
     /**
      * Queries Square Transaction API for transaction details.
-     *
-     * @param TransactionsApi $client
-     * @param string $location
-     * @param string $server_txn_id
      *
      * @return \Throwable|\SquareConnect\Model\RetrieveTransactionResponse
      */

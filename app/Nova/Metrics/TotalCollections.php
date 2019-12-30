@@ -14,10 +14,6 @@ class TotalCollections extends Value
 {
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\ValueResult
      */
     public function calculate(Request $request): ValueResult
     {
@@ -53,8 +49,6 @@ class TotalCollections extends Value
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

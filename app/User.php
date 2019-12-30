@@ -20,12 +20,13 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Represents a user, possibly a member and possibly not.
  *
- * @property boolean $is_active whether the user is currently active
- * @property string $name the display name for this user
+ * @method static \Illuminate\Database\Eloquent\Builder accessActive() scopes to only users that are access active
+ * @method static \Illuminate\Database\Eloquent\Builder active() scopes to only users that are active
  * @method static \Illuminate\Database\Eloquent\Builder findByIdentifier(string $id) finds a user by any identifier
  * @method static \Illuminate\Database\Eloquent\Builder hasOverride() scopes to only users with an active override
- * @method static \Illuminate\Database\Eloquent\Builder active() scopes to only users that are active
- * @method static \Illuminate\Database\Eloquent\Builder accessActive() scopes to only users that are access active
+ *
+ * @property bool $is_active whether the user is currently active
+ * @property string $name the display name for this user
  */
 class User extends Authenticatable
 {
@@ -148,8 +149,6 @@ class User extends Authenticatable
         return implode(' ', [$first, $this->last_name]);
     }
 
-    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
-
     /**
      * Get the preferred first name associated with the User.
      */
@@ -158,10 +157,6 @@ class User extends Authenticatable
         return $this->preferred_name ?? $this->first_name;
     }
 
-    // phpcs:enable
-
-    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-
     /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
      */
@@ -169,8 +164,6 @@ class User extends Authenticatable
     {
         $this->attributes['preferred_name'] = $preferred_name === $this->first_name ? null : $preferred_name;
     }
-
-    // phpcs:enable
 
     /**
      * Get the full name associated with the User.
@@ -223,8 +216,6 @@ class User extends Authenticatable
     /**
      * Route notifications for the mail channel.
      * Send to GT email when present and fall back to personal email if not.
-     *
-     * @return string
      */
     public function routeNotificationForMail(): string
     {
@@ -251,7 +242,9 @@ class User extends Authenticatable
         throw new BadMethodCallException('Not implemented');
     }
 
-    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 
     public function setRememberToken($value): void
     {
@@ -285,8 +278,6 @@ class User extends Authenticatable
 
     /**
      * Get the is_active flag for the User.
-     *
-     * @return bool
      */
     public function getIsActiveAttribute(): bool
     {
@@ -295,8 +286,6 @@ class User extends Authenticatable
 
     /**
      * Get the access_active flag for the User.
-     *
-     * @return bool
      */
     public function getIsAccessActiveAttribute(): bool
     {
@@ -305,11 +294,6 @@ class User extends Authenticatable
 
     /**
      * Scope a query to automatically determine user identifier.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $id
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFindByIdentifier(Builder $query, string $id): Builder
     {
@@ -332,10 +316,6 @@ class User extends Authenticatable
      * Scope a query to automatically include only active members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $query): Builder
     {
@@ -348,10 +328,6 @@ class User extends Authenticatable
      * Scope a query to automatically include only inactive members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeInactive(Builder $query): Builder
     {
@@ -364,10 +340,6 @@ class User extends Authenticatable
      * Scope a query to automatically include only access active members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAccessActive(Builder $query): Builder
     {
@@ -380,10 +352,6 @@ class User extends Authenticatable
      * Scope a query to automatically include only inactive members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAccessInactive(Builder $query): Builder
     {
@@ -396,10 +364,6 @@ class User extends Authenticatable
 
     /**
      * Scope a query to automatically include only members with access overrides.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeHasOverride(Builder $query): Builder
     {

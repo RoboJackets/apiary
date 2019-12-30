@@ -13,10 +13,6 @@ class PaymentSuccessListener
 {
     /**
      * Handle the event.
-     *
-     * @param \App\Events\PaymentSuccess  $event
-     *
-     * @return void
      */
     public function handle(PaymentSuccess $event): void
     {

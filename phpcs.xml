@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-    <ruleset name="PHP Checks Default Ruleset" namespace="Kberzinch\Php-Checks">
-    <description>The default rule set used by PHP Checks</description>
+    <ruleset name="Apiary Ruleset" namespace="RoboJackets">
+    <description>Apiary ruleset</description>
 
     <config name="installed_paths" value="../../slevomat/coding-standard"/>
 
@@ -10,22 +10,29 @@
     <exclude-pattern>*.min.js</exclude-pattern>
     <exclude-pattern>/bootstrap/cache/</exclude-pattern>
     <exclude-pattern>/node_modules/</exclude-pattern>
-    <exclude-pattern>/public/css/</exclude-pattern>
-    <exclude-pattern>/public/index.php</exclude-pattern>
-    <exclude-pattern>/public/js/</exclude-pattern>
-    <exclude-pattern>/storage/framework/</exclude-pattern>
+    <exclude-pattern>/public/</exclude-pattern>
+    <exclude-pattern>/storage/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
     <exclude-pattern>/_ide_helper.php</exclude-pattern>
 
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>
         <exclude name="PSR12.ControlStructures.ControlStructureSpacing"/>
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+    </rule>
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>/database/migrations/</exclude-pattern>
     </rule>
 
     <rule ref="Generic.Arrays.ArrayIndent"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 
     <rule ref="Generic.Classes.DuplicateClassName"/>
+
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+    </rule>
 
     <rule ref="Generic.CodeAnalysis"/>
 
@@ -127,8 +134,13 @@
 
     <rule ref="SlevomatCodingStandard.Exceptions"/>
 
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.Functions">
         <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>
+        <exclude name="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
@@ -168,6 +180,15 @@
         </properties>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>/app/Nova/Resource.php</exclude-pattern>
+        <exclude-pattern>/app/Nova/Filters/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>/app/Http/Controllers</exclude-pattern>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints"/>
 
     <rule ref="Squiz.Arrays">
@@ -175,7 +196,13 @@
         <exclude name="Squiz.Arrays.ArrayDeclaration"/>
     </rule>
 
-    <rule ref="Squiz.Classes"/>
+    <rule ref="Squiz.Classes">
+        <exclude name="Squiz.Classes.ClassFileName.NoMatch"/>
+    </rule>
+
+    <rule ref="Squiz.Classes.ClassFileName.NoMatch">
+        <exclude-pattern>/database/migrations/</exclude-pattern>
+    </rule>
 
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
     <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>

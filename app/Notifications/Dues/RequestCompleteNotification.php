@@ -35,8 +35,6 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param User  $notifiable
-     *
      * @return array<string>
      */
     public function via(User $notifiable): array
@@ -46,10 +44,6 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param User  $notifiable
-     *
-     * @return Mailable
      */
     public function toMail(User $notifiable): Mailable
     {
@@ -58,8 +52,6 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
 
     /**
      * Get the array representation of the notification.
-     *
-     * @param User  $notifiable
      *
      * @return array<string,string>
      */

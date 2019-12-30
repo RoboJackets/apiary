@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-
 namespace App\Nova\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -22,13 +20,10 @@ class UserActiveAttendance extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param \Illuminate\Http\Request  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string  $value
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $value
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, $query, $value): Builder
     {
         if ('yes' === $value) {
             return $query->whereHas('attendee', static function (Builder $q): void {
@@ -43,8 +38,6 @@ class UserActiveAttendance extends Filter
 
     /**
      * Get the filter's available options.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<string,string>
      */

@@ -16,8 +16,6 @@ class LinkedGitHubAccounts extends FieldByActiveBreakdown
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {
@@ -26,8 +24,6 @@ class LinkedGitHubAccounts extends FieldByActiveBreakdown
 
     /**
      * Get the displayable name of the metric.
-     *
-     * @return string
      */
     public function name(): string
     {

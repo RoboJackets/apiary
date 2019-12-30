@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-
 namespace App\Nova;
 
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
 
@@ -14,12 +13,9 @@ abstract class Resource extends NovaResource
     /**
      * Build an "index" query for the given resource.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function indexQuery(NovaRequest $request, $query): Builder
     {
         return $query;
     }

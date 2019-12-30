@@ -19,7 +19,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for dues transactions
  *
- * @property boolean $is_paid Whether this transaction is paid for
+ * @property bool $is_paid Whether this transaction is paid for
  * @property \App\DuesPackage $package The package associated with this transaction
  * @property \App\User $user the user associated with this transaction
  */
@@ -41,8 +41,6 @@ class DuesTransaction extends Resource
 
     /**
      * Get the displayble label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
@@ -51,8 +49,6 @@ class DuesTransaction extends Resource
 
     /**
      * Get the displayble singular label of the resource.
-     *
-     * @return string
      */
     public static function singularLabel(): string
     {
@@ -61,8 +57,6 @@ class DuesTransaction extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<mixed>
      */
@@ -182,8 +176,6 @@ class DuesTransaction extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
@@ -193,8 +185,6 @@ class DuesTransaction extends Resource
 
     /**
      * Get the filters available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
@@ -213,8 +203,6 @@ class DuesTransaction extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
@@ -224,8 +212,6 @@ class DuesTransaction extends Resource
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */

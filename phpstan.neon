@@ -3,12 +3,15 @@ includes:
   - %rootDir%/../phpstan-deprecation-rules/rules.neon
   - %rootDir%/../../nunomaduro/larastan/extension.neon
 parameters:
+  autoload_directories:
+    - database/seeds/
   excludes_analyse:
-    - vendor/*
-    - storage/*
-    - bootstrap/*
-    - _ide_helper.php
     - *.blade.php
+    - .phpstorm.meta.php
+    - _ide_helper.php
+    - bootstrap/*
+    - storage/*
+    - vendor/*
   ignoreErrors:
     - '#Access to an undefined property App\\[a-zA-Z]+\|\(Illuminate\\Database\\Eloquent\\Collection&iterable<App\\[a-zA-Z]+>\)::\$[a-zA-Z_]+.#'
     - '#Access to an undefined property App\\Payment::\$aggregate\.#'
@@ -38,6 +41,7 @@ parameters:
     - '#Cannot call method [a-zA-Z_]+\(\) on App\\[a-zA-Z]+\|\(Illuminate\\Database\\Eloquent\\Collection&iterable<App\\[a-zA-Z]+>\)\|null\.#'
     - '#Cannot call method can\(\) on App\\User\|null\.#'
     - '#Cannot call method cant\(\) on App\\User\|null\.#'
+    - '#Cannot call method name\(\) on array\|Illuminate\\Routing\\Route\.#'
     - '#Dynamic call to static method App\\Attendance::get\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder::distinct\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder::doesntHave\(\)\.#'
@@ -71,12 +75,16 @@ parameters:
     - '#Dynamic call to static method Spatie\\Permission\\Models\\Role::givePermissionTo\(\)\.#'
     - '#Dynamic call to static method Spatie\\Permission\\Models\\Role::revokePermissionTo\(\)\.#'
     - '#Dynamic call to static method Spatie\\Permission\\Models\\Role::syncPermissions\(\)\.#'
+    - '#Function factory invoked with 1 parameter, 0 required\.#'
+    - '#Function factory invoked with 2 parameters, 0 required\.#'
     - '#Function idMap not found while trying to analyse it - autoloading is probably not configured properly\.#'
     - '#Function idMap not found\.#'
+    - '#Method App\\Http\\Controllers\\[a-zA-Z]+::[a-zA-Z]+\(\) has no return typehint specified\.#'
     - '#Method App\\Http\\Controllers\\[a-zA-Z]+Controller::handleProviderCallback\(\) has no return typehint specified\.#'
     - '#Method App\\Http\\Controllers\\[a-zA-Z]+Controller::redirectToProvider\(\) has no return typehint specified\.#'
     - '#Method App\\Http\\Middleware\\PermissionMiddleware::handle\(\) has no return typehint specified\.#'
     - '#Method App\\RecruitingVisit::save\(\) has parameter \$options with no value type specified in iterable type array\.#'
+    - '#Method Illuminate\\Routing\\RouteRegistrar::middleware\(\) invoked with 2 parameters, 1 required\.#'
     - '#Parameter \#1 \$data of function bin2hex expects string, string\|false given\.#'
     - '#Parameter \#1 \$duesPackage of class App\\Notifications\\Dues\\RequestCompleteNotification constructor expects App\\DuesPackage, App\\DuesPackage\|null given\.#'
     - '#Parameter \#1 \$key of method Illuminate\\Http\\Request::input\(\) expects string\|null, int\|string given\.#'
@@ -91,7 +99,3 @@ parameters:
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Parameter \#5 \$column of method Laravel\\Nova\\Metrics\\Trend::aggregate\(\) expects string, Illuminate\\Database\\Query\\Expression given\.#'
     - '#Undefined variable: \$factory#'
-    - '#Function factory invoked with 1 parameter, 0 required\.#'
-    - '#Function factory invoked with 2 parameters, 0 required\.#'
-    - '#Method Illuminate\\Routing\\RouteRegistrar::middleware\(\) invoked with 2 parameters, 1 required\.#'
-    - '#Cannot call method name\(\) on array\|Illuminate\\Routing\\Route\.#'

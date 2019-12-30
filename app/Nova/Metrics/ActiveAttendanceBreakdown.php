@@ -14,8 +14,6 @@ class ActiveAttendanceBreakdown extends Partition
 {
     /**
      * Get the displayable name of the metric.
-     *
-     * @return string
      */
     public function name(): string
     {
@@ -32,8 +30,6 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      *
-     * @param bool  $showAllTime
-     *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(bool $showAllTime = false)
@@ -44,10 +40,6 @@ class ActiveAttendanceBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\PartitionResult
      */
     public function calculate(Request $request): PartitionResult
     {
@@ -88,8 +80,6 @@ class ActiveAttendanceBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

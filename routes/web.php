@@ -35,7 +35,9 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::prefix('dues')->group(static function (): void {
         Route::get('/', static function () {
             // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
-            return true === auth()->user()->is_active ? response()->view('dues.alreadypaid', [], 400) : view('dues/payDues');
+            return true === auth()->user()->is_active ? response()->view('dues.alreadypaid', [], 400) : view(
+                'dues/payDues'
+            );
         })->name('payDues');
 
         Route::get('/pay', 'PaymentController@storeUser')->name('dues.payOne');

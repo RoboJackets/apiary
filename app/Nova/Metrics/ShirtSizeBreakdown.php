@@ -16,8 +16,6 @@ class ShirtSizeBreakdown extends Partition
 {
     /**
      * Get the displayable name of the metric.
-     *
-     * @return string
      */
     public function name(): string
     {
@@ -33,8 +31,6 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Create a new ShirtSizeBreakdown metric. swagType can be either 'shirt' or 'polo'.
-     *
-     * @param string $swagType
      */
     public function __construct(string $swagType)
     {
@@ -51,10 +47,6 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\PartitionResult
      */
     public function calculate(Request $request): PartitionResult
     {
@@ -96,8 +88,6 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

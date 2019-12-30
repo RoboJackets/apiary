@@ -15,8 +15,6 @@ class SwagPickupRate extends TextMetric
 {
     /**
      * Get the displayable name of the metric.
-     *
-     * @return string
      */
     public function name(): string
     {
@@ -32,8 +30,6 @@ class SwagPickupRate extends TextMetric
 
     /**
      * Create a new SwagPickupRate metric. swagType can be either 'shirt' or 'polo'.
-     *
-     * @param string  $swagType
      */
     public function __construct(string $swagType)
     {
@@ -50,10 +46,6 @@ class SwagPickupRate extends TextMetric
 
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\ValueResult
      */
     public function calculate(Request $request): ValueResult
     {
@@ -95,8 +87,6 @@ class SwagPickupRate extends TextMetric
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

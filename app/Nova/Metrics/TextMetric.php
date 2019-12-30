@@ -17,8 +17,6 @@ abstract class TextMetric extends Value
 
     /**
      * Get the component name for the element.
-     *
-     * @return string
      */
     public function component(): string
     {

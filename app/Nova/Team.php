@@ -53,8 +53,6 @@ class Team extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<mixed>
      */
     public function fields(Request $request): array
@@ -175,8 +173,6 @@ class Team extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
@@ -208,8 +204,6 @@ class Team extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
@@ -219,8 +213,6 @@ class Team extends Resource
 
     /**
      * Get the lenses available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
@@ -232,8 +224,6 @@ class Team extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Actions\Action>
      */
     public function actions(Request $request): array
@@ -244,10 +234,7 @@ class Team extends Resource
     /**
      * Build an "index" query for the team resource to hide hidden teams.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public static function indexQuery(NovaRequest $request, $query): Builder
     {
@@ -259,10 +246,7 @@ class Team extends Resource
      *
      * This query determines which instances of the model may be attached to other resources.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {

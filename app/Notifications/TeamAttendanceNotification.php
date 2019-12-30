@@ -22,21 +22,16 @@ class TeamAttendanceNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param Team  $notifiable
-     *
      * @return array<string>
      */
     public function via(Team $notifiable): array
     {
-        return null !== $notifiable->routeNotificationForSlack($this) && null !== $notifiable->slack_private_channel_id ? ['slack'] : [];
+        return null !== $notifiable->routeNotificationForSlack($this)
+            && null !== $notifiable->slack_private_channel_id ? ['slack'] : [];
     }
 
     /**
      * Get the Slack representation of the notification.
-     *
-     * @param Team  $team
-     *
-     * @return SlackMessage
      */
     public function toSlack(Team $team): SlackMessage
     {
@@ -98,8 +93,6 @@ class TeamAttendanceNotification extends Notification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @param Team $notifiable
      *
      * @return array<string,string>
      */

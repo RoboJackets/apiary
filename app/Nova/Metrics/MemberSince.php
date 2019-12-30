@@ -14,10 +14,6 @@ class MemberSince extends TextMetric
 {
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\ValueResult
      */
     public function calculate(Request $request): ValueResult
     {
@@ -35,8 +31,6 @@ class MemberSince extends TextMetric
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

@@ -15,10 +15,6 @@ class TreasurerNotifiable
 
     /**
      * Route notifications for the Slack channel.
-     *
-     * @param \Illuminate\Notifications\Notification  $notification
-     *
-     * @return string|null
      */
     public function routeNotificationForSlack(Notification $notification): ?string
     {
@@ -27,10 +23,6 @@ class TreasurerNotifiable
 
     /**
      * Route notifications for the mail channel.
-     *
-     * @param \Illuminate\Notifications\Notification  $notification
-     *
-     * @return string|null
      */
     public function routeNotificationForMail(Notification $notification): ?string
     {

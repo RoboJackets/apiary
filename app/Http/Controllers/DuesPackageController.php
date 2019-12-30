@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
-
 namespace App\Http\Controllers;
 
 use App\DuesPackage;
@@ -40,10 +38,6 @@ class DuesPackageController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -55,10 +49,6 @@ class DuesPackageController extends Controller
 
     /**
      * Display a listing of active DuesPackages.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function indexActive(Request $request): JsonResponse
     {
@@ -70,10 +60,6 @@ class DuesPackageController extends Controller
 
     /**
      * Display a listing of DuesPackages that are available for purchase.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function indexAvailable(Request $request): JsonResponse
     {
@@ -87,10 +73,6 @@ class DuesPackageController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreDuesPackageRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreDuesPackageRequest $request): JsonResponse
     {
@@ -110,11 +92,6 @@ class DuesPackageController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param Request $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, int $id): JsonResponse
     {
@@ -129,11 +106,6 @@ class DuesPackageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateDuesPackageRequest $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateDuesPackageRequest $request, int $id): JsonResponse
     {
@@ -154,10 +126,6 @@ class DuesPackageController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {

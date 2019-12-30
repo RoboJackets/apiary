@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Http\Controllers;
 
 class AttendanceReportController extends Controller
@@ -15,8 +13,6 @@ class AttendanceReportController extends Controller
 
     /**
      * Show a resume book.
-     *
-     * @param string $hash
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */

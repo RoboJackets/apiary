@@ -23,13 +23,12 @@ class SummaryNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param TreasurerNotifiable  $notifiable
-     *
      * @return array<string>
      */
     public function via(TreasurerNotifiable $notifiable): array
     {
-        return null !== $notifiable->routeNotificationForSlack($this) && count($this->getPayments()) > 0 ? ['slack'] : [];
+        return null !== $notifiable->routeNotificationForSlack($this)
+            && count($this->getPayments()) > 0 ? ['slack'] : [];
     }
 
     /**
@@ -55,10 +54,6 @@ class SummaryNotification extends Notification
 
     /**
      * Get the Slack representation of the notification.
-     *
-     * @param TreasurerNotifiable  $team
-     *
-     * @return SlackMessage
      */
     public function toSlack(TreasurerNotifiable $team): SlackMessage
     {
@@ -107,8 +102,6 @@ class SummaryNotification extends Notification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @param TreasurerNotifiable $notifiable
      *
      * @return array<string,string>
      */

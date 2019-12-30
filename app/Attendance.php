@@ -67,11 +67,6 @@ class Attendance extends Model
 
     /**
      * Scope query to start at given date.
-     *
-     * @param Builder $query
-     * @param string $date Date to start search
-     *
-     * @return Builder
      */
     public function scopeStart(Builder $query, string $date): Builder
     {
@@ -80,11 +75,6 @@ class Attendance extends Model
 
     /**
      * Scope query to end at given date.
-     *
-     * @param Builder $query
-     * @param string $date Date to start search
-     *
-     * @return Builder
      */
     public function scopeEnd(Builder $query, string $date): Builder
     {

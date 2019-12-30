@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-
 namespace App\Nova\Filters;
 
 use App\Team;
@@ -30,11 +28,8 @@ class UserTeam extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param \Illuminate\Http\Request  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string  $value
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $value
      */
     public function apply(Request $request, $query, $value): Builder
     {
@@ -45,8 +40,6 @@ class UserTeam extends Filter
 
     /**
      * Get the filter's available options.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<string,string>
      */

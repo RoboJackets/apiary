@@ -29,10 +29,6 @@ class EventController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -44,10 +40,6 @@ class EventController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreEventRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
@@ -65,11 +57,6 @@ class EventController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -85,11 +72,6 @@ class EventController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateEventRequest $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateEventRequest $request, int $id): JsonResponse
     {

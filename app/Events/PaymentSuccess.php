@@ -24,8 +24,6 @@ class PaymentSuccess
 
     /**
      * Create a new event instance.
-     *
-     * @param \App\Payment $payment
      */
     public function __construct(Payment $payment)
     {

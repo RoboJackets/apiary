@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecruitingVisitRequest;
@@ -62,11 +60,6 @@ class RecruitingVisitController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id RecruitingVisit ID Number
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -90,11 +83,6 @@ class RecruitingVisitController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateRecruitingVisitRequest $request
-     * @param int $id RecruitingVisit Id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateRecruitingVisitRequest $request, int $id): JsonResponse
     {

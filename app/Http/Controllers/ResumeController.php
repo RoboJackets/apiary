@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
@@ -22,8 +20,6 @@ class ResumeController extends Controller
 
     /**
      * Show the user's resume.
-     *
-     * @param string $id
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
@@ -45,9 +41,6 @@ class ResumeController extends Controller
 
     /**
      * Store the user's resume.
-     *
-     * @param string $id
-     * @param StoreResumeRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -166,12 +159,11 @@ class ResumeController extends Controller
         );
     }
 
+    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
     /**
      * Delete the user's resume.
-     *
-     * @param string $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function delete(string $id): JsonResponse
     {
@@ -183,4 +175,6 @@ class ResumeController extends Controller
             501
         );
     }
+
+    // phpcs:enable
 }

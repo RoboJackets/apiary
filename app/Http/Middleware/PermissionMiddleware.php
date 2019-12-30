@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -15,9 +13,7 @@ class PermissionMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param mixed $permissions_to_check Permissions to authenticate
+     * @param array<string>|string $permissions_to_check Permissions to authenticate
      *
      * @suppress PhanPluginAlwaysReturnMethod
      */

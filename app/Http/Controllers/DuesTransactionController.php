@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
-
 namespace App\Http\Controllers;
 
 use App\DuesTransaction;
@@ -38,10 +36,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -54,10 +48,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Display a listing of paid resources.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function indexPaid(Request $request): JsonResponse
     {
@@ -70,10 +60,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Display a listing of pending resources.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function indexPending(Request $request): JsonResponse
     {
@@ -86,10 +72,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Display a listing of swag pending resources.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function indexPendingSwag(Request $request): JsonResponse
     {
@@ -104,10 +86,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreDuesTransactionRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreDuesTransactionRequest $request): JsonResponse
     {
@@ -181,11 +159,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -212,11 +185,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateDuesTransactionRequest $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateDuesTransactionRequest $request, int $id): JsonResponse
     {
@@ -253,10 +221,6 @@ class DuesTransactionController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {
