@@ -37,13 +37,6 @@ trait AuthorizeInclude
             $relationPermMap = [];
         }
 
-        if (! is_string($requestedInclude)) {
-            $type = gettype($requestedInclude);
-            Log::warning(__METHOD__.': Received invalid '.$type.' of relationships to include');
-
-            return [];
-        }
-
         // Convert comma-separated string to an array
         $requestedInclude = explode(',', $requestedInclude);
 
