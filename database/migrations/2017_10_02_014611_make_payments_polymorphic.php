@@ -13,12 +13,12 @@ class MakePaymentsPolymorphic extends Migration
      */
     public function up()
     {
-        Schema::table('payments', function (Blueprint $table) {
+        Schema::table('payments', static function (Blueprint $table): void {
             $table->integer('payable_id')->after('id');
             $table->string('payable_type')->after('payable_id');
         });
 
-        Schema::table('dues_transactions', function (Blueprint $table) {
+        Schema::table('dues_transactions', static function (Blueprint $table): void {
             $table->dropForeign(['payment_id']);
             $table->dropColumn('payment_id');
         });
@@ -31,12 +31,12 @@ class MakePaymentsPolymorphic extends Migration
      */
     public function down()
     {
-        Schema::table('payments', function (Blueprint $table) {
+        Schema::table('payments', static function (Blueprint $table): void {
             $table->dropColumn('payable_id');
             $table->dropColumn('payable_type');
         });
 
-        Schema::table('dues_transactions', function (Blueprint $table) {
+        Schema::table('dues_transactions', static function (Blueprint $table): void {
             $table->unsignedInteger('payment_id')->nullable()->after('dues_package_id');
             $table->foreign('payment_id')->references('id')->on('payments');
         });

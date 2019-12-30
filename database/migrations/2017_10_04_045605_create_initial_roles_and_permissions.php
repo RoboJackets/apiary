@@ -234,6 +234,9 @@ class CreateInitialRolesAndPermissions extends Migration
         $roles = ['admin', 'officer-i', 'officer-ii', 'core', 'member', 'non-member'];
         foreach ($roles as $role) {
             $dbRole = Role::where('name', $role)->first();
+            if (null === $dbRole) {
+                continue;
+            }
             $dbRole->delete();
         }
     }

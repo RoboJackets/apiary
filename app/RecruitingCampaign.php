@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * A batch of emails sent to addresses collected from RecruitingVisits.
+ *
+ * @property int $created_by the user that created this campaign
+ * @property string $status the status of this campaign
+ * @property int $id the database identifier for this campaign
+ */
 class RecruitingCampaign extends Model
 {
     use SoftDeletes;

@@ -91,9 +91,9 @@ class Team extends Resource
 
             CollectAttendance::make()
                 ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId) {
+                    if (isset($request->resourceId)) {
                         $resource = AppTeam::find($request->resourceId);
-                        if ($resource && ! $resource->attendable) {
+                        if (null !== $resource && false === $resource->attendable) {
                             return false;
                         }
                     }

@@ -29,7 +29,7 @@ class SummaryNotification extends Notification
      */
     public function via(TreasurerNotifiable $notifiable): array
     {
-        return $notifiable->routeNotificationForSlack($this) && count($this->getPayments()) > 0 ? ['slack'] : [];
+        return null !== $notifiable->routeNotificationForSlack($this) && count($this->getPayments()) > 0 ? ['slack'] : [];
     }
 
     /**
@@ -73,21 +73,21 @@ class SummaryNotification extends Notification
                 }
 
                 return $a->count() > $b->count() ? -1 : 1;
-            })->map(static function (Collection $payment, string $method) {
+            })->map(static function (Collection $payment, string $method): string {
                 return $payment->count().' paid with '.Payment::$methods[$method];
             })->join(', ', ' and ');
         $packages = $payments->groupBy(static function (Payment $payment) {
             // We know it's a DuesTransaction because of filtering in getPayments. Include trashed because in some
             // cases transactions can be trashed, but payments that aren't still refer to them.
             return DuesTransaction::with('package')->withTrashed()->find($payment->payable_id)->package->name;
-        })->sort(static function (Collection $a, Collection $b) {
+        })->sort(static function (Collection $a, Collection $b): int {
             // Sort by quantity descending
             if ($a->count() === $b->count()) {
                 return 0;
             }
 
             return $a->count() > $b->count() ? -1 : 1;
-        })->map(static function (Collection $payment, string $package) {
+        })->map(static function (Collection $payment, string $package): string {
             return $payment->count().' paid for '.$package;
         })->join(', ', ' and ');
 

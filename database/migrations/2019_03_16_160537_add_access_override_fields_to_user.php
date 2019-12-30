@@ -13,7 +13,7 @@ class AddAccessOverrideFieldsToUser extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dateTime('access_override_until')->nullable();
 
             $table->unsignedInteger('access_override_by_id')->nullable()->comment('user_id of the user who entered access override');
@@ -29,7 +29,7 @@ class AddAccessOverrideFieldsToUser extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('access_override_until');
             $table->dropColumn('access_override_by');
         });

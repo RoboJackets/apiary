@@ -13,7 +13,7 @@ class CreateRsvpsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rsvps', function (Blueprint $table) {
+        Schema::create('rsvps', static function (Blueprint $table): void {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('event_id');

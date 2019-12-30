@@ -13,7 +13,7 @@ class AddDemographicsColumns extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->text('gender')->nullable()->after('polo_size');
             $table->text('ethnicity')->nullable()->after('gender');
         });
@@ -26,7 +26,7 @@ class AddDemographicsColumns extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('gender');
             $table->dropColumn('ethnicity');
         });

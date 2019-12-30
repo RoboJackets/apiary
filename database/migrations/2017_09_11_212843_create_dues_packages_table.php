@@ -13,7 +13,7 @@ class CreateDuesPackagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dues_packages', function (Blueprint $table) {
+        Schema::create('dues_packages', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('name');
             $table->boolean('eligible_for_shirt')->default(false);

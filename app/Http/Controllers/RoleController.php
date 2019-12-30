@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRoleRequest;
 use App\User;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -198,7 +199,7 @@ class RoleController extends Controller
 
         foreach ($request->input('users') as $user) {
             $dbUser = User::findByIdentifier($user)->first();
-            if (! $dbUser) {
+            if (null === $dbUser) {
                 return response()->json(['status' => 'error', 'message' => 'User '.$user.' not found.'], 422);
             }
 

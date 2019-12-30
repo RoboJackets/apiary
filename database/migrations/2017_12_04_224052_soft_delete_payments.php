@@ -13,7 +13,7 @@ class SoftDeletePayments extends Migration
      */
     public function up()
     {
-        Schema::table('payments', function (Blueprint $table) {
+        Schema::table('payments', static function (Blueprint $table): void {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class SoftDeletePayments extends Migration
      */
     public function down()
     {
-        Schema::table('payments', function (Blueprint $table) {
+        Schema::table('payments', static function (Blueprint $table): void {
             $table->dropColumn('deleted_at');
         });
     }

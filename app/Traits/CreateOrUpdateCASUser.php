@@ -67,7 +67,7 @@ trait CreateOrUpdateCASUser
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {
             $role = Role::where('name', 'non-member')->first();
-            if ($role) {
+            if (null !== $role) {
                 $user->assignRole($role);
             } else {
                 Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
@@ -75,11 +75,11 @@ trait CreateOrUpdateCASUser
         }
 
         //Role update based on active status (in case it didn't happen elsewhere)
-        if ($user->is_active && $user->hasRole('non-member')) {
+        if (true === $user->is_active && $user->hasRole('non-member')) {
             Log::info(self::class.': Updating role membership for '.$user->uid);
             $user->removeRole('non-member');
             $role_member = Role::where('name', 'member')->first();
-            if ($role_member && ! $user->hasRole('member')) {
+            if (null !== $role_member && ! $user->hasRole('member')) {
                 $user->assignRole($role_member);
             } else {
                 Log::error(self::class.": Role 'member' not found for assignment to ".$user->uid);

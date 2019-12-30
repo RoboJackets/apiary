@@ -13,7 +13,7 @@ class AddProcessingFeeToPayments extends Migration
      */
     public function up()
     {
-        Schema::table('payments', function (Blueprint $table) {
+        Schema::table('payments', static function (Blueprint $table): void {
             $table->decimal('processing_fee')->after('amount')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddProcessingFeeToPayments extends Migration
      */
     public function down()
     {
-        Schema::table('payments', function (Blueprint $table) {
+        Schema::table('payments', static function (Blueprint $table): void {
             $table->dropColumn('processing_fee');
         });
     }

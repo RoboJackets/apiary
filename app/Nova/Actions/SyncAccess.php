@@ -25,7 +25,7 @@ class SyncAccess extends Action
      * Perform the action on the given models.
      *
      * @param \Laravel\Nova\Fields\ActionFields  $fields
-     * @param \Illuminate\Support\Collection  $models
+     * @param \Illuminate\Support\Collection<\App\User>  $models
      *
      * @return void
      *

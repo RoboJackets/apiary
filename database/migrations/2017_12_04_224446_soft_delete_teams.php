@@ -13,7 +13,7 @@ class SoftDeleteTeams extends Migration
      */
     public function up()
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('teams', static function (Blueprint $table): void {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class SoftDeleteTeams extends Migration
      */
     public function down()
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('teams', static function (Blueprint $table): void {
             $table->dropColumn('deleted_at');
         });
     }

@@ -13,7 +13,7 @@ class SoftDeleteDuesPackages extends Migration
      */
     public function up()
     {
-        Schema::table('dues_packages', function (Blueprint $table) {
+        Schema::table('dues_packages', static function (Blueprint $table): void {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class SoftDeleteDuesPackages extends Migration
      */
     public function down()
     {
-        Schema::table('dues_packages', function (Blueprint $table) {
+        Schema::table('dues_packages', static function (Blueprint $table): void {
             $table->dropColumn('deleted_at');
         });
     }

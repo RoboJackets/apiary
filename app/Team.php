@@ -21,6 +21,16 @@ use Laravel\Nova\Actions\Actionable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * Represents a group of Users.
+ *
+ * @property int $id the database identifier for this team
+ * @property boolean $visible whether this team is visible to non-admins
+ * @property boolean $self_serviceable whether this team can be joined/left voluntarily
+ * @property string $name The name of the team
+ * @property string $slack_private_channel_id the slack internal ID of the team's private channel
+ * @method static \Illuminate\Database\Eloquent\Builder visible() Scopes a query to only visible teams
+ */
 class Team extends Model
 {
     use Actionable;

@@ -84,7 +84,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($team->id)) {
+        if (null !== $team->id) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
         }
 
@@ -130,7 +130,7 @@ class TeamController extends Controller
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
         $members = $team->members;
 
-        if ($team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
+        if (null !== $team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -148,7 +148,7 @@ class TeamController extends Controller
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
+        if (null === $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -161,11 +161,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($team->id)) {
-            return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
+        return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
     }
 
     /**
@@ -181,7 +177,7 @@ class TeamController extends Controller
         $requestingUser = $request->user();
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
+        if (null === $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -201,6 +197,9 @@ class TeamController extends Controller
 
         try {
             $user = User::find($request->input('user_id'));
+            if (null === $user) {
+                return response()->json(['status' => 'user_not_found'], 400);
+            }
             if ('join' === $request->input('action')) {
                 $team->members()->syncWithoutDetaching($user);
             } else {
@@ -228,16 +227,20 @@ class TeamController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if ($team->delete()) {
+        if (null === $team) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'team_not_found',
+                ],
+                422
+            );
+        }
+
+        if (true === $team->delete()) {
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
         }
 
-        return response()->json(
-            [
-                'status' => 'error',
-                'message' => 'team_not_found',
-            ],
-            422
-        );
+        return response()->json(['status' => 'error'], 500);
     }
 }

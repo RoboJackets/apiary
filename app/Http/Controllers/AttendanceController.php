@@ -154,7 +154,7 @@ class AttendanceController extends Controller
     public function update(UpdateAttendanceRequest $request, int $id): JsonResponse
     {
         $att = Attendance::find($id);
-        if ($att) {
+        if (null !== $att) {
             try {
                 $att->update($request->all());
             } catch (QueryException $e) {
@@ -181,7 +181,7 @@ class AttendanceController extends Controller
     public function destroy(Request $request, int $id): JsonResponse
     {
         $att = Attendance::find($id);
-        if ($att->delete()) {
+        if (true === $att->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Attendance deleted.']);
         }
 

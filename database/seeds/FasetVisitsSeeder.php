@@ -12,6 +12,6 @@ class FasetVisitsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\FasetVisit::class, 20)->create();
+        factory(App\RecruitingVisit::class, 20)->create();
     }
 }

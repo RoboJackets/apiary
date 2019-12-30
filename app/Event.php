@@ -10,6 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Represents a one-off gathering where an RSVP may be requested or attendance may be taken.
+ *
+ * @property boolean $allow_anonymous_rsvp Whether anonymous RSVPs are allowed for this event
+ * @property int $id The database ID for this Event
+ * @property float $price The cost to attend this event
+ * @property string $name The name of the event
+ */
 class Event extends Model
 {
     use SoftDeletes;

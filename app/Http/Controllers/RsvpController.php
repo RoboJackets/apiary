@@ -136,7 +136,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (! $rsvp) {
+        if (null === $rsvp) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -155,7 +155,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (! $rsvp) {
+        if (null === $rsvp) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -167,7 +167,7 @@ class RsvpController extends Controller
             ], 403);
         }
 
-        if ($rsvp->delete()) {
+        if (true === $rsvp->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }
 

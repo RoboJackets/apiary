@@ -13,7 +13,7 @@ class SoftDeleteFasetSurveys extends Migration
      */
     public function up()
     {
-        Schema::table('faset_surveys', function (Blueprint $table) {
+        Schema::table('faset_surveys', static function (Blueprint $table): void {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class SoftDeleteFasetSurveys extends Migration
      */
     public function down()
     {
-        Schema::table('faset_surveys', function (Blueprint $table) {
+        Schema::table('faset_surveys', static function (Blueprint $table): void {
             $table->dropColumn('deleted_at');
         });
     }

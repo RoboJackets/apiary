@@ -37,7 +37,8 @@ class SwagPickupRate extends TextMetric
      */
     public function __construct(string $swagType)
     {
-        if (! in_array($swagType, ['shirt', 'polo'])) {
+        parent::__construct();
+        if (! in_array($swagType, ['shirt', 'polo'], true)) {
             Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
 

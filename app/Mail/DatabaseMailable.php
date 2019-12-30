@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification
 // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification
-// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 
 namespace App\Mail;
 
@@ -36,16 +35,17 @@ class DatabaseMailable extends Mailable
     /**
      * The metadata to pass to the template.
      *
-     * @var array
+     * @var array<string,string>
      */
     public $metadata;
 
     /**
      * Create a new message instance.
      *
-     * @suppress PhanTypeMismatchProperty
+     * @param int $template_id the ID of the template to use
+     * @param array<string,string> $metadata any metadata to pass to the template
      */
-    public function __construct(int $template_id, $metadata)
+    public function __construct(int $template_id, array $metadata)
     {
         $this->app_url = url('/');
         $this->template_id = $template_id;
@@ -60,7 +60,7 @@ class DatabaseMailable extends Mailable
     public function build()
     {
         $nt = NotificationTemplate::find($this->template_id);
-        if (! $nt) {
+        if (null === $nt) {
             die('Could not find template');
         }
 

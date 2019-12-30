@@ -13,7 +13,7 @@ class CreateDuesTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dues_transactions', function (Blueprint $table) {
+        Schema::create('dues_transactions', static function (Blueprint $table): void {
             $table->increments('id');
             $table->boolean('received_polo')->default(false);
             $table->boolean('received_shirt')->default(false);

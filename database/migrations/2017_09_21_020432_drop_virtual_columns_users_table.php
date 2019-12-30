@@ -13,7 +13,7 @@ class DropVirtualColumnsUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('name');
             $table->dropColumn('full_name');
         });
@@ -26,7 +26,7 @@ class DropVirtualColumnsUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->string('name')
                 ->virtualAs("concat_ws(' ',`first_name`,`last_name`)")->nullable()->after('preferred_name');
             $table->string('full_name')

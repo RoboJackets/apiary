@@ -13,7 +13,7 @@ class CreateRecruitingCampaignRecipientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recruiting_campaign_recipients', function (Blueprint $table) {
+        Schema::create('recruiting_campaign_recipients', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('email_address');
             $table->string('source');

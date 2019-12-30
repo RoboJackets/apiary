@@ -17,6 +17,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 
+/**
+ * Shows GTIDs that have recently attended an event but haven't paid dues
+ *
+ * @property ?\App\User $attendee The attendee for an event
+ */
 class RecentInactiveUsers extends Lens
 {
     /**
@@ -57,7 +62,7 @@ class RecentInactiveUsers extends Lens
                     return $request->user()->can('read-users-gtid');
                 })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
-                    return $this->attendee ? '—' : $gtid;
+                    return null === $this->attendee ? '—' : $gtid;
                 }),
 
             BelongsTo::make('User', 'attendee', \App\Nova\User::class),

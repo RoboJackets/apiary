@@ -13,7 +13,7 @@ class SoftDeleteEvents extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
+        Schema::table('events', static function (Blueprint $table): void {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class SoftDeleteEvents extends Migration
      */
     public function down()
     {
-        Schema::table('events', function (Blueprint $table) {
+        Schema::table('events', static function (Blueprint $table): void {
             $table->dropColumn('deleted_at');
         });
     }

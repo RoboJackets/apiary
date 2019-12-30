@@ -27,6 +27,10 @@ class AddTrainerRole extends Migration
      */
     public function down()
     {
-        Role::where('name', 'trainer')->first()->delete();
+        $role = Role::where('name', 'trainer')->first();
+
+        if (null !== $role) {
+            $role->delete();
+        }
     }
 }

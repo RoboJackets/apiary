@@ -13,7 +13,7 @@ class CreateTeamUser extends Migration
      */
     public function up()
     {
-        Schema::create('team_user', function (Blueprint $table) {
+        Schema::create('team_user', static function (Blueprint $table): void {
             $table->increments('id');
             $table->unsignedInteger('team_id');
             $table->unsignedInteger('user_id');

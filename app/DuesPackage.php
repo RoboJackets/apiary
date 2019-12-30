@@ -11,6 +11,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Actions\Actionable;
 
+/**
+ * Represents a possible dues payment and what privileges are associated with it.
+ *
+ * @property int $id The database identifier for this DuesPackage
+ * @property boolean $is_active Whether this DuesPackage is considered active
+ * @property boolean $eligible_for_polo Whether this DuesPackage grants eligibility for a polo
+ * @property boolean $eligible_for_shirt  Whether this DuesPackage grants eligibility for a shirt
+ * @property \DateTime $access_end The timestamp when users paid against this DuesPackage no longer have access to systems
+ * @property \DateTime $access_start The timestamp when users paid against this DuesPackage first have access to systems
+ * @property \DateTime $effective_end The timestamp when the DuesPackage is considered no longer active
+ * @property \DateTime $effective_start The timestamp when the DuesPackage is considered newly active
+ * @property float $cost the cost of this package
+ * @method static \Illuminate\Database\Eloquent\Builder availableForPurchase() Scopes a query to only packages available for purchase
+ */
 class DuesPackage extends Model
 {
     use Actionable;

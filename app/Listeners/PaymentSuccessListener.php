@@ -38,7 +38,7 @@ class PaymentSuccessListener
             $user->removeRole('non-member');
         }
         $role_member = Role::where('name', 'member')->first();
-        if ($role_member && ! $user->hasRole('member')) {
+        if (null !== $role_member && ! $user->hasRole('member')) {
             $user->assignRole($role_member);
         } elseif ($user->hasRole('member')) {
             Log::notice(self::class.": Role 'member' already assigned to ".$user->uid);

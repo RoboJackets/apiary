@@ -25,7 +25,7 @@ class UserAccessActive extends Filter
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string  $value
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Chelout\RelationshipEvents\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply(Request $request, $query, $value)
     {

@@ -13,7 +13,7 @@ class CreateAttendanceTable extends Migration
      */
     public function up()
     {
-        Schema::create('attendance', function (Blueprint $table) {
+        Schema::create('attendance', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('attendable_type');
             $table->unsignedInteger('attendable_id');

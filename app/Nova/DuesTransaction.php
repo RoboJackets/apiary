@@ -16,6 +16,13 @@ use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for dues transactions
+ *
+ * @property boolean $is_paid Whether this transaction is paid for
+ * @property \App\DuesPackage $package The package associated with this transaction
+ * @property \App\User $user the user associated with this transaction
+ */
 class DuesTransaction extends Resource
 {
     /**
@@ -75,17 +82,17 @@ class DuesTransaction extends Resource
                 })
                 ->exceptOnForms(),
 
-            Currency::make('Payment Due', function () {
+            Currency::make('Payment Due', function (): ?float {
                 if ($this->is_paid) {
-                    return;
+                    return null;
                 }
 
                 if (null === $this->package) {
-                    return;
+                    return null;
                 }
 
                 if (! $this->package->is_active) {
-                    return;
+                    return null;
                 }
 
                 return $this->package->cost;
@@ -268,10 +275,10 @@ class DuesTransaction extends Resource
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId);
+                $transaction = \App\DuesTransaction::find($request->resourceId)->first();
 
                 if (null !== $transaction) {
-                    if ($transaction->user()->get()->first()->id === $request->user()->id) {
+                    if ($transaction->user->id === $request->user()->id) {
                         return false;
                     }
 

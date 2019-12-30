@@ -13,7 +13,7 @@ class AddUseragentAndIpToRsvps extends Migration
      */
     public function up()
     {
-        Schema::table('rsvps', function (Blueprint $table) {
+        Schema::table('rsvps', static function (Blueprint $table): void {
             $table->ipAddress('ip_address')->after('user_id')->nullable();
             $table->string('user_agent')->after('user_id')->nullable();
         });
@@ -26,7 +26,7 @@ class AddUseragentAndIpToRsvps extends Migration
      */
     public function down()
     {
-        Schema::table('rsvps', function (Blueprint $table) {
+        Schema::table('rsvps', static function (Blueprint $table): void {
             $table->dropColumn('ip_address');
             $table->dropColumn('user_agent');
         });

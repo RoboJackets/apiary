@@ -13,7 +13,7 @@ class SoftDeleteRsvps extends Migration
      */
     public function up()
     {
-        Schema::table('rsvps', function (Blueprint $table) {
+        Schema::table('rsvps', static function (Blueprint $table): void {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class SoftDeleteRsvps extends Migration
      */
     public function down()
     {
-        Schema::table('rsvps', function (Blueprint $table) {
+        Schema::table('rsvps', static function (Blueprint $table): void {
             $table->dropColumn('deleted_at');
         });
     }

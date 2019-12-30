@@ -85,7 +85,7 @@ class NotificationTemplateController extends Controller
     public function update(UpdateNotificationTemplateRequest $request, int $id): JsonResponse
     {
         $nt = NotificationTemplate::find($id);
-        if (! $nt) {
+        if (null === $nt) {
             return response()->json(['status' => 'error', 'error' => 'model_not_found'], 404);
         }
 
@@ -104,7 +104,7 @@ class NotificationTemplateController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $nt = NotificationTemplate::find($id);
-        if ($nt->delete()) {
+        if (true === $nt->delete()) {
             return response()->json(['status' => 'success', 'message' => 'model_deleted']);
         }
 

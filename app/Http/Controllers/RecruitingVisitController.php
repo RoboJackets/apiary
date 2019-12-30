@@ -12,6 +12,7 @@ use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use App\RecruitingResponse;
 use App\RecruitingVisit;
 use App\Traits\AuthorizeInclude;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class RecruitingVisitController extends Controller
             return response()->json(['status' => 'success']);
         } catch (Throwable $e) {
             Bugsnag::notifyException($e);
-            DB::rollback();
+            DB::rollBack();
             Log::error('New Recruiting visit save failed', ['error' => $e->getMessage()]);
 
             return response()->json(['status' => 'error'])->setStatusCode(500);
@@ -100,7 +101,7 @@ class RecruitingVisitController extends Controller
         //Update only included fields
 
         $visit = RecruitingVisit::find($id);
-        if (! $visit) {
+        if (null === $visit) {
             return response()->json(['status' => 'error', 'message' => 'visit_not_found'], 404);
         }
 
@@ -138,7 +139,7 @@ class RecruitingVisitController extends Controller
         $emails = [];
         foreach ($visits as $visit) {
             echo 'Processing Visit '.$visit->id."<br/>\n";
-            if (! in_array($visit->recruiting_email, $emails)) {
+            if (! in_array($visit->recruiting_email, $emails, true)) {
                 $emails[] = $visit->recruiting_email;
             } else {
                 echo 'Deleting Visit '.$visit->id."<br/>\n";

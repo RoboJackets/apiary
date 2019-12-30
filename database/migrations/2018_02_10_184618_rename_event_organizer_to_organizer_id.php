@@ -13,7 +13,7 @@ class RenameEventOrganizerToOrganizerId extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
+        Schema::table('events', static function (Blueprint $table): void {
             $table->renameColumn('organizer', 'organizer_id');
         });
     }
@@ -25,7 +25,7 @@ class RenameEventOrganizerToOrganizerId extends Migration
      */
     public function down()
     {
-        Schema::table('events', function (Blueprint $table) {
+        Schema::table('events', static function (Blueprint $table): void {
             $table->renameColumn('organizer_id', 'organizer');
         });
     }

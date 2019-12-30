@@ -17,6 +17,16 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Nova\Actions\Actionable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Represents a user, possibly a member and possibly not.
+ *
+ * @property boolean $is_active whether the user is currently active
+ * @property string $name the display name for this user
+ * @method static \Illuminate\Database\Eloquent\Builder findByIdentifier(string $id) finds a user by any identifier
+ * @method static \Illuminate\Database\Eloquent\Builder hasOverride() scopes to only users with an active override
+ * @method static \Illuminate\Database\Eloquent\Builder active() scopes to only users that are active
+ * @method static \Illuminate\Database\Eloquent\Builder accessActive() scopes to only users that are access active
+ */
 class User extends Authenticatable
 {
     use SoftDeletes;
@@ -133,7 +143,7 @@ class User extends Authenticatable
      */
     public function getNameAttribute(): string
     {
-        $first = $this->preferred_name ?: $this->first_name;
+        $first = $this->preferred_name ?? $this->first_name;
 
         return implode(' ', [$first, $this->last_name]);
     }
@@ -143,7 +153,7 @@ class User extends Authenticatable
     /**
      * Get the preferred first name associated with the User.
      */
-    public function getPreferredFirstNameAttribute()
+    public function getPreferredFirstNameAttribute(): string
     {
         return $this->preferred_name ?? $this->first_name;
     }
@@ -155,7 +165,7 @@ class User extends Authenticatable
     /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
      */
-    public function setPreferredFirstNameAttribute($preferred_name): void
+    public function setPreferredFirstNameAttribute(string $preferred_name): void
     {
         $this->attributes['preferred_name'] = $preferred_name === $this->first_name ? null : $preferred_name;
     }
@@ -363,7 +373,7 @@ class User extends Authenticatable
     {
         return $query->whereHas('dues', static function (Builder $q): void {
             $q->paid()->accessCurrent();
-        })->orwhere('access_override_until', '>=', date('Y-m-d H:i:s'));
+        })->orWhere('access_override_until', '>=', date('Y-m-d H:i:s'));
     }
 
     /**

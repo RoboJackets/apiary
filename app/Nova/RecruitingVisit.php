@@ -14,6 +14,11 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for recruiting visits
+ *
+ * @property int $id the database ID for this recruiting visit
+ */
 class RecruitingVisit extends Resource
 {
     /**
@@ -94,7 +99,7 @@ class RecruitingVisit extends Resource
                 ->sortable()
                 ->rules('required', 'max:255', 'email'),
 
-            Text::make('Survey Responses', static function () use ($this_id) {
+            Text::make('Survey Responses', static function () use ($this_id): string {
                 return implode(', ', RecruitingResponse::where(
                     'recruiting_visit_id',
                     '=',

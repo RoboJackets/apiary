@@ -30,12 +30,15 @@ class DatabaseNotification extends Notification implements ShouldQueue
     /**
      * The metadata to pass to the template.
      *
-     * @var array
+     * @var array<string,string>
      */
     public $metadata;
 
     /**
      * Create a new notification instance.
+     *
+     * @param int $template_id the ID of the template to use
+     * @param array<string,string> $metadata any metadata to pass to the template
      */
     public function __construct(int $template_id, array $metadata)
     {
@@ -48,7 +51,7 @@ class DatabaseNotification extends Notification implements ShouldQueue
      *
      * @param mixed  $notifiable
      *
-     * @return array
+     * @return array<string>
      */
     public function via($notifiable): array
     {
@@ -72,7 +75,7 @@ class DatabaseNotification extends Notification implements ShouldQueue
      *
      * @param mixed  $notifiable
      *
-     * @return array
+     * @return array<string,string>
      */
     public function toArray($notifiable): array
     {

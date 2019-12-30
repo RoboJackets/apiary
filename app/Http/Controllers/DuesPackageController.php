@@ -11,6 +11,7 @@ use App\Http\Requests\StoreDuesPackageRequest;
 use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 use App\Traits\AuthorizeInclude;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -102,13 +103,9 @@ class DuesPackageController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($package->id)) {
-            $dbp = DuesPackage::findOrFail($package->id);
+        $dbp = DuesPackage::findOrFail($package->id);
 
-            return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($dbp)], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+        return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($dbp)], 201);
     }
 
     /**
@@ -141,14 +138,14 @@ class DuesPackageController extends Controller
     public function update(UpdateDuesPackageRequest $request, int $id): JsonResponse
     {
         $package = DuesPackage::find($id);
-        if (! $package) {
+        if (null === $package) {
             return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);
         }
 
         $package->update($request->all());
 
         $package = DuesPackage::find($package->id);
-        if ($package) {
+        if (null === $package) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
         }
 
@@ -165,7 +162,7 @@ class DuesPackageController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $package = DuesPackage::find($id);
-        if ($package->delete()) {
+        if (true === $package->delete()) {
             return response()->json(['status' => 'success', 'message' => 'DuesPackage deleted.']);
         }
 

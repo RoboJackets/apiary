@@ -24,7 +24,7 @@ class User extends JsonResource
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return array<string,mixed>
+     * @return array<int|string,mixed>
      */
     public function toArray($request): array
     {

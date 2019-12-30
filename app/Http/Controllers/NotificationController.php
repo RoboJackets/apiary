@@ -58,7 +58,7 @@ class NotificationController extends Controller
                 $hours++;
             } elseif ('database' === $template_type) {
                 foreach ($chunk as $address) {
-                    Mail::to($address)->queue(new DatabaseMailable(intval($template_id), null));
+                    Mail::to($address)->queue(new DatabaseMailable(intval($template_id), []));
                     $found[] = $address;
                 }
                 $hours++;

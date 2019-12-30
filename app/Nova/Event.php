@@ -18,6 +18,11 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for events
+ *
+ * @property int $id The database ID for this event
+ */
 class Event extends Resource
 {
     /**
@@ -79,7 +84,7 @@ class Event extends Resource
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
 
-            Text::make('RSVP URL', function () {
+            Text::make('RSVP URL', function (): string {
                 return route('events.rsvp', ['event' => $this->id]);
             })->onlyOnDetail(),
 

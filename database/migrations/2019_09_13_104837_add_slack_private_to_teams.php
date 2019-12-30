@@ -13,7 +13,7 @@ class AddSlackPrivateToTeams extends Migration
      */
     public function up()
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('teams', static function (Blueprint $table): void {
             $table->string('slack_private_channel_id')->after('slack_channel_name')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddSlackPrivateToTeams extends Migration
      */
     public function down()
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('teams', static function (Blueprint $table): void {
             $table->dropColumn('slack_private_channel_id');
         });
     }

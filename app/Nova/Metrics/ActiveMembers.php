@@ -21,7 +21,7 @@ class ActiveMembers extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        if ($request->resourceId) {
+        if (isset($request->resourceId)) {
             $count = Team::where('id', $request->resourceId)
                 ->get()
                 ->first()

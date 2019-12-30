@@ -24,6 +24,12 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for users
+ *
+ * @property string $resume_date When this user's resume was uploaded
+ * @property string $uid this user's username
+ */
 class User extends Resource
 {
     /**
@@ -159,8 +165,8 @@ class User extends Resource
             new Panel(
                 'Resume',
                 [
-                    File::make('Resume', function () {
-                        return $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
+                    File::make('Resume', function (): ?string {
+                        return null !== $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
                     })->path('resumes')
                         ->disk('local')
                         ->deletable(false)

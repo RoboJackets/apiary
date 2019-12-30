@@ -13,7 +13,7 @@ class AddA4PColumnToDuesPackages extends Migration
      */
     public function up()
     {
-        Schema::table('dues_packages', function (Blueprint $table) {
+        Schema::table('dues_packages', static function (Blueprint $table): void {
             $table->boolean('available_for_purchase')->after('cost')->default(true);
         });
     }
@@ -25,7 +25,7 @@ class AddA4PColumnToDuesPackages extends Migration
      */
     public function down()
     {
-        Schema::table('dues_packages', function (Blueprint $table) {
+        Schema::table('dues_packages', static function (Blueprint $table): void {
             $table->dropColumn('available_for_purchase');
         });
     }

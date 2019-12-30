@@ -13,7 +13,7 @@ class AttendanceRequireGtid extends Migration
      */
     public function up()
     {
-        Schema::table('attendance', function (Blueprint $table) {
+        Schema::table('attendance', static function (Blueprint $table): void {
             $table->integer('gtid')->nullable(false)->change();
         });
     }
@@ -25,7 +25,7 @@ class AttendanceRequireGtid extends Migration
      */
     public function down()
     {
-        Schema::table('attendance', function (Blueprint $table) {
+        Schema::table('attendance', static function (Blueprint $table): void {
             $table->integer('gtid')->nullable()->change();
         });
     }

@@ -13,7 +13,7 @@ class CreateFasetSurveysTable extends Migration
      */
     public function up()
     {
-        Schema::create('faset_surveys', function (Blueprint $table) {
+        Schema::create('faset_surveys', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('question');
             $table->timestamps();

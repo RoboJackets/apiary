@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\AuthorizeInclude;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -169,17 +170,13 @@ class DuesTransactionController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($transact->id)) {
-            $dbTransact = DuesTransaction::findOrFail($transact->id);
+        $dbTransact = DuesTransaction::findOrFail($transact->id);
 
-            $user->notify(new Confirm($dbTransact->package));
+        $user->notify(new Confirm($dbTransact->package));
 
-            $dbTransact = new DuesTransactionResource($dbTransact);
+        $dbTransact = new DuesTransactionResource($dbTransact);
 
-            return response()->json(['status' => 'success', 'dues_transaction' => $dbTransact], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+        return response()->json(['status' => 'success', 'dues_transaction' => $dbTransact], 201);
     }
 
     /**
@@ -242,7 +239,7 @@ class DuesTransactionController extends Controller
         }
 
         $transact = DuesTransaction::find($id);
-        if (! $transact) {
+        if (null === $transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
 
@@ -264,7 +261,7 @@ class DuesTransactionController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $transact = DuesTransaction::find($id);
-        if ($transact->delete()) {
+        if (true === $transact->delete()) {
             return response()->json(['status' => 'success', 'message' => 'DuesTransaction deleted.']);
         }
 

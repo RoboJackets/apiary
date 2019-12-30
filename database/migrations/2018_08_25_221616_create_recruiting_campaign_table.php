@@ -13,7 +13,7 @@ class CreateRecruitingCampaignTable extends Migration
      */
     public function up()
     {
-        Schema::create('recruiting_campaigns', function (Blueprint $table) {
+        Schema::create('recruiting_campaigns', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('name');
             $table->enum('status', ['new', 'in_progress', 'completed']);

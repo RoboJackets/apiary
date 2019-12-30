@@ -13,7 +13,7 @@ class AddStartEndDatesToRecruitingCampaign extends Migration
      */
     public function up()
     {
-        Schema::table('recruiting_campaigns', function (Blueprint $table) {
+        Schema::table('recruiting_campaigns', static function (Blueprint $table): void {
             $table->date('start_date')->after('notification_template_id')->default('1970-01-01 00:00:01');
             $table->date('end_date')->after('notification_template_id')->default('1970-01-01 00:00:02');
         });
@@ -26,7 +26,7 @@ class AddStartEndDatesToRecruitingCampaign extends Migration
      */
     public function down()
     {
-        Schema::table('recruiting_campaigns', function (Blueprint $table) {
+        Schema::table('recruiting_campaigns', static function (Blueprint $table): void {
             $table->dropColumn('start_date');
             $table->dropColumn('end_date');
         });

@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Represents a single attendance entry
+ *
+ * @property int $id The database identifier for this entry
+ * @property int $gtid the GTID associated with this entry
+ */
 class Attendance extends Model
 {
     use SoftDeletes;

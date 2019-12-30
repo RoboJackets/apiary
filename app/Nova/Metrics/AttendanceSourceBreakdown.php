@@ -27,7 +27,7 @@ class AttendanceSourceBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        return $this->count($request, Attendance::class, 'source')->label(static function (string $value): string {
+        return $this->count($request, Attendance::class, 'source')->label(static function (?string $value): string {
             switch ($value) {
                 case 'kiosk':
                     return 'Kiosk (unknown type)';

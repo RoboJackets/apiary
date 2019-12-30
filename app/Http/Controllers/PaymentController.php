@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
+// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 
 namespace App\Http\Controllers;
 
@@ -12,7 +13,7 @@ use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
 use App\Payment;
-use Bugsnag;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +26,7 @@ use SquareConnect\Api\TransactionsApi;
 use SquareConnect\Configuration;
 use SquareConnect\Model\CreateCheckoutRequest;
 use SquareConnect\Model\CreateOrderRequest;
+use Throwable;
 
 class PaymentController extends Controller
 {
@@ -77,15 +79,11 @@ class PaymentController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($payment->id)) {
-            $dbPayment = Payment::findOrFail($payment->id);
-            $dbPayment->payable->user->notify(new Confirm($dbPayment));
-            event(new PaymentSuccess($dbPayment));
+        $dbPayment = Payment::findOrFail($payment->id);
+        $dbPayment->payable->user->notify(new Confirm($dbPayment));
+        event(new PaymentSuccess($dbPayment));
 
-            return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+        return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
     }
 
     /**
@@ -182,7 +180,7 @@ class PaymentController extends Controller
     public function show(int $id): JsonResponse
     {
         $payment = Payment::find($id);
-        if ($payment) {
+        if (null !== $payment) {
             return response()->json(['status' => 'success', 'payment' => $payment]);
         }
 
@@ -200,14 +198,14 @@ class PaymentController extends Controller
     public function update(UpdatePaymentRequest $request, int $id): JsonResponse
     {
         $payment = Payment::find($id);
-        if (! $payment) {
+        if (null === $payment) {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
         }
 
         $payment->update($request->all());
 
         $payment = Payment::find($payment->id);
-        if ($payment) {
+        if (null !== $payment) {
             return response()->json(['status' => 'success', 'payment' => $payment]);
         }
 
@@ -224,7 +222,7 @@ class PaymentController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $payment = Payment::find($id);
-        if ($payment->delete()) {
+        if (true === $payment->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Payment deleted.']);
         }
 
@@ -252,7 +250,7 @@ class PaymentController extends Controller
 
         $line_items = [
             [
-                'name' => $name ?: 'Miscellaneous Payment',
+                'name' => $name ?? 'Miscellaneous Payment',
                 'quantity' => '1',
                 'base_price_money' => [
                     'amount' => $amount * 100,
@@ -348,7 +346,7 @@ class PaymentController extends Controller
 
         //Find the payment
         $payment = Payment::find($payment_id);
-        if (! $payment) {
+        if (null === $payment) {
             Log::warning(self::class.' - Error locating Payment '.$payment_id);
 
             return response(
@@ -393,14 +391,14 @@ class PaymentController extends Controller
         $counter = 0;
         while ($counter < 10) {
             $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
-            if (! $square_txn instanceof \SquareConnect\ApiException) {
+            if (! $square_txn instanceof Throwable) {
                 break;
             }
             $counter++;
             usleep($counter * 100000);
         }
 
-        if ($square_txn instanceof \SquareConnect\ApiException) {
+        if ($square_txn instanceof Throwable) {
             Bugsnag::notifyException($square_txn);
 
             return response(
@@ -482,9 +480,7 @@ class PaymentController extends Controller
             Log::debug(self::class.' - Querying Square for Transaction '.$server_txn_id);
             $square_txn = $client->retrieveTransaction($location, $server_txn_id);
         } catch (\Throwable $e) {
-            $error = $e->getMessage();
-            $error = is_array($error) ? $error : [$error];
-            Log::debug(self::class.' - Error querying Square transaction', $error);
+            Log::debug(self::class.' - Error querying Square transaction', [$e->getMessage()]);
 
             return $e;
         }

@@ -13,7 +13,7 @@ class CreateNotificationTemplatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification_templates', function (Blueprint $table) {
+        Schema::create('notification_templates', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('name');
             $table->string('subject');

@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Actions\Actionable;
 
+/**
+ * Represents a template for a notififaction that is stored in the database.
+ *
+ * @property int $id the database ID for this NotificationTemplate
+ * @property string $name The name of the template
+ * @property string $subject The subject that will be used for emails sent using this template
+ * @property string $body_markdown The body of this template
+ * @property int $created_by The user ID that created the template
+ */
 class NotificationTemplate extends Model
 {
     use Actionable;

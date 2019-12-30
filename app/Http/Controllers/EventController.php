@@ -60,11 +60,7 @@ class EventController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($event->id)) {
-            return response()->json(['status' => 'success', 'event' => $event], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
+        return response()->json(['status' => 'success', 'event' => $event], 201);
     }
 
     /**
@@ -99,7 +95,7 @@ class EventController extends Controller
     {
         $requestingUser = $request->user();
         $event = Event::find($id);
-        if (! $event) {
+        if (null === $event) {
             return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
         }
 
@@ -122,7 +118,7 @@ class EventController extends Controller
         }
 
         $event = Event::find($id);
-        if ($event->id) {
+        if (null !== $event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
         }
 
@@ -132,7 +128,7 @@ class EventController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $event = Event::find($id);
-        if ($event->delete()) {
+        if (true === $event->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }
 

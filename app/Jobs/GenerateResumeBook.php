@@ -27,6 +27,13 @@ class GenerateResumeBook implements ShouldQueue
     use SerializesModels;
 
     /**
+     * The number of attempts for this job
+     *
+     * @var int
+     */
+    public $tries = 1;
+
+    /**
      * The major (ou) to filter by, or null.
      *
      * @var ?string
@@ -63,7 +70,6 @@ class GenerateResumeBook implements ShouldQueue
         $this->resume_date_cutoff = $resume_date_cutoff;
         $this->path = null;
         $this->datecode = null;
-        $this->tries = 1;
     }
 
     /**
@@ -106,13 +112,13 @@ class GenerateResumeBook implements ShouldQueue
             throw new Exception('There are no resumes to export!');
         }
 
-        $filenames = $filteredUids->map(static function ($uid) {
+        $filenames = $filteredUids->map(static function (string $uid): string {
             return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
         });
 
         $this->datecode = now()->format('Y-m-d-Hi');
         $this->path = Storage::disk('local')->path('resumes/robojackets-resume-book-'.$this->datecode
-            .($this->major ? '-'.$this->major : '').'.pdf');
+            .(null === $this->major ? '-'.$this->major : '').'.pdf');
 
         // Ghostscript: -q -dNOPAUSE -dBATCH for disabling interactivity, -sDEVICE= for setting output type, -dSAFER
         // because the input is untrusted

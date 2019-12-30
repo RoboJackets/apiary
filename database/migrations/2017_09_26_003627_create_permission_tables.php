@@ -15,21 +15,21 @@ class CreatePermissionTables extends Migration
         $tableNames = config('permission.table_names');
         $foreignKeys = config('permission.foreign_keys');
 
-        Schema::create($tableNames['permissions'], function (Blueprint $table) {
+        Schema::create($tableNames['permissions'], static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();
         });
 
-        Schema::create($tableNames['roles'], function (Blueprint $table) {
+        Schema::create($tableNames['roles'], static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();
         });
 
-        Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $foreignKeys) {
+        Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames): void {
             $table->integer('permission_id')->unsigned();
             $table->morphs('model');
 
@@ -41,7 +41,7 @@ class CreatePermissionTables extends Migration
             $table->primary(['permission_id', 'model_id', 'model_type']);
         });
 
-        Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $foreignKeys) {
+        Schema::create($tableNames['model_has_roles'], static function (Blueprint $table) use ($tableNames): void {
             $table->integer('role_id')->unsigned();
             $table->morphs('model');
 
@@ -53,7 +53,7 @@ class CreatePermissionTables extends Migration
             $table->primary(['role_id', 'model_id', 'model_type']);
         });
 
-        Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['role_has_permissions'], static function (Blueprint $table) use ($tableNames): void {
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
 

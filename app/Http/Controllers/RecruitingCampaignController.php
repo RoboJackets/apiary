@@ -13,6 +13,7 @@ use App\RecruitingCampaign;
 use App\RecruitingCampaignRecipient;
 use App\RecruitingVisit;
 use App\Traits\AuthorizeInclude;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -56,11 +57,7 @@ class RecruitingCampaignController extends Controller
     {
         // Store the campaign
         // Yes, I know there is an easier way to do this.
-        $rc = new RecruitingCampaign();
-        $fields = array_keys($request->all());
-        foreach ($fields as $field) {
-            $rc->$field = $request->input($field);
-        }
+        $rc = new RecruitingCampaign($request->validated());
         $rc->created_by = $request->user()->id;
         $rc->status = 'new';
 
@@ -80,7 +77,7 @@ class RecruitingCampaignController extends Controller
 
         $added_recipient_emails = [];
         foreach ($visits as $v) {
-            if (in_array($v->recruiting_email, $added_recipient_emails)) {
+            if (in_array($v->recruiting_email, $added_recipient_emails, true)) {
                 Log::info(self::class.': Email '.$v->recruiting_email.' already in the list. Ignoring.');
             } else {
                 // Add new recipient
@@ -104,7 +101,7 @@ class RecruitingCampaignController extends Controller
 
         $db_rc = RecruitingCampaign::where('id', $rc->id)->with('recipients')->first();
 
-        if (is_numeric($db_rc->id)) {
+        if (null !== $db_rc) {
             return response()->json(['status' => 'success', 'campaign' => new RecruitingCampaignResource($db_rc)], 201);
         }
 

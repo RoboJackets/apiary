@@ -22,6 +22,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for attendance
+ *
+ * @property ?\App\User $attendee The user associated with the attendance record, if available
+ */
 class Attendance extends Resource
 {
     /**
@@ -99,7 +104,7 @@ class Attendance extends Resource
                     return $request->user()->can('read-users-gtid');
                 })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
-                    return $this->attendee ? '—' : $gtid;
+                    return null === $this->attendee ? '—' : $gtid;
                 }),
 
             BelongsTo::make('User', 'attendee'),

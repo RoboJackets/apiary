@@ -12,6 +12,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
 
+/**
+ * Represents a completed or in progress dues payment.
+ *
+ * @property int $id The database ID for this DuesTransaction
+ * @property ?string $swag_polo_provided The timestamp of when a polo was given for this DuesTransaction, or null
+ * @property ?int $swag_polo_providedBy the user ID that distributed a polo for this transaction
+ * @property ?string $swag_shirt_provided The timestamp of when a shirt was given for this DuesTransaction, or null
+ * @property ?int $swag_shirt_providedBy the user ID that distributed a shirt for this transaction
+ * @method static \Illuminate\Database\Eloquent\Builder paid() Scopes a query to only paid transactions
+ * @method static \Illuminate\Database\Eloquent\Builder current() Scopes a query to only current transactions
+ * @method static \Illuminate\Database\Eloquent\Builder pending() Scopes a query to only pending transactions
+ * @method static \Illuminate\Database\Eloquent\Builder pendingSwag() Scopes a query to only transactions that need swag distribution
+ * @property boolean $is_paid whether this transaction is paid in full
+ * @property string $status the status of this transaction
+ */
 class DuesTransaction extends Model
 {
     use SoftDeletes;
@@ -296,7 +311,7 @@ class DuesTransaction extends Model
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount(): string
+    public function getPayableAmount(): float
     {
         return $this->package->cost;
     }

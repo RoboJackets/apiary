@@ -24,7 +24,7 @@ class MemberSince extends TextMetric
         // Same logic as in DashboardController
         $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
 
-        if ($transaction) {
+        if (null !== $transaction) {
             return $this->result(date('F j, Y', strtotime(
                 $transaction->payment()->where('amount', '>', 0)->first()->updated_at->toDateTimeString()
             )));

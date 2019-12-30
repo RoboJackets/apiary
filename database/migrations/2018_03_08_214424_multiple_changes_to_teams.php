@@ -13,7 +13,7 @@ class MultipleChangesToTeams extends Migration
      */
     public function up()
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('teams', static function (Blueprint $table): void {
             $table->string('slug')->after('name')->nullable();
             $table->boolean('attendable')->after('name')->default(false);
             $table->boolean('visible')->after('name')->default(false);
@@ -29,7 +29,7 @@ class MultipleChangesToTeams extends Migration
      */
     public function down()
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('teams', static function (Blueprint $table): void {
             $table->dropColumn('slug');
             $table->dropColumn('attendable');
             $table->dropColumn('visible');

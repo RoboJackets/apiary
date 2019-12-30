@@ -30,7 +30,7 @@ class ResumeController extends Controller
     public function show(string $id)
     {
         $user = User::findByIdentifier($id)->first();
-        if ($user) {
+        if (null !== $user) {
             return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
         }
 
@@ -54,8 +54,8 @@ class ResumeController extends Controller
     public function store(string $id, StoreResumeRequest $request)
     {
         $user = User::findByIdentifier($id)->first();
-        if ($user) {
-            if (! $user->is_active) {
+        if (null !== $user) {
+            if (true !== $user->is_active) {
                 if ($request->has('redirect')) {
                     return redirect()->route('resume.index', ['resume_error' => 'inactive']);
                 }

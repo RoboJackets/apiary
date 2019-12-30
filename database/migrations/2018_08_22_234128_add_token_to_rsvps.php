@@ -13,7 +13,7 @@ class AddTokenToRsvps extends Migration
      */
     public function up()
     {
-        Schema::table('rsvps', function (Blueprint $table) {
+        Schema::table('rsvps', static function (Blueprint $table): void {
             $table->string('token')->after('source')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddTokenToRsvps extends Migration
      */
     public function down()
     {
-        Schema::table('rsvps', function (Blueprint $table) {
+        Schema::table('rsvps', static function (Blueprint $table): void {
             $table->dropColumn('token');
         });
     }

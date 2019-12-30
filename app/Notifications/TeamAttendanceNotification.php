@@ -28,7 +28,7 @@ class TeamAttendanceNotification extends Notification
      */
     public function via(Team $notifiable): array
     {
-        return $notifiable->routeNotificationForSlack($this) && $notifiable->slack_private_channel_id ? ['slack'] : [];
+        return null !== $notifiable->routeNotificationForSlack($this) && null !== $notifiable->slack_private_channel_id ? ['slack'] : [];
     }
 
     /**
@@ -60,7 +60,7 @@ class TeamAttendanceNotification extends Notification
         $inactiveNames = $knownAttendance->pluck('attendee')
             ->unique()
             ->filter(static function (User $user): bool {
-                return ! $user->is_active;
+                return false === $user->is_active;
             })->pluck('name');
 
         $inactive = $inactiveNames->count() + $unknown;

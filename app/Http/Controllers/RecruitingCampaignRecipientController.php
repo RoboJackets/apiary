@@ -11,11 +11,14 @@ use App\Http\Requests\UpdateRecruitingCampaignRecipientRequest;
 use App\Http\Resources\RecruitingCampaignRecipient as RCRResource;
 use App\RecruitingCampaign;
 use App\RecruitingCampaignRecipient;
+use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RecruitingCampaignRecipientController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware(['permission:send-notifications']);
@@ -123,8 +126,15 @@ class RecruitingCampaignRecipientController extends Controller
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
             ->where('id', $recipient_id)
             ->first();
-        $rcr->delete();
 
-        return response()->json(['status' => 'success'], 200);
+        if (null === $rcr) {
+            return response()->json(['status' => 'not_found'], 404);
+        }
+
+        if (true === $rcr->delete()) {
+            return response()->json(['status' => 'success'], 200);
+        }
+
+        return response()->json(['status' => 'error'], 500);
     }
 }

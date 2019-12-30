@@ -13,7 +13,7 @@ class TrivialAuthorization extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->char('is_admin')->default(0);
         });
     }
@@ -25,7 +25,7 @@ class TrivialAuthorization extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('is_admin');
         });
     }

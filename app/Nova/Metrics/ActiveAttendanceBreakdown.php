@@ -38,6 +38,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function __construct(bool $showAllTime = false)
     {
+        parent::__construct();
         $this->showAllTime = $showAllTime;
     }
 
@@ -59,7 +60,7 @@ class ActiveAttendanceBreakdown extends Partition
                 'active'
             );
 
-        if ($request->resourceId) {
+        if (isset($request->resourceId)) {
             $query = $query
                 ->where('attendable_id', $request->resourceId)
                 ->where('attendable_type', get_class($request->model()));

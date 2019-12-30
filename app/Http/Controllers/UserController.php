@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 use App\Traits\AuthorizeInclude;
 use App\User;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -130,7 +131,7 @@ class UserController extends Controller
     {
         $include = $request->input('include');
         $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
-        if ($user) {
+        if (null !== $user) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
             if ($requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
@@ -162,7 +163,7 @@ class UserController extends Controller
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
-        if (! $user) {
+        if (null === $user) {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
 
@@ -201,7 +202,7 @@ class UserController extends Controller
             $user = $user->makeVisible('api_token');
         }
 
-        if ($user) {
+        if (null !== $user) {
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         }
 
@@ -218,16 +219,25 @@ class UserController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $user = User::findByIdentifier($id)->first();
-        if ($user->delete()) {
+        if (null === $user) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'User does not exist or was previously deleted.',
+                ],
+                422
+            );
+        }
+
+        if (true === $user->delete()) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         }
 
         return response()->json(
             [
                 'status' => 'error',
-                'message' => 'User does not exist or was previously deleted.',
             ],
-            422
+            500
         );
     }
 }

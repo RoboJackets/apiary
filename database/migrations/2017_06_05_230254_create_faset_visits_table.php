@@ -13,7 +13,7 @@ class CreateFasetVisitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('faset_visits', function (Blueprint $table) {
+        Schema::create('faset_visits', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('faset_name');
             $table->string('faset_email');

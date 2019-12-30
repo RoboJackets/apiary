@@ -13,7 +13,7 @@ class AddSwagFieldsToDuesTransactions extends Migration
      */
     public function up()
     {
-        Schema::table('dues_transactions', function (Blueprint $table) {
+        Schema::table('dues_transactions', static function (Blueprint $table): void {
             //Change name and make these timestamps
             $table->dropColumn('received_polo');
             $table->timestamp('swag_polo_provided')->nullable()->after('id');
@@ -35,7 +35,7 @@ class AddSwagFieldsToDuesTransactions extends Migration
      */
     public function down()
     {
-        Schema::table('dues_transactions', function (Blueprint $table) {
+        Schema::table('dues_transactions', static function (Blueprint $table): void {
             //Change name back and make these booleans
             $table->dropColumn('swag_polo_provided');
             $table->boolean('received_polo')->default(false)->after('id');

@@ -39,6 +39,7 @@ abstract class FieldByActiveBreakdown extends Partition
      */
     public function __construct(string $field_name, bool $use_access_active = false)
     {
+        parent::__construct();
         $this->field_name = $field_name;
         $this->use_access_active = $use_access_active;
     }

@@ -12,12 +12,12 @@
 */
 function idMap($collection)
 {
-    return $collection->map(function ($el) {
+    return $collection->map(static function ($el) {
         return $el->id;
     })->toArray();
 }
 
-$factory->define(App\RecruitingVisit::class, function (Faker\Generator $faker) {
+$factory->define(App\RecruitingVisit::class, static function (Faker\Generator $faker): array {
     static $password;
 
     return [
@@ -27,7 +27,7 @@ $factory->define(App\RecruitingVisit::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
+$factory->define(App\DuesPackage::class, static function (Faker\Generator $faker): array {
     return [
         'name' => $faker->word,
         'eligible_for_shirt' => $faker->numberBetween($min = 0, $max = 1),
@@ -38,7 +38,7 @@ $factory->define(App\DuesPackage::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\DuesTransaction::class, function (Faker\Generator $faker) {
+$factory->define(App\DuesTransaction::class, static function (Faker\Generator $faker): array {
     return [
         'swag_shirt_provided' => $faker->optional()->dateTime,
         'swag_shirt_providedBy' => App\User::first() != null ? App\User::first()->id : null,
@@ -49,7 +49,7 @@ $factory->define(App\DuesTransaction::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\User::class, static function (Faker\Generator $faker): array {
     $lastName = $faker->lastName;
     $uid = $faker->bothify('?'.lcfirst($lastName).'##');
 
@@ -77,7 +77,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Payment::class, function (Faker\Generator $faker) {
+$factory->define(App\Payment::class, static function (Faker\Generator $faker): array {
     return [
         'payable_id' => $faker->numberBetween($min = 0, $max = 200),
         'payable_type' => $faker->randomElement($array = [\App\DuesTransaction::class, \App\Event::class]),
