@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
 // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
 
 namespace App\Http\Middleware;
@@ -12,7 +11,6 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use phpCAS;
 use RoboJackets\ErrorPages\BadNetwork;
 use RoboJackets\ErrorPages\DuoNotEnabled;
 use RoboJackets\ErrorPages\DuoOutage;
@@ -48,11 +46,6 @@ class CASAuthenticate
 
     /**
      * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     *
-     * @return mixed
      *
      * @SuppressWarnings(PHPMD.ExitExpression)
      */
@@ -101,7 +94,8 @@ class CASAuthenticate
                 if ('duo-two-factor' !== $this->cas->getAttribute('authn_method')) {
                     if (in_array(
                         '/gt/central/services/iam/two-factor/duo-user',
-                        $this->cas->getAttribute('gtAccountEntitlement')
+                        $this->cas->getAttribute('gtAccountEntitlement'),
+                        true
                     )
                     ) {
                         DuoOutage::render();
@@ -117,21 +111,21 @@ class CASAuthenticate
                     exit;
                 }
                 if (NetworkCheck::GTOTHER === $network) {
-                    BadNetwork::render('GTother', $username, phpCAS::getAttribute('eduPersonPrimaryAffiliation'));
+                    BadNetwork::render('GTother', $username, $this->cas->getAttribute('eduPersonPrimaryAffiliation'));
                     exit;
                 }
                 if (NetworkCheck::GTVISITOR === $network) {
-                    BadNetwork::render('GTvisitor', $username, phpCAS::getAttribute('eduPersonPrimaryAffiliation'));
+                    BadNetwork::render('GTvisitor', $username, $this->cas->getAttribute('eduPersonPrimaryAffiliation'));
                     exit;
                 }
                 if (NetworkCheck::EDUROAM_NON_GATECH_V4 === $network
                     || NetworkCheck::EDUROAM_NON_GATECH_V6 === $network
                 ) {
-                    EduroamNonGatech::render($username, phpCAS::getAttribute('eduPersonPrimaryAffiliation'));
+                    EduroamNonGatech::render($username, $this->cas->getAttribute('eduPersonPrimaryAffiliation'));
                     exit;
                 }
 
-                $user = $this->createOrUpdateCASUser($request);
+                $user = $this->createOrUpdateCASUser();
                 Auth::login($user);
             }
 

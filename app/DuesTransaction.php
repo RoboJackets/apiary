@@ -12,6 +12,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
 
+/**
+ * Represents a completed or in progress dues payment.
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder current() Scopes a query to only current transactions
+ * @method static \Illuminate\Database\Eloquent\Builder paid() Scopes a query to only paid transactions
+ * @method static \Illuminate\Database\Eloquent\Builder pending() Scopes a query to only pending transactions
+ * @method static \Illuminate\Database\Eloquent\Builder pendingSwag() Scopes a query to only transactions that need
+ *         swag distribution
+ *
+ * @property ?int $swag_polo_providedBy the user ID that distributed a polo for this transaction
+ * @property ?int $swag_shirt_providedBy the user ID that distributed a shirt for this transaction
+ * @property ?string $swag_polo_provided The timestamp of when a polo was given for this DuesTransaction, or null
+ * @property ?string $swag_shirt_provided The timestamp of when a shirt was given for this DuesTransaction, or null
+ * @property bool $is_paid whether this transaction is paid in full
+ * @property int $id The database ID for this DuesTransaction
+ * @property string $status the status of this transaction
+ */
 class DuesTransaction extends Model
 {
     use SoftDeletes;
@@ -95,8 +112,6 @@ class DuesTransaction extends Model
 
     /**
      * Get the status flag for the Transaction.
-     *
-     * @return string
      */
     public function getStatusAttribute(): string
     {
@@ -115,8 +130,6 @@ class DuesTransaction extends Model
 
     /**
      * Get the swag polo status attribute for the Transaction.
-     *
-     * @return string
      */
     public function getSwagPoloStatusAttribute(): string
     {
@@ -133,8 +146,6 @@ class DuesTransaction extends Model
 
     /**
      * Get the swag shirt status attribute for the Transaction.
-     *
-     * @return string
      */
     public function getSwagShirtStatusAttribute(): string
     {
@@ -168,10 +179,6 @@ class DuesTransaction extends Model
      * Scope a query to only include pending transactions.
      * Pending defined as no payments, or payments that do not sum to payable amount
      * for a currently active DuesPackage.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePending(Builder $query): Builder
     {
@@ -182,10 +189,6 @@ class DuesTransaction extends Model
      * Scope a query to only include swag-pending transactions.
      * Swag-pending defined as a paid transaction that has not provided shirt/polo
      * Note that you can't just chain the paid() scope to this because it breaks the joins.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePendingSwag(Builder $query): Builder
     {
@@ -214,10 +217,6 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include paid transactions
      * Paid defined as one or more payments whose total is equal to the payable amount.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePaid(Builder $query): Builder
     {
@@ -234,8 +233,6 @@ class DuesTransaction extends Model
 
     /**
      * Get the is_paid flag for the DuesTransaction.
-     *
-     * @return bool
      */
     public function getIsPaidAttribute(): bool
     {
@@ -245,10 +242,6 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include unpaid transactions
      * Unpaid defined as zero or more payments that are less than the payable amount.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeUnpaid(Builder $query): Builder
     {
@@ -266,10 +259,6 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include current transactions.
      * Current defined as belonging to an active DuesPackage.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeCurrent(Builder $query): Builder
     {
@@ -281,10 +270,6 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include current transactions.
      * Current defined as belonging to an active DuesPackage.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAccessCurrent(Builder $query): Builder
     {
@@ -296,7 +281,7 @@ class DuesTransaction extends Model
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount(): string
+    public function getPayableAmount(): float
     {
         return $this->package->cost;
     }

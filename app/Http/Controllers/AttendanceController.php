@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Http\Controllers;
 
 use App\Attendance;
@@ -39,8 +37,6 @@ class AttendanceController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -52,10 +48,6 @@ class AttendanceController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreAttendanceRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreAttendanceRequest $request): JsonResponse
     {
@@ -102,11 +94,6 @@ class AttendanceController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     * @param int $id Resource ID
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, int $id): JsonResponse
     {
@@ -122,10 +109,6 @@ class AttendanceController extends Controller
 
     /**
      * Searches attendance records for specified data.
-     *
-     * @param \App\Http\Requests\SearchAttendanceRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function search(SearchAttendanceRequest $request): JsonResponse
     {
@@ -145,16 +128,11 @@ class AttendanceController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateAttendanceRequest  $request
-     * @param int $id Resource ID
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateAttendanceRequest $request, int $id): JsonResponse
     {
         $att = Attendance::find($id);
-        if ($att) {
+        if (null !== $att) {
             try {
                 $att->update($request->all());
             } catch (QueryException $e) {
@@ -170,18 +148,18 @@ class AttendanceController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
     }
 
+    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Illuminate\Http\Request  $request
      * @param int $id Resource ID
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, int $id): JsonResponse
     {
         $att = Attendance::find($id);
-        if ($att->delete()) {
+        if (true === $att->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Attendance deleted.']);
         }
 
@@ -190,12 +168,10 @@ class AttendanceController extends Controller
         ], 422);
     }
 
+    // phpcs:enable
+
     /**
      * Give a summary of attendance from the given time period.
-     *
-     * @param \App\Http\Requests\StatisticsAttendanceRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function statistics(StatisticsAttendanceRequest $request): JsonResponse
     {
@@ -251,10 +227,13 @@ class AttendanceController extends Controller
             ->get()
             ->sum('aggregate')) / $numberOfWeeks;
 
+        // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
-        $attendanceByTeam = Attendance::selectRaw('date_format(attendance.created_at, \'%x %v\') as week,'
-                .'count(distinct gtid) as aggregate, attendable_id, teams.name, teams.visible')
-            ->where('attendable_type', \App\Team::class)
+        $attendanceByTeam = Attendance::selectRaw(
+            'date_format(attendance.created_at, \'%x %v\') as week, count(distinct gtid) as aggregate, attendable_id, '
+            .'teams.name, teams.visible'
+        )->where('attendable_type', \App\Team::class)
             ->when($user->cant('read-teams-hidden'), static function (Builder $query): void {
                 $query->where('visible', 1);
             })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
@@ -264,12 +243,17 @@ class AttendanceController extends Controller
             ->orderBy('week', 'asc')
             ->get();
 
+        // phpcs:enable
+        // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
         // If the user can't read teams only give them the attendable_id
         if ($user->can('read-teams')) {
             $attendanceByTeam = $attendanceByTeam->groupBy('name');
         } else {
             $attendanceByTeam = $attendanceByTeam->groupBy('attendable_id');
         }
+
+        // phpcs:enable
 
         // Return only the team ID/name, the day, and the count of records on that day
         $attendanceByTeam = $attendanceByTeam->map(static function (Collection $item): Collection {

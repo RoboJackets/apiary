@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// @phan-file-suppress PhanIncompatibleCompositionProp
 
 namespace App;
 
@@ -21,6 +22,17 @@ use Laravel\Nova\Actions\Actionable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * Represents a group of Users.
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder visible() Scopes a query to only visible teams
+ *
+ * @property bool $self_serviceable whether this team can be joined/left voluntarily
+ * @property bool $visible whether this team is visible to non-admins
+ * @property int $id the database identifier for this team
+ * @property string $name The name of the team
+ * @property string $slack_private_channel_id the slack internal ID of the team's private channel
+ */
 class Team extends Model
 {
     use Actionable;
@@ -61,10 +73,6 @@ class Team extends Model
 
     /**
      * Scope a query to only include attendable teams.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAttendable(Builder $query): Builder
     {
@@ -73,10 +81,6 @@ class Team extends Model
 
     /**
      * Scope a query to only include visible teams.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeVisible(Builder $query): Builder
     {
@@ -85,10 +89,6 @@ class Team extends Model
 
     /**
      * Scope a query to only include self-serviceable teams.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSelfServiceable(Builder $query): Builder
     {
@@ -123,10 +123,6 @@ class Team extends Model
 
     /**
      * Route notifications for the Slack channel.
-     *
-     * @param Notification $notification
-     *
-     * @return string|null
      */
     public function routeNotificationForSlack(Notification $notification): ?string
     {

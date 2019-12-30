@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
@@ -24,8 +22,7 @@ class OverrideAccess extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Laravel\Nova\Fields\ActionFields  $fields
-     * @param \Illuminate\Support\Collection  $users
+     * @param \Illuminate\Support\Collection<\App\User>  $users
      *
      * @return array<string,string>
      */

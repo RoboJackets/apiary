@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Notifications;
 
 use App\Mail\GeneralInterestInvite as Mailable;
@@ -27,10 +25,6 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param mixed $notifiable
-     *
-     * @return Mailable
      */
     public function toMail($notifiable): Mailable
     {
@@ -49,8 +43,6 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
 
     /**
      * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
      *
      * @return array<string,string>
      */

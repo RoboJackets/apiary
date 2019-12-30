@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 use App\Traits\AuthorizeInclude;
 use App\User;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,10 +30,6 @@ class UserController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -46,10 +43,6 @@ class UserController extends Controller
      * Searches for a resource based upon a keyword
      * Accepts GTID, First/Preferred Name, and Username (uid)
      * GTID returns first result, others return all matching (wildcard).
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request): JsonResponse
     {
@@ -75,10 +68,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreUserRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
@@ -120,17 +109,12 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param string $id
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
         $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
-        if ($user) {
+        if (null !== $user) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
             if ($requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
@@ -152,17 +136,12 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param string $id
-     * @param \App\Http\Requests\UpdateUserRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
-        if (! $user) {
+        if (null === $user) {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
 
@@ -201,7 +180,7 @@ class UserController extends Controller
             $user = $user->makeVisible('api_token');
         }
 
-        if ($user) {
+        if (null !== $user) {
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         }
 
@@ -210,24 +189,29 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param string $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id): JsonResponse
     {
         $user = User::findByIdentifier($id)->first();
-        if ($user->delete()) {
+        if (null === $user) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'User does not exist or was previously deleted.',
+                ],
+                422
+            );
+        }
+
+        if (true === $user->delete()) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         }
 
         return response()->json(
             [
                 'status' => 'error',
-                'message' => 'User does not exist or was previously deleted.',
             ],
-            422
+            500
         );
     }
 }

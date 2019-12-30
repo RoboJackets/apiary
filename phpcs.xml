@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-    <ruleset name="PHP Checks Default Ruleset" namespace="Kberzinch\Php-Checks">
-    <description>The default rule set used by PHP Checks</description>
+    <ruleset name="Apiary Ruleset" namespace="RoboJackets">
+    <description>Apiary ruleset</description>
 
     <config name="installed_paths" value="../../slevomat/coding-standard"/>
 
@@ -8,15 +8,21 @@
 
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>*.min.js</exclude-pattern>
-    <exclude-pattern>/bootstrap/cache/</exclude-pattern>
-    <exclude-pattern>/database/</exclude-pattern>
-    <exclude-pattern>/node_modules/</exclude-pattern>
-    <exclude-pattern>/public/css/</exclude-pattern>
-    <exclude-pattern>/public/index.php</exclude-pattern>
-    <exclude-pattern>/public/js/</exclude-pattern>
-    <exclude-pattern>/storage/framework/</exclude-pattern>
-    <exclude-pattern>/vendor/</exclude-pattern>
     <exclude-pattern>/_ide_helper.php</exclude-pattern>
+    <exclude-pattern>/bootstrap/cache/</exclude-pattern>
+    <exclude-pattern>/node_modules/</exclude-pattern>
+    <exclude-pattern>/public/</exclude-pattern>
+    <exclude-pattern>/storage/</exclude-pattern>
+    <exclude-pattern>/vendor/</exclude-pattern>
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>/database/migrations/</exclude-pattern>
+        <exclude-pattern>/database/seeds/</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>/database/factories/ModelFactory.php</exclude-pattern>
+    </rule>
 
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>
@@ -27,6 +33,14 @@
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 
     <rule ref="Generic.Classes.DuplicateClassName"/>
+
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+        <exclude-pattern>/app/Http/Resources/</exclude-pattern>
+        <exclude-pattern>/app/Notifiables/</exclude-pattern>
+        <exclude-pattern>/app/Notifications/</exclude-pattern>
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+        <exclude-pattern>/app/Policies/</exclude-pattern>
+    </rule>
 
     <rule ref="Generic.CodeAnalysis"/>
 
@@ -87,8 +101,6 @@
 
     <rule ref="Generic.VersionControl.GitMergeConflict"/>
 
-    <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
-
     <rule ref="PEAR.Files.IncludingFile"/>
 
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
@@ -101,18 +113,46 @@
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
 
     <rule ref="SlevomatCodingStandard.ControlStructures">
-        <exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
     </rule>
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
 
+    <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
+        <properties>
+            <property name="linesCountBeforeControlStructure" value="0"/>
+            <property name="linesCountBeforeFirstControlStructure" value="0"/>
+            <property name="linesCountAfterControlStructure" value="0"/>
+            <property name="linesCountAfterLastControlStructure" value="0"/>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
+        <properties>
+            <property name="linesCountBeforeControlStructure" value="0"/>
+            <property name="linesCountBeforeFirstControlStructure" value="0"/>
+            <property name="linesCountAfterControlStructure" value="0"/>
+            <property name="linesCountAfterLastControlStructure" value="0"/>
+        </properties>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.Exceptions"/>
+
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
+        <exclude-pattern>/app/Http/Resources/</exclude-pattern>
+        <exclude-pattern>/app/Notifiables/</exclude-pattern>
+        <exclude-pattern>/app/Notifications/</exclude-pattern>
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+        <exclude-pattern>/app/Policies/</exclude-pattern>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Functions">
         <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>
+        <exclude name="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
@@ -144,12 +184,26 @@
 
     <rule ref="SlevomatCodingStandard.PHP"/>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint">
+        <exclude-pattern>/app/Http/Resources/</exclude-pattern>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
         <properties>
             <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
             <property name="newlinesCountAfterDeclare" value="2"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>/app/Http/Resources</exclude-pattern>
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
+        <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints"/>
@@ -159,7 +213,13 @@
         <exclude name="Squiz.Arrays.ArrayDeclaration"/>
     </rule>
 
-    <rule ref="Squiz.Classes"/>
+    <rule ref="Squiz.Classes">
+        <exclude name="Squiz.Classes.ClassFileName.NoMatch"/>
+    </rule>
+
+    <rule ref="Squiz.Classes.ClassFileName.NoMatch">
+        <exclude-pattern>/database/migrations/</exclude-pattern>
+    </rule>
 
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
     <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>

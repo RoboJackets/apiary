@@ -22,9 +22,7 @@ class PaymentMethodBreakdown extends Partition
     /**
      * Calculate the value of the metric.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\PartitionResult
+     * @SuppressWarnings(PHPMD.UndefinedVariable)
      */
     public function calculate(Request $request): PartitionResult
     {
@@ -50,8 +48,6 @@ class PaymentMethodBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,18 +11,16 @@ class ChangeFasetToRecruiting extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Rename columns
-        Schema::table('faset_visits', function (Blueprint $table) {
+        Schema::table('faset_visits', static function (Blueprint $table): void {
             $table->renameColumn('faset_name', 'recruiting_name');
             $table->renameColumn('faset_email', 'recruiting_email');
         });
 
-        Schema::table('faset_responses', function (Blueprint $table) {
+        Schema::table('faset_responses', static function (Blueprint $table): void {
             $table->dropForeign('faset_responses_faset_visit_id_foreign');
             $table->renameColumn('faset_visit_id', 'recruiting_visit_id');
         });
@@ -37,25 +37,23 @@ class ChangeFasetToRecruiting extends Migration
         Schema::rename('faset_responses', 'recruiting_responses');
 
         // Put the foreign key constraint back
-        Schema::table('recruiting_responses', function (Blueprint $table) {
+        Schema::table('recruiting_responses', static function (Blueprint $table): void {
             $table->foreign('recruiting_visit_id')->references('id')->on('recruiting_visits');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // Rename columns
-        Schema::table('recruiting_visits', function (Blueprint $table) {
+        Schema::table('recruiting_visits', static function (Blueprint $table): void {
             $table->renameColumn('recruiting_name', 'faset_name');
             $table->renameColumn('recruiting_email', 'faset_email');
         });
 
-        Schema::table('recruiting_responses', function (Blueprint $table) {
+        Schema::table('recruiting_responses', static function (Blueprint $table): void {
             $table->dropForeign('recruiting_responses_recruiting_visit_id_foreign');
             $table->renameColumn('recruiting_visit_id', 'faset_visit_id');
         });
@@ -72,7 +70,7 @@ class ChangeFasetToRecruiting extends Migration
         Schema::rename('recruiting_responses', 'faset_responses');
 
         // Put the foreign key constraint back
-        Schema::table('faset_responses', function (Blueprint $table) {
+        Schema::table('faset_responses', static function (Blueprint $table): void {
             $table->foreign('faset_visit_id')->references('id')->on('faset_visits');
         });
     }

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Policies;
 
 use App\RecruitingVisit;
@@ -16,11 +14,6 @@ class RecruitingVisitPolicy
 
     /**
      * Determine whether the user can view the recruiting visit.
-     *
-     * @param \App\User  $user
-     * @param \App\RecruitingVisit  $resource
-     *
-     * @return bool
      */
     public function view(User $user, RecruitingVisit $resource): bool
     {
@@ -29,10 +22,6 @@ class RecruitingVisitPolicy
 
     /**
      * Determine whether the user can view any recruiting visits.
-     *
-     * @param \App\User  $user
-     *
-     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -41,10 +30,6 @@ class RecruitingVisitPolicy
 
     /**
      * Determine whether the user can create recruiting visits.
-     *
-     * @param \App\User  $user
-     *
-     * @return bool
      */
     public function create(User $user): bool
     {
@@ -53,11 +38,6 @@ class RecruitingVisitPolicy
 
     /**
      * Determine whether the user can update the recruiting visit.
-     *
-     * @param \App\User  $user
-     * @param \App\RecruitingVisit  $resource
-     *
-     * @return bool
      */
     public function update(User $user, RecruitingVisit $resource): bool
     {
@@ -66,11 +46,6 @@ class RecruitingVisitPolicy
 
     /**
      * Determine whether the user can delete the recruiting visit.
-     *
-     * @param \App\User  $user
-     * @param \App\RecruitingVisit  $resource
-     *
-     * @return bool
      */
     public function delete(User $user, RecruitingVisit $resource): bool
     {
@@ -79,11 +54,6 @@ class RecruitingVisitPolicy
 
     /**
      * Determine whether the user can restore the recruiting visit.
-     *
-     * @param \App\User  $user
-     * @param \App\RecruitingVisit  $resource
-     *
-     * @return bool
      */
     public function restore(User $user, RecruitingVisit $resource): bool
     {
@@ -92,11 +62,6 @@ class RecruitingVisitPolicy
 
     /**
      * Determine whether the user can permanently delete the user.
-     *
-     * @param \App\User  $user
-     * @param \App\RecruitingVisit  $resource
-     *
-     * @return bool
      */
     public function forceDelete(User $user, RecruitingVisit $resource): bool
     {

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Nova;
 
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
@@ -18,6 +16,11 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for events.
+ *
+ * @property int $id The database ID for this event
+ */
 class Event extends Resource
 {
     /**
@@ -45,10 +48,6 @@ class Event extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array<mixed>
      */
     public function fields(Request $request): array
     {
@@ -79,7 +78,7 @@ class Event extends Resource
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
 
-            Text::make('RSVP URL', function () {
+            Text::make('RSVP URL', function (): string {
                 return route('events.rsvp', ['event' => $this->id]);
             })->onlyOnDetail(),
 
@@ -121,8 +120,6 @@ class Event extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
@@ -144,8 +141,6 @@ class Event extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
@@ -156,8 +151,6 @@ class Event extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
@@ -167,8 +160,6 @@ class Event extends Resource
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */

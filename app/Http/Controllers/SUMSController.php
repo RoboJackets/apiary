@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
 namespace App\Http\Controllers;
 
@@ -15,10 +14,6 @@ class SUMSController extends Controller
 {
     /**
      * Returns view for SUMS status.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      *
      * @suppress PhanTypeExpectedObjectPropAccessButGotNull
      */

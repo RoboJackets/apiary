@@ -2,13 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification
-// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-
 namespace App\Notifications;
 
 use App\Mail\DatabaseMailable as Mailable;
@@ -30,12 +23,15 @@ class DatabaseNotification extends Notification implements ShouldQueue
     /**
      * The metadata to pass to the template.
      *
-     * @var array
+     * @var array<string,string>
      */
     public $metadata;
 
     /**
      * Create a new notification instance.
+     *
+     * @param int $template_id the ID of the template to use
+     * @param array<string,string> $metadata any metadata to pass to the template
      */
     public function __construct(int $template_id, array $metadata)
     {
@@ -46,9 +42,7 @@ class DatabaseNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed  $notifiable
-     *
-     * @return array
+     * @return array<string>
      */
     public function via($notifiable): array
     {
@@ -57,10 +51,6 @@ class DatabaseNotification extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param mixed  $notifiable
-     *
-     * @return Mailable
      */
     public function toMail($notifiable): Mailable
     {
@@ -70,9 +60,7 @@ class DatabaseNotification extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed  $notifiable
-     *
-     * @return array
+     * @return array<string,string>
      */
     public function toArray($notifiable): array
     {

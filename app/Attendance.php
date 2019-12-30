@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Represents a single attendance entry.
+ *
+ * @property int $id The database identifier for this entry
+ * @property int $gtid the GTID associated with this entry
+ */
 class Attendance extends Model
 {
     use SoftDeletes;
@@ -61,11 +67,6 @@ class Attendance extends Model
 
     /**
      * Scope query to start at given date.
-     *
-     * @param Builder $query
-     * @param string $date Date to start search
-     *
-     * @return Builder
      */
     public function scopeStart(Builder $query, string $date): Builder
     {
@@ -74,11 +75,6 @@ class Attendance extends Model
 
     /**
      * Scope query to end at given date.
-     *
-     * @param Builder $query
-     * @param string $date Date to start search
-     *
-     * @return Builder
      */
     public function scopeEnd(Builder $query, string $date): Builder
     {

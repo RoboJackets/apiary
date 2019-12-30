@@ -14,14 +14,10 @@ class ActiveMembers extends Value
 {
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\ValueResult
      */
     public function calculate(Request $request): ValueResult
     {
-        if ($request->resourceId) {
+        if (isset($request->resourceId)) {
             $count = Team::where('id', $request->resourceId)
                 ->get()
                 ->first()
@@ -37,8 +33,6 @@ class ActiveMembers extends Value
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

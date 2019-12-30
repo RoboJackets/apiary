@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
 use App\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class ResumeController extends Controller
@@ -23,14 +20,12 @@ class ResumeController extends Controller
     /**
      * Show the user's resume.
      *
-     * @param string $id
-     *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function show(string $id)
     {
         $user = User::findByIdentifier($id)->first();
-        if ($user) {
+        if (null !== $user) {
             return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
         }
 
@@ -46,16 +41,13 @@ class ResumeController extends Controller
     /**
      * Store the user's resume.
      *
-     * @param string $id
-     * @param StoreResumeRequest $request
-     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function store(string $id, StoreResumeRequest $request)
     {
         $user = User::findByIdentifier($id)->first();
-        if ($user) {
-            if (! $user->is_active) {
+        if (null !== $user) {
+            if (true !== $user->is_active) {
                 if ($request->has('redirect')) {
                     return redirect()->route('resume.index', ['resume_error' => 'inactive']);
                 }
@@ -163,24 +155,6 @@ class ResumeController extends Controller
                 'message' => 'User does not exist or was previously deleted.',
             ],
             422
-        );
-    }
-
-    /**
-     * Delete the user's resume.
-     *
-     * @param string $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function delete(string $id): JsonResponse
-    {
-        return response()->json(
-            [
-                'status' => 'error',
-                'message' => 'unimplemented',
-            ],
-            501
         );
     }
 }

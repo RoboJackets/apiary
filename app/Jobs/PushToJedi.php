@@ -22,6 +22,13 @@ class PushToJedi implements ShouldQueue
     use SerializesModels;
 
     /**
+     * The number of attempts for this job.
+     *
+     * @var int
+     */
+    public $tries = 1;
+
+    /**
      * The user that will be sent to JEDI.
      *
      * @var \App\User
@@ -64,8 +71,6 @@ class PushToJedi implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -86,8 +91,8 @@ class PushToJedi implements ShouldQueue
             'model_class' => $this->model_class,
             'model_id' => $this->model_id,
             'model_event' => $this->model_event,
-            'last_attendance_time' => $lastAttendance ? $lastAttendance->created_at : null,
-            'last_attendance_id' => $lastAttendance ? $lastAttendance->id : null,
+            'last_attendance_time' => null !== $lastAttendance ? $lastAttendance->created_at : null,
+            'last_attendance_id' => null !== $lastAttendance ? $lastAttendance->id : null,
             'teams' => [],
             'project_manager_of_teams' => [],
             'exists_in_sums' => $this->user->exists_in_sums,

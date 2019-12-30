@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter,Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecruitingCampaignRecipientRequest;
@@ -11,11 +9,14 @@ use App\Http\Requests\UpdateRecruitingCampaignRecipientRequest;
 use App\Http\Resources\RecruitingCampaignRecipient as RCRResource;
 use App\RecruitingCampaign;
 use App\RecruitingCampaignRecipient;
+use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RecruitingCampaignRecipientController extends Controller
 {
+    use AuthorizeInclude;
+
     public function __construct()
     {
         $this->middleware(['permission:send-notifications']);
@@ -23,11 +24,6 @@ class RecruitingCampaignRecipientController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param \App\RecruitingCampaign $campaign
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(RecruitingCampaign $campaign, Request $request): JsonResponse
     {
@@ -40,11 +36,6 @@ class RecruitingCampaignRecipientController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\RecruitingCampaign $campaign
-     * @param \App\Http\Requests\StoreRecruitingCampaignRecipientRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(RecruitingCampaign $campaign, StoreRecruitingCampaignRecipientRequest $request): JsonResponse
     {
@@ -76,13 +67,11 @@ class RecruitingCampaignRecipientController extends Controller
         ], 201);
     }
 
+    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
     /**
      * Display the specified resource.
-     *
-     * @param \App\RecruitingCampaign $campaign
-     * @param \App\RecruitingCampaignRecipient $recipient
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(RecruitingCampaign $campaign, RecruitingCampaignRecipient $recipient): JsonResponse
     {
@@ -91,12 +80,6 @@ class RecruitingCampaignRecipientController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\RecruitingCampaign $campaign
-     * @param \App\RecruitingCampaignRecipient $recipient
-     * @param \App\Http\Requests\UpdateRecruitingCampaignRecipientRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(
         RecruitingCampaign $campaign,
@@ -110,21 +93,25 @@ class RecruitingCampaignRecipientController extends Controller
         return response()->json(['status' => 'success', 'recipient' => new RCRResource($rcr)]);
     }
 
+    // phpcs:enable
+
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $campaign_id
-     * @param int $recipient_id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $campaign_id, int $recipient_id): JsonResponse
     {
         $rcr = RecruitingCampaignRecipient::where('recruiting_campaign_id', $campaign_id)
             ->where('id', $recipient_id)
             ->first();
-        $rcr->delete();
 
-        return response()->json(['status' => 'success'], 200);
+        if (null === $rcr) {
+            return response()->json(['status' => 'not_found'], 404);
+        }
+
+        if (true === $rcr->delete()) {
+            return response()->json(['status' => 'success'], 200);
+        }
+
+        return response()->json(['status' => 'error'], 500);
     }
 }

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Notifications;
 
 use App\Attendance;
@@ -20,21 +18,15 @@ class GlobalAttendanceNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param CoreNotifiable  $notifiable
-     *
      * @return array<string>
      */
     public function via(CoreNotifiable $notifiable): array
     {
-        return $notifiable->routeNotificationForSlack($this) ? ['slack'] : [];
+        return null !== $notifiable->routeNotificationForSlack($this) ? ['slack'] : [];
     }
 
     /**
      * Get the Slack representation of the notification.
-     *
-     * @param CoreNotifiable  $notifiable
-     *
-     * @return SlackMessage
      */
     public function toSlack(CoreNotifiable $notifiable): SlackMessage
     {
@@ -59,8 +51,6 @@ class GlobalAttendanceNotification extends Notification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @param CoreNotifiable $notifiable
      *
      * @return array<string,string>
      */

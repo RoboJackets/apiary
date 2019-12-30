@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
 
 namespace App\Nova\Actions;
 
@@ -22,8 +22,7 @@ class DistributePolo extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Laravel\Nova\Fields\ActionFields  $fields
-     * @param \Illuminate\Support\Collection  $models
+     * @param \Illuminate\Support\Collection<\App\DuesTransaction>  $models
      *
      * @return array<string,string>
      */

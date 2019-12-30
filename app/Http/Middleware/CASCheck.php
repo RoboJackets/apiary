@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Middleware;
 
 use App\Traits\CreateOrUpdateCASUser;
@@ -39,18 +37,13 @@ class CASCheck
 
     /**
      * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     *
-     * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
         phpCAS::checkAuthentication();
         if (null === $request->user()) {
             if ($this->cas->isAuthenticated()) {
-                $user = $this->createOrUpdateCASUser($request);
+                $user = $this->createOrUpdateCASUser();
                 Auth::login($user);
             }
 

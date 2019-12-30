@@ -9,6 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Represents a non-member who will receive an email invitation for General Interest.
+ *
+ * @property string $email_address the email address to send to
+ * @property string $source the source of this recipient
+ * @property int $recruiting_visit_id the RecruitingVisit that maps to this recipient
+ * @property int $recruiting_campaign_id the RecruitingCampaign that maps to this recipient
+ * @property int $user_id the ID of the user, if available
+ * @property string $notified_at the timestamp when this recipient was contacted
+ */
 class RecruitingCampaignRecipient extends Model
 {
     use SoftDeletes;
@@ -52,8 +62,6 @@ class RecruitingCampaignRecipient extends Model
 
     /**
      * Route notifications for the mail channel.
-     *
-     * @return string
      */
     public function routeNotificationForMail(): string
     {

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
-
 namespace App\Http\Controllers;
 
 use App\Event;
@@ -32,10 +30,6 @@ class RsvpController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -47,10 +41,6 @@ class RsvpController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -68,9 +58,6 @@ class RsvpController extends Controller
 
     /**
      * Stores a user-submitted RSVP resource.
-     *
-     * @param Event $event
-     * @param Request $request
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      *
@@ -126,17 +113,12 @@ class RsvpController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id): JsonResponse
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (! $rsvp) {
+        if (null === $rsvp) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -155,7 +137,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (! $rsvp) {
+        if (null === $rsvp) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -167,7 +149,7 @@ class RsvpController extends Controller
             ], 403);
         }
 
-        if ($rsvp->delete()) {
+        if (true === $rsvp->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }
 

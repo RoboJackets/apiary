@@ -18,15 +18,14 @@ class SendNotification extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Laravel\Nova\Fields\ActionFields  $fields
-     * @param \Illuminate\Support\Collection  $models
+     * @param \Illuminate\Support\Collection<\App\User>  $models
      *
      * @return array<string,string>
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
         foreach ($models as $model) {
-            Mail::to($model->gt_email)->send(new DatabaseMailable(intval($fields->template), null));
+            Mail::to($model->gt_email)->send(new DatabaseMailable(intval($fields->template), []));
         }
 
         return Action::message(Str::plural('Email', count($models)).' sent!');

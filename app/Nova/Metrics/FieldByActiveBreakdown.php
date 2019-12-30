@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Nova\Metrics;
 
 use App\User;
@@ -32,23 +30,17 @@ abstract class FieldByActiveBreakdown extends Partition
     /**
      * Create a new FieldByActiveBreakdown metric.
      *
-     * @param string  $field_name
-     * @param bool  $use_access_active
-     *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(string $field_name, bool $use_access_active = false)
     {
+        parent::__construct();
         $this->field_name = $field_name;
         $this->use_access_active = $use_access_active;
     }
 
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\PartitionResult
      *
      * @suppress PhanPossiblyNonClassMethodCall
      */

@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Nova\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
 
@@ -21,21 +20,16 @@ class DuesTransactionPaymentStatus extends BooleanFilter
     /**
      * Apply the filter to the given query.
      *
-     * @param \Illuminate\Http\Request  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param array<string>  $value
-     *
-     * @return mixed
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(Request $request, $query, $value): Builder
     {
-        return $value['pending'] ? $query->pending() : $query;
+        return isset($value['pending']) ? $query->pending() : $query;
     }
 
     /**
      * Get the filter's available options.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<string,string>
      */

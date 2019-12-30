@@ -13,10 +13,6 @@ class PaymentsPerDay extends Trend
 {
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\TrendResult
      */
     public function calculate(Request $request): TrendResult
     {
@@ -40,8 +36,6 @@ class PaymentsPerDay extends Trend
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

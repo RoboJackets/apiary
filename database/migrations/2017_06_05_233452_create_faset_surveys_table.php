@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,12 +10,10 @@ class CreateFasetSurveysTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('faset_surveys', function (Blueprint $table) {
+        Schema::create('faset_surveys', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('question');
             $table->timestamps();
@@ -22,10 +22,8 @@ class CreateFasetSurveysTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('faset_surveys');
     }

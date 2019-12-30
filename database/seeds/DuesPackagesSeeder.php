@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Seeder;
 
 class DuesPackagesSeeder extends Seeder
@@ -7,10 +9,8 @@ class DuesPackagesSeeder extends Seeder
     /**
      * Run the database seeds.
      * Run "php artisan db:seed --class=DuesPackagesSeeder".
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         factory(App\DuesPackage::class, 10)->create();
     }

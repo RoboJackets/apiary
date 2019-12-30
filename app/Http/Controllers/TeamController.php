@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeamRequest;
@@ -35,10 +33,6 @@ class TeamController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -68,10 +62,6 @@ class TeamController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreTeamRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreTeamRequest $request): JsonResponse
     {
@@ -84,7 +74,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($team->id)) {
+        if (null !== $team->id) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
         }
 
@@ -93,11 +83,6 @@ class TeamController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param string  $id
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id, Request $request): JsonResponse
     {
@@ -120,35 +105,28 @@ class TeamController extends Controller
 
     /**
      * Returns a list of all members of the given team.
-     *
-     * @param string $id integer Team ID
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function showMembers(Request $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        $members = $team->members;
-
-        if ($team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
+        if (null === $team) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        return response()->json(['status' => 'success', 'members' => UserResource::collection($members)]);
+        if (false === $team->visible && $request->user()->cant('read-teams-hidden')) {
+            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
+        }
+
+        return response()->json(['status' => 'success', 'members' => UserResource::collection($team->members)]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateTeamRequest  $request
-     * @param string  $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
+        if (null === $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -161,27 +139,18 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($team->id)) {
-            return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
+        return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
     }
 
     /**
      * Updates membership of the given team.
-     *
-     * @param \App\Http\Requests\UpdateMembersTeamRequest $request
-     * @param string $id integer
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function updateMembers(UpdateMembersTeamRequest $request, string $id): JsonResponse
     {
         $requestingUser = $request->user();
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (! $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
+        if (null === $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -201,6 +170,9 @@ class TeamController extends Controller
 
         try {
             $user = User::find($request->input('user_id'));
+            if (null === $user) {
+                return response()->json(['status' => 'user_not_found'], 400);
+            }
             if ('join' === $request->input('action')) {
                 $team->members()->syncWithoutDetaching($user);
             } else {
@@ -220,24 +192,24 @@ class TeamController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param string  $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if ($team->delete()) {
+        if (null === $team) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'team_not_found',
+                ],
+                422
+            );
+        }
+
+        if (true === $team->delete()) {
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
         }
 
-        return response()->json(
-            [
-                'status' => 'error',
-                'message' => 'team_not_found',
-            ],
-            422
-        );
+        return response()->json(['status' => 'error'], 500);
     }
 }

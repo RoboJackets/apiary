@@ -20,10 +20,6 @@ class RsvpSourceBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\PartitionResult
      */
     public function calculate(Request $request): PartitionResult
     {
@@ -48,8 +44,6 @@ class RsvpSourceBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

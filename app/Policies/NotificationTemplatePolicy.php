@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Policies;
 
 use App\NotificationTemplate;
@@ -16,11 +14,6 @@ class NotificationTemplatePolicy
 
     /**
      * Determine whether the user can view the notification template.
-     *
-     * @param \App\User  $user
-     * @param \App\NotificationTemplate  $notificationTemplate
-     *
-     * @return bool
      */
     public function view(User $user, NotificationTemplate $notificationTemplate): bool
     {
@@ -29,10 +22,6 @@ class NotificationTemplatePolicy
 
     /**
      * Determine whether the user can view any notification templates.
-     *
-     * @param \App\User  $user
-     *
-     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -41,10 +30,6 @@ class NotificationTemplatePolicy
 
     /**
      * Determine whether the user can create notification templates.
-     *
-     * @param \App\User  $user
-     *
-     * @return bool
      */
     public function create(User $user): bool
     {
@@ -53,11 +38,6 @@ class NotificationTemplatePolicy
 
     /**
      * Determine whether the user can update the notification template.
-     *
-     * @param \App\User  $user
-     * @param \App\NotificationTemplate  $notificationTemplate
-     *
-     * @return bool
      */
     public function update(User $user, NotificationTemplate $notificationTemplate): bool
     {
@@ -66,11 +46,6 @@ class NotificationTemplatePolicy
 
     /**
      * Determine whether the user can delete the notification template.
-     *
-     * @param \App\User  $user
-     * @param \App\NotificationTemplate  $notificationTemplate
-     *
-     * @return bool
      */
     public function delete(User $user, NotificationTemplate $notificationTemplate): bool
     {
@@ -79,11 +54,6 @@ class NotificationTemplatePolicy
 
     /**
      * Determine whether the user can restore the notification template.
-     *
-     * @param \App\User  $user
-     * @param \App\NotificationTemplate  $notificationTemplate
-     *
-     * @return bool
      */
     public function restore(User $user, NotificationTemplate $notificationTemplate): bool
     {
@@ -92,11 +62,6 @@ class NotificationTemplatePolicy
 
     /**
      * Determine whether the user can permanently delete the notification template.
-     *
-     * @param \App\User  $user
-     * @param \App\NotificationTemplate  $notificationTemplate
-     *
-     * @return bool
      */
     public function forceDelete(User $user, NotificationTemplate $notificationTemplate): bool
     {

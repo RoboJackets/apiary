@@ -42,8 +42,6 @@ class JEDI extends Dashboard
 
     /**
      * Get the URI key for the dashboard.
-     *
-     * @return string
      */
     public static function uriKey(): string
     {

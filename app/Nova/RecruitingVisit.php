@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Nova;
 
 use App\Nova\Actions\SendRecruitingEmail;
@@ -14,6 +12,11 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for recruiting visits.
+ *
+ * @property int $id the database ID for this recruiting visit
+ */
 class RecruitingVisit extends Resource
 {
     /**
@@ -32,8 +35,6 @@ class RecruitingVisit extends Resource
 
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
@@ -42,8 +43,6 @@ class RecruitingVisit extends Resource
 
     /**
      * Get the displayable singular label of the resource.
-     *
-     * @return string
      */
     public static function singularLabel(): string
     {
@@ -76,10 +75,6 @@ class RecruitingVisit extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array<mixed>
      */
     public function fields(Request $request): array
     {
@@ -94,7 +89,7 @@ class RecruitingVisit extends Resource
                 ->sortable()
                 ->rules('required', 'max:255', 'email'),
 
-            Text::make('Survey Responses', static function () use ($this_id) {
+            Text::make('Survey Responses', static function () use ($this_id): string {
                 return implode(', ', RecruitingResponse::where(
                     'recruiting_visit_id',
                     '=',
@@ -145,8 +140,6 @@ class RecruitingVisit extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
@@ -156,8 +149,6 @@ class RecruitingVisit extends Resource
 
     /**
      * Get the filters available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
@@ -169,8 +160,6 @@ class RecruitingVisit extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
@@ -180,8 +169,6 @@ class RecruitingVisit extends Resource
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */

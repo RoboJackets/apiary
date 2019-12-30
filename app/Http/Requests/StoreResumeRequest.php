@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -12,8 +10,6 @@ class StoreResumeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -23,7 +19,7 @@ class StoreResumeRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,mixed>
+     * @return array<string,string>
      */
     public function rules(): array
     {

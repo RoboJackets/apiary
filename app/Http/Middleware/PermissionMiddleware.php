@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -15,15 +13,9 @@ class PermissionMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param mixed $permission Permissions to authenticate
-     *
-     * @return mixed
-     *
-     * @suppress PhanPluginAlwaysReturnMethod
+     * @param array<string>|string $permissions_to_check Permissions to authenticate
      */
-    public function handle(Request $request, Closure $next, $permission)
+    public function handle(Request $request, Closure $next, $permissions_to_check)
     {
         if (Auth::guest() && $request->ajax()) {
             return response()->json(['status' => 'error',
@@ -35,7 +27,7 @@ class PermissionMiddleware
             abort(403);
         }
 
-        $permissions = is_array($permission) ? $permission : explode('|', $permission);
+        $permissions = is_array($permissions_to_check) ? $permissions_to_check : explode('|', $permissions_to_check);
 
         foreach ($permissions as $permission) {
             if ($request->user()->can($permission)) {

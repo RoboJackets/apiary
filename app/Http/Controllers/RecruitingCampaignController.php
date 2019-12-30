@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
 
 namespace App\Http\Controllers;
 
@@ -13,6 +13,7 @@ use App\RecruitingCampaign;
 use App\RecruitingCampaignRecipient;
 use App\RecruitingVisit;
 use App\Traits\AuthorizeInclude;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -32,10 +33,6 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -47,20 +44,10 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreRecruitingCampaignRequest  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreRecruitingCampaignRequest $request): JsonResponse
     {
-        // Store the campaign
-        // Yes, I know there is an easier way to do this.
-        $rc = new RecruitingCampaign();
-        $fields = array_keys($request->all());
-        foreach ($fields as $field) {
-            $rc->$field = $request->input($field);
-        }
+        $rc = new RecruitingCampaign($request->validated());
         $rc->created_by = $request->user()->id;
         $rc->status = 'new';
 
@@ -80,7 +67,7 @@ class RecruitingCampaignController extends Controller
 
         $added_recipient_emails = [];
         foreach ($visits as $v) {
-            if (in_array($v->recruiting_email, $added_recipient_emails)) {
+            if (in_array($v->recruiting_email, $added_recipient_emails, true)) {
                 Log::info(self::class.': Email '.$v->recruiting_email.' already in the list. Ignoring.');
             } else {
                 // Add new recipient
@@ -104,7 +91,7 @@ class RecruitingCampaignController extends Controller
 
         $db_rc = RecruitingCampaign::where('id', $rc->id)->with('recipients')->first();
 
-        if (is_numeric($db_rc->id)) {
+        if (null !== $db_rc) {
             return response()->json(['status' => 'success', 'campaign' => new RecruitingCampaignResource($db_rc)], 201);
         }
 
@@ -113,10 +100,6 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Create queue entries for email send.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function queue(int $id): JsonResponse
     {
@@ -141,10 +124,6 @@ class RecruitingCampaignController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param \App\RecruitingCampaign  $recruitingCampaign
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(RecruitingCampaign $recruitingCampaign): JsonResponse
     {
@@ -154,24 +133,7 @@ class RecruitingCampaignController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request  $request
-     * @param \App\RecruitingCampaign  $recruitingCampaign
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(Request $request, RecruitingCampaign $recruitingCampaign): JsonResponse
-    {
-        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
-    }
-
-    /**
      * Remove the specified resource from storage.
-     *
-     * @param \App\RecruitingCampaign  $recruitingCampaign
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(RecruitingCampaign $recruitingCampaign): JsonResponse
     {

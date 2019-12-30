@@ -17,8 +17,6 @@ class MakeAWish extends Card
 
     /**
      * Get the component name for the element.
-     *
-     * @return string
      */
     public function component(): string
     {

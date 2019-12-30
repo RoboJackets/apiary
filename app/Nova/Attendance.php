@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Nova;
 
 use App\Nova\Actions\ExportAttendance;
@@ -22,6 +20,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for attendance.
+ *
+ * @property ?\App\User $attendee The user associated with the attendance record, if available
+ */
 class Attendance extends Resource
 {
     /**
@@ -33,8 +36,6 @@ class Attendance extends Resource
 
     /**
      * Get the displayble label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
@@ -43,8 +44,6 @@ class Attendance extends Resource
 
     /**
      * Get the displayble singular label of the resource.
-     *
-     * @return string
      */
     public static function singularLabel(): string
     {
@@ -53,8 +52,6 @@ class Attendance extends Resource
 
     /**
      * Get the URI key for the resource.
-     *
-     * @return string
      */
     public static function uriKey(): string
     {
@@ -84,10 +81,6 @@ class Attendance extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array<mixed>
      */
     public function fields(Request $request): array
     {
@@ -99,7 +92,7 @@ class Attendance extends Resource
                     return $request->user()->can('read-users-gtid');
                 })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
-                    return $this->attendee ? '—' : $gtid;
+                    return null === $this->attendee ? '—' : $gtid;
                 }),
 
             BelongsTo::make('User', 'attendee'),
@@ -143,8 +136,6 @@ class Attendance extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
@@ -156,8 +147,6 @@ class Attendance extends Resource
 
     /**
      * Get the filters available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
@@ -174,8 +163,6 @@ class Attendance extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
@@ -189,8 +176,6 @@ class Attendance extends Resource
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
@@ -208,10 +193,6 @@ class Attendance extends Resource
     /**
      * Determine if the current user can view the given resource or throw an exception.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return void
-     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function authorizeToView(Request $request): void
@@ -224,10 +205,6 @@ class Attendance extends Resource
 
     /**
      * Determine if the current user can view the given resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return bool
      */
     public function authorizedToView(Request $request): bool
     {
@@ -238,10 +215,6 @@ class Attendance extends Resource
 
     /**
      * Determine if the current user can delete the given resource or throw an exception.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return void
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -255,10 +228,6 @@ class Attendance extends Resource
 
     /**
      * Determine if the current user can delete the given resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return bool
      */
     public function authorizedToDelete(Request $request): bool
     {

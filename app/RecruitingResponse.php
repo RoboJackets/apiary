@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Represents a response to a recruiting survey.
+ *
+ * @property string $response the response to the survey
+ */
 class RecruitingResponse extends Model
 {
     use SoftDeletes;

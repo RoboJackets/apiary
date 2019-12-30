@@ -8,9 +8,13 @@
 
 declare(strict_types=1);
 
-$uri = urldecode(
-    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
-);
+$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+if (! is_string($url)) {
+    throw new Exception('Failed parsing url');
+}
+
+$uri = urldecode($url);
 
 // This file allows us to emulate Apache's "mod_rewrite" functionality from the
 // built-in PHP web server. This provides a convenient way to test a Laravel

@@ -29,10 +29,6 @@ class EventController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -44,10 +40,6 @@ class EventController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreEventRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
@@ -60,20 +52,11 @@ class EventController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($event->id)) {
-            return response()->json(['status' => 'success', 'event' => $event], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
+        return response()->json(['status' => 'success', 'event' => $event], 201);
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id, Request $request): JsonResponse
     {
@@ -89,17 +72,12 @@ class EventController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateEventRequest $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateEventRequest $request, int $id): JsonResponse
     {
         $requestingUser = $request->user();
         $event = Event::find($id);
-        if (! $event) {
+        if (null === $event) {
             return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
         }
 
@@ -122,7 +100,7 @@ class EventController extends Controller
         }
 
         $event = Event::find($id);
-        if ($event->id) {
+        if (null !== $event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
         }
 
@@ -132,7 +110,7 @@ class EventController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $event = Event::find($id);
-        if ($event->delete()) {
+        if (true === $event->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }
 

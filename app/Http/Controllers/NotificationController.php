@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SendNotificationManualNotificationRequest;
@@ -58,7 +60,7 @@ class NotificationController extends Controller
                 $hours++;
             } elseif ('database' === $template_type) {
                 foreach ($chunk as $address) {
-                    Mail::to($address)->queue(new DatabaseMailable(intval($template_id), null));
+                    Mail::to($address)->queue(new DatabaseMailable(intval($template_id), []));
                     $found[] = $address;
                 }
                 $hours++;

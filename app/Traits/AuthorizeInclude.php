@@ -15,12 +15,9 @@ trait AuthorizeInclude
      * Given an array or comma-separated string of requested relationships to be included,
      * return an array of those allowed based on the requester's permissions.
      *
-     * @param string $class Class
-     * @param mixed $requestedInclude array of relationship names
-     *
      * @return array<string> relationships to include
      */
-    public function authorizeInclude(string $class, $requestedInclude = null): array
+    public function authorizeInclude(string $class, ?string $requestedInclude = null): array
     {
         // If the user doesn't request anything, we don't need to authorize anything
         if (null === $requestedInclude) {
@@ -38,13 +35,6 @@ trait AuthorizeInclude
         } else {
             Log::notice(__METHOD__.': No relationship permission map for '.$class.', assuming default naming');
             $relationPermMap = [];
-        }
-
-        if (! is_string($requestedInclude)) {
-            $type = gettype($requestedInclude);
-            Log::warning(__METHOD__.': Received invalid '.$type.' of relationships to include');
-
-            return [];
         }
 
         // Convert comma-separated string to an array
@@ -78,7 +68,7 @@ trait AuthorizeInclude
      * Converts a string in camelCase to dashed-format
      * Ex. duesTransactions -> dues-transactions.
      *
-     * @param $string string to convert
+     * @param string $string string to convert
      *
      * @return string result
      */

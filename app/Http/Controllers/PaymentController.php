@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Http\Controllers;
 
 use App\DuesTransaction;
@@ -12,7 +10,7 @@ use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
 use App\Payment;
-use Bugsnag;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +23,7 @@ use SquareConnect\Api\TransactionsApi;
 use SquareConnect\Configuration;
 use SquareConnect\Model\CreateCheckoutRequest;
 use SquareConnect\Model\CreateOrderRequest;
+use Throwable;
 
 class PaymentController extends Controller
 {
@@ -39,8 +38,6 @@ class PaymentController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
     {
@@ -51,10 +48,6 @@ class PaymentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StorePaymentRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
@@ -77,23 +70,15 @@ class PaymentController extends Controller
             return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
         }
 
-        if (is_numeric($payment->id)) {
-            $dbPayment = Payment::findOrFail($payment->id);
-            $dbPayment->payable->user->notify(new Confirm($dbPayment));
-            event(new PaymentSuccess($dbPayment));
+        $dbPayment = Payment::findOrFail($payment->id);
+        $dbPayment->payable->user->notify(new Confirm($dbPayment));
+        event(new PaymentSuccess($dbPayment));
 
-            return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+        return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
     }
 
     /**
      * Handles payment request from user-facing UI.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return mixed
      */
     public function storeUser(Request $request)
     {
@@ -174,15 +159,11 @@ class PaymentController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id): JsonResponse
     {
         $payment = Payment::find($id);
-        if ($payment) {
+        if (null !== $payment) {
             return response()->json(['status' => 'success', 'payment' => $payment]);
         }
 
@@ -191,23 +172,18 @@ class PaymentController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdatePaymentRequest $request
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdatePaymentRequest $request, int $id): JsonResponse
     {
         $payment = Payment::find($id);
-        if (! $payment) {
+        if (null === $payment) {
             return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
         }
 
         $payment->update($request->all());
 
         $payment = Payment::find($payment->id);
-        if ($payment) {
+        if (null !== $payment) {
             return response()->json(['status' => 'success', 'payment' => $payment]);
         }
 
@@ -216,15 +192,11 @@ class PaymentController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {
         $payment = Payment::find($id);
-        if ($payment->delete()) {
+        if (true === $payment->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Payment deleted.']);
         }
 
@@ -241,8 +213,6 @@ class PaymentController extends Controller
      * @param string $email Email address for Square Receipt
      * @param \App\Payment $payment Payment Model
      * @param bool $addFee Adds $3.00 transaction fee if true
-     *
-     * @return mixed
      */
     public function createSquareCheckout(string $name, int $amount, string $email, Payment $payment, bool $addFee)
     {
@@ -252,7 +222,7 @@ class PaymentController extends Controller
 
         $line_items = [
             [
-                'name' => $name ?: 'Miscellaneous Payment',
+                'name' => $name ?? 'Miscellaneous Payment',
                 'quantity' => '1',
                 'base_price_money' => [
                     'amount' => $amount * 100,
@@ -296,8 +266,6 @@ class PaymentController extends Controller
 
     /**
      * Processes Square redirect after completed checkout transaction.
-     *
-     * @return mixed
      */
     public function handleSquareResponse(Request $request)
     {
@@ -348,7 +316,7 @@ class PaymentController extends Controller
 
         //Find the payment
         $payment = Payment::find($payment_id);
-        if (! $payment) {
+        if (null === $payment) {
             Log::warning(self::class.' - Error locating Payment '.$payment_id);
 
             return response(
@@ -393,14 +361,14 @@ class PaymentController extends Controller
         $counter = 0;
         while ($counter < 10) {
             $square_txn = $this->getSquareTransaction($txnClient, $location, $server_txn_id);
-            if (! $square_txn instanceof \SquareConnect\ApiException) {
+            if (! $square_txn instanceof Throwable) {
                 break;
             }
             $counter++;
             usleep($counter * 100000);
         }
 
-        if ($square_txn instanceof \SquareConnect\ApiException) {
+        if ($square_txn instanceof Throwable) {
             Bugsnag::notifyException($square_txn);
 
             return response(
@@ -415,11 +383,11 @@ class PaymentController extends Controller
             );
         }
 
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall,PhanPossiblyUndeclaredMethod
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
         $proc_fee = $tenders[0]->getProcessingFeeMoney()->getAmount() / 100;
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall,PhanPossiblyUndeclaredMethod
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         $created_at = $square_txn->getTransaction()->getCreatedAt();
         Log::debug(
             self::class.' - Square Transaction Details for '.$server_txn_id,
@@ -470,10 +438,6 @@ class PaymentController extends Controller
     /**
      * Queries Square Transaction API for transaction details.
      *
-     * @param TransactionsApi $client
-     * @param string $location
-     * @param string $server_txn_id
-     *
      * @return \Throwable|\SquareConnect\Model\RetrieveTransactionResponse
      */
     protected function getSquareTransaction(TransactionsApi $client, string $location, string $server_txn_id)
@@ -482,9 +446,7 @@ class PaymentController extends Controller
             Log::debug(self::class.' - Querying Square for Transaction '.$server_txn_id);
             $square_txn = $client->retrieveTransaction($location, $server_txn_id);
         } catch (\Throwable $e) {
-            $error = $e->getMessage();
-            $error = is_array($error) ? $error : [$error];
-            Log::debug(self::class.' - Error querying Square transaction', $error);
+            Log::debug(self::class.' - Error querying Square transaction', [$e->getMessage()]);
 
             return $e;
         }

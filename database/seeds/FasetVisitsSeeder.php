@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Seeder;
 
 class FasetVisitsSeeder extends Seeder
@@ -7,11 +9,9 @@ class FasetVisitsSeeder extends Seeder
     /**
      * Run the database seeds.
      * Run "php artisan db:seed --class=FasetVisitsSeeder".
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        factory(App\FasetVisit::class, 20)->create();
+        factory(App\RecruitingVisit::class, 20)->create();
     }
 }

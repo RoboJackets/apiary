@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,Generic.Strings.UnnecessaryStringConcat.Found
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Nova;
 
@@ -24,6 +24,12 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for users.
+ *
+ * @property string $resume_date When this user's resume was uploaded
+ * @property string $uid this user's username
+ */
 class User extends Resource
 {
     /**
@@ -57,10 +63,6 @@ class User extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array<mixed>
      */
     public function fields(Request $request): array
     {
@@ -159,8 +161,8 @@ class User extends Resource
             new Panel(
                 'Resume',
                 [
-                    File::make('Resume', function () {
-                        return $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
+                    File::make('Resume', function (): ?string {
+                        return null !== $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
                     })->path('resumes')
                         ->disk('local')
                         ->deletable(false)
@@ -316,8 +318,6 @@ class User extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Card>
      */
     public function cards(Request $request): array
@@ -348,8 +348,6 @@ class User extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
@@ -365,8 +363,6 @@ class User extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Lenses\Lens>
      */
     public function lenses(Request $request): array
@@ -376,8 +372,6 @@ class User extends Resource
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */

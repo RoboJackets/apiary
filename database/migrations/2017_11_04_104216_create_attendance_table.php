@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,12 +10,10 @@ class CreateAttendanceTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('attendance', function (Blueprint $table) {
+        Schema::create('attendance', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('attendable_type');
             $table->unsignedInteger('attendable_id');
@@ -29,10 +29,8 @@ class CreateAttendanceTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('attendance');
     }

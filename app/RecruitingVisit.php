@@ -11,6 +11,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Nova\Actions\Actionable;
 
+/**
+ * Represents a non-member's visit to a recruiting event.
+ *
+ * @property int $id the database identifier for this RecruitingVisit
+ * @property string $visit_token an identifier for this visit
+ * @property string $recruiting_email the email address provided by the visitor
+ * @property int $user_id the ID of the user, if available
+ */
 class RecruitingVisit extends Model
 {
     use Actionable;
@@ -33,12 +41,10 @@ class RecruitingVisit extends Model
         return $this->belongsTo(\App\User::class);
     }
 
-    // phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
-
     /**
      * Save the model to the database.
      *
-     * @param array<string,string>  $options
+     * @param array  $options
      *
      * @return bool          Whether the save succeeded
      */
@@ -52,12 +58,8 @@ class RecruitingVisit extends Model
         return parent::save($options);
     }
 
-    // phpcs:enable
-
     /**
      * Route notifications for the mail channel.
-     *
-     * @return string
      */
     public function routeNotificationForMail(): string
     {

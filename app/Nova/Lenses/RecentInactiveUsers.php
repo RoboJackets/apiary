@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-
 namespace App\Nova\Lenses;
 
 use App\Nova\Event;
@@ -17,15 +15,17 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 
+/**
+ * Shows GTIDs that have recently attended an event but haven't paid dues.
+ *
+ * @property ?\App\User $attendee The attendee for an event
+ */
 class RecentInactiveUsers extends Lens
 {
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param \Laravel\Nova\Http\Requests\LensRequest  $request
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     *
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public static function query(LensRequest $request, $query): Builder
     {
@@ -45,8 +45,6 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the fields available to the lens.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields(Request $request): array
@@ -57,7 +55,7 @@ class RecentInactiveUsers extends Lens
                     return $request->user()->can('read-users-gtid');
                 })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
-                    return $this->attendee ? '—' : $gtid;
+                    return null === $this->attendee ? '—' : $gtid;
                 }),
 
             BelongsTo::make('User', 'attendee', \App\Nova\User::class),
@@ -73,8 +71,6 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the filters available for the lens.
      *
-     * @param \Illuminate\Http\Request  $request
-     *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
     public function filters(Request $request): array
@@ -86,8 +82,6 @@ class RecentInactiveUsers extends Lens
 
     /**
      * Get the URI key for the lens.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

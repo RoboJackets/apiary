@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 
 class Base64UrlEncode extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         DB::table('faset_visits')
             ->update(['visit_token' => DB::raw("REPLACE(visit_token, '+', '_')")]);
@@ -21,10 +21,8 @@ class Base64UrlEncode extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         DB::table('faset_visits')
             ->update(['visit_token' => DB::raw("REPLACE(visit_token, '_', '+')")]);

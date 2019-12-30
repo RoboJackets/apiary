@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Strings.UnnecessaryStringConcat.Found
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Nova\Actions;
 
@@ -27,8 +27,7 @@ class AddPayment extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Laravel\Nova\Fields\ActionFields  $fields
-     * @param \Illuminate\Support\Collection  $models
+     * @param \Illuminate\Support\Collection<\App\DuesTransaction>  $models
      *
      * @return array<string,string>
      */

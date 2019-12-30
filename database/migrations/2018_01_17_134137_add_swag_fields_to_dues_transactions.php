@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,12 +10,10 @@ class AddSwagFieldsToDuesTransactions extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('dues_transactions', function (Blueprint $table) {
+        Schema::table('dues_transactions', static function (Blueprint $table): void {
             //Change name and make these timestamps
             $table->dropColumn('received_polo');
             $table->timestamp('swag_polo_provided')->nullable()->after('id');
@@ -30,12 +30,10 @@ class AddSwagFieldsToDuesTransactions extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('dues_transactions', function (Blueprint $table) {
+        Schema::table('dues_transactions', static function (Blueprint $table): void {
             //Change name back and make these booleans
             $table->dropColumn('swag_polo_provided');
             $table->boolean('received_polo')->default(false)->after('id');

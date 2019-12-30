@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * A batch of emails sent to addresses collected from RecruitingVisits.
+ *
+ * @property int $created_by the user that created this campaign
+ * @property string $status the status of this campaign
+ * @property int $id the database identifier for this campaign
+ */
 class RecruitingCampaign extends Model
 {
     use SoftDeletes;
@@ -25,8 +32,6 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the user that owns the campaign.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function creator(): BelongsTo
     {
@@ -35,8 +40,6 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the template used in the campaign.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function template(): BelongsTo
     {
@@ -45,8 +48,6 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the recipients for this campaign.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function recipients(): HasMany
     {

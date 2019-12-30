@@ -20,14 +20,10 @@ class AttendanceSourceBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Laravel\Nova\Metrics\PartitionResult
      */
     public function calculate(Request $request): PartitionResult
     {
-        return $this->count($request, Attendance::class, 'source')->label(static function (string $value): string {
+        return $this->count($request, Attendance::class, 'source')->label(static function (?string $value): string {
             switch ($value) {
                 case 'kiosk':
                     return 'Kiosk (unknown type)';
@@ -42,6 +38,7 @@ class AttendanceSourceBreakdown extends Partition
                 case null:
                     return 'Unknown';
                 default:
+                    // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
                     return ucfirst($value);
             }
         });
@@ -49,8 +46,6 @@ class AttendanceSourceBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {
