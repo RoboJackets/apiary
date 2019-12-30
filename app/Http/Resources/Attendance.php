@@ -15,7 +15,7 @@ class Attendance extends JsonResource
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return array<string,string|int|\App\Http\Resources\User>
+     * @return array<string,mixed>
      */
     public function toArray($request): array
     {

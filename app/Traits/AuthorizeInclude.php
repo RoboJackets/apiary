@@ -15,12 +15,9 @@ trait AuthorizeInclude
      * Given an array or comma-separated string of requested relationships to be included,
      * return an array of those allowed based on the requester's permissions.
      *
-     * @param string $class Class
-     * @param mixed $requestedInclude array of relationship names
-     *
      * @return array<string> relationships to include
      */
-    public function authorizeInclude(string $class, $requestedInclude = null): array
+    public function authorizeInclude(string $class, ?string $requestedInclude = null): array
     {
         // If the user doesn't request anything, we don't need to authorize anything
         if (null === $requestedInclude) {

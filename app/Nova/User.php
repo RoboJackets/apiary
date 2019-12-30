@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,Generic.Strings.UnnecessaryStringConcat.Found
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Nova;
 
@@ -63,8 +63,6 @@ class User extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @return array<mixed>
      */
     public function fields(Request $request): array
     {

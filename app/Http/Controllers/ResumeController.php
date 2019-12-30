@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
 use App\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class ResumeController extends Controller
@@ -158,23 +157,4 @@ class ResumeController extends Controller
             422
         );
     }
-
-    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
-    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-
-    /**
-     * Delete the user's resume.
-     */
-    public function delete(string $id): JsonResponse
-    {
-        return response()->json(
-            [
-                'status' => 'error',
-                'message' => 'unimplemented',
-            ],
-            501
-        );
-    }
-
-    // phpcs:enable
 }

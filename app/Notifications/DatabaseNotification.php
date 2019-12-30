@@ -2,13 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification
-// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification
-// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-
 namespace App\Notifications;
 
 use App\Mail\DatabaseMailable as Mailable;

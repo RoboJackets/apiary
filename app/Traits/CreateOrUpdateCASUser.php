@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Traits;
 
 use App\User;
@@ -26,7 +24,7 @@ trait CreateOrUpdateCASUser
         $this->cas = app('cas');
     }
 
-    public function createOrUpdateCASUser(Request $request): User
+    public function createOrUpdateCASUser(): User
     {
         $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
         // Attributes that will be split by commas when masquerading

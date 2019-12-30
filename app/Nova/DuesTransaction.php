@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Nova;
 
 use App\DuesTransaction as ADT;
@@ -57,8 +55,6 @@ class DuesTransaction extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @return array<mixed>
      */
     public function fields(Request $request): array
     {

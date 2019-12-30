@@ -8,12 +8,12 @@
 
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>/_ide_helper.php</exclude-pattern>
     <exclude-pattern>/bootstrap/cache/</exclude-pattern>
     <exclude-pattern>/node_modules/</exclude-pattern>
     <exclude-pattern>/public/</exclude-pattern>
     <exclude-pattern>/storage/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
-    <exclude-pattern>/_ide_helper.php</exclude-pattern>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
         <exclude-pattern>/database/migrations/</exclude-pattern>
@@ -35,8 +35,11 @@
     <rule ref="Generic.Classes.DuplicateClassName"/>
 
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
-        <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Http/Resources/</exclude-pattern>
+        <exclude-pattern>/app/Notifiables/</exclude-pattern>
+        <exclude-pattern>/app/Notifications/</exclude-pattern>
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+        <exclude-pattern>/app/Policies/</exclude-pattern>
     </rule>
 
     <rule ref="Generic.CodeAnalysis"/>
@@ -140,8 +143,11 @@
     <rule ref="SlevomatCodingStandard.Exceptions"/>
 
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
-        <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Http/Resources/</exclude-pattern>
+        <exclude-pattern>/app/Notifiables/</exclude-pattern>
+        <exclude-pattern>/app/Notifications/</exclude-pattern>
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+        <exclude-pattern>/app/Policies/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Functions">
@@ -178,6 +184,10 @@
 
     <rule ref="SlevomatCodingStandard.PHP"/>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint">
+        <exclude-pattern>/app/Http/Resources/</exclude-pattern>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
         <properties>
             <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
@@ -187,13 +197,13 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
-        <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Http/Resources</exclude-pattern>
+        <exclude-pattern>/app/Nova/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
-        <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
         <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
+        <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints"/>

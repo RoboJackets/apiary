@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-
 namespace App\Nova;
 
 use Illuminate\Http\Request;
@@ -58,8 +56,6 @@ class NotificationTemplate extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @return array<mixed>
      */
     public function fields(Request $request): array
     {

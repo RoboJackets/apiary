@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint,SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
-
 namespace App\Http\Resources;
 
 use App\Http\Resources\Attendance as AttendanceResource;
@@ -24,7 +22,7 @@ class User extends JsonResource
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return array<int|string,mixed>
+     * @return array<string,mixed>
      */
     public function toArray($request): array
     {

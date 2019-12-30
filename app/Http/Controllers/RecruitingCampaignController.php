@@ -47,8 +47,6 @@ class RecruitingCampaignController extends Controller
      */
     public function store(StoreRecruitingCampaignRequest $request): JsonResponse
     {
-        // Store the campaign
-        // Yes, I know there is an easier way to do this.
         $rc = new RecruitingCampaign($request->validated());
         $rc->created_by = $request->user()->id;
         $rc->status = 'new';
@@ -133,19 +131,6 @@ class RecruitingCampaignController extends Controller
 
         return response()->json(['status' => 'success', 'campaign' => $rc]);
     }
-
-    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
-    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, RecruitingCampaign $recruitingCampaign): JsonResponse
-    {
-        return response()->json(['status' => 'error', 'error' => 'not_implemented'], 501);
-    }
-
-    // phpcs:enable
 
     /**
      * Remove the specified resource from storage.
