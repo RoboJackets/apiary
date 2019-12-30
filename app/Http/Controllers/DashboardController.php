@@ -37,6 +37,7 @@ class DashboardController extends Controller
 
         if (! $isNew) {
             $firstPaidTransact = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->first();
+            // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
             $lastPaidTransact = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->get()->last();
             $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end->toDateTimeString()));
             $firstPayment = date(
