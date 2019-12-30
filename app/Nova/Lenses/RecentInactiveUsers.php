@@ -18,7 +18,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 
 /**
- * Shows GTIDs that have recently attended an event but haven't paid dues
+ * Shows GTIDs that have recently attended an event but haven't paid dues.
  *
  * @property ?\App\User $attendee The attendee for an event
  */

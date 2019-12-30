@@ -227,7 +227,6 @@ class AttendanceController extends Controller
             ->get()
             ->sum('aggregate')) / $numberOfWeeks;
 
-
         // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated

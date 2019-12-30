@@ -23,7 +23,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for attendance
+ * A Nova resource for attendance.
  *
  * @property ?\App\User $attendee The user associated with the attendance record, if available
  */

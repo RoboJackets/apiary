@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Represents a single RSVP to an event
+ * Represents a single RSVP to an event.
  *
  * @property ?int $user_id the user that RSVPed to this event, if available
  * @property ?string $ip_address the IP that was used to submit the RSVP

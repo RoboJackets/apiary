@@ -15,14 +15,18 @@
     <exclude-pattern>/vendor/</exclude-pattern>
     <exclude-pattern>/_ide_helper.php</exclude-pattern>
 
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>/database/migrations/</exclude-pattern>
+        <exclude-pattern>/database/seeds/</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>/database/factories/ModelFactory.php</exclude-pattern>
+    </rule>
+
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>
         <exclude name="PSR12.ControlStructures.ControlStructureSpacing"/>
-        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
-    </rule>
-
-    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>/database/migrations/</exclude-pattern>
     </rule>
 
     <rule ref="Generic.Arrays.ArrayIndent"/>
@@ -32,6 +36,7 @@
 
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
         <exclude-pattern>/app/Nova/</exclude-pattern>
+        <exclude-pattern>/app/Http/Resources/</exclude-pattern>
     </rule>
 
     <rule ref="Generic.CodeAnalysis"/>
@@ -136,6 +141,7 @@
 
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
         <exclude-pattern>/app/Nova/</exclude-pattern>
+        <exclude-pattern>/app/Http/Resources/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Functions">
@@ -181,12 +187,13 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
-        <exclude-pattern>/app/Nova/Resource.php</exclude-pattern>
-        <exclude-pattern>/app/Nova/Filters/</exclude-pattern>
+        <exclude-pattern>/app/Nova/</exclude-pattern>
+        <exclude-pattern>/app/Http/Resources</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
-        <exclude-pattern>/app/Http/Controllers</exclude-pattern>
+        <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
+        <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints"/>

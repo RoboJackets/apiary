@@ -25,7 +25,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for users
+ * A Nova resource for users.
  *
  * @property string $resume_date When this user's resume was uploaded
  * @property string $uid this user's username

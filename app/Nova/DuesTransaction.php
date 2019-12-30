@@ -17,7 +17,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for dues transactions
+ * A Nova resource for dues transactions.
  *
  * @property bool $is_paid Whether this transaction is paid for
  * @property \App\DuesPackage $package The package associated with this transaction

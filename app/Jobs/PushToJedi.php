@@ -22,7 +22,7 @@ class PushToJedi implements ShouldQueue
     use SerializesModels;
 
     /**
-     * The number of attempts for this job
+     * The number of attempts for this job.
      *
      * @var int
      */

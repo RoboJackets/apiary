@@ -15,7 +15,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for recruiting visits
+ * A Nova resource for recruiting visits.
  *
  * @property int $id the database ID for this recruiting visit
  */

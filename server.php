@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-if (!is_string($url)) {
+if (! is_string($url)) {
     throw new Exception('Failed parsing url');
 }
 

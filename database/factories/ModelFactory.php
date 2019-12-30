@@ -1,5 +1,4 @@
-<?php // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
-
+<?php
 
 declare(strict_types=1);
 
@@ -15,7 +14,7 @@ declare(strict_types=1);
 */
 
 /**
- * Maps a collection of models to an array of their IDs
+ * Maps a collection of models to an array of their IDs.
  *
  * @param \Illuminate\Support\Collection $collection A collection of models
  *

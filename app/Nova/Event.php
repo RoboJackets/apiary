@@ -19,7 +19,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for events
+ * A Nova resource for events.
  *
  * @property int $id The database ID for this event
  */
