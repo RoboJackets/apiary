@@ -113,7 +113,7 @@ class GenerateResumeBook implements ShouldQueue
 
         $this->datecode = now()->format('Y-m-d-Hi');
         $this->path = Storage::disk('local')->path('resumes/robojackets-resume-book-'.$this->datecode
-            .(null === $this->major ? '-'.$this->major : '').'.pdf');
+            .(null !== $this->major ? '-'.$this->major : '').'.pdf');
 
         // Ghostscript: -q -dNOPAUSE -dBATCH for disabling interactivity, -sDEVICE= for setting output type, -dSAFER
         // because the input is untrusted

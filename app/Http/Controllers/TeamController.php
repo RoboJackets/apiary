@@ -109,13 +109,15 @@ class TeamController extends Controller
     public function showMembers(Request $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        $members = $team->members;
-
-        if (null !== $team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
+        if (null === $team) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        return response()->json(['status' => 'success', 'members' => UserResource::collection($members)]);
+        if (false === $team->visible && $request->user()->cant('read-teams-hidden')) {
+            return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
+        }
+
+        return response()->json(['status' => 'success', 'members' => UserResource::collection($team->members)]);
     }
 
     /**

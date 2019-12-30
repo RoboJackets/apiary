@@ -14,8 +14,6 @@ class PermissionMiddleware
      * Handle an incoming request.
      *
      * @param array<string>|string $permissions_to_check Permissions to authenticate
-     *
-     * @suppress PhanPluginAlwaysReturnMethod
      */
     public function handle(Request $request, Closure $next, $permissions_to_check)
     {
