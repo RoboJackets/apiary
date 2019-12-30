@@ -86,8 +86,6 @@
 
     <rule ref="Generic.VersionControl.GitMergeConflict"/>
 
-    <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
-
     <rule ref="PEAR.Files.IncludingFile"/>
 
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
@@ -100,13 +98,32 @@
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
 
     <rule ref="SlevomatCodingStandard.ControlStructures">
-        <exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
     </rule>
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
+        <properties>
+            <property name="linesCountBeforeControlStructure" value="0"/>
+            <property name="linesCountBeforeFirstControlStructure" value="0"/>
+            <property name="linesCountAfterControlStructure" value="0"/>
+            <property name="linesCountAfterLastControlStructure" value="0"/>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
+        <properties>
+            <property name="linesCountBeforeControlStructure" value="0"/>
+            <property name="linesCountBeforeFirstControlStructure" value="0"/>
+            <property name="linesCountAfterControlStructure" value="0"/>
+            <property name="linesCountAfterLastControlStructure" value="0"/>
+        </properties>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Exceptions"/>
 
