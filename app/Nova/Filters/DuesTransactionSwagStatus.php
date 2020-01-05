@@ -22,10 +22,12 @@ class DuesTransactionSwagStatus extends BooleanFilter
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param array<string>  $value
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(Request $request, $query, $value)
     {
-        return isset($value['pending']) ? $query->pendingSwag() : $query;
+        return $value['pending'] ? $query->pendingSwag() : $query;
     }
 
     /**
