@@ -26,7 +26,7 @@ class DuesTransactionSwagStatus extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $value['pending'] === true ? $query->pendingSwag() : $query;
+        return true === $value['pending'] ? $query->pendingSwag() : $query;
     }
 
     /**
