@@ -186,10 +186,11 @@ return [
     |
     */
 
-    'notify_release_stages' => '' === env('BUGSNAG_NOTIFY_RELEASE_STAGES') ? null : explode(
-        ',',
-        str_replace(' ', '', env('BUGSNAG_NOTIFY_RELEASE_STAGES'))
-    ),
+    'notify_release_stages' => '' === env('BUGSNAG_NOTIFY_RELEASE_STAGES')
+        || null === env('BUGSNAG_NOTIFY_RELEASE_STAGES') ? null : explode(
+            ',',
+            str_replace(' ', '', env('BUGSNAG_NOTIFY_RELEASE_STAGES'))
+        ),
 
     /*
     |--------------------------------------------------------------------------
