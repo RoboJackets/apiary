@@ -92,7 +92,7 @@ class Attendance extends Resource
                     return $request->user()->can('read-users-gtid');
                 })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
-                    return null === $this->attendee ? '—' : $gtid;
+                    return null !== $this->attendee ? '—' : $gtid;
                 }),
 
             BelongsTo::make('User', 'attendee'),
