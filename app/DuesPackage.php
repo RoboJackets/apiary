@@ -25,7 +25,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property bool $eligible_for_polo Whether this DuesPackage grants eligibility for a polo
  * @property bool $eligible_for_shirt Whether this DuesPackage grants eligibility for a shirt
  * @property bool $is_active Whether this DuesPackage is considered active
- * @property float $cost the cost of this package
+ * @property string $cost the cost of this package
  * @property int $id The database identifier for this DuesPackage
  */
 class DuesPackage extends Model
