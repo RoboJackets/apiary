@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Filters;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
 
@@ -21,11 +20,13 @@ class DuesTransactionSwagStatus extends BooleanFilter
      * Apply the filter to the given query.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array<string>  $value
+     * @param array<string,bool>  $value
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(Request $request, $query, $value)
     {
-        return isset($value['pending']) ? $query->pendingSwag() : $query;
+        return true === $value['pending'] ? $query->pendingSwag() : $query;
     }
 
     /**

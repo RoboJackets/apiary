@@ -257,7 +257,7 @@ class DuesTransaction extends Resource
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId)->first();
+                $transaction = \App\DuesTransaction::find($request->resourceId);
 
                 if (null !== $transaction) {
                     if ($transaction->user->id === $request->user()->id) {
