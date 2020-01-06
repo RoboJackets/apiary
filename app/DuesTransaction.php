@@ -281,7 +281,7 @@ class DuesTransaction extends Model
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount(): float
+    public function getPayableAmount(): string
     {
         return $this->package->cost;
     }
