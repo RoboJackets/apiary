@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bca0778c26b4f30c89ff2a76b6a4708",
+    "content-hash": "d09013b38015a249c218af840831245b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1904,16 +1904,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.4.6",
+            "version": "v3.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "78516806b280b360996e514565bc0e1f8d3cc7e3"
+                "reference": "45a76521b4c378eb97bbc86ef59fd6e323f9d8d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/78516806b280b360996e514565bc0e1f8d3cc7e3",
-                "reference": "78516806b280b360996e514565bc0e1f8d3cc7e3",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/45a76521b4c378eb97bbc86ef59fd6e323f9d8d1",
+                "reference": "45a76521b4c378eb97bbc86ef59fd6e323f9d8d1",
                 "shasum": ""
             },
             "require": {
@@ -1969,7 +1969,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2019-12-30T22:01:12+00:00"
+            "time": "2020-01-14T16:41:11+00:00"
         },
         {
             "name": "laravel/nova",
