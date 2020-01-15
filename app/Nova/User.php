@@ -132,6 +132,20 @@ class User extends Resource
                 ->hideWhenUpdating(),
 
             new Panel(
+                'System Access',
+                [
+                    Boolean::make('Active', 'is_access_active')
+                        ->onlyOnDetail(),
+
+                    DateTime::make('Override Expiration', 'access_override_until')
+                        ->onlyOnDetail(),
+
+                    BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
+                        ->onlyOnDetail(),
+                ]
+            ),
+
+            new Panel(
                 'Linked Accounts',
                 [
                     Text::make('GitHub Username', 'github_username')
@@ -176,20 +190,6 @@ class User extends Resource
                         }),
 
                     DateTime::make('Resume Uploaded At', 'resume_date')
-                        ->onlyOnDetail(),
-                ]
-            ),
-
-            new Panel(
-                'System Access',
-                [
-                    Boolean::make('Active', 'is_access_active')
-                        ->onlyOnDetail(),
-
-                    DateTime::make('Override Expiration', 'access_override_until')
-                        ->onlyOnDetail(),
-
-                    BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
                         ->onlyOnDetail(),
                 ]
             ),
