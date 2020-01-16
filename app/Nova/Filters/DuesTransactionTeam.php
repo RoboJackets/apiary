@@ -30,8 +30,10 @@ class DuesTransactionTeam extends Filter
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param int $value
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(Request $request, $query, $value)
     {
         return $query
             ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')
