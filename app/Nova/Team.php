@@ -73,10 +73,11 @@ class Team extends Resource
 
             new Panel('Metadata', $this->metaFields()),
 
-            BelongsToMany::make('User', 'members')
+            BelongsToMany::make('Members', 'members', User::class)
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-teams-membership') && $request->user()->can('read-users');
-                }),
+                })
+                ->required(true),
 
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
