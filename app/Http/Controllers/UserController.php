@@ -167,6 +167,19 @@ class UserController extends Controller
         }
         unset($request['generateToken']);
 
+        if ($request->filled('clickup_email')) {
+            // check that this is one of their verified emails
+            if (! in_array($request->input('clickup_email'), [
+                strtolower($user->uid).'@gatech.edu',
+                strtolower($user->gt_email),
+                strtolower($user->gmail_address),
+            ], true)) {
+                return response()->json(['status' => 'error',
+                    'message' => 'requested clickup_email value has not been verified',
+                ], 422);
+            }
+        }
+
         $user->update($validatedFields);
 
         if ($request->filled('roles')) {

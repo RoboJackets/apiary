@@ -160,6 +160,45 @@
           </div>
         </div>
 
+        <div class="form-group row">
+          <label for="user-sums" class="col-sm-2 col-form-label">SUMS</label>
+          <div class="col-sm-10 col-lg-4">
+            <div class="input-group">
+            <template v-if="user.exists_in_sums">
+              <input v-model="user.uid" type="text" readonly class="form-control" id="user-sums">
+            </template>
+            <template v-else>
+              <input type="text" readonly class="form-control" id="user-sums" placeholder="No account linked">
+              <div class="input-group-append">
+                <a href="/sums" class="btn btn-secondary">Link Account</a>
+              </div>
+            </template>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="user-clickup" class="col-sm-2 col-form-label">ClickUp</label>
+          <div class="col-sm-10 col-lg-4">
+            <div class="input-group">
+            <template v-if="user.clickup_email && user.clickup_email === clickUpEmailInDatabase">
+              <input v-model="user.clickup_email" type="text" readonly class="form-control" id="user-clickup">
+              <div class="input-group-append" v-if="user.clickup_invite_pending === 1">
+                <a href="/clickup" class="btn btn-secondary">Resend Invitation</a>
+              </div>
+            </template>
+            <template v-if="!user.clickup_email || user.clickup_email !== clickUpEmailInDatabase">
+              <select class="form-control" id="user-clickup" v-model="user.clickup_email">
+                <option v-for="option in clickUpEmailOptions" :value="option">{{ option }}</option>
+              </select>
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary">Send Invitation</button>
+              </div>
+            </template>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
@@ -191,6 +230,8 @@ export default {
         { value: 'xxl', text: 'XXL' },
         { value: 'xxxl', text: 'XXXL' },
       ],
+      clickUpEmailOptions: [],
+      clickUpEmailInDatabase: null,
     };
   },
   mounted() {
@@ -199,6 +240,10 @@ export default {
       .get(this.dataUrl)
       .then(response => {
         this.user = response.data.user;
+        this.clickUpEmailOptions = [
+          ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
+        ];
+        this.clickUpEmailInDatabase = this.user.clickup_email;
       })
       .catch(response => {
         console.log(response);
@@ -223,6 +268,7 @@ export default {
         .then(response => {
           this.hasError = false;
           this.feedback = 'Saved!';
+          this.clickUpEmailInDatabase = this.user.clickup_email;
           console.log('success');
         })
         .catch(response => {

@@ -96,6 +96,9 @@ class PushToJedi implements ShouldQueue
             'teams' => [],
             'project_manager_of_teams' => [],
             'exists_in_sums' => $this->user->exists_in_sums,
+            'clickup_email' => $this->user->clickup_email,
+            'clickup_id' => $this->user->clickup_id,
+            'clickup_invite_pending' => $this->user->clickup_invite_pending,
         ];
 
         foreach ($this->user->teams as $team) {
