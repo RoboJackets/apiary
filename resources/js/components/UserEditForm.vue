@@ -267,8 +267,12 @@ export default {
         .put(this.dataUrl, this.user)
         .then(response => {
           this.hasError = false;
-          this.feedback = 'Saved!';
-          this.clickUpEmailInDatabase = this.user.clickup_email;
+          if (this.user.clickup_email !== this.clickUpEmailInDatabase) {
+            this.clickUpEmailInDatabase = this.user.clickup_email;
+            this.feedback = 'Saved! Check your email for an email from ClickUp in the next few minutes.'
+          } else {
+            this.feedback = 'Saved!';
+          }
           console.log('success');
         })
         .catch(response => {
