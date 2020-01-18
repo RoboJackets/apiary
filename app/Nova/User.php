@@ -173,13 +173,13 @@ class User extends Resource
 
                     Boolean::make('ClickUp Invite Pending', 'clickup_invite_pending')
                         ->hideFromIndex()
-                        ->help('This flag is updated by JEDI in some cases but can be manually set if it is out of sync'
-                            .' from ClickUp. It only controls whether the user can request an invite to be resent.'),
+                        ->help('This flag is set by JEDI but may be out of sync with ClickUp in some cases.'
+                            . 'It only controls UX elements.'),
 
                     Boolean::make('SUMS', 'exists_in_sums')
                         ->hideFromIndex()
-                        ->help('Generally this is managed by JEDI, but can be manually overridden here if necessary.'
-                            .' This controls some UX elements but not the user\'s actual access.'),
+                        ->help('This flag is set by JEDI and should not be modified unless you know what you are doing.'
+                            . ' It only controls UX elements.'),
                 ]
             ),
 
