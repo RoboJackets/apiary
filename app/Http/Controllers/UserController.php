@@ -170,7 +170,7 @@ class UserController extends Controller
         if ($request->filled('clickup_email')) {
             // check that this is one of their verified emails
             if (! in_array($request->input('clickup_email'), [
-                strtolower($user->uid) . '@gatech.edu',
+                strtolower($user->uid).'@gatech.edu',
                 strtolower($user->gt_email),
                 strtolower($user->gmail_address),
             ], true)) {
