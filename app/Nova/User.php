@@ -159,16 +159,27 @@ class User extends Resource
                         ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
                             .' This controls whether a card is displayed but not the user\'s actual access.'),
 
-                    Text::make('Gmail Address', 'gmail_address')
+                    Text::make('Google', 'gmail_address')
                         ->hideFromIndex()
                         ->rules('nullable', 'max:255', 'email')
                         ->creationRules('unique:users,gmail_address')
                         ->updateRules('unique:users,gmail_address,{{resourceId}}'),
 
+                    Text::make('ClickUp', 'clickup_email')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:255', 'email')
+                        ->creationRules('unique:users,clickup_email')
+                        ->updateRules('unique:users,clickup_email,{{resourceId}}'),
+
+                    Boolean::make('ClickUp Invite Pending', 'clickup_invite_pending')
+                        ->hideFromIndex()
+                        ->help('This flag is updated by JEDI in some cases but can be manually set if it is out of sync'
+                            .' from ClickUp. It only controls whether the user can request an invite to be resent.'),
+
                     Boolean::make('SUMS', 'exists_in_sums')
                         ->hideFromIndex()
-                        ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
-                            .' This controls whether a card is displayed but not the user\'s actual access.'),
+                        ->help('Generally this is managed by JEDI, but can be manually overridden here if necessary.'
+                            .' This controls some UX elements but not the user\'s actual access.'),
                 ]
             ),
 

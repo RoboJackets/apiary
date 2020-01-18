@@ -43,6 +43,9 @@ class UpdateUserRequest extends FormRequest
             'ethnicity' => 'string|nullable',
             'github_invite_pending' => 'boolean',
             'exists_in_sums' => 'boolean',
+            'clickup_email' => 'string|nullable',
+            'clickup_id' => 'integer|nullable',
+            'clickup_invite_pending' => 'boolean',
         ];
     }
 
