@@ -269,7 +269,7 @@ export default {
           this.hasError = false;
           if (this.user.clickup_email !== this.clickUpEmailInDatabase) {
             this.clickUpEmailInDatabase = this.user.clickup_email;
-            this.feedback = 'Saved! Check your email for an email from ClickUp in the next few minutes.'
+            this.feedback = 'Saved! Look out for an email from ClickUp in the next few minutes.'
           } else {
             this.feedback = 'Saved!';
           }
