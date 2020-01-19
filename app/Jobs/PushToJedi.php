@@ -87,7 +87,7 @@ class PushToJedi implements ShouldQueue
             'last_name' => $this->user->last_name,
             'is_access_active' => $this->user->is_access_active,
             'github_username' => $this->user->github_username,
-            'gmail_address' => $this->user->gmail_address,
+            'google_accounts' => [],
             'model_class' => $this->model_class,
             'model_id' => $this->model_id,
             'model_event' => $this->model_event,
@@ -109,6 +109,17 @@ class PushToJedi implements ShouldQueue
             $send['project_manager_of_teams'][] = $team->name;
         }
 
+        if (null !== $this->user->gmail_address) {
+            $send['google_accounts'][] = $this->user->gmail_address;
+        }
+
+        if (in_array('G Suite', $send['teams'], true)) {
+            $send['google_accounts'][] = $this->user->preferred_first_name.'.'.$this->user->last_name
+                .'@robojackets.org';
+        }
+
+        $send['google_accounts'] = array_unique($send['google_accounts'], SORT_STRING);
+
         $client = new Client(
             [
                 'headers' => [
@@ -116,6 +127,7 @@ class PushToJedi implements ShouldQueue
                     'Authorization' => 'Bearer '.config('jedi.token'),
                     'Accept' => 'application/json',
                 ],
+                'allow_redirects' => false,
             ]
         );
 
