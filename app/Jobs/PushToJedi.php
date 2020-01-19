@@ -109,7 +109,7 @@ class PushToJedi implements ShouldQueue
             $send['project_manager_of_teams'][] = $team->name;
         }
 
-        if (in_array('G Suite', $send['teams'])) {
+        if (in_array('G Suite', $send['teams'], true)) {
             $send['google_accounts'][] = $this->user->preferred_first_name.'.'.$this->user->last_name
                 .'@robojackets.org';
         }
