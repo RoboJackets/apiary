@@ -110,11 +110,11 @@ class PushToJedi implements ShouldQueue
         }
 
         if (null !== $this->user->gmail_address) {
-            $send['google_accounts'][] = $this->user->gmail_address;
+            $send['google_accounts'][] = strtolower($this->user->gmail_address);
         }
 
         if (in_array('G Suite', $send['teams'], true)) {
-            $send['google_accounts'][] = $this->user->preferred_first_name.'.'.$this->user->last_name
+            $send['google_accounts'][] = strtolower($this->user->preferred_first_name.'.'.$this->user->last_name)
                 .'@robojackets.org';
         }
 
