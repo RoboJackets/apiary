@@ -91,13 +91,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     }
 
     /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-    }
-
-    /**
      * Get the extra dashboards that should be displayed on the Nova dashboard.
      *
      * @return array<\Laravel\Nova\Dashboard>
