@@ -59,6 +59,10 @@ class User extends Resource
         'gtid',
         'github_username',
         'phone',
+        'gt_email',
+        'clickup_email',
+        'gmail_address',
+        'personal_email',
     ];
 
     /**
