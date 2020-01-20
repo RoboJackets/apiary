@@ -39,7 +39,7 @@
               Check
             </h4>
             <p class="card-text">
-              Make a check out to RoboJackets and give it to an officer or your project manager. Don't forget to sign it!
+              Make a check out to Georgia Tech, write RoboJackets on the memo line, and give it to an officer or your project manager. Don't forget to sign it!
             </p>
           </div>
         </div>
