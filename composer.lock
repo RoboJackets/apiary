@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eba721cb7d80acd494d31a6aa91b2dea",
+    "content-hash": "cc66fa3ee956bf657f61a2e0fc91fe08",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1974,17 +1974,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v2.9.3",
+            "version": "v2.9.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "b86eaee07c59edcc82816143a10461434d2f31e9"
+                "reference": "98f7dac7cf6518e57398f9e73b4068d705daf60f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-b86eaee07c59edcc82816143a10461434d2f31e9-zip-121166.zip",
-                "reference": "b86eaee07c59edcc82816143a10461434d2f31e9",
-                "shasum": "482b2d86e1163868fc08a3ecf4d0cb03826b9ae6"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-98f7dac7cf6518e57398f9e73b4068d705daf60f-zip-66ff64.zip",
+                "reference": "98f7dac7cf6518e57398f9e73b4068d705daf60f",
+                "shasum": "cfbb70e224755a3b43b852eb89b91092dcfd96d9"
             },
             "require": {
                 "cakephp/chronos": "^1.0",
@@ -2039,7 +2039,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2020-01-07T18:37:48+00:00"
+            "time": "2020-01-21T18:45:10+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -3303,23 +3303,20 @@
         },
         {
             "name": "phpseclib/bcmath_compat",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/bcmath_compat.git",
-                "reference": "c394fcdf4e3f84438aac24252e21710c21cd59a5"
+                "reference": "f805922db4b3d8c1e174dafb74ac7374264e8880"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/bcmath_compat/zipball/c394fcdf4e3f84438aac24252e21710c21cd59a5",
-                "reference": "c394fcdf4e3f84438aac24252e21710c21cd59a5",
+                "url": "https://api.github.com/repos/phpseclib/bcmath_compat/zipball/f805922db4b3d8c1e174dafb74ac7374264e8880",
+                "reference": "f805922db4b3d8c1e174dafb74ac7374264e8880",
                 "shasum": ""
             },
             "require": {
                 "phpseclib/phpseclib": ">=2.0.19"
-            },
-            "provide": {
-                "ext-bcmath": "7.3.5"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
@@ -3356,7 +3353,7 @@
                 "math",
                 "polyfill"
             ],
-            "time": "2019-06-20T12:36:23+00:00"
+            "time": "2020-01-10T11:44:43+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
