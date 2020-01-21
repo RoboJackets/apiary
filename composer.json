@@ -20,7 +20,7 @@
         "bugsnag/bugsnag-laravel": "2.17.1",
         "guzzlehttp/guzzle": "6.5.2",
         "laravel/horizon": "3.4.7",
-        "laravel/nova": "2.9.3",
+        "laravel/nova": "2.9.4",
         "laravel/slack-notification-channel": "2.0.2",
         "laravel/socialite": "4.3.1",
         "laravel/tinker": "1.0.10",
