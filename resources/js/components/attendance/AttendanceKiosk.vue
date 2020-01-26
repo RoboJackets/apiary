@@ -63,7 +63,8 @@
                                 return item.visible && item.attendable;
                             }).sort(function (a, b) {
                                 return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
-                            }).forEach(function (team) {
+                            });
+                            this.teams.forEach(function (team) {
                                 // If the team name starts with Robo and the next letter is a capital letter, insert
                                 // 0xAD (an invisible hyphen) to allow the browser to break the word up if necessary.
                                 if (team.name.length < 5) return;
