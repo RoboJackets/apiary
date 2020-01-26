@@ -10,11 +10,6 @@
                 </div>
             </template>
         </div>
-        <div class="row d-none">
-            <div class="col-sm-1" style="padding-top: 20px">
-                <object id="nfc-logo" data="/img/nfc-logo.svg" type="image/svg+xml" style="max-width: 20px"></object>
-            </div>
-        </div>
     </div>
 </template>
 
