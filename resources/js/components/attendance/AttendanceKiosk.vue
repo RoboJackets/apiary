@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row justify-content-center">
             <template v-for="team in teams">
-                <div class="col-sm-12 col-md-4" style="padding-top:50px">
+                <div :class="rowclass" style="padding-top:50px">
                     <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
                     <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
                         {{ team.name }}
@@ -63,6 +63,16 @@
                                 return item.visible && item.attendable;
                             }).sort(function (a, b) {
                                 return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
+                            }).forEach(function (team) {
+                                // If the team name starts with Robo and the next letter is a capital letter, insert
+                                // 0xAD (an invisible hyphen) to allow the browser to break the word up if necessary.
+                                if (team.name.length < 5) return;
+                                let startsWithRobo = team.name.startsWith('Robo');
+                                let charCode = team.name.charCodeAt(4);
+                                let nextLetterCapital = charCode >= 65 && charCode <= 90;
+                                if (startsWithRobo && nextLetterCapital) {
+                                    team.name = team.name.substring(0, 4) + "\u00AD" + team.name.substring(4);
+                                }
                             });
                             this.startKeyboardListening();
                             // this.startSocketListening();
@@ -442,6 +452,11 @@
                 return !isNaN(parseFloat(n)) && isFinite(n);
             },
         },
+        computed: {
+            rowclass: function() {
+                return 'col-sm-12 ' + (this.teams.length > 6 ? 'col-md-3' : 'col-md-4');
+            },
+        },
     };
 </script>
 
@@ -459,6 +474,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        hyphens: manual;
     }
 </style>
 <style>
