@@ -75,7 +75,6 @@
                                 }
                             });
                             this.startKeyboardListening();
-                            // this.startSocketListening();
                         }
                     })
                     .catch(error => {
@@ -138,55 +137,6 @@
                         }
                     }.bind(this)
                 );
-            },
-            startSocketListening() {
-                //Remove focus from button
-                document.activeElement.blur();
-                let self = this;
-                this.socket = new WebSocket("ws://localhost:9000");
-                // Make NFC logo icon green
-                document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#27AE60');
-
-                this.socket.onerror = function(event) {
-                    // Make NFC logo icon red
-                    document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#FF0000');
-
-                    Swal.fire({
-                        title: 'Hmm...',
-                        text: 'There was an error connecting to the contactless card reader.',
-                        showCancelButton: true,
-                        showConfirmButton: true,
-                        confirmButtonText: 'Retry',
-                        cancelButtonText: 'Continue',
-                        type: 'info',
-                    }).then(function(result) {
-                      if (result.value) {
-                          // handle confirm
-                          console.log('Retrying socket connection per user request');
-                          self.startSocketListening()
-                      } else {
-                          // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-                          console.log('Ignoring socket connectivity issues per user request')
-                      }
-                    });
-                };
-
-                this.socket.onclose = function (event) {
-                    // Make NFC logo icon red
-                    document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#FF0000');
-                    console.log('Socket disconnected')
-                };
-
-                this.socket.onmessage = ({data}) => {
-                    console.log({ event: "Received message", data });
-                    this.cardType = 'contactless';
-                    this.cardPresented(data);
-                };
-            },
-            stopSocketListening() {
-                let self = this;
-                this.socket.close();
-                Swal.fire('socket closed');
             },
             clicked: function (event) {
                 //Remove focus from button
@@ -326,7 +276,6 @@
                                     input: 'select',
                                     inputOptions: {
                                         'reload': 'Reload page',
-                                        'socket': 'Reconnect to contactless reader',
                                         'exit': 'Exit kiosk mode',
                                     },
                                     inputPlaceholder: 'Select an option',
@@ -335,9 +284,6 @@
                                         return new Promise((resolve) => {
                                             if (value === 'reload') {
                                                 location.reload();
-                                                resolve()
-                                            } else if (value === 'socket') {
-                                                this.startSocketListening();
                                                 resolve()
                                             } else if (value === 'exit') {
                                                 window.location.href = 'http://exitkiosk';
