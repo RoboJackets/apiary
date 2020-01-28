@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b777261add74f51e5433d7286cb84b38",
+    "content-hash": "8bf63a95c1d17dfbcbf9eb9f8c66d63b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1756,16 +1756,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.13.0",
+            "version": "v6.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ae376a9fc70ebb7e9baf032e9287aa2d0be880af"
+                "reference": "f0059760814b76fb5f98bb80628607c7560ebe58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ae376a9fc70ebb7e9baf032e9287aa2d0be880af",
-                "reference": "ae376a9fc70ebb7e9baf032e9287aa2d0be880af",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f0059760814b76fb5f98bb80628607c7560ebe58",
+                "reference": "f0059760814b76fb5f98bb80628607c7560ebe58",
                 "shasum": ""
             },
             "require": {
@@ -1899,7 +1899,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-01-28T14:53:00+00:00"
+            "time": "2020-01-28T21:44:01+00:00"
         },
         {
             "name": "laravel/horizon",
