@@ -160,7 +160,7 @@ class User extends Authenticatable
     /**
      * Set the preferred first name associated with the User. Stores null if preferred name matches legal name.
      */
-    public function setPreferredFirstNameAttribute(string $preferred_name): void
+    public function setPreferredFirstNameAttribute(?string $preferred_name): void
     {
         $this->attributes['preferred_name'] = $preferred_name === $this->first_name ? null : $preferred_name;
     }

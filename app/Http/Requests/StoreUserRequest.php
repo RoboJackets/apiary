@@ -32,7 +32,7 @@ class StoreUserRequest extends FormRequest
             'first_name' => 'required|max:127',
             'middle_name' => 'max:127',
             'last_name' => 'required|max:127',
-            'preferred_name' => 'max:127',
+            'preferred_first_name' => 'max:127',
             'phone' => 'max:15',
             'emergency_contact_name' => 'max:255',
             'emergency_contact_phone' => 'max:15',
