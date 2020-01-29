@@ -59,7 +59,7 @@ class Event extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'allow_anonymous_rsvp' => 'boolean',
