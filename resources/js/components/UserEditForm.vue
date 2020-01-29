@@ -267,7 +267,7 @@ export default {
         .put(this.dataUrl, this.user)
         .then(response => {
           this.hasError = false;
-          if (this.user.clickup_email !== this.clickUpEmailInDatabase) {
+          if (this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0) {
             this.clickUpEmailInDatabase = this.user.clickup_email;
             this.feedback = 'Saved! Look out for an email from ClickUp in the next few minutes.'
           } else {
