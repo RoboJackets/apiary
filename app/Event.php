@@ -56,6 +56,15 @@ class Event extends Model
         'organizer_name',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'allow_anonymous_rsvp' => 'boolean',
+    ];
+
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(\App\User::class, 'organizer_id');
