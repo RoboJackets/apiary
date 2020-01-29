@@ -1,19 +1,14 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row justify-content-center">
             <template v-for="team in teams">
-                <div class="col-sm-12 col-md-4" style="padding-top:50px">
+                <div :class="rowclass" style="padding-top:50px">
                     <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
                     <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
                         {{ team.name }}
                     </div>
                 </div>
             </template>
-        </div>
-        <div class="row d-none">
-            <div class="col-sm-1" style="padding-top: 20px">
-                <object id="nfc-logo" data="/img/nfc-logo.svg" type="image/svg+xml" style="max-width: 20px"></object>
-            </div>
         </div>
     </div>
 </template>
@@ -64,8 +59,18 @@
                             }).sort(function (a, b) {
                                 return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
                             });
+                            this.teams.forEach(function (team) {
+                                // If the team name starts with Robo and the next letter is a capital letter, insert
+                                // 0xAD (an invisible hyphen) to allow the browser to break the word up if necessary.
+                                if (team.name.length < 5) return;
+                                let startsWithRobo = team.name.startsWith('Robo');
+                                let charCode = team.name.charCodeAt(4);
+                                let nextLetterCapital = charCode >= 65 && charCode <= 90;
+                                if (startsWithRobo && nextLetterCapital) {
+                                    team.name = team.name.substring(0, 4) + "\u00AD" + team.name.substring(4);
+                                }
+                            });
                             this.startKeyboardListening();
-                            // this.startSocketListening();
                         }
                     })
                     .catch(error => {
@@ -128,55 +133,6 @@
                         }
                     }.bind(this)
                 );
-            },
-            startSocketListening() {
-                //Remove focus from button
-                document.activeElement.blur();
-                let self = this;
-                this.socket = new WebSocket("ws://localhost:9000");
-                // Make NFC logo icon green
-                document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#27AE60');
-
-                this.socket.onerror = function(event) {
-                    // Make NFC logo icon red
-                    document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#FF0000');
-
-                    Swal.fire({
-                        title: 'Hmm...',
-                        text: 'There was an error connecting to the contactless card reader.',
-                        showCancelButton: true,
-                        showConfirmButton: true,
-                        confirmButtonText: 'Retry',
-                        cancelButtonText: 'Continue',
-                        type: 'info',
-                    }).then(function(result) {
-                      if (result.value) {
-                          // handle confirm
-                          console.log('Retrying socket connection per user request');
-                          self.startSocketListening()
-                      } else {
-                          // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-                          console.log('Ignoring socket connectivity issues per user request')
-                      }
-                    });
-                };
-
-                this.socket.onclose = function (event) {
-                    // Make NFC logo icon red
-                    document.getElementById('nfc-logo').contentDocument.getElementById('svg-nfc-g').setAttribute('fill', '#FF0000');
-                    console.log('Socket disconnected')
-                };
-
-                this.socket.onmessage = ({data}) => {
-                    console.log({ event: "Received message", data });
-                    this.cardType = 'contactless';
-                    this.cardPresented(data);
-                };
-            },
-            stopSocketListening() {
-                let self = this;
-                this.socket.close();
-                Swal.fire('socket closed');
             },
             clicked: function (event) {
                 //Remove focus from button
@@ -316,7 +272,6 @@
                                     input: 'select',
                                     inputOptions: {
                                         'reload': 'Reload page',
-                                        'socket': 'Reconnect to contactless reader',
                                         'exit': 'Exit kiosk mode',
                                     },
                                     inputPlaceholder: 'Select an option',
@@ -325,9 +280,6 @@
                                         return new Promise((resolve) => {
                                             if (value === 'reload') {
                                                 location.reload();
-                                                resolve()
-                                            } else if (value === 'socket') {
-                                                this.startSocketListening();
                                                 resolve()
                                             } else if (value === 'exit') {
                                                 window.location.href = 'http://exitkiosk';
@@ -442,6 +394,11 @@
                 return !isNaN(parseFloat(n)) && isFinite(n);
             },
         },
+        computed: {
+            rowclass: function() {
+                return 'col-sm-12 ' + (this.teams.length > 6 ? 'col-md-3' : 'col-md-4');
+            },
+        },
     };
 </script>
 
@@ -459,6 +416,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        hyphens: manual;
     }
 </style>
 <style>
