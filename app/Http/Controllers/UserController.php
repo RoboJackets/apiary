@@ -168,11 +168,12 @@ class UserController extends Controller
         unset($request['generateToken']);
 
         if ($request->filled('clickup_email')) {
-            // check that this is one of their verified emails
+            // Check that this is one of their verified emails
+            // gmail_address can be null and clickup_email can't be empty here so fall back to an empty string.
             if (! in_array($request->input('clickup_email'), [
                 strtolower($user->uid).'@gatech.edu',
                 strtolower($user->gt_email),
-                strtolower($user->gmail_address),
+                strtolower($user->gmail_address ?? ''),
             ], true)) {
                 return response()->json(['status' => 'error',
                     'message' => 'requested clickup_email value has not been verified',
