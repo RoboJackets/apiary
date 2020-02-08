@@ -78,7 +78,6 @@ class User extends Resource
                 ->updateRules('unique:users,uid,{{resourceId}}'),
 
             Text::make('Preferred First Name')
-                ->sortable()
                 ->rules('nullable', 'max:127'),
 
             Text::make('Legal First Name', 'first_name')
