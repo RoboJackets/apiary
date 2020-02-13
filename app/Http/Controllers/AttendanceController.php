@@ -119,11 +119,7 @@ class AttendanceController extends Controller
             ->start($request->input('start_date'))->end($request->input('end_date'))
             ->with($this->authorizeInclude(Attendance::class, $include))->get();
 
-        if ($att) {
-            return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
+        return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
     }
 
     /**
