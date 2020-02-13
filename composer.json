@@ -22,7 +22,7 @@
         "laravel/horizon": "3.6.1",
         "laravel/nova": "2.10.1",
         "laravel/slack-notification-channel": "2.0.2",
-        "laravel/socialite": "4.3.1",
+        "laravel/socialite": "4.3.2",
         "laravel/tinker": "1.0.10",
         "maatwebsite/laravel-nova-excel": "1.1.9",
         "predis/predis": "1.1.1",
