@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2e1d1d28c5bc86ad1893e010eff053f",
+    "content-hash": "9b750607a89fc96d7a7d0e32006ecf4e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1902,16 +1902,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "56d25493d1d994a30ae0a20002428d6fd64b567f"
+                "reference": "f0295eec1fb96d0adace50aac01c3984877c034c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/56d25493d1d994a30ae0a20002428d6fd64b567f",
-                "reference": "56d25493d1d994a30ae0a20002428d6fd64b567f",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/f0295eec1fb96d0adace50aac01c3984877c034c",
+                "reference": "f0295eec1fb96d0adace50aac01c3984877c034c",
                 "shasum": ""
             },
             "require": {
@@ -1967,7 +1967,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2020-02-12T14:13:07+00:00"
+            "time": "2020-02-14T15:17:05+00:00"
         },
         {
             "name": "laravel/nova",
@@ -5082,16 +5082,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.13.1",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3"
+                "reference": "fbdeaec0df06cf3d51c93de80c7eb76e271f5a38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
-                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/fbdeaec0df06cf3d51c93de80c7eb76e271f5a38",
+                "reference": "fbdeaec0df06cf3d51c93de80c7eb76e271f5a38",
                 "shasum": ""
             },
             "require": {
@@ -5103,7 +5103,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -5136,7 +5136,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2019-11-27T13:56:44+00:00"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/polyfill-iconv",
