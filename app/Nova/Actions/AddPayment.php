@@ -133,7 +133,6 @@ class AddPayment extends Action
                 ->creationRules('required'),
 
             Currency::make('Amount')
-                ->format('%.2n')
                 ->help('Record actual amount of money collected, including processing fees. Credit/debit is +$3.')
                 ->creationRules('required'),
         ];

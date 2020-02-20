@@ -87,8 +87,7 @@ class DuesTransaction extends Resource
 
                 return $this->package->cost;
             })
-                ->onlyOnDetail()
-                ->format('%.2n'),
+                ->onlyOnDetail(),
 
             Text::make('Shirt Status', 'swag_shirt_status')
                 ->onlyOnIndex(),
