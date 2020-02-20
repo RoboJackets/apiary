@@ -82,7 +82,6 @@ class DuesPackage extends Resource
 
             Currency::make('Cost')
                 ->sortable()
-                ->format('%.2n')
                 ->rules('required'),
 
             Boolean::make('Available for Purchase')
