@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bc9d3df2b4680f56128a6ab6b1add43",
+    "content-hash": "58efc03858011688e9cd6adbf0686831",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -620,16 +620,16 @@
         },
         {
             "name": "chelout/laravel-relationship-events",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chelout/laravel-relationship-events.git",
-                "reference": "3b71f101186e71fb7ea4b107be3dc1671505dfb1"
+                "reference": "756ddbd5ecf92b580f147c415e7eac5abb4d201c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/3b71f101186e71fb7ea4b107be3dc1671505dfb1",
-                "reference": "3b71f101186e71fb7ea4b107be3dc1671505dfb1",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/756ddbd5ecf92b580f147c415e7eac5abb4d201c",
+                "reference": "756ddbd5ecf92b580f147c415e7eac5abb4d201c",
                 "shasum": ""
             },
             "require": {
@@ -675,7 +675,7 @@
                 "relations",
                 "relationship"
             ],
-            "time": "2019-10-04T13:40:35+00:00"
+            "time": "2020-02-25T07:55:06+00:00"
         },
         {
             "name": "composer/ca-bundle",
