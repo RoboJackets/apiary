@@ -17,7 +17,7 @@
         "laravel/framework": "6.17.1",
         "adldap2/adldap2-laravel": "6.0.8",
         "barryvdh/laravel-ide-helper": "2.6.7",
-        "bugsnag/bugsnag-laravel": "2.17.1",
+        "bugsnag/bugsnag-laravel": "2.18.0",
         "guzzlehttp/guzzle": "6.5.2",
         "laravel/horizon": "3.7.2",
         "laravel/nova": "2.11.1",
