@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2eeff9ae4786c3cd3ac0fdef89f07ee2",
+    "content-hash": "befc9e4ffe92cba3c6ef42c5f581d5fb",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2607,7 +2607,7 @@
         },
         {
             "name": "maatwebsite/laravel-nova-excel",
-            "version": "1.1.9",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Nova-Excel.git",
