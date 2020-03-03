@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4147a8d33d00607d6afdf2871b24ec7a",
+    "content-hash": "d80f394b7b569c4032007975f3215358",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -621,29 +621,28 @@
         },
         {
             "name": "chelout/laravel-relationship-events",
-            "version": "v1.1.2",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chelout/laravel-relationship-events.git",
-                "reference": "756ddbd5ecf92b580f147c415e7eac5abb4d201c"
+                "reference": "ebb1029b8bedc8d52cf1707b40d11bba69a3006b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/756ddbd5ecf92b580f147c415e7eac5abb4d201c",
-                "reference": "756ddbd5ecf92b580f147c415e7eac5abb4d201c",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/ebb1029b8bedc8d52cf1707b40d11bba69a3006b",
+                "reference": "ebb1029b8bedc8d52cf1707b40d11bba69a3006b",
                 "shasum": ""
             },
             "require": {
-                "illuminate/container": "^6.0",
-                "illuminate/database": "^6.0",
-                "illuminate/events": "^6.0",
-                "illuminate/support": "^6.0",
+                "illuminate/container": "^6.0|^7.0",
+                "illuminate/database": "^6.0|^7.0",
+                "illuminate/events": "^6.0|^7.0",
+                "illuminate/support": "^6.0|^7.0",
                 "php": "^7.2"
             },
             "require-dev": {
-                "orchestra/testbench": "^4.0",
-                "orchestra/testbench-core": "^4.0",
-                "phpunit/phpunit": "^8.3"
+                "orchestra/testbench": "^4.0|^5.0",
+                "phpunit/phpunit": "^8.3|^9.0"
             },
             "type": "library",
             "extra": {
@@ -676,7 +675,7 @@
                 "relations",
                 "relationship"
             ],
-            "time": "2020-02-25T07:55:06+00:00"
+            "time": "2020-03-03T13:06:30+00:00"
         },
         {
             "name": "composer/ca-bundle",
