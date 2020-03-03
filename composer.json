@@ -30,7 +30,7 @@
         "vyuldashev/nova-permission": "2.5.0",
         "robojackets/error-pages": "2.0.0",
         "robojackets/network-check": "1.0.1",
-        "spatie/laravel-failed-job-monitor": "3.2.0",
+        "spatie/laravel-failed-job-monitor": "3.3.0",
         "spatie/laravel-sluggable": "2.2.1",
         "square/connect": "2.20190710.0",
         "subfission/cas": "3.0",

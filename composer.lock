@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09cd7bd0d7dbcc6abdbe7d901bf4e0f4",
+    "content-hash": "b24f0e2405edaf813e1f21d8917dcfaf",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4094,28 +4094,29 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "8127afac1fe52c8a3c6d0ebf2a88476bd084831c"
+                "reference": "f2e641b2d3f4fb679c4f631f61d6cfb3823178b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/8127afac1fe52c8a3c6d0ebf2a88476bd084831c",
-                "reference": "8127afac1fe52c8a3c6d0ebf2a88476bd084831c",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/f2e641b2d3f4fb679c4f631f61d6cfb3823178b1",
+                "reference": "f2e641b2d3f4fb679c4f631f61d6cfb3823178b1",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.8.0|^6.0",
+                "laravel/framework": "~5.8.0|^6.0|^7.0",
                 "php": "^7.2"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.8.0|^4.0",
+                "orchestra/testbench": "~3.8.0|^4.0|^5.0",
                 "phpunit/phpunit": "^8.0"
             },
             "suggest": {
-                "guzzlehttp/guzzle": "Allows notifications to be sent via Slack"
+                "guzzlehttp/guzzle": "Allows notifications to be sent to Slack",
+                "laravel/slack-notification-channel": "Required for sending notifications via Slack"
             },
             "type": "library",
             "extra": {
@@ -4153,7 +4154,7 @@
                 "slack",
                 "spatie"
             ],
-            "time": "2019-09-04T07:04:51+00:00"
+            "time": "2020-03-03T15:13:49+00:00"
         },
         {
             "name": "spatie/laravel-permission",
