@@ -37,7 +37,7 @@
         "uxweb/sweet-alert": "dev-master"
     },
     "require-dev": {
-        "beyondcode/laravel-dump-server": "1.3.0",
+        "beyondcode/laravel-dump-server": "1.4.0",
         "filp/whoops": "2.7.1",
         "fzaninotto/faker": "1.9.1",
         "mockery/mockery": "1.3.1",
