@@ -11,7 +11,8 @@
   ],
   "reviewers": [],
   "ignoreDeps": [
-    "square/connect"
+    "square/connect",
+    "spatie/laravel-sluggable"
   ],
   "prConcurrentLimit": 1,
   "prHourlyLimit": 0,
