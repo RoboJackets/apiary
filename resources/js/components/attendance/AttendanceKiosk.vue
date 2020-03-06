@@ -2,7 +2,7 @@
     <div>
         <div class="row justify-content-center">
             <template v-for="team in teams">
-                <div :class="rowclass" style="padding-top:50px">
+                <div :class="rowclass(team)" style="padding-top:50px">
                     <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
                     <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
                         {{ team.name }}
@@ -393,10 +393,9 @@
             isNumeric(n) {
                 return !isNaN(parseFloat(n)) && isFinite(n);
             },
-        },
-        computed: {
-            rowclass: function() {
-                return 'col-sm-12 ' + (this.teams.length > 6 ? 'col-md-3' : 'col-md-4');
+            rowclass: function(team) {
+                // Teams with names starting with Robo are wider to fill the bottom row and avoid wrapping
+                return 'col-sm-12 ' + (this.teams.length > 6 && !team.name.startsWith('Robo') ? 'col-md-3' : 'col-md-4');
             },
         },
     };
