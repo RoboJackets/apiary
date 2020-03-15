@@ -39,14 +39,14 @@ class Major extends Model
         return $this->belongsToMany(User::class)->whereNull('major_user.deleted_at')->withTimestamps();
     }
 
-    public static function findOrCreateFromGtadGroup(string $gtad_group): Major
+    public static function findOrCreateFromGtadGroup(string $gtad_group): self
     {
         $major = self::where('gtad_majorgroup_name', strtolower($gtad_group))->first();
 
         if (null === $major) {
             $exploded = explode('_', $gtad_group);
 
-            $major = new Major();
+            $major = new self();
             $major->gtad_majorgroup_name = strtolower($gtad_group);
             $major->whitepages_ou = strtoupper($exploded[0]);
             $major->school = strtoupper($exploded[1]);

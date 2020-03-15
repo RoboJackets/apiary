@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use BadMethodCallException;
-use Exception;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
@@ -400,7 +399,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Synchronizes major relationship with a given list of gtAccountEntitlements
+     * Synchronizes major relationship with a given list of gtAccountEntitlements.
      *
      * @param array<string>  $accountEntitlements
      */
@@ -417,13 +416,13 @@ class User extends Authenticatable
                 continue;
             }
 
-            $gtad_group = substr($entitlement, self::ENTITLEMENT_PREFIX_LENGTH);
-
-            if (false === $gtad_group) {
-                throw new Exception('Failed to get GTAD group name');
-            }
-
-            $new_major_ids[] = Major::findOrCreateFromGtadGroup($gtad_group)->id;
+            $new_major_ids[] = Major::findOrCreateFromGtadGroup(
+                // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+                substr(
+                    $entitlement,
+                    self::ENTITLEMENT_PREFIX_LENGTH
+                )
+            )->id;
         }
 
         foreach ($new_major_ids as $new_major_id) {

@@ -25,7 +25,7 @@ trait CreateOrUpdateCASUser
     }
 
     /**
-     * Creates the logged in CAS user if they don't already exist, or update attributes if they do
+     * Creates the logged in CAS user if they don't already exist, or update attributes if they do.
      *
      * @SuppressWarnings(PHPMD.ExitExpression)
      */

@@ -229,7 +229,7 @@ class User extends Resource
 
             BelongsToMany::make('Majors')
                 ->readonly(static function (Request $request): bool {
-                    return !$request->user()->hasRole('admin');
+                    return ! $request->user()->hasRole('admin');
                 }),
 
             BelongsToMany::make('Teams')
