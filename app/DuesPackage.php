@@ -69,7 +69,7 @@ class DuesPackage extends Model
      */
     public function duesTransactions(): HasMany
     {
-        return $this->hasMany(\App\DuesTransaction::class);
+        return $this->hasMany(DuesTransaction::class);
     }
 
     /**
@@ -77,7 +77,7 @@ class DuesPackage extends Model
      */
     public function transactions(): HasMany
     {
-        return $this->hasMany(\App\DuesTransaction::class);
+        return $this->hasMany(DuesTransaction::class);
     }
 
     /**

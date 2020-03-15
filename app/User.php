@@ -26,6 +26,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder hasOverride() scopes to only users with an active override
  *
  * @property bool $is_active whether the user is currently active
+ * @property bool $is_service_account whether the user is a service account (vs human)
  * @property string $name the display name for this user
  */
 class User extends Authenticatable
@@ -36,6 +37,9 @@ class User extends Authenticatable
     use Actionable;
     use HasBelongsToManyEvents;
     use HasRelationshipObservables;
+
+    private const ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
+    private const ENTITLEMENT_PREFIX_LENGTH = 38;
 
     /**
      * The accessors to append to the model's array form.
@@ -61,6 +65,7 @@ class User extends Authenticatable
         'accept_safety_agreement',
         'access_override_until',
         'resume_date',
+        'last_login',
     ];
 
     /**
@@ -94,6 +99,18 @@ class User extends Authenticatable
      * @var array<string>
      */
     protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'github_invite_pending' => 'boolean',
+        'exists_in_sums' => 'boolean',
+        'has_ever_logged_in' => 'boolean',
+        'is_service_account' => 'boolean',
+    ];
 
     /**
      *  Get the recruiting visits associated with this user.
@@ -152,7 +169,7 @@ class User extends Authenticatable
     /**
      * Get the preferred first name associated with the User.
      */
-    public function getPreferredFirstNameAttribute(): string
+    public function getPreferredFirstNameAttribute(): ?string
     {
         return $this->preferred_name ?? $this->first_name;
     }
@@ -211,6 +228,11 @@ class User extends Authenticatable
     public function rsvps(): HasMany
     {
         return $this->hasMany(Rsvp::class);
+    }
+
+    public function majors(): BelongsToMany
+    {
+        return $this->belongsToMany(Major::class)->whereNull('major_user.deleted_at')->withTimestamps();
     }
 
     /**
@@ -373,5 +395,43 @@ class User extends Authenticatable
     public function accessOverrideBy(): BelongsTo
     {
         return $this->belongsTo(self::class, 'access_override_by_id');
+    }
+
+    public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
+    {
+        $current_major_ids = $this->majors()->map(static function ($item) {
+            return $item->id;
+        });
+
+        $new_major_ids = [];
+
+        foreach ($accountEntitlements as $entitlement) {
+            if (self::ENTITLEMENT_PREFIX !== substr($entitlement, 0, self::ENTITLEMENT_PREFIX_LENGTH)) {
+                continue;
+            }
+
+            $new_major_ids[] = Major::findOrCreateFromGtadGroup(
+                substr(
+                    $entitlement,
+                    self::ENTITLEMENT_PREFIX_LENGTH
+                )
+            )->id;
+        }
+
+        foreach ($new_major_ids as $new_major_id) {
+            if (in_array($new_major_id, $current_major_ids)) {
+                continue;
+            }
+
+            $this->majors()->attach($new_major_id);
+        }
+
+        foreach ($current_major_ids as $current_major_id) {
+            if (in_array($current_major_id, $new_major_ids)) {
+                continue;
+            }
+
+            $this->majors()->updateExistingPivot($current_major_id, ['deleted_at' => Carbon\Carbon::now()]);
+        }
     }
 }

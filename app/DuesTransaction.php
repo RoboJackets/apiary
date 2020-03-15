@@ -67,7 +67,7 @@ class DuesTransaction extends Model
      */
     public function payment(): MorphMany
     {
-        return $this->morphMany(\App\Payment::class, 'payable');
+        return $this->morphMany(Payment::class, 'payable');
     }
 
     /**
@@ -75,7 +75,7 @@ class DuesTransaction extends Model
      */
     public function package(): BelongsTo
     {
-        return $this->belongsTo(\App\DuesPackage::class, 'dues_package_id');
+        return $this->belongsTo(DuesPackage::class, 'dues_package_id');
     }
 
     /**
@@ -83,7 +83,7 @@ class DuesTransaction extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -91,7 +91,7 @@ class DuesTransaction extends Model
      */
     public function swagShirtProvidedBy(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class, 'swag_shirt_providedBy', 'id');
+        return $this->belongsTo(User::class, 'swag_shirt_providedBy', 'id');
     }
 
     /**
@@ -99,7 +99,7 @@ class DuesTransaction extends Model
      */
     public function swagPoloProvidedBy(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class, 'swag_polo_providedBy', 'id');
+        return $this->belongsTo(User::class, 'swag_polo_providedBy', 'id');
     }
 
     /**

@@ -30,7 +30,7 @@ class RecruitingVisit extends Model
      */
     public function recruitingResponses(): HasMany
     {
-        return $this->hasMany(\App\RecruitingResponse::class);
+        return $this->hasMany(RecruitingResponse::class);
     }
 
     /**
@@ -38,7 +38,7 @@ class RecruitingVisit extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

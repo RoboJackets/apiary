@@ -7,6 +7,7 @@ namespace App\Traits;
 use App\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use RoboJackets\ErrorPages\Unauthorized;
 use Spatie\Permission\Models\Role;
 
 trait CreateOrUpdateCASUser
@@ -23,11 +24,24 @@ trait CreateOrUpdateCASUser
         $this->cas = app('cas');
     }
 
+    /**
+     * Creates the logged in CAS user if they don't already exist, or update attributes if they do
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression)
+     */
     public function createOrUpdateCASUser(): User
     {
-        $attrs = ['gtGTID', 'email_primary', 'givenName', 'sn'];
+        $attrs = [
+            'gtGTID',
+            'email_primary',
+            'givenName',
+            'sn',
+            'eduPersonPrimaryAffiliation',
+        ];
         // Attributes that will be split by commas when masquerading
-        $arrayAttrs = ['gtPersonEntitlement'];
+        $arrayAttrs = [
+            'gtAccountEntitlement',
+        ];
         // Merge them together so we verify all attributes are present, even the array ones
         $attrs = array_merge($attrs, $arrayAttrs);
         if ($this->cas->isMasquerading()) {
@@ -53,12 +67,22 @@ trait CreateOrUpdateCASUser
         $user = User::where('uid', $this->cas->user())->first();
         if (null === $user) {
             $user = new User();
+            $user->create_reason = 'cas_login';
+            $user->is_service_account = false;
+        }
+        if ($user->is_service_account) {
+            Unauthorized::render(0b110);
+            exit;
         }
         $user->uid = $this->cas->user();
         $user->gtid = $this->cas->getAttribute('gtGTID');
         $user->gt_email = $this->cas->getAttribute('email_primary');
         $user->first_name = $this->cas->getAttribute('givenName');
         $user->last_name = $this->cas->getAttribute('sn');
+        $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
+        $user->has_ever_logged_in = true;
+        $user->last_login = date('Y-m-d H:i:s');
+        $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement'));
         $user->save();
 
         //Initial Role Assignment

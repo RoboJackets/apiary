@@ -10,10 +10,8 @@ class AddClickUpFieldsToUsers extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', static function (Blueprint $table): void {
             $table->string('clickup_email', 255)->after('gmail_address')->nullable()->unique();
@@ -24,10 +22,8 @@ class AddClickUpFieldsToUsers extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('clickup_email');

@@ -8,12 +8,14 @@ use App\Attendance;
 use App\DuesPackage;
 use App\DuesTransaction;
 use App\Event;
+use App\Major;
 use App\NotificationTemplate;
 use App\Payment;
 use App\Policies\AttendancePolicy;
 use App\Policies\DuesPackagePolicy;
 use App\Policies\DuesTransactionPolicy;
 use App\Policies\EventPolicy;
+use App\Policies\MajorPolicy;
 use App\Policies\NotificationTemplatePolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
@@ -50,6 +52,7 @@ class AuthServiceProvider extends ServiceProvider
         DuesTransaction::class => DuesTransactionPolicy::class,
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
+        Major::class => MajorPolicy::class,
     ];
 
     /**
