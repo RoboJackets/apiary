@@ -81,6 +81,8 @@ class Major extends Resource
 
     /**
      * Get the cards available for the request.
+     *
+     * @return array<\Laravel\Nova\Metrics\Value>
      */
     public function cards(Request $request): array
     {

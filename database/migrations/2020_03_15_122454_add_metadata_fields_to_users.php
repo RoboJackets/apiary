@@ -18,7 +18,7 @@ class AddMetadataFieldsToUsers extends Migration
             'string'
         );
 
-        Schema::table('users', static function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->string('create_reason', 255)->default('cas_login');
             $table->boolean('has_ever_logged_in')->default(true);
             $table->boolean('is_service_account')->default(false);
@@ -27,7 +27,7 @@ class AddMetadataFieldsToUsers extends Migration
             $table->string('gtDirGUID')->nullable();
         });
 
-        Schema::table('users', static function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->string('create_reason', 255)->default(null)->change();
             $table->boolean('has_ever_logged_in')->default(null)->change();
         });
@@ -38,7 +38,7 @@ class AddMetadataFieldsToUsers extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', static function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('create_reason');
             $table->dropColumn('has_ever_logged_in');
             $table->dropColumn('is_service_account');

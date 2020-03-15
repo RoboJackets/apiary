@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use BadMethodCallException;
+use Exception;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -397,6 +399,11 @@ class User extends Authenticatable
         return $this->belongsTo(self::class, 'access_override_by_id');
     }
 
+    /**
+     * Synchronizes major relationship with a given list of gtAccountEntitlements
+     *
+     * @param array<string>  $accountEntitlements
+     */
     public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
     {
         $current_major_ids = $this->majors()->map(static function ($item) {
@@ -410,16 +417,17 @@ class User extends Authenticatable
                 continue;
             }
 
-            $new_major_ids[] = Major::findOrCreateFromGtadGroup(
-                substr(
-                    $entitlement,
-                    self::ENTITLEMENT_PREFIX_LENGTH
-                )
-            )->id;
+            $gtad_group = substr($entitlement, self::ENTITLEMENT_PREFIX_LENGTH);
+
+            if (false === $gtad_group) {
+                throw new Exception('Failed to get GTAD group name');
+            }
+
+            $new_major_ids[] = Major::findOrCreateFromGtadGroup($gtad_group)->id;
         }
 
         foreach ($new_major_ids as $new_major_id) {
-            if (in_array($new_major_id, $current_major_ids)) {
+            if (in_array($new_major_id, $current_major_ids, true)) {
                 continue;
             }
 
@@ -427,11 +435,11 @@ class User extends Authenticatable
         }
 
         foreach ($current_major_ids as $current_major_id) {
-            if (in_array($current_major_id, $new_major_ids)) {
+            if (in_array($current_major_id, $new_major_ids, true)) {
                 continue;
             }
 
-            $this->majors()->updateExistingPivot($current_major_id, ['deleted_at' => Carbon\Carbon::now()]);
+            $this->majors()->updateExistingPivot($current_major_id, ['deleted_at' => Carbon::now()]);
         }
     }
 }
