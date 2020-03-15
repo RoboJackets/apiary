@@ -82,8 +82,8 @@ trait CreateOrUpdateCASUser
         $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
         $user->has_ever_logged_in = true;
         $user->last_login = date('Y-m-d H:i:s');
-        $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement'));
         $user->save();
+        $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement'));
 
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {
