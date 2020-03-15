@@ -44,6 +44,7 @@ class AddMetadataFieldsToUsers extends Migration
             $table->dropColumn('is_service_account');
             $table->dropColumn('primary_affiliation');
             $table->dropColumn('last_login');
+            $table->dropColumn('gtDirGUID');
         });
     }
 }
