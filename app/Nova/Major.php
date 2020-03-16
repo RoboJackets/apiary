@@ -70,7 +70,7 @@ class Major extends Resource
                 'Metadata',
                 [
                     DateTime::make('Created', 'created_at')
-                    ->onlyOnDetail(),
+                        ->onlyOnDetail(),
 
                     DateTime::make('Last Updated', 'updated_at')
                         ->onlyOnDetail(),

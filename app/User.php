@@ -405,9 +405,7 @@ class User extends Authenticatable
      */
     public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
     {
-        $current_major_ids = $this->majors()->get()->map(static function (Major $item): int {
-            return $item->id;
-        })->toArray();
+        $current_major_ids = $this->majors()->get()->pluck('id')->toArray();
 
         $new_major_ids = [];
 
