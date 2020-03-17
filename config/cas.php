@@ -162,6 +162,7 @@ return [
     'cas_masquerade' => env('CAS_MASQUERADE', null),
     'cas_masquerade_gtGTID' => env('CAS_MASQUERADE_gtGTID', null),
     'cas_masquerade_email_primary' => env('CAS_MASQUERADE_email_primary', null),
+    'cas_masquerade_eduPersonPrimaryAffiliation' => env('CAS_MASQUERADE_eduPersonPrimaryAffiliation', null),
     'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName', null),
     'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null),
     'cas_masquerade_gtPersonEntitlement' => env('CAS_MASQUERADE_gtPersonEntitlement', null),

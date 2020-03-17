@@ -88,6 +88,12 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'max:127'),
 
+            Text::make('Primary Affiliation')
+                ->resolveUsing(static function (?string $affiliation): ?string {
+                    return null === $affiliation ? null : ucfirst($affiliation);
+                })
+                ->onlyOnDetail(),
+
             Text::make('Georgia Tech Email', 'gt_email')
                 ->rules('required', 'email')
                 ->creationRules('unique:users,gt_email')
@@ -151,7 +157,7 @@ class User extends Resource
             new Panel(
                 'Linked Accounts',
                 [
-                    Text::make('GitHub Username', 'github_username')
+                    Text::make('GitHub', 'github_username')
                         ->hideFromIndex()
                         ->rules('nullable', 'max:39')
                         ->creationRules('unique:users,github_username')
@@ -219,6 +225,11 @@ class User extends Resource
                     }
 
                     return $request->user()->can('read-recruiting-visits');
+                }),
+
+            BelongsToMany::make('Majors')
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
                 }),
 
             BelongsToMany::make('Teams')
@@ -316,6 +327,19 @@ class User extends Resource
 
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
+
+            Boolean::make('Has Ever Logged In')
+                ->onlyOnDetail(),
+
+            Boolean::make('Is Service Account')
+                ->hideFromIndex(),
+
+            Text::make('Create Reason')
+                ->hideFromIndex()
+                ->required(),
+
+            Text::make('gtDirGUID')
+                ->hideFromIndex(),
 
             MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
                 ->canSee(static function (Request $request): bool {

@@ -35,7 +35,7 @@ class RecruitingCampaign extends Model
      */
     public function creator(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
@@ -43,7 +43,7 @@ class RecruitingCampaign extends Model
      */
     public function template(): BelongsTo
     {
-        return $this->belongsTo(\App\NotificationTemplate::class, 'notification_template_id');
+        return $this->belongsTo(NotificationTemplate::class, 'notification_template_id');
     }
 
     /**
@@ -51,7 +51,7 @@ class RecruitingCampaign extends Model
      */
     public function recipients(): HasMany
     {
-        return $this->hasMany(\App\RecruitingCampaignRecipient::class);
+        return $this->hasMany(RecruitingCampaignRecipient::class);
     }
 
     /**

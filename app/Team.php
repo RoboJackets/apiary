@@ -60,7 +60,7 @@ class Team extends Model
      */
     public function members(): BelongsToMany
     {
-        return $this->belongsToMany(\App\User::class)->withTimestamps();
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     /**
@@ -68,7 +68,7 @@ class Team extends Model
      */
     public function attendance(): MorphMany
     {
-        return $this->morphMany(\App\Attendance::class, 'attendable');
+        return $this->morphMany(Attendance::class, 'attendable');
     }
 
     /**
@@ -118,7 +118,7 @@ class Team extends Model
 
     public function projectManager(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class, 'project_manager_id');
+        return $this->belongsTo(User::class, 'project_manager_id');
     }
 
     /**

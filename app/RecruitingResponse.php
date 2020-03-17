@@ -22,7 +22,7 @@ class RecruitingResponse extends Model
      */
     public function recruitingVisit(): BelongsTo
     {
-        return $this->belongsTo(\App\RecruitingVisit::class);
+        return $this->belongsTo(RecruitingVisit::class);
     }
 
     /**

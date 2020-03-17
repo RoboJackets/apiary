@@ -67,12 +67,12 @@ class Event extends Model
 
     public function organizer(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class, 'organizer_id');
+        return $this->belongsTo(User::class, 'organizer_id');
     }
 
     public function rsvps(): HasMany
     {
-        return $this->hasMany(\App\Rsvp::class);
+        return $this->hasMany(Rsvp::class);
     }
 
     /**
@@ -80,7 +80,7 @@ class Event extends Model
      */
     public function attendance(): MorphMany
     {
-        return $this->morphMany(\App\Attendance::class, 'attendable');
+        return $this->morphMany(Attendance::class, 'attendable');
     }
 
     /**

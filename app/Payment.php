@@ -74,7 +74,7 @@ class Payment extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class, 'recorded_by');
+        return $this->belongsTo(User::class, 'recorded_by');
     }
 
     /**

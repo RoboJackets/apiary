@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Major;
 use App\Team;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -135,5 +136,20 @@ class UserPolicy
         }
 
         return $user->can('update-teams-membership');
+    }
+
+    public function attachMajor(User $user, User $userResource, Major $major): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function attachAnyMajor(User $user, User $userResource): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function detachMajor(User $user, User $userResource, Major $major): bool
+    {
+        return $user->hasRole('admin');
     }
 }
