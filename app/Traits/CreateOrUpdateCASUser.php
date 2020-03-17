@@ -81,7 +81,6 @@ trait CreateOrUpdateCASUser
         $user->last_name = $this->cas->getAttribute('sn');
         $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
         $user->has_ever_logged_in = true;
-        $user->last_login = date('Y-m-d H:i:s');
         $user->save();
         $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement'));
 

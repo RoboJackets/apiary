@@ -23,7 +23,6 @@ class AddMetadataFieldsToUsers extends Migration
             $table->boolean('has_ever_logged_in')->default(true);
             $table->boolean('is_service_account')->default(false);
             $table->string('primary_affiliation')->nullable();
-            $table->timestamp('last_login')->nullable();
             $table->string('gtDirGUID')->nullable();
         });
 

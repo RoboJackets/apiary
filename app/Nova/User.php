@@ -328,9 +328,6 @@ class User extends Resource
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
 
-            DateTime::make('Last Login')
-                ->onlyOnDetail(),
-
             Boolean::make('Has Ever Logged In')
                 ->onlyOnDetail(),
 

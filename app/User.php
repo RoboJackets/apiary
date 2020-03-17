@@ -66,7 +66,6 @@ class User extends Authenticatable
         'accept_safety_agreement',
         'access_override_until',
         'resume_date',
-        'last_login',
     ];
 
     /**
