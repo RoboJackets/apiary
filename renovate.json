@@ -1,45 +1,46 @@
 {
-  "extends": [
-    "config:base",
-    ":disableMajorUpdates"
-  ],
-  "labels": [
-    "area / devOps",
-    "priority / low",
-    "status / code review",
-    "type / technical debt"
-  ],
-  "reviewers": [],
-  "ignoreDeps": [
-    "square/connect",
-    "spatie/laravel-sluggable",
-	"beyondcode/laravel-dump-server"
-  ],
-  "prConcurrentLimit": 1,
-  "prHourlyLimit": 0,
-  "rebaseStalePrs": true,
-  "vulnerabilityAlerts": {
+    "extends": [
+        "config:base",
+        ":disableMajorUpdates"
+    ],
     "labels": [
-      "area / devOps",
-      "priority / high",
-      "status / code review",
-      "type / technical debt"
-    ]
-  },
-  "hostRules": [
-    {
-      "domainName": "nova.laravel.com",
-      "username": "developers@robojackets.org",
-      "encrypted": {
-        "password": "m4fVZTnuxkpRyuA3NoJZg2tXRawuBdt7IW21BXPWWaB7tzPxd2ck8U/9FHr3omnrnRAdCtvUILRxGcHlBN8uhQlxRyhfxchSgtlvDN5bVzBmzWp5VbKjWpuUxq2mU7ZqrYJJBtLP7SlwztOhZbRKjP5IscNgUWnbHGOPdhEsfbnUkfFXKm7eiQlzObnEvG/CN9nGn2auROi7q/xPqJ8aCKL/NeF6ZfLlYbjREjZaC6xwOaZeWIJtD6GQ8VRN9B0qeScsHP8hTzbRZ5Fe5CKL82yY5N998a7O8SXVNYNhIwKzrYHko5Vg/CpbC4ZXvXiRR33pNC36W4jqMA9wXo1rZw=="
-      }
+        "area / devOps",
+        "priority / low",
+        "status / code review",
+        "type / technical debt"
+    ],
+    "reviewers": [],
+    "ignoreDeps": [
+        "square/connect",
+        "spatie/laravel-sluggable",
+        "beyondcode/laravel-dump-server",
+        "oitnetworkservices/buzzapiclient"
+    ],
+    "prConcurrentLimit": 1,
+    "prHourlyLimit": 0,
+    "rebaseStalePrs": true,
+    "vulnerabilityAlerts": {
+        "labels": [
+            "area / devOps",
+            "priority / high",
+            "status / code review",
+            "type / technical debt"
+        ]
     },
-    {
-      "domainName": "packages.robojackets.org",
-      "username": "renovate",
-      "encrypted": {
-        "password": "aFif0PGKkIzJQXS+3hmLVSj2zrnqTtf43M+247sqyuSoV5actdT1E5njpejhBRKg66jHNQoWIELwI/v1OlkbxTyxQdfKj+CGq1sSyOOlaUZTFLuNoteoQWHHAFy6X2kAAaO5QWe9l/gy+9xUbsfL4KTnRrmynSwA04Hs93cHnwqfZdB4XeVGCe2uZENvUnGFBJrouuy8N4g4BGzksIIrTdbYGtCOCkbdk9Jd/cmWgRUqeenGfSIohtmQlKt6qdPkVktjTDCvpUsGVuM/+2Iy82azu3LVN1vEY+RU9FIktMd7bz8CarJ2144qTUswQ31doTD4k+vuzaLb3hFpgMkP/g=="
-      }
-    }
-  ]
+    "hostRules": [
+        {
+            "domainName": "nova.laravel.com",
+            "username": "developers@robojackets.org",
+            "encrypted": {
+                "password": "m4fVZTnuxkpRyuA3NoJZg2tXRawuBdt7IW21BXPWWaB7tzPxd2ck8U/9FHr3omnrnRAdCtvUILRxGcHlBN8uhQlxRyhfxchSgtlvDN5bVzBmzWp5VbKjWpuUxq2mU7ZqrYJJBtLP7SlwztOhZbRKjP5IscNgUWnbHGOPdhEsfbnUkfFXKm7eiQlzObnEvG/CN9nGn2auROi7q/xPqJ8aCKL/NeF6ZfLlYbjREjZaC6xwOaZeWIJtD6GQ8VRN9B0qeScsHP8hTzbRZ5Fe5CKL82yY5N998a7O8SXVNYNhIwKzrYHko5Vg/CpbC4ZXvXiRR33pNC36W4jqMA9wXo1rZw=="
+            }
+        },
+        {
+            "domainName": "packages.robojackets.org",
+            "username": "renovate",
+            "encrypted": {
+                "password": "aFif0PGKkIzJQXS+3hmLVSj2zrnqTtf43M+247sqyuSoV5actdT1E5njpejhBRKg66jHNQoWIELwI/v1OlkbxTyxQdfKj+CGq1sSyOOlaUZTFLuNoteoQWHHAFy6X2kAAaO5QWe9l/gy+9xUbsfL4KTnRrmynSwA04Hs93cHnwqfZdB4XeVGCe2uZENvUnGFBJrouuy8N4g4BGzksIIrTdbYGtCOCkbdk9Jd/cmWgRUqeenGfSIohtmQlKt6qdPkVktjTDCvpUsGVuM/+2Iy82azu3LVN1vEY+RU9FIktMd7bz8CarJ2144qTUswQ31doTD4k+vuzaLb3hFpgMkP/g=="
+            }
+        }
+    ]
 }
