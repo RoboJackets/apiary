@@ -12,7 +12,8 @@
   "reviewers": [],
   "ignoreDeps": [
     "square/connect",
-    "spatie/laravel-sluggable"
+    "spatie/laravel-sluggable",
+	"beyondcode/laravel-dump-server"
   ],
   "prConcurrentLimit": 1,
   "prHourlyLimit": 0,
