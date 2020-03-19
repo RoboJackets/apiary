@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\User;
+use Spatie\Permission\Models\Role;
 use OITNetworkServices\BuzzAPI;
 use OITNetworkServices\BuzzAPI\Resources;
 use Exception;
@@ -73,7 +74,7 @@ class CreateUserFromBuzzAPI implements ShouldQueue
             ->where([$this->identifier => $this->value])
             ->get();
 
-        if (! $peopleResponse->isSuccessful) {
+        if (! $peopleResponse->isSuccessful()) {
             throw new Exception('GTED people search failed with message '.$peopleResponse->errorInfo()->message);
         }
         if (0 === count($peopleResponse->json->api_result_data)) {

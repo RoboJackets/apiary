@@ -54,7 +54,7 @@ class UpdateMajorsForUser implements ShouldQueue
             return;
         }
 
-        $user = User::where('uid', $person->gtPrimaryGTAccountUsername)->first();
+        $user = User::where('uid', $this->username)->first();
         if (null === $user) {
             throw new Exception('Attempted to run UpdateMajorsForUser without an existing user');
         }
@@ -63,11 +63,11 @@ class UpdateMajorsForUser implements ShouldQueue
         }
 
         $accountResponse = BuzzAPI::select('gtAccountEntitlement')
-            ->from(Resources::GTED_ACCOUNT)
+            ->from(Resources::GTED_ACCOUNTS)
             ->where(['uid' => $this->username])
             ->get();
 
-        if (! $accountResponse->isSuccessful) {
+        if (! $accountResponse->isSuccessful()) {
             throw new Exception('GTED account search failed with message '.$accountResponse->errorInfo()->message);
         }
         if (0 === count($accountResponse->json->api_result_data)) {
