@@ -73,10 +73,15 @@ class CreateUserFromBuzzAPI implements ShouldQueue
         }
 
         $peopleResponse = BuzzAPI::select(
-                'gtGTID', 'mail', 'sn', 'givenName', 'eduPersonPrimaryAffiliation', 'gtPrimaryGTAccountUsername'
-            )->from(Resources::GTED_PEOPLE)
-            ->where([$this->identifier => $this->value])
-            ->get();
+            'gtGTID',
+            'mail',
+            'sn',
+            'givenName',
+            'eduPersonPrimaryAffiliation',
+            'gtPrimaryGTAccountUsername'
+        )->from(Resources::GTED_PEOPLE)
+        ->where([$this->identifier => $this->value])
+        ->get();
 
         if (! $peopleResponse->isSuccessful()) {
             throw new Exception('GTED people search failed with message '.$peopleResponse->errorInfo()->message);
@@ -106,14 +111,16 @@ class CreateUserFromBuzzAPI implements ShouldQueue
         $user->save();
 
         // Initial role assignment
-        if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {
-            $role = Role::where('name', 'non-member')->first();
-            if (null !== $role) {
-                $user->assignRole($role);
-
-                return;
-            }
-            Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
+        if (! $user->wasRecentlyCreated && 0 !== $user->roles->count()) {
+            return;
         }
+
+        $role = Role::where('name', 'non-member')->first();
+        if (null !== $role) {
+            $user->assignRole($role);
+
+            return;
+        }
+        Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
     }
 }
