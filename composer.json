@@ -96,10 +96,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/regnilk/cas"
-        },
-		{
-			"type": "composer",
-			"url": "https://packages.ns.gatech.edu"
-		}
+        }
     ]
 }
