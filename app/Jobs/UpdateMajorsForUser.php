@@ -29,18 +29,18 @@ class UpdateMajorsForUser implements ShouldQueue
     public $tries = 1;
 
     /**
-     * The username for which to update majors.
+     * The user for which to update majors.
      *
-     * @var string
+     * @var App\User
      */
-    private $username;
+    private $user;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(string $username)
+    public function __construct(User $user)
     {
-        $this->username = $username;
+        $this->user = $user;
         $this->tries = 1;
         $this->queue = 'buzzapi';
     }
@@ -54,17 +54,16 @@ class UpdateMajorsForUser implements ShouldQueue
             return;
         }
 
-        $user = User::where('uid', $this->username)->first();
-        if (null === $user) {
+        if (null === $this->user) {
             throw new Exception('Attempted to run UpdateMajorsForUser without an existing user');
         }
-        if ($user->is_service_account) {
+        if ($this->user->is_service_account) {
             throw new Exception('Attempted to run UpdateMajorsForUser on a service account');
         }
 
         $accountResponse = BuzzAPI::select('gtAccountEntitlement')
             ->from(Resources::GTED_ACCOUNTS)
-            ->where(['uid' => $this->username])
+            ->where(['uid' => $this->user->uid])
             ->get();
 
         if (! $accountResponse->isSuccessful()) {
@@ -76,6 +75,6 @@ class UpdateMajorsForUser implements ShouldQueue
 
         $account = $accountResponse->first();
 
-        $user->syncMajorsFromAccountEntitlements($account->gtAccountEntitlement);
+        $this->user->syncMajorsFromAccountEntitlements($account->gtAccountEntitlement);
     }
 }
