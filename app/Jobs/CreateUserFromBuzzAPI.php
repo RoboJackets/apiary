@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\User;
-use Spatie\Permission\Models\Role;
-use OITNetworkServices\BuzzAPI;
-use OITNetworkServices\BuzzAPI\Resources;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use OITNetworkServices\BuzzAPI;
+use OITNetworkServices\BuzzAPI\Resources;
+use Spatie\Permission\Models\Role;
 
 class CreateUserFromBuzzAPI implements ShouldQueue
 {
@@ -23,7 +24,9 @@ class CreateUserFromBuzzAPI implements ShouldQueue
     use SerializesModels;
 
     public const IDENTIFIER_GTID = 'gtid';
+    // @phan-suppress-next-line PhanUnreferencedPublicClassConstant
     public const IDENTIFIER_USERNAME = 'uid';
+    // @phan-suppress-next-line PhanUnreferencedPublicClassConstant
     public const IDENTIFIER_MAIL = 'email';
 
     /**
@@ -69,8 +72,9 @@ class CreateUserFromBuzzAPI implements ShouldQueue
             return;
         }
 
-        $peopleResponse = BuzzAPI::select('gtGTID', 'mail', 'sn', 'givenName', 'eduPersonPrimaryAffiliation', 'gtPrimaryGTAccountUsername')
-            ->from(Resources::GTED_PEOPLE)
+        $peopleResponse = BuzzAPI::select(
+                'gtGTID', 'mail', 'sn', 'givenName', 'eduPersonPrimaryAffiliation', 'gtPrimaryGTAccountUsername'
+            )->from(Resources::GTED_PEOPLE)
             ->where([$this->identifier => $this->value])
             ->get();
 
@@ -106,9 +110,9 @@ class CreateUserFromBuzzAPI implements ShouldQueue
             $role = Role::where('name', 'non-member')->first();
             if (null !== $role) {
                 $user->assignRole($role);
-            } else {
-                Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
+                return;
             }
+            Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
         }
     }
 }
