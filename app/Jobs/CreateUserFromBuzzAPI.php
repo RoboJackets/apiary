@@ -68,7 +68,7 @@ class CreateUserFromBuzzAPI implements ShouldQueue
             return;
         }
 
-        $peopleResponse = BuzzAPI::select(['gtGTID', 'mail', 'sn', 'givenName', 'eduPersonPrimaryAffiliation', 'gtPrimaryGTAccountUsername'])
+        $peopleResponse = BuzzAPI::select('gtGTID', 'mail', 'sn', 'givenName', 'eduPersonPrimaryAffiliation', 'gtPrimaryGTAccountUsername')
             ->from(Resources::GTED_PEOPLE)
             ->where([$this->identifier => $this->value])
             ->get();

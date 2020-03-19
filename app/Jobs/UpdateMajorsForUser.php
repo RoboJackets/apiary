@@ -62,7 +62,7 @@ class UpdateMajorsForUser implements ShouldQueue
             throw new Exception('Attempted to run UpdateMajorsForUser on a service account');
         }
 
-        $accountResponse = BuzzAPI::select(['gtAccountEntitlement'])
+        $accountResponse = BuzzAPI::select('gtAccountEntitlement')
             ->from(Resources::GTED_ACCOUNT)
             ->where(['uid' => $this->username])
             ->get();
