@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "043a1c318de39632a805999a153748e8",
+    "content-hash": "29d39a3fd69b459db969e3d0834ee8a6",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3079,7 +3079,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.gatech.edu:OIT-NetworkServices/BuzzAPIClient.git",
+                "url": "https://github.gatech.edu/OIT-NetworkServices/BuzzAPIClient.git",
                 "reference": "f8214e9146b5cc3730e60b29023173e86e2b1aa5"
             },
             "dist": {
