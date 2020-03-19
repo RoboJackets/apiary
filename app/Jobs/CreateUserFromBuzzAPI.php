@@ -95,7 +95,7 @@ class CreateUserFromBuzzAPI implements ShouldQueue
         $user = User::where('uid', $person->gtPrimaryGTAccountUsername)->first();
         if (null === $user) {
             $user = new User();
-            $user->create_reason = 'buzzapi-job';
+            $user->create_reason = 'buzzapi_job';
             $user->is_service_account = false;
         }
         if ($user->is_service_account) {
