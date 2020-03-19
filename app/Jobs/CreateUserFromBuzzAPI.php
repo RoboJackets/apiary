@@ -110,6 +110,7 @@ class CreateUserFromBuzzAPI implements ShouldQueue
             $role = Role::where('name', 'non-member')->first();
             if (null !== $role) {
                 $user->assignRole($role);
+
                 return;
             }
             Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);

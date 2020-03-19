@@ -31,7 +31,7 @@ class UpdateMajorsForUser implements ShouldQueue
     /**
      * The user for which to update majors.
      *
-     * @var App\User
+     * @var \App\User
      */
     private $user;
 

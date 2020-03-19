@@ -17,6 +17,7 @@ class AttendanceObserver
             // not have access to anything with Jedi anyway.
             CreateUserFromBuzzAPI::dispatch(CreateUserFromBuzzAPI::IDENTIFIER_GTID, $attendance->gtid)
                 ->onQueue('buzzapi');
+
             return;
         }
 
