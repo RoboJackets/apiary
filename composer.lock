@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "249b97c510f9dbb3c09288f1750722a3",
+    "content-hash": "043a1c318de39632a805999a153748e8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3076,17 +3076,17 @@
         },
         {
             "name": "oitnetworkservices/buzzapiclient",
-            "version": "0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:OIT-NetworkServices/BuzzAPIClient.git",
-                "reference": "9ba9a11a5a3f22eb67ca93692201047332b3b071"
+                "reference": "f8214e9146b5cc3730e60b29023173e86e2b1aa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.ns.gatech.edu/dist/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-0.1-2e065c.zip",
-                "reference": "9ba9a11a5a3f22eb67ca93692201047332b3b071",
-                "shasum": "85e3c9b89f4eb07eb496ed70e4be02b8854986c3"
+                "url": "https://packages.ns.gatech.edu/dist/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-dev-master-2da4f8.zip",
+                "reference": "f8214e9146b5cc3730e60b29023173e86e2b1aa5",
+                "shasum": "c88fa83094020ea35204592bde394316830dd7e2"
             },
             "require": {
                 "ext-json": "*",
@@ -3125,7 +3125,7 @@
                 }
             ],
             "description": "BuzzAPI Client Library",
-            "time": "2020-03-11T22:15:42+00:00"
+            "time": "2020-03-19T17:46:03+00:00"
         },
         {
             "name": "opis/closure",
@@ -8486,6 +8486,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "oitnetworkservices/buzzapiclient": 20,
         "uxweb/sweet-alert": 20
     },
     "prefer-stable": true,
