@@ -29,7 +29,7 @@ class SyncAccess extends Action
     public function handle(ActionFields $fields, Collection $models): void
     {
         foreach ($models as $user) {
-            if (Str::startsWith($user->uid, 'svc_')) {
+            if ($user->is_service_account) {
                 continue;
             }
 
