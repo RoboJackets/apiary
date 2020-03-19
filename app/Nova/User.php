@@ -467,6 +467,13 @@ class User extends Resource
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->can('read-users-resume') && $request->user()->id === $user->id;
                 }),
+            (new Actions\UpdateMajors())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin');
+                }),
         ];
     }
 }
