@@ -10,6 +10,7 @@ use App\Http\Requests\StatisticsAttendanceRequest;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Http\Resources\Attendance as AttendanceResource;
+use App\Jobs\CreateUserFromBuzzAPI;
 use App\Jobs\PushToJedi;
 use App\Team;
 use App\Traits\AuthorizeInclude;
@@ -77,6 +78,10 @@ class AttendanceController extends Controller
                 Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
                 $att = Attendance::create($request->all());
                 $code = 201;
+
+                if (null === $att->attendee) {
+                    CreateUserFromBuzzAPI::dispatch(CreateUserFromBuzzAPI::IDENTIFIER_GTID, $att->gtid);
+                }
             }
         } catch (QueryException $e) {
             Bugsnag::notifyException($e);
