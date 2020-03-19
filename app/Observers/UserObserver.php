@@ -10,6 +10,15 @@ use DateTime;
 
 class UserObserver
 {
+    public function created(User $user): void
+    {
+        if ('cas_login' === $user->create_reason) {
+            return;
+        }
+
+        UpdateMajorsForUser::dispatch($user)->onQueue('buzzapi');
+    }
+
     public function saved(User $user): void
     {
         PushToJedi::dispatch($user, User::class, $user->id, 'saved')->onQueue('jedi');
