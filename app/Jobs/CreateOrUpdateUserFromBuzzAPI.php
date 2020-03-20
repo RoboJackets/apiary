@@ -12,6 +12,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use OITNetworkServices\BuzzAPI;
 use OITNetworkServices\BuzzAPI\Resources;
@@ -22,6 +23,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
+    use SerializesModels;
 
     public const IDENTIFIER_GTID = 'gtid';
     public const IDENTIFIER_USERNAME = 'uid';
