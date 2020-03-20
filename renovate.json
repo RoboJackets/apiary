@@ -13,8 +13,7 @@
     "ignoreDeps": [
         "square/connect",
         "spatie/laravel-sluggable",
-        "beyondcode/laravel-dump-server",
-        "oitnetworkservices/buzzapiclient"
+        "beyondcode/laravel-dump-server"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
