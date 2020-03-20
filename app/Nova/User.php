@@ -342,6 +342,9 @@ class User extends Resource
                 ->hideFromIndex()
                 ->required(),
 
+            Text::make('gtDirGUID')
+                ->hideFromIndex(),
+
             MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
