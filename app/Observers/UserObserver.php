@@ -4,12 +4,23 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Jobs\PushToJedi;
 use App\User;
 use DateTime;
 
 class UserObserver
 {
+    public function created(User $user): void
+    {
+        if ('cas_login' === $user->create_reason) {
+            return;
+        }
+
+        CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user)
+            ->onQueue('buzzapi');
+    }
+
     public function saved(User $user): void
     {
         PushToJedi::dispatch($user, User::class, $user->id, 'saved')->onQueue('jedi');

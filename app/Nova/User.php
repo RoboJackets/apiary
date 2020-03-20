@@ -88,9 +88,13 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'max:127'),
 
-            Text::make('Primary Affiliation')
+            Text::make('GTED Primary Affiliation', 'primary_affiliation')
                 ->resolveUsing(static function (?string $affiliation): ?string {
-                    return null === $affiliation ? null : ucfirst($affiliation);
+                    return null === $affiliation || 'member' === $affiliation ? null : ucfirst($affiliation);
+                })
+                ->canSee(static function (Request $request): bool {
+                    // Hidden to non-admins because it's confusing and not useful
+                    return $request->user()->hasRole('admin');
                 })
                 ->onlyOnDetail(),
 
@@ -466,6 +470,13 @@ class User extends Resource
                 })
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->can('read-users-resume') && $request->user()->id === $user->id;
+                }),
+            (new Actions\UpdateMajors())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->canRun(static function (Request $request, AU $user): bool {
+                    return $request->user()->hasRole('admin');
                 }),
         ];
     }

@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Attendance;
+use App\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
@@ -55,6 +56,8 @@ class ExportAttendance extends Action
 
         // Iterate over each GTID, transforming it into an array of attendables to counts, then ensure every row has
         // all columns
+
+        // Transform the attendance records into [gtid => [attendable => count, ...], ...]
         $collection = $models->groupBy('gtid')
             ->map(static function (Collection $records) use (&$attendables): Collection {
                 // Group the attendance records for that GTID by the attendable
@@ -74,6 +77,8 @@ class ExportAttendance extends Action
                 return [$attendable => 0];
             });
 
+        // Ensure each value in the previous arrary has all possible attendable keys, then prepend the GTID:
+        // [gtid => ['GTID' => gtid, attendable => count, attendable => count, ...], ...]
         $collection = $collection->map(static function (Collection $columns, int $gtid) use ($attendables): Collection {
             return $columns->union($attendables)->sortKeys()->prepend($gtid, 'GTID');
         });
@@ -84,10 +89,16 @@ class ExportAttendance extends Action
 
         $attendables_array = $attendables->sortKeys()->keys()->all();
 
-        Storage::append($file, 'GTID,'.implode(',', $attendables_array));
+        Storage::append($file, 'Name,Email,Major,'.implode(',', $attendables_array));
 
         foreach ($collection as $person) {
-            $row = $person->get('GTID');
+            $user = User::where('gtid', $person->get('GTID'))->first();
+            if (null === $user) {
+                // Skip when there's not a user because it's likely to not be a valid GTID.
+                continue;
+            }
+            $majors = $user->majors->pluck('whitepages_ou')->join('/');
+            $row = $user->full_name.','.$user->gt_email.','.$majors;
             foreach ($attendables_array as $attendable) {
                 $row .= ','.$person->get($attendable);
             }
