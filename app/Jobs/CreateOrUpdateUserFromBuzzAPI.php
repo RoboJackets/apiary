@@ -75,18 +75,19 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         // This exists so we can easily migrate to searching by a different identifier in the future. The is_int call
         // is necessary to avoid calling is_a with an integer value.
         $searchUid = null;
+        $searchValue = null;
         if (! is_int($this->value) && $this->value instanceof User) {
             $searchUid = $this->value->uid;
             if (null === $this->value->gtDirGUID) {
                 $this->identifier = self::IDENTIFIER_USERNAME;
-                $this->value = $this->value->uid;
+                $searchValue = $this->value->uid;
             } else {
                 $this->identifier = self::IDENTIFIER_GTDIRGUID;
-                $this->value = $this->value->gtDirGUID;
+                $searchValue = $this->value->gtDirGUID;
             }
+        } else {
+            $searchValue = $this->value;
         }
-
-        /* @var int|string $this->value */
 
         $accountsResponse = BuzzAPI::select(
             'gtGTID',
