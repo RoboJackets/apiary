@@ -10,18 +10,16 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use OITNetworkServices\BuzzAPI;
 use OITNetworkServices\BuzzAPI\Resources;
 use Spatie\Permission\Models\Role;
 
-class CreateUserFromBuzzAPI implements ShouldQueue
+class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
-    use SerializesModels;
 
     public const IDENTIFIER_GTID = 'gtid';
     // @phan-suppress-next-line PhanUnreferencedPublicClassConstant
@@ -37,14 +35,14 @@ class CreateUserFromBuzzAPI implements ShouldQueue
     public $tries = 1;
 
     /**
-     * The identifier to search for the person with.
+     * The identifier to search for the account with.
      *
      * @var string
      */
     private $identifier;
 
     /**
-     * The value of the identifier to search for the person with.
+     * The value of the identifier to search for the account with.
      *
      * @var string|int
      */
@@ -59,7 +57,6 @@ class CreateUserFromBuzzAPI implements ShouldQueue
     {
         $this->identifier = $identifier;
         $this->value = $value;
-        $this->tries = 1;
         $this->queue = 'buzzapi';
     }
 
@@ -72,46 +69,57 @@ class CreateUserFromBuzzAPI implements ShouldQueue
             return;
         }
 
-        $peopleResponse = BuzzAPI::select(
+        $accountsResponse = BuzzAPI::select(
             'gtGTID',
             'mail',
             'sn',
             'givenName',
             'eduPersonPrimaryAffiliation',
-            'gtPrimaryGTAccountUsername'
-        )->from(Resources::GTED_PEOPLE)
+            'gtPrimaryGTAccountUsername',
+            'gtAccountEntitlement'
+        )->from(Resources::GTED_ACCOUNTS)
         ->where([$this->identifier => $this->value])
         ->get();
 
-        if (! $peopleResponse->isSuccessful()) {
-            throw new Exception('GTED people search failed with message '.$peopleResponse->errorInfo()->message);
+        if (! $accountsResponse->isSuccessful()) {
+            throw new Exception('GTED accounts search failed with message '.$accountsResponse->errorInfo()->message);
         }
-        if (0 === count($peopleResponse->json->api_result_data)) {
-            throw new Exception('GTED people search was successful but gave no results');
+        $numResults = count($accountsResponse->json->api_result_data);
+        if (0 === $numResults) {
+            throw new Exception('GTED accounts search was successful but gave no results');
         }
 
-        $person = $peopleResponse->first();
+        $account = $accountsResponse->first();
+        // If there's multiple results, find the one for their primary GT account. If there's only one (we're searching
+        // by the uid or GUID of that account), just use that one.
+        if (1 !== numResults) {
+            $primaryUid = $account->gtPrimaryGTAccountUsername;
+            $account = collect($accountsResponse->json->api_result_data)->firstWhere('uid', $primaryUid);
+        }
 
-        $user = User::where('uid', $person->gtPrimaryGTAccountUsername)->first();
-        if (null === $user) {
+        $user = User::where('uid', $account->uid)->first();
+        $userIsNew = null === $user;
+        if ($userIsNew) {
             $user = new User();
             $user->create_reason = 'buzzapi_job';
             $user->is_service_account = false;
+            $user->has_ever_logged_in = false;
         }
         if ($user->is_service_account) {
-            throw new Exception('BuzzAPI job attempted to create an account for an existing service account');
+            throw new Exception('BuzzAPI job attempted to create/update an account for an existing service account');
         }
-        $user->uid = $person->gtPrimaryGTAccountUsername;
-        $user->gtid = $person->gtGTID;
-        $user->gt_email = $person->mail;
-        $user->first_name = $person->givenName;
-        $user->last_name = $person->sn;
-        $user->primary_affiliation = $person->eduPersonPrimaryAffiliation;
-        $user->has_ever_logged_in = false;
+        $user->uid = $account->uid;
+        $user->gtid = $account->gtGTID;
+        $user->gt_email = $account->mail;
+        $user->first_name = $account->givenName;
+        $user->last_name = $account->sn;
+        $user->primary_affiliation = $account->eduPersonPrimaryAffiliation;
+        $user->gtDirGUID = $account->gtPersonDirectoryID;
         $user->save();
+        $user->syncMajorsFromAccountEntitlements($account->gtAccountEntitlement);
 
         // Initial role assignment
-        if (! $user->wasRecentlyCreated && 0 !== $user->roles->count()) {
+        if (! $userIsNew && 0 !== $user->roles->count()) {
             return;
         }
 
