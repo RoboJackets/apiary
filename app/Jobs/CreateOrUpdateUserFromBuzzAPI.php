@@ -55,8 +55,9 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
      */
     public function __construct(string $identifier, $value)
     {
-        // This exists so we can easily migrate to searching by a different identifier in the future.
-        if (self::IDENTIFIER_USER === $identifier || is_a($value, User::class)) {
+        // This exists so we can easily migrate to searching by a different identifier in the future. The is_int call
+        // is necessary to avoid calling is_a with an integer value.
+        if (self::IDENTIFIER_USER === $identifier || (! is_int($value) && is_a($value, User::class))) {
             $identifier = self::IDENTIFIER_USERNAME;
             $value = $value->uid;
         }
