@@ -22,10 +22,10 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     use Queueable;
 
     public const IDENTIFIER_GTID = 'gtid';
-    // @phan-suppress-next-line PhanUnreferencedPublicClassConstant
     public const IDENTIFIER_USERNAME = 'uid';
     // @phan-suppress-next-line PhanUnreferencedPublicClassConstant
     public const IDENTIFIER_MAIL = 'email';
+    public const IDENTIFIER_USER = 'user';
 
     /**
      * The number of attempts for this job.
@@ -51,10 +51,15 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param string|int $value
+     * @param string|int|\App\User $value
      */
     public function __construct(string $identifier, $value)
     {
+        // This exists so we can easily migrate to searching by a different identifier in the future.
+        if (IDENTIFIER_USER === $identifier) {
+            $identifier = IDENTIFIER_USERNAME;
+            $value = $value->uid;
+        }
         $this->identifier = $identifier;
         $this->value = $value;
         $this->queue = 'buzzapi';

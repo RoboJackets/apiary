@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Jobs\UpdateMajorsForUser;
+use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -30,7 +30,8 @@ class UpdateMajors extends Action
                 continue;
             }
 
-            UpdateMajorsForUser::dispatch($user)->onQueue('buzzapi');
+            CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user)
+                ->onQueue('buzzapi');
         }
     }
 
