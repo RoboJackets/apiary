@@ -114,7 +114,6 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $user->first_name = $account->givenName;
         $user->last_name = $account->sn;
         $user->primary_affiliation = $account->eduPersonPrimaryAffiliation;
-        $user->gtDirGUID = $account->gtPersonDirectoryID;
         $user->save();
         $user->syncMajorsFromAccountEntitlements($account->gtAccountEntitlement);
 
