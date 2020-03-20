@@ -86,6 +86,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             }
         }
 
+        /* @var int|string $this->value */
+
         $accountsResponse = BuzzAPI::select(
             'gtGTID',
             'mail',
