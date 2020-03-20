@@ -25,7 +25,7 @@
         "laravel/socialite": "4.3.2",
         "laravel/tinker": "1.0.10",
         "maatwebsite/laravel-nova-excel": "1.2.1",
-        "oitnetworkservices/buzzapiclient": "^0.1.1",
+        "oitnetworkservices/buzzapiclient": "0.1.1",
         "predis/predis": "1.1.1",
         "robojackets/error-pages": "2.1.1",
         "robojackets/network-check": "1.0.1",
