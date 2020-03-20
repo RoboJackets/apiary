@@ -100,7 +100,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'gtAccountEntitlement',
             'uid'
         )->from(Resources::GTED_ACCOUNTS)
-        ->where([$this->identifier => $this->value])
+        ->where([$this->identifier => $searchValue])
         ->get();
 
         if (! $accountsResponse->isSuccessful()) {
