@@ -73,14 +73,14 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         // This exists so we can easily migrate to searching by a different identifier in the future. The is_int call
         // is necessary to avoid calling is_a with an integer value.
         $searchUid = null;
-        if (! is_int($this->value) && is_a($this->value, User::class)) {
+        if (! is_int($this->value) && $this->value instanceof User) {
             $searchUid = $this->value->uid;
             if (null === $this->value->gtDirGUID) {
                 $this->identifier = self::IDENTIFIER_USERNAME;
-                $this->value = $value->uid;
+                $this->value = $this->value->uid;
             } else {
                 $this->identifier = self::IDENTIFIER_GTDIRGUID;
-                $this->value = $value->gtDirGUID;
+                $this->value = $this->value->gtDirGUID;
             }
         }
 
@@ -107,7 +107,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
         // If there's multiple results, find the one for their primary GT account or of the User we're searching for.
         // If there's only one (we're searching by the uid of that account), just use that one.
-        $searchUid = $searchUid ?? $account->gtPrimaryGTAccountUsername;
+        $searchUid ??= $accountsResponse->first()->gtPrimaryGTAccountUsername;
         $account = collect($accountsResponse->json->api_result_data)->firstWhere('uid', $searchUid);
 
         $user = User::where('uid', $account->uid)->first();
