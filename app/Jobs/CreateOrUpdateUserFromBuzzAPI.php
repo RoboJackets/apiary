@@ -76,7 +76,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         // is necessary to avoid calling is_a with an integer value.
         $searchUid = null;
         $searchValue = null;
-        if (! is_int($this->value) && $this->value instanceof User) {
+        if ($this->value instanceof User) {
             $searchUid = $this->value->uid;
             if (null === $this->value->gtDirGUID) {
                 $this->identifier = self::IDENTIFIER_USERNAME;
