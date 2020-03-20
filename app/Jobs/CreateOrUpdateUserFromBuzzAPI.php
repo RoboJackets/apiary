@@ -56,8 +56,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     public function __construct(string $identifier, $value)
     {
         // This exists so we can easily migrate to searching by a different identifier in the future.
-        if (IDENTIFIER_USER === $identifier) {
-            $identifier = IDENTIFIER_USERNAME;
+        if (CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER === $identifier) {
+            $identifier = CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USERNAME;
             $value = $value->uid;
         }
         $this->identifier = $identifier;
@@ -81,7 +81,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'givenName',
             'eduPersonPrimaryAffiliation',
             'gtPrimaryGTAccountUsername',
-            'gtAccountEntitlement'
+            'gtAccountEntitlement',
+            'uid'
         )->from(Resources::GTED_ACCOUNTS)
         ->where([$this->identifier => $this->value])
         ->get();
@@ -97,7 +98,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $account = $accountsResponse->first();
         // If there's multiple results, find the one for their primary GT account. If there's only one (we're searching
         // by the uid or GUID of that account), just use that one.
-        if (1 !== numResults) {
+        if (1 !== $numResults) {
             $primaryUid = $account->gtPrimaryGTAccountUsername;
             $account = collect($accountsResponse->json->api_result_data)->firstWhere('uid', $primaryUid);
         }
