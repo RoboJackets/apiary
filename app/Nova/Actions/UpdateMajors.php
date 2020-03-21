@@ -30,7 +30,8 @@ class UpdateMajors extends Action
                 continue;
             }
 
-            CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, null)
+            // It's not possible for users to be created here but the parameter is required.
+            CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, 'nova_action')
                 ->onQueue('buzzapi');
         }
     }

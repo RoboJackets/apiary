@@ -56,7 +56,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     /**
      * The reason the user is being created (or null if the user is not being created).
      *
-     * @var ?string
+     * @var string
      */
     private $reason;
 
@@ -65,7 +65,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
      *
      * @param string|int|\App\User $value
      */
-    public function __construct(string $identifier, $value, ?string $reason)
+    public function __construct(string $identifier, $value, string $reason)
     {
         $this->identifier = $identifier;
         $this->value = $value;
