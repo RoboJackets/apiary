@@ -80,7 +80,7 @@ class PushToJedi implements ShouldQueue
 
         // Skip users who have never logged in as they will not have access to anything. This allows running on every
         // user but saving some time.
-        if (! $this->user->has_logged_in) {
+        if (! $this->user->has_ever_logged_in) {
             return;
         }
 
