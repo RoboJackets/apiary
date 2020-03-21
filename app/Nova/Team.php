@@ -172,7 +172,7 @@ class Team extends Resource
             Text::make('Link', 'attendance_secret')
                 ->hideFromIndex()
                 ->resolveUsing(static function (?string $secret): ?string {
-                    return null === $secret ? null : config('app.url').'/attendance/remote/'.$secret;
+                    return null === $secret ? null : config('app.url').'attendance/remote/'.$secret;
                 })
                 ->readonly(static function (Request $request): bool {
                     return ! $request->user()->hasRole('admin');
