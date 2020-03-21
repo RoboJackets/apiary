@@ -54,14 +54,22 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     private $value;
 
     /**
+     * The reason the user is being created (or null if the user is not being created).
+     *
+     * @var string
+     */
+    private $reason;
+
+    /**
      * Create a new job instance.
      *
      * @param string|int|\App\User $value
      */
-    public function __construct(string $identifier, $value)
+    public function __construct(string $identifier, $value, string $reason)
     {
         $this->identifier = $identifier;
         $this->value = $value;
+        $this->reason = $reason;
         $this->queue = 'buzzapi';
     }
 
@@ -120,7 +128,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $userIsNew = null === $user;
         if ($userIsNew) {
             $user = new User();
-            $user->create_reason = 'buzzapi_job';
+            $user->create_reason = $this->reason;
             $user->is_service_account = false;
             $user->has_ever_logged_in = false;
         }

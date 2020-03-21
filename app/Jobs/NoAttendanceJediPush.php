@@ -40,7 +40,7 @@ class NoAttendanceJediPush implements ShouldQueue
         })->get();
 
         foreach ($users as $user) {
-            PushToJedi::dispatch($user, self::class, -1, 'no_attendance')->onQueue('jedi');
+            PushToJedi::dispatch($user, self::class, -1, 'no attendance');
         }
     }
 }
