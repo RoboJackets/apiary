@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\ClassStanding;
 use App\Major;
 use App\Team;
 use App\User;
@@ -149,6 +150,21 @@ class UserPolicy
     }
 
     public function detachMajor(User $user, User $userResource, Major $major): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function attachClassStanding(User $user, User $userResource, ClassStanding $classStanding): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function attachAnyClassStanding(User $user, User $userResource): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function detachClassStanding(User $user, User $userResource, ClassStanding $classStanding): bool
     {
         return $user->hasRole('admin');
     }

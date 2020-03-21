@@ -83,6 +83,16 @@ trait CreateOrUpdateCASUser
         $user->has_ever_logged_in = true;
         $user->save();
         $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement'));
+        $standing_count = $user->syncClassStandingFromAccountEntitlements(
+            $this->cas->getAttribute('gtAccountEntitlement')
+        );
+
+        if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
+            Log::warning(
+                self::class.': User '.$user->uid
+                .' has primary affiliation of student but '.$standing_count.' class standings. Check data integrity.'
+            );
+        }
 
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {

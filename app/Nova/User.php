@@ -236,6 +236,11 @@ class User extends Resource
                     return ! $request->user()->hasRole('admin');
                 }),
 
+            BelongsToMany::make('Class Standing')
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                }),
+
             BelongsToMany::make('Teams')
                 ->canSee(static function (Request $request): bool {
                     if ($request->resourceId === $request->user()->id) {
