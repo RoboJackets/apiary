@@ -87,10 +87,10 @@ trait CreateOrUpdateCASUser
             $this->cas->getAttribute('gtAccountEntitlement')
         );
 
-        if ('student' === $user->primary_affiliation && 0 === $standing_count) {
+        if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
             Log::warning(
                 self::class.': User '.$user->uid
-                .' has primary affiliation of student but no class standings. Check data integrity.'
+                .' has primary affiliation of student but '.$standing_count.' class standings. Check data integrity.'
             );
         }
 
