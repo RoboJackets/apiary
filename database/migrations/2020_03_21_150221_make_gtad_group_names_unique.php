@@ -23,7 +23,7 @@ class MakeGtadGroupNamesUnique extends Migration
      */
     public function down(): void
     {
-        Schema::table('geo', static function (Blueprint $table): void {
+        Schema::table('majors', static function (Blueprint $table): void {
             $table->dropIndex(['gtad_majorgroup_name']);
         });
     }
