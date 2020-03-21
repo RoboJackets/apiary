@@ -31,6 +31,7 @@ class DuesPackageExpiration implements ShouldQueue
     public function __construct(DuesPackage $package)
     {
         $this->package = $package;
+        $this->queue = 'jedi';
     }
 
     /**
@@ -39,8 +40,7 @@ class DuesPackageExpiration implements ShouldQueue
     public function handle(): void
     {
         foreach ($this->package->transactions as $transaction) {
-            PushToJedi::dispatch($transaction->user, DuesPackage::class, $this->package->id, 'expiration')
-                ->onQueue('jedi');
+            PushToJedi::dispatch($transaction->user, DuesPackage::class, $this->package->id, 'expiration');
         }
     }
 }

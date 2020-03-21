@@ -11,22 +11,9 @@ use DateTime;
 
 class UserObserver
 {
-    public function created(User $user): void
-    {
-        if ('cas_login' === $user->create_reason) {
-            return;
-        }
-
-        CreateOrUpdateUserFromBuzzAPI::dispatch(
-            CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER,
-            $user,
-            'buzzapi_user_observer'
-        )->onQueue('buzzapi');
-    }
-
     public function saved(User $user): void
     {
-        PushToJedi::dispatch($user, User::class, $user->id, 'saved')->onQueue('jedi');
+        PushToJedi::dispatch($user, User::class, $user->id, 'saved');
     }
 
     public function updated(User $user): void
@@ -35,7 +22,7 @@ class UserObserver
             return;
         }
 
-        PushToJedi::dispatch($user, User::class, $user->id, 'updated/access override expiration')
-            ->delay($user->access_override_until)->onQueue('jedi');
+        PushToJedi::dispatch($user, User::class, $user->id, 'updated or access override expiration')
+            ->delay($user->access_override_until);
     }
 }

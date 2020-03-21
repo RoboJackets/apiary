@@ -18,12 +18,12 @@ class AttendanceObserver
             CreateOrUpdateUserFromBuzzAPI::dispatch(
                 CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_GTID,
                 $attendance->gtid,
-                'buzzapi_attendance'
-            )->onQueue('buzzapi');
+                'attendance'
+            );
 
             return;
         }
 
-        PushToJedi::dispatch($attendance->attendee, Attendance::class, $attendance->id, 'saved')->onQueue('jedi');
+        PushToJedi::dispatch($attendance->attendee, Attendance::class, $attendance->id, 'saved');
     }
 }
