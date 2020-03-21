@@ -16,6 +16,7 @@ class RemoteAttendanceController extends Controller
         $team = Team::where('attendance_secret', $secret)->get()->first();
 
         if (null === $team
+            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
             || $team->attendance_secret_expiration < Carbon::now('America/New_York')
         ) {
             return view(
