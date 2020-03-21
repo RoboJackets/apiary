@@ -14,7 +14,7 @@ class CreateClassStandingsTable extends Migration
     public function up(): void
     {
         Schema::create('class_standings', static function (Blueprint $table): void {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name')->unique();
             $table->timestamps();
         });
