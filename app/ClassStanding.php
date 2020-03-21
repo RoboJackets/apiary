@@ -40,14 +40,14 @@ class ClassStanding extends Model
 
     public static function findOrCreateFromName(string $name): self
     {
-        $major = self::where('name', strtolower($name))->first();
+        $classStanding = self::where('name', strtolower($name))->first();
 
-        if (null === $major) {
-            $major = new self();
-            $major->name = strtolower($name);
-            $major->save();
+        if (null === $classStanding) {
+            $classStanding = new self();
+            $classStanding->name = strtolower($name);
+            $classStanding->save();
         }
 
-        return $major;
+        return $classStanding;
     }
 }

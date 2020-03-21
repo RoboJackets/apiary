@@ -12,11 +12,18 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class UpdateMajors extends Action
+class RefreshFromGTED extends Action
 {
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
+    /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Refresh from GTED';
 
     /**
      * Perform the action on the given models.
@@ -30,8 +37,7 @@ class UpdateMajors extends Action
                 continue;
             }
 
-            CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user)
-                ->onQueue('buzzapi');
+            CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user);
         }
     }
 
