@@ -136,6 +136,14 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $user->gtDirGUID = $account->gtPersonDirectoryId;
         $user->save();
         $user->syncMajorsFromAccountEntitlements($account->gtAccountEntitlement);
+        $standing_count = $user->syncClassStandingFromAccountEntitlements($account->gtAccountEntitlement);
+
+        if ('student' === $user->primary_affiliation && 0 === $standing_count) {
+            Log::warning(
+                self::class.': User '.$user->uid
+                .' has primary affiliation of student but no class standings. Check data integrity.'
+            );
+        }
 
         // Initial role assignment
         if (! $userIsNew && 0 !== $user->roles->count()) {

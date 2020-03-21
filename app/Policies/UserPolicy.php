@@ -152,4 +152,19 @@ class UserPolicy
     {
         return $user->hasRole('admin');
     }
+
+    public function attachClassStanding(User $user, User $userResource, ClassStanding $classStanding): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function attachAnyClassStanding(User $user, User $userResource): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function detachClassStanding(User $user, User $userResource, ClassStanding $classStanding): bool
+    {
+        return $user->hasRole('admin');
+    }
 }
