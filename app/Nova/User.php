@@ -236,7 +236,7 @@ class User extends Resource
                     return ! $request->user()->hasRole('admin');
                 }),
 
-            BelongsToMany::make('Class Standing')
+            BelongsToMany::make('Class Standing', 'classStanding')
                 ->readonly(static function (Request $request): bool {
                     return ! $request->user()->hasRole('admin');
                 }),
