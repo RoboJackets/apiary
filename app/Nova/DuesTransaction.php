@@ -54,6 +54,13 @@ class DuesTransaction extends Resource
     }
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Dues';
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array

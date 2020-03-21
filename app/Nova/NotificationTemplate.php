@@ -44,6 +44,13 @@ class NotificationTemplate extends Resource
     public static $title = 'name';
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Other';
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
