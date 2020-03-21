@@ -30,7 +30,7 @@ class UpdateMajors extends Action
                 continue;
             }
 
-            CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user)
+            CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, null)
                 ->onQueue('buzzapi');
         }
     }

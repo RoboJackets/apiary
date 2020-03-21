@@ -17,7 +17,7 @@ class UserObserver
             return;
         }
 
-        CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user)
+        CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, 'buzzapi_user_observer')
             ->onQueue('buzzapi');
     }
 
