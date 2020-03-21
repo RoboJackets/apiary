@@ -40,8 +40,14 @@ class User extends Authenticatable
     use HasBelongsToManyEvents;
     use HasRelationshipObservables;
 
-    private const ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
-    private const ENTITLEMENT_PREFIX_LENGTH = 38;
+    private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
+    private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
+
+    // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
+    private const STANDING_ENTITLEMENT_PREFIX =
+        '/gt/central/services/office365/gtad-attributes/gtad-extensionattribute14=office365:';
+    // phpcs:enable
+    private const STANDING_ENTITLEMENT_PREFIX_LENGTH = 83;
 
     /**
      * The accessors to append to the model's array form.
@@ -236,6 +242,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Major::class)->whereNull('major_user.deleted_at')->withTimestamps();
     }
 
+    public function classStanding(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            ClassStanding::class
+        )->whereNull(
+            'class_standing_user.deleted_at'
+        )->withTimestamps();
+    }
+
     /**
      * Route notifications for the mail channel.
      * Send to GT email when present and fall back to personal email if not.
@@ -410,7 +425,7 @@ class User extends Authenticatable
         $new_major_ids = [];
 
         foreach ($accountEntitlements as $entitlement) {
-            if (self::ENTITLEMENT_PREFIX !== substr($entitlement, 0, self::ENTITLEMENT_PREFIX_LENGTH)) {
+            if (self::MAJOR_ENTITLEMENT_PREFIX !== substr($entitlement, 0, self::MAJOR_ENTITLEMENT_PREFIX_LENGTH)) {
                 continue;
             }
 
@@ -418,7 +433,7 @@ class User extends Authenticatable
                 // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
                 substr(
                     $entitlement,
-                    self::ENTITLEMENT_PREFIX_LENGTH
+                    self::MAJOR_ENTITLEMENT_PREFIX_LENGTH
                 )
             )->id;
         }
@@ -438,5 +453,55 @@ class User extends Authenticatable
 
             $this->majors()->updateExistingPivot($current_major_id, ['deleted_at' => Carbon::now()]);
         }
+    }
+
+    /**
+     * Synchronizes major relationship with a given list of gtAccountEntitlements.
+     *
+     * @param array<string>  $accountEntitlements
+     */
+    public function syncClassStandingFromAccountEntitlements(array $accountEntitlements): int
+    {
+        $current_class_standings = $this->classStanding()->get()->pluck('id')->toArray();
+
+        $new_class_standings = [];
+
+        foreach ($accountEntitlements as $entitlement) {
+            if (self::STANDING_ENTITLEMENT_PREFIX !== substr(
+                $entitlement,
+                0,
+                self::STANDING_ENTITLEMENT_PREFIX_LENGTH
+            )) {
+                continue;
+            }
+
+            $standing_name = explode(
+                '-',
+                substr(
+                    $entitlement,
+                    self::STANDING_ENTITLEMENT_PREFIX_LENGTH
+                )
+            )[0];
+
+            $new_class_standings[] = ClassStanding::findOrCreateFromName($standing_name)->id;
+        }
+
+        foreach ($new_class_standings as $new_class_standing) {
+            if (in_array($new_class_standing, $current_class_standings, true)) {
+                continue;
+            }
+
+            $this->classStanding()->attach($new_class_standing);
+        }
+
+        foreach ($current_class_standings as $current_class_standing) {
+            if (in_array($current_class_standing, $new_class_standings, true)) {
+                continue;
+            }
+
+            $this->classStanding()->updateExistingPivot($current_class_standing, ['deleted_at' => Carbon::now()]);
+        }
+
+        return count($new_class_standings);
     }
 }
