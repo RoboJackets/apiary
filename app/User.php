@@ -28,6 +28,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @property bool $is_active whether the user is currently active
  * @property bool $is_service_account whether the user is a service account (vs human)
+ * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
  * @property string $name the display name for this user
  */
 class User extends Authenticatable
