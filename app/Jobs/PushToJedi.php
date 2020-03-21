@@ -78,6 +78,12 @@ class PushToJedi implements ShouldQueue
             return;
         }
 
+        // Skip users who have never logged in as they will not have access to anything. This allows running on every
+        // user but saving some time.
+        if (! $this->user->has_logged_in) {
+            return;
+        }
+
         $lastAttendance = $this->user->attendance()->where('attendable_type', Team::class)
             ->orderBy('created_at', 'desc')->first();
 
