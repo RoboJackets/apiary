@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\ClassStanding;
 use App\Major;
 use App\Team;
 use App\User;

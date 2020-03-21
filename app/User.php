@@ -483,7 +483,7 @@ class User extends Authenticatable
                 )
             )[0];
 
-            $new_class_standings[] = ClassStanding::findOrCreate($standing_name)->id;
+            $new_class_standings[] = ClassStanding::findOrCreateFromName($standing_name)->id;
         }
 
         foreach ($new_class_standings as $new_class_standing) {

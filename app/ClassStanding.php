@@ -30,7 +30,6 @@ class ClassStanding extends Model
         'updated_at',
     ];
 
-
     /**
      *  Get the Users that are members of this ClassStanding.
      */
