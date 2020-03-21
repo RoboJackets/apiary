@@ -174,7 +174,7 @@ class Team extends Resource
                 ->resolveUsing(static function (?string $secret): ?string {
                     return null === $secret ? null : config('app.url').'/attendance/remote/'.$secret;
                 })
-                ->readOnly(static function (Request $request): bool {
+                ->readonly(static function (Request $request): bool {
                     // Hidden to non-admins because it's confusing and not useful
                     return ! $request->user()->hasRole('admin');
                 })
@@ -186,11 +186,11 @@ class Team extends Resource
 
             DateTime::make('Expiration', 'attendance_expiration')
                 ->hideFromIndex()
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                })
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('create-attendance');
-                })
-                ->readOnly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
                 }),
         ];
     }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\DateTime;
-use Carbon\Carbon;
 
 class ResetRemoteAttendance extends Action
 {
@@ -22,6 +22,10 @@ class ResetRemoteAttendance extends Action
 
     /**
      * Perform the action on the given models.
+     *
+     * @param \Illuminate\Support\Collection<\App\Team>  $models
+     *
+     * @return array<string,string>
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
