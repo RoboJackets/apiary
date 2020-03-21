@@ -31,6 +31,13 @@ class Major extends Resource
     public static $title = 'display_name';
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Demographics';
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>

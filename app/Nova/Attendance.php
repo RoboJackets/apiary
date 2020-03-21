@@ -66,6 +66,13 @@ class Attendance extends Resource
     public static $title = 'name';
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Meetings';
+
+    /**
      * The relationships that should be eager loaded on index queries.
      *
      * @var array<string>

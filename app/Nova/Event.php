@@ -38,6 +38,13 @@ class Event extends Resource
     public static $title = 'name';
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Meetings';
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
