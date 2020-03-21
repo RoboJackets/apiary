@@ -183,7 +183,7 @@ class Team extends Resource
                 ->creationRules('unique:teams,attendance_secret')
                 ->updateRules('unique:teams,attendance_secret,{{resourceId}}'),
 
-            DateTime::make('Expiration', 'attendance_expiration')
+            DateTime::make('Expiration', 'attendance_secret_expiration')
                 ->hideFromIndex()
                 ->readonly(static function (Request $request): bool {
                     return ! $request->user()->hasRole('admin');
@@ -275,7 +275,10 @@ class Team extends Resource
                 })
                 ->canRun(static function (Request $request): bool {
                     return $request->user()->can('create-attendance');
-                }),
+                })
+                ->confirmText('Are you sure you want to reset the remote attendance link?')
+                ->confirmButtonText('Reset Link')
+                ->cancelButtonText('Cancel'),
         ];
     }
 

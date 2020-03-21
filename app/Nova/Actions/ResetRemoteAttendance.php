@@ -29,10 +29,10 @@ class ResetRemoteAttendance extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $expiration = Carbon::now()->addHours(2);
+        $expiration = $fields['expiration_time'];
 
-        if (property_exists($fields, 'expiration_time')) {
-            $expiration = $fields->expiration_time;
+        if (null === $expiration) {
+            $expiration = Carbon::now()->addHours(1);
         }
 
         $team = $models->first();
@@ -53,7 +53,7 @@ class ResetRemoteAttendance extends Action
     {
         if (Auth::user()->hasRole('admin')) {
             return [
-                DateTime::make('Expiration Time')
+                DateTime::make('Expiration Time', 'expiration_time')
                     ->required(true)
                     ->help('When the remote attendance URL will expire'),
             ];
