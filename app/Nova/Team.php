@@ -175,7 +175,6 @@ class Team extends Resource
                     return null === $secret ? null : config('app.url').'/attendance/remote/'.$secret;
                 })
                 ->readonly(static function (Request $request): bool {
-                    // Hidden to non-admins because it's confusing and not useful
                     return ! $request->user()->hasRole('admin');
                 })
                 ->canSee(static function (Request $request): bool {
