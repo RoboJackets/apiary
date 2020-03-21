@@ -49,9 +49,23 @@ class Team extends Model
      * @var array<string>
      */
     protected $guarded = [
-        'id',
-        'deleted_at',
+        'attendance_secret',
+        'attendance_secret_expiration',
         'created_at',
+        'deleted_at',
+        'id',
+        'updated_at',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array<string>
+     */
+    protected $dates = [
+        'attendance_secret_expiration',
+        'created_at',
+        'deleted_at',
         'updated_at',
     ];
 

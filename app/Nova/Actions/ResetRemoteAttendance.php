@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Nova\Actions;
+
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\DateTime;
+use Carbon\Carbon;
+
+class ResetRemoteAttendance extends Action
+{
+    /**
+     * Indicates if this action is only available on the resource detail view.
+     *
+     * @var bool
+     */
+    public $onlyOnDetail = true;
+
+    /**
+     * Perform the action on the given models.
+     */
+    public function handle(ActionFields $fields, Collection $models): array
+    {
+        $expiration = Carbon::now()->addHours(2);
+
+        if (property_exists($fields, 'expiration_time')) {
+            $expiration = $fields->expiration_time;
+        }
+
+        $team = $models->first();
+
+        $team->attendance_secret = hash('sha256', random_bytes(64));
+        $team->attendance_secret_expiration = $expiration;
+        $team->save();
+
+        return Action::message('A new link has been generated!');
+    }
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array
+     */
+    public function fields(): array
+    {
+        if (Auth::user()->hasRole('admin')) {
+            return [
+                DateTime::make('Expiration Time')
+                    ->required(true)
+                    ->help('When the remote attendance URL will expire'),
+            ];
+        }
+
+        return [];
+    }
+}
