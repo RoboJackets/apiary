@@ -54,8 +54,8 @@ class ResetRemoteAttendance extends Action
         if (Auth::user()->hasRole('admin')) {
             return [
                 DateTime::make('Expiration Time', 'expiration_time')
-                    ->required(true)
-                    ->help('When the remote attendance URL will expire'),
+                    ->required(false)
+                    ->help('When the remote attendance URL will expire. Defaults to one hour in the future.'),
             ];
         }
 

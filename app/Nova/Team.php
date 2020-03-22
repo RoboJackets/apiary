@@ -170,15 +170,24 @@ class Team extends Resource
     {
         return [
             Text::make('Link', 'attendance_secret')
-                ->hideFromIndex()
+                ->onlyOnDetail()
                 ->resolveUsing(static function (?string $secret): ?string {
-                    return null === $secret ? null : config('app.url').'attendance/remote/'.$secret;
+                    return null === $secret ? null : route('attendance.remote', ['secret' => $secret]);
                 })
+                ->readonly(static function (Request $request): bool {
+                    return true;
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                }),
+
+            Text::make('Secret', 'attendance_secret')
+                ->onlyOnForms()
                 ->readonly(static function (Request $request): bool {
                     return ! $request->user()->hasRole('admin');
                 })
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
+                    return $request->user()->hasRole('admin');
                 })
                 ->creationRules('unique:teams,attendance_secret')
                 ->updateRules('unique:teams,attendance_secret,{{resourceId}}'),
