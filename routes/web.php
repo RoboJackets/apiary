@@ -149,6 +149,10 @@ Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth
 
 Route::view('attendance/kiosk', 'attendance.kiosk')->name('attendance.kiosk');
 
+Route::get('attendance/remote/{secret}', 'RemoteAttendanceController@index')
+    ->middleware('auth.cas.force')
+    ->name('attendance.remote');
+
 Route::get('login', static function (): RedirectResponse {
     return redirect()->intended();
 })->name('login')->middleware('auth.cas.force');

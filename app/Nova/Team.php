@@ -74,6 +74,8 @@ class Team extends Resource
                 ->searchable()
                 ->nullable(),
 
+            new Panel('Remote Attendance', $this->remoteAttendanceFields()),
+
             new Panel('Communications', $this->commFields()),
 
             new Panel('Controls', $this->controlFields()),
@@ -160,6 +162,48 @@ class Team extends Resource
     }
 
     /**
+     * Remote attendance fields.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function remoteAttendanceFields(): array
+    {
+        return [
+            Text::make('Link', 'attendance_secret')
+                ->onlyOnDetail()
+                ->resolveUsing(static function (?string $secret): ?string {
+                    return null === $secret ? null : route('attendance.remote', ['secret' => $secret]);
+                })
+                ->readonly(static function (Request $request): bool {
+                    return true;
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                }),
+
+            Text::make('Secret', 'attendance_secret')
+                ->onlyOnForms()
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->creationRules('unique:teams,attendance_secret')
+                ->updateRules('unique:teams,attendance_secret,{{resourceId}}'),
+
+            DateTime::make('Expiration', 'attendance_secret_expiration')
+                ->hideFromIndex()
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                }),
+        ];
+    }
+
+    /**
      * Timestamp fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
@@ -233,7 +277,18 @@ class Team extends Resource
      */
     public function actions(Request $request): array
     {
-        return [];
+        return [
+            (new Actions\ResetRemoteAttendance())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                })
+                ->canRun(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                })
+                ->confirmText('Are you sure you want to reset the remote attendance link?')
+                ->confirmButtonText('Reset Link')
+                ->cancelButtonText('Cancel'),
+        ];
     }
 
     /**
