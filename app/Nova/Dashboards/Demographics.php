@@ -22,13 +22,13 @@ class Demographics extends Dashboard
         return [
             (new MajorsBreakdown())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
-            }),
+            })->width('1/2'),
             (new SchoolsBreakdown())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
-            }),
+            })->width('1/2'),
             (new ClassStandingsBreakdown())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
-            }),
+            })->width('1/2'),
         ];
     }
 

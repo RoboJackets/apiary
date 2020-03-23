@@ -17,7 +17,7 @@ class ClassStandingsBreakdown extends Partition
      *
      * @var string
      */
-    public $name = 'Majors of Active Members';
+    public $name = 'Class Standing of Active Members';
 
     /**
      * Calculate the value of the metric.
@@ -31,7 +31,7 @@ class ClassStandingsBreakdown extends Partition
             ->map(static function (User $user): string {
                 return $user->classStanding->pluck('name')->sort()->join('/');
             })->groupBy(static function (string $majors): string {
-                return 0 === strlen($majors) ? 'none or unknown' : $majors;
+                return 0 === strlen($majors) ? 'none or unknown' : ucfirst($majors);
             })->map(static function (Collection $coll): int {
                 return $coll->count();
             })->sort()
