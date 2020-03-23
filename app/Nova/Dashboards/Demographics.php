@@ -6,6 +6,7 @@ namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\ClassStandingsBreakdown;
 use App\Nova\Metrics\MajorsBreakdown;
+use App\Nova\Metrics\PrimaryAffiliationBreakdown;
 use App\Nova\Metrics\SchoolsBreakdown;
 use Illuminate\Http\Request;
 use Laravel\Nova\Dashboard;
@@ -27,6 +28,9 @@ class Demographics extends Dashboard
                 return $request->user()->can('read-users');
             })->width('1/2'),
             (new ClassStandingsBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            })->width('1/2'),
+            (new PrimaryAffiliationBreakdown())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             })->width('1/2'),
         ];
