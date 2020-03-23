@@ -33,7 +33,7 @@ class EthnicityBreakdown extends Partition
                 case 'native':
                     return 'Native American';
                 case 'islander':
-                   return 'Native Hawaiian and Other Pacific Islander';
+                    return 'Native Hawaiian and Other Pacific Islander';
                 case 'none':
                     return 'Prefer not to respond';
                 case null:
