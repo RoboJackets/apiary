@@ -31,7 +31,7 @@ class MajorsBreakdown extends Partition
             ->map(static function (User $user): string {
                 return $user->majors->pluck('whitepages_ou')->sort()->join('/');
             })->groupBy(static function (string $majors): string {
-                return $majors;
+                return 0 === strlen($majors) ? 'none or unknown' : $majors;
             })->map(static function (Collection $coll): int {
                 return $coll->count();
             })->sort()
