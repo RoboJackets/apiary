@@ -31,4 +31,14 @@ class Demographics extends Dashboard
     {
         return 'demographics';
     }
+
+    /**
+     * Get the displayable name of the dashboard.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'Demographics';
+    }
 }

@@ -6,6 +6,7 @@ namespace App\Nova\Metrics;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
@@ -31,8 +32,9 @@ class MajorsBreakdown extends Partition
                 return $user->majors->pluck('whitepages_ou')->sort()->join('/');
             })->groupBy(static function (string $majors): string {
                 return $majors;
-            })->map('count')
-            ->sort()
+            })->map(static function (Collection $coll): int {
+                return $coll->count();
+            })->sort()
             ->reverse()->toArray());
     }
 
