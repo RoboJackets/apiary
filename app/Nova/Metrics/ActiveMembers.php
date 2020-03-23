@@ -28,7 +28,7 @@ class ActiveMembers extends Value
             return $this->result($count);
         }
 
-        return $this->result(User::active()->count());
+        return $this->result(User::active()->count())->allowZeroResult();
     }
 
     /**

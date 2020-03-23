@@ -16,7 +16,7 @@ class PendingGitHubInvitations extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        return $this->result(User::accessActive()->where('github_invite_pending', 1)->count());
+        return $this->result(User::accessActive()->where('github_invite_pending', 1)->count())->allowZeroResult();
     }
 
     /**

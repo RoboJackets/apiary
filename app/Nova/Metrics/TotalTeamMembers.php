@@ -18,7 +18,7 @@ class TotalTeamMembers extends Value
     {
         $count = Team::where('id', $request->resourceId)->get()->first()->members()->count();
 
-        return $this->result($count);
+        return $this->result($count)->allowZeroResult();
     }
 
     /**

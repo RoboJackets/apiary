@@ -18,7 +18,7 @@ class ResumesSubmitted extends Value
     {
         return $this->result(
             User::active()->where('resume_date', '>', now()->subDays($request->range)->startOfDay())->count()
-        );
+        )->allowZeroResult();
     }
 
     /**

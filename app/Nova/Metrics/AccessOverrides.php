@@ -16,7 +16,7 @@ class AccessOverrides extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        return $this->result(User::hasOverride()->count());
+        return $this->result(User::hasOverride()->count())->allowZeroResult();
     }
 
     /**

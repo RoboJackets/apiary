@@ -16,7 +16,7 @@ class PaymentsPerDay extends Trend
      */
     public function calculate(Request $request): TrendResult
     {
-        return $this->countByDays($request, Payment::class)->showLatestValue();
+        return $this->countByDays($request, Payment::class)->showLatestValue()->allowZeroResult();
     }
 
     /**

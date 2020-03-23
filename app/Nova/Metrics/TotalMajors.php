@@ -16,7 +16,7 @@ class TotalMajors extends Value
      */
     public function calculate(NovaRequest $request): ValueResult
     {
-        return $this->result(Major::count());
+        return $this->result(Major::count())->allowZeroResult();
     }
 
     /**
