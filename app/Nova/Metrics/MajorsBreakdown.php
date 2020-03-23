@@ -23,6 +23,7 @@ class MajorsBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
+        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         return $this->result(User::active()
             ->with('majors')
             ->get()
@@ -30,7 +31,6 @@ class MajorsBreakdown extends Partition
                 return $user->majors->pluck('whitepages_ou')->sort()->join('/');
             })->groupBy(static function (string $majors): string {
                 return $majors;
-            // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
             })->map('count')
             ->sort()
             ->reverse()->toArray());
