@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\MajorsBreakdown;
+use App\Nova\Metrics\SchoolsBreakdown;
+use App\Nova\Metrics\ClassStandingsBreakdown;
 use Illuminate\Http\Request;
 use Laravel\Nova\Dashboard;
 
@@ -19,6 +21,12 @@ class Demographics extends Dashboard
     {
         return [
             (new MajorsBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            }),
+            (new SchoolsBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            }),
+            (new ClassStandingsBreakdown())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
         ];
