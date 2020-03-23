@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\ClassStandingsBreakdown;
+use App\Nova\Metrics\EthnicityBreakdown;
+use App\Nova\Metrics\GenderBreakdown;
 use App\Nova\Metrics\MajorsBreakdown;
 use App\Nova\Metrics\PrimaryAffiliationBreakdown;
 use App\Nova\Metrics\SchoolsBreakdown;
@@ -32,6 +34,12 @@ class Demographics extends Dashboard
             })->width('1/2'),
             (new PrimaryAffiliationBreakdown())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
+            })->width('1/2'),
+            (new GenderBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users-demographics');
+            })->width('1/2'),
+            (new EthnicityBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users-demographics');
             })->width('1/2'),
         ];
     }
