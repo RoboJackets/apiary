@@ -35,6 +35,8 @@ class AttendanceSourceBreakdown extends Partition
                     return 'Manual entry';
                 case 'MyRoboJackets':
                     return 'Swipe/contactless, not kiosk';
+                case 'secret-link':
+                    return 'Secret link';
                 case null:
                     return 'Unknown';
                 default:
