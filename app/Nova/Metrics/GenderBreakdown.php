@@ -29,7 +29,7 @@ class GenderBreakdown extends Partition
                 case 'nonbinary':
                     return 'Non-binary or gender-queer';
                 case null:
-                    return 'Unknown'
+                    return 'Unknown';
                 default:
                     // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
                     return ucfirst($value);

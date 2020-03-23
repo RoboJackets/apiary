@@ -37,7 +37,7 @@ class EthnicityBreakdown extends Partition
                 case 'none':
                     return 'Prefer not to respond';
                 case null:
-                    return 'Unknown'
+                    return 'Unknown';
                 default:
                     // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
                     return ucfirst($value);
