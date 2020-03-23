@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\ClassStandingsBreakdown;
 use App\Nova\Metrics\MajorsBreakdown;
 use App\Nova\Metrics\SchoolsBreakdown;
-use App\Nova\Metrics\ClassStandingsBreakdown;
 use Illuminate\Http\Request;
 use Laravel\Nova\Dashboard;
 

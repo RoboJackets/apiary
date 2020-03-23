@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
-abstract class DemographicsBreakdown extends Partition
+abstract class MajorDemographicsBreakdown extends Partition
 {
     /**
      * The name of the field to base the metric on.
