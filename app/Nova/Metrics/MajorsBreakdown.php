@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Attendance;
 use App\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
@@ -31,7 +30,7 @@ class MajorsBreakdown extends Partition
                 return $user->majors->pluck('whitepages_ou')->sort()->join('/');
             })->groupBy(static function (string $majors): string {
                 return $majors;
-            })->map->count()
+            })->map('count')
             ->sort()
             ->reverse());
     }

@@ -7,8 +7,8 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Nova\Cards\MakeAWish;
-use App\Nova\Dashboards\JEDI;
 use App\Nova\Dashboards\Demographics;
+use App\Nova\Dashboards\JEDI;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
