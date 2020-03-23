@@ -29,7 +29,7 @@ class ClassStandingsBreakdown extends Partition
             ->with('classStanding')
             ->get()
             ->map(static function (User $user): string {
-                return $user->class_standings->pluck('name')->sort()->join('/');
+                return $user->classStanding->pluck('name')->sort()->join('/');
             })->groupBy(static function (string $majors): string {
                 return 0 === strlen($majors) ? 'none or unknown' : $majors;
             })->map(static function (Collection $coll): int {
