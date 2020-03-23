@@ -26,7 +26,7 @@ class ClassStandingsBreakdown extends Partition
     {
         // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         return $this->result(User::active()
-            ->with('class_standings')
+            ->with('classStanding')
             ->get()
             ->map(static function (User $user): string {
                 return $user->class_standings->pluck('name')->sort()->join('/');
