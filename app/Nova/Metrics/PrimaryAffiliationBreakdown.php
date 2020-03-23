@@ -23,7 +23,7 @@ class PrimaryAffiliationBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        return $this->count($request, User::class, 'primary_affiliation')
+        return $this->count($request, User::active(), 'primary_affiliation')
             ->label(static function (?string $value): string {
                 switch ($value) {
                     case null:
