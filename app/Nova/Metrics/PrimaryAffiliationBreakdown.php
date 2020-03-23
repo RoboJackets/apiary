@@ -16,7 +16,7 @@ class PrimaryAffiliationBreakdown extends Partition
      *
      * @var string
      */
-    public $name = 'Primary Affiliation with GT of Active Users';
+    public $name = 'Primary Affiliation with GT of Active Members';
 
     /**
      * Calculate the value of the metric.
