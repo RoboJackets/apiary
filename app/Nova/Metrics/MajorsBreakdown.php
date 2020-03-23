@@ -26,13 +26,14 @@ class MajorsBreakdown extends Partition
         return $this->result(User::active()
             ->with('majors')
             ->get()
+            // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
             ->map(static function (User $user): string {
                 return $user->majors->pluck('whitepages_ou')->sort()->join('/');
             })->groupBy(static function (string $majors): string {
                 return $majors;
             })->map('count')
             ->sort()
-            ->reverse());
+            ->reverse()->toArray());
     }
 
     /**
