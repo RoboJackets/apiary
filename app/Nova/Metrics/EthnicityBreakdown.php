@@ -24,24 +24,30 @@ class EthnicityBreakdown extends Partition
     public function calculate(Request $request): PartitionResult
     {
         return $this->count($request, User::active(), 'ethnicity')->label(static function (?string $value): string {
-            switch ($value) {
-                // Original enum values in resources/js/components/dues/Demographics.vue
-                case 'white':
-                    return 'White/Caucasian';
-                case 'black':
-                    return 'Black or African American';
-                case 'native':
-                    return 'Native American';
-                case 'islander':
-                    return 'Native Hawaiian and Other Pacific Islander';
-                case 'none':
-                    return 'Prefer not to respond';
-                case null:
-                    return 'Unknown';
-                default:
-                    // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
-                    return ucfirst($value);
+            if (null === $value) {
+                return 'Unknown';
             }
+
+            return collect(explode(',', $value))->map(static function (string $item): string {
+                switch ($value) {
+                    // Original enum values in resources/js/components/dues/Demographics.vue
+                    case 'white':
+                        return 'White/Caucasian';
+                    case 'black':
+                        return 'Black or African American';
+                    case 'native':
+                        return 'Native American';
+                    case 'islander':
+                        return 'Native Hawaiian and Other Pacific Islander';
+                    case 'none':
+                        return 'Prefer not to respond';
+                    case null:
+                        return 'Unknown';
+                    default:
+                        // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
+                        return ucfirst($value);
+                }
+            })->join(', ');
         });
     }
 
