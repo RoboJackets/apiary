@@ -29,7 +29,7 @@ class EthnicityBreakdown extends Partition
             }
 
             return collect(explode(',', $value))->map(static function (string $item): string {
-                switch ($value) {
+                switch ($item) {
                     // Original enum values in resources/js/components/dues/Demographics.vue
                     case 'white':
                         return 'White/Caucasian';
@@ -45,7 +45,7 @@ class EthnicityBreakdown extends Partition
                         return 'Unknown';
                     default:
                         // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
-                        return ucfirst($value);
+                        return ucfirst($item);
                 }
             })->join(', ');
         });
