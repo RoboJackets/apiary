@@ -41,10 +41,7 @@ class EthnicityBreakdown extends Partition
                         return 'Native Hawaiian and Other Pacific Islander';
                     case 'none':
                         return 'Prefer not to respond';
-                    case null:
-                        return 'Unknown';
                     default:
-                        // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
                         return ucfirst($item);
                 }
             })->join(', ');
