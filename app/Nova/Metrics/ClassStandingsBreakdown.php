@@ -30,8 +30,8 @@ class ClassStandingsBreakdown extends Partition
             ->get()
             ->map(static function (User $user): string {
                 return $user->classStanding->pluck('name')->sort()->join('/');
-            })->groupBy(static function (string $majors): string {
-                return 0 === strlen($majors) ? 'none or unknown' : ucfirst($majors);
+            })->groupBy(static function (string $classStandings): string {
+                return 0 === strlen($classStandings) ? 'none or unknown' : ucfirst($classStandings);
             })->map(static function (Collection $coll): int {
                 return $coll->count();
             })->sort()

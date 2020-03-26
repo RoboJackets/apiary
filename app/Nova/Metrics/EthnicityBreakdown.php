@@ -23,7 +23,7 @@ class EthnicityBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        return $this->count($request, User::active(), 'gender')->label(static function (?string $value): string {
+        return $this->count($request, User::active(), 'ethnicity')->label(static function (?string $value): string {
             switch ($value) {
                 // Original enum values in resources/js/components/dues/Demographics.vue
                 case 'white':
