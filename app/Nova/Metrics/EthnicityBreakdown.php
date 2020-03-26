@@ -24,7 +24,7 @@ class EthnicityBreakdown extends Partition
     public function calculate(Request $request): PartitionResult
     {
         return $this->count($request, User::active(), 'ethnicity')->label(static function (?string $value): string {
-            if (null === $value) {
+            if (null === $value || '' === $value) {
                 return 'Unknown';
             }
 
