@@ -16,7 +16,7 @@ class MajorsMissingDisplayNames extends Value
      */
     public function calculate(NovaRequest $request): ValueResult
     {
-        return $this->result(Major::where('display_name', null)->count());
+        return $this->result(Major::where('display_name', null)->count())->allowZeroResult();
     }
 
     /**

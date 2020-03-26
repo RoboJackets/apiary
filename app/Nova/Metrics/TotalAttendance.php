@@ -35,7 +35,7 @@ class TotalAttendance extends Value
 
         $request->timezone = $originalTimezone;
 
-        return $result;
+        return $result->allowZeroResult();
     }
 
     /**

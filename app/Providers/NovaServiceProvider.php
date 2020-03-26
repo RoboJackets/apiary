@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Nova\Cards\MakeAWish;
+use App\Nova\Dashboards\Demographics;
 use App\Nova\Dashboards\JEDI;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\ActiveMembers;
@@ -99,6 +100,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new JEDI())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            }),
+            (new Demographics())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
         ];

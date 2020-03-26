@@ -4,39 +4,30 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Attendance;
+use App\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
-class AttendanceSourceBreakdown extends Partition
+class GenderBreakdown extends Partition
 {
     /**
      * The displayable name of the metric.
      *
      * @var string
      */
-    public $name = 'Attendance Sources';
+    public $name = 'Gender of Active Members';
 
     /**
      * Calculate the value of the metric.
      */
     public function calculate(Request $request): PartitionResult
     {
-        return $this->count($request, Attendance::class, 'source')->label(static function (?string $value): string {
+        return $this->count($request, User::active(), 'gender')->label(static function (?string $value): string {
             switch ($value) {
-                case 'kiosk':
-                    return 'Kiosk (unknown type)';
-                case 'kiosk-contactless':
-                    return 'Kiosk (contactless)';
-                case 'kiosk-magstripe':
-                    return 'Kiosk (magstripe)';
-                case 'manual':
-                    return 'Manual entry';
-                case 'MyRoboJackets':
-                    return 'Swipe/contactless, not kiosk';
-                case 'secret-link':
-                    return 'Secret link';
+                // Original enum values in resources/js/components/dues/Demographics.vue
+                case 'nonbinary':
+                    return 'Non-binary or gender-queer';
                 case null:
                     return 'Unknown';
                 default:
@@ -51,6 +42,6 @@ class AttendanceSourceBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return 'attendance-sources';
+        return 'gender-breakdown';
     }
 }

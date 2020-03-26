@@ -18,7 +18,7 @@ class ActiveStudentsInMajor extends Value
     {
         $count = Major::find($request->resourceId)->members()->active()->count();
 
-        return $this->result($count);
+        return $this->result($count)->allowZeroResult();
     }
 
     /**
