@@ -36,10 +36,10 @@ class Demographics extends Dashboard
                 return $request->user()->can('read-users');
             })->width('1/2'),
             (new GenderBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users-demographics');
+                return $request->user()->can('read-users');
             })->width('1/2'),
             (new EthnicityBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users-demographics');
+                return $request->user()->can('read-users');
             })->width('1/2'),
         ];
     }
