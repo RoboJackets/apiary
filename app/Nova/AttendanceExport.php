@@ -55,6 +55,9 @@ class AttendanceExport extends Resource
             Hidden::make('Secret')
                 ->rules('required'),
 
+            DateTime::make('Expires At')
+                ->rules('required'),
+
             BelongsTo::make('Downloaded By', 'downloadUser')
                 ->nullable(),
 

@@ -18,6 +18,7 @@ class CreateAttendanceExportsTable extends Migration
             $table->string('secret')->unique();
             $table->timestamp('start_time');
             $table->timestamp('end_time');
+            $table->timestamp('expires_at');
             $table->unsignedInteger('download_user_id')->nullable();
             $table->timestamp('downloaded_at')->nullable();
             $table->timestamps();

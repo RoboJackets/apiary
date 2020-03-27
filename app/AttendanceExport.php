@@ -43,6 +43,7 @@ class AttendanceExport extends Model
         'deleted_at',
         'start_time',
         'end_time',
+        'expires_at',
         'downloaded_at',
     ];
 
