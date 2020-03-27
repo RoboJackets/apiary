@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c08cb8b198485b09fc5a6c99441c12e",
+    "content-hash": "a4c69a40aaf4416fbcc55030ae459ce0",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4499,21 +4499,21 @@
         },
         {
             "name": "subfission/cas",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/subfission/cas.git",
-                "reference": "1688f27e623f311fb364eba9d5f293af0da89f75"
+                "reference": "57e912ffe88950e02594a300e511ef577461d78f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/subfission/cas/zipball/1688f27e623f311fb364eba9d5f293af0da89f75",
-                "reference": "1688f27e623f311fb364eba9d5f293af0da89f75",
+                "url": "https://api.github.com/repos/subfission/cas/zipball/57e912ffe88950e02594a300e511ef577461d78f",
+                "reference": "57e912ffe88950e02594a300e511ef577461d78f",
                 "shasum": ""
             },
             "require": {
                 "apereo/phpcas": "^1.3",
-                "illuminate/support": "6.x",
+                "illuminate/support": "^6.0|^7.0",
                 "php": ">=7.2.0"
             },
             "require-dev": {
@@ -4548,15 +4548,16 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Adds CAS to laravel 6.x",
+            "description": "Adds CAS support to Laravel 5.x, 6.x, & 7.x",
             "keywords": [
                 "SSO",
                 "cas",
                 "laravel",
                 "laravel 6",
+                "laravel 7",
                 "phpCAS"
             ],
-            "time": "2019-12-06T19:08:16+00:00"
+            "time": "2020-03-27T04:53:54+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
