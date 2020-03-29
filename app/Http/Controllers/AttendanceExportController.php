@@ -31,7 +31,7 @@ class AttendanceExportController extends Controller
             return view(
                 'attendance.export',
                 [
-                    'message' => 'That link has already been used.'.
+                    'message' => 'That link has already been used.',
                 ]
             );
         }
