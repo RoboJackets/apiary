@@ -12,7 +12,7 @@ class AttendanceReportController extends Controller
     }
 
     /**
-     * Show a resume book.
+     * Download a pre-saved attendance report.
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
