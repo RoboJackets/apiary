@@ -6,7 +6,7 @@ namespace App\Console;
 
 use App\Jobs\DailyDuesSummary;
 use App\Jobs\NoAttendanceJediPush;
-use App\Jobs\WeeklyAttendance;
+use App\Jobs\WeeklyAttendanceSlack;
 use Bugsnag\BugsnagLaravel\Commands\DeployCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        $schedule->job(new WeeklyAttendance())->weekly()->sundays()->at('11:00');
+        $schedule->job(new WeeklyAttendanceSlack())->weekly()->sundays()->at('11:00');
         $schedule->job(new DailyDuesSummary())->daily()->at('11:00');
         $schedule->job(new NoAttendanceJediPush())->daily()->at('10:00');
     }
