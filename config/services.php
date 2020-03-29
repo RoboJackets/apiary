@@ -62,4 +62,6 @@ return [
     'treasurer_slack_webhook_url' => env('TREASURER_SLACK_WEBHOOK_URL'),
     'treasurer_email' => env('TREASURER_EMAIL'),
     'core_slack_webhook_url' => env('CORE_SLACK_WEBHOOK_URL'),
+
+    'attendance_email' => env('ATTENDANCE_EMAIL'),
 ];
