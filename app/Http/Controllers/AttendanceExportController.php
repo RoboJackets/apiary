@@ -40,7 +40,7 @@ class AttendanceExportController extends Controller
         $export->downloadedUser = $request->user();
         $export->save();
 
-        return response()->streamDownload(static function () with ($export): void {
+        return response()->streamDownload(static function () use ($export): void {
             $attendance = Attendance::whereBetween('created_at', [$export->start_time, $export->end_time])->get();
 
             echo Attendance::formatAsCSV($attendance);

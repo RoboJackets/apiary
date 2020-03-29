@@ -99,7 +99,7 @@ class Attendance extends Model
     /**
      * Transform an array of Attendance objects into a CSV file.
      *
-     * @param array<App\Attendance> $attendance
+     * @param array<\App\Attendance> $attendance
      */
     public static function formatAsCSV(iterable $attendance): string
     {
@@ -109,7 +109,7 @@ class Attendance extends Model
         // all columns
 
         // Transform the attendance records into [gtid => [attendable => count, ...], ...]
-        $collection = $models->groupBy('gtid')
+        $collection = $attendance->groupBy('gtid')
             ->map(static function (Collection $records) use (&$attendables): Collection {
                 // Group the attendance records for that GTID by the attendable
                 return $records->groupBy(static function (Attendance $item) use (&$attendables): string {
