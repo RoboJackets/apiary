@@ -101,3 +101,4 @@ parameters:
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Undefined variable: \$factory#'
     - '#Variable property access on App\\User\.#'
+    - '#Property App\\AttendanceExport::$((start|end)_time|expires_at) \(Illuminate\\Support\\Carbon\|string\) does not accept Carbon\\Carbon.'

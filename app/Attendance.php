@@ -100,7 +100,7 @@ class Attendance extends Model
     /**
      * Transform an array of Attendance objects into a CSV file.
      *
-     * @param array<\App\Attendance> $attendance
+     * @param iterable<\App\Attendance> $attendance
      */
     public static function formatAsCsv(iterable $attendance): string
     {
