@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
+
 namespace App;
 
-use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -101,7 +102,7 @@ class Attendance extends Model
      *
      * @param array<\App\Attendance> $attendance
      */
-    public static function formatAsCSV(iterable $attendance): string
+    public static function formatAsCsv(iterable $attendance): string
     {
         $attendables = [];
 
@@ -109,7 +110,7 @@ class Attendance extends Model
         // all columns
 
         // Transform the attendance records into [gtid => [attendable => count, ...], ...]
-        $collection = $attendance->groupBy('gtid')
+        $collection = collect($attendance)->groupBy('gtid')
             ->map(static function (Collection $records) use (&$attendables): Collection {
                 // Group the attendance records for that GTID by the attendable
                 return $records->groupBy(static function (Attendance $item) use (&$attendables): string {
