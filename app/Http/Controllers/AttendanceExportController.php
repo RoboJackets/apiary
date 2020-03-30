@@ -28,7 +28,8 @@ class AttendanceExportController extends Controller
                     'message' => 'That link is no longer valid.',
                 ]
             );
-        } elseif (null !== $export->downloaded_at) {
+        }
+        if (null !== $export->downloaded_at) {
             return view(
                 'attendance.export',
                 [
@@ -38,7 +39,7 @@ class AttendanceExportController extends Controller
         }
 
         $export->downloaded_at = Carbon::now('America/New_York');
-        $export->downloadUser = $request->user();
+        $export->downloadUser()->save($request->user());
         $export->save();
 
         return response()->streamDownload(static function () use ($export): void {

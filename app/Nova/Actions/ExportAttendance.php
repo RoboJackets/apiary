@@ -55,7 +55,8 @@ class ExportAttendance extends Action
 
         $file = 'attendance-reports/'.$hash.'.csv';
 
-        Storage::append($file, Attendance::formatAsCsv($models));
+        // Redundant collect() to make Phan happy
+        Storage::append($file, Attendance::formatAsCsv(collect($models)));
 
         return Action::download(
             route('api.v1.attendancereport.show', ['hash' => $hash]),

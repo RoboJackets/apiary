@@ -113,7 +113,7 @@ class Attendance extends Model
         $collection = collect($attendance)->groupBy('gtid')
             ->map(static function (Collection $records) use (&$attendables): Collection {
                 // Group the attendance records for that GTID by the attendable
-                return $records->groupBy(static function (Attendance $item) use (&$attendables): string {
+                return $records->groupBy(static function (self $item) use (&$attendables): string {
                     $name = $item->attendable->name;
                     $attendables[] = $name;
 

@@ -37,7 +37,7 @@ class WeeklyAttendanceEmail implements ShouldQueue
             return;
         }
 
-        $export = new AttendanceExport;
+        $export = new AttendanceExport();
 
         // Today is Sunday, so go back 7 days to last Sunday at the start of the day.
         // Stop at yesterday at the end of the day.
