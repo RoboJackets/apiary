@@ -32,7 +32,7 @@
         "spatie/laravel-failed-job-monitor": "3.3.0",
         "spatie/laravel-permission": "3.11.0",
         "spatie/laravel-sluggable": "2.2.1",
-        "square/connect": "2.20190710.0",
+        "square/connect": "3.20200325.0",
         "subfission/cas": "3.1.0",
         "uxweb/sweet-alert": "dev-master",
         "vyuldashev/nova-permission": "2.7.0"
