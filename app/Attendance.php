@@ -137,7 +137,7 @@ class Attendance extends Model
 
         $attendables_array = $attendables->sortKeys()->keys()->all();
 
-        $csv = 'Name,Email,Major,'.implode(',', $attendables_array).'\n';
+        $csv = 'Name,Email,Major,'.implode(',', $attendables_array)."\n";
 
         foreach ($collection as $person) {
             $user = User::where('gtid', $person->get('GTID'))->first();
@@ -150,7 +150,7 @@ class Attendance extends Model
             foreach ($attendables_array as $attendable) {
                 $row .= ','.$person->get($attendable);
             }
-            $csv .= $row.'\n';
+            $csv .= $row."\n";
         }
 
         return $csv;
