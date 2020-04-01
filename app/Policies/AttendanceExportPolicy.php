@@ -33,7 +33,7 @@ class AttendanceExportPolicy
      */
     public function create(User $user): bool
     {
-        // Attendance exports should be created with the Nova action.
+        // Attendance exports should be created with the Nova action or the weekly job.
         return false;
     }
 
