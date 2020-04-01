@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c783ed60779a6685c034f1c7f142dac9",
+    "content-hash": "6c0f0e85ac81490423cf41a156430571",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4380,16 +4380,16 @@
         },
         {
             "name": "square/connect",
-            "version": "2.20190710.0",
+            "version": "2.20200122.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/connect-php-sdk.git",
-                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643"
+                "reference": "f9c01bb9c6b4af550d1b0066d581bcc680918707"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
-                "reference": "5a54406d8175f0663a1cc88df32c2b7ca0f3c643",
+                "url": "https://api.github.com/repos/square/connect-php-sdk/zipball/f9c01bb9c6b4af550d1b0066d581bcc680918707",
+                "reference": "f9c01bb9c6b4af550d1b0066d581bcc680918707",
                 "shasum": ""
             },
             "require": {
@@ -4427,7 +4427,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2019-07-10T17:03:51+00:00"
+            "time": "2020-02-18T21:03:48+00:00"
         },
         {
             "name": "subfission/cas",
