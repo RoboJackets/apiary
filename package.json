@@ -27,7 +27,7 @@
     "datatables.net-bs4": "1.10.20",
     "datatables.net-buttons-bs4": "1.6.1",
     "jquery": "3.4.1",
-    "jszip": "3.2.2",
+    "jszip": "3.3.0",
     "moment": "2.24.0",
     "popper.js": "1.16.1",
     "sweetalert2": "8.19.0",
