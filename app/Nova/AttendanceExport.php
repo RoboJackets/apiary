@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Fields\Hidden;
+use App\Nova\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -47,21 +48,25 @@ class AttendanceExport extends Resource
     {
         return [
             DateTime::make('Start Time')
+                ->hideFromIndex()
                 ->rules('required'),
 
             DateTime::make('End Time')
+                ->hideFromIndex()
                 ->rules('required'),
 
             Hidden::make('Secret')
+                ->hideFromIndex()
                 ->rules('required'),
 
             DateTime::make('Expires At')
                 ->rules('required'),
 
-            BelongsTo::make('Downloaded By', 'downloadUser')
+            BelongsTo::make('Downloaded By', 'downloadUser', User::class)
                 ->nullable(),
 
             DateTime::make('Downloaded At')
+                ->hideFromIndex()
                 ->nullable(),
 
             new Panel('Metadata', $this->metaFields()),
@@ -77,7 +82,7 @@ class AttendanceExport extends Resource
     {
         return [
             DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
+                ->exceptOnForms(),
 
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
