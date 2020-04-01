@@ -39,7 +39,7 @@ class AttendanceExportController extends Controller
         }
 
         $export->downloaded_at = Carbon::now('America/New_York');
-        $export->downloadUser()->save($request->user());
+        $export->downloadUser()->associate($request->user());
         $export->save();
 
         return response()->streamDownload(static function () use ($export): void {
