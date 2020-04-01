@@ -16,9 +16,10 @@ class CreateAttendanceExportsTable extends Migration
         Schema::create('attendance_exports', static function (Blueprint $table): void {
             $table->increments('id');
             $table->string('secret')->unique();
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
-            $table->timestamp('expires_at');
+            // useCurrent() for all of these because the migration required a default value.
+            $table->timestamp('start_time')->useCurrent();
+            $table->timestamp('end_time')->useCurrent();
+            $table->timestamp('expires_at')->useCurrent();
             $table->unsignedInteger('download_user_id')->nullable();
             $table->timestamp('downloaded_at')->nullable();
             $table->timestamps();
