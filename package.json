@@ -27,14 +27,14 @@
     "datatables.net-bs4": "1.10.20",
     "datatables.net-buttons-bs4": "1.6.1",
     "jquery": "3.4.1",
-    "jszip": "3.2.2",
+    "jszip": "3.3.0",
     "moment": "2.24.0",
     "popper.js": "1.16.1",
     "sweetalert2": "8.19.0",
     "vue": "2.6.11",
     "vue-flatpickr-component": "8.1.5",
     "vue-moment": "4.1.0",
-    "vue-select": "3.9.4",
+    "vue-select": "3.9.5",
     "vue-template-compiler": "2.6.11",
     "vuelidate": "0.7.5"
   }
