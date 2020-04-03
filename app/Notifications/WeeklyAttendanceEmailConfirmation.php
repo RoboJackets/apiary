@@ -33,7 +33,7 @@ class WeeklyAttendanceEmailConfirmation extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(AttendanceExport $export, boolean $notSending = false)
+    public function __construct(AttendanceExport $export, boolean $notSending)
     {
         $this->export = $export;
         $this->notSending = $notSending;

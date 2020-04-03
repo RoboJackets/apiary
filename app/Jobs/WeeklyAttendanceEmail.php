@@ -60,6 +60,6 @@ class WeeklyAttendanceEmail implements ShouldQueue
 
         Mail::to(config('services.attendance_email'))->send(new Report($export));
 
-        (new CoreOfficersNotifiable())->notify(new WeeklyAttendanceEmailConfirmation($export));
+        (new CoreOfficersNotifiable())->notify(new WeeklyAttendanceEmailConfirmation($export, false));
     }
 }
