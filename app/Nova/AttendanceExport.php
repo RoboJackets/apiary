@@ -9,6 +9,7 @@ use App\Nova\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
 class AttendanceExport extends Resource
@@ -32,7 +33,7 @@ class AttendanceExport extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The logical group associated with the resource.
@@ -55,9 +56,26 @@ class AttendanceExport extends Resource
                 ->hideFromIndex()
                 ->rules('required'),
 
-            Hidden::make('Secret')
-                ->hideFromIndex()
-                ->rules('required'),
+            Hidden::make('Link', 'secret')
+                ->onlyOnDetail()
+                ->resolveUsing(static function (?string $secret): ?string {
+                    return null === $secret ? null : route('attendance.export', ['secret' => $secret]);
+                })
+                ->readonly(static function (Request $request): bool {
+                    return true;
+                }),
+
+            Text::make('Secret')
+                ->onlyOnForms()
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->creationRules('unique:attendance_exports,secret')
+                ->updateRules('unique:attendance_exports,secret,{{resourceId}}'),
+
 
             DateTime::make('Expires At')
                 ->rules('required'),
