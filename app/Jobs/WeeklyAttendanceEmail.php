@@ -46,7 +46,7 @@ class WeeklyAttendanceEmail implements ShouldQueue
         $export->start_time = Carbon::now()->subDays(7)->startOfDay();
         $export->end_time = Carbon::now()->subDays(1)->endOfDay();
 
-        $export->expires_at = Carbon::now()->addDays(7);
+        $export->expires_at = Carbon::now()->addDays(3);
         $export->secret = hash('sha256', random_bytes(64));
 
         $export->save();
