@@ -75,7 +75,6 @@ class AttendanceExport extends Resource
                 ->creationRules('unique:attendance_exports,secret')
                 ->updateRules('unique:attendance_exports,secret,{{resourceId}}'),
 
-
             DateTime::make('Expires At')
                 ->rules('required'),
 
