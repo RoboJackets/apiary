@@ -50,6 +50,7 @@ class WeeklyAttendanceEmail implements ShouldQueue
         if (0 === Attendance::whereBetween('created_at', [$export->start_time, $export->end_time])->count()) {
             // No attendance? Don't bother emailing.
             (new CoreOfficersNotifiable())->notify(new WeeklyAttendanceEmailConfirmation($export, true));
+
             return;
         }
 
