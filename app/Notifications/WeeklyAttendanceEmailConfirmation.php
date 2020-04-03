@@ -26,14 +26,14 @@ class WeeklyAttendanceEmailConfirmation extends Notification
     /**
      * True if not sending due to no attendance.
      *
-     * @var boolean
+     * @var bool
      */
     public $notSending;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(AttendanceExport $export, boolean $notSending)
+    public function __construct(AttendanceExport $export, bool $notSending)
     {
         $this->export = $export;
         $this->notSending = $notSending;
