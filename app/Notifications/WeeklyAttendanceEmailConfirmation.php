@@ -24,11 +24,19 @@ class WeeklyAttendanceEmailConfirmation extends Notification
     public $export;
 
     /**
+     * True if not sending due to no attendance.
+     *
+     * @var boolean
+     */
+    public $notSending;
+
+    /**
      * Create a new notification instance.
      */
-    public function __construct(AttendanceExport $export)
+    public function __construct(AttendanceExport $export, boolean $notSending = false)
     {
         $this->export = $export;
+        $this->notSending = $notSending;
     }
 
     /**
@@ -46,13 +54,16 @@ class WeeklyAttendanceEmailConfirmation extends Notification
      */
     public function toSlack(CoreOfficersNotifiable $notifiable): SlackMessage
     {
+
+        $message = $this->notSending ? 'The weekly attenadnce report email will not be sent as no attendance was '.
+            'recorded in the last seven days.' : 'The weekly attendance email has been sent to '.
+            config('services.attendance_email').'. The report includes attendance from '.
+            $this->export->start_time->format('l, n/j/Y \a\t g:iA').' to '.
+            $this->export->end_time->format('l, n/j/Y \a\t g:iA').'.';
+
         return (new SlackMessage())
             ->from(config('app.name'), ':robobuzz:')
-            ->content(
-                'The weekly attendance email has been sent to '.config('services.attendance_email').'. The report '.
-                'includes attendance from '.$this->export->start_time->format('l, n/j/Y \a\t g:iA').' to '.
-                $this->export->end_time->format('l, n/j/Y \a\t g:iA').'.'
-            );
+            ->content($message);
     }
 
     /**

@@ -46,6 +46,12 @@ class WeeklyAttendanceEmail implements ShouldQueue
         $export->start_time = Carbon::now()->subDays(7)->startOfDay();
         $export->end_time = Carbon::now()->subDays(1)->endOfDay();
 
+        if (0 === Attendance::whereBetween('created_at', [$export->start_time, $export->end_time])->count()) {
+            // No attendance? Don't bother emailing.
+            (new CoreOfficersNotifiable())->notify(new WeeklyAttendanceEmailConfirmation($export, true));
+            return;
+        }
+
         $export->expires_at = Carbon::now()->addDays(3);
         $export->secret = hash('sha256', random_bytes(64));
 
