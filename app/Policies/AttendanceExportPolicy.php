@@ -33,8 +33,8 @@ class AttendanceExportPolicy
      */
     public function create(User $user): bool
     {
-        // Attendance exports should be created with the Nova action or the weekly job.
-        return false;
+        // Attendance exports should be created with the Nova action or the weekly job but allow admins to override it.
+        return $user->hasRole('admin');
     }
 
     /**
