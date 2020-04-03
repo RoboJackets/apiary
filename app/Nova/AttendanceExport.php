@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Fields\Hidden;
-use App\Nova\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
