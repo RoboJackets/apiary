@@ -40,7 +40,7 @@ class Report extends Mailable
         return $this
             ->from('attendancereports@my.robojackets.org', 'RoboJackets')
             ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
-                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <officers@robojackets.org>');
+                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets Officers <officers@robojackets.org>');
             })->subject('RoboJackets Attendance Report Ending '.$this->export->end_time->format('n/j/Y'))
             ->markdown('mail.attendance.report');
     }
