@@ -6,6 +6,8 @@ namespace App\Jobs;
 
 use App\AttendanceExport;
 use App\Mail\Attendance\Report;
+use App\Notifiables\CoreOfficersNotifiable;
+use App\Notifications\WeeklyAttendanceEmailConfirmation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -50,5 +52,7 @@ class WeeklyAttendanceEmail implements ShouldQueue
         $export->save();
 
         Mail::to(config('services.attendance_email'))->send(new Report($export));
+
+        (new CoreOfficersNotifiable())->notify(new WeeklyAttendanceEmailConfirmation($export));
     }
 }
