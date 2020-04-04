@@ -54,7 +54,7 @@ class WeeklyAttendanceEmailConfirmation extends Notification
      */
     public function toSlack(CoreOfficersNotifiable $notifiable): SlackMessage
     {
-        $message = $this->notSending ? 'The weekly attenadnce report email will not be sent as no attendance was '.
+        $message = $this->notSending ? 'The weekly attendance report email will not be sent as no attendance was '.
             'recorded in the last seven days.' : 'The weekly attendance email has been sent to '.
             config('services.attendance_email').'. The report includes attendance from '.
             $this->export->start_time->format('l, n/j/Y \a\t g:iA').' to '.
