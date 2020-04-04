@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Attendance;
+use App\AttendanceExport;
 use App\DuesPackage;
 use App\DuesTransaction;
 use App\Event;
 use App\Major;
 use App\NotificationTemplate;
 use App\Payment;
+use App\Policies\AttendanceExportPolicy;
 use App\Policies\AttendancePolicy;
 use App\Policies\DuesPackagePolicy;
 use App\Policies\DuesTransactionPolicy;
@@ -45,6 +47,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Event::class => EventPolicy::class,
         Attendance::class => AttendancePolicy::class,
+        AttendanceExport::class => AttendanceExportPolicy::class,
         DuesPackage::class => DuesPackagePolicy::class,
         NotificationTemplate::class => NotificationTemplatePolicy::class,
         RecruitingVisit::class => RecruitingVisitPolicy::class,
