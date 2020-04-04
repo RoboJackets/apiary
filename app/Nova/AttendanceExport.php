@@ -72,6 +72,7 @@ class AttendanceExport extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
+                ->rules('required')
                 ->creationRules('unique:attendance_exports,secret')
                 ->updateRules('unique:attendance_exports,secret,{{resourceId}}'),
 
@@ -79,9 +80,11 @@ class AttendanceExport extends Resource
                 ->rules('required'),
 
             BelongsTo::make('Downloaded By', 'downloadUser', User::class)
+                ->hideWhenCreating()
                 ->nullable(),
 
             DateTime::make('Downloaded At')
+                ->hideWhenCreating()
                 ->hideFromIndex()
                 ->nullable(),
 
