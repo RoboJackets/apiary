@@ -49,7 +49,7 @@ class SwagPickupRate extends TextMetric
      */
     public function calculate(Request $request): ValueResult
     {
-        $package = DuesPackage::where('id', $request->resourceId)->first();
+        $package = DuesPackage::where('id', $request->resourceId)->withTrashed()->first();
         $eligible = 'shirt' === $this->swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
 
         if (! $eligible) {
