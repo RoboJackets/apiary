@@ -93,10 +93,10 @@ class Attendance extends Resource
     {
         return [
             Text::make('GTID')
-                ->sortable()
+                ->hideFromIndex()
                 ->rules('required', 'max:255')
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-gtid');
+                    return $request->user()->hasRole('admin');
                 })->resolveUsing(function (string $gtid): string {
                     // Hide GTID when the attendee is known
                     return null !== $this->attendee ? '—' : $gtid;
