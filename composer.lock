@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c783ed60779a6685c034f1c7f142dac9",
+    "content-hash": "5fe3e17f5b39465453d576c4226090a9",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1731,6 +1731,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -1777,6 +1778,7 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {
@@ -4279,25 +4281,25 @@
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "a51839b77a9f0fc8246b690b92b9339de464dc8a"
+                "reference": "b711700bacdf5382d8f4ed896b38e22102d27821"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/a51839b77a9f0fc8246b690b92b9339de464dc8a",
-                "reference": "a51839b77a9f0fc8246b690b92b9339de464dc8a",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/b711700bacdf5382d8f4ed896b38e22102d27821",
+                "reference": "b711700bacdf5382d8f4ed896b38e22102d27821",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0|^6.0",
-                "illuminate/support": "~5.6.0|~5.7.0|~5.8.0|^6.0",
+                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
+                "illuminate/support": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
                 "php": "^7.2"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.6.0|~3.7.0|~3.8.0|^4.0"
+                "orchestra/testbench": "~3.6.0|~3.7.0|~3.8.0|^4.0|^5.0"
             },
             "type": "library",
             "autoload": {
@@ -4323,7 +4325,7 @@
                 "laravel-sluggable",
                 "spatie"
             ],
-            "time": "2019-09-16T09:37:47+00:00"
+            "time": "2020-04-06T14:31:18+00:00"
         },
         {
             "name": "spatie/once",
