@@ -153,6 +153,9 @@ class Team extends Resource
             Boolean::make('Visible')
                 ->sortable(),
 
+            Boolean::make('Visible On Kiosk')
+                ->hideFromIndex(),
+
             Boolean::make('Attendable')
                 ->sortable(),
 

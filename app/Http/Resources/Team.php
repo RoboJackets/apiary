@@ -25,6 +25,7 @@ class Team extends JsonResource
             'name' => $this->name,
             'self_serviceable' => $this->self_serviceable,
             'visible' => $this->visible,
+            'visible_on_kiosk' => $this->visible_on_kiosk,
             'attendable' => $this->attendable,
             'slug' => $this->slug,
             'description' => $this->description,

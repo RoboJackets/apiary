@@ -13,22 +13,22 @@ class TeamsSeeder extends Seeder
     {
         DB::table('teams')->insert([
             ['name' => 'IGVC', 'visible' => true, 'attendable' => true,
-                'description' => 'IGVC', 'slug' => 'igvc', 'self_serviceable' => true,
+                'description' => 'IGVC', 'slug' => 'igvc', 'self_serviceable' => true, 'visible_on_kiosk' => true,
             ],
             ['name' => 'BattleBots', 'visible' => true, 'attendable' => true,
-                'description' => 'BattleBots', 'slug' => 'battlebots', 'self_serviceable' => true,
+                'description' => 'BattleBots', 'slug' => 'battlebots', 'self_serviceable' => true, 'visible_on_kiosk' => true,
             ],
             ['name' => 'Outreach', 'visible' => true, 'attendable' => true,
-                'description' => 'Outreach', 'slug' => 'outreach', 'self_serviceable' => true,
+                'description' => 'Outreach', 'slug' => 'outreach', 'self_serviceable' => true, 'visible_on_kiosk' => true,
             ],
             ['name' => 'RoboCup', 'visible' => true, 'attendable' => true,
-                'description' => 'RoboCup', 'slug' => 'robocup', 'self_serviceable' => true,
+                'description' => 'RoboCup', 'slug' => 'robocup', 'self_serviceable' => true, 'visible_on_kiosk' => true,
             ],
             ['name' => 'RoboRacing', 'visible' => true, 'attendable' => true,
-                'description' => 'RoboRacing', 'slug' => 'roboracing', 'self_serviceable' => true,
+                'description' => 'RoboRacing', 'slug' => 'roboracing', 'self_serviceable' => true, 'visible_on_kiosk' => true,
             ],
             ['name' => 'Core', 'visible' => true, 'attendable' => true,
-                'description' => 'Core', 'slug' => 'core', 'self_serviceable' => false,
+                'description' => 'Core', 'slug' => 'core', 'self_serviceable' => false, 'visible_on_kiosk' => true,
             ],
         ]);
     }
