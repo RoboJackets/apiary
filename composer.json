@@ -16,7 +16,7 @@
         "barryvdh/laravel-ide-helper": "2.6.7",
         "bugsnag/bugsnag-laravel": "2.18.0",
         "chelout/laravel-relationship-events": "1.2.1",
-        "doctrine/dbal": "2.10.1",
+        "doctrine/dbal": "2.10.2",
         "guzzlehttp/guzzle": "6.5.3",
         "laravel/framework": "6.18.8",
         "laravel/horizon": "3.7.2",
