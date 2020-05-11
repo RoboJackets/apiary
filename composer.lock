@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74f3998552c6a1064b0352a9437c05ce",
+    "content-hash": "f709ca17d753a5135e8d5c05e41a1304",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -393,16 +393,16 @@
         },
         {
             "name": "bugsnag/bugsnag",
-            "version": "v3.20.0",
+            "version": "v3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bugsnag/bugsnag-php.git",
-                "reference": "ac5888aabd75f16ae7b9cf57bfbb55d33914e036"
+                "reference": "531fe1c16beb68af698e35bd5b3a19a422399e28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/ac5888aabd75f16ae7b9cf57bfbb55d33914e036",
-                "reference": "ac5888aabd75f16ae7b9cf57bfbb55d33914e036",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/531fe1c16beb68af698e35bd5b3a19a422399e28",
+                "reference": "531fe1c16beb68af698e35bd5b3a19a422399e28",
                 "shasum": ""
             },
             "require": {
@@ -449,20 +449,20 @@
                 "logging",
                 "tracking"
             ],
-            "time": "2020-02-26T17:32:58+00:00"
+            "time": "2020-04-29T10:59:17+00:00"
         },
         {
             "name": "bugsnag/bugsnag-laravel",
-            "version": "v2.18.0",
+            "version": "v2.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bugsnag/bugsnag-laravel.git",
-                "reference": "091124d3dd492619f2c4bc0ace4e3d1369180931"
+                "reference": "bebac599024d76210b9a5172372263e7ec6db9c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/091124d3dd492619f2c4bc0ace4e3d1369180931",
-                "reference": "091124d3dd492619f2c4bc0ace4e3d1369180931",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/bebac599024d76210b9a5172372263e7ec6db9c2",
+                "reference": "bebac599024d76210b9a5172372263e7ec6db9c2",
                 "shasum": ""
             },
             "require": {
@@ -509,7 +509,7 @@
                 "logging",
                 "tracking"
             ],
-            "time": "2020-02-26T22:04:36+00:00"
+            "time": "2020-05-11T09:33:48+00:00"
         },
         {
             "name": "bugsnag/bugsnag-psr-logger",
