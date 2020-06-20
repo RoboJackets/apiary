@@ -100,7 +100,7 @@ class CASAuthenticate
                     }
                 }
 
-                if ('mfa-duo' !== phpCAS::getAttribute('authnContextClass')) {
+                if ('mfa-duo' !== $this->cas->getAttribute('authnContextClass')) {
                     if (in_array(
                         '/gt/central/services/iam/two-factor/duo-user',
                         $this->cas->getAttribute('gtAccountEntitlement'),
