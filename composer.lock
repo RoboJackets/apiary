@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd102a82880f6ab1792a2b0f8e4b00aa",
+    "content-hash": "fabedeb46fccc5e5c42d542a76b6e897",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2255,16 +2255,16 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "cde90a7335a2130a4488beb68f4b2141869241db"
+                "reference": "3c9ef136ca59366bc1b50b7f2500a946d5149c62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/cde90a7335a2130a4488beb68f4b2141869241db",
-                "reference": "cde90a7335a2130a4488beb68f4b2141869241db",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/3c9ef136ca59366bc1b50b7f2500a946d5149c62",
+                "reference": "3c9ef136ca59366bc1b50b7f2500a946d5149c62",
                 "shasum": ""
             },
             "require": {
@@ -2315,7 +2315,7 @@
                 "laravel",
                 "psysh"
             ],
-            "time": "2020-04-07T15:01:31+00:00"
+            "time": "2020-07-07T15:10:00+00:00"
         },
         {
             "name": "league/commonmark",
@@ -3092,16 +3092,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.3.0",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc"
+                "reference": "c346bbfafe2ff60680258b631afb730d186ed864"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/9a9981c347c5c49d6dfe5cf826bb882b824080dc",
-                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c346bbfafe2ff60680258b631afb730d186ed864",
+                "reference": "c346bbfafe2ff60680258b631afb730d186ed864",
                 "shasum": ""
             },
             "require": {
@@ -3140,7 +3140,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2019-11-08T13:50:10+00:00"
+            "time": "2020-07-02T17:12:47+00:00"
         },
         {
             "name": "oitnetworkservices/buzzapiclient",
@@ -3851,16 +3851,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.10.3",
+            "version": "v0.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "2bde2fa03e05dff0aee834598b951d6fc7c6fe02"
+                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/2bde2fa03e05dff0aee834598b951d6fc7c6fe02",
-                "reference": "2bde2fa03e05dff0aee834598b951d6fc7c6fe02",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a8aec1b2981ab66882a01cce36a49b6317dc3560",
+                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560",
                 "shasum": ""
             },
             "require": {
@@ -3919,7 +3919,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2020-04-07T06:44:48+00:00"
+            "time": "2020-05-03T19:32:03+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
