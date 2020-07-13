@@ -43,7 +43,7 @@
         "fzaninotto/faker": "1.9.1",
         "mockery/mockery": "1.4.1",
         "nunomaduro/collision": "3.0.1",
-        "facade/ignition": "1.16.1",
+        "facade/ignition": "1.16.3",
         "phpunit/phpunit": "8.5.8"
     },
     "autoload": {
