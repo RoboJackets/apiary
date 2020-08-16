@@ -40,7 +40,6 @@ class AttendanceSourceBreakdown extends Partition
                 case null:
                     return 'Unknown';
                 default:
-                    // @phan-suppress-next-line PhanTypeMismatchArgumentNullableInternal
                     return ucfirst($value);
             }
         });

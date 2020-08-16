@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Mail;
 
 use App\NotificationTemplate;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -58,7 +59,7 @@ class DatabaseMailable extends Mailable
     {
         $nt = NotificationTemplate::find($this->template_id);
         if (null === $nt) {
-            throw Exception('Failed to find template');
+            throw new Exception('Failed to find template');
         }
 
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')

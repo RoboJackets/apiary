@@ -57,6 +57,5 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
-        $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
     }
 }

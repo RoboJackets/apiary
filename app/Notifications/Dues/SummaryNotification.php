@@ -13,6 +13,7 @@ use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use NumberFormatter;
 
 class SummaryNotification extends Notification
 {
@@ -55,9 +56,10 @@ class SummaryNotification extends Notification
      */
     public function toSlack(TreasurerNotifiable $team): SlackMessage
     {
+        $numberFormatter = new NumberFormatter("en-US", NumberFormatter::CURRENCY)
         $payments = $this->getPayments();
         $num = $payments->count();
-        $total = money_format('$%.2n', $payments->sum('amount'));
+        $total = $numberFormatter->format($payments->sum('amount'))
         $methods = $payments->groupBy('method')
             ->sort(static function (Collection $a, Collection $b) {
                 // Sort by quantity descending

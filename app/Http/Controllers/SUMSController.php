@@ -14,8 +14,6 @@ class SUMSController extends Controller
 {
     /**
      * Returns view for SUMS status.
-     *
-     * @suppress PhanTypeExpectedObjectPropAccessButGotNull
      */
     public function index(Request $request)
     {
