@@ -10,6 +10,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
@@ -34,7 +35,7 @@ class DistributeShirt extends Action
                 if ($model->is_paid) {
                     if (null === $model->swag_shirt_provided) {
                         $model->swag_shirt_provided = date('Y-m-d H:i:s');
-                        $model->swag_shirt_providedBy = \Auth::user()->id;
+                        $model->swag_shirt_providedBy = Auth::user()->id;
                         $model->save();
                     } else {
                         $this->markAsFailed($model, 'Already picked up');

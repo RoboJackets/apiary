@@ -10,8 +10,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.2",
-        "adldap2/adldap2-laravel": "6.1.1",
+        "php": "^7.4",
         "apereo/phpcas": "1.3.8",
         "barryvdh/laravel-ide-helper": "2.8.0",
         "bugsnag/bugsnag-laravel": "2.19.0",
@@ -39,12 +38,15 @@
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "1.3.0",
+        "facade/ignition": "1.16.3",
         "filp/whoops": "2.7.3",
         "fzaninotto/faker": "1.9.1",
         "mockery/mockery": "1.4.2",
         "nunomaduro/collision": "3.0.1",
-        "facade/ignition": "1.16.3",
-        "phpunit/phpunit": "8.5.8"
+        "nunomaduro/larastan": "^0.6.2",
+        "phpstan/extension-installer": "^1.0",
+        "psalm/plugin-laravel": "^1.3",
+        "robojackets/static-analysis": "^1.0"
     },
     "autoload": {
         "classmap": [
@@ -69,9 +71,6 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
-        ],
-        "post-package-update": [
-            "rm -rf error-pages-cache"
         ]
     },
     "config": {
@@ -91,7 +90,7 @@
         },
         {
             "type": "composer",
-            "url": "https://packages.robojackets.org"
+            "url": "https://composer.robojackets.org"
         },
         {
             "type": "vcs",
