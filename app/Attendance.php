@@ -16,10 +16,39 @@ use Illuminate\Support\Collection;
 /**
  * Represents a single attendance entry.
  *
- * @property int $id The database identifier for this entry
- * @property int $gtid the GTID associated with this entry
+ * @method static \Illuminate\Database\Query\Builder|Attendance onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Attendance withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Attendance withTrashed()
+ * @method static Builder|Attendance end($date)
+ * @method static Builder|Attendance newModelQuery()
+ * @method static Builder|Attendance newQuery()
+ * @method static Builder|Attendance query()
+ * @method static Builder|Attendance start($date)
+ * @method static Builder|Attendance whereAttendableId($value)
+ * @method static Builder|Attendance whereAttendableType($value)
+ * @method static Builder|Attendance whereCreatedAt($value)
+ * @method static Builder|Attendance whereDeletedAt($value)
+ * @method static Builder|Attendance whereGtid($value)
+ * @method static Builder|Attendance whereId($value)
+ * @method static Builder|Attendance whereRecordedBy($value)
+ * @method static Builder|Attendance whereSource($value)
+ * @method static Builder|Attendance whereUpdatedAt($value)
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $attendable_id
+ * @property int $gtid the GTID associated with this entry
+ * @property int $id The database identifier for this entry
+ * @property int|null $recorded_by
+ * @property string $attendable_type
+ * @property string|null $source
+ *
+ * @property-read \App\Team|\App\Event $attendable
+ * @property-read \App\User $attendee
+ * @property-read \App\User $recorded
  */
 class Attendance extends Model
 {

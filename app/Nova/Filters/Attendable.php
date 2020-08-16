@@ -26,8 +26,6 @@ class Attendable extends Filter
 
     /**
      * Create new Attendable filter.
-     *
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(bool $includeEvents = true)
     {
@@ -56,8 +54,6 @@ class Attendable extends Filter
      * Get the filter's available options.
      *
      * @return array<string,string>
-     *
-     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function options(Request $request): array
     {

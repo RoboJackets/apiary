@@ -31,7 +31,6 @@ abstract class MajorDemographicsBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         return $this->result(User::active()
             ->with('majors')
             ->get()

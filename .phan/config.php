@@ -24,6 +24,7 @@ return [
     ],
 
     'suppress_issue_types' => [
+        'PhanAccessNonStaticToStatic',
         'PhanInvalidFQSENInCallable',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',
@@ -31,6 +32,7 @@ return [
         'PhanPluginMixedKeyNoKey',
         'PhanPluginNonBoolInLogicalArith',
         'PhanPossiblyFalseTypeArgumentInternal',
+        'PhanPossiblyNonClassMethodCall',
         'PhanPossiblyNullTypeArgument',
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',

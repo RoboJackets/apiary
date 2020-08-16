@@ -32,5 +32,10 @@
                 <file name="config/database.php" />
             </errorLevel>
         </UndefinedConstant>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PropertyNotSetInConstructor>
     </issueHandlers>
 </psalm>

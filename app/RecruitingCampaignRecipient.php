@@ -12,14 +12,40 @@ use Illuminate\Notifications\Notifiable;
 /**
  * Represents a non-member who will receive an email invitation for General Interest.
  *
- * @property string $email_address the email address to send to
- * @property string $source the source of this recipient
- * @property int $recruiting_visit_id the RecruitingVisit that maps to this recipient
- * @property int $recruiting_campaign_id the RecruitingCampaign that maps to this recipient
- * @property int $user_id the ID of the user, if available
- * @property string $notified_at the timestamp when this recipient was contacted
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereEmailAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereNotifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingCampaignId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingVisitId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withTrashed()
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $id
+ * @property int $recruiting_campaign_id the RecruitingCampaign that maps to this recipient
+ * @property int $recruiting_visit_id the RecruitingVisit that maps to this recipient
+ * @property int $user_id the ID of the user, if available
+ * @property string $email_address the email address to send to
+ * @property string $notified_at the timestamp when this recipient was contacted
+ * @property string $source the source of this recipient
+ *
+ * @property-read \App\RecruitingCampaign $recruitingCampaign
+ * @property-read \App\RecruitingVisit $recruitingVisit
+ * @property-read \App\User $user
+ * @property-read int|null $notifications_count
  */
 class RecruitingCampaignRecipient extends Model
 {

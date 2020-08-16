@@ -14,21 +14,53 @@ use Laravel\Nova\Actions\Actionable;
 /**
  * Represents a possible dues payment and what privileges are associated with it.
  *
- * @method static \Illuminate\Database\Eloquent\Builder availableForPurchase() Scopes a query to only packages
- *           available for purchase
+ * @method static \Illuminate\Database\Eloquent\Builder availableForPurchase()
+ * @method static \Illuminate\Database\Query\Builder|DuesPackage onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
+ * @method static Builder|DuesPackage accessActive()
+ * @method static Builder|DuesPackage active()
+ * @method static Builder|DuesPackage newModelQuery()
+ * @method static Builder|DuesPackage newQuery()
+ * @method static Builder|DuesPackage query()
+ * @method static Builder|DuesPackage whereAccessEnd($value)
+ * @method static Builder|DuesPackage whereAccessStart($value)
+ * @method static Builder|DuesPackage whereAvailableForPurchase($value)
+ * @method static Builder|DuesPackage whereCost($value)
+ * @method static Builder|DuesPackage whereCreatedAt($value)
+ * @method static Builder|DuesPackage whereDeletedAt($value)
+ * @method static Builder|DuesPackage whereEffectiveEnd($value)
+ * @method static Builder|DuesPackage whereEffectiveStart($value)
+ * @method static Builder|DuesPackage whereEligibleForPolo($value)
+ * @method static Builder|DuesPackage whereEligibleForShirt($value)
+ * @method static Builder|DuesPackage whereId($value)
+ * @method static Builder|DuesPackage whereName($value)
+ * @method static Builder|DuesPackage whereUpdatedAt($value)
  *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \DateTime $access_end The timestamp when users paid against this DuesPackage no longer have access to
- *                                 systems
  * @property \DateTime $access_start The timestamp when users paid against this DuesPackage first have access to systems
  * @property \DateTime $effective_end The timestamp when the DuesPackage is considered no longer active
  * @property \DateTime $effective_start The timestamp when the DuesPackage is considered newly active
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $eligible_for_polo Whether this DuesPackage grants eligibility for a polo
  * @property bool $eligible_for_shirt Whether this DuesPackage grants eligibility for a shirt
  * @property bool $is_active Whether this DuesPackage is considered active
- * @property string $cost the cost of this package
+ * @property float $cost the cost of this package
+ * @property int $available_for_purchase
  * @property int $id The database identifier for this DuesPackage
- * @property \Carbon\Carbon $created_at when the model was created
- * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property string $name
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $transactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read bool $is_access_active
+ * @property-read int|null $actions_count
+ * @property-read int|null $dues_transactions_count
+ * @property-read int|null $transactions_count
  */
 class DuesPackage extends Model
 {
@@ -64,6 +96,15 @@ class DuesPackage extends Model
         'effective_end',
         'access_start',
         'access_end',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'cost' => 'float',
     ];
 
     /**

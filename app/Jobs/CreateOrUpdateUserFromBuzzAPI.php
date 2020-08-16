@@ -102,6 +102,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'gtAccountEntitlement',
             'uid'
         )->from(Resources::GTED_ACCOUNTS)
+        // @phan-suppress-next-line PhanTypeMismatchArgument
         ->where([$this->identifier => $searchValue])
         ->get();
 
