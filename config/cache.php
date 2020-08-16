@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Illuminate\Support\Str;
 
 return [
@@ -41,6 +39,7 @@ return [
 
         'array' => [
             'driver' => 'array',
+            'serialize' => false,
         ],
 
         'database' => [
@@ -62,6 +61,7 @@ return [
                 env('MEMCACHED_PASSWORD'),
             ],
             'options' => [
+                // Memcached::OPT_CONNECT_TIMEOUT => 2000,
             ],
             'servers' => [
                 [
