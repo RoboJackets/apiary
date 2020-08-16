@@ -54,7 +54,7 @@ class Payment extends Model
      *
      * @phan-suppress PhanReadOnlyPublicProperty
      */
-    public static $methods = [
+    public static array $methods = [
         'cash' => 'Cash',
         'squarecash' => 'Square Cash',
         'check' => 'Check',

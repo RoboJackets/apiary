@@ -17,17 +17,13 @@ class CASCheck
 
     /**
      * Auth facade.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
      */
-    protected $auth;
+    protected \Illuminate\Contracts\Auth\Guard $auth;
 
     /**
      * CAS library interface.
-     *
-     * @var \Subfission\Cas\CasManager
      */
-    protected $cas;
+    protected \Subfission\Cas\CasManager $cas;
 
     public function __construct(Guard $auth)
     {

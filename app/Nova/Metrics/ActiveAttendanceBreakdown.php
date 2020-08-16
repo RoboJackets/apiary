@@ -22,10 +22,8 @@ class ActiveAttendanceBreakdown extends Partition
 
     /**
      * Whether to show based on all attendance records or only those from the last two weeks.
-     *
-     * @var bool
      */
-    protected $showAllTime = false;
+    protected bool $showAllTime = false;
 
     /**
      * Create a new ActiveAttendanceBreakdown metric.

@@ -34,17 +34,13 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     /**
      * The number of attempts for this job.
-     *
-     * @var int
      */
-    public $tries = 1;
+    public int $tries = 1;
 
     /**
      * The identifier to search for the account with.
-     *
-     * @var string
      */
-    private $identifier;
+    private string $identifier;
 
     /**
      * The value of the identifier to search for the account with.
@@ -55,10 +51,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     /**
      * The reason the user is being created (or null if the user is not being created).
-     *
-     * @var string
      */
-    private $reason;
+    private string $reason;
 
     /**
      * Create a new job instance.

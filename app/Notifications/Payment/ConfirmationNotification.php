@@ -17,10 +17,8 @@ class ConfirmationNotification extends Notification implements ShouldQueue
 
     /**
      * The payment that was completed.
-     *
-     * @var \App\Payment
      */
-    public $payment;
+    public \App\Payment $payment;
 
     /**
      * Create a new notification instance.

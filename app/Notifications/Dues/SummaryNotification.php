@@ -56,7 +56,7 @@ class SummaryNotification extends Notification
      */
     public function toSlack(TreasurerNotifiable $team): SlackMessage
     {
-        $numberFormatter = new NumberFormatter("en-US", NumberFormatter::CURRENCY);
+        $numberFormatter = new NumberFormatter('en-US', NumberFormatter::CURRENCY);
         $payments = $this->getPayments();
         $num = $payments->count();
         $total = $numberFormatter->format($payments->sum('amount'));

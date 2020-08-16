@@ -15,17 +15,15 @@ class DatabaseNotification extends Notification implements ShouldQueue
 
     /**
      * The ID of the template that will be sent.
-     *
-     * @var int
      */
-    public $template_id;
+    public int $template_id;
 
     /**
      * The metadata to pass to the template.
      *
      * @var array<string,string>
      */
-    public $metadata;
+    public array $metadata;
 
     /**
      * Create a new notification instance.

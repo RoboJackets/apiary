@@ -219,7 +219,9 @@
         <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.TypeHints"/>
+    <rule ref="SlevomatCodingStandard.TypeHints">
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
+    </rule>
 
     <rule ref="Squiz.Arrays">
         <exclude name="Squiz.Arrays.ArrayDeclaration"/>

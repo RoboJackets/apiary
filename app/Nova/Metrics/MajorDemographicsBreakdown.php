@@ -14,10 +14,8 @@ abstract class MajorDemographicsBreakdown extends Partition
 {
     /**
      * The name of the field to base the metric on.
-     *
-     * @var string
      */
-    protected $field_name;
+    protected string $field_name;
 
     /**
      * Create a new MajorDemographicsBreakdown metric.

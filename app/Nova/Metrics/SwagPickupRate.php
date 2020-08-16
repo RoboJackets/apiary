@@ -23,10 +23,8 @@ class SwagPickupRate extends TextMetric
 
     /**
      * Which type of swag we're looking at, either 'shirt' or 'polo'.
-     *
-     * @var string
      */
-    protected $swagType;
+    protected string $swagType;
 
     /**
      * Create a new SwagPickupRate metric. swagType can be either 'shirt' or 'polo'.

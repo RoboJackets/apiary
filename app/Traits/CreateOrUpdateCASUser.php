@@ -14,10 +14,8 @@ trait CreateOrUpdateCASUser
 {
     /**
      * CAS library interface.
-     *
-     * @var \Subfission\Cas\CasManager
      */
-    protected $cas;
+    protected \Subfission\Cas\CasManager $cas;
 
     public function __construct()
     {

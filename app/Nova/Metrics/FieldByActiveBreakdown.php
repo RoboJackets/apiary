@@ -15,17 +15,13 @@ abstract class FieldByActiveBreakdown extends Partition
 {
     /**
      * The name of the field to base the metric on.
-     *
-     * @var string
      */
-    protected $field_name;
+    protected string $field_name;
 
     /**
      * True to use the is_access_active instead of is_active value.
-     *
-     * @var bool
      */
-    protected $use_access_active;
+    protected bool $use_access_active;
 
     /**
      * Create a new FieldByActiveBreakdown metric.
