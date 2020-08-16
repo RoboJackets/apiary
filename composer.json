@@ -74,9 +74,10 @@
         ]
     },
     "config": {
+        "classmap-authoritative": true,
         "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true
+        "process-timeout": 10,
+        "sort-packages": true
     },
     "extra": {
         "laravel": {
