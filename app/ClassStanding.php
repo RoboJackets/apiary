@@ -7,6 +7,27 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Represents a class standing (e.g. freshman)
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereUpdatedAt($value)
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property int $id
+ * @property string $name
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\User> $members
+ * @property-read int|null $members_count
+ */
 class ClassStanding extends Model
 {
     /**

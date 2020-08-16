@@ -17,10 +17,8 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
 
     /**
      * The dues package that was requested.
-     *
-     * @var \App\DuesPackage
      */
-    public $duesPackage;
+    public \App\DuesPackage $duesPackage;
 
     /**
      * Create a new notification instance.

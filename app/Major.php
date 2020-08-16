@@ -7,6 +7,33 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Represents a single major (e.g. Computer Science)
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Major newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Major newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Major query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Major whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Major whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Major whereGtadMajorgroupName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Major whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Major whereSchool($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Major whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Major whereWhitepagesOu($value)
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property int $id
+ * @property string $gtad_majorgroup_name
+ * @property string $school
+ * @property string $whitepages_ou
+ * @property string|null $display_name
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\User> $members
+ * @property-read int|null $members_count
+ */
 class Major extends Model
 {
     /**

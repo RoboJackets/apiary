@@ -14,10 +14,8 @@ abstract class MajorDemographicsBreakdown extends Partition
 {
     /**
      * The name of the field to base the metric on.
-     *
-     * @var string
      */
-    protected $field_name;
+    protected string $field_name;
 
     /**
      * Create a new MajorDemographicsBreakdown metric.
@@ -33,7 +31,6 @@ abstract class MajorDemographicsBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         return $this->result(User::active()
             ->with('majors')
             ->get()

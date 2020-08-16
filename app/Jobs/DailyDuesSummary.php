@@ -21,10 +21,8 @@ class DailyDuesSummary implements ShouldQueue
 
     /**
      * The number of times the job may be attempted.
-     *
-     * @var int
      */
-    public $tries = 1;
+    public int $tries = 1;
 
     /**
      * Execute the job.

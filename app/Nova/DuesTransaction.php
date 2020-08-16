@@ -79,7 +79,7 @@ class DuesTransaction extends Resource
                 })
                 ->exceptOnForms(),
 
-            Currency::make('Payment Due', function (): ?string {
+            Currency::make('Payment Due', function (): ?float {
                 if ($this->is_paid) {
                     return null;
                 }
@@ -223,7 +223,7 @@ class DuesTransaction extends Resource
             (new Actions\DistributeShirt())->canSee(static function (Request $request): bool {
                 $transaction = \App\DuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction) {
+                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
                     if (! $transaction->package->eligible_for_shirt) {
                         return false;
                     }
@@ -244,7 +244,7 @@ class DuesTransaction extends Resource
             (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
                 $transaction = \App\DuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction) {
+                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
                     if (! $transaction->package->eligible_for_polo) {
                         return false;
                     }
@@ -265,7 +265,7 @@ class DuesTransaction extends Resource
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
                 $transaction = \App\DuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction) {
+                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
                     if ($transaction->user->id === $request->user()->id) {
                         return false;
                     }
@@ -282,7 +282,7 @@ class DuesTransaction extends Resource
                 return $request->user()->can('create-payments');
             })->canRun(static function (Request $request, ADT $dues_transaction): bool {
                 return $request->user()->can('create-payments')
-                    && ($dues_transaction->user()->get()->first()->id !== $request->user()->id);
+                    && ($dues_transaction->user()->first()->id !== $request->user()->id);
             }),
         ];
     }

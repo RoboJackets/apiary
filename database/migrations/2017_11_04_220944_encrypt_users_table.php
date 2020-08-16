@@ -14,7 +14,7 @@ class EncryptUsersTable extends Migration
         $plugin = DB::select("SELECT PLUGIN_NAME, PLUGIN_STATUS FROM INFORMATION_SCHEMA.PLUGINS
           WHERE PLUGIN_NAME LIKE 'keyring%'");
         if (1 !== count($plugin)) {
-            die('No keyring plugin found.');
+            throw new Exception('No keyring plugin found.');
         }
 
         DB::raw("ALTER TABLE 'users' ENCRYPTION='Y'");

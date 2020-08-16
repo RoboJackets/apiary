@@ -25,11 +25,135 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder active() scopes to only users that are active
  * @method static \Illuminate\Database\Eloquent\Builder findByIdentifier(string $id) finds a user by any identifier
  * @method static \Illuminate\Database\Eloquent\Builder hasOverride() scopes to only users with an active override
+ * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|User withTrashed()
+ * @method static Builder|User accessInactive()
+ * @method static Builder|User inactive()
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static Builder|User permission($permissions)
+ * @method static Builder|User query()
+ * @method static Builder|User role($roles, $guard = null)
+ * @method static Builder|User whereAcceptSafetyAgreement($value)
+ * @method static Builder|User whereAccessOverrideById($value)
+ * @method static Builder|User whereAccessOverrideUntil($value)
+ * @method static Builder|User whereApiToken($value)
+ * @method static Builder|User whereClickupEmail($value)
+ * @method static Builder|User whereClickupId($value)
+ * @method static Builder|User whereClickupInvitePending($value)
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereCreateReason($value)
+ * @method static Builder|User whereDeletedAt($value)
+ * @method static Builder|User whereEmergencyContactName($value)
+ * @method static Builder|User whereEmergencyContactPhone($value)
+ * @method static Builder|User whereEthnicity($value)
+ * @method static Builder|User whereExistsInSums($value)
+ * @method static Builder|User whereFirstName($value)
+ * @method static Builder|User whereFullName($value)
+ * @method static Builder|User whereGender($value)
+ * @method static Builder|User whereGithubInvitePending($value)
+ * @method static Builder|User whereGithubUsername($value)
+ * @method static Builder|User whereGmailAddress($value)
+ * @method static Builder|User whereGraduationSemester($value)
+ * @method static Builder|User whereGtDirGUID($value)
+ * @method static Builder|User whereGtEmail($value)
+ * @method static Builder|User whereGtid($value)
+ * @method static Builder|User whereHasEverLoggedIn($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereIsServiceAccount($value)
+ * @method static Builder|User whereJoinSemester($value)
+ * @method static Builder|User whereLastName($value)
+ * @method static Builder|User whereMiddleName($value)
+ * @method static Builder|User whereName($value)
+ * @method static Builder|User wherePersonalEmail($value)
+ * @method static Builder|User wherePhone($value)
+ * @method static Builder|User wherePoloSize($value)
+ * @method static Builder|User wherePreferredName($value)
+ * @method static Builder|User wherePrimaryAffiliation($value)
+ * @method static Builder|User whereResumeDate($value)
+ * @method static Builder|User whereShirtSize($value)
+ * @method static Builder|User whereSlackId($value)
+ * @method static Builder|User whereUid($value)
+ * @method static Builder|User whereUpdatedAt($value)
  *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property bool $exists_in_sums
+ * @property bool $github_invite_pending
+ * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
  * @property bool $is_active whether the user is currently active
  * @property bool $is_service_account whether the user is a service account (vs human)
- * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
+ * @property Carbon|null $accept_safety_agreement
+ * @property Carbon|null $access_override_until
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $resume_date
+ * @property int $clickup_invite_pending
+ * @property int $gtid
+ * @property int $id
+ * @property int|null $access_override_by_id
+ * @property int|null $clickup_id
+ * @property string $create_reason
+ * @property string $first_name
+ * @property string $gt_email
+ * @property string $last_name
  * @property string $name the display name for this user
+ * @property string $uid
+ * @property string|null $api_token
+ * @property string|null $clickup_email
+ * @property string|null $emergency_contact_name
+ * @property string|null $emergency_contact_phone
+ * @property string|null $ethnicity
+ * @property string|null $gender
+ * @property string|null $github_username
+ * @property string|null $gmail_address
+ * @property string|null $graduation_semester
+ * @property string|null $gtDirGUID
+ * @property string|null $join_semester
+ * @property string|null $middle_name
+ * @property string|null $personal_email
+ * @property string|null $phone
+ * @property string|null $polo_size
+ * @property string|null $preferred_first_name
+ * @property string|null $preferred_name
+ * @property string|null $primary_affiliation
+ * @property string|null $shirt_size
+ * @property string|null $slack_id
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ClassStanding> $classStanding
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $dues
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $paidDues
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Event> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Major> $majors
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingVisit> $recruitingVisits
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Rsvp> $rsvps
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $manages
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $teams
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Role> $roles
+ * @property-read bool $is_access_active
+ * @property-read int|null $actions_count
+ * @property-read int|null $attendance_count
+ * @property-read int|null $class_standing_count
+ * @property-read int|null $dues_count
+ * @property-read int|null $dues_transactions_count
+ * @property-read int|null $events_count
+ * @property-read int|null $majors_count
+ * @property-read int|null $manages_count
+ * @property-read int|null $notifications_count
+ * @property-read int|null $paid_dues_count
+ * @property-read int|null $permissions_count
+ * @property-read int|null $recruiting_visits_count
+ * @property-read int|null $roles_count
+ * @property-read int|null $rsvps_count
+ * @property-read int|null $teams_count
+ * @property-read string $full_name
+ * @property-read User $accessOverrideBy
  */
 class User extends Authenticatable
 {
@@ -257,7 +381,7 @@ class User extends Authenticatable
      */
     public function routeNotificationForMail(): string
     {
-        return $this->gt_email ?? $this->personal_email;
+        return $this->gt_email;
     }
 
     public function getAuthIdentifierName(): string
@@ -420,7 +544,7 @@ class User extends Authenticatable
      */
     public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
     {
-        $current_major_ids = $this->majors()->get()->pluck('id')->toArray();
+        $current_major_ids = $this->majors()->pluck('id')->toArray();
 
         $new_major_ids = [];
 
@@ -462,7 +586,7 @@ class User extends Authenticatable
      */
     public function syncClassStandingFromAccountEntitlements(array $accountEntitlements): int
     {
-        $current_class_standings = $this->classStanding()->get()->pluck('id')->toArray();
+        $current_class_standings = $this->classStanding()->pluck('id')->toArray();
 
         $new_class_standings = [];
 

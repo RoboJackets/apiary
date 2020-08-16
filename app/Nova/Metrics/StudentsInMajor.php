@@ -16,7 +16,7 @@ class StudentsInMajor extends Value
      */
     public function calculate(NovaRequest $request): ValueResult
     {
-        $count = Major::where('id', $request->resourceId)->get()->first()->members()->count();
+        $count = Major::where('id', $request->resourceId)->first()->members()->count();
 
         return $this->result($count)->allowZeroResult();
     }

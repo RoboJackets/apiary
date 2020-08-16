@@ -16,17 +16,13 @@ class GeneralInterestInvite extends Mailable
 
     /**
      * The URL for this application.
-     *
-     * @var string
      */
-    public $app_url;
+    public string $app_url;
 
     /**
      * The token for this recruiting visit.
-     *
-     * @var string
      */
-    public $visit_token;
+    public string $visit_token;
 
     /**
      * Create a new message instance.

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'target_php_version' => '7.2',
+    'target_php_version' => '7.4',
 
     'directory_list' => [
         '.',
@@ -24,6 +24,7 @@ return [
     ],
 
     'suppress_issue_types' => [
+        'PhanAccessNonStaticToStatic',
         'PhanInvalidFQSENInCallable',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',
@@ -31,6 +32,7 @@ return [
         'PhanPluginMixedKeyNoKey',
         'PhanPluginNonBoolInLogicalArith',
         'PhanPossiblyFalseTypeArgumentInternal',
+        'PhanPossiblyNonClassMethodCall',
         'PhanPossiblyNullTypeArgument',
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',

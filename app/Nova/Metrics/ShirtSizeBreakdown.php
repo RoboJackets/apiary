@@ -24,10 +24,8 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Which type of swag we're looking at, either 'shirt' or 'polo'.
-     *
-     * @var string
      */
-    protected $swagType;
+    protected string $swagType;
 
     /**
      * Create a new ShirtSizeBreakdown metric. swagType can be either 'shirt' or 'polo'.
@@ -38,8 +36,6 @@ class ShirtSizeBreakdown extends Partition
         if (! in_array($swagType, ['shirt', 'polo'], true)) {
             Log::error('Invalid swag type given to ShirtSizeBreakdown metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
-
-            return;
         }
 
         $this->swagType = $swagType;

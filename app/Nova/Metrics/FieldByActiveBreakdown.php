@@ -15,22 +15,16 @@ abstract class FieldByActiveBreakdown extends Partition
 {
     /**
      * The name of the field to base the metric on.
-     *
-     * @var string
      */
-    protected $field_name;
+    protected string $field_name;
 
     /**
      * True to use the is_access_active instead of is_active value.
-     *
-     * @var bool
      */
-    protected $use_access_active;
+    protected bool $use_access_active;
 
     /**
      * Create a new FieldByActiveBreakdown metric.
-     *
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(string $field_name, bool $use_access_active = false)
     {
@@ -41,8 +35,6 @@ abstract class FieldByActiveBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function calculate(Request $request): PartitionResult
     {

@@ -28,7 +28,7 @@ class TotalAttendance extends Value
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         // If a subrange is selected, let the library do the work, otherwise just count everything
         if ($request->range > 0) {
-            $result = $this->count($request, (new Attendance())->newQuery()->where('gtid', $gtid));
+            $result = $this->count($request, Attendance::newQuery()->where('gtid', $gtid));
         } else {
             $result = $this->result(Attendance::where('gtid', $gtid)->count());
         }

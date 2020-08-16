@@ -23,38 +23,28 @@ class PushToJedi implements ShouldQueue
 
     /**
      * The number of attempts for this job.
-     *
-     * @var int
      */
-    public $tries = 1;
+    public int $tries = 1;
 
     /**
      * The user that will be sent to JEDI.
-     *
-     * @var \App\User
      */
-    private $user;
+    private \App\User $user;
 
     /**
      * The name of the class that caused the push to be run.
-     *
-     * @var string
      */
-    private $model_class;
+    private string $model_class;
 
     /**
      * The ID of the model that caused the push to be run.
-     *
-     * @var int
      */
-    private $model_id;
+    private int $model_id;
 
     /**
      * A description of the event that caused the push to be run.
-     *
-     * @var string
      */
-    private $model_event;
+    private string $model_event;
 
     /**
      * Create a new job instance.
@@ -115,8 +105,9 @@ class PushToJedi implements ShouldQueue
             $send['project_manager_of_teams'][] = $team->name;
         }
 
-        if (null !== $this->user->gmail_address) {
-            $send['google_accounts'][] = strtolower($this->user->gmail_address);
+        $gmail_address = $this->user->gmail_address;
+        if (null !== $gmail_address) {
+            $send['google_accounts'][] = strtolower($gmail_address);
         }
 
         if (in_array('G Suite', $send['teams'], true)) {

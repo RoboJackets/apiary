@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Resource::withoutWrapping();
 
+        // @phan-suppress-next-line PhanPluginAlwaysReturnFunction
         Horizon::auth(static function (): bool {
             // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             if (auth()->guard('web')->user() instanceof User
@@ -41,8 +42,6 @@ class AppServiceProvider extends ServiceProvider
             }
 
             abort(403, 'Forbidden');
-
-            return false;
         });
 
         User::observe(UserObserver::class);
@@ -56,7 +55,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
         $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
     }
 }

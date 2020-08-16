@@ -23,10 +23,8 @@ class SwagPickupRate extends TextMetric
 
     /**
      * Which type of swag we're looking at, either 'shirt' or 'polo'.
-     *
-     * @var string
      */
-    protected $swagType;
+    protected string $swagType;
 
     /**
      * Create a new SwagPickupRate metric. swagType can be either 'shirt' or 'polo'.
@@ -37,8 +35,6 @@ class SwagPickupRate extends TextMetric
         if (! in_array($swagType, ['shirt', 'polo'], true)) {
             Log::error('Invalid swag type given to SwagPickupRate metric: "'.$swagType.'"');
             abort(400, 'Invalid swag type');
-
-            return;
         }
 
         $this->swagType = $swagType;

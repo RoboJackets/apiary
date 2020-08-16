@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Mail;
 
 use App\NotificationTemplate;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -17,24 +18,20 @@ class DatabaseMailable extends Mailable
 
     /**
      * The URL for this instance of the application.
-     *
-     * @var string
      */
-    public $app_url;
+    public string $app_url;
 
     /**
      * The ID of the template that will be sent.
-     *
-     * @var int
      */
-    public $template_id;
+    public int $template_id;
 
     /**
      * The metadata to pass to the template.
      *
      * @var array<string,string>
      */
-    public $metadata;
+    public array $metadata;
 
     /**
      * Create a new message instance.
@@ -58,7 +55,7 @@ class DatabaseMailable extends Mailable
     {
         $nt = NotificationTemplate::find($this->template_id);
         if (null === $nt) {
-            die('Could not find template');
+            throw new Exception('Failed to find template');
         }
 
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
