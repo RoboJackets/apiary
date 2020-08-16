@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Resource::withoutWrapping();
 
+        // @phan-suppress-next-line PhanPluginAlwaysReturnFunction
         Horizon::auth(static function (): bool {
             // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             if (auth()->guard('web')->user() instanceof User

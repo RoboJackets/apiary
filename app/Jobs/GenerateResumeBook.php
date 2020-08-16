@@ -80,6 +80,11 @@ class GenerateResumeBook implements ShouldQueue
             ->whereNotNull('resume_date')
             ->where('resume_date', '>', $this->resume_date_cutoff)
             ->get();
+
+        if (!is_a($users, Collection::class)) {
+            throw new Exception("query did not return a collection")
+        }
+
         $filteredUids = $users->pluck('uid');
 
         if (null !== $this->major) {

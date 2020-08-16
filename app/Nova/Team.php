@@ -97,7 +97,6 @@ class Team extends Resource
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppTeam::find($request->resourceId);
-                        // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
                         if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
                             return false;
                         }
