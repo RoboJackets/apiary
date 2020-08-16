@@ -58,7 +58,7 @@ class DatabaseMailable extends Mailable
     {
         $nt = NotificationTemplate::find($this->template_id);
         if (null === $nt) {
-            throw Exception("Failed to find template");
+            throw Exception('Failed to find template');
         }
 
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
