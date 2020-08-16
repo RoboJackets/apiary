@@ -24,6 +24,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $method The method of payment (see $methods)
  * @property int $payable_id the ID of the payable model
  * @property string $payable_type the class of the payable model
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class Payment extends Model
 {

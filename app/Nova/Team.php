@@ -98,7 +98,7 @@ class Team extends Resource
                     if (isset($request->resourceId)) {
                         $resource = AppTeam::find($request->resourceId);
                         // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
-                        if (null !== $resource && false === $resource->attendable) {
+                        if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
                             return false;
                         }
                     }

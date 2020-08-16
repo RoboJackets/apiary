@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $event_id the ID of the event that was RSVP'ed to
  * @property ?string $source where the RSVP came from (e.g. email, website)
  * @property ?string $response yes or no
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class Rsvp extends Model
 {

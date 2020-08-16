@@ -453,22 +453,6 @@ class User extends Resource
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 }),
-            (new Actions\ExportGtid())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-gtid');
-                }),
-            (new Actions\ExportUsername())
-                ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->can('read-users');
-                }),
-            (new Actions\ExportEmails())
-                ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->can('read-users');
-                }),
-            (new Actions\ExportContactInfo())
-                ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->can('read-users');
-                }),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('send-notifications');

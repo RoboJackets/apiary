@@ -31,6 +31,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id the database identifier for this team
  * @property string $name The name of the team
  * @property string $slack_private_channel_id the slack internal ID of the team's private channel
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class Team extends Model
 {

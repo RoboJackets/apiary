@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $created_by the user that created this campaign
  * @property string $status the status of this campaign
  * @property int $id the database identifier for this campaign
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class RecruitingCampaign extends Model
 {

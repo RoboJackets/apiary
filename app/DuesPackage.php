@@ -27,6 +27,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property bool $is_active Whether this DuesPackage is considered active
  * @property string $cost the cost of this package
  * @property int $id The database identifier for this DuesPackage
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class DuesPackage extends Model
 {

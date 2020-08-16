@@ -18,6 +18,8 @@ use Illuminate\Notifications\Notifiable;
  * @property int $recruiting_campaign_id the RecruitingCampaign that maps to this recipient
  * @property int $user_id the ID of the user, if available
  * @property string $notified_at the timestamp when this recipient was contacted
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class RecruitingCampaignRecipient extends Model
 {

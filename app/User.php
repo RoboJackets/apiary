@@ -30,6 +30,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $is_service_account whether the user is a service account (vs human)
  * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
  * @property string $name the display name for this user
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class User extends Authenticatable
 {
@@ -420,7 +422,7 @@ class User extends Authenticatable
      */
     public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
     {
-        $current_major_ids = $this->majors()->get()->pluck('id')->toArray();
+        $current_major_ids = $this->majors()->pluck('id')->toArray();
 
         $new_major_ids = [];
 
@@ -462,7 +464,7 @@ class User extends Authenticatable
      */
     public function syncClassStandingFromAccountEntitlements(array $accountEntitlements): int
     {
-        $current_class_standings = $this->classStanding()->get()->pluck('id')->toArray();
+        $current_class_standings = $this->classStanding()->pluck('id')->toArray();
 
         $new_class_standings = [];
 

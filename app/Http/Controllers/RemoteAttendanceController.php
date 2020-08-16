@@ -13,7 +13,7 @@ class RemoteAttendanceController extends Controller
 {
     public function index(Request $request, string $secret)
     {
-        $team = Team::where('attendance_secret', $secret)->get()->first();
+        $team = Team::where('attendance_secret', $secret)->first();
 
         if (null === $team
             // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull

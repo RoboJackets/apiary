@@ -98,13 +98,9 @@ class UserController extends Controller
             }
         }
 
-        if (is_numeric($user->id)) {
-            $dbUser = User::findOrFail($user->id)->makeVisible('api_token');
+        $dbUser = User::findOrFail($user->id)->makeVisible('api_token');
 
-            return response()->json(['status' => 'success', 'user' => $dbUser], 201);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Unknown error.'], 500);
+        return response()->json(['status' => 'success', 'user' => $dbUser], 201);
     }
 
     /**

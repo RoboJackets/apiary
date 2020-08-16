@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id The database ID for this Event
  * @property float $price The cost to attend this event
  * @property string $name The name of the event
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class Event extends Model
 {

@@ -28,6 +28,8 @@ use Illuminate\Database\Query\JoinClause;
  * @property bool $is_paid whether this transaction is paid in full
  * @property int $id The database ID for this DuesTransaction
  * @property string $status the status of this transaction
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class DuesTransaction extends Model
 {
@@ -236,7 +238,7 @@ class DuesTransaction extends Model
      */
     public function getIsPaidAttribute(): bool
     {
-        return 0 !== self::where('dues_transactions.id', $this->id)->paid()->get()->count();
+        return 0 !== self::where('dues_transactions.id', $this->id)->paid()->count();
     }
 
     /**

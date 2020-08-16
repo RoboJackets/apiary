@@ -18,6 +18,8 @@ use Illuminate\Support\Collection;
  *
  * @property int $id The database identifier for this entry
  * @property int $gtid the GTID associated with this entry
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class Attendance extends Model
 {

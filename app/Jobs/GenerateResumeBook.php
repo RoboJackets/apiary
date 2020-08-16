@@ -84,7 +84,7 @@ class GenerateResumeBook implements ShouldQueue
 
         if (null !== $this->major) {
             $majors = $users->mapWithKeys(static function (User $user): array {
-                $ous = Cache::remember('whitepages_ou_'.$user->uid, now()->addDays(1), static function () {
+                $ous = Cache::remember('whitepages_ou_'.$user->uid, now()->addDays(1), static function (): void {
                     throw new Exception('This needs to be rewritten to use the local database or BuzzAPI');
                 });
 

@@ -126,6 +126,18 @@ class PaymentController extends Controller
 
         if (null !== $transactZeroPmt) {
             $payment = $transactZeroPmt->payment[0];
+            if (null === $payment) {
+                return response(
+                    view(
+                        'errors.generic',
+                        [
+                            'error_code' => 500,
+                            'error_message' => 'Got null payment',
+                        ]
+                    ),
+                    500
+                );
+            }
             $payment->unique_id = bin2hex(openssl_random_pseudo_bytes(10));
             $payment->save();
         } else {

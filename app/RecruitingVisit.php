@@ -18,6 +18,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $visit_token an identifier for this visit
  * @property string $recruiting_email the email address provided by the visitor
  * @property int $user_id the ID of the user, if available
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class RecruitingVisit extends Model
 {

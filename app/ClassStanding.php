@@ -7,6 +7,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Represents a class standing (e.g. freshman)
+ *
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ */
 class ClassStanding extends Model
 {
     /**

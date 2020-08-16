@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Represents an attendance report export link.
  *
  * @property string $secret the secret in the URL
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class AttendanceExport extends Model
 {

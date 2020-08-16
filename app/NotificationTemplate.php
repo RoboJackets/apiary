@@ -17,6 +17,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $subject The subject that will be used for emails sent using this template
  * @property string $body_markdown The body of this template
  * @property int $created_by The user ID that created the template
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class NotificationTemplate extends Model
 {

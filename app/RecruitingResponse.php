@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Represents a response to a recruiting survey.
  *
  * @property string $response the response to the survey
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
  */
 class RecruitingResponse extends Model
 {
