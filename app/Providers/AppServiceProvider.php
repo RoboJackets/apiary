@@ -12,7 +12,7 @@ use App\Observers\PaymentObserver;
 use App\Observers\UserObserver;
 use App\Payment;
 use App\User;
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 
@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Resource::withoutWrapping();
+        JsonResource::withoutWrapping();
 
         // @phan-suppress-next-line PhanPluginAlwaysReturnFunction
         Horizon::auth(static function (): bool {
