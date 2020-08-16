@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Represents a single major (e.g. Computer Science)
+ * Represents a single major (e.g. Computer Science).
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Major newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Major newQuery()

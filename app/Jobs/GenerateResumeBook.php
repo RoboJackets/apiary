@@ -77,7 +77,7 @@ class GenerateResumeBook implements ShouldQueue
             ->where('resume_date', '>', $this->resume_date_cutoff)
             ->get();
 
-        if (!is_a($users, Collection::class)) {
+        if (! is_a($users, Collection::class)) {
             throw new Exception('query did not return a collection');
         }
 

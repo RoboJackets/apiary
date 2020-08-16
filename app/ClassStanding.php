@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Represents a class standing (e.g. freshman)
+ * Represents a class standing (e.g. freshman).
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newQuery()

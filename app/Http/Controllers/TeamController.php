@@ -170,7 +170,7 @@ class TeamController extends Controller
 
         try {
             $user = User::find($request->input('user_id'));
-            if (null === $user || !is_a($user, User::class)) {
+            if (null === $user || ! is_a($user, User::class)) {
                 return response()->json(['status' => 'user_not_found'], 400);
             }
             if ('join' === $request->input('action')) {
