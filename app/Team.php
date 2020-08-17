@@ -18,8 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Laravel\Nova\Actions\Actionable;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * Represents a group of Users.
@@ -80,7 +78,6 @@ class Team extends Model
 {
     use Actionable;
     use SoftDeletes;
-    use HasSlug;
     use HasManyEvents;
     use HasBelongsToManyEvents;
     use HasRelationshipObservables;
@@ -150,14 +147,6 @@ class Team extends Model
     public function scopeSelfServiceable(Builder $query): Builder
     {
         return $query->where('self_serviceable', true);
-    }
-
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
     }
 
     /**
