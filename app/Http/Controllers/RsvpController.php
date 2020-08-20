@@ -14,6 +14,7 @@ use App\User;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RsvpController extends Controller
 {
@@ -100,7 +101,10 @@ class RsvpController extends Controller
         }
 
         $rsvp->ip_address = $request->ip();
-        $rsvp->user_agent = $request->userAgent();
+        $rsvp->user_agent = null;
+        if (null !== $request->userAgent()) {
+            $rsvp->user_agent = Str::limit($request->userAgent(), 1023, '');
+        }
         $rsvp->event_id = $event->id;
         $rsvp->source = $source ?? $request->input('source');
         $rsvp->response = 'yes';
