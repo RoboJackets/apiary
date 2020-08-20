@@ -17,8 +17,8 @@
         "chelout/laravel-relationship-events": "1.2.1",
         "doctrine/dbal": "2.10.2",
         "guzzlehttp/guzzle": "6.5.5",
-        "laravel/framework": "^7.25",
-        "laravel/nova": "^3.0",
+        "laravel/framework": "7.25.0",
+        "laravel/nova": "3.8.2",
         "laravel/slack-notification-channel": "2.1.0",
         "laravel/socialite": "4.4.1",
         "laravel/tinker": "2.4.2",
@@ -34,22 +34,22 @@
         "subfission/cas": "3.1.0",
         "uxweb/sweet-alert": "dev-master",
         "vyuldashev/nova-permission": "2.9.0",
-        "fideloper/proxy": "^4.2",
-        "fruitcake/laravel-cors": "^2.0"
+        "fideloper/proxy": "4.4.0",
+        "fruitcake/laravel-cors": "2.0.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "*",
-        "facade/ignition": "^2.0",
+        "facade/ignition": "2.3.6",
         "filp/whoops": "2.7.3",
         "fzaninotto/faker": "1.9.1",
         "mockery/mockery": "1.4.2",
-        "nunomaduro/collision": "^4.1",
+        "nunomaduro/collision": "4.2.0",
         "nunomaduro/larastan": "0.6.2",
         "ocramius/package-versions": "1.9.0",
         "phpstan/extension-installer": "1.0.4",
         "psalm/plugin-laravel": "1.3.1",
         "robojackets/static-analysis": "1.0.0",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "8.5.8"
     },
     "autoload": {
         "classmap": [
