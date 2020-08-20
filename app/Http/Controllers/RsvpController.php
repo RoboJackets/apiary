@@ -101,7 +101,10 @@ class RsvpController extends Controller
         }
 
         $rsvp->ip_address = $request->ip();
-        $rsvp->user_agent = Str::limit($request->userAgent(), 1023, '');
+        $rsvp->user_agent = null;
+        if (null !== $request->userAgent()) {
+            $rsvp->user_agent = Str::limit($request->userAgent(), 1023, '');
+        }
         $rsvp->event_id = $event->id;
         $rsvp->source = $source ?? $request->input('source');
         $rsvp->response = 'yes';
