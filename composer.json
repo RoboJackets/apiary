@@ -95,10 +95,6 @@
         {
             "type": "composer",
             "url": "https://composer.robojackets.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/regnilk/cas"
         }
     ]
 }
