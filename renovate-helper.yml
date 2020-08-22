@@ -125,17 +125,17 @@ jobs:
         COMPOSER_AUTH: "{}"
 
       inputs:
-      - name: source
+      - name: pull-request-branch
 
       outputs:
-      - name: source
+      - name: pull-request-branch
 
       caches:
-      - path: source/vendor
+      - path: pull-request-branch/vendor
 
       run:
         path: composer
-        dir: source
+        dir: pull-request-branch
         args:
         - update
         - --no-interaction
