@@ -1,0 +1,148 @@
+---
+resource_types:
+
+- name: github-webhook
+  type: registry-image
+  source:
+    repository: docker.robojackets.org/robojackets/concourse-github-webhook-resource
+    username: ((docker-robojackets-org.username))
+    password: ((docker-robojackets-org.password))
+
+- name: pull-request
+  type: registry-image
+  source:
+    repository: teliaoss/github-pr-resource
+
+resources:
+
+- name: pull-request
+  public: true
+  type: pull-request
+  icon: source-pull
+  webhook_token: ((webhook-token))
+  source:
+    repository: RoboJackets/apiary
+    access_token: ((github-com/token))
+    base_branch: master
+    disable_forks: true
+
+- name: pull-request-branch
+  public: true
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/RoboJackets/apiary
+    branch: ((pr-branch))
+    username: x-access-token
+    password: ((github-com/token))
+
+- name: webhooks
+  public: true
+  type: github-webhook
+  icon: webhook
+  source:
+    github_token: ((github-com/token))
+    webhook_token: ((webhook-token))
+    resources:
+      pull-request:
+        github_uri: https://github.com/RoboJackets/apiary
+        events:
+        - push
+        - pull_request
+
+jobs:
+
+- name: reconfigure
+  public: true
+  plan:
+
+  - in_parallel:
+
+    - put: webhooks
+      inputs: []
+
+    - get: pull-request
+      trigger: true
+
+    - get: pull-request-branch
+
+  - task: composer-verify-lock-out-of-date
+    config:
+      platform: linux
+
+      image_resource:
+        type: registry-image
+        source:
+          repository: docker.robojackets.org/robojackets/php-build
+          username: ((docker-robojackets-org.username))
+          password: ((docker-robojackets-org.password))
+
+      inputs:
+      - name: pull-request
+
+      run:
+        path: bash
+        dir: pull-request
+        args:
+        - -o
+        - pipefail
+        - -c
+        - >-
+            composer install --dry-run --no-interaction --no-progress --no-suggest
+            2>&1 | grep --fixed-strings "outdated"
+
+
+  - load_var: pr-branch-two
+    file: pull-request/.git/resource/head_name
+    format: trim
+    reveal: true
+
+  - set_pipeline: self
+    file: pull-request/renovate-helper.yml
+    vars:
+      pr-branch: ((.:pr-branch-two))
+
+- name: update-composer-lock
+  public: true
+  plan:
+
+  - get: pull-request-branch
+    passed: [reconfigure]
+
+  - task: composer-update
+    config:
+      platform: linux
+
+      image_resource:
+        type: registry-image
+        source:
+          repository: docker.robojackets.org/robojackets/php-build
+          username: ((docker-robojackets-org.username))
+          password: ((docker-robojackets-org.password))
+
+      params:
+        COMPOSER_AUTH: "{}"
+
+      inputs:
+      - name: source
+
+      outputs:
+      - name: source
+
+      caches:
+      - path: source/vendor
+
+      run:
+        path: composer
+        dir: source
+        args:
+        - update
+        - --no-interaction
+        - --no-progress
+        - --no-suggest
+        - --optimize-autoloader
+        - --classmap-authoritative
+
+  - put: pull-request-branch
+    params:
+      repository: pull-request-branch
