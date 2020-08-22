@@ -14,14 +14,4 @@ class UserObserver
     {
         PushToJedi::dispatch($user, User::class, $user->id, 'saved');
     }
-
-    public function updated(User $user): void
-    {
-        if (null === $user->access_override_until || $user->access_override_until <= new DateTime()) {
-            return;
-        }
-
-        PushToJedi::dispatch($user, User::class, $user->id, 'updated or access override expiration')
-            ->delay($user->access_override_until);
-    }
 }

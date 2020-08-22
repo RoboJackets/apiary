@@ -544,7 +544,7 @@ class User extends Authenticatable
      */
     public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
     {
-        $current_major_ids = $this->majors()->pluck('id')->toArray();
+        $current_major_ids = $this->majors()->pluck('majors.id')->toArray();
 
         $new_major_ids = [];
 
@@ -586,7 +586,7 @@ class User extends Authenticatable
      */
     public function syncClassStandingFromAccountEntitlements(array $accountEntitlements): int
     {
-        $current_class_standings = $this->classStanding()->pluck('id')->toArray();
+        $current_class_standings = $this->classStanding()->pluck('class_standings.id')->toArray();
 
         $new_class_standings = [];
 
