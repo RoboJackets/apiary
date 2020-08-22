@@ -15,7 +15,7 @@ use Laravel\Nova\Actions\Actionable;
  * Represents a non-member's visit to a recruiting event.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit query()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit whereDeletedAt($value)

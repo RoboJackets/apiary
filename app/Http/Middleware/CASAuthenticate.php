@@ -118,17 +118,23 @@ class CASAuthenticate
                     exit;
                 }
                 if (NetworkCheck::GTOTHER === $network) {
-                    BadNetwork::render('GTother', $username, $this->cas->getAttribute('eduPersonPrimaryAffiliation'), $error_pages_cache);
+                    BadNetwork::render('GTother', $username, $this->cas->getAttribute(
+                        'eduPersonPrimaryAffiliation'
+                    ), $error_pages_cache);
                     exit;
                 }
                 if (NetworkCheck::GTVISITOR === $network) {
-                    BadNetwork::render('GTvisitor', $username, $this->cas->getAttribute('eduPersonPrimaryAffiliation'), $error_pages_cache);
+                    BadNetwork::render('GTvisitor', $username, $this->cas->getAttribute(
+                        'eduPersonPrimaryAffiliation'
+                    ), $error_pages_cache);
                     exit;
                 }
                 if (NetworkCheck::EDUROAM_NON_GATECH_V4 === $network
                     || NetworkCheck::EDUROAM_NON_GATECH_V6 === $network
                 ) {
-                    EduroamNonGatech::render($username, $this->cas->getAttribute('eduPersonPrimaryAffiliation'), $error_pages_cache);
+                    EduroamNonGatech::render($username, $this->cas->getAttribute(
+                        'eduPersonPrimaryAffiliation'
+                    ), $error_pages_cache);
                     exit;
                 }
 

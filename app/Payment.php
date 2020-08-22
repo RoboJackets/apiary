@@ -14,7 +14,7 @@ use Laravel\Nova\Actions\Actionable;
  * Represents a payment made from a member to RoboJackets against a Payable.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment query()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCheckoutId($value)

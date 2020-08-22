@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Represents a one-off gathering where an RSVP may be requested or attendance may be taken.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Event query()
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereAllowAnonymousRsvp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereCost($value)

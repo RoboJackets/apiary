@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * A batch of emails sent to addresses collected from RecruitingVisits.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaign newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaign newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaign query()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaign whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaign whereCreatedBy($value)

@@ -31,7 +31,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User accessInactive()
  * @method static Builder|User inactive()
  * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
  * @method static Builder|User role($roles, $guard = null)

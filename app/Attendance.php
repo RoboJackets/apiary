@@ -21,7 +21,7 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Query\Builder|Attendance withTrashed()
  * @method static Builder|Attendance end($date)
  * @method static Builder|Attendance newModelQuery()
- * @method static Builder|Attendance newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|Attendance query()
  * @method static Builder|Attendance start($date)
  * @method static Builder|Attendance whereAttendableId($value)

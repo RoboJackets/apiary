@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Represents an attendance report export link.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|AttendanceExport newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AttendanceExport newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AttendanceExport query()
  * @method static \Illuminate\Database\Eloquent\Builder|AttendanceExport whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AttendanceExport whereDeletedAt($value)

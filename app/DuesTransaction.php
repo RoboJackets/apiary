@@ -21,7 +21,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Eloquent\Builder pendingSwag() Scopes a query to only transactions that need
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction newModelQuery()
- * @method static Builder|DuesTransaction newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|DuesTransaction query()
  * @method static Builder|DuesTransaction unpaid()
  * @method static Builder|DuesTransaction whereCreatedAt($value)

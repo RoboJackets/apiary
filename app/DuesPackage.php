@@ -21,7 +21,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|DuesPackage accessActive()
  * @method static Builder|DuesPackage active()
  * @method static Builder|DuesPackage newModelQuery()
- * @method static Builder|DuesPackage newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|DuesPackage query()
  * @method static Builder|DuesPackage whereAccessEnd($value)
  * @method static Builder|DuesPackage whereAccessStart($value)

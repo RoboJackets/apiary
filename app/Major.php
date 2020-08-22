@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * Represents a single major (e.g. Computer Science).
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Major newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Major newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Major query()
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereDisplayName($value)
