@@ -122,7 +122,7 @@ jobs:
           password: ((docker-robojackets-org.password))
 
       params:
-        COMPOSER_AUTH: "{}"
+        COMPOSER_AUTH: ((composer-auth))
 
       inputs:
       - name: pull-request-branch
@@ -143,6 +143,41 @@ jobs:
         - --no-suggest
         - --optimize-autoloader
         - --classmap-authoritative
+
+  - task: commit-lock-file
+    config:
+      platform: linux
+
+      image_resource:
+        type: registry-image
+        source:
+          repository: docker.robojackets.org/robojackets/php-build
+          username: ((docker-robojackets-org.username))
+          password: ((docker-robojackets-org.password))
+
+      params:
+        GIT_COMMITTER_NAME: George Burdell
+        GIT_COMMITTER_EMAIL: support@robojackets.org
+
+      inputs:
+      - name: pull-request-branch
+
+      outputs:
+      - name: pull-request-branch
+
+      run:
+        path: bash
+        dir: source
+        args:
+        - -e
+        - -o
+        - pipefail
+        - -c
+        - >-
+            git config --global user.email support@robojackets.org &&
+            git config --global user.name "George Burdell"
+            && git add composer.lock
+            && git commit -m "Fix composer.lock"
 
   - put: pull-request-branch
     params:
