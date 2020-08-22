@@ -11,6 +11,7 @@
     ],
     "reviewers": [],
     "ignoreDeps": [
+        "ocramius/package-versions",
         "square/connect"
     ],
     "prConcurrentLimit": 1,
