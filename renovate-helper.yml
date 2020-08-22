@@ -167,7 +167,7 @@ jobs:
 
       run:
         path: bash
-        dir: source
+        dir: pull-request-branch
         args:
         - -e
         - -o
