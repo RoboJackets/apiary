@@ -64,9 +64,6 @@ jobs:
     - get: pull-request
       trigger: true
 
-    - get: pull-request-branch
-      trigger: true
-
   - task: composer-verify-lock-out-of-date
     config:
       platform: linux
@@ -108,7 +105,10 @@ jobs:
   plan:
 
   - get: pull-request-branch
+
+  - get: pull-request
     passed: [reconfigure]
+    trigger: true
 
   - task: composer-update
     config:
