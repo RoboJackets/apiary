@@ -65,6 +65,7 @@ jobs:
       trigger: true
 
     - get: pull-request-branch
+      trigger: true
 
   - task: composer-verify-lock-out-of-date
     config:
