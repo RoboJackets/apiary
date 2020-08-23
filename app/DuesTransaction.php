@@ -173,7 +173,7 @@ class DuesTransaction extends Model
      */
     public function getSwagPoloStatusAttribute(): string
     {
-        if ($this->package->eligible_for_polo)
+        if ($this->package->eligible_for_polo) {
             if (null === $this->swag_polo_provided) {
                 return 'Not Picked Up';
             } else {
@@ -189,7 +189,7 @@ class DuesTransaction extends Model
      */
     public function getSwagShirtStatusAttribute(): string
     {
-        if ($this->package->eligible_for_shirt)
+        if ($this->package->eligible_for_shirt) {
             if (null === $this->eligible_for_shirt) {
                 return 'Not Picked Up';
             } else {
