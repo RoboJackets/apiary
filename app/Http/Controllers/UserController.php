@@ -225,7 +225,8 @@ class UserController extends Controller
         );
     }
 
-    public function showProfile(Request $request) {
+    public function showProfile(Request $request)
+    {
         return view('users/userprofile', ['id' => $request->user()->id]);
     }
 }

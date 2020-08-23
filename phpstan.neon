@@ -30,7 +30,6 @@ parameters:
     - '#Cannot call method members\(\) on App\\Team\|null\.#'
     - '#Cannot call method name\(\) on array\|Illuminate\\Routing\\Route\.#'
     - '#Dynamic call to static method Illuminate\\Auth\\SessionGuard::authenticate\(\)\.#'
-    - '#Dynamic call to static method Illuminate\\Contracts\\Auth\\Guard::user\(\)\.#'
     - '#Method App\\Http\\Controllers\\[a-zA-Z]+::[a-zA-Z]+\(\) has no return typehint specified\.#'
     - '#Method App\\Http\\Middleware\\[a-zA-Z]+::handle\(\) has no return typehint specified\.#'
     - '#Method App\\Notifications\\[a-zA-Z]+::toArray\(\) has parameter \$notifiable with no typehint specified\.#'

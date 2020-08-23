@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-use Illuminate\Http\RedirectResponse;
-
 namespace App\Http\Controllers;
+
+use Illuminate\Http\RedirectResponse;
 
 class RedirectController extends Controller
 {
-    public function logout(): RedirectResponse {
+    public function logout(): RedirectResponse
+    {
         return redirect('logout');
     }
 
-    public function login(): RedirectResponse {
+    public function login(): RedirectResponse
+    {
         return redirect()->intended();
     }
 }

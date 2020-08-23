@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
