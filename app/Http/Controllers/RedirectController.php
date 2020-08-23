@@ -11,9 +11,9 @@ class RedirectController extends Controller
     /**
      * Redirect to the logout route.
      *
-     * @return Illuminate\Http\RedirectResponse|Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function logout(): RedirectResponse
+    public function logout()
     {
         return redirect('logout');
     }
