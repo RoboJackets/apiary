@@ -132,10 +132,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingVisit> $recruitingVisits
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Rsvp> $rsvps
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $manages
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $teams
+ * @property-read \Illuminate\Database\Eloquent\Collection $teams
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection $roles
  * @property-read bool $is_access_active
  * @property-read int|null $actions_count
  * @property-read int|null $attendance_count
@@ -467,11 +467,7 @@ class User extends Authenticatable
             return $query->where('id', $id);
         }
 
-        if (! is_numeric($id)) {
-            return $query->where('uid', $id);
-        }
-
-        return $query;
+        return $query->where('uid', $id);
     }
 
     /**
