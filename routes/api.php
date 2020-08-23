@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use App\User;
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
