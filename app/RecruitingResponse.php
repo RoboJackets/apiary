@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Represents a response to a recruiting survey.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse query()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereDeletedAt($value)

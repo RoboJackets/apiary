@@ -22,6 +22,14 @@ class NoAttendanceJediPush implements ShouldQueue
     use SerializesModels;
 
     /**
+     * Create a new job instance.
+     */
+    public function __construct()
+    {
+        $this->queue = config('vapor-queue-names.jedi');
+    }
+
+    /**
      * Execute the job.
      */
     public function handle(): void

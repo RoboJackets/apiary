@@ -28,7 +28,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
  * @method static Builder|Team attendable()
  * @method static Builder|Team newModelQuery()
- * @method static Builder|Team newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|Team query()
  * @method static Builder|Team selfServiceable()
  * @method static Builder|Team whereAttendanceSecret($value)

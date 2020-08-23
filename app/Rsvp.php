@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Represents a single RSVP to an event.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Rsvp newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp query()
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp whereDeletedAt($value)

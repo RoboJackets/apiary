@@ -1,11 +1,25 @@
 id: 12610
 name: apiary
 environments:
-    production:
-        memory: 1024
-        cli-memory: 512
-        runtime: php-7.4
-        build:
-            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
-            - 'php artisan event:cache'
-            - 'npm ci && npm run prod && rm -rf node_modules'
+  sandbox:
+    queues:
+    - apiary-sandbox-email
+    - apiary-sandbox-slack
+    - apiary-sandbox-buzzapi
+    - apiary-sandbox-jedi
+    queue-concurrency: 4
+    gateway-version: 2
+    #domain: apiary-test-aws-sandbox.robojackets.org
+    memory: 1024
+    cli-memory: 512
+    database: apiary-sandbox-t3-micro
+    runtime: php-7.4
+    storage: robojackets-sandbox-apiary-uploads
+    build:
+    - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-interaction --no-progress --no-suggest --no-dev'
+    - 'php artisan event:cache'
+    - 'php artisan view:cache'
+    - 'php artisan nova:publish'
+    - 'npm ci && npm run prod && rm -rf node_modules'
+    deploy:
+    - 'php artisan migrate --force'

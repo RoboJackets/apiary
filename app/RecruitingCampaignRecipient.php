@@ -13,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
  * Represents a non-member who will receive an email invitation for General Interest.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient query()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereDeletedAt($value)

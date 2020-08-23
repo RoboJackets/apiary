@@ -31,7 +31,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User accessInactive()
  * @method static Builder|User inactive()
  * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
  * @method static Builder|User role($roles, $guard = null)
@@ -132,10 +132,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingVisit> $recruitingVisits
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Rsvp> $rsvps
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $manages
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $teams
+ * @property-read \Illuminate\Database\Eloquent\Collection $teams
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection $roles
  * @property-read bool $is_access_active
  * @property-read int|null $actions_count
  * @property-read int|null $attendance_count
@@ -467,11 +467,7 @@ class User extends Authenticatable
             return $query->where('id', $id);
         }
 
-        if (! is_numeric($id)) {
-            return $query->where('uid', $id);
-        }
-
-        return $query;
+        return $query->where('uid', $id);
     }
 
     /**
@@ -544,7 +540,7 @@ class User extends Authenticatable
      */
     public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
     {
-        $current_major_ids = $this->majors()->pluck('id')->toArray();
+        $current_major_ids = $this->majors()->pluck('majors.id')->toArray();
 
         $new_major_ids = [];
 
@@ -586,7 +582,7 @@ class User extends Authenticatable
      */
     public function syncClassStandingFromAccountEntitlements(array $accountEntitlements): int
     {
-        $current_class_standings = $this->classStanding()->pluck('id')->toArray();
+        $current_class_standings = $this->classStanding()->pluck('class_standings.id')->toArray();
 
         $new_class_standings = [];
 

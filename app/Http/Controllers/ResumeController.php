@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -157,5 +158,10 @@ class ResumeController extends Controller
             ],
             422
         );
+    }
+
+    public function showUploadPage(Request $request)
+    {
+        return view('users/resumeupload', ['id' => $request->user()->id]);
     }
 }

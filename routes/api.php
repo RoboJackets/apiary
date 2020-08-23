@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use App\User;
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,10 +12,6 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('v1/user', static function (Request $request): User {
-    return $request->user();
-});
 
 Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force')->group(
     static function (): void {

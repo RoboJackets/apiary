@@ -56,7 +56,11 @@
                             Pay Dues
                         </h4>
                         <p class="card-text">
+                            @if (config('features.card-present-payments'))
                             Dues payments are accepted online with credit/debit cards or in-person with card/cash/check.
+                            @else
+                            Dues payments are accepted online with credit/debit cards or in-person with cash/check.
+                            @endif
                         </p>
                         <a style="margin-bottom: 0.5rem;display:block" href="/dues/pay">Pay Online Now</a>
                         <a href="/dues">Change Dues Term</a>

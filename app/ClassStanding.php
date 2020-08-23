@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * Represents a class standing (e.g. freshman).
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding query()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereId($value)

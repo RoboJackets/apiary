@@ -13,7 +13,7 @@ use Laravel\Nova\Actions\Actionable;
  * Represents a template for a notififaction that is stored in the database.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate query()
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereBodyMarkdown($value)
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereCreatedAt($value)

@@ -21,7 +21,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Eloquent\Builder pendingSwag() Scopes a query to only transactions that need
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction newModelQuery()
- * @method static Builder|DuesTransaction newQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|DuesTransaction query()
  * @method static Builder|DuesTransaction unpaid()
  * @method static Builder|DuesTransaction whereCreatedAt($value)
@@ -64,7 +64,7 @@ use Illuminate\Database\Query\JoinClause;
  * @property-read \App\User $swagPoloProvidedBy
  * @property-read \App\User $swagShirtProvidedBy
  * @property-read \App\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Payment> $payment
+ * @property-read \Illuminate\Database\Eloquent\Collection $payment
  * @property-read int|null $payment_count
  * @property-read string $swag_polo_status
  * @property-read string $swag_shirt_status
@@ -155,7 +155,7 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute(): string
     {
-        if (null === $this->package || ! $this->package->is_active) {
+        if (! $this->package->is_active) {
             return 'expired';
         }
 
@@ -173,12 +173,8 @@ class DuesTransaction extends Model
      */
     public function getSwagPoloStatusAttribute(): string
     {
-        if (null === $this->package || $this->package->eligible_for_polo && null === $this->swag_polo_provided) {
-            return 'Not Picked Up';
-        }
-
-        if ($this->package->eligible_for_polo && null !== $this->swag_polo_provided) {
-            return 'Picked Up';
+        if ($this->package->eligible_for_polo) {
+            return null === $this->swag_polo_provided ? 'Not Picked Up' : 'Picked Up';
         }
 
         return 'Not Eligible';
@@ -189,12 +185,8 @@ class DuesTransaction extends Model
      */
     public function getSwagShirtStatusAttribute(): string
     {
-        if (null === $this->package || $this->package->eligible_for_shirt && null === $this->swag_shirt_provided) {
-            return 'Not Picked Up';
-        }
-
-        if ($this->package->eligible_for_shirt && null !== $this->swag_shirt_provided) {
-            return 'Picked Up';
+        if ($this->package->eligible_for_shirt) {
+            return null === $this->swag_shirt_provided ? 'Not Picked Up' : 'Picked Up';
         }
 
         return 'Not Eligible';
