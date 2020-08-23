@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class RedirectController extends Controller
 {
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         $request->session()->regenerate();
         cas()->logout(config('app.url'));
     }
