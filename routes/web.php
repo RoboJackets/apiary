@@ -16,9 +16,7 @@ use Illuminate\View\View;
 |
 */
 
-Route::get('nova/logout', static function (): RedirectResponse {
-    return redirect('logout');
-})->name('nova.logout');
+Route::get('nova/logout', 'RedirectController@logout')->name('nova.logout');
 
 Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('/', 'DashboardController@index')->name('home');
@@ -27,18 +25,10 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::view('recruiting', 'recruiting/form');
 
-    Route::get('profile', static function (): View {
-        // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
-        return view('users/userprofile', ['id' => auth()->user()->id]);
-    });
+    Route::get('profile', 'UserController@showProfile');
 
     Route::prefix('dues')->group(static function (): void {
-        Route::get('/', static function () {
-            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
-            return true === auth()->user()->is_active ? response()->view('dues.alreadypaid', [], 400) : view(
-                'dues/payDues'
-            );
-        })->name('payDues');
+        Route::get('/', 'DuesController@showDuesFlow')->name('payDues');
 
         Route::get('/pay', 'PaymentController@storeUser')->name('dues.payOne');
         Route::post('/pay', 'PaymentController@storeUser')->name('dues.pay');
@@ -49,10 +39,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     });
 
     Route::prefix('resume')->name('resume.')->group(static function (): void {
-        Route::get('/', static function (): View {
-            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
-            return view('users/resumeupload', ['id' => auth()->user()->id]);
-        })->name('index');
+        Route::get('/', 'ResumeController@showUploadPage')->name('index');
     });
 
     Route::prefix('payments')->group(static function (): void {
@@ -80,13 +67,8 @@ Route::get('attendance/export/{secret}', 'AttendanceExportController@show')
     ->middleware('auth.cas.force')
     ->name('attendance.export');
 
-Route::get('login', static function (): RedirectResponse {
-    return redirect()->intended();
-})->name('login')->middleware('auth.cas.force');
+Route::get('login', 'RedirectController@login')->name('login')->middleware('auth.cas.force');
 
-Route::get('logout', static function (): void {
-    Session::flush();
-    cas()->logout(config('app.url'));
-})->name('logout');
+Route::get('logout', 'AuthController@logout')->name('logout');
 
 Route::view('privacy', 'privacy');

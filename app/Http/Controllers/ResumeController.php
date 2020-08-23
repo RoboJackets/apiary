@@ -158,4 +158,8 @@ class ResumeController extends Controller
             422
         );
     }
+
+    public function showUploadPage(Request $request) {
+        return view('users/resumeupload', ['id' => $request->user()->id]);
+    }
 }

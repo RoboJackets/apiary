@@ -237,4 +237,10 @@ class DuesTransactionController extends Controller
             422
         );
     }
+
+    public function showDuesFlow(Request $request) {
+        return true === $request->user()->is_active ? response()->view('dues.alreadypaid', [], 400) : view(
+            'dues/payDues'
+        );
+    }
 }
