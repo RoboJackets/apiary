@@ -71,6 +71,9 @@
             <errorLevel type="suppress">
                 <directory name="app/Http/Controllers" />
             </errorLevel>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Middleware" />
+            </errorLevel>
         </MissingReturnType>
     </issueHandlers>
 </psalm>
