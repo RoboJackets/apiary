@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RedirectController extends Controller
+class AuthController extends Controller
 {
     public function logout(Request $request)
     {
