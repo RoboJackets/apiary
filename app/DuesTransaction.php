@@ -64,7 +64,7 @@ use Illuminate\Database\Query\JoinClause;
  * @property-read \App\User $swagPoloProvidedBy
  * @property-read \App\User $swagShirtProvidedBy
  * @property-read \App\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Payment> $payment
+ * @property-read \Illuminate\Database\Eloquent\Collection $payment
  * @property-read int|null $payment_count
  * @property-read string $swag_polo_status
  * @property-read string $swag_shirt_status
@@ -155,7 +155,7 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute(): string
     {
-        if (null === $this->package || ! $this->package->is_active) {
+        if (! $this->package->is_active) {
             return 'expired';
         }
 
@@ -173,15 +173,15 @@ class DuesTransaction extends Model
      */
     public function getSwagPoloStatusAttribute(): string
     {
-        if (null === $this->package || $this->package->eligible_for_polo && null === $this->swag_polo_provided) {
-            return 'Not Picked Up';
+        if ($this->package->eligible_for_polo)
+            if (null === $this->swag_polo_provided) {
+                return 'Not Picked Up';
+            } else {
+                return 'Picked Up';
+            }
+        } else {
+            return 'Not Eligible';
         }
-
-        if ($this->package->eligible_for_polo && null !== $this->swag_polo_provided) {
-            return 'Picked Up';
-        }
-
-        return 'Not Eligible';
     }
 
     /**
@@ -189,15 +189,15 @@ class DuesTransaction extends Model
      */
     public function getSwagShirtStatusAttribute(): string
     {
-        if (null === $this->package || $this->package->eligible_for_shirt && null === $this->swag_shirt_provided) {
-            return 'Not Picked Up';
+        if ($this->package->eligible_for_shirt)
+            if (null === $this->eligible_for_shirt) {
+                return 'Not Picked Up';
+            } else {
+                return 'Picked Up';
+            }
+        } else {
+            return 'Not Eligible';
         }
-
-        if ($this->package->eligible_for_shirt && null !== $this->swag_shirt_provided) {
-            return 'Picked Up';
-        }
-
-        return 'Not Eligible';
     }
 
     /**

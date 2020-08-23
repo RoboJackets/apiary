@@ -52,6 +52,11 @@
                 <directory name="app" />
             </errorLevel>
         </InvalidReturnStatement>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </TooManyArguments>
         <PossiblyUndefinedMethod>
             <errorLevel type="suppress">
                 <directory name="database/migrations" />
@@ -62,5 +67,10 @@
                 <directory name="database/migrations" />
             </errorLevel>
         </UndefinedInterfaceMethod>
+        <MissingReturnType>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Controllers" />
+            </errorLevel>
+        </MissingReturnType>
     </issueHandlers>
 </psalm>
