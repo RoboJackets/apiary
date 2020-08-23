@@ -3,11 +3,11 @@ name: apiary
 environments:
   sandbox:
     queues:
-    - email
-    - slack
-    - buzzapi
-    - jedi
-    queue-concurrency: 1
+    - apiary-sandbox-email
+    - apiary-sandbox-slack
+    - apiary-sandbox-buzzapi
+    - apiary-sandbox-jedi
+    queue-concurrency: 4
     gateway-version: 2
     #domain: apiary-test-aws-sandbox.robojackets.org
     memory: 1024

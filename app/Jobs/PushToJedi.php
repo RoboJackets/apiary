@@ -56,7 +56,7 @@ class PushToJedi implements ShouldQueue
         $this->model_id = $model_id;
         $this->model_event = $model_event;
         $this->tries = 1;
-        $this->queue = 'jedi';
+        $this->queue = config('vapor-queue-names.jedi');
     }
 
     /**

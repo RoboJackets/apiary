@@ -25,6 +25,14 @@ class DailyDuesSummary implements ShouldQueue
     public int $tries = 1;
 
     /**
+     * Create a new job instance.
+     */
+    public function __construct()
+    {
+        $this->queue = config('vapor-queue-names.slack');
+    }
+
+    /**
      * Execute the job.
      */
     public function handle(): void
