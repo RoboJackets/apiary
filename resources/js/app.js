@@ -47,6 +47,7 @@ Vue.component('user-lookup', require('./components/fields/UserLookup.vue').defau
 // Large Scale Components
 Vue.component('resume-upload-form', require('./components/ResumeUploadForm.vue').default);
 Vue.component('payment-instructions', require('./components/PaymentInstructions.vue').default);
+Vue.component('user-edit-form', require('./components/UserEditForm.vue').default);
 
 // Attendance
 Vue.component('attendance-kiosk', require('./components/attendance/AttendanceKiosk.vue').default);

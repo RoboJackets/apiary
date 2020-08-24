@@ -75,5 +75,10 @@
                 <directory name="app/Http/Middleware" />
             </errorLevel>
         </MissingReturnType>
+        <UnresolvableInclude>
+            <errorLevel type="suppress">
+                <file name="app/Console/Kernel.php" />
+            </errorLevel>
+        </UnresolvableInclude>
     </issueHandlers>
 </psalm>
