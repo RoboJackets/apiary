@@ -17,6 +17,7 @@ environments:
     storage: robojackets-sandbox-apiary-uploads
     build:
     - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-interaction --no-progress --no-suggest --no-dev'
+    - 'php artisan optimize'
     - 'php artisan event:cache'
     - 'php artisan view:cache'
     - 'php artisan nova:publish'
