@@ -19,7 +19,7 @@
         "guzzlehttp/guzzle": "6.5.5",
         "laravel/framework": "7.26.0",
         "laravel/nova": "3.8.4",
-        "laravel/slack-notification-channel": "2.1.0",
+        "laravel/slack-notification-channel": "2.2.0",
         "laravel/socialite": "4.4.1",
         "laravel/tinker": "2.4.2",
         "laravel/vapor-core": "2.8.2",
