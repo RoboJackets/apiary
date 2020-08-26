@@ -174,8 +174,8 @@ jobs:
         - pipefail
         - -c
         - >-
-            git config --global user.email support@robojackets.org &&
-            git config --global user.name "George Burdell"
+            git config --global user.email "69061102+robojackets-concourse[bot]@users.noreply.github.com" &&
+            git config --global user.name "robojackets-concourse[bot]"
             && git add composer.lock
             && git commit -m "Fix composer.lock"
 
