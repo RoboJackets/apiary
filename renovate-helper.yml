@@ -156,8 +156,10 @@ jobs:
           password: ((docker-robojackets-org.password))
 
       params:
-        GIT_COMMITTER_NAME: George Burdell
-        GIT_COMMITTER_EMAIL: support@robojackets.org
+        GIT_AUTHOR_NAME: robojackets-concourse[bot]
+        GIT_AUTHOR_EMAIL: 69061102+robojackets-concourse[bot]@users.noreply.github.com
+        GIT_COMMITTER_NAME: robojackets-concourse[bot]
+        GIT_COMMITTER_EMAIL: 69061102+robojackets-concourse[bot]@users.noreply.github.com
 
       inputs:
       - name: pull-request-branch
@@ -174,9 +176,7 @@ jobs:
         - pipefail
         - -c
         - >-
-            git config --global user.email "69061102+robojackets-concourse[bot]@users.noreply.github.com" &&
-            git config --global user.name "robojackets-concourse[bot]"
-            && git add composer.lock
+            git add composer.lock
             && git commit -m "Fix composer.lock"
 
   - put: pull-request-branch
