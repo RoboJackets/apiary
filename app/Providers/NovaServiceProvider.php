@@ -33,8 +33,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
         Nova::serving(static function (ServingNova $event): void {
-            Nova::script('apiary-custom', __DIR__.'/../../public/js/nova.js');
-            Nova::style('apiary-custom', __DIR__.'/../../public/css/nova.css');
+            Nova::script('apiary-custom', asset('js/nova.js'));
+            Nova::style('apiary-custom', asset('css/nova.css'));
         });
     }
 
