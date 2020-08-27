@@ -32,7 +32,7 @@ class Event extends JsonResource
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
             'organizer' => new UserResource($this->whenLoaded('organizer')),
-            'rsvps' => new RsvpResource($this->whenLoaded('rsvps')),
+            'rsvps' => RsvpResource::collection($this->whenLoaded('rsvps')),
         ];
     }
 }
