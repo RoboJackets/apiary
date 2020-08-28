@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e50e0c7666b5b5ef090bb107da42de9",
+    "content-hash": "31c8048dc295feec75db12c40e73d0ea",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2611,36 +2611,36 @@
         },
         {
             "name": "laravel/vapor-core",
-            "version": "v2.8.2",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/vapor-core.git",
-                "reference": "9080b37c8b6379843651e05166f6fbb759bb252b"
+                "reference": "82c09b9cd0e7e4fda31bd07abe1742bb09bf5f67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/vapor-core/zipball/9080b37c8b6379843651e05166f6fbb759bb252b",
-                "reference": "9080b37c8b6379843651e05166f6fbb759bb252b",
+                "url": "https://api.github.com/repos/laravel/vapor-core/zipball/82c09b9cd0e7e4fda31bd07abe1742bb09bf5f67",
+                "reference": "82c09b9cd0e7e4fda31bd07abe1742bb09bf5f67",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "^3.80",
-                "guzzlehttp/guzzle": "^6.3",
+                "guzzlehttp/guzzle": "^6.3|^7.0",
                 "hollodotme/fast-cgi-client": "^3.0",
-                "illuminate/container": "^6.0|^7.0",
-                "illuminate/http": "^6.0|^7.0",
-                "illuminate/queue": "^6.0|^7.0",
-                "illuminate/support": "^6.0|^7.0",
+                "illuminate/container": "^6.0|^7.0|^8.0",
+                "illuminate/http": "^6.0|^7.0|^8.0",
+                "illuminate/queue": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
                 "monolog/monolog": "^1.12|^2.0",
                 "nyholm/psr7": "^1.0",
-                "php": "^7.1",
+                "php": "^7.2",
                 "riverline/multipart-parser": "^2.0",
                 "symfony/process": "^4.3|^5.0",
                 "symfony/psr-http-message-bridge": "^1.0|^2.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.2",
-                "orchestra/testbench": "^4.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
                 "phpunit/phpunit": "^8.0"
             },
             "type": "library",
@@ -2675,7 +2675,7 @@
                 "laravel",
                 "vapor"
             ],
-            "time": "2020-07-15T12:46:10+00:00"
+            "time": "2020-08-26T13:19:25+00:00"
         },
         {
             "name": "league/commonmark",
