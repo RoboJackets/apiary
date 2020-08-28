@@ -8,7 +8,7 @@ namespace Laravel\Nova\Http\Controllers;
 // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 
 /**
- * Monkey patch for Nova because it uses this for URLs
+ * Monkey patch for Nova because it uses this for URLs.
  *
  * @param string $path the path (really URL) to the file Nova is trying to serve
  *
