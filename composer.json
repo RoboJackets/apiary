@@ -51,6 +51,9 @@
         "robojackets/static-analysis": "1.0.0"
     },
     "autoload": {
+        "files": [
+            "NovaOnVaporMonkeyPatch.php"
+        ],
         "classmap": [
             "database"
         ],
