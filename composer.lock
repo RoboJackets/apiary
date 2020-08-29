@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31c8048dc295feec75db12c40e73d0ea",
+    "content-hash": "6ea0759cbc6a2110e5960648ac4936f5",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7744,6 +7744,84 @@
                 }
             ],
             "time": "2020-08-05T15:09:04+00:00"
+        },
+        {
+            "name": "ukfast/laravel-health-check",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ukfast/laravel-health-check.git",
+                "reference": "d843dd34ec4d98a3a723f50746fcfd983383421c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/d843dd34ec4d98a3a723f50746fcfd983383421c",
+                "reference": "d843dd34ec4d98a3a723f50746fcfd983383421c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/http": "^5.4|^6.0|^7.0",
+                "illuminate/support": "^5.4|^6.0|^7.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": ">=5.6.3",
+                "illuminate/database": "^5.4|^6.0|^7.0",
+                "illuminate/log": "^5.4|^6.0|^7.0",
+                "illuminate/redis": "^5.4|^6.0|^7.0",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^3.0",
+                "phpunit/phpunit": ">=5.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows the http health check to function.",
+                "illuminate/database": "Allows the database health check to function. Use version 5.4 for Laravel 5 and 6.0 for Laravel 6.x",
+                "illuminate/log": "Allows the log health check to function. Use version 5.4 for Laravel 5 and 6.0 for Laravel 6.x",
+                "illuminate/redis": "Allows the redis health check to function. Use version 5.4 for Laravel 5 and 6.0 for Laravel 6.x"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "UKFast\\HealthCheck\\HealthCheckServiceProvider"
+                    ],
+                    "aliases": {
+                        "HealthCheck": "UKFast\\HealthCheck\\Facade\\HealthCheck"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UKFast\\HealthCheck\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "George Kelly",
+                    "email": "george.kelly@ukfast.co.uk",
+                    "role": "Author & Maintainer"
+                },
+                {
+                    "name": "Tyler Woonton",
+                    "email": "tyler.woonton@ukfast.co.uk",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A package for checking the health of your Laravel/Lumen applications.",
+            "keywords": [
+                "laravel",
+                "laravel-health-check",
+                "lumen",
+                "lumen-health-check",
+                "ukfast",
+                "ukfast-health-check"
+            ],
+            "time": "2020-08-24T15:58:53+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
