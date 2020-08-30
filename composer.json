@@ -16,6 +16,8 @@
         "bugsnag/bugsnag-laravel": "2.19.0",
         "chelout/laravel-relationship-events": "1.2.1",
         "doctrine/dbal": "2.10.2",
+        "fideloper/proxy": "4.4.0",
+        "fruitcake/laravel-cors": "2.0.1",
         "guzzlehttp/guzzle": "6.5.5",
         "laravel/framework": "7.26.1",
         "laravel/nova": "3.8.4",
@@ -31,10 +33,9 @@
         "spatie/laravel-permission": "3.16.0",
         "square/connect": "2.20190710.0",
         "subfission/cas": "3.1.0",
+        "ukfast/laravel-health-check": "^1.2",
         "uxweb/sweet-alert": "dev-master",
-        "vyuldashev/nova-permission": "2.9.0",
-        "fideloper/proxy": "4.4.0",
-        "fruitcake/laravel-cors": "2.0.1"
+        "vyuldashev/nova-permission": "2.9.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "*",
