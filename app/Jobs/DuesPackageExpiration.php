@@ -29,7 +29,7 @@ class DuesPackageSync implements ShouldQueue
     public function __construct(DuesPackage $package)
     {
         $this->package = $package;
-        $this->queue = config('vapor-queue-names.jedi');
+        $this->queue = config('queue.name.jedi');
     }
 
     /**

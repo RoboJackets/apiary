@@ -29,7 +29,7 @@ class DailyDuesSummary implements ShouldQueue
      */
     public function __construct()
     {
-        $this->queue = config('vapor-queue-names.slack');
+        $this->queue = config('queue.name.slack');
     }
 
     /**
