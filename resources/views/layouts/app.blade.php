@@ -34,6 +34,12 @@
             </li>
             @endcan
 
+            @can('access-horizon')
+            <li class="nav-item">
+              <a class="nav-link" href="/horizon/dashboard">Job Status</a>
+            </li>
+            @endcan
+
           </ul>
 
           @if (auth()->user())
