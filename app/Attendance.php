@@ -162,9 +162,11 @@ class Attendance extends Model
 
         // Ensure each value in the previous arrary has all possible attendable keys, then prepend the GTID:
         // [gtid => ['GTID' => gtid, attendable => count, attendable => count, ...], ...]
-        $collection = $collection->map(static function (Collection $columns, int $gtid) use ($attendables): Collection {
-            return $columns->union($attendables)->sortKeys()->prepend($gtid, 'GTID');
-        });
+        $collection = $collection->map(
+            static function (Collection $columns, int $gtid) use ($attendables): Collection {
+                return $columns->union($attendables)->sortKeys()->prepend($gtid, 'GTID');
+            }
+        );
 
         $attendables_array = $attendables->sortKeys()->keys()->all();
 

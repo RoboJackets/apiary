@@ -56,22 +56,25 @@ class CreatePermissionTables extends Migration
             $table->primary(['role_id', 'model_id', 'model_type']);
         });
 
-        Schema::create($tableNames['role_has_permissions'], static function (Blueprint $table) use ($tableNames): void {
-            $table->integer('permission_id')->unsigned();
-            $table->integer('role_id')->unsigned();
+        Schema::create(
+            $tableNames['role_has_permissions'],
+            static function (Blueprint $table) use ($tableNames): void {
+                $table->integer('permission_id')->unsigned();
+                $table->integer('role_id')->unsigned();
 
-            $table->foreign('permission_id')
-                ->references('id')
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
+                $table->foreign('permission_id')
+                    ->references('id')
+                    ->on($tableNames['permissions'])
+                    ->onDelete('cascade');
 
-            $table->foreign('role_id')
-                ->references('id')
-                ->on($tableNames['roles'])
-                ->onDelete('cascade');
+                $table->foreign('role_id')
+                    ->references('id')
+                    ->on($tableNames['roles'])
+                    ->onDelete('cascade');
 
-            $table->primary(['permission_id', 'role_id']);
-        });
+                $table->primary(['permission_id', 'role_id']);
+            }
+        );
     }
 
     /**
