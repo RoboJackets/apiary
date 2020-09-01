@@ -20,6 +20,7 @@
         "fruitcake/laravel-cors": "2.0.1",
         "guzzlehttp/guzzle": "6.5.5",
         "laravel/framework": "7.26.1",
+        "laravel/horizon": "^4.3",
         "laravel/nova": "3.8.4",
         "laravel/slack-notification-channel": "2.2.0",
         "laravel/socialite": "4.4.1",
