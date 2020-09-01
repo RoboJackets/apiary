@@ -133,6 +133,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
@@ -166,6 +167,7 @@
     <rule ref="SlevomatCodingStandard.Functions">
         <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
+        <exclude name="SlevomatCodingStandard.Functions.RequireSingleLineCall.RequiredSingleLineCall"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>

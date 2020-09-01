@@ -198,8 +198,10 @@ class User extends Resource
 
                     Boolean::make('SUMS', 'exists_in_sums')
                         ->hideFromIndex()
-                        ->help('This flag is set by JEDI and should not be modified unless you know what you are doing.'
-                            .' It only controls UX elements.'),
+                        ->help(
+                            'This flag is set by JEDI and should not be modified unless you know what you are doing.'
+                            .' It only controls UX elements.'
+                        ),
                 ]
             ),
 
