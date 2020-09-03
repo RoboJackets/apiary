@@ -15,7 +15,7 @@
         "barryvdh/laravel-ide-helper": "2.8.0",
         "bugsnag/bugsnag-laravel": "2.19.0",
         "chelout/laravel-relationship-events": "1.2.1",
-        "doctrine/dbal": "2.10.2",
+        "doctrine/dbal": "2.10.3",
         "fideloper/proxy": "4.4.0",
         "fruitcake/laravel-cors": "2.0.1",
         "guzzlehttp/guzzle": "6.5.5",
