@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e92473bb37bca21219f1dd9f774bd47",
+    "content-hash": "9546ab19e9180d09f60fc3a53326c350",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -115,16 +115,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.151.5",
+            "version": "3.151.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d38bd349560bbbb25b0991950c858fabff1280b3"
+                "reference": "b34231eb116dd7dada37f6d30d88343a992c9c3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d38bd349560bbbb25b0991950c858fabff1280b3",
-                "reference": "d38bd349560bbbb25b0991950c858fabff1280b3",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b34231eb116dd7dada37f6d30d88343a992c9c3e",
+                "reference": "b34231eb116dd7dada37f6d30d88343a992c9c3e",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-09-02T18:18:35+00:00"
+            "time": "2020-09-03T18:17:59+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -2139,16 +2139,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.26.1",
+            "version": "v7.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "fad3e5f03b9ae89853c8a0925231d2b3ce07a9c3"
+                "reference": "17777a92da9b3cf0026f26462d289d596420e6d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/fad3e5f03b9ae89853c8a0925231d2b3ce07a9c3",
-                "reference": "fad3e5f03b9ae89853c8a0925231d2b3ce07a9c3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/17777a92da9b3cf0026f26462d289d596420e6d0",
+                "reference": "17777a92da9b3cf0026f26462d289d596420e6d0",
                 "shasum": ""
             },
             "require": {
@@ -2293,7 +2293,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-08-27T14:22:46+00:00"
+            "time": "2020-09-01T13:41:48+00:00"
         },
         {
             "name": "laravel/nova",
@@ -10149,16 +10149,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.1.6",
+            "version": "9.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "d25b24b1cd14772bde4d75daeb393dc17db9f6e6"
+                "reference": "2ef92bec3186a827faf7362ff92ae4e8ec2e49d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d25b24b1cd14772bde4d75daeb393dc17db9f6e6",
-                "reference": "d25b24b1cd14772bde4d75daeb393dc17db9f6e6",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2ef92bec3186a827faf7362ff92ae4e8ec2e49d2",
+                "reference": "2ef92bec3186a827faf7362ff92ae4e8ec2e49d2",
                 "shasum": ""
             },
             "require": {
@@ -10218,7 +10218,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-31T06:31:46+00:00"
+            "time": "2020-09-03T07:09:19+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
