@@ -9,8 +9,8 @@ import Bugsnag from '@bugsnag/js'
 import BugsnagPluginVue from '@bugsnag/plugin-vue'
 
 Bugsnag.start({
-  apiKey: document.head.querySelector('meta[name="bugsnag-api-key"]').content,
-  plugins: [new BugsnagPluginVue()]
+    apiKey: document.head.querySelector('meta[name="bugsnag-api-key"]').content,
+    plugins: [new BugsnagPluginVue()]
 })
 
 require('./bootstrap');
