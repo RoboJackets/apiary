@@ -39,7 +39,7 @@
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "*",
-        "facade/ignition": "2.3.6",
+        "facade/ignition": "2.3.7",
         "filp/whoops": "2.7.3",
         "fzaninotto/faker": "1.9.1",
         "laravel/vapor-cli": "1.9.0",
