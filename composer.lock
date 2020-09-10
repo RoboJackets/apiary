@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d27bbe02ccbad15e0722d2325eece598",
+    "content-hash": "0f8c67693e5b042339909a8537d6bd9d",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2151,16 +2151,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.27.0",
+            "version": "v7.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "17777a92da9b3cf0026f26462d289d596420e6d0"
+                "reference": "f7493ab717ca2a9598b1db2d6a3bae8ac8c755e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/17777a92da9b3cf0026f26462d289d596420e6d0",
-                "reference": "17777a92da9b3cf0026f26462d289d596420e6d0",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f7493ab717ca2a9598b1db2d6a3bae8ac8c755e8",
+                "reference": "f7493ab717ca2a9598b1db2d6a3bae8ac8c755e8",
                 "shasum": ""
             },
             "require": {
@@ -2305,7 +2305,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-09-01T13:41:48+00:00"
+            "time": "2020-09-09T15:02:46+00:00"
         },
         {
             "name": "laravel/nova",
