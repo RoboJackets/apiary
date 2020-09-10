@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b0536c1b50af821021cbf1d70255fa4",
+    "content-hash": "2816d1568f1208c1d18885d2d1799131",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2625,16 +2625,16 @@
         },
         {
             "name": "laravel/vapor-core",
-            "version": "v2.9.0",
+            "version": "v2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/vapor-core.git",
-                "reference": "82c09b9cd0e7e4fda31bd07abe1742bb09bf5f67"
+                "reference": "d0e69e602779f85886c87f373f6879395986bc49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/vapor-core/zipball/82c09b9cd0e7e4fda31bd07abe1742bb09bf5f67",
-                "reference": "82c09b9cd0e7e4fda31bd07abe1742bb09bf5f67",
+                "url": "https://api.github.com/repos/laravel/vapor-core/zipball/d0e69e602779f85886c87f373f6879395986bc49",
+                "reference": "d0e69e602779f85886c87f373f6879395986bc49",
                 "shasum": ""
             },
             "require": {
@@ -2689,7 +2689,7 @@
                 "laravel",
                 "vapor"
             ],
-            "time": "2020-08-26T13:19:25+00:00"
+            "time": "2020-09-09T15:48:54+00:00"
         },
         {
             "name": "league/commonmark",
