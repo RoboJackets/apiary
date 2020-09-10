@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f8c67693e5b042339909a8537d6bd9d",
+    "content-hash": "4b0536c1b50af821021cbf1d70255fa4",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -330,16 +330,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.8.17",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "e6f8e7d04346a95be89580f8c2c22d6c3fa65556"
+                "reference": "283a40c901101e66de7061bd359252c013dcc43c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/e6f8e7d04346a95be89580f8c2c22d6c3fa65556",
-                "reference": "e6f8e7d04346a95be89580f8c2c22d6c3fa65556",
+                "url": "https://api.github.com/repos/brick/math/zipball/283a40c901101e66de7061bd359252c013dcc43c",
+                "reference": "283a40c901101e66de7061bd359252c013dcc43c",
                 "shasum": ""
             },
             "require": {
@@ -378,24 +378,24 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-18T23:41:20+00:00"
+            "time": "2020-08-18T23:57:15+00:00"
         },
         {
             "name": "brick/money",
-            "version": "0.4.5",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/money.git",
-                "reference": "91f2b5bc35646f172b038e46bb496ad18db59c3c"
+                "reference": "f922b357dc56f78c398c6cd055fbaa75eaffdbeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/money/zipball/91f2b5bc35646f172b038e46bb496ad18db59c3c",
-                "reference": "91f2b5bc35646f172b038e46bb496ad18db59c3c",
+                "url": "https://api.github.com/repos/brick/money/zipball/f922b357dc56f78c398c6cd055fbaa75eaffdbeb",
+                "reference": "f922b357dc56f78c398c6cd055fbaa75eaffdbeb",
                 "shasum": ""
             },
             "require": {
-                "brick/math": "~0.7.3 || ~0.8.0",
+                "brick/math": "~0.7.3 || ~0.8.0 || ~0.9.0",
                 "php": "^7.1|^8.0"
             },
             "require-dev": {
@@ -430,7 +430,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-31T14:17:02+00:00"
+            "time": "2020-08-19T22:52:38+00:00"
         },
         {
             "name": "bugsnag/bugsnag",
@@ -2309,23 +2309,23 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v3.8.4",
+            "version": "v3.9.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "1ee33dcf3394fcbd4d6f0ebc94a155c0643b5359"
+                "reference": "512af9cfca0c50b9c391492b1a327d9944b35f12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-1ee33dcf3394fcbd4d6f0ebc94a155c0643b5359-zip-e59c0f.zip",
-                "reference": "1ee33dcf3394fcbd4d6f0ebc94a155c0643b5359",
-                "shasum": "13a09d4023c3b30737e053e505d589e22c219699"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-512af9cfca0c50b9c391492b1a327d9944b35f12-zip-48aed5.zip",
+                "reference": "512af9cfca0c50b9c391492b1a327d9944b35f12",
+                "shasum": "d21807b526e66f1fa79756ede57c73e45fc636c5"
             },
             "require": {
-                "brick/money": "^0.4.2",
+                "brick/money": "^0.5.0",
                 "cakephp/chronos": "^1.0|^2.0",
                 "doctrine/dbal": "^2.9",
-                "illuminate/support": "^7.0",
+                "illuminate/support": "^7.0|^8.0",
                 "laravel/ui": "^2.0",
                 "moontoast/math": "^1.1",
                 "php": "^7.2.5",
@@ -2336,8 +2336,9 @@
                 "symfony/process": "^5.0"
             },
             "require-dev": {
+                "laravel/legacy-factories": "^1.0",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^5.0",
+                "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "^8.4",
                 "predis/predis": "^1.1"
             },
@@ -2379,7 +2380,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2020-08-21T17:45:15+00:00"
+            "time": "2020-09-09T15:34:29+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
