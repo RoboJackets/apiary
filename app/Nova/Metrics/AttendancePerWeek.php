@@ -26,8 +26,7 @@ class AttendancePerWeek extends Trend
 
         // If we're on a team page, not the main dashboard, filter to that team
         if (isset($request->resourceId)) {
-            $query = (new Attendance())
-                ->newQuery()
+            $query = Attendance::newQuery()
                 ->where('attendable_id', $request->resourceId)
                 ->where('attendable_type', \App\Team::class);
         }
