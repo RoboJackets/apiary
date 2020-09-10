@@ -80,5 +80,12 @@
                 <file name="app/Console/Kernel.php" />
             </errorLevel>
         </UnresolvableInclude>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <directory name="routes" />
+                <file name="app/DuesTransaction.php" />
+                <file name="app/Nova/Lenses/RecentInactiveUsers.php" />
+            </errorLevel>
+        </TooManyArguments>
     </issueHandlers>
 </psalm>
