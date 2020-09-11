@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\Jobs\PushToJedi;
 use App\User;
+use DateTime;
 
 class UserObserver
 {
