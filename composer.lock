@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "592b76ce8bb45cabf536eabe876ee2ff",
+    "content-hash": "cd5eb9e236e00d1c28f36ce9ed191bf9",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2570,27 +2570,27 @@
         },
         {
             "name": "laravel/ui",
-            "version": "v2.3.0",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/ui.git",
-                "reference": "2ccaa3b821ea8ac7e05393b946d0578bdb46099b"
+                "reference": "f5398544a9cd4804a42d09ce51735e37cd51ea2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/ui/zipball/2ccaa3b821ea8ac7e05393b946d0578bdb46099b",
-                "reference": "2ccaa3b821ea8ac7e05393b946d0578bdb46099b",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/f5398544a9cd4804a42d09ce51735e37cd51ea2d",
+                "reference": "f5398544a9cd4804a42d09ce51735e37cd51ea2d",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^7.0|^8.0",
-                "illuminate/filesystem": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
+                "illuminate/console": "^7.0",
+                "illuminate/filesystem": "^7.0",
+                "illuminate/support": "^7.0",
                 "php": "^7.2.5"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^8.0|^9.0"
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "extra": {
@@ -2621,7 +2621,7 @@
                 "laravel",
                 "ui"
             ],
-            "time": "2020-09-09T12:07:59+00:00"
+            "time": "2020-09-11T15:31:52+00:00"
         },
         {
             "name": "laravel/vapor-core",
@@ -10619,17 +10619,17 @@
         },
         {
             "name": "robojackets/static-analysis",
-            "version": "v1.0",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/static-analysis.git",
-                "reference": "8b06e152fde8e2912f319f394df9e3496c973ada"
+                "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/dist/robojackets/static-analysis/robojackets-static-analysis-8b06e152fde8e2912f319f394df9e3496c973ada-zip-be94c1.zip",
-                "reference": "8b06e152fde8e2912f319f394df9e3496c973ada",
-                "shasum": "9a8b0b1494c716667293467bb112cd0a8cfe170e"
+                "url": "https://composer.robojackets.org/dist/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
+                "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d",
+                "shasum": "a689506e5b50450671a0a44e5e33afcb958ba2da"
             },
             "require": {
                 "phan/phan": "*",
@@ -10659,9 +10659,9 @@
             "description": "Standard static analyzers for PHP, with sensible defaults",
             "homepage": "https://github.gatech.edu/RoboJackets/static-analysis",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/static-analysis/tree/v1.0"
+                "source": "https://github.gatech.edu/RoboJackets/static-analysis/tree/v1.1"
             },
-            "time": "2020-08-15T17:59:14+00:00"
+            "time": "2020-09-10T00:31:02+00:00"
         },
         {
             "name": "sabre/event",
