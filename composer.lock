@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "287de0e95354efbc785daab7c8b0a130",
+    "content-hash": "9c41843c63bef01ec4c47a97b5d65234",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7768,38 +7768,38 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.2.1",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "d843dd34ec4d98a3a723f50746fcfd983383421c"
+                "reference": "3873da2ed2093cc92b20a4c2176e535ca7860062"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/d843dd34ec4d98a3a723f50746fcfd983383421c",
-                "reference": "d843dd34ec4d98a3a723f50746fcfd983383421c",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/3873da2ed2093cc92b20a4c2176e535ca7860062",
+                "reference": "3873da2ed2093cc92b20a4c2176e535ca7860062",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/http": "^5.4|^6.0|^7.0",
-                "illuminate/support": "^5.4|^6.0|^7.0",
+                "illuminate/http": "^5.4|^6.0|^7.0|^8.0",
+                "illuminate/support": "^5.4|^6.0|^7.0|^8.0",
                 "php": ">=5.6"
             },
             "require-dev": {
                 "guzzlehttp/guzzle": ">=5.6.3",
-                "illuminate/database": "^5.4|^6.0|^7.0",
-                "illuminate/log": "^5.4|^6.0|^7.0",
-                "illuminate/redis": "^5.4|^6.0|^7.0",
+                "illuminate/database": "^5.4|^6.0|^7.0|^8.0",
+                "illuminate/log": "^5.4|^6.0|^7.0|^8.0",
+                "illuminate/redis": "^5.4|^6.0|^7.0|^8.0",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^3.0",
+                "orchestra/testbench": "^3.0|^4.0|^5.0|^6.0",
                 "phpunit/phpunit": ">=5.0"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Allows the http health check to function.",
-                "illuminate/database": "Allows the database health check to function. Use version 5.4 for Laravel 5 and 6.0 for Laravel 6.x",
-                "illuminate/log": "Allows the log health check to function. Use version 5.4 for Laravel 5 and 6.0 for Laravel 6.x",
-                "illuminate/redis": "Allows the redis health check to function. Use version 5.4 for Laravel 5 and 6.0 for Laravel 6.x"
+                "illuminate/database": "Allows the database health check to function.",
+                "illuminate/log": "Allows the log health check to function.",
+                "illuminate/redis": "Allows the redis health check to function."
             },
             "type": "library",
             "extra": {
@@ -7842,7 +7842,7 @@
                 "ukfast",
                 "ukfast-health-check"
             ],
-            "time": "2020-08-24T15:58:53+00:00"
+            "time": "2020-09-08T20:55:55+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
