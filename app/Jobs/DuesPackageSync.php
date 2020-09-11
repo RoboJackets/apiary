@@ -20,8 +20,10 @@ class DuesPackageSync implements ShouldQueue
 
     /**
      * The dues package that will expire.
+     *
+     * @var \App\DuesPackage
      */
-    private \App\DuesPackage $package;
+    private $package;
 
     /**
      * Create a new job instance.

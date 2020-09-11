@@ -23,28 +23,38 @@ class PushToJedi implements ShouldQueue
 
     /**
      * The number of attempts for this job.
+     *
+     * @var int
      */
-    public int $tries = 1;
+    public $tries = 1;
 
     /**
      * The user that will be sent to JEDI.
+     *
+     * @var \App\User
      */
-    private \App\User $user;
+    private $user;
 
     /**
      * The name of the class that caused the push to be run.
+     *
+     * @var string
      */
-    private string $model_class;
+    private $model_class;
 
     /**
      * The ID of the model that caused the push to be run.
+     *
+     * @var int
      */
-    private int $model_id;
+    private $model_id;
 
     /**
      * A description of the event that caused the push to be run.
+     *
+     * @var string
      */
-    private string $model_event;
+    private $model_event;
 
     /**
      * Create a new job instance.

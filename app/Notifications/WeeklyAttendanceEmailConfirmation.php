@@ -18,13 +18,17 @@ class WeeklyAttendanceEmailConfirmation extends Notification
 
     /**
      * The AttendanceExport relevant to this.
+     *
+     * @var \App\AttendanceExport
      */
-    public \App\AttendanceExport $export;
+    public $export;
 
     /**
      * True if not sending due to no attendance.
+     *
+     * @var bool
      */
-    public bool $notSending;
+    public $notSending;
 
     /**
      * Create a new notification instance.

@@ -27,34 +27,38 @@ class GenerateResumeBook implements ShouldQueue
 
     /**
      * The number of attempts for this job.
+     *
+     * @var int
      */
-    public int $tries = 1;
+    public $tries = 1;
 
     /**
      * The major (ou) to filter by, or null.
      *
      * @var ?string
      */
-    private ?string $major = null;
+    private $major;
 
     /**
      * The cutoff date for resumes.
+     *
+     * @var string
      */
-    private string $resume_date_cutoff;
+    private $resume_date_cutoff;
 
     /**
      * The path to the resume book output file. Only valid after handle is complete.
      *
      * @var ?string
      */
-    public ?string $path = null;
+    public $path;
 
     /**
      * The datecode in the name of the resume book output file. Only valid after handle is complete.
      *
      * @var ?string
      */
-    public ?string $datecode = null;
+    public $datecode;
 
     /**
      * Create a new job instance.
@@ -77,8 +81,8 @@ class GenerateResumeBook implements ShouldQueue
             ->where('resume_date', '>', $this->resume_date_cutoff)
             ->get();
 
-        if (! is_a($users, Collection::class)) {
-            throw new Exception('query did not return a collection');
+        if (!is_a($users, Collection::class)) {
+            throw new Exception("query did not return a collection")
         }
 
         $filteredUids = $users->pluck('uid');

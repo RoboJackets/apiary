@@ -21,8 +21,10 @@ class Attendable extends Filter
 
     /**
      * Whether to include events in the attendable options.
+     *
+     * @var bool
      */
-    protected bool $includeEvents = true;
+    protected $includeEvents = true;
 
     /**
      * Create new Attendable filter.

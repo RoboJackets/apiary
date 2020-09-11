@@ -23,8 +23,10 @@ class WeeklyAttendanceSlack implements ShouldQueue
 
     /**
      * The number of times the job may be attempted.
+     *
+     * @var int
      */
-    public int $tries = 1;
+    public $tries = 1;
 
     /**
      * Create a new job instance.

@@ -18,20 +18,24 @@ class DatabaseMailable extends Mailable
 
     /**
      * The URL for this instance of the application.
+     *
+     * @var string
      */
-    public string $app_url;
+    public $app_url;
 
     /**
      * The ID of the template that will be sent.
+     *
+     * @var int
      */
-    public int $template_id;
+    public $template_id;
 
     /**
      * The metadata to pass to the template.
      *
      * @var array<string,string>
      */
-    public array $metadata;
+    public $metadata;
 
     /**
      * Create a new message instance.
