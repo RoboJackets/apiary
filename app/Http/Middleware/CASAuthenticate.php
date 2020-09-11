@@ -47,6 +47,8 @@ class CASAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
+        $error_pages_cache = '/tmp/error-pages-cache/';
+
         //Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
             // Run the user update only if they don't have an active session
@@ -57,7 +59,7 @@ class CASAuthenticate
                     foreach (array_keys($_COOKIE) as $key) {
                         setcookie($key, '', time() - 3600);
                     }
-                    UsernameContainsDomain::render($username);
+                    UsernameContainsDomain::render($username, $error_pages_cache);
                     exit;
                 }
 
@@ -91,28 +93,28 @@ class CASAuthenticate
                     if ((! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr))
                         && 'authn_method' !== $attr
                     ) {
-                        Unauthorized::render(0b110);
+                        Unauthorized::render(0b110, $error_pages_cache);
                         exit;
                     }
                 }
 
-                if ('mfa-duo' !== $this->cas->getAttribute('authnContextClass')) {
+                if ('duo-two-factor' !== $this->cas->getAttribute('authn_method')) {
                     if (in_array(
                         '/gt/central/services/iam/two-factor/duo-user',
                         $this->cas->getAttribute('gtAccountEntitlement'),
                         true
                     )
                     ) {
-                        DuoOutage::render();
+                        DuoOutage::render($error_pages_cache);
                         exit;
                     }
-                    DuoNotEnabled::render();
+                    DuoNotEnabled::render($error_pages_cache);
                     exit;
                 }
 
                 $network = NetworkCheck::detect();
                 if (NetworkCheck::EDUROAM_ISS_DISABLED === $network) {
-                    EduroamISSDisabled::render();
+                    EduroamISSDisabled::render($error_pages_cache);
                     exit;
                 }
                 if (NetworkCheck::GTOTHER === $network) {
