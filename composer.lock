@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd5eb9e236e00d1c28f36ce9ed191bf9",
+    "content-hash": "287de0e95354efbc785daab7c8b0a130",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -115,16 +115,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.154.0",
+            "version": "3.154.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "370d1a58004fbeb3896ec48489677e90e653b12f"
+                "reference": "5651d8a92164d98869b70a15e4c06ce4c14c7c28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/370d1a58004fbeb3896ec48489677e90e653b12f",
-                "reference": "370d1a58004fbeb3896ec48489677e90e653b12f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5651d8a92164d98869b70a15e4c06ce4c14c7c28",
+                "reference": "5651d8a92164d98869b70a15e4c06ce4c14c7c28",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-09-10T18:12:09+00:00"
+            "time": "2020-09-11T18:12:41+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -4825,24 +4825,24 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "3.3.1",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "f18041a4c7e88801e2bf9209a90ba056e4d32d77"
+                "reference": "45506cb616ca89748b2b2bbb91d83b9da2bea8b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/f18041a4c7e88801e2bf9209a90ba056e4d32d77",
-                "reference": "f18041a4c7e88801e2bf9209a90ba056e4d32d77",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/45506cb616ca89748b2b2bbb91d83b9da2bea8b8",
+                "reference": "45506cb616ca89748b2b2bbb91d83b9da2bea8b8",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.8.0|^6.0|^7.0",
+                "laravel/framework": "~5.8.0|^6.0|^7.0|^8.0",
                 "php": "^7.2"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.8.0|^4.0|^5.0",
+                "orchestra/testbench": "~3.8.0|^4.0|^5.0|^6.0",
                 "phpunit/phpunit": "^8.0"
             },
             "suggest": {
@@ -4887,11 +4887,11 @@
             ],
             "funding": [
                 {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
+                    "url": "https://github.com/spatie",
+                    "type": "github"
                 }
             ],
-            "time": "2020-04-20T18:59:20+00:00"
+            "time": "2020-09-09T08:21:01+00:00"
         },
         {
             "name": "spatie/laravel-permission",
