@@ -34,7 +34,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
         Nova::serving(static function (ServingNova $event): void {
             Nova::script('apiary-custom', asset('js/nova.js'));
-            Nova::style('apiary-custom', asset('css/nova.css'));
+            Nova::theme(asset('css/nova.css'));
         });
     }
 

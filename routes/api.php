@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +15,7 @@ declare(strict_types=1);
 |
 */
 
+// @phan-suppress-next-line PhanParamTooMany
 Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force')->group(
     static function (): void {
         // Recruiting (Formerly known as FASET)

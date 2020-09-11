@@ -4,6 +4,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import Vue from 'vue'
+import Bugsnag from '@bugsnag/js'
+import BugsnagPluginVue from '@bugsnag/plugin-vue'
+
+Bugsnag.start({
+    apiKey: document.head.querySelector('meta[name="bugsnag-api-key"]').content,
+    plugins: [new BugsnagPluginVue()]
+})
+
 require('./bootstrap');
 var axios = require('axios');
 
@@ -11,7 +20,8 @@ var axios = require('axios');
 import Swal from 'sweetalert2';
 window.Swal = Swal;
 
-window.Vue = require('vue');
+Bugsnag.getPlugin('vue')
+  .installVueErrorHandler(Vue)
 
 // Import the Vuelidate validation plugin
 import Vuelidate from 'vuelidate';
@@ -51,7 +61,6 @@ Vue.component('user-edit-form', require('./components/UserEditForm.vue').default
 
 // Attendance
 Vue.component('attendance-kiosk', require('./components/attendance/AttendanceKiosk.vue').default);
-Vue.component('attendance-export', require('./components/attendance/AttendanceExport.vue').default);
 
 // Dues
 Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue').default);
@@ -67,3 +76,4 @@ Vue.component('team-membership-button', require('./components/teams/TeamMembersh
 const app = new Vue({
     el: '#app',
 });
+
