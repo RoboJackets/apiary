@@ -27,7 +27,7 @@ Homestead is a pre-packaged [Vagrant](https://www.vagrantup.com/) box maintained
 
 Laravel Mix is used to compile browser assets. Currently, we're concatenating and minifying all of our JS and CSS. This step is also where we compile our SCSS into CSS. In your local dev environment, you should run `npm run dev` the first time you clone the repo and any time the assets change. Laravel Mix is a simple wrapper around webpack, which you really don't need to know about at this point. However, the fact that we use Webpack as a module bundler means that the process to reference JavaScript and CSS is a little bit different. It also means that if you add new CSS or JS files into the project, you need to reference them in [`webpack.mix.js`](webpack.mix.js) to be compiled. See [the relevant Laravel documentation](https://laravel.com/docs/5.4/mix#running-mix) for more details.
 
-Most of the backend code lives under [`app/Http`](/app/Http), with templates under [`resources/views`](/resources/views) and [`resources/assets/js`](/resources/assets/js), but you're encouraged to browse through the project tree to get a better feel of where different components live. The `php artisan` command can generate new classes for you in the correct locations automatically - run it with no parameters to see all the options.
+Most of the backend code lives under [`app/Http`](/app/Http), with templates under [`resources/views`](/resources/views) and [`resources/js`](/resources/js), but you're encouraged to browse through the project tree to get a better feel of where different components live. The `php artisan` command can generate new classes for you in the correct locations automatically - run it with no parameters to see all the options.
 
 ### Install dependencies
 
