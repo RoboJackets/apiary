@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5696bb886881bbee5088ee53ec54bad2",
+    "content-hash": "2e40d68299d45b038d0935538819adcb",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1226,16 +1226,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "2.10.3",
+            "version": "2.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "03ca23afc2ee062f5d3e32426ad37c34a4770dcf"
+                "reference": "47433196b6390d14409a33885ee42b6208160643"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/03ca23afc2ee062f5d3e32426ad37c34a4770dcf",
-                "reference": "03ca23afc2ee062f5d3e32426ad37c34a4770dcf",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/47433196b6390d14409a33885ee42b6208160643",
+                "reference": "47433196b6390d14409a33885ee42b6208160643",
                 "shasum": ""
             },
             "require": {
@@ -1331,7 +1331,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-02T01:35:42+00:00"
+            "time": "2020-09-12T21:20:41+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -2693,16 +2693,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.5.4",
+            "version": "1.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "21819c989e69bab07e933866ad30c7e3f32984ba"
+                "reference": "45832dfed6007b984c0d40addfac48d403dc6432"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/21819c989e69bab07e933866ad30c7e3f32984ba",
-                "reference": "21819c989e69bab07e933866ad30c7e3f32984ba",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/45832dfed6007b984c0d40addfac48d403dc6432",
+                "reference": "45832dfed6007b984c0d40addfac48d403dc6432",
                 "shasum": ""
             },
             "require": {
@@ -2714,7 +2714,7 @@
             },
             "require-dev": {
                 "cebe/markdown": "~1.0",
-                "commonmark/commonmark.js": "0.29.1",
+                "commonmark/commonmark.js": "0.29.2",
                 "erusev/parsedown": "~1.0",
                 "ext-json": "*",
                 "github/gfm": "0.29.0",
@@ -2784,7 +2784,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-18T01:19:12+00:00"
+            "time": "2020-09-13T14:44:46+00:00"
         },
         {
             "name": "league/flysystem",
@@ -8987,16 +8987,16 @@
         },
         {
             "name": "microsoft/tolerant-php-parser",
-            "version": "v0.0.22",
+            "version": "v0.0.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/microsoft/tolerant-php-parser.git",
-                "reference": "3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6"
+                "reference": "1d76657e3271754515ace52501d3e427eca42ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6",
-                "reference": "3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6",
+                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/1d76657e3271754515ace52501d3e427eca42ad0",
+                "reference": "1d76657e3271754515ace52501d3e427eca42ad0",
                 "shasum": ""
             },
             "require": {
@@ -9024,7 +9024,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2020-08-08T23:25:34+00:00"
+            "time": "2020-09-13T17:29:12+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -9619,16 +9619,16 @@
         },
         {
             "name": "phan/phan",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "cef3be384aa32c7e2d54c9cd57de9836cda02030"
+                "reference": "22f2083e2b0c10d6861d7d0e2ddd423660488609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/cef3be384aa32c7e2d54c9cd57de9836cda02030",
-                "reference": "cef3be384aa32c7e2d54c9cd57de9836cda02030",
+                "url": "https://api.github.com/repos/phan/phan/zipball/22f2083e2b0c10d6861d7d0e2ddd423660488609",
+                "reference": "22f2083e2b0c10d6861d7d0e2ddd423660488609",
                 "shasum": ""
             },
             "require": {
@@ -9638,7 +9638,7 @@
                 "ext-json": "*",
                 "ext-tokenizer": "*",
                 "felixfbecker/advanced-json-rpc": "^3.0.4",
-                "microsoft/tolerant-php-parser": "0.0.22",
+                "microsoft/tolerant-php-parser": "0.0.23",
                 "netresearch/jsonmapper": ">=1.6.0",
                 "php": "^7.2.0",
                 "sabre/event": "^5.0",
@@ -9649,7 +9649,7 @@
                 "phpunit/phpunit": "^8.5.0"
             },
             "suggest": {
-                "ext-ast": "Needed for parsing ASTs (unless --use-fallback-parser is used). 1.0.1+ is needed, 1.0.6+ is recommended.",
+                "ext-ast": "Needed for parsing ASTs (unless --use-fallback-parser is used). 1.0.1+ is needed, 1.0.8+ is recommended.",
                 "ext-iconv": "Either iconv or mbstring is needed to ensure issue messages are valid utf-8",
                 "ext-igbinary": "Improves performance of polyfill when ext-ast is unavailable",
                 "ext-mbstring": "Either iconv or mbstring is needed to ensure issue messages are valid utf-8",
@@ -9687,7 +9687,7 @@
                 "php",
                 "static"
             ],
-            "time": "2020-08-25T21:47:26+00:00"
+            "time": "2020-09-13T18:23:38+00:00"
         },
         {
             "name": "phar-io/manifest",
