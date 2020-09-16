@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03a8bab6900759420c216c0df75fd903",
+    "content-hash": "51e5318c7e187c545c5d011b899e164a",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -8876,16 +8876,16 @@
         },
         {
             "name": "laravel/vapor-cli",
-            "version": "v1.9.1",
+            "version": "v1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/vapor-cli.git",
-                "reference": "e7ca5b0c5be99e4c1c56f63b094884bac1fb79c9"
+                "reference": "445fefc9e1161ae284d71f5970f8924eb1b00ed1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/vapor-cli/zipball/e7ca5b0c5be99e4c1c56f63b094884bac1fb79c9",
-                "reference": "e7ca5b0c5be99e4c1c56f63b094884bac1fb79c9",
+                "url": "https://api.github.com/repos/laravel/vapor-cli/zipball/445fefc9e1161ae284d71f5970f8924eb1b00ed1",
+                "reference": "445fefc9e1161ae284d71f5970f8924eb1b00ed1",
                 "shasum": ""
             },
             "require": {
@@ -8936,7 +8936,7 @@
                 "laravel",
                 "vapor"
             ],
-            "time": "2020-09-12T20:16:37+00:00"
+            "time": "2020-09-14T13:09:02+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
