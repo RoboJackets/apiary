@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4060c8efb73ebb34eb5d5f042e498734",
+    "content-hash": "03a8bab6900759420c216c0df75fd903",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2309,24 +2309,24 @@
         },
         {
             "name": "laravel/nova",
-            "version": "v3.9.2",
+            "version": "v3.10.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "512af9cfca0c50b9c391492b1a327d9944b35f12"
+                "reference": "5ccdcc817b190505d21cd4ca1a75cf1ca113238f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-512af9cfca0c50b9c391492b1a327d9944b35f12-zip-48aed5.zip",
-                "reference": "512af9cfca0c50b9c391492b1a327d9944b35f12",
-                "shasum": "d21807b526e66f1fa79756ede57c73e45fc636c5"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-5ccdcc817b190505d21cd4ca1a75cf1ca113238f-zip-179efb.zip",
+                "reference": "5ccdcc817b190505d21cd4ca1a75cf1ca113238f",
+                "shasum": "4eb7f94a130999d70ca04fae4d89bcabbc4e2b18"
             },
             "require": {
                 "brick/money": "^0.5.0",
                 "cakephp/chronos": "^1.0|^2.0",
                 "doctrine/dbal": "^2.9",
                 "illuminate/support": "^7.0|^8.0",
-                "laravel/ui": "^2.0",
+                "laravel/ui": "^2.0|^3.0",
                 "moontoast/math": "^1.1",
                 "php": "^7.2.5",
                 "spatie/once": "^1.1 | ^2.0",
@@ -2380,7 +2380,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2020-09-09T15:34:29+00:00"
+            "time": "2020-09-15T15:34:07+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
