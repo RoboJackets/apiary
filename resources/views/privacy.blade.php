@@ -65,7 +65,7 @@
                 <li>Information regarding an individual payment, including your email address, will be shared with Square, RoboJackets' designated payments processor, for the purposes of completing a credit/debit card transaction. You can opt-out of this sharing by using another payment method.
                 <li>All other information will be released only to RoboJackets officers in the course of conducting business.</li>
             </ul>
-            <p>RoboJackets does not sell any of the information collected to any organizations. However, sponsors who provide financial support to RoboJackets will receive aggregated data as outlined above as a benefit of their support.</p>
+            <p>RoboJackets does not sell any of the information collected. However, sponsors who provide financial support to RoboJackets will receive aggregated data as outlined above as a benefit of their support.</p>
 
             <h2>Cookies</h2>
             <p>This application uses cookies to keep you logged-in during and between sessions. If you elect to disable first-party cookies in your browser settings, this website may no longer function as intended.</p>
