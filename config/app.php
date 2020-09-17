@@ -248,6 +248,4 @@ return [
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
     ],
-
-    'ga-ua' => env('GA_UA', 'UA-XXXXX-Y'),
 ];
