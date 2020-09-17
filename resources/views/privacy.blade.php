@@ -55,10 +55,10 @@
             <p>Data collected by RoboJackets is stored on a server secured within a Georgia Tech datacenter. Personally indentifiable information is encrypted at rest.</p>
 
             <h2>How will RoboJackets share your data?</h2>
-            <p>RoboJackets shares data with certain external organizations in the course of conducting day to day business:</p>
+            <p>RoboJackets shares data with certain external organizations in the course of conducting day to day business.</p>
             <ul>
-                <li>RoboJackets will only release information about you as strictly necessary to Georgia Tech campus departments performing work on our behalf, including but not limited to, granting BuzzCard access to the shop, enrollment in SUMS, and reimbursement processing.</li>
-                <li>RoboJackets will release the resumes of all active members to our sponsors. You can opt out of this by not submitting a resume on this website.</li>
+                <li>Identidying information, such as GTID and your name will be shared as strictly necessary to Georgia Tech campus departments performing work on our behalf, including but not limited to, granting BuzzCard access to the shop, enrollment in SUMS, obtaining Institute Approved Absence letters, and reimbursement processing.</li>
+                <li>Resumes of all active members will be shared with our sponsors. You can opt out of this by not submitting a resume on this website.</li>
                 <li>Attendance data will be shared in aggregate or with identifying information to Georgia Tech campus departments.</li>
                 <li>Demographic information will be shared in aggregate to current and potential sponsors.</li>
                 <li>Information regarding an individual payment, including your email address, will be shared with Square, RoboJackets' designated payments processor, for the purposes of completing a credit/debit card transaction. You can opt-out of this sharing by using another payment method.
