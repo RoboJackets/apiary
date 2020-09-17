@@ -24,6 +24,7 @@
                 <li>Your Georgia Tech username</li>
                 <li>Your major</li>
                 <li>Your class standing</li>
+                <li>Information supplied by your web browser, including your IP address, web browser version, and operating system</li>
             </ul>
             <p>RoboJackets may store the following information about you, if you voluntarily provide it. You may opt out of this data collection by declining to provide it.</p>
             <ul>
@@ -33,14 +34,14 @@
                 <li>Your emergency contact information, including their name and phone number</li>
                 <li>Your shirt and polo sizes</li>
                 <li>Your resume</li>
-                <li>The usernames or other identifiers of your linked Github, Google, and ClickUp accounts</li>
-                <li>Transaction identifiers for credit/debit card transactions completed by RoboJackets' payments processor, Square</li>
+                <li>Identifiers, such as username or email, of your linked Github, Google, and ClickUp accounts</li>
+                <li>Transaction identifiers for credit/debit card transactions completed by RoboJackets' payments processor, Square; RoboJackets does not process or store billing data, including credit/debit card numbers.</li>
                 <li>A history of events and team meetings attended</li>
             </ul>
 
             <h2>How will RoboJackets use your data?</h2>
             <ul>
-                <li>To track membership activity, including dues payments and meeting attendance</li>
+                <li>To track membership activity, including dues transactions and meeting attendance</li>
                 <li>To facilitate all payments via credit and debit cards</li>
                 <li>To purchase and distribute items included with membership, such as t-shirts and polos</li>
                 <li>To provision and manage access to computer systems that RoboJackets uses or maintains, such as Google Drive, RoboJackets Cloud, Github, ClickUp, SUMS, and Wordpress</li>
@@ -52,12 +53,12 @@
             </ul>
 
             <h2>How does RoboJackets store your data?</h2>
-            <p>Data collected by RoboJackets is stored on a server secured within a Georgia Tech datacenter. Personally indentifiable information is encrypted at rest.</p>
+            <p>Data collected by RoboJackets is stored on a server secured within a Georgia Tech datacenter. Personally identifiable information is encrypted at rest.</p>
 
             <h2>How will RoboJackets share your data?</h2>
             <p>RoboJackets shares data with certain external organizations in the course of conducting day to day business.</p>
             <ul>
-                <li>Identidying information, such as GTID and your name will be shared as strictly necessary to Georgia Tech campus departments performing work on our behalf, including but not limited to, granting BuzzCard access to the shop, enrollment in SUMS, obtaining Institute Approved Absence letters, and reimbursement processing.</li>
+                <li>Identifying information, such as GTID and your name will be shared as strictly necessary to Georgia Tech campus departments performing work on our behalf, including but not limited to, granting BuzzCard access to the shop, enrollment in SUMS, obtaining Institute Approved Absence letters, and reimbursement processing.</li>
                 <li>Resumes of all active members will be shared with our sponsors. You can opt out of this by not submitting a resume on this website.</li>
                 <li>Attendance data will be shared in aggregate or with identifying information to Georgia Tech campus departments.</li>
                 <li>Demographic information will be shared in aggregate to current and potential sponsors.</li>
@@ -67,7 +68,7 @@
             <p>RoboJackets does not sell any of the information collected to any organizations. However, sponsors who provide financial support to RoboJackets will receive aggregated data as outlined above as a benefit of their support.</p>
 
             <h2>Cookies</h2>
-            <p>This application uses cookies to keep you logged in during and between sessions. If you elect to disable first-party cookies in your browser settings, this website may no longer function as intended.</p>
+            <p>This application uses cookies to keep you logged-in during and between sessions. If you elect to disable first-party cookies in your browser settings, this website may no longer function as intended.</p>
 
             <h2>Privacy policies of other websites</h2>
             <p>This application contains links and redirects to other websites. This privacy policy applies only to this website, as the other websites are governed by their own privacy policies.</p>
