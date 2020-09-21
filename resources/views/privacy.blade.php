@@ -63,7 +63,7 @@
                 <li>Attendance data will be shared in aggregate or with identifying information to Georgia Tech campus departments.</li>
                 <li>Demographic information will be shared in aggregate to current and potential sponsors.</li>
                 <li>Information regarding an individual payment, including your email address, will be shared with Square, RoboJackets' designated payments processor, for the purposes of completing a credit/debit card transaction. You can opt-out of this sharing by using another payment method.
-                <li>All other information will be released only to RoboJackets officers in the course of conducting business.</li>
+                <li>All other information will be released only to RoboJackets officers and officer-designated RoboJackets members in the course of conducting business.</li>
             </ul>
             <p>RoboJackets does not sell any of the information collected. However, sponsors who provide financial support to RoboJackets will receive aggregated data as outlined above as a benefit of their support.</p>
 
@@ -74,7 +74,7 @@
             <p>This application contains links and redirects to other websites. This privacy policy applies only to this website, as the other websites are governed by their own privacy policies.</p>
 
             <h2>Changes to this privacy policy</h2>
-            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on September 17, 2020.</p>
+            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on September 21, 2020.</p>
 
             <h2>How to contact us</h2>
             <p>If you have a question regarding any RoboJackets computing systems, including this website, contact RoboJackets IT by emailing <a href="support@robojackets.org">support@robojackets.org</a>.</p>
