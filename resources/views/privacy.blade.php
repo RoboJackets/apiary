@@ -44,7 +44,7 @@
                 <li>To track membership activity, including dues transactions and meeting attendance</li>
                 <li>To facilitate all payments via credit and debit cards</li>
                 <li>To purchase and distribute items included with membership, such as t-shirts and polos</li>
-                <li>To provision and manage access to computer systems that RoboJackets uses or maintains, such as Google Drive, RoboJackets Cloud, Github, ClickUp, SUMS, and Wordpress</li>
+                <li>To provision and manage access to computer systems that RoboJackets uses or maintains, such as Google Drive, RoboJackets Cloud, GitHub, ClickUp, SUMS, and WordPress</li>
                 <li>To generate analytical reports regarding membership engagement and composition</li>
                 <li>To email you regarding your membership in RoboJackets, including in advance of and for changes in membership or access status</li>
                 <li>To maintain the RoboJackets resume book, which is provided to sponsors seeking to hire our members</li>
