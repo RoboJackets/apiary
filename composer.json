@@ -24,7 +24,7 @@
         "laravel/slack-notification-channel": "2.2.0",
         "laravel/socialite": "4.4.1",
         "laravel/tinker": "2.4.2",
-        "laravel/vapor-core": "2.9.1",
+        "laravel/vapor-core": "2.9.2",
         "oitnetworkservices/buzzapiclient": "0.1.1",
         "predis/predis": "1.1.6",
         "robojackets/error-pages": "2.1.1",

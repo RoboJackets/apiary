@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac746f173b55dc3cb5fad0b275df6bb9",
+    "content-hash": "ffdb29bea3c9ae2e64c45627a07c69ef",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -115,16 +115,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.155.1",
+            "version": "3.155.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "575430a46c329a2a3723cdcb2d30df390f434ba1"
+                "reference": "5a3afb3b3171a133a491d3457e1e7dcaa45ac954"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/575430a46c329a2a3723cdcb2d30df390f434ba1",
-                "reference": "575430a46c329a2a3723cdcb2d30df390f434ba1",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5a3afb3b3171a133a491d3457e1e7dcaa45ac954",
+                "reference": "5a3afb3b3171a133a491d3457e1e7dcaa45ac954",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-09-23T18:11:33+00:00"
+            "time": "2020-09-24T18:13:54+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -2624,16 +2624,16 @@
         },
         {
             "name": "laravel/vapor-core",
-            "version": "v2.9.1",
+            "version": "v2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/vapor-core.git",
-                "reference": "d0e69e602779f85886c87f373f6879395986bc49"
+                "reference": "f982e953bcd6dcb9d762be826faf3d15bd53bc18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/vapor-core/zipball/d0e69e602779f85886c87f373f6879395986bc49",
-                "reference": "d0e69e602779f85886c87f373f6879395986bc49",
+                "url": "https://api.github.com/repos/laravel/vapor-core/zipball/f982e953bcd6dcb9d762be826faf3d15bd53bc18",
+                "reference": "f982e953bcd6dcb9d762be826faf3d15bd53bc18",
                 "shasum": ""
             },
             "require": {
@@ -2688,7 +2688,7 @@
                 "laravel",
                 "vapor"
             ],
-            "time": "2020-09-09T15:48:54+00:00"
+            "time": "2020-09-23T12:49:33+00:00"
         },
         {
             "name": "league/commonmark",
@@ -10001,16 +10001,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.43",
+            "version": "0.12.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "54221b44766cb4bdfe40d1828d5bba5dd79c38c6"
+                "reference": "330b45776ea77f167b150e24787412414a8fa469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/54221b44766cb4bdfe40d1828d5bba5dd79c38c6",
-                "reference": "54221b44766cb4bdfe40d1828d5bba5dd79c38c6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/330b45776ea77f167b150e24787412414a8fa469",
+                "reference": "330b45776ea77f167b150e24787412414a8fa469",
                 "shasum": ""
             },
             "require": {
@@ -10053,7 +10053,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-19T21:19:38+00:00"
+            "time": "2020-09-24T15:28:47+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
