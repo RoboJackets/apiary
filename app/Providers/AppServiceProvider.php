@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// @phan-file-suppress PhanPluginAlwaysReturnFunction
+
 namespace App\Providers;
 
 use App\Attendance;
@@ -25,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         JsonResource::withoutWrapping();
 
-        Horizon::auth(static function (): bool { // @phan-suppress-current-line PhanPluginAlwaysReturnFunction
+        Horizon::auth(static function (): bool {
             // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             if (auth()->guard('web')->user() instanceof User
                 // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
