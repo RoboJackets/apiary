@@ -84,6 +84,11 @@ class NotificationTemplate extends Resource
     protected function basicFields(): array
     {
         return [
+            Text::make('From')
+                ->rules('max:255', 'regex:/^[-a-zA-Z0-9 ]+$/')
+                ->suggestions(['RoboJackets'])
+                ->sortable(),
+
             Text::make('Subject')
                 ->rules('required', 'max:255')
                 ->sortable(),
