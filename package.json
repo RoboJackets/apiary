@@ -19,7 +19,7 @@
     "sass-loader": "7.3.1"
   },
   "dependencies": {
-    "@bugsnag/js": "7.3.5",
+    "@bugsnag/js": "7.4.0",
     "@bugsnag/plugin-vue": "7.3.5",
     "axios": "0.20.0",
     "chartist": "0.11.4",
