@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        JsonResource::withoutWrapping();
+
         Horizon::auth(static function (): bool {
             // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             if (auth()->guard('web')->user() instanceof User
@@ -39,11 +41,8 @@ class AppServiceProvider extends ServiceProvider
             }
 
             abort(403, 'Forbidden');
-
-            return false;
         });
 
-        JsonResource::withoutWrapping();
         User::observe(UserObserver::class);
         Payment::observe(PaymentObserver::class);
         Attendance::observe(AttendanceObserver::class);
