@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
+     *
+     * @suppress PhanPluginAlwaysReturnFunction
      */
     public function boot(): void
     {
@@ -41,6 +43,8 @@ class AppServiceProvider extends ServiceProvider
             }
 
             abort(403, 'Forbidden');
+
+            // No return as this is unreachable.
         });
 
         User::observe(UserObserver::class);
