@@ -54,4 +54,3 @@ parameters:
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\HasMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Variable \$factory might not be defined\.#'
     - '#Variable property access on App\\User\.#'
-    - '#Called \'last\' on Laravel collection, but could have been retrieved as a query\.#'
