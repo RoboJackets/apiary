@@ -13,7 +13,8 @@
     "ignoreDeps": [
         "ocramius/package-versions",
         "square/connect",
-        "mockery/mockery"
+        "mockery/mockery",
+        "doctrine/dbal"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
