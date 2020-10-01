@@ -20,14 +20,12 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @suppress PhanPluginAlwaysReturnFunction
      */
     public function boot(): void
     {
         JsonResource::withoutWrapping();
 
-        Horizon::auth(static function (): bool {
+        Horizon::auth(static function (): bool { // @phan-suppress-current-line PhanPluginAlwaysReturnFunction
             // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             if (auth()->guard('web')->user() instanceof User
                 // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
