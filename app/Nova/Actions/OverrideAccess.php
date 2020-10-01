@@ -34,6 +34,9 @@ class OverrideAccess extends Action
                 return Action::danger('You cannot override your own access!');
             }
             $date = Carbon::createFromFormat('Y-m-d', $fields->access_override_until);
+            if (false === $date) {
+                return Action::danger('You must select a date!');
+            }
             $date->hour = 23;
             $date->minute = 59;
             $date->second = 0;
