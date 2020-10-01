@@ -82,7 +82,7 @@ class GenerateResumeBook implements ShouldQueue
             ->get();
 
         if (!is_a($users, Collection::class)) {
-            throw new Exception("query did not return a collection")
+            throw new Exception("query did not return a collection");
         }
 
         $filteredUids = $users->pluck('uid');
