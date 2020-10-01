@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -11,7 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Date;
 
 class OverrideAccess extends Action
 {
@@ -32,7 +33,11 @@ class OverrideAccess extends Action
             if ($user->id === Auth::user()->id) {
                 return Action::danger('You cannot override your own access!');
             }
-            $user->access_override_until = $fields->access_override_until;
+            $date = Carbon::createFromFormat('Y-m-d', $fields->access_override_until);
+            $date->hour = 23;
+            $date->minute = 59;
+            $date->second = 0;
+            $user->access_override_until = $date;
             $user->access_override_by_id = Auth::user()->id;
             $user->save();
         }
@@ -48,7 +53,7 @@ class OverrideAccess extends Action
     public function fields(): array
     {
         return [
-            DateTime::make('Override Expiration', 'access_override_until')->rules('required'),
+            Date::make('Override Expiration', 'access_override_until')->rules('required'),
         ];
     }
 
