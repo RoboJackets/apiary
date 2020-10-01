@@ -31,7 +31,7 @@ class DailyDuesSummary implements ShouldQueue
      */
     public function __construct()
     {
-        $this->queue = config('queue.name.slack');
+        $this->queue = 'slack';
     }
 
     /**

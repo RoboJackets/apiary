@@ -31,7 +31,7 @@ class DuesPackageSync implements ShouldQueue
     public function __construct(DuesPackage $package)
     {
         $this->package = $package;
-        $this->queue = config('queue.name.jedi');
+        $this->queue = 'jedi';
     }
 
     /**

@@ -36,7 +36,7 @@ class WeeklyAttendanceEmail implements ShouldQueue
      */
     public function __construct()
     {
-        $this->queue = config('queue.name.email');
+        $this->queue = 'email';
     }
 
     /**

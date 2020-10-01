@@ -87,11 +87,4 @@ return [
         'database' => env('DB_CONNECTION', 'mysql'),
         'table' => 'failed_jobs',
     ],
-
-    'name' => [
-        'email' => (env('QUEUE_CONNECTION') === 'redis' ? '' : (env('CACHE_PREFIX').'-')).'email',
-        'slack' => (env('QUEUE_CONNECTION') === 'redis' ? '' : (env('CACHE_PREFIX').'-')).'slack',
-        'buzzapi' => (env('QUEUE_CONNECTION') === 'redis' ? '' : (env('CACHE_PREFIX').'-')).'buzzapi',
-        'jedi' => (env('QUEUE_CONNECTION') === 'redis' ? '' : (env('CACHE_PREFIX').'-')).'jedi',
-    ],
 ];

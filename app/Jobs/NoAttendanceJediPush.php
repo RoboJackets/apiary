@@ -26,7 +26,7 @@ class NoAttendanceJediPush implements ShouldQueue
      */
     public function __construct()
     {
-        $this->queue = config('queue.name.jedi');
+        $this->queue = 'jedi';
     }
 
     /**

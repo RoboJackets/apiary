@@ -70,7 +70,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $this->identifier = $identifier;
         $this->value = $value;
         $this->reason = $reason;
-        $this->queue = config('queue.name.buzzapi');
+        $this->queue = 'buzzapi';
     }
 
     /**
