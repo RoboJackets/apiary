@@ -63,7 +63,7 @@ class DatabaseMailable extends Mailable
         }
 
         return $this->from('noreply@my.robojackets.org', $nt->from)
-            ->withSwiftMessage(function (SimpleMimeEntity $message) use ($nt): void {
+            ->withSwiftMessage(static function (SimpleMimeEntity $message) use ($nt): void {
                 $message->getHeaders()
                     ->addTextHeader('Reply-To', $nt->from.' <hello@robojackets.org>');
             })
