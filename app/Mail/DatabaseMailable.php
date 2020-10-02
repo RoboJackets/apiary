@@ -62,10 +62,10 @@ class DatabaseMailable extends Mailable
             throw new Exception('Failed to find template');
         }
 
-        return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
+        return $this->from('noreply@my.robojackets.org', $nt->from)
+            ->withSwiftMessage(static function (SimpleMimeEntity $message) use ($nt): void {
                 $message->getHeaders()
-                    ->addTextHeader('Reply-To', 'RoboJackets <hello@robojackets.org>');
+                    ->addTextHeader('Reply-To', $nt->from.' <hello@robojackets.org>');
             })
             ->subject($nt->subject)
             ->markdown('mail.database', ['markdown' => $nt->body_markdown, 'metadata' => $this->metadata]);

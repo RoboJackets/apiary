@@ -18,7 +18,7 @@ class NotificationTemplateController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permission:send-notifications']);
+        $this->middleware(['permission:manage-notification-templates']);
     }
 
     /**
@@ -39,6 +39,7 @@ class NotificationTemplateController extends Controller
     {
         $nt = new NotificationTemplate();
         $nt->name = $request->input('name');
+        $nt->from = $request->input('from');
         $nt->subject = $request->input('subject');
         $nt->body_markdown = $request->input('body_markdown');
         $nt->created_by = $request->user()->id;

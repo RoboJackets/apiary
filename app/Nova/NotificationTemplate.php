@@ -80,10 +80,17 @@ class NotificationTemplate extends Resource
      * Notification fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
+     *
+     * @suppress PhanTypeInvalidCallableArraySize
      */
     protected function basicFields(): array
     {
         return [
+            Text::make('From')
+                ->rules('max:255', 'regex:/^[-a-zA-Z0-9 ]+$/')
+                ->suggestions(['RoboJackets'])
+                ->sortable(),
+
             Text::make('Subject')
                 ->rules('required', 'max:255')
                 ->sortable(),
