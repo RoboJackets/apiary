@@ -20,8 +20,10 @@ class DuesPackageSync implements ShouldQueue
 
     /**
      * The dues package that will expire.
+     *
+     * @var \App\DuesPackage
      */
-    private \App\DuesPackage $package;
+    private $package;
 
     /**
      * Create a new job instance.
@@ -29,7 +31,7 @@ class DuesPackageSync implements ShouldQueue
     public function __construct(DuesPackage $package)
     {
         $this->package = $package;
-        $this->queue = config('vapor-queue-names.jedi');
+        $this->queue = 'jedi';
     }
 
     /**

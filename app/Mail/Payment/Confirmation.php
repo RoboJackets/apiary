@@ -17,8 +17,10 @@ class Confirmation extends Mailable
 
     /**
      * The Payment object of interest.
+     *
+     * @var Payment
      */
-    public Payment $payment;
+    public $payment;
 
     /**
      * Create a new message instance.

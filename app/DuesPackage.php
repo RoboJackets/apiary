@@ -41,10 +41,10 @@ use Laravel\Nova\Actions\Actionable;
  *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
- * @property \DateTime $access_end The timestamp when users paid against this DuesPackage no longer have access to
- * @property \DateTime $access_start The timestamp when users paid against this DuesPackage first have access to systems
- * @property \DateTime $effective_end The timestamp when the DuesPackage is considered no longer active
- * @property \DateTime $effective_start The timestamp when the DuesPackage is considered newly active
+ * @property \Carbon\Carbon $access_end The timestamp when users paid against this DuesPackage no longer have access to
+ * @property \Carbon\Carbon $access_start The timestamp when users paid against this DuesPackage first are access active
+ * @property \Carbon\Carbon $effective_end The timestamp when the DuesPackage is considered no longer active
+ * @property \Carbon\Carbon $effective_start The timestamp when the DuesPackage is considered newly active
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $eligible_for_polo Whether this DuesPackage grants eligibility for a polo
  * @property bool $eligible_for_shirt Whether this DuesPackage grants eligibility for a shirt

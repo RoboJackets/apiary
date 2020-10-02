@@ -24,8 +24,10 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Which type of swag we're looking at, either 'shirt' or 'polo'.
+     *
+     * @var string
      */
-    protected string $swagType;
+    protected $swagType;
 
     /**
      * Create a new ShirtSizeBreakdown metric. swagType can be either 'shirt' or 'polo'.

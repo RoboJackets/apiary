@@ -17,8 +17,10 @@ class RequestComplete extends Mailable
 
     /**
      * The DuesPackage selected.
+     *
+     * @var DuesPackage
      */
-    public DuesPackage $duesPackage;
+    public $duesPackage;
 
     /**
      * Create a new message instance.

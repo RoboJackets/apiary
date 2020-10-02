@@ -74,9 +74,9 @@ return [
 
     'environments' => [
         'production' => [
-            'supervisor-1' => [
+            'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'jedi', 'buzzapi'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 3,
@@ -85,9 +85,9 @@ return [
         ],
 
         'test' => [
-            'supervisor-1' => [
+            'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'jedi', 'buzzapi'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
@@ -96,9 +96,9 @@ return [
         ],
 
         'local' => [
-            'supervisor-1' => [
+            'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'jedi', 'buzzapi'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,

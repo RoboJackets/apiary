@@ -34,13 +34,17 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     /**
      * The number of attempts for this job.
+     *
+     * @var int
      */
-    public int $tries = 1;
+    public $tries = 1;
 
     /**
      * The identifier to search for the account with.
+     *
+     * @var string
      */
-    private string $identifier;
+    private $identifier;
 
     /**
      * The value of the identifier to search for the account with.
@@ -51,8 +55,10 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     /**
      * The reason the user is being created (or null if the user is not being created).
+     *
+     * @var string
      */
-    private string $reason;
+    private $reason;
 
     /**
      * Create a new job instance.
@@ -64,7 +70,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $this->identifier = $identifier;
         $this->value = $value;
         $this->reason = $reason;
-        $this->queue = config('vapor-queue-names.buzzapi');
+        $this->queue = 'buzzapi';
     }
 
     /**

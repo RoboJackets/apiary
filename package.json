@@ -13,14 +13,13 @@
     "bootstrap": "4.5.2",
     "cross-env": "5.2.0",
     "laravel-mix": "5.0.5",
-    "laravel-vapor": "0.4.1",
     "lodash": "4.17.20",
     "resolve-url-loader": "3.1.1",
     "sass": "1.26.11",
     "sass-loader": "7.3.1"
   },
   "dependencies": {
-    "@bugsnag/js": "7.3.5",
+    "@bugsnag/js": "7.4.0",
     "@bugsnag/plugin-vue": "7.3.5",
     "axios": "0.20.0",
     "chartist": "0.11.4",
