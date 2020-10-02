@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "613f43ac0d13a761694c008038508e6b",
+    "content-hash": "6215fc6fcfc79da16a839e0ab630cf0a",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3149,7 +3149,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-f8214e9146b5cc3730e60b29023173e86e2b1aa5-zip-2da4f8.zip",
                 "reference": "f8214e9146b5cc3730e60b29023173e86e2b1aa5",
-                "shasum": "008c2bc47869892f43c0717833393f6a97b6539e"
+                "shasum": "394fe598f35bde6afa4c4a3aad3cd60527b8af02"
             },
             "require": {
                 "ext-json": "*",
@@ -4216,7 +4216,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
                 "reference": "22e01ddd8df96f297407095be5cd74480aa10469",
-                "shasum": "1c6a9d1daa474bdf8e1a40001782370af34a8e44"
+                "shasum": "97b2305f7efc483e07cf9872fae61153d8a2b93e"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -4265,7 +4265,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/robojackets/network-check/robojackets-network-check-2fed18379f699e0e215b999b8c59c8dda5d7d00c-zip-2a429c.zip",
                 "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c",
-                "shasum": "5d0a35192a91b4b76a1f4cfff1ad3438d17679b4"
+                "shasum": "f8b5c72982cd70baa130812f071272a512dddd46"
             },
             "type": "library",
             "autoload": {
@@ -10044,7 +10044,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
                 "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d",
-                "shasum": "0bba20ce2ed0a25ca7415e2bb998f372ef987977"
+                "shasum": "a689506e5b50450671a0a44e5e33afcb958ba2da"
             },
             "require": {
                 "phan/phan": "*",
