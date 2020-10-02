@@ -80,6 +80,8 @@ class NotificationTemplate extends Resource
      * Notification fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
+     *
+     * @suppress PhanTypeInvalidCallableArraySize
      */
     protected function basicFields(): array
     {
