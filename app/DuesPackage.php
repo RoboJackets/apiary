@@ -42,7 +42,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Carbon\Carbon $access_end The timestamp when users paid against this DuesPackage no longer have access to
- * @property \Carbon\Carbon $access_start The timestamp when users paid against this DuesPackage first have access to systems
+ * @property \Carbon\Carbon $access_start The timestamp when users paid against this DuesPackage first are access active
  * @property \Carbon\Carbon $effective_end The timestamp when the DuesPackage is considered no longer active
  * @property \Carbon\Carbon $effective_start The timestamp when the DuesPackage is considered newly active
  * @property \Illuminate\Support\Carbon|null $deleted_at
