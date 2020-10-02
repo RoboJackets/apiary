@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'app_version' => null,
+    'app_version' => exec('cd '.__DIR__.' && git rev-parse HEAD'),
 
     /*
     |--------------------------------------------------------------------------

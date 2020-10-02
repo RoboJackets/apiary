@@ -17,8 +17,10 @@ class PaymentSuccess
 
     /**
      * The payment of interest.
+     *
+     * @var \App\Payment
      */
-    public \App\Payment $payment;
+    public $payment;
 
     /**
      * Create a new event instance.

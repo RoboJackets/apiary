@@ -23,15 +23,17 @@ class WeeklyAttendanceSlack implements ShouldQueue
 
     /**
      * The number of times the job may be attempted.
+     *
+     * @var int
      */
-    public int $tries = 1;
+    public $tries = 1;
 
     /**
      * Create a new job instance.
      */
     public function __construct()
     {
-        $this->queue = config('vapor-queue-names.slack');
+        $this->queue = 'slack';
     }
 
     /**

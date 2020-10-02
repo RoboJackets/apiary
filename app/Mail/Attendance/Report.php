@@ -17,8 +17,10 @@ class Report extends Mailable
 
     /**
      * The AttendanceExport for the email.
+     *
+     * @var AttendanceExport
      */
-    public AttendanceExport $export;
+    public $export;
 
     /**
      * Create a new message instance.

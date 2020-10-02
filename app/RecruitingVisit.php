@@ -55,13 +55,6 @@ class RecruitingVisit extends Model
     use SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<string>
-     */
-    protected $fillable = ['recruiting_email', 'recruiting_name'];
-
-    /**
      *  Get the Recruiting Responses associated with this Recruiting Visit.
      */
     public function recruitingResponses(): HasMany
@@ -109,6 +102,13 @@ class RecruitingVisit extends Model
     {
         return $this->visit_token;
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = ['recruiting_email', 'recruiting_name'];
 
     /**
      * Map of relationships to permissions for dynamic inclusion.

@@ -13,8 +13,10 @@ class APITokenAuthenticate
 {
     /**
      * Auth factory.
+     *
+     * @var \Illuminate\Contracts\Auth\Factory
      */
-    protected \Illuminate\Contracts\Auth\Factory $auth;
+    protected $auth;
 
     public function __construct(AuthFactory $auth)
     {
