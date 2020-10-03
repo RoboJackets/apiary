@@ -54,7 +54,7 @@
 
 <script type="text/javascript">
 /*
-   *  @props 
+   *  @props
    */
 
 export default {
@@ -95,7 +95,9 @@ export default {
       .get(this.teamsUrl)
       .then(response => {
         this.teams = response.data.teams.sort(function(a, b) {
-          return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
+          return a.visible_on_kiosk && !b.visible_on_kiosk ? -1 :
+                b.visible_on_kiosk && !a.visible_on_kiosk ? 1 :
+                a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
         });
       })
       .catch(response => {

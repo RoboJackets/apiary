@@ -216,6 +216,12 @@ export default {
           formatted.byTeam.push(team);
         }
 
+        formatted.byTeam = formatted.byTeam.sort(function(a, b) {
+            return a.visible_on_kiosk && !b.visible_on_kiosk ? -1 :
+                  b.visible_on_kiosk && !a.visible_on_kiosk ? 1 :
+                  a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
+          });
+
         this.data = formatted;
         this.loading = false;
       });
