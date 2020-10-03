@@ -14,7 +14,7 @@ use App\Jobs\PushToJedi;
 use App\Team;
 use App\Traits\AuthorizeInclude;
 use App\User;
-use Bugsnag;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;

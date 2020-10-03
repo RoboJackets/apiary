@@ -198,8 +198,10 @@ class User extends Resource
 
                     Boolean::make('SUMS', 'exists_in_sums')
                         ->hideFromIndex()
-                        ->help('This flag is set by JEDI and should not be modified unless you know what you are doing.'
-                            .' It only controls UX elements.'),
+                        ->help(
+                            'This flag is set by JEDI and should not be modified unless you know what you are doing.'
+                            .' It only controls UX elements.'
+                        ),
                 ]
             ),
 
@@ -229,23 +231,13 @@ class User extends Resource
 
             new Panel('Swag', $this->swagFields()),
 
-            HasMany::make('Recruiting Visits', 'recruitingVisits')
+            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
                 ->canSee(static function (Request $request): bool {
                     if ($request->resourceId === $request->user()->id) {
-                        return $request->user()->can('read-recruiting-visits-own');
+                        return $request->user()->can('read-dues-transactions-own');
                     }
 
-                    return $request->user()->can('read-recruiting-visits');
-                }),
-
-            BelongsToMany::make('Majors')
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                }),
-
-            BelongsToMany::make('Class Standing', 'classStanding')
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
+                    return $request->user()->can('read-dues-transactions');
                 }),
 
             BelongsToMany::make('Teams')
@@ -266,13 +258,23 @@ class User extends Resource
                     return $request->user()->can('read-attendance');
                 }),
 
-            HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
+            BelongsToMany::make('Majors')
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                }),
+
+            BelongsToMany::make('Class Standing', 'classStanding')
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                }),
+
+            HasMany::make('Recruiting Visits', 'recruitingVisits')
                 ->canSee(static function (Request $request): bool {
                     if ($request->resourceId === $request->user()->id) {
-                        return $request->user()->can('read-dues-transactions-own');
+                        return $request->user()->can('read-recruiting-visits-own');
                     }
 
-                    return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-recruiting-visits');
                 }),
 
             new Panel('Metadata', $this->metaFields()),
@@ -452,22 +454,6 @@ class User extends Resource
                 })
                 ->canRun(static function (Request $request, AU $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-                }),
-            (new Actions\ExportGtid())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-gtid');
-                }),
-            (new Actions\ExportUsername())
-                ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->can('read-users');
-                }),
-            (new Actions\ExportEmails())
-                ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->can('read-users');
-                }),
-            (new Actions\ExportContactInfo())
-                ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->can('read-users');
                 }),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {

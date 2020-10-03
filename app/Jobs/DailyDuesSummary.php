@@ -27,6 +27,14 @@ class DailyDuesSummary implements ShouldQueue
     public $tries = 1;
 
     /**
+     * Create a new job instance.
+     */
+    public function __construct()
+    {
+        $this->queue = 'slack';
+    }
+
+    /**
      * Execute the job.
      */
     public function handle(): void

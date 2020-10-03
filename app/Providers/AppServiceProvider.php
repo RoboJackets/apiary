@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// @phan-file-suppress PhanPluginAlwaysReturnFunction
+
 namespace App\Providers;
 
 use App\Attendance;
@@ -12,7 +14,7 @@ use App\Observers\PaymentObserver;
 use App\Observers\UserObserver;
 use App\Payment;
 use App\User;
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 
@@ -23,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Resource::withoutWrapping();
+        JsonResource::withoutWrapping();
 
         Horizon::auth(static function (): bool {
             // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
@@ -42,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
 
             abort(403, 'Forbidden');
 
-            return false;
+            // No return as this is unreachable.
         });
 
         User::observe(UserObserver::class);
@@ -56,7 +58,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
         $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
     }
 }

@@ -108,6 +108,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'gtAccountEntitlement',
             'uid'
         )->from(Resources::GTED_ACCOUNTS)
+        // @phan-suppress-next-line PhanTypeMismatchArgument
         ->where([$this->identifier => $searchValue])
         ->get();
 
@@ -121,7 +122,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
         // If there's multiple results, find the one for their primary GT account or of the User we're searching for.
         // If there's only one (we're searching by the uid of that account), just use that one.
-        $searchUid = $searchUid ?? $accountsResponse->first()->gtPrimaryGTAccountUsername;
+        $searchUid ??= $accountsResponse->first()->gtPrimaryGTAccountUsername;
         $account = collect($accountsResponse->json->api_result_data)->firstWhere('uid', $searchUid);
 
         $user = User::where('uid', $account->uid)->first();

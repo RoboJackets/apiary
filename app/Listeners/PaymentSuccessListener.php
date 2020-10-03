@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Listeners;
 
-use App\DuesTransaction;
 use App\Events\PaymentSuccess;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
@@ -19,10 +18,6 @@ class PaymentSuccessListener
         $payment = $event->payment;
         $payable = $payment->payable;
         Log::info(self::class.': Handling successful payment ID '.$payment->id);
-        // If this is a Dues Transaction payment, update user roles
-        if (! ($payable instanceof DuesTransaction)) {
-            return;
-        }
 
         if ('paid' !== $payable->status) {
             return;

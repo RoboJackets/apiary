@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="7"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="app" />
+        <directory name="config" />
+        <directory name="database" />
+        <directory name="routes" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <directory name="routes" />
+                <directory name="database" />
+            </errorLevel>
+        </UndefinedClass>
+        <UndefinedGlobalVariable>
+            <errorLevel type="suppress">
+                <file name="database/factories/ModelFactory.php" />
+            </errorLevel>
+        </UndefinedGlobalVariable>
+        <UndefinedConstant>
+            <errorLevel type="suppress">
+                <file name="config/database.php" />
+            </errorLevel>
+        </UndefinedConstant>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <LessSpecificImplementedReturnType>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </LessSpecificImplementedReturnType>
+        <ImplementedReturnTypeMismatch>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </ImplementedReturnTypeMismatch>
+        <InvalidReturnStatement>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </InvalidReturnStatement>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </TooManyArguments>
+        <PossiblyUndefinedMethod>
+            <errorLevel type="suppress">
+                <directory name="database/migrations" />
+            </errorLevel>
+        </PossiblyUndefinedMethod>
+        <UndefinedInterfaceMethod>
+            <errorLevel type="suppress">
+                <directory name="database/migrations" />
+            </errorLevel>
+        </UndefinedInterfaceMethod>
+        <MissingReturnType>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Controllers" />
+            </errorLevel>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Middleware" />
+            </errorLevel>
+        </MissingReturnType>
+        <UnresolvableInclude>
+            <errorLevel type="suppress">
+                <file name="app/Console/Kernel.php" />
+            </errorLevel>
+        </UnresolvableInclude>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <directory name="routes" />
+                <file name="app/DuesTransaction.php" />
+                <file name="app/Nova/Lenses/RecentInactiveUsers.php" />
+            </errorLevel>
+        </TooManyArguments>
+    </issueHandlers>
+</psalm>

@@ -32,3 +32,5 @@ _ide_helper.php
 .last_deployment_hash
 pause-monitoring.sh
 resume-monitoring.sh
+.vapor/
+.env.production

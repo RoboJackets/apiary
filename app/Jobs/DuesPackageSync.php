@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class DuesPackageExpiration implements ShouldQueue
+class DuesPackageSync implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -40,7 +40,7 @@ class DuesPackageExpiration implements ShouldQueue
     public function handle(): void
     {
         foreach ($this->package->transactions as $transaction) {
-            PushToJedi::dispatch($transaction->user, DuesPackage::class, $this->package->id, 'expiration');
+            PushToJedi::dispatch($transaction->user, DuesPackage::class, $this->package->id, 'sync');
         }
     }
 }

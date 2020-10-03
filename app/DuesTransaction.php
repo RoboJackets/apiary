@@ -19,15 +19,55 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Eloquent\Builder paid() Scopes a query to only paid transactions
  * @method static \Illuminate\Database\Eloquent\Builder pending() Scopes a query to only pending transactions
  * @method static \Illuminate\Database\Eloquent\Builder pendingSwag() Scopes a query to only transactions that need
- *         swag distribution
+ * @method static Builder|DuesTransaction accessCurrent()
+ * @method static Builder|DuesTransaction newModelQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method static Builder|DuesTransaction query()
+ * @method static Builder|DuesTransaction unpaid()
+ * @method static Builder|DuesTransaction whereCreatedAt($value)
+ * @method static Builder|DuesTransaction whereDeletedAt($value)
+ * @method static Builder|DuesTransaction whereDuesPackageId($value)
+ * @method static Builder|DuesTransaction whereId($value)
+ * @method static Builder|DuesTransaction wherePaymentId($value)
+ * @method static Builder|DuesTransaction whereReceivedPolo($value)
+ * @method static Builder|DuesTransaction whereReceivedShirt($value)
+ * @method static Builder|DuesTransaction whereSwagPoloProvided($value)
+ * @method static Builder|DuesTransaction whereSwagPoloProvidedBy($value)
+ * @method static Builder|DuesTransaction whereSwagShirtProvided($value)
+ * @method static Builder|DuesTransaction whereSwagShirtProvidedBy($value)
+ * @method static Builder|DuesTransaction whereUpdatedAt($value)
+ * @method static Builder|DuesTransaction whereUserId($value)
+ * @method static QueryBuilder|DuesTransaction onlyTrashed()
+ * @method static QueryBuilder|DuesTransaction withoutTrashed()
+ * @method static QueryBuilder|DuesTransaction withTrashed()
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  *
  * @property ?int $swag_polo_providedBy the user ID that distributed a polo for this transaction
  * @property ?int $swag_shirt_providedBy the user ID that distributed a shirt for this transaction
  * @property ?string $swag_polo_provided The timestamp of when a polo was given for this DuesTransaction, or null
  * @property ?string $swag_shirt_provided The timestamp of when a shirt was given for this DuesTransaction, or null
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $is_paid whether this transaction is paid in full
+ * @property int $dues_package_id
  * @property int $id The database ID for this DuesTransaction
+ * @property int $received_polo
+ * @property int $received_shirt
+ * @property int $user_id
+ * @property int|null $payment_id
  * @property string $status the status of this transaction
+ *
+ * @property-read \App\DuesPackage $for
+ * @property-read \App\DuesPackage $package
+ * @property-read \App\User $swagPoloProvidedBy
+ * @property-read \App\User $swagShirtProvidedBy
+ * @property-read \App\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection $payment
+ * @property-read int|null $payment_count
+ * @property-read string $swag_polo_status
+ * @property-read string $swag_shirt_status
  */
 class DuesTransaction extends Model
 {
@@ -115,7 +155,7 @@ class DuesTransaction extends Model
      */
     public function getStatusAttribute(): string
     {
-        if (null === $this->package || ! $this->package->is_active) {
+        if (! $this->package->is_active) {
             return 'expired';
         }
 
@@ -133,12 +173,8 @@ class DuesTransaction extends Model
      */
     public function getSwagPoloStatusAttribute(): string
     {
-        if (null === $this->package || $this->package->eligible_for_polo && null === $this->swag_polo_provided) {
-            return 'Not Picked Up';
-        }
-
-        if ($this->package->eligible_for_polo && null !== $this->swag_polo_provided) {
-            return 'Picked Up';
+        if ($this->package->eligible_for_polo) {
+            return null === $this->swag_polo_provided ? 'Not Picked Up' : 'Picked Up';
         }
 
         return 'Not Eligible';
@@ -149,12 +185,8 @@ class DuesTransaction extends Model
      */
     public function getSwagShirtStatusAttribute(): string
     {
-        if (null === $this->package || $this->package->eligible_for_shirt && null === $this->swag_shirt_provided) {
-            return 'Not Picked Up';
-        }
-
-        if ($this->package->eligible_for_shirt && null !== $this->swag_shirt_provided) {
-            return 'Picked Up';
+        if ($this->package->eligible_for_shirt) {
+            return null === $this->swag_shirt_provided ? 'Not Picked Up' : 'Picked Up';
         }
 
         return 'Not Eligible';
@@ -236,7 +268,7 @@ class DuesTransaction extends Model
      */
     public function getIsPaidAttribute(): bool
     {
-        return 0 !== self::where('dues_transactions.id', $this->id)->paid()->get()->count();
+        return 0 !== self::where('dues_transactions.id', $this->id)->paid()->count();
     }
 
     /**
@@ -281,7 +313,7 @@ class DuesTransaction extends Model
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount(): string
+    public function getPayableAmount(): float
     {
         return $this->package->cost;
     }

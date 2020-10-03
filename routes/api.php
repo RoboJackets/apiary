@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +15,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('v1/user', static function (Request $request): User {
-    return $request->user();
-});
-
+// @phan-suppress-next-line PhanParamTooMany
 Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force')->group(
     static function (): void {
         // Recruiting (Formerly known as FASET)

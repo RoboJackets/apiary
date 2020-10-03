@@ -115,8 +115,9 @@ class PushToJedi implements ShouldQueue
             $send['project_manager_of_teams'][] = $team->name;
         }
 
-        if (null !== $this->user->gmail_address) {
-            $send['google_accounts'][] = strtolower($this->user->gmail_address);
+        $gmail_address = $this->user->gmail_address;
+        if (null !== $gmail_address) {
+            $send['google_accounts'][] = strtolower($gmail_address);
         }
 
         if (in_array('G Suite', $send['teams'], true)) {

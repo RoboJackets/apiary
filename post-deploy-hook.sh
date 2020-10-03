@@ -5,10 +5,11 @@ cd "${0%/*}"
 composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative
 php artisan migrate --no-interaction
 php artisan config:cache --no-interaction
-php artisan view:clear --no-interaction
-php artisan route:clear --no-interaction
+php artisan view:cache --no-interaction
+php artisan route:cache --no-interaction
 php artisan nova:publish --no-interaction
-php artisan horizon:assets --no-interaction
+php artisan horizon:publish --no-interaction
+php artisan optimize
 php artisan cache:clear --no-interaction
 
 if [ -f ".last_deployment_hash" ]; then

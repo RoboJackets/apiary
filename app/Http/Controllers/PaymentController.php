@@ -126,6 +126,18 @@ class PaymentController extends Controller
 
         if (null !== $transactZeroPmt) {
             $payment = $transactZeroPmt->payment[0];
+            if (null === $payment) {
+                return response(
+                    view(
+                        'errors.generic',
+                        [
+                            'error_code' => 500,
+                            'error_message' => 'Got null payment',
+                        ]
+                    ),
+                    500
+                );
+            }
             $payment->unique_id = bin2hex(openssl_random_pseudo_bytes(10));
             $payment->save();
         } else {
@@ -383,11 +395,9 @@ class PaymentController extends Controller
             );
         }
 
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         $tenders = $square_txn->getTransaction()->getTenders();
         $amount = $tenders[0]->getAmountMoney()->getAmount() / 100;
         $proc_fee = $tenders[0]->getProcessingFeeMoney()->getAmount() / 100;
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         $created_at = $square_txn->getTransaction()->getCreatedAt();
         Log::debug(
             self::class.' - Square Transaction Details for '.$server_txn_id,
@@ -416,7 +426,7 @@ class PaymentController extends Controller
         }
 
         $payment->amount = $amount;
-        $payment->processing_fee = $proc_fee;
+        $payment->processing_fee = floatval($proc_fee);
         $payment->checkout_id = $checkout_id;
         $payment->server_txn_id = $server_txn_id;
         $payment->client_txn_id = $client_txn_id;

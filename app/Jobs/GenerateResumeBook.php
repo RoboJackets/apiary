@@ -3,11 +3,9 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-// @phan-file-suppress PhanStaticCallToNonStatic,PhanPossiblyNonClassMethodCall,PhanTypeMismatchArgument
 
 namespace App\Jobs;
 
-use Adldap\Laravel\Facades\Adldap;
 use App\User;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -17,6 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class GenerateResumeBook implements ShouldQueue
@@ -81,17 +80,17 @@ class GenerateResumeBook implements ShouldQueue
             ->whereNotNull('resume_date')
             ->where('resume_date', '>', $this->resume_date_cutoff)
             ->get();
+
+        if (! is_a($users, Collection::class)) {
+            throw new Exception('Query did not return a collection');
+        }
+
         $filteredUids = $users->pluck('uid');
 
         if (null !== $this->major) {
             $majors = $users->mapWithKeys(static function (User $user): array {
-                $ous = Cache::remember('whitepages_ou_'.$user->uid, now()->addDays(1), static function () use ($user) {
-                    return Adldap::search()
-                        ->where('uid', '=', $user->uid)
-                        ->select('uid', 'ou')
-                        ->get()
-                        ->pluck('ou')
-                        ->pluck(0);
+                $ous = Cache::remember('whitepages_ou_'.$user->uid, now()->addDays(1), static function (): void {
+                    throw new Exception('This needs to be rewritten to use the local database or BuzzAPI');
                 });
 
                 return [$user->uid => $ous];
@@ -120,13 +119,13 @@ class GenerateResumeBook implements ShouldQueue
         $cmd = 'gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER -sOutputFile='.escapeshellarg($this->path).' ';
         $cmd .= $filenames->join(' ');
 
-        \Log::debug('Running shell command: '.$cmd);
+        Log::debug('Running shell command: '.$cmd);
         $gsOutput = [];
         $gsExit = -1;
         exec($cmd, $gsOutput, $gsExit);
 
         if (0 !== $gsExit) {
-            \Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
+            Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
             $this->path = null;
             $this->datecode = null;
             throw new Exception('gs did not exit cleanly, so the resume book could not be generated.');
@@ -135,13 +134,13 @@ class GenerateResumeBook implements ShouldQueue
         // This is not perfect! The original metadata is recoverable (exiftool can't remove it permanently).
         $cmdExif = 'exiftool -Title="RoboJackets Resume Book" -Creator="MyRoboJackets" -Author="RoboJackets" ';
         $cmdExif .= escapeshellarg($this->path);
-        \Log::debug('Running shell command: '.$cmdExif);
+        Log::debug('Running shell command: '.$cmdExif);
         $exifOutput = [];
         $exifExit = -1;
         exec($cmdExif, $exifOutput, $exifExit);
 
         if (0 !== $exifExit) {
-            \Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '
+            Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '
                 .implode("\n", $exifOutput));
             $this->path = null;
             $this->datecode = null;

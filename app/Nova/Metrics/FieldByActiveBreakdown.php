@@ -29,8 +29,6 @@ abstract class FieldByActiveBreakdown extends Partition
 
     /**
      * Create a new FieldByActiveBreakdown metric.
-     *
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(string $field_name, bool $use_access_active = false)
     {
@@ -41,8 +39,6 @@ abstract class FieldByActiveBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function calculate(Request $request): PartitionResult
     {

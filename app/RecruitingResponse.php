@@ -11,7 +11,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Represents a response to a recruiting survey.
  *
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newModelQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereFasetSurveyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereFasetVisitId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereResponse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|RecruitingResponse onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingResponse withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingResponse withTrashed()
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $faset_survey_id
+ * @property int $faset_visit_id
  * @property string $response the response to the survey
+ *
+ * @property-read \App\RecruitingVisit $recruitingVisit
  */
 class RecruitingResponse extends Model
 {

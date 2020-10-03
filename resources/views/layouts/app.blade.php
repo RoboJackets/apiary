@@ -22,9 +22,11 @@
             <li class="nav-item {{ $request->is('teams*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
             </li>
+            @if (config('features.resumes'))
             <li class="nav-item {{ $request->is('resume*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('resume.index') }}">Resume</a>
             </li>
+            @endif
 
             @can('access-nova')
             <li class="nav-item">

@@ -183,8 +183,6 @@ return [
         Subfission\Cas\CasServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
-        Maatwebsite\LaravelNovaExcel\LaravelNovaExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +225,7 @@ return [
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Http' => Illuminate\Support\Facades\Http::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
@@ -249,6 +248,4 @@ return [
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
     ],
-
-    'ga-ua' => env('GA_UA', 'UA-XXXXX-Y'),
 ];

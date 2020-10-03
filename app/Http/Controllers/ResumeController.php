@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ResumeController extends Controller
@@ -109,12 +111,12 @@ class ResumeController extends Controller
             $exifErrorInvalidType = 'Unknown file type' === $exifError;
 
             if (! $valid || ! $pageCountValid) {
-                \Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '
+                Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '
                     .($valid ? 'true' : 'false').', one page: '.($pageCountValid ? 'true' : 'false').', Error: '
                     .$exifError.')');
                 $error = $valid ? 'resume_not_one_page' : 'resume_not_pdf';
                 if ($exifError && ! $exifErrorInvalidType) {
-                    \Log::error('exiftool responded with unknown error');
+                    Log::error('exiftool responded with unknown error');
                     $error = 'unknown_error';
                 }
 
@@ -156,5 +158,10 @@ class ResumeController extends Controller
             ],
             422
         );
+    }
+
+    public function showUploadPage(Request $request)
+    {
+        return view('users/resumeupload', ['id' => $request->user()->id]);
     }
 }

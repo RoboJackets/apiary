@@ -24,7 +24,6 @@ class ClassStandingsBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         return $this->result(User::active()
             ->with('classStanding')
             ->get()

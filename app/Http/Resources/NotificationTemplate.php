@@ -22,6 +22,7 @@ class NotificationTemplate extends JsonResource
             // Attributes
             'id' => $this->id,
             'name' => $this->name,
+            'from' => $this->from,
             'subject' => $this->subject,
             'body_markdown' => $this->body_markdown,
             'created_by' => $this->created_by,

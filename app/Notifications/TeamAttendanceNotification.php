@@ -49,7 +49,6 @@ class TeamAttendanceNotification extends Notification
             ->get();
         $duesPackageAvailable = DuesPackage::availableForPurchase()->active()->count() > 0;
 
-        // @phan-suppress-next-line PhanPossiblyNonClassMethodCall
         $inactiveNames = $knownAttendance->pluck('attendee')
             ->unique()
             ->filter(static function (User $user): bool {

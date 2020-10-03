@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
-// @phan-file-suppress PhanIncompatibleCompositionProp
 
 namespace App;
 
@@ -19,25 +18,66 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Laravel\Nova\Actions\Actionable;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * Represents a group of Users.
  *
  * @method static \Illuminate\Database\Eloquent\Builder visible() Scopes a query to only visible teams
+ * @method static \Illuminate\Database\Query\Builder|Team onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
+ * @method static Builder|Team attendable()
+ * @method static Builder|Team newModelQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method static Builder|Team query()
+ * @method static Builder|Team selfServiceable()
+ * @method static Builder|Team whereAttendanceSecret($value)
+ * @method static Builder|Team whereAttendanceSecretExpiration($value)
+ * @method static Builder|Team whereCreatedAt($value)
+ * @method static Builder|Team whereDeletedAt($value)
+ * @method static Builder|Team whereDescription($value)
+ * @method static Builder|Team whereGoogleGroup($value)
+ * @method static Builder|Team whereId($value)
+ * @method static Builder|Team whereMailingListName($value)
+ * @method static Builder|Team whereName($value)
+ * @method static Builder|Team whereProjectManagerId($value)
+ * @method static Builder|Team whereSlackChannelId($value)
+ * @method static Builder|Team whereSlackChannelName($value)
+ * @method static Builder|Team whereSlackPrivateChannelId($value)
+ * @method static Builder|Team whereUpdatedAt($value)
  *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property \Illuminate\Support\Carbon|null $attendance_secret_expiration
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $self_serviceable whether this team can be joined/left voluntarily
  * @property bool $visible whether this team is visible to non-admins
  * @property int $id the database identifier for this team
+ * @property int|null $project_manager_id
  * @property string $name The name of the team
  * @property string $slack_private_channel_id the slack internal ID of the team's private channel
+ * @property string|null $attendance_secret
+ * @property string|null $description
+ * @property string|null $google_group
+ * @property string|null $mailing_list_name
+ * @property string|null $slack_channel_id
+ * @property string|null $slack_channel_name
+ *
+ * @property-read \App\User $projectManager
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\User> $members
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read int|null $actions_count
+ * @property-read int|null $attendance_count
+ * @property-read int|null $members_count
+ * @property-read int|null $notifications_count
  */
 class Team extends Model
 {
     use Actionable;
     use SoftDeletes;
-    use HasSlug;
     use HasManyEvents;
     use HasBelongsToManyEvents;
     use HasRelationshipObservables;
@@ -107,14 +147,6 @@ class Team extends Model
     public function scopeSelfServiceable(Builder $query): Builder
     {
         return $query->where('self_serviceable', true);
-    }
-
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
     }
 
     /**

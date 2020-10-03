@@ -22,8 +22,6 @@ class SyncAccess extends Action
      * Perform the action on the given models.
      *
      * @param \Illuminate\Support\Collection<\App\User>  $models
-     *
-     * @suppress PhanPossiblyNonClassMethodCall
      */
     public function handle(ActionFields $fields, Collection $models): void
     {
