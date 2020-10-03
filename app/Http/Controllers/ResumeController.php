@@ -16,7 +16,6 @@ class ResumeController extends Controller
     {
         $this->middleware('permission:read-users-resume|read-users-own', ['only' => ['show']]);
         $this->middleware('permission:update-users-resume|update-users-own', ['only' => ['store']]);
-        $this->middleware('permission:delete-users-resume|update-users-own', ['only' => ['delete']]);
     }
 
     /**
@@ -28,7 +27,27 @@ class ResumeController extends Controller
     {
         $user = User::findByIdentifier($id)->first();
         if (null !== $user) {
-            return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
+            if (! user()->can('read-users-resume') && user()->id !== $user->id) {
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'You do not have permission to view that resume.',
+                    ],
+                    403
+                );
+            }
+
+            try {
+                return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
+            } catch (FileNotFoundException $e) {
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'The requested user has no resume.',
+                    ],
+                    404
+                );
+            }
         }
 
         return response()->json(
@@ -49,6 +68,16 @@ class ResumeController extends Controller
     {
         $user = User::findByIdentifier($id)->first();
         if (null !== $user) {
+            if (! user()->can('update-users-resume') && user()->id !== $user->id) {
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'You do not have permission to upload that resume.',
+                    ],
+                    403
+                );
+            }
+
             if (true !== $user->is_active) {
                 if ($request->has('redirect')) {
                     return redirect()->route('resume.index', ['resume_error' => 'inactive']);
