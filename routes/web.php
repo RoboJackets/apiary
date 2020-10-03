@@ -27,7 +27,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('profile', 'UserController@showProfile');
 
     Route::prefix('dues')->group(static function (): void {
-        Route::get('/', 'DuesController@showDuesFlow')->name('payDues');
+        Route::get('/', 'DuesTransactionController@showDuesFlow')->name('payDues');
 
         Route::get('/pay', 'PaymentController@storeUser')->name('dues.payOne');
         Route::post('/pay', 'PaymentController@storeUser')->name('dues.pay');
