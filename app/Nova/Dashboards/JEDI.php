@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\AccessActiveMembers;
 use App\Nova\Metrics\AccessOverrides;
+use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\LinkedGitHubAccounts;
 use App\Nova\Metrics\LinkedGoogleAccounts;
 use App\Nova\Metrics\PendingGitHubInvitations;
@@ -22,6 +24,12 @@ class JEDI extends Dashboard
     public function cards(): array
     {
         return [
+            (new ActiveMembers())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            })->width('1/2'),
+            (new AccessActiveMembers())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            })->width('1/2'),
             (new AccessOverrides())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),
