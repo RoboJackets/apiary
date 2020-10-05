@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
