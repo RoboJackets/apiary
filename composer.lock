@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b230f5bda6d5800f592fe19d0274217",
+    "content-hash": "99a7426d93761a16143f3b094859b280",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7338,16 +7338,16 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "da258c4702d4399c28aa6e73e438339561b46b14"
+                "reference": "a92184c19cc5e74794be043df7dfeb587731c436"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/da258c4702d4399c28aa6e73e438339561b46b14",
-                "reference": "da258c4702d4399c28aa6e73e438339561b46b14",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/a92184c19cc5e74794be043df7dfeb587731c436",
+                "reference": "a92184c19cc5e74794be043df7dfeb587731c436",
                 "shasum": ""
             },
             "require": {
@@ -7369,7 +7369,8 @@
                 "guzzlehttp/guzzle": "Allows the http health check to function.",
                 "illuminate/database": "Allows the database health check to function.",
                 "illuminate/log": "Allows the log health check to function.",
-                "illuminate/redis": "Allows the redis health check to function."
+                "illuminate/redis": "Allows the redis health check to function.",
+                "sensiolabs/security-checker": "Allows the package security health check to function."
             },
             "type": "library",
             "extra": {
@@ -7412,7 +7413,7 @@
                 "ukfast",
                 "ukfast-health-check"
             ],
-            "time": "2020-10-03T22:52:14+00:00"
+            "time": "2020-10-08T09:55:41+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
