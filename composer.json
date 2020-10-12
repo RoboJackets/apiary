@@ -29,6 +29,7 @@
         "predis/predis": "1.1.6",
         "robojackets/error-pages": "2.1.1",
         "robojackets/network-check": "1.0.1",
+        "sensiolabs/security-checker": "^6.0",
         "spatie/laravel-failed-job-monitor": "3.3.2",
         "spatie/laravel-permission": "3.17.0",
         "square/connect": "2.20190710.0",
