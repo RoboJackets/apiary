@@ -79,26 +79,20 @@ class GenerateResumeBook implements ShouldQueue
         $users = User::active()
             ->whereNotNull('resume_date')
             ->where('resume_date', '>', $this->resume_date_cutoff)
+            ->with('majors')
             ->get();
 
         if (! is_a($users, Collection::class)) {
             throw new Exception('Query did not return a collection');
         }
 
-        $filteredUids = $users->pluck('uid');
-
         if (null !== $this->major) {
-            $majors = $users->mapWithKeys(static function (User $user): array {
-                $ous = Cache::remember('whitepages_ou_'.$user->uid, now()->addDays(1), static function (): void {
-                    throw new Exception('This needs to be rewritten to use the local database or BuzzAPI');
-                });
-
-                return [$user->uid => $ous];
+            $users = $users->filter(function (User $user): bool {
+                return $user->majors->contains('whitepages_ou', $this->major);
             });
-            $filteredUids = $majors->filter(function (Collection $ous, string $uid): bool {
-                return $ous->contains($this->major);
-            })->keys();
         }
+
+        $filteredUids = $users->pluck('uid');
 
         if (0 === $filteredUids->count()) {
             $this->path = null;
