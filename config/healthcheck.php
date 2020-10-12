@@ -14,9 +14,13 @@ return [
      */
     'checks' => [
         UKFast\HealthCheck\Checks\CacheHealthCheck::class,
+        UKFast\HealthCheck\Checks\CrossServiceHealthCheck::class,
         UKFast\HealthCheck\Checks\DatabaseHealthCheck::class,
         UKFast\HealthCheck\Checks\HttpHealthCheck::class,
         UKFast\HealthCheck\Checks\LogHealthCheck::class,
+        UKFast\HealthCheck\Checks\PackageSecurityHealthCheck::class,
+        UKFast\HealthCheck\Checks\RedisHealthCheck::class,
+        UKFast\HealthCheck\Checks\StorageHealthCheck::class,
     ],
 
     /**
@@ -81,7 +85,9 @@ return [
      * to hit. The URI should reference the endpoint specifically,
      * for example: https://api.example.com/health.
      */
-    'x-service-checks' => [],
+    'x-service-checks' => [
+        'https://'.env('BUZZAPI_HOST', 'api.gatech.edu').'/ping',
+    ],
 
     /**
      * A list of stores to be checked by the Cache health check.
@@ -89,6 +95,15 @@ return [
     'cache' => [
         'stores' => [
             env('CACHE_DRIVER'),
+        ],
+    ],
+
+    /**
+     * A list of disks to be checked by the Storage health check.
+     */
+    'storage' => [
+        'disks' => [
+            'local',
         ],
     ],
 ];

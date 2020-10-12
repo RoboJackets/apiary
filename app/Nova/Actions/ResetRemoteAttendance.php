@@ -32,7 +32,7 @@ class ResetRemoteAttendance extends Action
         $expiration = $fields['expiration_time'];
 
         if (null === $expiration) {
-            $expiration = Carbon::now()->addHours(1);
+            $expiration = Carbon::now()->addHours(4);
         }
 
         $team = $models->first();
@@ -55,7 +55,7 @@ class ResetRemoteAttendance extends Action
             return [
                 DateTime::make('Expiration Time', 'expiration_time')
                     ->required(false)
-                    ->help('When the remote attendance URL will expire. Defaults to one hour in the future.'),
+                    ->help('When the remote attendance URL will expire. Defaults to four hours in the future.'),
             ];
         }
 

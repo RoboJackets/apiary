@@ -3,7 +3,7 @@
 cd "${0%/*}"
 
 composer install --no-interaction --no-progress --no-suggest --no-dev --optimize-autoloader --classmap-authoritative
-php artisan migrate --no-interaction
+php artisan migrate --no-interaction --force
 php artisan config:cache --no-interaction
 php artisan view:cache --no-interaction
 php artisan route:cache --no-interaction

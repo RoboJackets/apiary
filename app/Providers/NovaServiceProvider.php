@@ -66,10 +66,18 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards(): array
     {
         return [
-            new PaymentsPerDay(),
-            new ActiveMembers(),
-            new AttendancePerWeek(),
-            new ActiveAttendanceBreakdown(),
+            (new PaymentsPerDay())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-payments');
+            }),
+            (new ActiveMembers())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users');
+            }),
+            (new AttendancePerWeek())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-attendance');
+            }),
+            (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users') && $request->user()->can('read-attendance');
+            }),
             new MakeAWish(),
         ];
     }
