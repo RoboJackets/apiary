@@ -6,10 +6,10 @@ namespace App\Nova\Actions;
 
 use App\Jobs\GenerateResumeBook as GenerateJob;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\DateTime;
