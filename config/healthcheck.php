@@ -96,7 +96,7 @@ return [
     ],
 
     /**
-     * A list of disks to be checked by the Storage health check
+     * A list of disks to be checked by the Storage health check.
      */
     'storage' => [
         'disks' => [
