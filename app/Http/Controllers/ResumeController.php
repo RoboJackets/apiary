@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
 use App\User;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -23,11 +24,11 @@ class ResumeController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
         $user = User::findByIdentifier($id)->first();
         if (null !== $user) {
-            if (! user()->can('read-users-resume') && user()->id !== $user->id) {
+            if (! $request->user()->can('read-users-resume') && $request->user()->id !== $user->id) {
                 return response()->json(
                     [
                         'status' => 'error',
@@ -68,7 +69,7 @@ class ResumeController extends Controller
     {
         $user = User::findByIdentifier($id)->first();
         if (null !== $user) {
-            if (! user()->can('update-users-resume') && user()->id !== $user->id) {
+            if (! $request->user()->can('update-users-resume') && $request->user()->id !== $user->id) {
                 return response()->json(
                     [
                         'status' => 'error',
