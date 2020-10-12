@@ -17,6 +17,9 @@ return [
         UKFast\HealthCheck\Checks\DatabaseHealthCheck::class,
         UKFast\HealthCheck\Checks\HttpHealthCheck::class,
         UKFast\HealthCheck\Checks\LogHealthCheck::class,
+        UKFast\HealthCheck\Checks\PackageSecurityHealthCheck::class,
+        UKFast\HealthCheck\Checks\RedisHealthCheck::class,
+        UKFast\HealthCheck\Checks\StorageHealthCheck::class,
     ],
 
     /**
@@ -89,6 +92,15 @@ return [
     'cache' => [
         'stores' => [
             env('CACHE_DRIVER'),
+        ],
+    ],
+
+    /**
+     * A list of disks to be checked by the Storage health check.
+     */
+    'storage' => [
+        'disks' => [
+            'local',
         ],
     ],
 ];
