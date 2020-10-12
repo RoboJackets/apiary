@@ -84,7 +84,9 @@ return [
      * to hit. The URI should reference the endpoint specifically,
      * for example: https://api.example.com/health.
      */
-    'x-service-checks' => [],
+    'x-service-checks' => [
+        "https://".env('BUZZAPI_HOST', 'api.gatech.edu')."/ping",
+    ],
 
     /**
      * A list of stores to be checked by the Cache health check.
