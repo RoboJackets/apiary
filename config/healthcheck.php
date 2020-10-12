@@ -85,7 +85,7 @@ return [
      * for example: https://api.example.com/health.
      */
     'x-service-checks' => [
-        "https://".env('BUZZAPI_HOST', 'api.gatech.edu')."/ping",
+        'https://'.env('BUZZAPI_HOST', 'api.gatech.edu').'/ping',
     ],
 
     /**
