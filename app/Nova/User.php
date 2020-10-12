@@ -465,9 +465,6 @@ class User extends Resource
             (new Actions\GenerateResumeBook())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-resume');
-                })
-                ->canRun(static function (Request $request, AU $user): bool {
-                    return $request->user()->can('read-users-resume') && $request->user()->id === $user->id;
                 })->standalone(),
             (new Actions\RefreshFromGTED())
                 ->canSee(static function (Request $request): bool {
