@@ -23,6 +23,8 @@ class ResumeController extends Controller
      * Show the user's resume.
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
+     * @suppress PhanUnusedVariableCaughtException
      */
     public function show(string $id, Request $request)
     {
