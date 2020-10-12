@@ -67,11 +67,4 @@ class GenerateResumeBook extends Action
                 ->help('Only export resumes uploaded after this date.'),
         ];
     }
-
-    /**
-     * Indicates if this action is only available on the resource detail view.
-     *
-     * @var bool
-     */
-    public $onlyOnDetail = true;
 }
