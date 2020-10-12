@@ -2998,16 +2998,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.41.0",
+            "version": "2.41.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8690b13ad4da6d54d692afea15aab30b36fee52e"
+                "reference": "35959c93ada06469107a05df6b15b65074a960cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8690b13ad4da6d54d692afea15aab30b36fee52e",
-                "reference": "8690b13ad4da6d54d692afea15aab30b36fee52e",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/35959c93ada06469107a05df6b15b65074a960cf",
+                "reference": "35959c93ada06469107a05df6b15b65074a960cf",
                 "shasum": ""
             },
             "require": {
@@ -3083,7 +3083,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-04T09:11:05+00:00"
+            "time": "2020-10-10T23:35:06+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3149,7 +3149,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-f8214e9146b5cc3730e60b29023173e86e2b1aa5-zip-2da4f8.zip",
                 "reference": "f8214e9146b5cc3730e60b29023173e86e2b1aa5",
-                "shasum": "394fe598f35bde6afa4c4a3aad3cd60527b8af02"
+                "shasum": "008c2bc47869892f43c0717833393f6a97b6539e"
             },
             "require": {
                 "ext-json": "*",
@@ -3196,29 +3196,29 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.5.7",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "4531e53afe2fc660403e76fb7644e95998bff7bf"
+                "reference": "c547f8262a5fa9ff507bd06cc394067b83a75085"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/4531e53afe2fc660403e76fb7644e95998bff7bf",
-                "reference": "4531e53afe2fc660403e76fb7644e95998bff7bf",
+                "url": "https://api.github.com/repos/opis/closure/zipball/c547f8262a5fa9ff507bd06cc394067b83a75085",
+                "reference": "c547f8262a5fa9ff507bd06cc394067b83a75085",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.4 || ^7.0"
+                "php": "^5.4 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "jeremeamia/superclosure": "^2.0",
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.5.x-dev"
+                    "dev-master": "3.6.x-dev"
                 }
             },
             "autoload": {
@@ -3253,7 +3253,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2020-09-06T17:02:15+00:00"
+            "time": "2020-10-11T21:42:15+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -4216,7 +4216,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
                 "reference": "22e01ddd8df96f297407095be5cd74480aa10469",
-                "shasum": "97b2305f7efc483e07cf9872fae61153d8a2b93e"
+                "shasum": "1c6a9d1daa474bdf8e1a40001782370af34a8e44"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -4265,7 +4265,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/robojackets/network-check/robojackets-network-check-2fed18379f699e0e215b999b8c59c8dda5d7d00c-zip-2a429c.zip",
                 "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c",
-                "shasum": "f8b5c72982cd70baa130812f071272a512dddd46"
+                "shasum": "5d0a35192a91b4b76a1f4cfff1ad3438d17679b4"
             },
             "type": "library",
             "autoload": {
@@ -9007,16 +9007,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v5.5.0",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "9f7177629c8be2b6b07b9bf0c030669a09fabf16"
+                "reference": "4ef04d577f9ccbf08b4150886f1bfe30d8c3c9ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/9f7177629c8be2b6b07b9bf0c030669a09fabf16",
-                "reference": "9f7177629c8be2b6b07b9bf0c030669a09fabf16",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/4ef04d577f9ccbf08b4150886f1bfe30d8c3c9ef",
+                "reference": "4ef04d577f9ccbf08b4150886f1bfe30d8c3c9ef",
                 "shasum": ""
             },
             "require": {
@@ -9083,7 +9083,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2020-09-27T23:46:39+00:00"
+            "time": "2020-10-11T06:28:32+00:00"
         },
         {
             "name": "phan/phan",
@@ -9470,16 +9470,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.48",
+            "version": "0.12.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d364cfbac9ffd869570cdfea7eaa6541c3dac666"
+                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d364cfbac9ffd869570cdfea7eaa6541c3dac666",
-                "reference": "d364cfbac9ffd869570cdfea7eaa6541c3dac666",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9a6136c2b39d5214da78de37128d5fe08e5d5b05",
+                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05",
                 "shasum": ""
             },
             "require": {
@@ -9522,7 +9522,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-01T13:20:16+00:00"
+            "time": "2020-10-12T14:10:44+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -10045,7 +10045,7 @@
                 "type": "zip",
                 "url": "https://composer.robojackets.org/dist/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
                 "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d",
-                "shasum": "a689506e5b50450671a0a44e5e33afcb958ba2da"
+                "shasum": "0bba20ce2ed0a25ca7415e2bb998f372ef987977"
             },
             "require": {
                 "phan/phan": "*",
