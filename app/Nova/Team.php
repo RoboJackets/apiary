@@ -242,15 +242,15 @@ class Team extends Resource
     public function actions(Request $request): array
     {
         return [
-            (new Actions\ResetRemoteAttendance())
+            (new Actions\CreateRemoteAttendanceLink())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('create-attendance');
                 })
                 ->canRun(static function (Request $request): bool {
                     return $request->user()->can('create-attendance');
                 })
-                ->confirmText('Are you sure you want to reset the remote attendance link?')
-                ->confirmButtonText('Reset Link')
+                ->confirmText('Are you sure you want to create a remote attendance link?')
+                ->confirmButtonText('Create Link')
                 ->cancelButtonText('Cancel'),
         ];
     }

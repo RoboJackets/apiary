@@ -11,7 +11,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\DateTime;
 
-class ResetRemoteAttendance extends Action
+class CreateRemoteAttendanceLink extends Action
 {
     /**
      * Indicates if this action is only available on the resource detail view.
