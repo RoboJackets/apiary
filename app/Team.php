@@ -126,6 +126,14 @@ class Team extends Model
     }
 
     /**
+     * Get all of the event's remote attendance links.
+     */
+    public function remoteAttendanceLinks(): MorphMany
+    {
+        return $this->morphMany(RemoteAttendanceLink::class, 'attendable');
+    }
+
+    /**
      * Scope a query to only include attendable teams.
      */
     public function scopeAttendable(Builder $query): Builder

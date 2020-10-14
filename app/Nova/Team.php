@@ -17,6 +17,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -74,8 +75,6 @@ class Team extends Resource
                 ->searchable()
                 ->nullable(),
 
-            new Panel('Remote Attendance', $this->remoteAttendanceFields()),
-
             new Panel('Communications', $this->commFields()),
 
             new Panel('Controls', $this->controlFields()),
@@ -87,6 +86,11 @@ class Team extends Resource
                     return $request->user()->can('read-teams-membership') && $request->user()->can('read-users');
                 })
                 ->required(true),
+
+            MorphMany::make('Remote Attendance Links')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-remote-attendance-links');
+                }),
 
             MorphMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
@@ -160,48 +164,6 @@ class Team extends Resource
 
             Boolean::make('Self-Serviceable', 'self_serviceable')
                 ->sortable(),
-        ];
-    }
-
-    /**
-     * Remote attendance fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function remoteAttendanceFields(): array
-    {
-        return [
-            Text::make('Link', 'attendance_secret')
-                ->onlyOnDetail()
-                ->resolveUsing(static function (?string $secret): ?string {
-                    return null === $secret ? null : route('attendance.remote', ['secret' => $secret]);
-                })
-                ->readonly(static function (Request $request): bool {
-                    return true;
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
-                }),
-
-            Text::make('Secret', 'attendance_secret')
-                ->onlyOnForms()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })
-                ->creationRules('unique:teams,attendance_secret')
-                ->updateRules('unique:teams,attendance_secret,{{resourceId}}'),
-
-            DateTime::make('Expiration', 'attendance_secret_expiration')
-                ->hideFromIndex()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
-                }),
         ];
     }
 

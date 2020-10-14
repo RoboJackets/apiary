@@ -90,11 +90,14 @@ class Event extends Resource
                 return route('events.rsvp', ['event' => $this->id]);
             })->onlyOnDetail(),
 
-            new Panel('Metadata', $this->metaFields()),
-
             HasMany::make('RSVPs')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-rsvps');
+                }),
+
+            MorphMany::make('Remote Attendance Links')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-remote-attendance-links');
                 }),
 
             MorphMany::make('Attendance')
@@ -106,6 +109,8 @@ class Event extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('create-attendance');
                 }),
+
+            new Panel('Metadata', $this->metaFields()),
         ];
     }
 
