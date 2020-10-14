@@ -31,8 +31,6 @@ use Laravel\Nova\Actions\Actionable;
  * @method \Illuminate\Database\Eloquent\Builder newQuery()
  * @method static Builder|Team query()
  * @method static Builder|Team selfServiceable()
- * @method static Builder|Team whereAttendanceSecret($value)
- * @method static Builder|Team whereAttendanceSecretExpiration($value)
  * @method static Builder|Team whereCreatedAt($value)
  * @method static Builder|Team whereDeletedAt($value)
  * @method static Builder|Team whereDescription($value)
@@ -50,7 +48,6 @@ use Laravel\Nova\Actions\Actionable;
  *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
- * @property \Illuminate\Support\Carbon|null $attendance_secret_expiration
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $self_serviceable whether this team can be joined/left voluntarily
  * @property bool $visible whether this team is visible to non-admins
@@ -58,7 +55,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property int|null $project_manager_id
  * @property string $name The name of the team
  * @property string $slack_private_channel_id the slack internal ID of the team's private channel
- * @property string|null $attendance_secret
  * @property string|null $description
  * @property string|null $google_group
  * @property string|null $mailing_list_name
@@ -89,8 +85,6 @@ class Team extends Model
      * @var array<string>
      */
     protected $guarded = [
-        'attendance_secret',
-        'attendance_secret_expiration',
         'created_at',
         'deleted_at',
         'id',
@@ -103,7 +97,6 @@ class Team extends Model
      * @var array<string>
      */
     protected $dates = [
-        'attendance_secret_expiration',
         'created_at',
         'deleted_at',
         'updated_at',
