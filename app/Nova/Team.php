@@ -88,7 +88,7 @@ class Team extends Resource
                 })
                 ->required(true),
 
-            HasMany::make('Attendance')
+            MorphMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),

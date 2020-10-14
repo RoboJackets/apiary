@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
@@ -96,7 +97,7 @@ class Event extends Resource
                     return $request->user()->can('read-rsvps');
                 }),
 
-            HasMany::make('Attendance')
+            MorphMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
