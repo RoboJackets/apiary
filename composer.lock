@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f747bf695936fd2696155c65f005063",
+    "content-hash": "2bf9dbb3102cbb14d492b07f2f7cde12",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7479,16 +7479,16 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "a92184c19cc5e74794be043df7dfeb587731c436"
+                "reference": "ba7e9588d9abdf6d9a2f385a30d7221a5b6f0f3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/a92184c19cc5e74794be043df7dfeb587731c436",
-                "reference": "a92184c19cc5e74794be043df7dfeb587731c436",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/ba7e9588d9abdf6d9a2f385a30d7221a5b6f0f3b",
+                "reference": "ba7e9588d9abdf6d9a2f385a30d7221a5b6f0f3b",
                 "shasum": ""
             },
             "require": {
@@ -7554,7 +7554,7 @@
                 "ukfast",
                 "ukfast-health-check"
             ],
-            "time": "2020-10-08T09:55:41+00:00"
+            "time": "2020-10-13T09:43:19+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
