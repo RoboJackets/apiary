@@ -19,7 +19,7 @@ class CreateRemoteAttendancelinksTable extends Migration
             // useCurrent() for this because the migration required a default value.
             $table->timestamp('expires_at')->useCurrent();
 
-            $table->string('redirect_url')->nullable();
+            $table->string('redirect_url', 1023)->nullable();
             $table->string('note')->nullable();
 
             $table->string('attendable_type');
