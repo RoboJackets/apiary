@@ -22,11 +22,13 @@ use App\Policies\NotificationTemplatePolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RecruitingVisitPolicy;
+use App\Policies\RemoteAttendanceLinkPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\RsvpPolicy;
 use App\Policies\TeamPolicy;
 use App\Policies\UserPolicy;
 use App\RecruitingVisit;
+use App\RemoteAttendanceLink;
 use App\Rsvp;
 use App\Team;
 use App\User;
@@ -56,6 +58,7 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
         Major::class => MajorPolicy::class,
+        RemoteAttendanceLink::class => RemoteAttendanceLinkPolicy::class,
     ];
 
     /**
