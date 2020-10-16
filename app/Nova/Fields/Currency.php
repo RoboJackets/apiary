@@ -9,13 +9,13 @@ class Currency extends \Laravel\Nova\Fields\Currency
     /**
      * Check value for null value.
      *
-     * @param  mixed $value
+     * @param mixed $value
      *
      * @return bool
      */
     protected function isNullValue($value)
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return true;
         }
 
