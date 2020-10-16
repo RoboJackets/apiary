@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Currency;
+use App\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 
 class AddPayment extends Action
