@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+
 namespace App\Nova\Fields;
 
 class Currency extends \Laravel\Nova\Fields\Currency
