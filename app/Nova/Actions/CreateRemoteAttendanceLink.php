@@ -101,6 +101,7 @@ class CreateRemoteAttendanceLink extends Action
 
             Select::make('Purpose')
                 ->required(true)
+                ->rules('required')
                 ->options([
                     'Electrical' => 'Electrical',
                     'Mechanical' => 'Mechanical',
