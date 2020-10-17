@@ -100,7 +100,7 @@ class RemoteAttendanceLink extends Resource
                 ->creationRules('unique:remote_attendance_links,secret')
                 ->updateRules('unique:remote_attendance_links,secret,{{resourceId}}')
                 ->help('This is contained in the attendance URL that will be shared. The default value for this field'.
-                    .' is randomly generated.'),
+                    ' is randomly generated.'),
 
             DateTime::make('Expires At')
                 ->hideFromIndex()

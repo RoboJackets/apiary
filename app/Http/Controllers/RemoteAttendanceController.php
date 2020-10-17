@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Attendance;
-use App\RemoteAttendanceLink;;
+use App\RemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
@@ -15,7 +15,7 @@ class RemoteAttendanceController extends Controller
     private function handleRequest(Request $request, string $secret, bool $redirect)
     {
         $link = RemoteAttendanceLink::where('secret', $secret)->first();
-            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
+        // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
         $expired = null === $link ? true : $team->attendance_secret_expiration < Carbon::now('America/New_York');
 
         if (null === $link) {
@@ -84,7 +84,7 @@ class RemoteAttendanceController extends Controller
                         'message' => 'Your attendance has been recorded for '.$name.'. You may now close this page.',
                     ]
                 );
-        } else if ($redirect) {
+        } elseif ($redirect) {
             return redirect()->away($link->redirect_url);
         }
 
