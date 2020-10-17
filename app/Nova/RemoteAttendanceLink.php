@@ -122,7 +122,6 @@ class RemoteAttendanceLink extends Resource
                 ->help('This defaults to four hours in the future.'),
 
             Text::make('Redirect URL')
-                ->hideFromIndex()
                 ->sortable()
                 ->required(false)
                 ->rules('nullable', 'url')
