@@ -7,6 +7,7 @@ namespace App\Nova\Actions;
 use App\RemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
@@ -49,6 +50,22 @@ class CreateRemoteAttendanceLink extends Action
             (strlen($fields->other_purpose) > 0 ? $fields->other_purpose : null) : $fields->purpose;
         $link->save();
         $link->refresh(); // Update id field
+
+        $user = Auth::user();
+        $attExisting = Attendance::where('attendable_type', get_class($attendable))
+            ->where('attendable_id', $attendable->id)
+            ->where('gtid', $user->gtid)
+            ->whereDate('created_at', date('Y-m-d'))->count();
+
+        if (0 === $attExisting) {
+            $att = new Attendance();
+            $att->attendable_type = get_class($attendable);
+            $att->attendable_id = $attendable->id;
+            $att->gtid = $user->gtid;
+            $att->source = 'secret-link-creation-'.$link->id;
+            $att->recorded_by = $user->id;
+            $att->save();
+        }
 
         return Action::push('/resources/remote-attendance-links/'.$link->id);
     }
