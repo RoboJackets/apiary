@@ -21,7 +21,7 @@ class RemoteAttendanceLinkPolicy
             return false;
         }
 
-        if (is_a($attendance->attendable, 'App\Team') && ! $team->visible) {
+        if (is_a($attendance->attendable, 'App\Team') && ! $attendance->attendable->visible) {
             return $user->can('read-teams-hidden');
         }
 

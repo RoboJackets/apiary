@@ -106,11 +106,11 @@ class RemoteAttendanceController extends Controller
 
     public function index(Request $request, string $secret)
     {
-        return this::handleRequest($request, $secret, false);
+        return $this::handleRequest($request, $secret, false);
     }
 
     public function redirect(Request $request, string $secret)
     {
-        return this::handleRequest($request, $secret, true);
+        return $this::handleRequest($request, $secret, true);
     }
 }

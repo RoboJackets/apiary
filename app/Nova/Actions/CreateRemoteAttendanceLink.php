@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Attendance;
 use App\RemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -39,7 +40,7 @@ class CreateRemoteAttendanceLink extends Action
         // Only on detail, so it will only ever have one model.
         $attendable = $models->first();
 
-        $link = (new RemoteAttendanceLink);
+        $link = new RemoteAttendanceLink();
 
         $link->attendable_type = get_class($attendable);
         $link->attendable_id = $attendable->id;
