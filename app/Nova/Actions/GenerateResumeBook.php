@@ -9,6 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\DateTime;
@@ -31,6 +32,11 @@ class GenerateResumeBook extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
+        // Check this here because canSee was removed from App\Nova\User as this is a standalone action.
+        if (! Auth::user()->can('read-users-resume')) {
+            return Action::danger('Sorry! You are not authorized to perform this action.');
+        }
+
         $job = new GenerateJob($fields->major, $fields->resume_date_cutoff);
         $job->handle();
 
@@ -61,11 +67,4 @@ class GenerateResumeBook extends Action
                 ->help('Only export resumes uploaded after this date.'),
         ];
     }
-
-    /**
-     * Indicates if this action is only available on the resource detail view.
-     *
-     * @var bool
-     */
-    public $onlyOnDetail = true;
 }

@@ -22,7 +22,7 @@ resources:
   webhook_token: ((webhook-token))
   source:
     repository: RoboJackets/apiary
-    access_token: ((github-com/token))
+    access_token: ((github-com/token.token))
     base_branch: master
     disable_forks: true
 
@@ -34,14 +34,14 @@ resources:
     uri: https://github.com/RoboJackets/apiary
     branch: ((pr-branch))
     username: x-access-token
-    password: ((github-com/token))
+    password: ((github-com/token.token))
 
 - name: webhooks
   public: true
   type: github-webhook
   icon: webhook
   source:
-    github_token: ((github-com/token))
+    github_token: ((github-com/token.token))
     webhook_token: ((webhook-token))
     resources:
       pull-request:
