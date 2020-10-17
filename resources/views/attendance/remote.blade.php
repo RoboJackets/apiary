@@ -11,6 +11,9 @@ Remote Attendance | {{ config('app.name') }}
 
 <p>
 {{ $message }}
+@isset($linkDestination)
+ <a :href="$linkDestination">{{ $linkDestination }}</a>
+@endif
 </p>
 
 <a href="/">Go back to the dashboard</a>
