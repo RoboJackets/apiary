@@ -88,6 +88,13 @@ class Team extends Resource
 
             MorphMany::make('Remote Attendance Links')
                 ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = AppTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
+                            return false;
+                        }
+                    }
+
                     return $request->user()->can('read-remote-attendance-links');
                 }),
 
@@ -243,6 +250,13 @@ class Team extends Resource
         return [
             (new Actions\CreateRemoteAttendanceLink())
                 ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = AppTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
+                            return false;
+                        }
+                    }
+
                     return $request->user()->can('create-remote-attendance-links');
                 })
                 ->canRun(static function (Request $request): bool {

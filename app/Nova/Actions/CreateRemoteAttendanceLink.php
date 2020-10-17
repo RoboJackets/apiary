@@ -49,8 +49,7 @@ class CreateRemoteAttendanceLink extends Action
         $link->redirect_url = $fields->redirect_url;
         // If Purpose is other, set it to the Other Purpose value or null if that's empty. If the Purpose isn't other,
         // use that value. This deliberately allows empty values.
-        $link->note = 'Other' === $fields->purpose ?
-            (strlen($fields->other_purpose) > 0 ? $fields->other_purpose : null) : $fields->purpose;
+        $link->note = 'Other' === $fields->purpose ? $fields->other_purpose : $fields->purpose;
         $link->save();
         $link->refresh(); // Update id field
 
@@ -101,6 +100,7 @@ class CreateRemoteAttendanceLink extends Action
                     'BlueJeans calls are supported currently. Contact an administrator for other redirect URLs.'),
 
             Select::make('Purpose')
+                ->required(true)
                 ->options([
                     'Electrical' => 'Electrical',
                     'Mechanical' => 'Mechanical',
