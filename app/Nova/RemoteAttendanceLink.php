@@ -40,6 +40,13 @@ class RemoteAttendanceLink extends Resource
     public static $group = 'Meetings';
 
     /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = false;
+
+    /**
      * The relationships that should be eager loaded on index queries.
      *
      * @var array<string>
@@ -65,13 +72,7 @@ class RemoteAttendanceLink extends Resource
                 ->types([
                     Event::class,
                     Team::class,
-                ]),
-
-            Text::make('Non-redirecting Link', 'secret')
-                ->onlyOnDetail()
-                ->resolveUsing(static function (string $secret): string {
-                    return route('attendance.remote', ['secret' => $secret]);
-                })
+                ])
                 ->readonly(static function (Request $request): bool {
                     return true;
                 }),
@@ -95,6 +96,15 @@ class RemoteAttendanceLink extends Resource
                     return true;
                 }),
 
+            Text::make('Non-redirecting Link', 'secret')
+                ->onlyOnDetail()
+                ->resolveUsing(static function (string $secret): string {
+                    return route('attendance.remote', ['secret' => $secret]);
+                })
+                ->readonly(static function (Request $request): bool {
+                    return true;
+                }),
+
             Text::make('Secret')
                 ->onlyOnForms()
                 ->default(hash('sha256', random_bytes(64)))
@@ -107,16 +117,18 @@ class RemoteAttendanceLink extends Resource
                     ' is randomly generated.'),
 
             DateTime::make('Expires At')
-                ->hideFromIndex()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->can('update-remote-attendance-links');
-                }),
+                ->default(Carbon::now()->addHours(4))
+                ->help('This defaults to four hours in the future.'),
 
             Text::make('Redirect URL')
                 ->hideFromIndex()
                 ->sortable()
                 ->required(false)
-                ->rules('nullable', 'url'),
+                ->rules('nullable', 'url')
+                ->help('If you put a link to a BlueJeans or Google Meet meeting here, everyone who clicks the '.
+                    'attendance link will be redirected to that meeting after their attendance is recorded. If '.
+                    'you add a redirect URL, do not share the meeting link directly. Only Google Meet and '.
+                    'BlueJeans calls are supported currently in the user-facing action.'),
 
             Text::make('Note')
                 ->hideFromIndex()
