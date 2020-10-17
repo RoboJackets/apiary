@@ -121,7 +121,7 @@ class Team extends Model
     /**
      * Get all of the event's remote attendance links.
      */
-    public function remote_attendance_links(): MorphMany
+    public function remoteAttendanceLinks(): MorphMany
     {
         return $this->morphMany(RemoteAttendanceLink::class, 'attendable');
     }

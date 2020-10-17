@@ -95,7 +95,7 @@ class Event extends Resource
                     return $request->user()->can('read-rsvps');
                 }),
 
-            MorphMany::make('Remote Attendance Links')
+            MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-remote-attendance-links');
                 }),

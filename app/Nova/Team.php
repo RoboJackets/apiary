@@ -86,7 +86,7 @@ class Team extends Resource
                 })
                 ->required(true),
 
-            MorphMany::make('Remote Attendance Links')
+            MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppTeam::find($request->resourceId);
