@@ -62,6 +62,16 @@ class RemoteAttendanceLink extends Resource
     public static $globallySearchable = false;
 
     /**
+     * The list of recommended values for the note field.
+     *
+     * @var array<string>
+     */
+    public static $recommendedNotes = [
+        'Electrical Subteam', 'Mechanical/Mechatronics Subteam', 'Software Subteam', 'Whole Team', 'Training',
+        'Trainers Only', 'Discipline Core (n/a)', 'Event (n/a)',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @suppress PhanTypeInvalidCallableArraySize
@@ -135,9 +145,7 @@ class RemoteAttendanceLink extends Resource
                 ->required(false)
                 ->help('This can be used to keep track of what this link was used for more specifically. Press the '.
                     'down arrow for suggestions.')
-                ->suggestions([
-                    'Electrical', 'Mechanical', 'Software', 'Firmware', 'Mechatronics', 'Whole Team', 'Event (n/a)',
-                ]),
+                ->suggestions($this->recommendedNotes),
 
             new Panel('Metadata', $this->metaFields()),
         ];

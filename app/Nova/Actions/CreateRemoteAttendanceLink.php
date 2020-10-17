@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Attendance;
+use App\Nova\RemoteAttendanceLink;
 use App\RemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -79,6 +80,11 @@ class CreateRemoteAttendanceLink extends Action
      */
     public function fields(): array
     {
+        $notes = collect(RemoteAttendanceLink::$recommendedNotes)
+            ->concat(['Other'])->mapWithKeys(static function (string $note): array {
+                return $note => $note;
+            });
+
         /* The following regex will match any of the following:
          * https://bluejeans.com/<digits, optional query string>
          * https://bluejeans.com/<digits>/<digits, optional query string>
@@ -102,16 +108,7 @@ class CreateRemoteAttendanceLink extends Action
             Select::make('Purpose')
                 ->required(true)
                 ->rules('required')
-                ->options([
-                    'Electrical' => 'Electrical',
-                    'Mechanical' => 'Mechanical',
-                    'Software' => 'Software',
-                    'Firmware' => 'Firmware',
-                    'Mechatronics' => 'Mechatronics',
-                    'Whole Team' => 'Whole Team',
-                    'Event (n/a)' => 'Event (n/a)',
-                    'Other' => 'Other',
-                ]),
+                ->options($notes),
 
             Text::make('Other Purpose')
                 ->required(false)
