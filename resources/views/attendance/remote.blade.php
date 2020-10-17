@@ -12,7 +12,7 @@ Remote Attendance | {{ config('app.name') }}
 <p>
 {{ $message }}
 @isset($linkDestination)
- <a href="$linkDestination">{{ $linkDestination }}</a>
+ <a href="{{ $linkDestination }}">{{ $linkDestination }}</a>
 @endif
 </p>
 
