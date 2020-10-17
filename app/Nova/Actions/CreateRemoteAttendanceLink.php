@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found,Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
+
 namespace App\Nova\Actions;
 
 use App\RemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
@@ -37,7 +39,7 @@ class CreateRemoteAttendanceLink extends Action
         // Only on detail, so it will only ever have one model.
         $attendable = $models->first();
 
-        $link = new RemoteAttendanceLink;
+        $link = (new RemoteAttendanceLink);
 
         $link->attendable_type = get_class($attendable);
         $link->attendable_id = $attendable->id;

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found,Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
+
 namespace App\Http\Controllers;
 
 use App\Attendance;
@@ -81,12 +83,14 @@ class RemoteAttendanceController extends Controller
 
         if (! $urlIsValid) {
             return view(
-                    'attendance.remote',
-                    [
-                        'message' => 'Your attendance has been recorded for '.$name.'. You may now close this page.',
-                    ]
-                );
-        } elseif ($redirect) {
+                'attendance.remote',
+                [
+                    'message' => 'Your attendance has been recorded for '.$name.'. You may now close this page.',
+                ]
+            );
+        }
+
+        if ($redirect) {
             return redirect()->away($link->redirect_url);
         }
 
