@@ -90,7 +90,7 @@ class Team extends Resource
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
+                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -107,7 +107,7 @@ class Team extends Resource
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
+                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -210,11 +210,25 @@ class Team extends Resource
             (new AttendancePerWeek())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = AppTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
+                            return false;
+                        }
+                    }
+
                     return $request->user()->can('read-attendance');
                 }),
             (new ActiveAttendanceBreakdown())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = AppTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
+                            return false;
+                        }
+                    }
+
                     return $request->user()->can('read-attendance');
                 }),
         ];
@@ -252,7 +266,7 @@ class Team extends Resource
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
+                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
