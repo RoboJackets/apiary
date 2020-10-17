@@ -90,14 +90,14 @@ class Event extends Resource
                 return route('events.rsvp', ['event' => $this->id]);
             })->onlyOnDetail(),
 
-            HasMany::make('RSVPs')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-rsvps');
-                }),
-
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-remote-attendance-links');
+                }),
+
+            HasMany::make('RSVPs')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-rsvps');
                 }),
 
             MorphMany::make('Attendance')
