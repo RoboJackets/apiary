@@ -127,7 +127,7 @@ class RemoteAttendanceLink extends Resource
                 ->rules('nullable', 'url')
                 ->help('If you put a link to a BlueJeans or Google Meet meeting here, everyone who clicks the '.
                     'attendance link will be redirected to that meeting after their attendance is recorded. If '.
-                    'you add a redirect URL, do not share the meeting link directly. Only Google Meet and '.
+                    'you add a redirect URL, do not share that URL directly. Only Google Meet and '.
                     'BlueJeans calls are supported currently in the user-facing action.'),
 
             Text::make('Note')

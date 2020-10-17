@@ -97,7 +97,7 @@ class CreateRemoteAttendanceLink extends Action
                     '\.bluejeans\.com\/a2m\/live-event\/[a-z]+|meet\.google\.com\/[-a-z]+)(\?[^@]*)?$/', 'max:1023')
                 ->help('If you put a link to a BlueJeans or Google Meet meeting here, everyone who clicks the '.
                     'attendance link will be redirected to that meeting after their attendance is recorded. If '.
-                    'you add a redirect URL, do not share the meeting link directly. Only Google Meet and '.
+                    'you add a redirect URL, do not share that URL directly. Only Google Meet and '.
                     'BlueJeans calls are supported currently. Contact an administrator for other redirect URLs.'),
 
             Select::make('Purpose')
