@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use App\RemoteAttendanceLink;
+use App\Team;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -21,7 +22,7 @@ class RemoteAttendanceLinkPolicy
             return false;
         }
 
-        if (is_a($attendance->attendable, 'App\Team') && ! $attendance->attendable->visible) {
+        if (is_a($attendance->attendable, Team::class) && ! $attendance->attendable->visible) {
             return $user->can('read-teams-hidden');
         }
 

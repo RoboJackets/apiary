@@ -96,8 +96,7 @@ class RemoteAttendanceController extends Controller
         return view(
             'attendance.remote',
             [
-                'message' => 'Your attendance has been recorded for '.$name.'. You may now close this page. You can '.
-                    'now continue to the meeting:',
+                'message' => 'Your attendance has been recorded for '.$name.'. You can now continue to the meeting:',
                 'linkDestination' => $link->redirect_url,
             ]
         );
