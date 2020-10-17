@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Attendance;
+use App\Event;
 use App\RemoteAttendanceLink;
+use App\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
@@ -16,7 +18,7 @@ class RemoteAttendanceController extends Controller
     {
         $link = RemoteAttendanceLink::where('secret', $secret)->first();
         // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
-        $expired = null === $link ? true : $team->attendance_secret_expiration < Carbon::now('America/New_York');
+        $expired = null === $link ? true : $link->expires_at < Carbon::now('America/New_York');
 
         if (null === $link) {
             return view(
@@ -100,11 +102,11 @@ class RemoteAttendanceController extends Controller
 
     public function index(Request $request, string $secret)
     {
-        return handleRequest($request, $secret, false);
+        return this::handleRequest($request, $secret, false);
     }
 
     public function redirect(Request $request, string $secret)
     {
-        return handleRequest($request, $secret, true);
+        return this::handleRequest($request, $secret, true);
     }
 }
