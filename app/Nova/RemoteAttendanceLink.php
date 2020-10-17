@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\RemoteAttendanceLink as RAL;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphTo;
