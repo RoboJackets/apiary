@@ -109,6 +109,7 @@ class CreateRemoteAttendanceLink extends Action
                     'Firmware' => 'Firmware',
                     'Mechatronics' => 'Mechatronics',
                     'Whole Team' => 'Whole Team',
+                    'Event (n/a)' => 'Event (n/a)',
                     'Other' => 'Other',
                 ]),
 

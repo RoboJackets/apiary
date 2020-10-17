@@ -135,7 +135,9 @@ class RemoteAttendanceLink extends Resource
                 ->required(false)
                 ->help('This can be used to keep track of what this link was used for more specifically. Press the '.
                     'down arrow for suggestions.')
-                ->suggestions(['Electrical', 'Mechanical', 'Software', 'Firmware', 'Mechatronics', 'Whole Team']),
+                ->suggestions([
+                    'Electrical', 'Mechanical', 'Software', 'Firmware', 'Mechatronics', 'Whole Team', 'Event (n/a)'
+                ]),
 
             new Panel('Metadata', $this->metaFields()),
         ];
