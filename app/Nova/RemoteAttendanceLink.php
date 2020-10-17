@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\RemoteAttendanceLink as RAL;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphTo;
@@ -62,44 +63,60 @@ class RemoteAttendanceLink extends Resource
                     Team::class,
                 ]),
 
-            Text::make('Link', 'secret')
+            Text::make('Non-redirecting Link', 'secret')
+                ->onlyOnDetail()
+                ->resolveUsing(static function (string $secret): string {
+                    return route('attendance.remote', ['secret' => $secret]);
+                })
+                ->readonly(static function (Request $request): bool {
+                    return true;
+                }),
+
+            Text::make('Auto-redirecting Link', 'secret')
                 ->onlyOnDetail()
                 ->resolveUsing(static function (string $secret): string {
                     return route('attendance.remote.redirect', ['secret' => $secret]);
                 })
+                ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = RAL::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, RAL::class)) {
+                            return null !== $resource->redirect_url;
+                        }
+                    }
+
+                    return false;
+                })
                 ->readonly(static function (Request $request): bool {
                     return true;
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
                 }),
 
             Text::make('Secret')
                 ->onlyOnForms()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
+                ->default(hash('sha256', random_bytes(64)))
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
+                    return $request->user()->can('update-remote-attendance-links');
                 })
-                ->creationRules('unique:teams,secret')
-                ->updateRules('unique:teams,secret,{{resourceId}}'),
+                ->creationRules('unique:remote_attendance_links,secret')
+                ->updateRules('unique:remote_attendance_links,secret,{{resourceId}}')
+                ->help('This is contained in the attendance URL that will be shared. The default value for this field'.
+                    .' is randomly generated.'),
 
             DateTime::make('Expires At')
                 ->hideFromIndex()
                 ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
+                    return ! $request->user()->can('update-remote-attendance-links');
                 }),
 
             Text::make('Redirect URL')
                 ->hideFromIndex()
-                ->sortable(),
+                ->sortable()
+                ->required(false)
+                ->rules('nullable', 'url'),
 
             Text::make('Note')
                 ->hideFromIndex()
+                ->required(false)
                 ->help('This can be used to keep track of what this link was used for more specifically. Press the '.
                     'down arrow for suggestions.')
                 ->suggestions(['Electrical', 'Mechanical', 'Software', 'Firmware', 'Mechatronics', 'Whole Team'])

@@ -181,10 +181,10 @@ class Event extends Resource
         return [
             (new Actions\CreateRemoteAttendanceLink())
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
+                    return $request->user()->can('create-remote-attendance-links');
                 })
                 ->canRun(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
+                    return $request->user()->can('create-remote-attendance-links');
                 })
                 ->confirmText('Are you sure you want to create a remote attendance link?')
                 ->confirmButtonText('Create Link')

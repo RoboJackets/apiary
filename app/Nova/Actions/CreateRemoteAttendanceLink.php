@@ -47,9 +47,10 @@ class CreateRemoteAttendanceLink extends Action
         // use that value. This deliberately allows empty values.
         $link->note = 'Other' === $fields->purpose ?
             (strlen($fields->other_purpose) > 0 ? $fields->other_purpose : null) : $fields->purpose;
-        $team->save();
+        $link->save();
+        $link->refresh(); // Update id field
 
-        return Action::message('A new link has been generated!');
+        return Action::push('/resources/remote-attendance-links/'.$link->id);
     }
 
     /**
