@@ -12,15 +12,13 @@ use App\RemoteAttendanceLink;
 use App\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class RemoteAttendanceController extends Controller
 {
     private function handleRequest(Request $request, string $secret, bool $redirect)
     {
         $link = RemoteAttendanceLink::where('secret', $secret)->first();
-        // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
-        $expired = null === $link ? true : $link->expires_at < Carbon::now('America/New_York');
 
         if (null === $link) {
             return view(
@@ -31,6 +29,7 @@ class RemoteAttendanceController extends Controller
             );
         }
 
+        $expired = $link->expires_at < Carbon::now('America/New_York');
         // Sanity check that the URL is actually a URL before we show it to the user as a link
         $urlIsValid = null !== $link->redirect_url && Validator::make([
             'redirect_url' => $link->redirect_url,

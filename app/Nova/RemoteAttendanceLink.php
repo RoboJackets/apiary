@@ -55,6 +55,8 @@ class RemoteAttendanceLink extends Resource
 
     /**
      * Get the fields displayed by the resource.
+     *
+     * @suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(Request $request): array
     {
