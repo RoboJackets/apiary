@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1c2d92ca4be710f97b45d822691ecd7",
+    "content-hash": "7c35b0a8fea5332149b3facb9dd2a50f",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2740,16 +2740,16 @@
         },
         {
             "name": "league/mime-type-detection",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/mime-type-detection.git",
-                "reference": "ea2fbfc988bade315acd5967e6d02274086d0f28"
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/ea2fbfc988bade315acd5967e6d02274086d0f28",
-                "reference": "ea2fbfc988bade315acd5967e6d02274086d0f28",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/353f66d7555d8a90781f6f5e7091932f9a4250aa",
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa",
                 "shasum": ""
             },
             "require": {
@@ -2787,7 +2787,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-21T18:10:53+00:00"
+            "time": "2020-10-18T11:50:25+00:00"
         },
         {
             "name": "league/oauth1-client",
@@ -8946,16 +8946,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.6.5",
+            "version": "v0.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "585f53d0bd094f59723e7689601c5a99d6da5ea1"
+                "reference": "a23cfad4b9ba3f8bc285daa79c5a4ca9624987f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/585f53d0bd094f59723e7689601c5a99d6da5ea1",
-                "reference": "585f53d0bd094f59723e7689601c5a99d6da5ea1",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/a23cfad4b9ba3f8bc285daa79c5a4ca9624987f4",
+                "reference": "a23cfad4b9ba3f8bc285daa79c5a4ca9624987f4",
                 "shasum": ""
             },
             "require": {
@@ -9035,7 +9035,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2020-10-15T12:24:50+00:00"
+            "time": "2020-10-17T12:05:16+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
