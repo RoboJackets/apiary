@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c35b0a8fea5332149b3facb9dd2a50f",
+    "content-hash": "61850d82615907927fb2ea6be5901942",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -349,16 +349,16 @@
         },
         {
             "name": "bugsnag/bugsnag",
-            "version": "v3.23.0",
+            "version": "v3.23.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bugsnag/bugsnag-php.git",
-                "reference": "08824075e84bce079a071106165d9f3acb1ecf67"
+                "reference": "138d6c3875fc062612160be4440ffd762ed372e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/08824075e84bce079a071106165d9f3acb1ecf67",
-                "reference": "08824075e84bce079a071106165d9f3acb1ecf67",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/138d6c3875fc062612160be4440ffd762ed372e1",
+                "reference": "138d6c3875fc062612160be4440ffd762ed372e1",
                 "shasum": ""
             },
             "require": {
@@ -367,12 +367,10 @@
                 "php": ">=5.5"
             },
             "require-dev": {
-                "graham-campbell/testbench-core": "^1.1",
                 "guzzlehttp/psr7": "^1.3",
-                "mockery/mockery": "^0.9.4|^1.3.1",
                 "mtdowling/burgomaster": "dev-master#72151eddf5f0cf101502b94bf5031f9c53501a04",
                 "php-mock/php-mock-phpunit": "^1.1|^2.1",
-                "phpunit/phpunit": "^4.8.36|^7.5.15",
+                "phpunit/phpunit": "^4.8.36|^7.5.15|^9.3.10",
                 "sebastian/version": ">=1.0.3"
             },
             "type": "library",
@@ -406,7 +404,7 @@
                 "logging",
                 "tracking"
             ],
-            "time": "2020-09-14T12:27:59+00:00"
+            "time": "2020-10-19T09:17:48+00:00"
         },
         {
             "name": "bugsnag/bugsnag-laravel",
@@ -8498,16 +8496,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "fa50d9db1c0c2fae99cf988d27023effda5524a3"
+                "reference": "2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/fa50d9db1c0c2fae99cf988d27023effda5524a3",
-                "reference": "fa50d9db1c0c2fae99cf988d27023effda5524a3",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8",
+                "reference": "2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8",
                 "shasum": ""
             },
             "require": {
@@ -8555,7 +8553,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2020-10-17T09:00:00+00:00"
+            "time": "2020-10-20T12:00:00+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -9148,16 +9146,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v5.6.0",
+            "version": "v5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "4ef04d577f9ccbf08b4150886f1bfe30d8c3c9ef"
+                "reference": "8e866c7f296505a5ccd5a2e7b5555a116194c358"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/4ef04d577f9ccbf08b4150886f1bfe30d8c3c9ef",
-                "reference": "4ef04d577f9ccbf08b4150886f1bfe30d8c3c9ef",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/8e866c7f296505a5ccd5a2e7b5555a116194c358",
+                "reference": "8e866c7f296505a5ccd5a2e7b5555a116194c358",
                 "shasum": ""
             },
             "require": {
@@ -9224,7 +9222,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2020-10-11T06:28:32+00:00"
+            "time": "2020-10-19T22:44:31+00:00"
         },
         {
             "name": "phan/phan",
@@ -11204,16 +11202,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.17.2",
+            "version": "3.18.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "9e526d9cb569fe4631e6a737bbb7948d05596e3f"
+                "reference": "19aa905f7c3c7350569999a93c40ae91ae4e1626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/9e526d9cb569fe4631e6a737bbb7948d05596e3f",
-                "reference": "9e526d9cb569fe4631e6a737bbb7948d05596e3f",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/19aa905f7c3c7350569999a93c40ae91ae4e1626",
+                "reference": "19aa905f7c3c7350569999a93c40ae91ae4e1626",
                 "shasum": ""
             },
             "require": {
@@ -11300,7 +11298,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2020-10-15T00:23:17+00:00"
+            "time": "2020-10-20T13:48:22+00:00"
         },
         {
             "name": "webmozart/assert",
