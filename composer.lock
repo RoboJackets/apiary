@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dee2e11f7fcfe7e207df545c3cfc92e3",
+    "content-hash": "2fd144b63eaf3b819ef467cbb27f9c40",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3013,16 +3013,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.41.3",
+            "version": "2.41.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "e148788eeae9b9b7b87996520358b86faad37b52"
+                "reference": "6571aec754a648ef476a8d8f57993f7bc965afe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e148788eeae9b9b7b87996520358b86faad37b52",
-                "reference": "e148788eeae9b9b7b87996520358b86faad37b52",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/6571aec754a648ef476a8d8f57993f7bc965afe4",
+                "reference": "6571aec754a648ef476a8d8f57993f7bc965afe4",
                 "shasum": ""
             },
             "require": {
@@ -3098,7 +3098,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-12T20:36:09+00:00"
+            "time": "2020-10-22T07:28:05+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -7971,16 +7971,16 @@
         },
         {
             "name": "beyondcode/laravel-dump-server",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beyondcode/laravel-dump-server.git",
-                "reference": "1df6bb3bf13a2e818c1abbb7065ea362277be5c0"
+                "reference": "1d1b4c066a7f855d34a027f7af49aa77416c3c1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beyondcode/laravel-dump-server/zipball/1df6bb3bf13a2e818c1abbb7065ea362277be5c0",
-                "reference": "1df6bb3bf13a2e818c1abbb7065ea362277be5c0",
+                "url": "https://api.github.com/repos/beyondcode/laravel-dump-server/zipball/1d1b4c066a7f855d34a027f7af49aa77416c3c1b",
+                "reference": "1d1b4c066a7f855d34a027f7af49aa77416c3c1b",
                 "shasum": ""
             },
             "require": {
@@ -8028,7 +8028,7 @@
                 "beyondcode",
                 "laravel-dump-server"
             ],
-            "time": "2020-09-14T07:14:12+00:00"
+            "time": "2020-10-22T07:39:00+00:00"
         },
         {
             "name": "composer/package-versions-deprecated",
@@ -8955,16 +8955,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.6.6",
+            "version": "v0.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "a23cfad4b9ba3f8bc285daa79c5a4ca9624987f4"
+                "reference": "4649da8e2e3bd179ba46aac9c8e4d76c87ae47c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/a23cfad4b9ba3f8bc285daa79c5a4ca9624987f4",
-                "reference": "a23cfad4b9ba3f8bc285daa79c5a4ca9624987f4",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/4649da8e2e3bd179ba46aac9c8e4d76c87ae47c0",
+                "reference": "4649da8e2e3bd179ba46aac9c8e4d76c87ae47c0",
                 "shasum": ""
             },
             "require": {
@@ -9044,7 +9044,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2020-10-17T12:05:16+00:00"
+            "time": "2020-10-21T07:54:14+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
