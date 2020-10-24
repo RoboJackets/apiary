@@ -17,7 +17,7 @@
         "chelout/laravel-relationship-events": "1.3.0",
         "doctrine/dbal": "2.10.3",
         "fideloper/proxy": "4.4.1",
-        "fruitcake/laravel-cors": "2.0.2",
+        "fruitcake/laravel-cors": "2.0.3",
         "guzzlehttp/guzzle": "6.5.5",
         "laravel/framework": "7.28.4",
         "laravel/horizon": "4.3.5",
