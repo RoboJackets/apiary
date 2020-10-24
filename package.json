@@ -34,6 +34,6 @@
     "vue-moment": "4.1.0",
     "vue-select": "3.10.8",
     "vue-template-compiler": "2.6.12",
-    "vuelidate": "0.7.5"
+    "vuelidate": "0.7.6"
   }
 }
