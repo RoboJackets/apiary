@@ -21,7 +21,7 @@
   "dependencies": {
     "@bugsnag/js": "7.5.1",
     "@bugsnag/plugin-vue": "7.3.5",
-    "axios": "0.20.0",
+    "axios": "0.21.0",
     "chartist": "0.11.4",
     "chartist-plugin-legend": "0.6.2",
     "chartist-plugin-pointlabels": "0.0.6",
