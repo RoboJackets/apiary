@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34baf8a691764d42cae1e695cefcbb88",
+    "content-hash": "78aff2416331ff553a3966969a95b6a5",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2129,16 +2129,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.29.1",
+            "version": "v7.29.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c7309f1a94c10d86bab2358a1e37f9410749d5c3"
+                "reference": "0fb15ae253c3a043f2c5cbf9641427a7646ea77a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c7309f1a94c10d86bab2358a1e37f9410749d5c3",
-                "reference": "c7309f1a94c10d86bab2358a1e37f9410749d5c3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0fb15ae253c3a043f2c5cbf9641427a7646ea77a",
+                "reference": "0fb15ae253c3a043f2c5cbf9641427a7646ea77a",
                 "shasum": ""
             },
             "require": {
@@ -2287,7 +2287,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2020-10-29T15:24:13+00:00"
+            "time": "2020-10-29T18:57:35+00:00"
         },
         {
             "name": "laravel/horizon",
