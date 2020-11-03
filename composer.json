@@ -22,7 +22,7 @@
         "laravel/framework": "7.29.3",
         "laravel/horizon": "4.3.5",
         "laravel/nova": "3.14.0",
-        "laravel/slack-notification-channel": "2.2.0",
+        "laravel/slack-notification-channel": "2.3.0",
         "laravel/socialite": "4.4.1",
         "laravel/tinker": "2.5.0",
         "oitnetworkservices/buzzapiclient": "0.1.2",
