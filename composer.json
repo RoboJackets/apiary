@@ -34,7 +34,7 @@
         "spatie/laravel-permission": "3.17.0",
         "square/connect": "2.20190710.0",
         "subfission/cas": "3.1.0",
-        "ukfast/laravel-health-check": "1.7.2",
+        "ukfast/laravel-health-check": "1.8.0",
         "uxweb/sweet-alert": "dev-master",
         "vyuldashev/nova-permission": "2.9.0"
     },
