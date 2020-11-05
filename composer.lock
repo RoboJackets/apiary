@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b59bc4d3fd470e86c45dedde5045f02",
+    "content-hash": "8180c4eca1febef38046ab4acf8d5539",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7726,16 +7726,16 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.7.2",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "9e5530fd304795565a5e9c755395ba7631249144"
+                "reference": "7ac08008400d9aac318471413169b7f22de28c15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/9e5530fd304795565a5e9c755395ba7631249144",
-                "reference": "9e5530fd304795565a5e9c755395ba7631249144",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/7ac08008400d9aac318471413169b7f22de28c15",
+                "reference": "7ac08008400d9aac318471413169b7f22de28c15",
                 "shasum": ""
             },
             "require": {
@@ -7805,7 +7805,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2020-10-20T09:28:00+00:00"
+            "time": "2020-11-05T14:52:42+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
@@ -10010,16 +10010,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.53",
+            "version": "0.12.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "dbbdb0d7c2434ecd5289f6114d16473e694caa67"
+                "reference": "45c7b999a4b7dd9ac5558bdaaf23dcebbef88223"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dbbdb0d7c2434ecd5289f6114d16473e694caa67",
-                "reference": "dbbdb0d7c2434ecd5289f6114d16473e694caa67",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/45c7b999a4b7dd9ac5558bdaaf23dcebbef88223",
+                "reference": "45c7b999a4b7dd9ac5558bdaaf23dcebbef88223",
                 "shasum": ""
             },
             "require": {
@@ -10050,7 +10050,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.53"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.54"
             },
             "funding": [
                 {
@@ -10066,7 +10066,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-01T14:51:50+00:00"
+            "time": "2020-11-05T13:36:26+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
