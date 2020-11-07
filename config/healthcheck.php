@@ -22,6 +22,7 @@ return [
         UKFast\HealthCheck\Checks\MigrationUpToDateHealthCheck::class,
         UKFast\HealthCheck\Checks\PackageSecurityHealthCheck::class,
         UKFast\HealthCheck\Checks\RedisHealthCheck::class,
+        UKFast\HealthCheck\Checks\SchedulerHealthCheck::class,
         UKFast\HealthCheck\Checks\StorageHealthCheck::class,
     ],
 
@@ -106,5 +107,10 @@ return [
         'disks' => [
             'local',
         ],
+    ],
+
+    'scheduler' => [
+        'cache-key' => 'laravel-scheduler-health-check',
+        'minutes-between-checks' => 2,
     ],
 ];
