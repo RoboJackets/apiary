@@ -177,6 +177,20 @@ class UserController extends Controller
             }
         }
 
+        if ($request->filled('autodesk_email')) {
+            // Check that this is one of their verified emails
+            // gmail_address can be null and autodesk_email can't be empty here so fall back to an empty string.
+            if (! in_array($request->input('autodesk_email'), [
+                strtolower($user->uid).'@gatech.edu',
+                strtolower($user->gt_email),
+                strtolower($user->gmail_address ?? ''),
+            ], true)) {
+                return response()->json(['status' => 'error',
+                                         'message' => 'requested autodesk_email value has not been verified',
+                ], 422);
+            }
+        }
+
         $user->update($validatedFields);
 
         if ($request->filled('roles')) {
