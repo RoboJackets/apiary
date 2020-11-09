@@ -15,7 +15,7 @@ class AddAutodeskFieldsToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->string('autodesk_email', 255)->after('clickup_invite_pending')->nullable()->unique();
             $table->boolean('autodesk_invite_pending')->after('autodesk_email')->default(false);
         });
@@ -28,7 +28,7 @@ class AddAutodeskFieldsToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('autodesk_email');
             $table->dropColumn('autodesk_invite_pending');
         });
