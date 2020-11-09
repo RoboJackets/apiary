@@ -199,6 +199,28 @@
           </div>
         </div>
 
+        <div class="form-group row">
+          <label for="user-autodesk" class="col-sm-2 col-form-label">Autodesk</label>
+          <div class="col-sm-10 col-lg-4">
+            <div class="input-group">
+            <template v-if="user.autodesk_email && user.autodesk_email === AutodeskEmailInDatabase">
+              <input v-model="user.autodesk_email" type="text" readonly class="form-control" id="user-autodesk">
+              <div class="input-group-append" v-if="user.autodesk_invite_pending === 1">
+                <a href="/autodesk" class="btn btn-secondary">Resend Invitation</a>
+              </div>
+            </template>
+            <template v-if="!user.autodesk_email || user.autodesk_email !== AutodeskEmailInDatabase">
+              <select class="form-control" id="user-autodesk" v-model="user.autodesk_email">
+                <option v-for="option in AutodeskEmailOptions" :value="option">{{ option }}</option>
+              </select>
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary">Send Invitation</button>
+              </div>
+            </template>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>

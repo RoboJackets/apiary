@@ -186,7 +186,7 @@ class UserController extends Controller
                 strtolower($user->gmail_address ?? ''),
             ], true)) {
                 return response()->json(['status' => 'error',
-                                         'message' => 'requested autodesk_email value has not been verified',
+                    'message' => 'requested autodesk_email value has not been verified',
                 ], 422);
             }
         }

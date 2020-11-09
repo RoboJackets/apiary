@@ -39,9 +39,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
  * @method static Builder|User whereApiToken($value)
- * @method static Builder|User whereClickupEmail($value)
- * @method static Builder|User whereClickupId($value)
- * @method static Builder|User whereClickupInvitePending($value)
+ * @method static Builder|User whereAutodeskEmail($value)
+ * @method static Builder|User whereAutodeskInvitePending($value)
  * @method static Builder|User whereCreatedAt($value)
  * @method static Builder|User whereCreateReason($value)
  * @method static Builder|User whereDeletedAt($value)
@@ -91,6 +90,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon|null $deleted_at
  * @property Carbon|null $resume_date
  * @property int $clickup_invite_pending
+ * @property int $autodesk_invite_pending
  * @property int $gtid
  * @property int $id
  * @property int|null $access_override_by_id
@@ -103,6 +103,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $uid
  * @property string|null $api_token
  * @property string|null $clickup_email
+ * @property string|null $autodesk_email
  * @property string|null $emergency_contact_name
  * @property string|null $emergency_contact_phone
  * @property string|null $ethnicity
