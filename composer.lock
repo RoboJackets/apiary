@@ -758,16 +758,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.0.4",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "4053eab90a7cdf0b81dd93073dc6c18c15d487fd"
+                "reference": "d5789bd8e2d852a6b98fe944ca2ff82e921eb43d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/4053eab90a7cdf0b81dd93073dc6c18c15d487fd",
-                "reference": "4053eab90a7cdf0b81dd93073dc6c18c15d487fd",
+                "url": "https://api.github.com/repos/composer/composer/zipball/d5789bd8e2d852a6b98fe944ca2ff82e921eb43d",
+                "reference": "d5789bd8e2d852a6b98fe944ca2ff82e921eb43d",
                 "shasum": ""
             },
             "require": {
@@ -835,7 +835,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.0.4"
+                "source": "https://github.com/composer/composer/tree/2.0.6"
             },
             "funding": [
                 {
@@ -851,7 +851,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-30T21:39:11+00:00"
+            "time": "2020-11-07T10:21:17+00:00"
         },
         {
             "name": "composer/semver",
@@ -3344,9 +3344,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/dist/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-fbe7a97c8f7ce2eb11ebc4c7c4e130ad9fbd031d-zip-43a8aa.zip",
+                "url": "https://composer.robojackets.org/1604849115/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-fbe7a97c8f7ce2eb11ebc4c7c4e130ad9fbd031d-zip-43a8aa.zip",
                 "reference": "fbe7a97c8f7ce2eb11ebc4c7c4e130ad9fbd031d",
-                "shasum": "b00e836141327eb4668f670fe3d386dfac77b534"
+                "shasum": "5795ea5380a46a5ecc71af92e8dac2a661d6dee5"
             },
             "require": {
                 "ext-json": "*",
@@ -3397,16 +3397,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "c547f8262a5fa9ff507bd06cc394067b83a75085"
+                "reference": "943b5d70cc5ae7483f6aff6ff43d7e34592ca0f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/c547f8262a5fa9ff507bd06cc394067b83a75085",
-                "reference": "c547f8262a5fa9ff507bd06cc394067b83a75085",
+                "url": "https://api.github.com/repos/opis/closure/zipball/943b5d70cc5ae7483f6aff6ff43d7e34592ca0f5",
+                "reference": "943b5d70cc5ae7483f6aff6ff43d7e34592ca0f5",
                 "shasum": ""
             },
             "require": {
@@ -3456,9 +3456,9 @@
             ],
             "support": {
                 "issues": "https://github.com/opis/closure/issues",
-                "source": "https://github.com/opis/closure/tree/3.6.0"
+                "source": "https://github.com/opis/closure/tree/3.6.1"
             },
-            "time": "2020-10-11T21:42:15+00:00"
+            "time": "2020-11-07T02:01:34+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4483,9 +4483,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/dist/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
+                "url": "https://composer.robojackets.org/1604849115/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
                 "reference": "22e01ddd8df96f297407095be5cd74480aa10469",
-                "shasum": "b0e7ab6bc2627f36d3293cdf9e384de418d3958e"
+                "shasum": "bca21fcd1a3572ed7a6ac6c60324ae5bd8b1d38f"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -4532,9 +4532,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/dist/robojackets/network-check/robojackets-network-check-2fed18379f699e0e215b999b8c59c8dda5d7d00c-zip-2a429c.zip",
+                "url": "https://composer.robojackets.org/1604849115/robojackets/network-check/robojackets-network-check-2fed18379f699e0e215b999b8c59c8dda5d7d00c-zip-2a429c.zip",
                 "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c",
-                "shasum": "2cf40d926408d8fda4281702f10224d75a1c8ba9"
+                "shasum": "10125cdc18d8c801fce59a7d42bc22235ae0a523"
             },
             "type": "library",
             "autoload": {
@@ -10623,9 +10623,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/dist/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
+                "url": "https://composer.robojackets.org/1604849115/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
                 "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d",
-                "shasum": "7cb0493564d5379fb6d6aa858ffec27eab92d369"
+                "shasum": "0bf271f4168f96ebfc96225eec558787176e0e99"
             },
             "require": {
                 "phan/phan": "*",
