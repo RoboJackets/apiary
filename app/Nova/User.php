@@ -347,7 +347,8 @@ class User extends Resource
                 ->onlyOnDetail(),
 
             Boolean::make('Has Ever Logged In')
-                ->onlyOnDetail(),
+                ->hideFromIndex()
+                ->required(),
 
             Boolean::make('Is Service Account')
                 ->hideFromIndex(),
