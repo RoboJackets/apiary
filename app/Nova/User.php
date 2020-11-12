@@ -197,7 +197,6 @@ class User extends Resource
                         ->help('This flag is set by JEDI but may be out of sync with ClickUp in some cases.'
                             .' It only controls UX elements.'),
 
-
                     Text::make('Autodesk', 'autodesk_email')
                     ->hideFromIndex()
                     ->rules('nullable', 'max:255', 'email')
@@ -208,7 +207,6 @@ class User extends Resource
                     ->hideFromIndex()
                     ->help('This flag is set by JEDI but may be out of sync with Autodesk in some cases.'
                            .' It only controls UX elements.'),
-
 
                     Boolean::make('SUMS', 'exists_in_sums')
                         ->hideFromIndex()

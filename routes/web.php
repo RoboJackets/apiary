@@ -52,6 +52,9 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('google/callback', 'GoogleController@handleProviderCallback');
 
     Route::get('clickup', 'ClickUpController@index');
+
+    Route::get('autodesk', 'AutodeskLibraryController@index');
+
 });
 
 Route::get('/events/{event}/rsvp', 'RsvpController@storeUser')->middleware('auth.cas.check')->name('events.rsvp');

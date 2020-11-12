@@ -254,6 +254,8 @@ export default {
       ],
       clickUpEmailOptions: [],
       clickUpEmailInDatabase: null,
+      AutodeskEmailOptions: [],
+      AutodeskEmailInDatabase: null,
     };
   },
   mounted() {
@@ -266,6 +268,12 @@ export default {
           ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
         ];
         this.clickUpEmailInDatabase = this.user.clickup_email;
+
+        this.AutodeskEmailOptions = [
+          ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
+        ];
+        this.AutodeskEmailInDatabase = this.user.autodesk_email;
+
       })
       .catch(response => {
         console.log(response);
@@ -295,6 +303,14 @@ export default {
           } else {
             this.feedback = 'Saved!';
           }
+
+          if (this.user.autodesk_email !== this.AutodeskEmailInDatabase && this.user.autodesk_email && this.user.autodesk_email.length > 0) {
+            this.AutodeskEmailInDatabase = this.user.autodesk_email;
+            this.feedback = 'Saved! Look out for an email from Autodesk in the next few minutes.'
+          } else {
+            this.feedback = 'Saved!';
+          }
+
           console.log('success');
         })
         .catch(response => {
