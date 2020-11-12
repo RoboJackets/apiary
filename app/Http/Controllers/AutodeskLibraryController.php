@@ -14,7 +14,7 @@ class AutodeskLibraryController extends Controller
 
         if (! $user->is_access_active) {
             return view(
-                'Library.io',
+                'autodesk',
                 [
                     'message' => 'You have not paid dues, so you do not have access to Library.io right now.',
                 ]
@@ -23,7 +23,7 @@ class AutodeskLibraryController extends Controller
 
         if (0 === count($user->teams)) {
             return view(
-                'Library.io',
+                'autodesk',
                 [
                     'message' => 'You are not a member of any teams yet. Join a team first, then try again.',
                 ]
@@ -34,6 +34,6 @@ class AutodeskLibraryController extends Controller
             return redirect('/profile');
         }
 
-        return redirect(config('jedi.host').'/self-service/autodesk-library');
+        return redirect(config('jedi.host').'/self-service/autodesk');
     }
 }
