@@ -1,18 +1,18 @@
 @extends('layouts/app')
 
-    @section('title')
-    Autodesk Access Request | {{ config('app.name') }}
+@section('title')
+Autodesk Access Request | {{ config('app.name') }}
 @endsection
 
-    @section('content')
-    @component('layouts/title')
-    Autodesk Access Request
-    @endcomponent
+@section('content')
+@component('layouts/title')
+  Autodesk Access Request
+@endcomponent
 
-    <p>
+<p>
 {{ $message }}
 </p>
 
 <a href="/">Go back to the dashboard</a>
 
-                               @endsection
+@endsection

@@ -203,15 +203,15 @@
           <label for="user-autodesk" class="col-sm-2 col-form-label">Autodesk</label>
           <div class="col-sm-10 col-lg-4">
             <div class="input-group">
-            <template v-if="user.autodesk_email && user.autodesk_email === AutodeskEmailInDatabase">
+            <template v-if="user.autodesk_email && user.autodesk_email === autodeskEmailInDatabase">
               <input v-model="user.autodesk_email" type="text" readonly class="form-control" id="user-autodesk">
               <div class="input-group-append" v-if="user.autodesk_invite_pending === 1">
                 <a href="/autodesk" class="btn btn-secondary">Resend Invitation</a>
               </div>
             </template>
-            <template v-if="!user.autodesk_email || user.autodesk_email !== AutodeskEmailInDatabase">
+            <template v-if="!user.autodesk_email || user.autodesk_email !== autodeskEmailInDatabase">
               <select class="form-control" id="user-autodesk" v-model="user.autodesk_email">
-                <option v-for="option in AutodeskEmailOptions" :value="option">{{ option }}</option>
+                <option v-for="option in autodeskEmailOptions" :value="option">{{ option }}</option>
               </select>
               <div class="input-group-append">
                 <button type="submit" class="btn btn-secondary">Send Invitation</button>
@@ -254,8 +254,8 @@ export default {
       ],
       clickUpEmailOptions: [],
       clickUpEmailInDatabase: null,
-      AutodeskEmailOptions: [],
-      AutodeskEmailInDatabase: null,
+      autodeskEmailOptions: [],
+      autodeskEmailInDatabase: null,
     };
   },
   mounted() {
@@ -269,10 +269,10 @@ export default {
         ];
         this.clickUpEmailInDatabase = this.user.clickup_email;
 
-        this.AutodeskEmailOptions = [
+        this.autodeskEmailOptions = [
           ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
         ];
-        this.AutodeskEmailInDatabase = this.user.autodesk_email;
+        this.autodeskEmailInDatabase = this.user.autodesk_email;
 
       })
       .catch(response => {
@@ -304,8 +304,8 @@ export default {
             this.feedback = 'Saved!';
           }
 
-          if (this.user.autodesk_email !== this.AutodeskEmailInDatabase && this.user.autodesk_email && this.user.autodesk_email.length > 0) {
-            this.AutodeskEmailInDatabase = this.user.autodesk_email;
+          if (this.user.autodesk_email !== this.autodeskEmailInDatabase && this.user.autodesk_email && this.user.autodesk_email.length > 0) {
+            this.autodeskEmailInDatabase = this.user.autodesk_email;
             this.feedback = 'Saved! Look out for an email from Autodesk in the next few minutes.'
           } else {
             this.feedback = 'Saved!';

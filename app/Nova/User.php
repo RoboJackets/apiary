@@ -198,15 +198,15 @@ class User extends Resource
                             .' It only controls UX elements.'),
 
                     Text::make('Autodesk', 'autodesk_email')
-                    ->hideFromIndex()
-                    ->rules('nullable', 'max:255', 'email')
-                    ->creationRules('unique:users,autodesk_email')
-                    ->updateRules('unique:users,autodesk_email,{{resourceId}}'),
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:255', 'email')
+                        ->creationRules('unique:users,autodesk_email')
+                        ->updateRules('unique:users,autodesk_email,{{resourceId}}'),
 
                     Boolean::make('Autodesk Invite Pending', 'autodesk_invite_pending')
-                    ->hideFromIndex()
-                    ->help('This flag is set by JEDI but may be out of sync with Autodesk in some cases.'
-                           .' It only controls UX elements.'),
+                        ->hideFromIndex()
+                        ->help('This flag is set by JEDI but may be out of sync with Autodesk in some cases.'
+                            .' It only controls UX elements.'),
 
                     Boolean::make('SUMS', 'exists_in_sums')
                         ->hideFromIndex()
