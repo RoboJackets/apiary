@@ -68,6 +68,7 @@ class User extends Resource
         'phone',
         'gt_email',
         'clickup_email',
+        'autodesk_email',
         'gmail_address',
         'personal_email',
     ];
@@ -194,6 +195,17 @@ class User extends Resource
                     Boolean::make('ClickUp Invite Pending', 'clickup_invite_pending')
                         ->hideFromIndex()
                         ->help('This flag is set by JEDI but may be out of sync with ClickUp in some cases.'
+                            .' It only controls UX elements.'),
+
+                    Text::make('Autodesk', 'autodesk_email')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:255', 'email')
+                        ->creationRules('unique:users,autodesk_email')
+                        ->updateRules('unique:users,autodesk_email,{{resourceId}}'),
+
+                    Boolean::make('Autodesk Invite Pending', 'autodesk_invite_pending')
+                        ->hideFromIndex()
+                        ->help('This flag is set by JEDI but may be out of sync with Autodesk in some cases.'
                             .' It only controls UX elements.'),
 
                     Boolean::make('SUMS', 'exists_in_sums')

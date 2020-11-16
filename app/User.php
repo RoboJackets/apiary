@@ -39,9 +39,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
  * @method static Builder|User whereApiToken($value)
- * @method static Builder|User whereClickupEmail($value)
- * @method static Builder|User whereClickupId($value)
- * @method static Builder|User whereClickupInvitePending($value)
+ * @method static Builder|User whereAutodeskEmail($value)
+ * @method static Builder|User whereAutodeskInvitePending($value)
  * @method static Builder|User whereCreatedAt($value)
  * @method static Builder|User whereCreateReason($value)
  * @method static Builder|User whereDeletedAt($value)
@@ -83,6 +82,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property bool $exists_in_sums
  * @property bool $github_invite_pending
+ * @property bool $clickup_invite_pending
+ * @property bool $autodesk_invite_pending
  * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
  * @property bool $is_active whether the user is currently active
  * @property bool $is_service_account whether the user is a service account (vs human)
@@ -90,7 +91,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon|null $access_override_until
  * @property Carbon|null $deleted_at
  * @property Carbon|null $resume_date
- * @property int $clickup_invite_pending
  * @property int $gtid
  * @property int $id
  * @property int|null $access_override_by_id
@@ -103,6 +103,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $uid
  * @property string|null $api_token
  * @property string|null $clickup_email
+ * @property string|null $autodesk_email
  * @property string|null $emergency_contact_name
  * @property string|null $emergency_contact_phone
  * @property string|null $ethnicity
@@ -238,6 +239,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'github_invite_pending' => 'boolean',
+        'clickup_invite_pending' => 'boolean',
+        'autodesk_invite_pending' => 'boolean',
         'exists_in_sums' => 'boolean',
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
