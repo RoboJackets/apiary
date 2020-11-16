@@ -183,7 +183,7 @@
             <div class="input-group">
             <template v-if="user.clickup_email && user.clickup_email === clickUpEmailInDatabase">
               <input v-model="user.clickup_email" type="text" readonly class="form-control" id="user-clickup">
-              <div class="input-group-append" v-if="user.clickup_invite_pending === 1">
+              <div class="input-group-append" v-if="user.clickup_invite_pending === true">
                 <a href="/clickup" class="btn btn-secondary">Resend Invitation</a>
               </div>
             </template>
@@ -205,7 +205,7 @@
             <div class="input-group">
             <template v-if="user.autodesk_email && user.autodesk_email === autodeskEmailInDatabase">
               <input v-model="user.autodesk_email" type="text" readonly class="form-control" id="user-autodesk">
-              <div class="input-group-append" v-if="user.autodesk_invite_pending === 1">
+              <div class="input-group-append" v-if="user.autodesk_invite_pending === true">
                 <a href="/autodesk" class="btn btn-secondary">Resend Invitation</a>
               </div>
             </template>
