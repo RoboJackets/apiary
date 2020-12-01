@@ -12,6 +12,6 @@ class DuesPackagesSeeder extends Seeder
      */
     public function run(): void
     {
-        factory(App\DuesPackage::class, 10)->create();
+        \App\DuesPackage::factory()->count(10)->create();
     }
 }

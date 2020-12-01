@@ -12,9 +12,9 @@ class DuesTransactionsSeeder extends Seeder
      */
     public function run(): void
     {
-        factory(App\DuesPackage::class, 10)->create();
-        factory(App\DuesTransaction::class, 10)->create()->each(static function ($duesTransaction): void {
-            $duesTransaction->payment()->save(factory(App\Payment::class)->make());
+        \App\DuesPackage::factory()->count(10)->create();
+        \App\DuesTransaction::factory()->count(10)->create()->each(static function ($duesTransaction): void {
+            $duesTransaction->payment()->save(\App\Payment::factory()->make());
             $duesTransaction->package();
         });
     }

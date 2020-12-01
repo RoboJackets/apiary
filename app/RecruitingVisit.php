@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -50,6 +51,8 @@ use Laravel\Nova\Actions\Actionable;
  */
 class RecruitingVisit extends Model
 {
+    use HasFactory;
+
     use Actionable;
     use Notifiable;
     use SoftDeletes;
