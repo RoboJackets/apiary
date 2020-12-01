@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e70b3defd55ef52eaf6736efd94134b",
+    "content-hash": "f8287d75ed4df4a0bf0bea724cb69765",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2374,17 +2374,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.15.0",
+            "version": "3.16.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "54057eedd1b500f1d9b3395f21d882190c08cd50"
+                "reference": "55c9acf9bfe5095af1d13ef96ba7f637cda8e12c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-54057eedd1b500f1d9b3395f21d882190c08cd50-zip-1ef7d6.zip",
-                "reference": "54057eedd1b500f1d9b3395f21d882190c08cd50",
-                "shasum": "84bfb83819c0c80f44afd195cf347d42ae79bfb6"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-55c9acf9bfe5095af1d13ef96ba7f637cda8e12c-zip-320e51.zip",
+                "reference": "55c9acf9bfe5095af1d13ef96ba7f637cda8e12c",
+                "shasum": "d9835c14057f117c671cb59cf1c49403eb9b7a06"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2439,6 +2439,7 @@
                     "@php -r \"if (file_exists('.env.dusk')) { copy('.env.dusk', 'vendor/laravel/nova-dusk-suite/.env'); } else { copy('.env.dusk.example', 'vendor/laravel/nova-dusk-suite/.env'); }\""
                 ],
                 "dusk:assets": [
+                    "yarn install",
                     "yarn run prod",
                     "./vendor/bin/testbench-dusk nova:publish"
                 ],
@@ -2460,7 +2461,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2020-11-10T16:05:55+00:00"
+            "time": "2020-12-01T20:06:44+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
