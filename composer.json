@@ -21,7 +21,7 @@
         "guzzlehttp/guzzle": "6.5.5",
         "laravel/framework": "7.30.0",
         "laravel/horizon": "4.3.5",
-        "laravel/nova": "3.15.0",
+        "laravel/nova": "3.16.0",
         "laravel/slack-notification-channel": "2.3.0",
         "laravel/socialite": "4.4.1",
         "laravel/tinker": "2.5.0",
