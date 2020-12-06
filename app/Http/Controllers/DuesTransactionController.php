@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DuesTransaction;
 use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Models\DuesTransaction;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\AuthorizeInclude;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\RecruitingVisit;
+use App\Models\RecruitingVisit;
 use Illuminate\Database\Seeder;
 
 class FasetVisitsSeeder extends Seeder

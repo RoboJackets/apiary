@@ -17,7 +17,7 @@ class ClassStanding extends Resource
      *
      * @var string
      */
-    public static $model = \App\ClassStanding::class;
+    public static $model = \App\Models\ClassStanding::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

@@ -21,7 +21,7 @@ class SyncAccess extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\User>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\User>  $models
      */
     public function handle(ActionFields $fields, Collection $models): void
     {

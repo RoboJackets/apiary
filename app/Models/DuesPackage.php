@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,8 +55,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property int $id The database identifier for this DuesPackage
  * @property string $name
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $duesTransactions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $transactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read bool $is_access_active
  * @property-read int|null $actions_count

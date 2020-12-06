@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use BadMethodCallException;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
@@ -124,16 +124,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $shirt_size
  * @property string|null $slack_id
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Attendance> $attendance
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ClassStanding> $classStanding
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $dues
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $duesTransactions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $paidDues
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Event> $events
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Major> $majors
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingVisit> $recruitingVisits
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Rsvp> $rsvps
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $manages
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $dues
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $paidDues
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Event> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Major> $majors
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingVisit> $recruitingVisits
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $manages
  * @property-read \Illuminate\Database\Eloquent\Collection $teams
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
@@ -283,7 +283,7 @@ class User extends Authenticatable
     /**
      * Check membership status for a given team.
      *
-     * @param \App\Team $team Team ID
+     * @param \App\Models\Team $team Team ID
      *
      * @return bool Whether or not user is a member of the given team
      */

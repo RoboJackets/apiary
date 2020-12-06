@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Payment as AppPayment;
+use App\Models\Payment as AppModelsPayment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -22,7 +22,7 @@ class Payment extends Resource
      *
      * @var string
      */
-    public static $model = \App\Payment::class;
+    public static $model = \App\Models\Payment::class;
 
     /**
      * Fields to eager load on index.
@@ -53,7 +53,7 @@ class Payment extends Resource
                 ]),
 
             Select::make('Payment Method', 'method')
-                ->options(AppPayment::$methods)
+                ->options(AppModelsPayment::$methods)
                 ->displayUsingLabels()
                 ->sortable(),
 

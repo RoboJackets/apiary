@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Attendance;
-use App\Team;
-use App\User;
+use App\Models\Attendance;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Metrics\ValueResult;
@@ -20,7 +20,7 @@ class PrimaryTeam extends TextMetric
     {
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         $teams = Attendance::where('gtid', $gtid)
-            ->where('attendable_type', \App\Team::class);
+            ->where('attendable_type', Team::getMorphClassStatic());
 
         if (is_numeric($request->range) && $request->range >= -2) {
             // For the purposes of this, the spring semester runs January - April, summer runs May - July, and fall

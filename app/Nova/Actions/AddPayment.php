@@ -6,8 +6,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\DuesTransaction;
+use App\Models\Payment;
 use App\Notifications\Payment\ConfirmationNotification;
-use App\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -27,7 +28,7 @@ class AddPayment extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\DuesTransaction>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\DuesTransaction>  $models
      *
      * @return array<string,string>
      */
@@ -100,7 +101,7 @@ class AddPayment extends Action
         $payment->method = $fields->method;
         $payment->amount = $entered_amount;
         $payment->payable_id = $models->first()->id;
-        $payment->payable_type = \App\DuesTransaction::class;
+        $payment->payable_type = DuesTransaction::getMorphClassStatic();
         $payment->notes = 'Added in Nova';
         $payment->save();
 

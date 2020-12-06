@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,9 +42,9 @@ use Illuminate\Notifications\Notifiable;
  * @property string $notified_at the timestamp when this recipient was contacted
  * @property string $source the source of this recipient
  *
- * @property-read \App\RecruitingCampaign $recruitingCampaign
- * @property-read \App\RecruitingVisit $recruitingVisit
- * @property-read \App\User $user
+ * @property-read \App\Models\RecruitingCampaign $recruitingCampaign
+ * @property-read \App\Models\RecruitingVisit $recruitingVisit
+ * @property-read \App\Models\User $user
  * @property-read int|null $notifications_count
  */
 class RecruitingCampaignRecipient extends Model

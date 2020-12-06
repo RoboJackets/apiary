@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Notifications;
 
 use App\Mail\GeneralInterestInvite as Mailable;
+use App\Models\RecruitingCampaignRecipient;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -32,7 +33,7 @@ class GeneralInterestNotification extends Notification implements ShouldQueue
         $email = $notifiable->routeNotificationForMail();
         $token = $notifiable->getVisitToken();
 
-        if ($notifiable instanceof \App\RecruitingCampaignRecipient) {
+        if ($notifiable instanceof RecruitingCampaignRecipient) {
             // Update the notifiable to show it has been sent
             $notifiable->notified_at = date('Y-m-d H:i:s', time());
             $notifiable->save();

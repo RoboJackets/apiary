@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,9 +42,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $start_date
  * @property string $status the status of this campaign
  *
- * @property-read \App\NotificationTemplate $template
- * @property-read \App\User $creator
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingCampaignRecipient> $recipients
+ * @property-read \App\Models\NotificationTemplate $template
+ * @property-read \App\Models\User $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingCampaignRecipient> $recipients
  * @property-read int|null $recipients_count
  */
 class RecruitingCampaign extends Model

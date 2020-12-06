@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\DuesTransaction;
+use App\Models\DuesTransaction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\ValueResult;
 

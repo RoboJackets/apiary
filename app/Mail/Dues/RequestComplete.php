@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Mail\Dues;
 
-use App\DuesPackage;
+use App\Models\DuesPackage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

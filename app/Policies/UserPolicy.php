@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\ClassStanding;
-use App\Major;
-use App\Team;
-use App\User;
+use App\Models\ClassStanding;
+use App\Models\Major;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy

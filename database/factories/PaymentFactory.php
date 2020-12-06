@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\DuesTransaction;
-use App\Event;
-use App\Payment;
-use App\User;
+use App\Models\DuesTransaction;
+use App\Models\Event;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentFactory extends Factory
@@ -28,7 +28,12 @@ class PaymentFactory extends Factory
     {
         return [
             'payable_id' => $this->faker->numberBetween(0, 200),
-            'payable_type' => $this->faker->randomElement([DuesTransaction::class, Event::class]),
+            'payable_type' => $this->faker->randomElement(
+                [
+                    DuesTransaction::getMorphClassStatic(),
+                    Event::getMorphClassStatic(),
+                ]
+            ),
             'amount' => (string) $this->faker->randomFloat(2, 0, 1000),
             'processing_fee' => (string) $this->faker->randomFloat(2, 0, 1000),
             'method' => 'square',

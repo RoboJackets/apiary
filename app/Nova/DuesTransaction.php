@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\DuesTransaction as ADT;
+use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -18,8 +18,8 @@ use Laravel\Nova\Panel;
  * A Nova resource for dues transactions.
  *
  * @property bool $is_paid Whether this transaction is paid for
- * @property \App\DuesPackage $package The package associated with this transaction
- * @property \App\User $user the user associated with this transaction
+ * @property \App\Models\DuesPackage $package The package associated with this transaction
+ * @property \App\Models\User $user the user associated with this transaction
  */
 class DuesTransaction extends Resource
 {
@@ -28,7 +28,7 @@ class DuesTransaction extends Resource
      *
      * @var string
      */
-    public static $model = ADT::class;
+    public static $model = AppModelsDuesTransaction::class;
 
     /**
      * The relationships that should be eager loaded on index queries.
@@ -221,9 +221,9 @@ class DuesTransaction extends Resource
     {
         return [
             (new Actions\DistributeShirt())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId);
+                $transaction = AppModelsDuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
+                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
                     if (! $transaction->package->eligible_for_shirt) {
                         return false;
                     }
@@ -238,13 +238,13 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId);
+                $transaction = AppModelsDuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
+                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
                     if (! $transaction->package->eligible_for_polo) {
                         return false;
                     }
@@ -259,13 +259,13 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId);
+                $transaction = AppModelsDuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
+                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
                     if ($transaction->user->id === $request->user()->id) {
                         return false;
                     }
@@ -280,7 +280,7 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('create-payments');
-            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('create-payments')
                     && ($dues_transaction->user()->first()->id !== $request->user()->id);
             }),

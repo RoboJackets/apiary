@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
-use App\DuesPackage;
-use App\Team;
-use App\User;
+use App\Models\DuesPackage;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;

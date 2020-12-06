@@ -23,7 +23,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for attendance.
  *
- * @property ?\App\User $attendee The user associated with the attendance record, if available
+ * @property ?\App\Models\User $attendee The user associated with the attendance record, if available
  */
 class Attendance extends Resource
 {
@@ -32,7 +32,7 @@ class Attendance extends Resource
      *
      * @var string
      */
-    public static $model = \App\Attendance::class;
+    public static $model = \App\Models\Attendance::class;
 
     /**
      * Get the displayble label of the resource.

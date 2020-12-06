@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Nova\Lenses;
 
+use App\Models\Team as AppModelsTeam;
 use App\Nova\Event;
 use App\Nova\Filters\Attendable;
 use App\Nova\Team;
+use App\Nova\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -18,7 +20,7 @@ use Laravel\Nova\Lenses\Lens;
 /**
  * Shows GTIDs that have recently attended an event but haven't paid dues.
  *
- * @property ?\App\User $attendee The attendee for an event
+ * @property ?\App\Models\User $attendee The attendee for an event
  */
 class RecentInactiveUsers extends Lens
 {
@@ -34,7 +36,7 @@ class RecentInactiveUsers extends Lens
                 $query->whereDoesntHave('attendee', static function (Builder $q): void {
                     $q->active();
                 })
-                    ->where('attendable_type', \App\Team::class)
+                    ->where('attendable_type', AppModelsTeam::getMorphClassStatic())
                     ->whereBetween('created_at', [now()->subDays(14)->startOfDay(), now()])
                     ->select('gtid', 'attendable_id', 'attendable_type')
                     ->distinct()
@@ -58,7 +60,7 @@ class RecentInactiveUsers extends Lens
                     return null !== $this->attendee ? '—' : $gtid;
                 }),
 
-            BelongsTo::make('User', 'attendee', \App\Nova\User::class),
+            BelongsTo::make('User', 'attendee', User::class),
 
             MorphTo::make('Attended', 'attendable')
                 ->types([

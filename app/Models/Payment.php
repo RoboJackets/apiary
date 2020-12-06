@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,8 +54,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property string|null $client_txn_id
  * @property string|null $server_txn_id
  *
- * @property-read \App\DuesTransaction $payable
- * @property-read \App\User $user
+ * @property-read \App\Models\DuesTransaction $payable
+ * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read string $method_presentation

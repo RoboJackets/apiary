@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Attendance;
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Jobs\PushToJedi;
+use App\Models\Attendance;
 
 class AttendanceObserver
 {

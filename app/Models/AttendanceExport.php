@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $download_user_id
  * @property string $secret the secret in the URL
  *
- * @property-read \App\User $downloadUser
+ * @property-read \App\Models\User $downloadUser
  */
 class AttendanceExport extends Model
 {

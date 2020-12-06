@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $faset_visit_id
  * @property string $response the response to the survey
  *
- * @property-read \App\RecruitingVisit $recruitingVisit
+ * @property-read \App\Models\RecruitingVisit $recruitingVisit
  */
 class RecruitingResponse extends Model
 {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Models\Team;
 use App\Notifiables\CoreNotifiable;
 use App\Notifications\GlobalAttendanceNotification;
 use App\Notifications\TeamAttendanceNotification;
-use App\Team;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

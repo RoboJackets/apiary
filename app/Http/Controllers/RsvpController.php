@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Event;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Rsvp as RsvpResource;
-use App\RecruitingVisit;
-use App\Rsvp;
+use App\Models\Event;
+use App\Models\RecruitingVisit;
+use App\Models\Rsvp;
+use App\Models\User;
 use App\Traits\AuthorizeInclude;
-use App\User;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
