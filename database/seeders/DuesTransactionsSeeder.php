@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\DuesPackage;
+use App\DuesTransaction;
+use App\Payment
 use Illuminate\Database\Seeder;
 
 class DuesTransactionsSeeder extends Seeder
@@ -14,9 +17,9 @@ class DuesTransactionsSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\DuesPackage::factory()->count(10)->create();
-        \App\DuesTransaction::factory()->count(10)->create()->each(static function ($duesTransaction): void {
-            $duesTransaction->payment()->save(\App\Payment::factory()->make());
+        DuesPackage::factory()->count(10)->create();
+        DuesTransaction::factory()->count(10)->create()->each(static function (DuesTransaction $duesTransaction): void {
+            $duesTransaction->payment()->save(Payment::factory()->make());
             $duesTransaction->package();
         });
     }

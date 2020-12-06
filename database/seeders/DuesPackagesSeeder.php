@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\DuesPackage;
 use Illuminate\Database\Seeder;
 
 class DuesPackagesSeeder extends Seeder
@@ -14,6 +15,6 @@ class DuesPackagesSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\DuesPackage::factory()->count(10)->create();
+        DuesPackage::factory()->count(10)->create();
     }
 }
