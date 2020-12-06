@@ -22,11 +22,6 @@
                 <directory name="database" />
             </errorLevel>
         </UndefinedClass>
-        <UndefinedGlobalVariable>
-            <errorLevel type="suppress">
-                <file name="database/factories/ModelFactory.php" />
-            </errorLevel>
-        </UndefinedGlobalVariable>
         <UndefinedConstant>
             <errorLevel type="suppress">
                 <file name="config/database.php" />

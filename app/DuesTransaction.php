@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -71,6 +72,7 @@ use Illuminate\Database\Query\JoinClause;
  */
 class DuesTransaction extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     /**

@@ -6,6 +6,7 @@ namespace App;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -65,6 +66,7 @@ use Laravel\Nova\Actions\Actionable;
 class DuesPackage extends Model
 {
     use Actionable;
+    use HasFactory;
     use SoftDeletes;
 
     /**
