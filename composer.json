@@ -30,7 +30,7 @@
         "robojackets/error-pages": "2.1.1",
         "robojackets/network-check": "1.0.1",
         "sensiolabs/security-checker": "6.0.3",
-        "spatie/laravel-failed-job-monitor": "3.3.2",
+        "spatie/laravel-failed-job-monitor": "3.4.0",
         "spatie/laravel-permission": "3.18.0",
         "square/connect": "2.20190710.0",
         "subfission/cas": "4.0.0",

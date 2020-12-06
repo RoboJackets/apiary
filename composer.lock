@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fef8e67554766bc3dc4b93e8afd83568",
+    "content-hash": "b0b4ffaf854019905a293490ea0643f5",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -4884,25 +4884,26 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "3.3.2",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "45506cb616ca89748b2b2bbb91d83b9da2bea8b8"
+                "reference": "32556fb5b1e1bab6129f6afa604707793cb4d0d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/45506cb616ca89748b2b2bbb91d83b9da2bea8b8",
-                "reference": "45506cb616ca89748b2b2bbb91d83b9da2bea8b8",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/32556fb5b1e1bab6129f6afa604707793cb4d0d7",
+                "reference": "32556fb5b1e1bab6129f6afa604707793cb4d0d7",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "~5.8.0|^6.0|^7.0|^8.0",
-                "php": "^7.2"
+                "php": "^7.3|^8.0"
             },
             "require-dev": {
+                "mockery/mockery": "^1.4",
                 "orchestra/testbench": "~3.8.0|^4.0|^5.0|^6.0",
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^8.5|^9.5"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Allows notifications to be sent to Slack",
@@ -4946,7 +4947,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-failed-job-monitor/issues",
-                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/master"
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/3.4.0"
             },
             "funding": [
                 {
@@ -4954,7 +4955,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-09T08:21:01+00:00"
+            "time": "2020-12-02T15:40:34+00:00"
         },
         {
             "name": "spatie/laravel-permission",
