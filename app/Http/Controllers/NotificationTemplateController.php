@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreNotificationTemplateRequest;
 use App\Http\Requests\UpdateNotificationTemplateRequest;
 use App\Http\Resources\NotificationTemplate as NotificationTemplateResource;
-use App\NotificationTemplate;
+use App\Models\NotificationTemplate;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\DuesTransaction as ADT;
+use App\Models\DuesTransaction as ADT;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -221,9 +221,9 @@ class DuesTransaction extends Resource
     {
         return [
             (new Actions\DistributeShirt())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId);
+                $transaction = \App\Models\DuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
+                if (null !== $transaction && is_a($transaction, \App\Models\DuesTransaction::class)) {
                     if (! $transaction->package->eligible_for_shirt) {
                         return false;
                     }
@@ -242,9 +242,9 @@ class DuesTransaction extends Resource
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId);
+                $transaction = \App\Models\DuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
+                if (null !== $transaction && is_a($transaction, \App\Models\DuesTransaction::class)) {
                     if (! $transaction->package->eligible_for_polo) {
                         return false;
                     }
@@ -263,9 +263,9 @@ class DuesTransaction extends Resource
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
-                $transaction = \App\DuesTransaction::find($request->resourceId);
+                $transaction = \App\Models\DuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction && is_a($transaction, \App\DuesTransaction::class)) {
+                if (null !== $transaction && is_a($transaction, \App\Models\DuesTransaction::class)) {
                     if ($transaction->user->id === $request->user()->id) {
                         return false;
                     }

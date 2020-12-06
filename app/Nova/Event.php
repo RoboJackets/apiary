@@ -28,7 +28,7 @@ class Event extends Resource
      *
      * @var string
      */
-    public static $model = \App\Event::class;
+    public static $model = \App\Models\Event::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

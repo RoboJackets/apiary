@@ -9,7 +9,7 @@ use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\TotalTeamMembers;
 use App\Nova\ResourceTools\CollectAttendance;
-use App\Team as AppTeam;
+use App\Models\Team as AppTeam;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -29,7 +29,7 @@ class Team extends Resource
      *
      * @var string
      */
-    public static $model = \App\Team::class;
+    public static $model = \App\Models\Team::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

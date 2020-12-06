@@ -11,7 +11,7 @@ use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
-use App\User as AU;
+use App\Models\User as AU;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -37,7 +37,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = \App\User::class;
+    public static $model = \App\Models\User::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

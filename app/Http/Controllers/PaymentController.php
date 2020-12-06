@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DuesTransaction;
+use App\Models\DuesTransaction;
 use App\Events\PaymentSuccess;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
-use App\Payment;
+use App\Models\Payment;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 use Illuminate\Database\QueryException;
@@ -223,7 +223,7 @@ class PaymentController extends Controller
      * @param string $name Name of line item
      * @param int $amount Amount in *whole* dollars to be paid (excluding fees!)
      * @param string $email Email address for Square Receipt
-     * @param \App\Payment $payment Payment Model
+     * @param \App\Models\Payment $payment Payment Model
      * @param bool $addFee Adds $3.00 transaction fee if true
      */
     public function createSquareCheckout(string $name, int $amount, string $email, Payment $payment, bool $addFee)

@@ -23,7 +23,7 @@ class DuesPackage extends Resource
      *
      * @var string
      */
-    public static $model = \App\DuesPackage::class;
+    public static $model = \App\Models\DuesPackage::class;
 
     /**
      * Get the displayble label of the resource.

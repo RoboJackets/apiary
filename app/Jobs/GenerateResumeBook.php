@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\User;
+use App\Models\User;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

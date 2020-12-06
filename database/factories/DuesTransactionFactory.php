@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\DuesPackage;
-use App\DuesTransaction;
-use App\User;
+use App\Models\DuesPackage;
+use App\Models\DuesTransaction;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DuesTransactionFactory extends Factory

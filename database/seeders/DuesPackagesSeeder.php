@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\DuesPackage;
+use App\Models\DuesPackage;
 use Illuminate\Database\Seeder;
 
 class DuesPackagesSeeder extends Seeder

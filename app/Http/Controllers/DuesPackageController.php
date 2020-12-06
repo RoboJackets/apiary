@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DuesPackage;
+use App\Models\DuesPackage;
 use App\Http\Requests\StoreDuesPackageRequest;
 use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;

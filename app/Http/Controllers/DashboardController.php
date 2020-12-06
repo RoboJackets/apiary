@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DuesPackage;
-use App\DuesTransaction;
-use App\Team;
+use App\Models\DuesPackage;
+use App\Models\DuesTransaction;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

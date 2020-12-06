@@ -6,14 +6,14 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Attendance;
-use App\DuesPackage;
+use App\Models\Attendance;
+use App\Models\DuesPackage;
 use App\Observers\AttendanceObserver;
 use App\Observers\DuesPackageObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\UserObserver;
-use App\Payment;
-use App\User;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;

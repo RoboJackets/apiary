@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Attendance;
-use App\Team;
+use App\Models\Attendance;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

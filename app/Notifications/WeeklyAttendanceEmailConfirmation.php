@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
-use App\AttendanceExport;
+use App\Models\AttendanceExport;
 use App\Notifiables\CoreOfficersNotifiable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
@@ -19,7 +19,7 @@ class WeeklyAttendanceEmailConfirmation extends Notification
     /**
      * The AttendanceExport relevant to this.
      *
-     * @var \App\AttendanceExport
+     * @var \App\Models\AttendanceExport
      */
     public $export;
 

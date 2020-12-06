@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Notifications\Payment;
 
 use App\Mail\Payment\Confirmation as Mailable;
-use App\Payment;
-use App\User;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -18,7 +18,7 @@ class ConfirmationNotification extends Notification implements ShouldQueue
     /**
      * The payment that was completed.
      *
-     * @var \App\Payment
+     * @var \App\Models\Payment
      */
     public $payment;
 

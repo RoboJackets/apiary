@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\User;
+use App\Models\User;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -49,7 +49,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     /**
      * The value of the identifier to search for the account with.
      *
-     * @var string|int|\App\User
+     * @var string|int|\App\Models\User
      */
     private $value;
 
@@ -63,7 +63,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param string|int|\App\User $value
+     * @param string|int|\App\Models\User $value
      */
     public function __construct(string $identifier, $value, string $reason)
     {

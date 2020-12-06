@@ -32,7 +32,7 @@ class Attendance extends Resource
      *
      * @var string
      */
-    public static $model = \App\Attendance::class;
+    public static $model = \App\Models\Attendance::class;
 
     /**
      * Get the displayble label of the resource.

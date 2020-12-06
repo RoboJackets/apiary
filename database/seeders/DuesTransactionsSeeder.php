@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\DuesPackage;
-use App\DuesTransaction;
-use App\Payment;
+use App\Models\DuesPackage;
+use App\Models\DuesTransaction;
+use App\Models\Payment;
 use Illuminate\Database\Seeder;
 
 class DuesTransactionsSeeder extends Seeder

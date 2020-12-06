@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Mail\Payment;
 
-use App\Payment;
+use App\Models\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

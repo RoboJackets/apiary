@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Notifications\GeneralInterestNotification;
-use App\RecruitingVisit;
+use App\Models\RecruitingVisit;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;

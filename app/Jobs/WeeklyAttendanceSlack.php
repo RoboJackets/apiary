@@ -7,7 +7,7 @@ namespace App\Jobs;
 use App\Notifiables\CoreNotifiable;
 use App\Notifications\GlobalAttendanceNotification;
 use App\Notifications\TeamAttendanceNotification;
-use App\Team;
+use App\Models\Team;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

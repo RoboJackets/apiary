@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Jobs\PushToJedi;
-use App\Payment;
+use App\Models\Payment;
 
 class PaymentObserver
 {

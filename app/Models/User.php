@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use BadMethodCallException;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;

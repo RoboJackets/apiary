@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Attendance;
-use App\AttendanceExport;
+use App\Models\Attendance;
+use App\Models\AttendanceExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 

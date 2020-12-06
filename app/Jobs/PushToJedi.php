@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Team;
-use App\User;
+use App\Models\Team;
+use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
@@ -31,7 +31,7 @@ class PushToJedi implements ShouldQueue
     /**
      * The user that will be sent to JEDI.
      *
-     * @var \App\User
+     * @var \App\Models\User
      */
     private $user;
 

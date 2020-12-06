@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Attendance;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Metrics\Trend;
@@ -29,7 +29,7 @@ class AttendancePerWeek extends Trend
             $query = (new Attendance())
                 ->newQuery()
                 ->where('attendable_id', $request->resourceId)
-                ->where('attendable_type', \App\Team::class);
+                ->where('attendable_type', \App\Models\Team::class);
         }
 
         // Aggregate based on counting distinct values in the gtid column

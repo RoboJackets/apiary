@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Attendance;
-use App\User;
+use App\Models\Attendance;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;

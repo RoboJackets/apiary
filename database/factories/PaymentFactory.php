@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\DuesTransaction;
-use App\Event;
-use App\Payment;
-use App\User;
+use App\Models\DuesTransaction;
+use App\Models\Event;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentFactory extends Factory

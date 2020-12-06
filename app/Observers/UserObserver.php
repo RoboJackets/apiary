@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Jobs\PushToJedi;
-use App\User;
+use App\Models\User;
 use DateTime;
 
 class UserObserver

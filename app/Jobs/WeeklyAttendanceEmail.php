@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Attendance;
-use App\AttendanceExport;
+use App\Models\Attendance;
+use App\Models\AttendanceExport;
 use App\Mail\Attendance\Report;
 use App\Notifiables\CoreOfficersNotifiable;
 use App\Notifications\WeeklyAttendanceEmailConfirmation;

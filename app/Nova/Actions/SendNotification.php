@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Mail\DatabaseMailable;
-use App\NotificationTemplate;
+use App\Models\NotificationTemplate;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;

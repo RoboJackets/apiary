@@ -34,7 +34,7 @@ class RecentInactiveUsers extends Lens
                 $query->whereDoesntHave('attendee', static function (Builder $q): void {
                     $q->active();
                 })
-                    ->where('attendable_type', \App\Team::class)
+                    ->where('attendable_type', \App\Models\Team::class)
                     ->whereBetween('created_at', [now()->subDays(14)->startOfDay(), now()])
                     ->select('gtid', 'attendable_id', 'attendable_type')
                     ->distinct()
