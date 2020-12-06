@@ -85,7 +85,7 @@ class PushToJedi implements ShouldQueue
         }
 
         $lastAttendance = $this->user->attendance()->where('attendable_type', Team::getMorphClassStatic())
-            ->orderBy('created_at', 'desc')->first();
+            ->orderByDesc('created_at')->first();
 
         $send = [
             'uid' => strtolower($this->user->uid),

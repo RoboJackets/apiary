@@ -29,7 +29,7 @@ class RsvpSourceBreakdown extends Partition
                 ->selectRaw('if(recruiting_visits.id, "Recruiting Email", source) as rsvpsource')
                 ->selectRaw('count(rsvps.id) as aggregate')
                 ->groupBy('rsvpsource')
-                ->orderBy('aggregate', 'desc')
+                ->orderByDesc('aggregate')
                 ->get()
                 ->mapWithKeys(static function (object $item): array {
                     if (null !== $item->rsvpsource) {
