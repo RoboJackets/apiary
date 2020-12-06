@@ -19,7 +19,7 @@ class UpdateMembersTeamRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
@@ -29,7 +29,7 @@ class UpdateMembersTeamRequest extends FormRequest
                 'numeric',
                 'exists:users,id',
             ],
-            'action'  => [
+            'action' => [
                 'required',
                 'in:join,leave',
             ],

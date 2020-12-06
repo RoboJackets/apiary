@@ -48,13 +48,6 @@ class Major extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-
-
-    /**
      *  Get the Users that are members of this Major.
      */
     public function members(): BelongsToMany

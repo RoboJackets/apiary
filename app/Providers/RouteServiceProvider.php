@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * The controller namespace for the application.
-     *
-     * When present, controller route declarations will automatically be prefixed with this namespace.
-     *
-     * @var string|null
-     */
-
-    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -29,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
 
-        $this->routes(function (): void {
+        $this->routes(static function (): void {
             Route::prefix('api')
                 ->middleware('api')
                 ->group(base_path('routes/api.php'));

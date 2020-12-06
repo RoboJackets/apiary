@@ -19,7 +19,7 @@ class StoreUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
@@ -43,11 +43,13 @@ class StoreUserRequest extends FormRequest
                 'required',
                 'unique:users',
                 'max:255',
+                'email:rfc,strict,dns,spoof',
             ],
             'personal_email' => [
                 'unique:users',
                 'max:255',
                 'nullable',
+                'email:rfc,strict,dns,spoof',
             ],
             'first_name' => [
                 'required',

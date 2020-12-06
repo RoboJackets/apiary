@@ -19,7 +19,7 @@ class StoreAttendanceRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
@@ -28,19 +28,19 @@ class StoreAttendanceRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'attendable_id'   => [
+            'attendable_id' => [
                 'required',
                 'numeric',
             ],
-            'gtid'            => [
+            'gtid' => [
                 'required',
                 'numeric',
             ],
-            'source'          => [
+            'source' => [
                 'required',
                 'string',
             ],
-            'created_at'      => [
+            'created_at' => [
                 'date',
             ],
         ];

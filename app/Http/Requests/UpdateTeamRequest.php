@@ -19,36 +19,36 @@ class UpdateTeamRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'name'               => [
+            'name' => [
                 'string',
             ],
-            'description'        => [
+            'description' => [
                 'string',
                 'max:4096',
                 'nullable',
             ],
-            'attendable'         => [
+            'attendable' => [
                 'boolean',
             ],
-            'visible'            => [
+            'visible' => [
                 'boolean',
             ],
-            'visible_on_kiosk'   => [
+            'visible_on_kiosk' => [
                 'boolean',
             ],
-            'self_serviceable'   => [
+            'self_serviceable' => [
                 'boolean',
             ],
-            'mailing_list_name'  => [
+            'mailing_list_name' => [
                 'string',
                 'nullable',
             ],
-            'slack_channel_id'   => [
+            'slack_channel_id' => [
                 'string',
                 'nullable',
             ],

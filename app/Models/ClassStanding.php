@@ -42,13 +42,6 @@ class ClassStanding extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-
-
-    /**
      *  Get the Users that are members of this ClassStanding.
      */
     public function members(): BelongsToMany

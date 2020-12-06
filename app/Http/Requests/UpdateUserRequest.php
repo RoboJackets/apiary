@@ -19,7 +19,7 @@ class UpdateUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<int|string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
@@ -69,7 +69,10 @@ class UpdateUserRequest extends FormRequest
                 'in:s,m,l,xl,xxl,xxxl',
                 'nullable',
             ],
-            'accept_safety_agreement => date|nullable',
+            'accept_safety_agreement' => [
+                'date',
+                'nullable',
+            ],
             'generateToken' => [
                 'boolean',
             ],

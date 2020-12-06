@@ -19,15 +19,15 @@ class UpdateRecruitingCampaignRecipientRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'email_address'          => [
+            'email_address' => [
                 'nullable',
             ],
-            'user_id'                => [
+            'user_id' => [
                 'exists:users,id',
                 'numeric',
                 'nullable',

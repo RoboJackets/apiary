@@ -19,7 +19,7 @@ class SearchAttendanceRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
@@ -27,15 +27,15 @@ class SearchAttendanceRequest extends FormRequest
             'attendable_type' => [
                 'required',
             ],
-            'attendable_id'   => [
+            'attendable_id' => [
                 'required',
                 'numeric',
             ],
-            'start_date'      => [
+            'start_date' => [
                 'date',
                 'nullable',
             ],
-            'end_date'        => [
+            'end_date' => [
                 'date',
                 'nullable',
             ],

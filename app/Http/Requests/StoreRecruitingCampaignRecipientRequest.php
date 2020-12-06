@@ -19,23 +19,24 @@ class StoreRecruitingCampaignRecipientRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'recipients'                       => [
+            'recipients' => [
                 'required',
                 'array',
             ],
-            'recipients.*.email_address'       => [
+            'recipients.*.email_address' => [
                 'required',
+                'email:rfc,strict,dns,spoof',
             ],
             'recipients.*.recruiting_visit_id' => [
                 'exists:recruiting_visits,id',
                 'numeric',
             ],
-            'recipients.*.user_id'             => [
+            'recipients.*.user_id' => [
                 'exists:users,id',
                 'numeric',
             ],

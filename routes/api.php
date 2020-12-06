@@ -1,23 +1,25 @@
 <?php
 
+// @phan-file-suppress PhanStaticCallToNonStatic
+
 declare(strict_types=1);
 
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RsvpController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\NotificationTemplateController;
-use App\Http\Controllers\RecruitingCampaignRecipientController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceReportController;
 use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationTemplateController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RecruitingCampaignController;
+use App\Http\Controllers\RecruitingCampaignRecipientController;
 use App\Http\Controllers\RecruitingVisitController;
 use App\Http\Controllers\ResumeBookController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -66,9 +68,9 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
         Route::resource('users', UserController::class)->except('create', 'edit');
         Route::get('users/{id}/resume', [ResumeController::class, 'show']);
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);
-        Route::delete('users/{id}/resume', [ResumeController::class, 'delete']);
         Route::get('resumebooks/{tag}', [ResumeBookController::class, 'show'])->name('resumebook.show');
-        Route::get('attendancereports/{hash}', [AttendanceReportController::class, 'show'])->name('attendancereport.show');
+        Route::get('attendancereports/{hash}', [AttendanceReportController::class, 'show'])
+            ->name('attendancereport.show');
         Route::resource('events', EventController::class)->except('create', 'edit');
         Route::resource('rsvps', RsvpController::class)->except('create', 'edit');
         Route::resource('payments', PaymentController::class)->except('create', 'edit');

@@ -19,7 +19,7 @@ class UpdateAttendanceRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
@@ -27,17 +27,17 @@ class UpdateAttendanceRequest extends FormRequest
             'attendable_type' => [
                 'string',
             ],
-            'attendable_id'   => [
+            'attendable_id' => [
                 'numeric',
             ],
-            'gtid'            => [
+            'gtid' => [
                 'numeric',
                 'exists:users',
             ],
-            'source'          => [
+            'source' => [
                 'string',
             ],
-            'recorded_by'     => [
+            'recorded_by' => [
                 'numeric',
                 'exists:users',
             ],

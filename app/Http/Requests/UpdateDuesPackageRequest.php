@@ -19,27 +19,27 @@ class UpdateDuesPackageRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'name'               => [
+            'name' => [
                 'string',
             ],
             'eligible_for_shirt' => [
                 'boolean',
             ],
-            'eligible_for_polo'  => [
+            'eligible_for_polo' => [
                 'boolean',
             ],
-            'effective_start'    => [
+            'effective_start' => [
                 'date',
             ],
-            'effective_end'      => [
+            'effective_end' => [
                 'date',
             ],
-            'cost'               => [
+            'cost' => [
                 'numeric',
             ],
         ];

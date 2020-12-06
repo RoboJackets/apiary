@@ -112,11 +112,11 @@ class PaymentController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => ,
+                        'error_code' => 400,
                         'error_message' => 'No eligible Dues Transaction found for payment.',
                     ]
                 ),
-                
+                400
             );
         }
 
@@ -131,11 +131,11 @@ class PaymentController extends Controller
                     view(
                         'errors.generic',
                         [
-                            'error_code' => ,
+                            'error_code' => 500,
                             'error_message' => 'Got null payment',
                         ]
                     ),
-                    
+                    500
                 );
             }
             $payment->unique_id = bin2hex(openssl_random_pseudo_bytes(10));
@@ -161,11 +161,11 @@ class PaymentController extends Controller
             view(
                 'errors.generic',
                 [
-                    'error_code' => ,
+                    'error_code' => 500,
                     'error_message' => 'Unable to process Square Checkout request.',
                 ]
             ),
-            
+            500
         );
     }
 
@@ -296,11 +296,11 @@ class PaymentController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => ,
+                        'error_code' => 400,
                         'error_message' => 'Missing parameter in Square response.',
                     ]
                 ),
-                
+                400
             );
         }
 
@@ -318,11 +318,11 @@ class PaymentController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => ,
+                        'error_code' => 422,
                         'error_message' => 'Invalid Payment ID in Square response.',
                     ]
                 ),
-                
+                422
             );
         }
 
@@ -335,11 +335,11 @@ class PaymentController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => ,
+                        'error_code' => 404,
                         'error_message' => 'Unable to locate payment.',
                     ]
                 ),
-                
+                404
             );
         }
         Log::debug(self::class.' - Found Payment '.$payment_id);
@@ -352,11 +352,11 @@ class PaymentController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => ,
+                        'error_code' => 409,
                         'error_message' => 'Payment already processed.',
                     ]
                 ),
-                
+                409
             );
         }
 
@@ -387,11 +387,11 @@ class PaymentController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => ,
+                        'error_code' => 500,
                         'error_message' => 'Error querying Square transaction',
                     ]
                 ),
-                
+                500
             );
         }
 
@@ -417,11 +417,11 @@ class PaymentController extends Controller
                 view(
                     'errors.generic',
                     [
-                        'error_code' => ,
+                        'error_code' => 409,
                         'error_message' => 'Payment discrepancy found. Please contact the Treasurer for assistance.',
                     ]
                 ),
-                
+                409
             );
         }
 

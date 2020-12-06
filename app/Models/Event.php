@@ -60,13 +60,6 @@ class Event extends Model
     use SoftDeletes;
 
     /**
-     * Attributes to mutate to dates.
-     *
-     * @var array<string>
-     */
-
-
-    /**
      * The attributes that are not mass assignable.
      *
      * @var array<string>

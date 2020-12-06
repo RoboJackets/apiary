@@ -190,13 +190,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-
-
-    /**
      * The attributes that are not mass assignable.
      *
      * @var array<string>

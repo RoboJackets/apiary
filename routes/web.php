@@ -1,5 +1,7 @@
 <?php
 
+// @phan-file-suppress PhanStaticCallToNonStatic
+
 declare(strict_types=1);
 
 use App\Http\Controllers\AttendanceExportController;
@@ -72,7 +74,9 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('autodesk', [AutodeskLibraryController::class, 'index']);
 });
 
-Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])->middleware('auth.cas.check')->name('events.rsvp');
+Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])
+    ->middleware('auth.cas.check')
+    ->name('events.rsvp');
 
 Route::view('attendance/kiosk', 'attendance.kiosk')->name('attendance.kiosk');
 

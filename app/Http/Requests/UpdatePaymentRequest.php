@@ -19,15 +19,15 @@ class UpdatePaymentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'amount'      => [
+            'amount' => [
                 'numeric',
             ],
-            'method'      => [
+            'method' => [
                 'string',
             ],
             'recorded_by' => [

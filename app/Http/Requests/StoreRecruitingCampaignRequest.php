@@ -19,12 +19,12 @@ class StoreRecruitingCampaignRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'name'                     => [
+            'name' => [
                 'required',
                 'string',
             ],
@@ -32,11 +32,11 @@ class StoreRecruitingCampaignRequest extends FormRequest
                 'numeric',
                 'exists:notification_templates,id',
             ],
-            'start_date'               => [
+            'start_date' => [
                 'date',
                 'required',
             ],
-            'end_date'                 => [
+            'end_date' => [
                 'date',
                 'required',
             ],
