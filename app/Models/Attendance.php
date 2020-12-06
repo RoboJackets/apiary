@@ -46,9 +46,9 @@ use Illuminate\Support\Collection;
  * @property string $attendable_type
  * @property string|null $source
  *
- * @property-read \App\Team|\App\Event $attendable
- * @property-read \App\User $attendee
- * @property-read \App\User $recorded
+ * @property-read \App\Models\Team|\App\Models\Event $attendable
+ * @property-read \App\Models\User $attendee
+ * @property-read \App\Models\User $recorded
  */
 class Attendance extends Model
 {
@@ -131,7 +131,7 @@ class Attendance extends Model
     /**
      * Transform an array of Attendance objects into a CSV file.
      *
-     * @param iterable<\App\Attendance> $attendance
+     * @param iterable<\App\Models\Attendance> $attendance
      */
     public static function formatAsCsv(iterable $attendance): string
     {

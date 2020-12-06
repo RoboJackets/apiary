@@ -43,8 +43,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string|null $token
  *
- * @property-read \App\Event $event
- * @property-read \App\User $user
+ * @property-read \App\Models\Event $event
+ * @property-read \App\Models\User $user
  */
 class Rsvp extends Model
 {

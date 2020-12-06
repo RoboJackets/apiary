@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $download_user_id
  * @property string $secret the secret in the URL
  *
- * @property-read \App\User $downloadUser
+ * @property-read \App\Models\User $downloadUser
  */
 class AttendanceExport extends Model
 {

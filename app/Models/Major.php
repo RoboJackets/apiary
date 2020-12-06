@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $whitepages_ou
  * @property string|null $display_name
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\User> $members
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read int|null $members_count
  */
 class Major extends Model

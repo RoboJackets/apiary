@@ -82,7 +82,6 @@ class EventController extends Controller
         }
 
         $requestedUser = $event->organizer;
-        //Enforce users only viewing themselves (read-users-own)
         if ($requestingUser->cant('update-events') && $requestingUser->id !== $requestedUser->id) {
             return response()->json([
                 'status' => 'error',

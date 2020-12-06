@@ -42,8 +42,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $recruiting_email the email address provided by the visitor
  * @property string $visit_token an identifier for this visit
  *
- * @property-read \App\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingResponse> $recruitingResponses
+ * @property-read \App\Models\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingResponse> $recruitingResponses
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read int|null $notifications_count

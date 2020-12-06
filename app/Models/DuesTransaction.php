@@ -60,11 +60,11 @@ use Illuminate\Database\Query\JoinClause;
  * @property int|null $payment_id
  * @property string $status the status of this transaction
  *
- * @property-read \App\DuesPackage $for
- * @property-read \App\DuesPackage $package
- * @property-read \App\User $swagPoloProvidedBy
- * @property-read \App\User $swagShirtProvidedBy
- * @property-read \App\User $user
+ * @property-read \App\Models\DuesPackage $for
+ * @property-read \App\Models\DuesPackage $package
+ * @property-read \App\Models\User $swagPoloProvidedBy
+ * @property-read \App\Models\User $swagShirtProvidedBy
+ * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection $payment
  * @property-read int|null $payment_count
  * @property-read string $swag_polo_status

@@ -238,7 +238,7 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
@@ -259,7 +259,7 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('distribute-swag');
             }),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
@@ -280,7 +280,7 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('create-payments');
-            })->canRun(static function (Request $request, ADT $dues_transaction): bool {
+            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('create-payments')
                     && ($dues_transaction->user()->first()->id !== $request->user()->id);
             }),

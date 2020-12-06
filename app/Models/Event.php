@@ -46,9 +46,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name The name of the event
  * @property string|null $location
  *
- * @property-read \App\User $organizer
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Attendance> $attendance
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Rsvp> $rsvps
+ * @property-read \App\Models\User $organizer
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
  * @property-read int|null $attendance_count
  * @property-read int|null $rsvps_count
  * @property-read string $organizer_name
