@@ -44,7 +44,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property-read \App\Models\NotificationTemplate $template
  * @property-read \App\Models\User $creator
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingCampaignRecipient> $recipients
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingCampaignRecipient> $recipients
  * @property-read int|null $recipients_count
  */
 class RecruitingCampaign extends Model
