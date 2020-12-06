@@ -18,15 +18,10 @@
     <issueHandlers>
         <UndefinedClass>
             <errorLevel type="suppress">
-                <directory name="routes" />
                 <directory name="database" />
+                <directory name="routes" />
             </errorLevel>
         </UndefinedClass>
-        <UndefinedConstant>
-            <errorLevel type="suppress">
-                <file name="config/database.php" />
-            </errorLevel>
-        </UndefinedConstant>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -70,11 +65,18 @@
                 <directory name="app/Http/Middleware" />
             </errorLevel>
         </MissingReturnType>
-        <UnresolvableInclude>
+        <InvalidStaticInvocation>
             <errorLevel type="suppress">
-                <file name="app/Console/Kernel.php" />
+                <directory name="app/Http/Controllers" />
+                <directory name="app/Jobs" />
+                <directory name="app/Nova/Actions" />
+                <directory name="app/Nova/Filters" />
+                <directory name="app/Nova/Lenses" />
+                <directory name="app/Nova/Metrics" />
+                <directory name="database/factories" />
+                <file name="app/Notifications/Dues/SummaryNotification.php" />
             </errorLevel>
-        </UnresolvableInclude>
+        </InvalidStaticInvocation>
         <TooManyArguments>
             <errorLevel type="suppress">
                 <directory name="routes" />

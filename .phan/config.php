@@ -36,6 +36,7 @@ return [
         'PhanPossiblyNullTypeArgument',
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',
+        'PhanStaticCallToNonStatic',
         'PhanUndeclaredClassMethod',
         'PhanUndeclaredFunction',
         'PhanUndeclaredFunctionInCallable',
