@@ -91,14 +91,7 @@ class DuesPackage extends Model
      *
      * @var array<string>
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'effective_start',
-        'effective_end',
-        'access_start',
-        'access_end',
-    ];
+
 
     /**
      * The attributes that should be cast to native types.
@@ -106,6 +99,10 @@ class DuesPackage extends Model
      * @var array<string,string>
      */
     protected $casts = [
+        'effective_start' => 'datetime',
+        'effective_end' => 'datetime',
+        'access_start' => 'datetime',
+        'access_end' => 'datetime',
         'cost' => 'float',
     ];
 

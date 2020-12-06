@@ -194,13 +194,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'accept_safety_agreement',
-        'access_override_until',
-        'resume_date',
-    ];
+
 
     /**
      * The attributes that are not mass assignable.
@@ -240,6 +234,9 @@ class User extends Authenticatable
      * @var array<string,string>
      */
     protected $casts = [
+        'accept_safety_agreement' => 'datetime',
+        'access_override_until' => 'datetime',
+        'resume_date' => 'datetime',
         'github_invite_pending' => 'boolean',
         'clickup_invite_pending' => 'boolean',
         'autodesk_invite_pending' => 'boolean',

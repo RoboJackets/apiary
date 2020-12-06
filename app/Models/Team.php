@@ -104,11 +104,8 @@ class Team extends Model
      *
      * @var array<string>
      */
-    protected $dates = [
-        'attendance_secret_expiration',
-        'created_at',
-        'deleted_at',
-        'updated_at',
+    protected $casts = [
+        'attendance_secret_expiration' => 'datetime',
     ];
 
     /**
