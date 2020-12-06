@@ -31,7 +31,7 @@ class ClickUpController extends Controller
         }
 
         if (null === $user->clickup_email) {
-            return redirect('/profile');
+            return redirect()->to('/profile');
         }
 
         return redirect(config('jedi.host').'/self-service/clickup');

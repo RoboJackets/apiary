@@ -15,7 +15,7 @@ class RedirectController extends Controller
      */
     public function logout()
     {
-        return redirect('logout');
+        return redirect()->to('logout');
     }
 
     public function login(): RedirectResponse
