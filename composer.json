@@ -36,7 +36,7 @@
         "subfission/cas": "4.0.0",
         "ukfast/laravel-health-check": "1.8.0",
         "uxweb/sweet-alert": "dev-master",
-        "vyuldashev/nova-permission": "2.9.0"
+        "vyuldashev/nova-permission": "2.10.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "1.6.0",
