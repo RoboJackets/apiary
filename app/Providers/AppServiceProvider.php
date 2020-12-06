@@ -54,9 +54,9 @@ class AppServiceProvider extends ServiceProvider
         DuesPackage::observe(DuesPackageObserver::class);
 
         Relation::morphMap([
-            'event' => 'App\Models\Event',
-            'dues-transaction' => 'App\Models\DuesTransaction',
-            'team' => 'App\Models\Team',
+            'event' => \App\Models\Event::class,
+            'dues-transaction' => \App\Models\DuesTransaction::class,
+            'team' => \App\Models\Team::class,
         ]);
     }
 

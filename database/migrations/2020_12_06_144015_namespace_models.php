@@ -20,9 +20,9 @@ class NamespaceModels extends Migration
             ->update(['payable_type' => 'dues-transaction']);
 
         DB::table('model_has_roles')
-            ->update(['model_type' => 'App\Models\User']);
+            ->update(['model_type' => \App\Models\User::class]);
         DB::table('model_has_permissions')
-            ->update(['model_type' => 'App\Models\User']);
+            ->update(['model_type' => \App\Models\User::class]);
     }
 
     /**
