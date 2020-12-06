@@ -14,6 +14,7 @@ use App\Observers\AttendanceObserver;
 use App\Observers\DuesPackageObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\UserObserver;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
@@ -51,6 +52,12 @@ class AppServiceProvider extends ServiceProvider
         Payment::observe(PaymentObserver::class);
         Attendance::observe(AttendanceObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
+
+        Relation::morphMap([
+            'event' => 'App\Models\Event',
+            'dues-transaction' => 'App\Models\DuesTransaction',
+            'team' => 'App\Models\Team',
+        ]);
     }
 
     /**

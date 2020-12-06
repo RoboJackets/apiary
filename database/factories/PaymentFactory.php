@@ -28,7 +28,7 @@ class PaymentFactory extends Factory
     {
         return [
             'payable_id' => $this->faker->numberBetween(0, 200),
-            'payable_type' => $this->faker->randomElement([DuesTransaction::class, Event::class]),
+            'payable_type' => $this->faker->randomElement([DuesTransaction::getMorphClass(), Event::getMorphClass()]),
             'amount' => (string) $this->faker->randomFloat(2, 0, 1000),
             'processing_fee' => (string) $this->faker->randomFloat(2, 0, 1000),
             'method' => 'square',

@@ -179,7 +179,7 @@ class AttendanceController extends Controller
         // Get average attendance by day of week from the range given. Selects the weekday number and the weekday name
         // so it can be sorted more easily; the number is trimmed out in the map method
         $attendanceByDay = Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->where('attendable_type', Team::class)
+            ->where('attendable_type', Team::getMorphClass())
             ->selectRaw('date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
             ->groupBy('day')
             ->orderBy('day', 'asc')
@@ -189,7 +189,7 @@ class AttendanceController extends Controller
             });
 
         $attendanceByDayAndTeam = Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->where('attendable_type', Team::class)
+            ->where('attendable_type', Team::getMorphClass())
             ->selectRaw('attendable_id, date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
             ->groupBy('day', 'attendable_id')
             ->orderBy('day', 'asc')
@@ -217,7 +217,7 @@ class AttendanceController extends Controller
             });
 
         $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->where('attendable_type', Team::class)
+            ->where('attendable_type', Team::getMorphClass())
             ->selectRaw('date_format(created_at, \'%Y %U\') as week, count(distinct gtid) as aggregate')
             ->groupBy('week')
             ->get()
@@ -229,7 +229,7 @@ class AttendanceController extends Controller
         $attendanceByTeam = Attendance::selectRaw(
             'date_format(attendance.created_at, \'%x %v\') as week, count(distinct gtid) as aggregate, attendable_id, '
             .'teams.name, teams.visible'
-        )->where('attendable_type', Team::class)
+        )->where('attendable_type', Team::getMorphClass())
             ->when($user->cant('read-teams-hidden'), static function (Builder $query): void {
                 $query->where('visible', 1);
             })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')

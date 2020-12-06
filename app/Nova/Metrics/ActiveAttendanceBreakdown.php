@@ -55,7 +55,7 @@ class ActiveAttendanceBreakdown extends Partition
         if (isset($request->resourceId)) {
             $query = $query
                 ->where('attendable_id', $request->resourceId)
-                ->where('attendable_type', get_class($request->model()));
+                ->where('attendable_type', $request->model()->getMorphClass());
         }
 
         if (! $this->showAllTime) {
