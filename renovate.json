@@ -11,10 +11,7 @@
     ],
     "reviewers": [],
     "ignoreDeps": [
-        "ocramius/package-versions",
-        "square/connect",
-        "mockery/mockery",
-        "doctrine/dbal"
+        "square/connect"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
