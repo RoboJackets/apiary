@@ -24,12 +24,28 @@ class StoreDuesPackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'               => 'required|string',
-            'eligible_for_shirt' => 'boolean',
-            'eligible_for_polo'  => 'boolean',
-            'effective_start'    => 'required|date',
-            'effective_end'      => 'required|date',
-            'cost'               => 'required|numeric',
+            'name'               => [
+                'required',
+                'string',
+            ],
+            'eligible_for_shirt' => [
+                'boolean',
+            ],
+            'eligible_for_polo'  => [
+                'boolean',
+            ],
+            'effective_start'    => [
+                'required',
+                'date',
+            ],
+            'effective_end'      => [
+                'required',
+                'date',
+            ],
+            'cost'               => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 

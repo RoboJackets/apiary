@@ -24,8 +24,13 @@ class UpdateRecruitingVisitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'recruiting_name'  => 'max:127',
-            'recruiting_email' => 'email|max:127',
+            'recruiting_name'  => [
+                'max:127',
+            ],
+            'recruiting_email' => [
+                'email',
+                'max:127',
+            ],
         ];
     }
 

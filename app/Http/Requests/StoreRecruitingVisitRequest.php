@@ -24,8 +24,15 @@ class StoreRecruitingVisitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'recruiting_email' => 'required|email|max:255',
-            'recruiting_name' => 'required|max:255',
+            'recruiting_email' => [
+                'required',
+                'email',
+                'max:255',
+            ],
+            'recruiting_name' => [
+                'required',
+                'max:255',
+            ],
         ];
     }
 }

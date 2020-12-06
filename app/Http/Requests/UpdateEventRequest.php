@@ -24,13 +24,34 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'                 => 'required|max:255',
-            'price'                => 'numeric|nullable',
-            'allow_anonymous_rsvp' => 'required|boolean',
-            'organizer_id'         => 'required|exists:users,id',
-            'location'             => 'max:255|nullable',
-            'start_time'           => 'date|nullable',
-            'end_time'             => 'date|nullable',
+            'name'                 => [
+                'required',
+                'max:255',
+            ],
+            'price'                => [
+                'numeric',
+                'nullable',
+            ],
+            'allow_anonymous_rsvp' => [
+                'required',
+                'boolean',
+            ],
+            'organizer_id'         => [
+                'required',
+                'exists:users,id',
+            ],
+            'location'             => [
+                'max:255',
+                'nullable',
+            ],
+            'start_time'           => [
+                'date',
+                'nullable',
+            ],
+            'end_time'             => [
+                'date',
+                'nullable',
+            ],
         ];
     }
 

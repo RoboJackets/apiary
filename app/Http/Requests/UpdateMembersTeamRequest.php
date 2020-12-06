@@ -24,8 +24,15 @@ class UpdateMembersTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|numeric|exists:users,id',
-            'action'  => 'required|in:join,leave',
+            'user_id' => [
+                'required',
+                'numeric',
+                'exists:users,id',
+            ],
+            'action'  => [
+                'required',
+                'in:join,leave',
+            ],
         ];
     }
 

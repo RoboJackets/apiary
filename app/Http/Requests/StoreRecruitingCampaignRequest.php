@@ -24,10 +24,22 @@ class StoreRecruitingCampaignRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'                     => 'required|string',
-            'notification_template_id' => 'numeric|exists:notification_templates,id',
-            'start_date'               => 'date|required',
-            'end_date'                 => 'date|required',
+            'name'                     => [
+                'required',
+                'string',
+            ],
+            'notification_template_id' => [
+                'numeric',
+                'exists:notification_templates,id',
+            ],
+            'start_date'               => [
+                'date',
+                'required',
+            ],
+            'end_date'                 => [
+                'date',
+                'required',
+            ],
         ];
     }
 

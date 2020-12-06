@@ -24,15 +24,38 @@ class UpdateTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'               => 'string',
-            'description'        => 'string|max:4096|nullable',
-            'attendable'         => 'boolean',
-            'visible'            => 'boolean',
-            'visible_on_kiosk'   => 'boolean',
-            'self_serviceable'   => 'boolean',
-            'mailing_list_name'  => 'string|nullable',
-            'slack_channel_id'   => 'string|nullable',
-            'slack_channel_name' => 'string|nullable',
+            'name'               => [
+                'string',
+            ],
+            'description'        => [
+                'string',
+                'max:4096',
+                'nullable',
+            ],
+            'attendable'         => [
+                'boolean',
+            ],
+            'visible'            => [
+                'boolean',
+            ],
+            'visible_on_kiosk'   => [
+                'boolean',
+            ],
+            'self_serviceable'   => [
+                'boolean',
+            ],
+            'mailing_list_name'  => [
+                'string',
+                'nullable',
+            ],
+            'slack_channel_id'   => [
+                'string',
+                'nullable',
+            ],
+            'slack_channel_name' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 

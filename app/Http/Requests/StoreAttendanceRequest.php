@@ -24,11 +24,25 @@ class StoreAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'attendable_type' => 'required|string',
-            'attendable_id'   => 'required|numeric',
-            'gtid'            => 'required|numeric',
-            'source'          => 'required|string',
-            'created_at'      => 'date',
+            'attendable_type' => [
+                'required',
+                'string',
+            ],
+            'attendable_id'   => [
+                'required',
+                'numeric',
+            ],
+            'gtid'            => [
+                'required',
+                'numeric',
+            ],
+            'source'          => [
+                'required',
+                'string',
+            ],
+            'created_at'      => [
+                'date',
+            ],
         ];
     }
 

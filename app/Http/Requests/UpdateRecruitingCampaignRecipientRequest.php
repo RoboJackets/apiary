@@ -24,8 +24,14 @@ class UpdateRecruitingCampaignRecipientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email_address'          => 'nullable',
-            'user_id'                => 'exists:users,id|numeric|nullable',
+            'email_address'          => [
+                'nullable',
+            ],
+            'user_id'                => [
+                'exists:users,id',
+                'numeric',
+                'nullable',
+            ],
         ];
     }
 

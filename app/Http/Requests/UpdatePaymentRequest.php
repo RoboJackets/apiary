@@ -24,9 +24,16 @@ class UpdatePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount'      => 'numeric',
-            'method'      => 'string',
-            'recorded_by' => 'numeric|exists:users,id',
+            'amount'      => [
+                'numeric',
+            ],
+            'method'      => [
+                'string',
+            ],
+            'recorded_by' => [
+                'numeric',
+                'exists:users,id',
+            ],
         ];
     }
 

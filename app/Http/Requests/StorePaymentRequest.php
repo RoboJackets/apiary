@@ -26,15 +26,28 @@ class StorePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount'       => 'required|numeric',
+            'amount'       => [
+                'required',
+                'numeric',
+            ],
             'method'       => [
                 'required',
                 'string',
                 Rule::in(array_keys(Payment::$methods)),
             ],
-            'recorded_by'  => 'required|numeric|exists:users,id',
-            'payable_type' => 'required|string',
-            'payable_id'   => 'required|numeric',
+            'recorded_by'  => [
+                'required',
+                'numeric',
+                'exists:users,id',
+            ],
+            'payable_type' => [
+                'required',
+                'string',
+            ],
+            'payable_id'   => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 

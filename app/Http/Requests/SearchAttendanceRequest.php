@@ -24,10 +24,21 @@ class SearchAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'attendable_type' => 'required',
-            'attendable_id'   => 'required|numeric',
-            'start_date'      => 'date|nullable',
-            'end_date'        => 'date|nullable',
+            'attendable_type' => [
+                'required',
+            ],
+            'attendable_id'   => [
+                'required',
+                'numeric',
+            ],
+            'start_date'      => [
+                'date',
+                'nullable',
+            ],
+            'end_date'        => [
+                'date',
+                'nullable',
+            ],
         ];
     }
 

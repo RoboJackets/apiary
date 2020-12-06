@@ -24,9 +24,17 @@ class StoreNotificationTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string',
-            'subject'       => 'required|string',
-            'body_markdown' => 'required',
+            'name'          => [
+                'required',
+                'string',
+            ],
+            'subject'       => [
+                'required',
+                'string',
+            ],
+            'body_markdown' => [
+                'required',
+            ],
         ];
     }
 

@@ -24,7 +24,10 @@ class StoreResumeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'resume' => 'required|file',
+            'resume' => [
+                'required',
+                'file',
+            ],
         ];
     }
 

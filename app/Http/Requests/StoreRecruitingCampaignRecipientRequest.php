@@ -24,10 +24,21 @@ class StoreRecruitingCampaignRecipientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'recipients'                       => 'required|array',
-            'recipients.*.email_address'       => 'required',
-            'recipients.*.recruiting_visit_id' => 'exists:recruiting_visits,id|numeric',
-            'recipients.*.user_id'             => 'exists:users,id|numeric',
+            'recipients'                       => [
+                'required',
+                'array',
+            ],
+            'recipients.*.email_address'       => [
+                'required',
+            ],
+            'recipients.*.recruiting_visit_id' => [
+                'exists:recruiting_visits,id',
+                'numeric',
+            ],
+            'recipients.*.user_id'             => [
+                'exists:users,id',
+                'numeric',
+            ],
         ];
     }
 

@@ -24,9 +24,16 @@ class SendNotificationManualNotificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'emails'        => 'required',
-            'template_type' => 'required|in:recruiting,database',
-            'template_id'   => 'numeric',
+            'emails'        => [
+                'required',
+            ],
+            'template_type' => [
+                'required',
+                'in:recruiting,database',
+            ],
+            'template_id'   => [
+                'numeric',
+            ],
         ];
     }
 

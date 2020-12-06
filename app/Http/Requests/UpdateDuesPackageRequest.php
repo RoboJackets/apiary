@@ -24,12 +24,24 @@ class UpdateDuesPackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'               => 'string',
-            'eligible_for_shirt' => 'boolean',
-            'eligible_for_polo'  => 'boolean',
-            'effective_start'    => 'date',
-            'effective_end'      => 'date',
-            'cost'               => 'numeric',
+            'name'               => [
+                'string',
+            ],
+            'eligible_for_shirt' => [
+                'boolean',
+            ],
+            'eligible_for_polo'  => [
+                'boolean',
+            ],
+            'effective_start'    => [
+                'date',
+            ],
+            'effective_end'      => [
+                'date',
+            ],
+            'cost'               => [
+                'numeric',
+            ],
         ];
     }
 

@@ -24,8 +24,12 @@ class UpdateNotificationTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'    => 'string',
-            'subject' => 'string',
+            'name'    => [
+                'string',
+            ],
+            'subject' => [
+                'string',
+            ],
         ];
     }
 

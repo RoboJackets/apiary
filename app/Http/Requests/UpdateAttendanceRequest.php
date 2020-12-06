@@ -24,11 +24,23 @@ class UpdateAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'attendable_type' => 'string',
-            'attendable_id'   => 'numeric',
-            'gtid'            => 'numeric|exists:users',
-            'source'          => 'string',
-            'recorded_by'     => 'numeric|exists:users',
+            'attendable_type' => [
+                'string',
+            ],
+            'attendable_id'   => [
+                'numeric',
+            ],
+            'gtid'            => [
+                'numeric',
+                'exists:users',
+            ],
+            'source'          => [
+                'string',
+            ],
+            'recorded_by'     => [
+                'numeric',
+                'exists:users',
+            ],
         ];
     }
 
