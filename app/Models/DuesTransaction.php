@@ -240,7 +240,7 @@ class DuesTransaction extends Model
                                 ->where('dues_transactions.swag_polo_provided', '=', null);
                         });
                 });
-        })->leftJoin('payments', static function (JoinClause $j): void {
+        })->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                 ->where('payments.payable_type', '=', $this->getMorphClass())
                 ->where('payments.deleted_at', '=', null);
@@ -256,7 +256,7 @@ class DuesTransaction extends Model
     {
         return $query->select(
             'dues_transactions.*'
-        )->leftJoin('payments', static function (JoinClause $j): void {
+        )->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
@@ -281,7 +281,7 @@ class DuesTransaction extends Model
     {
         return $query->select(
             'dues_transactions.*'
-        )->leftJoin('payments', static function (JoinClause $j): void {
+        )->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
