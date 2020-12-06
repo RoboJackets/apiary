@@ -29,7 +29,7 @@ class AttendancePerWeek extends Trend
             $query = (new Attendance())
                 ->newQuery()
                 ->where('attendable_id', $request->resourceId)
-                ->where('attendable_type', $request->resource->getMorphClass());
+                ->where('attendable_type', $request->model()->getMorphClass());
         }
 
         // Aggregate based on counting distinct values in the gtid column

@@ -27,7 +27,7 @@ class PaymentMethodBreakdown extends Partition
     public function calculate(Request $request): PartitionResult
     {
         return $this->result(
-            Payment::where('payable_type', $request->resource->getMorphClass())
+            Payment::where('payable_type', $request->model()->getMorphClass())
                     ->where('amount', '>', 0)
                     ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                         $q->select('id')
