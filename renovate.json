@@ -26,7 +26,8 @@
     },
     "hostRules": [
         {
-            "domainName": "nova.laravel.com",
+            "hostName": "nova.laravel.com",
+            "hostType": "packagist",
             "username": "developers@robojackets.org",
             "encrypted": {
                 "password": "rN/1UpBZXEzT6UszQVO8Blwn4D3wEHrl0twtx+K92/0m6JiWG0eoq1vyuNPmaB5c5dSUULwtbHeIGPrj6iXZIcBUYHDOt9zlh2ORY755qebNP8GFIuI1E9obgWKjkyVamZVFyKWDT7lNDY2VJ5ahCiGTnz3Nl8gQC7u1aeEnZfWoqq2/eQLWa4gW+3unEWQtDdEiJAmAuayEuKgiaUo/H437Qc//dE+T3ELJ2xKyqzIKBFeOQ08Mgv0suq4qssyxsUG9reVzStnXnn0MfwSt31sB7r+X1Cyjws/LHFNGw/R5oUay8Yz3DYYjO+HLjXvkwyi07ICrFa+9pHPOSamdOg=="
