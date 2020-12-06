@@ -51,9 +51,8 @@ use Laravel\Nova\Actions\Actionable;
  */
 class RecruitingVisit extends Model
 {
-    use HasFactory;
-
     use Actionable;
+    use HasFactory;
     use Notifiable;
     use SoftDeletes;
 

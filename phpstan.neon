@@ -51,6 +51,5 @@ parameters:
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\HasMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\HasMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
-    - '#Variable \$factory might not be defined\.#'
     - '#Variable property access on App\\User\.#'
     - '#Property App\\User::\$access_override_until \(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\Carbon\.#'

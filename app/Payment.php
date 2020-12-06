@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -62,6 +63,7 @@ use Laravel\Nova\Actions\Actionable;
 class Payment extends Model
 {
     use Actionable;
+    use HasFactory;
     use SoftDeletes;
 
     /**

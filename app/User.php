@@ -8,6 +8,7 @@ use BadMethodCallException;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -158,12 +159,13 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-    use SoftDeletes;
-    use Notifiable;
-    use HasRoles;
     use Actionable;
     use HasBelongsToManyEvents;
+    use HasFactory;
     use HasRelationshipObservables;
+    use HasRoles;
+    use Notifiable;
+    use SoftDeletes;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
