@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b911391894f68b18448e8304d158863",
+    "content-hash": "80881b0ff9440627d275633d63677010",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -8207,20 +8207,20 @@
         },
         {
             "name": "vyuldashev/nova-permission",
-            "version": "v2.9.0",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vyuldashev/nova-permission.git",
-                "reference": "5c5a1a94495873136944724bd8732c9e477487ab"
+                "reference": "29413157778ce2974f5250e399770942e5652531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/5c5a1a94495873136944724bd8732c9e477487ab",
-                "reference": "5c5a1a94495873136944724bd8732c9e477487ab",
+                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/29413157778ce2974f5250e399770942e5652531",
+                "reference": "29413157778ce2974f5250e399770942e5652531",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2",
+                "php": "^7.2|^8.0",
                 "spatie/laravel-permission": "^3.0"
             },
             "type": "library",
@@ -8251,9 +8251,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vyuldashev/nova-permission/issues",
-                "source": "https://github.com/vyuldashev/nova-permission/tree/master"
+                "source": "https://github.com/vyuldashev/nova-permission/tree/v2.10.0"
             },
-            "time": "2020-04-25T18:30:25+00:00"
+            "time": "2020-12-03T18:53:49+00:00"
         },
         {
             "name": "webmozart/assert",
