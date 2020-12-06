@@ -45,7 +45,7 @@ class SummaryNotification extends Notification
         // Nothing else will update it as far as I can tell.
         $payments = Payment::whereBetween('updated_at', [$startOfDay, $endOfDay])
             ->where('amount', '>', 0)
-            ->where('payable_type', DuesTransaction::getMorphClass())
+            ->where('payable_type', DuesTransaction::getMorphClassStatic())
             ->get();
 
         return $payments;

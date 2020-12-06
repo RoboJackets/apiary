@@ -101,7 +101,7 @@ class AddPayment extends Action
         $payment->method = $fields->method;
         $payment->amount = $entered_amount;
         $payment->payable_id = $models->first()->id;
-        $payment->payable_type = DuesTransaction::getMorphClass();
+        $payment->payable_type = DuesTransaction::getMorphClassStatic();
         $payment->notes = 'Added in Nova';
         $payment->save();
 

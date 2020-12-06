@@ -65,18 +65,6 @@
                 <directory name="app/Http/Middleware" />
             </errorLevel>
         </MissingReturnType>
-        <InvalidStaticInvocation>
-            <errorLevel type="suppress">
-                <directory name="app/Http/Controllers" />
-                <directory name="app/Jobs" />
-                <directory name="app/Nova/Actions" />
-                <directory name="app/Nova/Filters" />
-                <directory name="app/Nova/Lenses" />
-                <directory name="app/Nova/Metrics" />
-                <directory name="database/factories" />
-                <file name="app/Notifications/Dues/SummaryNotification.php" />
-            </errorLevel>
-        </InvalidStaticInvocation>
         <TooManyArguments>
             <errorLevel type="suppress">
                 <directory name="routes" />

@@ -18,7 +18,7 @@ class TotalCollections extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        $query = Payment::where('payable_type', DuesTransaction::getMorphClass())
+        $query = Payment::where('payable_type', DuesTransaction::getMorphClassStatic())
             ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')

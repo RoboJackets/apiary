@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\GetMorphClassStatic;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
@@ -77,11 +78,12 @@ use Laravel\Nova\Actions\Actionable;
 class Team extends Model
 {
     use Actionable;
-    use SoftDeletes;
-    use HasManyEvents;
+    use GetMorphClassStatic;
     use HasBelongsToManyEvents;
+    use HasManyEvents;
     use HasRelationshipObservables;
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.

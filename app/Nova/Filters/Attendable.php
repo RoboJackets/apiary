@@ -45,7 +45,7 @@ class Attendable extends Filter
         $parts = explode(',', $value);
         $attendableType = $parts[0];
         $attendableID = $parts[1];
-        if (! in_array($attendableType, [Event::getMorphClass(), Team::getMorphClass()], true)
+        if (! in_array($attendableType, [Event::getMorphClassStatic(), Team::getMorphClassStatic()], true)
             || ! is_numeric($attendableID)) {
             return $query;
         }
@@ -68,14 +68,14 @@ class Attendable extends Filter
                 ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
                 })->get()->mapWithKeys(static function (Team $item): array {
-                    return ['Team: '.$item->name => Team::getMorphClass().','.$item->id];
+                    return ['Team: '.$item->name => $item->getMorphClass().','.$item->id];
                 })->toArray();
         }
 
         $events = [];
         if ($this->includeEvents && $request->user()->can('read-events')) {
             $events = Event::all()->mapWithKeys(static function (Event $item): array {
-                return ['Event: '.$item->name => Event::getMorphClass().','.$item->id];
+                return ['Event: '.$item->name => $item->getMorphClass().','.$item->id];
             })->toArray();
         }
 

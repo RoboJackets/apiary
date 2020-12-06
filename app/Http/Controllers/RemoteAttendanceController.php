@@ -27,7 +27,7 @@ class RemoteAttendanceController extends Controller
             );
         }
 
-        $attendable_type = Team::getMorphClass();
+        $attendable_type = $team->getMorphClass();
         $attendable_id = $team->id;
         $gtid = $request->user()->gtid;
 

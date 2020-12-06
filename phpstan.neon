@@ -33,6 +33,7 @@ parameters:
     - '#Dynamic call to static method Illuminate\\Auth\\SessionGuard::authenticate\(\)\.#'
     - '#Method App\\Http\\Controllers\\[a-zA-Z]+::[a-zA-Z]+\(\) has no return typehint specified\.#'
     - '#Method App\\Http\\Middleware\\[a-zA-Z]+::handle\(\) has no return typehint specified\.#'
+    - '#Method App\\Models\\[a-zA-Z]+::getMorphClassStatic\(\) should return string but returns int\|string\|false\.#'
     - '#Method App\\Models\\RecruitingVisit::save\(\) has parameter \$options with no value type specified in iterable type array\.#'
     - '#Method App\\Notifications\\[a-zA-Z]+::toArray\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Notifications\\[a-zA-Z]+::toMail\(\) has parameter \$notifiable with no typehint specified\.#'
@@ -54,5 +55,4 @@ parameters:
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\HasMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\HasMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.#'
-    - '#Static call to instance method Illuminate\\Database\\Eloquent\\Model::getMorphClass\(\)\.#'
     - '#Variable property access on App\\Models\\User\.#'

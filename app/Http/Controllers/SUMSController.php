@@ -37,7 +37,7 @@ class SUMSController extends Controller
             );
         }
 
-        $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClass())
+        $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
             ->orderBy('created_at', 'desc')->first();
 
         if (null !== $lastAttendance
