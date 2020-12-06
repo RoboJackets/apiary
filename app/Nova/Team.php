@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\Team as AppModelsTeam;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\TotalTeamMembers;
 use App\Nova\ResourceTools\CollectAttendance;
-use App\Models\Team as AppTeam;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -96,8 +96,9 @@ class Team extends Resource
             CollectAttendance::make()
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
-                        $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && false === $resource->attendable) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class)
+                            && false === $resource->attendable) {
                             return false;
                         }
                     }

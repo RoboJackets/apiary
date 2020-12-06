@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Notifications\Dues;
 
-use App\Models\DuesPackage;
 use App\Mail\Dues\RequestComplete as Mailable;
+use App\Models\DuesPackage;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

@@ -65,9 +65,9 @@ use Laravel\Nova\Actions\Actionable;
  * @property string|null $slack_channel_id
  * @property string|null $slack_channel_name
  *
- * @property-read \App\User $projectManager
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Attendance> $attendance
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\User> $members
+ * @property-read \App\Models\User $projectManager
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read int|null $attendance_count

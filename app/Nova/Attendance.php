@@ -23,7 +23,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for attendance.
  *
- * @property ?\App\User $attendee The user associated with the attendance record, if available
+ * @property ?\App\Models\User $attendee The user associated with the attendance record, if available
  */
 class Attendance extends Resource
 {

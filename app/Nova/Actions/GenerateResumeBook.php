@@ -24,7 +24,7 @@ class GenerateResumeBook extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\User>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\User>  $models
      *
      * @return array<string,string>
      *

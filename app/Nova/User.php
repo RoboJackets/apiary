@@ -6,12 +6,12 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\User as AppModelsUser;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
-use App\Models\User as AU;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -451,28 +451,28 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
             (new Actions\OverrideAccess())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
             (new Actions\ResetApiToken())
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 }),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('send-notifications');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->can('send-notifications');
                 }),
             (new Actions\GenerateResumeBook())
@@ -483,7 +483,7 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
         ];

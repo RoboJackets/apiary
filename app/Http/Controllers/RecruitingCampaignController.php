@@ -8,10 +8,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecruitingCampaignRequest;
 use App\Http\Resources\RecruitingCampaign as RecruitingCampaignResource;
-use App\Notifications\GeneralInterestNotification;
 use App\Models\RecruitingCampaign;
 use App\Models\RecruitingCampaignRecipient;
 use App\Models\RecruitingVisit;
+use App\Notifications\GeneralInterestNotification;
 use App\Traits\AuthorizeInclude;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Carbon\Carbon;

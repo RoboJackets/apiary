@@ -6,8 +6,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Notifications\Payment\ConfirmationNotification;
+use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Notifications\Payment\ConfirmationNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -100,7 +101,7 @@ class AddPayment extends Action
         $payment->method = $fields->method;
         $payment->amount = $entered_amount;
         $payment->payable_id = $models->first()->id;
-        $payment->payable_type = \App\Models\DuesTransaction::class;
+        $payment->payable_type = DuesTransaction::class;
         $payment->notes = 'Added in Nova';
         $payment->save();
 

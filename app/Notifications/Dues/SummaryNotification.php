@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Notifications\Dues;
 
 use App\Models\DuesTransaction;
-use App\Notifiables\TreasurerNotifiable;
 use App\Models\Payment;
 use App\Models\User;
+use App\Notifiables\TreasurerNotifiable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;

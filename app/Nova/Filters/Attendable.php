@@ -45,7 +45,7 @@ class Attendable extends Filter
         $parts = explode(',', $value);
         $attendableType = $parts[0];
         $attendableID = $parts[1];
-        if (! in_array($attendableType, [\App\Models\Event::class, \App\Models\Team::class], true) || ! is_numeric($attendableID)) {
+        if (! in_array($attendableType, [Event::class, Team::class], true) || ! is_numeric($attendableID)) {
             return $query;
         }
 

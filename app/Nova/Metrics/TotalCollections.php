@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Models\DuesTransaction;
 use App\Models\Payment;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class TotalCollections extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        $query = Payment::where('payable_type', \App\Models\DuesTransaction::class)
+        $query = Payment::where('payable_type', DuesTransaction::class)
             ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')

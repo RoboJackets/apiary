@@ -8,8 +8,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SendNotificationManualNotificationRequest;
 use App\Mail\DatabaseMailable;
-use App\Notifications\GeneralInterestNotification;
 use App\Models\RecruitingVisit;
+use App\Notifications\GeneralInterestNotification;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;

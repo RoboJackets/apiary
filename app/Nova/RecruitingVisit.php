@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Actions\SendRecruitingEmail;
 use App\Models\RecruitingResponse;
+use App\Nova\Actions\SendRecruitingEmail;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;

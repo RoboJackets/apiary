@@ -23,7 +23,7 @@ class ResetRemoteAttendance extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\Team>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\Team>  $models
      *
      * @return array<string,string>
      */

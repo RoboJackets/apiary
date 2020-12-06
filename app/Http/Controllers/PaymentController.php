@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\DuesTransaction;
 use App\Events\PaymentSuccess;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
-use App\Notifications\Payment\ConfirmationNotification as Confirm;
+use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Notifications\Payment\ConfirmationNotification as Confirm;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\Eloquent\Builder as Eloquent;
 use Illuminate\Database\QueryException;
