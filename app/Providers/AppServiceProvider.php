@@ -8,7 +8,10 @@ namespace App\Providers;
 
 use App\Models\Attendance;
 use App\Models\DuesPackage;
+use App\Models\DuesTransaction;
+use App\Models\Event;
 use App\Models\Payment;
+use App\Models\Team;
 use App\Models\User;
 use App\Observers\AttendanceObserver;
 use App\Observers\DuesPackageObserver;
@@ -54,9 +57,9 @@ class AppServiceProvider extends ServiceProvider
         DuesPackage::observe(DuesPackageObserver::class);
 
         Relation::morphMap([
-            'event' => \App\Models\Event::class,
-            'dues-transaction' => \App\Models\DuesTransaction::class,
-            'team' => \App\Models\Team::class,
+            'event' => Event::class,
+            'dues-transaction' => DuesTransaction::class,
+            'team' => Team::class,
         ]);
     }
 
