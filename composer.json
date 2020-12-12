@@ -40,7 +40,7 @@
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "1.6.0",
-        "facade/ignition": "2.5.2",
+        "facade/ignition": "2.5.3",
         "filp/whoops": "2.9.1",
         "mockery/mockery": "1.4.2",
         "nunomaduro/collision": "5.1.0",
