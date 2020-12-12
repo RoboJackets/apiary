@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7896ac5e251f5576289f0785ed56cf11",
+    "content-hash": "00ece5a3712dca1b6e41ea029036ec34",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -622,16 +622,16 @@
         },
         {
             "name": "chelout/laravel-relationship-events",
-            "version": "v1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chelout/laravel-relationship-events.git",
-                "reference": "88adfd2caa52c22821595fa25e935d029aa35fd8"
+                "reference": "2d454338bbcf28a07151098fac621fe672855902"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/88adfd2caa52c22821595fa25e935d029aa35fd8",
-                "reference": "88adfd2caa52c22821595fa25e935d029aa35fd8",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/2d454338bbcf28a07151098fac621fe672855902",
+                "reference": "2d454338bbcf28a07151098fac621fe672855902",
                 "shasum": ""
             },
             "require": {
@@ -639,7 +639,7 @@
                 "illuminate/database": "^6.0|^7.0|^8.0",
                 "illuminate/events": "^6.0|^7.0|^8.0",
                 "illuminate/support": "^6.0|^7.0|^8.0",
-                "php": "^7.2"
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^4.0|^5.0|^6.0",
@@ -678,9 +678,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chelout/laravel-relationship-events/issues",
-                "source": "https://github.com/chelout/laravel-relationship-events/tree/v1.3.0"
+                "source": "https://github.com/chelout/laravel-relationship-events/tree/1.4.0"
             },
-            "time": "2020-09-08T17:18:57+00:00"
+            "time": "2020-12-09T13:28:52+00:00"
         },
         {
             "name": "composer/ca-bundle",
