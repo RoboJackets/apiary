@@ -3452,9 +3452,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
+                "url": "https://composer.robojackets.org/1607878418/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
                 "reference": "7caf590d32760a304772419303a109261406763a",
-                "shasum": "39c013f9510ac030c99a0f2357963ad7ebedfa9b"
+                "shasum": "a26bc426a3096719a94ef65bee909675b7e598a0"
             },
             "require": {
                 "ext-json": "*",
@@ -4643,9 +4643,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
+                "url": "https://composer.robojackets.org/1607878418/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
                 "reference": "22e01ddd8df96f297407095be5cd74480aa10469",
-                "shasum": "8695ee6ff5c6f74a77c98d97f5f82d5d40a1ca82"
+                "shasum": "12c49dc16f96c2e7191fc4e13ef0a3d49c752109"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -8624,22 +8624,22 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.7.0",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7"
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/e8d808670b8f882188368faaf1144448c169c0b7",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/fe390591e0241955f22eb9ba327d137e501c771c",
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
                 "php": ">=5.3",
-                "squizlabs/php_codesniffer": "^2 || ^3 || 4.0.x-dev"
+                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
@@ -8690,7 +8690,7 @@
                 "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
                 "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
             },
-            "time": "2020-06-25T14:57:39+00:00"
+            "time": "2020-12-07T18:04:37+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -9839,16 +9839,16 @@
         },
         {
             "name": "phan/phan",
-            "version": "3.2.6",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "e14110d4bef8643562b02a4003015c2c0dcc9fe4"
+                "reference": "642844acf5acf755d32cc104a4e3ced5521b00d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/e14110d4bef8643562b02a4003015c2c0dcc9fe4",
-                "reference": "e14110d4bef8643562b02a4003015c2c0dcc9fe4",
+                "url": "https://api.github.com/repos/phan/phan/zipball/642844acf5acf755d32cc104a4e3ced5521b00d3",
+                "reference": "642844acf5acf755d32cc104a4e3ced5521b00d3",
                 "shasum": ""
             },
             "require": {
@@ -9910,9 +9910,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/3.2.6"
+                "source": "https://github.com/phan/phan/tree/3.2.7"
             },
-            "time": "2020-11-27T19:39:49+00:00"
+            "time": "2020-12-13T16:39:58+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -10248,16 +10248,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.61",
+            "version": "0.12.62",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2096111b454b018ba6edcd4852b54a78e4ccbeca"
+                "reference": "632393159335bbbdd7ca07d19b3ad50d76aa7fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2096111b454b018ba6edcd4852b54a78e4ccbeca",
-                "reference": "2096111b454b018ba6edcd4852b54a78e4ccbeca",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/632393159335bbbdd7ca07d19b3ad50d76aa7fd8",
+                "reference": "632393159335bbbdd7ca07d19b3ad50d76aa7fd8",
                 "shasum": ""
             },
             "require": {
@@ -10288,7 +10288,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.61"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.62"
             },
             "funding": [
                 {
@@ -10304,35 +10304,31 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-13T10:04:03+00:00"
+            "time": "2020-12-13T13:59:38+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
-            "version": "0.12.5",
+            "version": "0.12.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-deprecation-rules.git",
-                "reference": "bfabc6a1b4617fbcbff43f03a4c04eae9bafae21"
+                "reference": "46dbd43c2db973d2876d6653e53f5c2cc3a01fbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/bfabc6a1b4617fbcbff43f03a4c04eae9bafae21",
-                "reference": "bfabc6a1b4617fbcbff43f03a4c04eae9bafae21",
+                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/46dbd43c2db973d2876d6653e53f5c2cc3a01fbb",
+                "reference": "46dbd43c2db973d2876d6653e53f5c2cc3a01fbb",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.26"
+                "phpstan/phpstan": "^0.12.60"
             },
             "require-dev": {
-                "consistence/coding-standard": "^3.0.1",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "ergebnis/composer-normalize": "^2.0.2",
-                "jakub-onderka/php-parallel-lint": "^1.0",
-                "phing/phing": "^2.16.0",
+                "phing/phing": "^2.16.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
                 "phpstan/phpstan-phpunit": "^0.12",
-                "phpunit/phpunit": "^7.0",
-                "slevomat/coding-standard": "^4.5.2"
+                "phpunit/phpunit": "^7.5.20"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -10357,37 +10353,33 @@
             "description": "PHPStan rules for detecting usage of deprecated classes, methods, properties, constants and traits.",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-deprecation-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/0.12.5"
+                "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/0.12.6"
             },
-            "time": "2020-07-21T14:52:30+00:00"
+            "time": "2020-12-13T10:20:54+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "0.12.5",
+            "version": "0.12.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "334898a32217e4605e0f9cfa3d3fc3101bda26be"
+                "reference": "03807e3410747ec18cd5f05a6342384adcc423bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/334898a32217e4605e0f9cfa3d3fc3101bda26be",
-                "reference": "334898a32217e4605e0f9cfa3d3fc3101bda26be",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/03807e3410747ec18cd5f05a6342384adcc423bf",
+                "reference": "03807e3410747ec18cd5f05a6342384adcc423bf",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.33"
+                "phpstan/phpstan": "^0.12.60"
             },
             "require-dev": {
-                "consistence/coding-standard": "^3.0.1",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "ergebnis/composer-normalize": "^2.0.2",
-                "jakub-onderka/php-parallel-lint": "^1.0",
-                "phing/phing": "^2.16.0",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpunit/phpunit": "^7.0",
-                "slevomat/coding-standard": "^4.5.2"
+                "phing/phing": "^2.16.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/phpstan-phpunit": "^0.12.16",
+                "phpunit/phpunit": "^7.5.20"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -10412,9 +10404,9 @@
             "description": "Extra strict and opinionated rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/master"
+                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/0.12.7"
             },
-            "time": "2020-08-30T15:42:06+00:00"
+            "time": "2020-12-13T13:27:14+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10912,9 +10904,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
+                "url": "https://composer.robojackets.org/1607878418/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
                 "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d",
-                "shasum": "13bb371bc493555d092ae0a66e2753664a774d84"
+                "shasum": "383aa26414ab57153675f9c0613eee16955040b2"
             },
             "require": {
                 "phan/phan": "*",
