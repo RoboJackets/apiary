@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "167cde509791d892726f9bd88fdf3b91",
+    "content-hash": "6696336ced06b5693c39e01d38d79867",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -4684,17 +4684,21 @@
         },
         {
             "name": "robojackets/network-check",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/network-check.git",
-                "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c"
+                "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/robojackets/network-check/robojackets-network-check-2fed18379f699e0e215b999b8c59c8dda5d7d00c-zip-2a429c.zip",
-                "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c",
-                "shasum": "fb71255227f174c714c6a330911f23d57d34ea80"
+                "url": "https://composer.robojackets.org/1607878418/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
+                "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7",
+                "shasum": "6abee297c43031cd09f843ba05538b9099567978"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.0",
+                "robojackets/static-analysis": "*"
             },
             "type": "library",
             "autoload": {
@@ -4715,10 +4719,10 @@
             "description": "Determines what GT network a client is connected to",
             "homepage": "https://github.gatech.edu/RoboJackets/network-check",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/network-check/tree/v1.0.1",
+                "source": "https://github.gatech.edu/RoboJackets/network-check/tree/v1.1.0",
                 "issues": "https://github.gatech.edu/RoboJackets/network-check/issues"
             },
-            "time": "2019-09-18T23:54:27+00:00"
+            "time": "2020-12-12T22:40:57+00:00"
         },
         {
             "name": "seld/jsonlint",
