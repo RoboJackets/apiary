@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6696336ced06b5693c39e01d38d79867",
+    "content-hash": "bb2a5a339c41ad1536e3ef300995f6ca",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -10896,17 +10896,17 @@
         },
         {
             "name": "robojackets/static-analysis",
-            "version": "v1.1",
+            "version": "v1.2",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/static-analysis.git",
-                "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d"
+                "reference": "1a1c4fff67e3727f20cd33814f29a0724405f211"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607878418/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
-                "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d",
-                "shasum": "383aa26414ab57153675f9c0613eee16955040b2"
+                "url": "https://composer.robojackets.org/1607896556/robojackets/static-analysis/robojackets-static-analysis-1a1c4fff67e3727f20cd33814f29a0724405f211-zip-ab0a59.zip",
+                "reference": "1a1c4fff67e3727f20cd33814f29a0724405f211",
+                "shasum": "3725a23d2be63e422cbed810645ebadb0b4c143c"
             },
             "require": {
                 "phan/phan": "*",
@@ -10936,9 +10936,9 @@
             "description": "Standard static analyzers for PHP, with sensible defaults",
             "homepage": "https://github.gatech.edu/RoboJackets/static-analysis",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/static-analysis/tree/v1.1"
+                "source": "https://github.gatech.edu/RoboJackets/static-analysis/tree/v1.2"
             },
-            "time": "2020-09-10T00:31:02+00:00"
+            "time": "2020-12-13T21:52:12+00:00"
         },
         {
             "name": "sabre/event",
