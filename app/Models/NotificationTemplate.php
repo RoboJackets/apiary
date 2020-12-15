@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,7 +38,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $name The name of the template
  * @property string $subject The subject that will be used for emails sent using this template
  *
- * @property-read \App\User $creator
+ * @property-read \App\Models\User $creator
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  */

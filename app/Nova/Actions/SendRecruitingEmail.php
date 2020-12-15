@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\RecruitingVisit;
 use App\Notifications\GeneralInterestNotification;
-use App\RecruitingVisit;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -23,7 +23,7 @@ class SendRecruitingEmail extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\User>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\User>  $models
      */
     public function handle(ActionFields $fields, Collection $models): void
     {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\Event as EventResource;
+use App\Models\Event;
 use App\Traits\AuthorizeInclude;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
@@ -82,7 +82,6 @@ class EventController extends Controller
         }
 
         $requestedUser = $event->organizer;
-        //Enforce users only viewing themselves (read-users-own)
         if ($requestingUser->cant('update-events') && $requestingUser->id !== $requestedUser->id) {
             return response()->json([
                 'status' => 'error',

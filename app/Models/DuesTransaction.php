@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
+use App\Traits\GetMorphClassStatic;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -59,11 +61,11 @@ use Illuminate\Database\Query\JoinClause;
  * @property int|null $payment_id
  * @property string $status the status of this transaction
  *
- * @property-read \App\DuesPackage $for
- * @property-read \App\DuesPackage $package
- * @property-read \App\User $swagPoloProvidedBy
- * @property-read \App\User $swagShirtProvidedBy
- * @property-read \App\User $user
+ * @property-read \App\Models\DuesPackage $for
+ * @property-read \App\Models\DuesPackage $package
+ * @property-read \App\Models\User $swagPoloProvidedBy
+ * @property-read \App\Models\User $swagShirtProvidedBy
+ * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection $payment
  * @property-read int|null $payment_count
  * @property-read string $swag_polo_status
@@ -71,6 +73,8 @@ use Illuminate\Database\Query\JoinClause;
  */
 class DuesTransaction extends Model
 {
+    use GetMorphClassStatic;
+    use HasFactory;
     use SoftDeletes;
 
     /**
@@ -238,9 +242,9 @@ class DuesTransaction extends Model
                                 ->where('dues_transactions.swag_polo_provided', '=', null);
                         });
                 });
-        })->leftJoin('payments', static function (JoinClause $j): void {
+        })->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                ->where('payments.payable_type', '=', self::class)
+                ->where('payments.payable_type', '=', $this->getMorphClass())
                 ->where('payments.deleted_at', '=', null);
         })->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
@@ -254,9 +258,9 @@ class DuesTransaction extends Model
     {
         return $query->select(
             'dues_transactions.*'
-        )->leftJoin('payments', static function (JoinClause $j): void {
+        )->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', self::class)
+                    ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
@@ -279,9 +283,9 @@ class DuesTransaction extends Model
     {
         return $query->select(
             'dues_transactions.*'
-        )->leftJoin('payments', static function (JoinClause $j): void {
+        )->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', self::class)
+                    ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')

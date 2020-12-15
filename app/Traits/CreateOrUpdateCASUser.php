@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\User;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use RoboJackets\ErrorPages\Unauthorized;

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -54,8 +55,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property int $id The database identifier for this DuesPackage
  * @property string $name
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $duesTransactions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $transactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read bool $is_access_active
  * @property-read int|null $actions_count
@@ -65,6 +66,7 @@ use Laravel\Nova\Actions\Actionable;
 class DuesPackage extends Model
 {
     use Actionable;
+    use HasFactory;
     use SoftDeletes;
 
     /**

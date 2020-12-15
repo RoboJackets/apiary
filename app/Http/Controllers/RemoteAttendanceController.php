@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Attendance;
-use App\Event;
-use App\RemoteAttendanceLink;
-use App\Team;
+use App\Models\Attendance;
+use App\Models\Event;
+use App\Models\RemoteAttendanceLink;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

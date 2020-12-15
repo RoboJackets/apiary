@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\DuesPackage;
-use App\DuesTransaction;
+use App\Models\DuesPackage;
+use App\Models\DuesTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\ValueResult;

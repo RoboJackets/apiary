@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Notifications\Dues;
 
-use App\DuesPackage;
 use App\Mail\Dues\RequestComplete as Mailable;
-use App\User;
+use App\Models\DuesPackage;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -18,7 +18,7 @@ class RequestCompleteNotification extends Notification implements ShouldQueue
     /**
      * The dues package that was requested.
      *
-     * @var \App\DuesPackage
+     * @var \App\Models\DuesPackage
      */
     public $duesPackage;
 

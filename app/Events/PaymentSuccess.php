@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Events;
 
-use App\Payment;
+use App\Models\Payment;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -18,7 +18,7 @@ class PaymentSuccess
     /**
      * The payment of interest.
      *
-     * @var \App\Payment
+     * @var \App\Models\Payment
      */
     public $payment;
 

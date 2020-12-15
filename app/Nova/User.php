@@ -6,12 +6,12 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\User as AppModelsUser;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
-use App\User as AU;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -37,7 +37,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = \App\User::class;
+    public static $model = \App\Models\User::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -68,6 +68,7 @@ class User extends Resource
         'phone',
         'gt_email',
         'clickup_email',
+        'autodesk_email',
         'gmail_address',
         'personal_email',
     ];
@@ -194,6 +195,17 @@ class User extends Resource
                     Boolean::make('ClickUp Invite Pending', 'clickup_invite_pending')
                         ->hideFromIndex()
                         ->help('This flag is set by JEDI but may be out of sync with ClickUp in some cases.'
+                            .' It only controls UX elements.'),
+
+                    Text::make('Autodesk', 'autodesk_email')
+                        ->hideFromIndex()
+                        ->rules('nullable', 'max:255', 'email')
+                        ->creationRules('unique:users,autodesk_email')
+                        ->updateRules('unique:users,autodesk_email,{{resourceId}}'),
+
+                    Boolean::make('Autodesk Invite Pending', 'autodesk_invite_pending')
+                        ->hideFromIndex()
+                        ->help('This flag is set by JEDI but may be out of sync with Autodesk in some cases.'
                             .' It only controls UX elements.'),
 
                     Boolean::make('SUMS', 'exists_in_sums')
@@ -347,7 +359,8 @@ class User extends Resource
                 ->onlyOnDetail(),
 
             Boolean::make('Has Ever Logged In')
-                ->onlyOnDetail(),
+                ->hideFromIndex()
+                ->required(),
 
             Boolean::make('Is Service Account')
                 ->hideFromIndex(),
@@ -438,28 +451,28 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
             (new Actions\OverrideAccess())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
             (new Actions\ResetApiToken())
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 }),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('send-notifications');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->can('send-notifications');
                 }),
             (new Actions\GenerateResumeBook())
@@ -470,7 +483,7 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AU $user): bool {
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
         ];

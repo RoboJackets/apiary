@@ -46,6 +46,8 @@ class UpdateUserRequest extends FormRequest
             'clickup_email' => 'string|nullable|email',
             'clickup_id' => 'integer|nullable',
             'clickup_invite_pending' => 'boolean',
+            'autodesk_email' => 'string|nullable|email',
+            'autodesk_invite_pending' => 'boolean',
         ];
     }
 

@@ -12,16 +12,16 @@
   "devDependencies": {
     "bootstrap": "4.5.3",
     "cross-env": "5.2.0",
-    "laravel-mix": "5.0.7",
+    "laravel-mix": "5.0.9",
     "lodash": "4.17.20",
-    "resolve-url-loader": "3.1.1",
-    "sass": "1.27.0",
+    "resolve-url-loader": "3.1.2",
+    "sass": "1.30.0",
     "sass-loader": "7.3.1"
   },
   "dependencies": {
-    "@bugsnag/js": "7.4.0",
-    "@bugsnag/plugin-vue": "7.3.5",
-    "axios": "0.20.0",
+    "@bugsnag/js": "7.5.3",
+    "@bugsnag/plugin-vue": "7.5.3",
+    "axios": "0.21.0",
     "chartist": "0.11.4",
     "chartist-plugin-legend": "0.6.2",
     "chartist-plugin-pointlabels": "0.0.6",
@@ -34,6 +34,6 @@
     "vue-moment": "4.1.0",
     "vue-select": "3.10.8",
     "vue-template-compiler": "2.6.12",
-    "vuelidate": "0.7.5"
+    "vuelidate": "0.7.6"
   }
 }

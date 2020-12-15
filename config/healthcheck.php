@@ -13,13 +13,16 @@ return [
      * of the service.
      */
     'checks' => [
+        OITNetworkServices\BuzzAPI\HealthChecks\CredentialsAreValid::class,
+        OITNetworkServices\BuzzAPI\HealthChecks\ServiceIsAvailable::class,
         UKFast\HealthCheck\Checks\CacheHealthCheck::class,
-        UKFast\HealthCheck\Checks\CrossServiceHealthCheck::class,
         UKFast\HealthCheck\Checks\DatabaseHealthCheck::class,
         UKFast\HealthCheck\Checks\HttpHealthCheck::class,
         UKFast\HealthCheck\Checks\LogHealthCheck::class,
+        UKFast\HealthCheck\Checks\MigrationUpToDateHealthCheck::class,
         UKFast\HealthCheck\Checks\PackageSecurityHealthCheck::class,
         UKFast\HealthCheck\Checks\RedisHealthCheck::class,
+        UKFast\HealthCheck\Checks\SchedulerHealthCheck::class,
         UKFast\HealthCheck\Checks\StorageHealthCheck::class,
     ],
 
@@ -86,7 +89,6 @@ return [
      * for example: https://api.example.com/health.
      */
     'x-service-checks' => [
-        'https://'.env('BUZZAPI_HOST', 'api.gatech.edu').'/ping',
     ],
 
     /**
@@ -105,5 +107,10 @@ return [
         'disks' => [
             'local',
         ],
+    ],
+
+    'scheduler' => [
+        'cache-key' => 'laravel-scheduler-health-check',
+        'minutes-between-checks' => 2,
     ],
 ];

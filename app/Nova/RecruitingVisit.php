@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\RecruitingResponse;
 use App\Nova\Actions\SendRecruitingEmail;
-use App\RecruitingResponse;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -24,7 +24,7 @@ class RecruitingVisit extends Resource
      *
      * @var string
      */
-    public static $model = \App\RecruitingVisit::class;
+    public static $model = \App\Models\RecruitingVisit::class;
 
     /**
      * The relationships that should be eager loaded on index queries.

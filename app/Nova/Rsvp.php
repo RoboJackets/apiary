@@ -17,7 +17,7 @@ class Rsvp extends Resource
      *
      * @var string
      */
-    public static $model = \App\Rsvp::class;
+    public static $model = \App\Models\Rsvp::class;
 
     /**
      * The relationships that should be eager loaded on index queries.

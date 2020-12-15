@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\AttendanceExport;
-use App\User;
+use App\Models\AttendanceExport;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AttendanceExportPolicy

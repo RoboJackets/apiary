@@ -18,20 +18,10 @@
     <issueHandlers>
         <UndefinedClass>
             <errorLevel type="suppress">
-                <directory name="routes" />
                 <directory name="database" />
+                <directory name="routes" />
             </errorLevel>
         </UndefinedClass>
-        <UndefinedGlobalVariable>
-            <errorLevel type="suppress">
-                <file name="database/factories/ModelFactory.php" />
-            </errorLevel>
-        </UndefinedGlobalVariable>
-        <UndefinedConstant>
-            <errorLevel type="suppress">
-                <file name="config/database.php" />
-            </errorLevel>
-        </UndefinedConstant>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -75,15 +65,10 @@
                 <directory name="app/Http/Middleware" />
             </errorLevel>
         </MissingReturnType>
-        <UnresolvableInclude>
-            <errorLevel type="suppress">
-                <file name="app/Console/Kernel.php" />
-            </errorLevel>
-        </UnresolvableInclude>
         <TooManyArguments>
             <errorLevel type="suppress">
                 <directory name="routes" />
-                <file name="app/DuesTransaction.php" />
+                <file name="app/Models/DuesTransaction.php" />
                 <file name="app/Nova/Lenses/RecentInactiveUsers.php" />
             </errorLevel>
         </TooManyArguments>

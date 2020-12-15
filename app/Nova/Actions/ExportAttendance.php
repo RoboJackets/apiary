@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Attendance;
+use App\Models\Attendance;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
@@ -45,7 +45,7 @@ class ExportAttendance extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\Attendance>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\Attendance>  $models
      *
      * @return array<string,string>
      */

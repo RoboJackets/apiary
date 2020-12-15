@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Mail\Attendance;
 
-use App\AttendanceExport;
+use App\Models\AttendanceExport;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

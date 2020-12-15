@@ -21,7 +21,7 @@ class Major extends Resource
      *
      * @var string
      */
-    public static $model = \App\Major::class;
+    public static $model = \App\Models\Major::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

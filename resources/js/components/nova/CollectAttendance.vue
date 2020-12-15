@@ -51,9 +51,7 @@
         },
         computed: {
             attendableType: function() {
-                let firstCap = this.resourceName.charAt(0).toUpperCase() + this.resourceName.slice(1)
-                let singular = firstCap.replace(/s$/, '');
-                return 'App\\' + singular;
+                return this.resourceName.toLowerCase().replace(/s$/, '');
             }
         },
         data() {

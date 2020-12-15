@@ -18,7 +18,7 @@ class AttendanceExport extends Resource
      *
      * @var string
      */
-    public static $model = \App\AttendanceExport::class;
+    public static $model = \App\Models\AttendanceExport::class;
 
     /**
      * The relationships that should be eager loaded on index queries.

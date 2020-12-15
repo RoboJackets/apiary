@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use BadMethodCallException;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -39,9 +40,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
  * @method static Builder|User whereApiToken($value)
- * @method static Builder|User whereClickupEmail($value)
- * @method static Builder|User whereClickupId($value)
- * @method static Builder|User whereClickupInvitePending($value)
+ * @method static Builder|User whereAutodeskEmail($value)
+ * @method static Builder|User whereAutodeskInvitePending($value)
  * @method static Builder|User whereCreatedAt($value)
  * @method static Builder|User whereCreateReason($value)
  * @method static Builder|User whereDeletedAt($value)
@@ -83,6 +83,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property bool $exists_in_sums
  * @property bool $github_invite_pending
+ * @property bool $clickup_invite_pending
+ * @property bool $autodesk_invite_pending
  * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
  * @property bool $is_active whether the user is currently active
  * @property bool $is_service_account whether the user is a service account (vs human)
@@ -90,7 +92,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon|null $access_override_until
  * @property Carbon|null $deleted_at
  * @property Carbon|null $resume_date
- * @property int $clickup_invite_pending
  * @property int $gtid
  * @property int $id
  * @property int|null $access_override_by_id
@@ -103,6 +104,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $uid
  * @property string|null $api_token
  * @property string|null $clickup_email
+ * @property string|null $autodesk_email
  * @property string|null $emergency_contact_name
  * @property string|null $emergency_contact_phone
  * @property string|null $ethnicity
@@ -122,16 +124,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $shirt_size
  * @property string|null $slack_id
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Attendance> $attendance
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ClassStanding> $classStanding
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $dues
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $duesTransactions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\DuesTransaction> $paidDues
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Event> $events
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Major> $majors
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingVisit> $recruitingVisits
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Rsvp> $rsvps
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Team> $manages
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $dues
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $paidDues
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Event> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Major> $majors
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingVisit> $recruitingVisits
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $manages
  * @property-read \Illuminate\Database\Eloquent\Collection $teams
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
@@ -157,12 +159,13 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-    use SoftDeletes;
-    use Notifiable;
-    use HasRoles;
     use Actionable;
     use HasBelongsToManyEvents;
+    use HasFactory;
     use HasRelationshipObservables;
+    use HasRoles;
+    use Notifiable;
+    use SoftDeletes;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
@@ -238,6 +241,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'github_invite_pending' => 'boolean',
+        'clickup_invite_pending' => 'boolean',
+        'autodesk_invite_pending' => 'boolean',
         'exists_in_sums' => 'boolean',
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
@@ -278,7 +283,7 @@ class User extends Authenticatable
     /**
      * Check membership status for a given team.
      *
-     * @param \App\Team $team Team ID
+     * @param \App\Models\Team $team Team ID
      *
      * @return bool Whether or not user is a member of the given team
      */

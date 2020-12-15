@@ -11,6 +11,7 @@ use App\Jobs\WeeklyAttendanceSlack;
 use Bugsnag\BugsnagLaravel\Commands\DeployCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
 
 class Kernel extends ConsoleKernel
 {
@@ -29,6 +30,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
+        $schedule->command(CacheSchedulerRunning::class)->everyMinute();
 
         $schedule->job(new WeeklyAttendanceEmail())->weekly()->sundays()->at('1:00');
         $schedule->job(new WeeklyAttendanceSlack())->weekly()->sundays()->at('11:00');

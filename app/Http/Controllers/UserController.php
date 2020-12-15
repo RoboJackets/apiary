@@ -7,8 +7,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
+use App\Models\User;
 use App\Traits\AuthorizeInclude;
-use App\User;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -173,6 +173,20 @@ class UserController extends Controller
             ], true)) {
                 return response()->json(['status' => 'error',
                     'message' => 'requested clickup_email value has not been verified',
+                ], 422);
+            }
+        }
+
+        if ($request->filled('autodesk_email')) {
+            // Check that this is one of their verified emails
+            // gmail_address can be null and autodesk_email can't be empty here so fall back to an empty string.
+            if (! in_array($request->input('autodesk_email'), [
+                strtolower($user->uid).'@gatech.edu',
+                strtolower($user->gt_email),
+                strtolower($user->gmail_address ?? ''),
+            ], true)) {
+                return response()->json(['status' => 'error',
+                    'message' => 'requested autodesk_email value has not been verified',
                 ], 422);
             }
         }

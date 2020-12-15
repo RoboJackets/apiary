@@ -25,7 +25,7 @@
                 attendance: {
                     gtid: '',
                     attendable_id: '',
-                    attendable_type: 'App\\Team',
+                    attendable_type: 'team',
                     source: 'kiosk',
                     include: 'attendee',
                 },

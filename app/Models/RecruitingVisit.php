@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -41,8 +42,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $recruiting_email the email address provided by the visitor
  * @property string $visit_token an identifier for this visit
  *
- * @property-read \App\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\RecruitingResponse> $recruitingResponses
+ * @property-read \App\Models\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingResponse> $recruitingResponses
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read int|null $notifications_count
@@ -51,6 +52,7 @@ use Laravel\Nova\Actions\Actionable;
 class RecruitingVisit extends Model
 {
     use Actionable;
+    use HasFactory;
     use Notifiable;
     use SoftDeletes;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Attendance;
-use App\User;
+use App\Models\Attendance;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
@@ -55,7 +55,7 @@ class ActiveAttendanceBreakdown extends Partition
         if (isset($request->resourceId)) {
             $query = $query
                 ->where('attendable_id', $request->resourceId)
-                ->where('attendable_type', get_class($request->model()));
+                ->where('attendable_type', $request->model()->getMorphClass());
         }
 
         if (! $this->showAllTime) {

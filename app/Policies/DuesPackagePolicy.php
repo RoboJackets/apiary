@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\DuesPackage;
-use App\User;
+use App\Models\DuesPackage;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class DuesPackagePolicy

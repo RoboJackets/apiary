@@ -23,7 +23,7 @@ class DistributePolo extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\DuesTransaction>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\DuesTransaction>  $models
      *
      * @return array<string,string>
      */

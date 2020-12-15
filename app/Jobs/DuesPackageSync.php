@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\DuesPackage;
+use App\Models\DuesPackage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -21,7 +21,7 @@ class DuesPackageSync implements ShouldQueue
     /**
      * The dues package that will expire.
      *
-     * @var \App\DuesPackage
+     * @var \App\Models\DuesPackage
      */
     private $package;
 

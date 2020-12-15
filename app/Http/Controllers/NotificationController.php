@@ -8,8 +8,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SendNotificationManualNotificationRequest;
 use App\Mail\DatabaseMailable;
+use App\Models\RecruitingVisit;
 use App\Notifications\GeneralInterestNotification;
-use App\RecruitingVisit;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
@@ -60,7 +60,7 @@ class NotificationController extends Controller
                 $hours++;
             } elseif ('database' === $template_type) {
                 foreach ($chunk as $address) {
-                    Mail::to($address)->queue(new DatabaseMailable(intval($template_id), []));
+                    Mail::to($address)->queue((new DatabaseMailable(intval($template_id), []))->onQueue('email'));
                     $found[] = $address;
                 }
                 $hours++;

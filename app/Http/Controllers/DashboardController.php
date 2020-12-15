@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DuesPackage;
-use App\DuesTransaction;
-use App\Team;
+use App\Models\DuesPackage;
+use App\Models\DuesTransaction;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -57,7 +57,7 @@ class DashboardController extends Controller
         $needsResume = $user->is_active &&
             (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date);
 
-        $lastAttendance = $user->attendance()->where('attendable_type', Team::class)
+        $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
             ->orderBy('created_at', 'desc')->first();
 
         $sumsAccessPending = $user->is_access_active

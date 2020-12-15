@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Team;
-use App\User;
+use App\Models\Team;
+use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
@@ -31,7 +31,7 @@ class PushToJedi implements ShouldQueue
     /**
      * The user that will be sent to JEDI.
      *
-     * @var \App\User
+     * @var \App\Models\User
      */
     private $user;
 
@@ -84,7 +84,7 @@ class PushToJedi implements ShouldQueue
             return;
         }
 
-        $lastAttendance = $this->user->attendance()->where('attendable_type', Team::class)
+        $lastAttendance = $this->user->attendance()->where('attendable_type', Team::getMorphClassStatic())
             ->orderBy('created_at', 'desc')->first();
 
         $send = [
@@ -105,6 +105,8 @@ class PushToJedi implements ShouldQueue
             'clickup_email' => $this->user->clickup_email,
             'clickup_id' => $this->user->clickup_id,
             'clickup_invite_pending' => $this->user->clickup_invite_pending,
+            'autodesk_email' => $this->user->autodesk_email,
+            'autodesk_invite_pending' => $this->user->autodesk_invite_pending,
         ];
 
         foreach ($this->user->teams as $team) {

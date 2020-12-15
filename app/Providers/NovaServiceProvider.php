@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Nova\Cards\MakeAWish;
 use App\Nova\Dashboards\Demographics;
 use App\Nova\Dashboards\JEDI;
@@ -14,7 +15,6 @@ use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Tools\AttendanceReport;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;

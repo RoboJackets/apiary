@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Notifications\Dues;
 
-use App\DuesTransaction;
+use App\Models\DuesTransaction;
+use App\Models\Payment;
+use App\Models\User;
 use App\Notifiables\TreasurerNotifiable;
-use App\Payment;
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
@@ -45,7 +45,7 @@ class SummaryNotification extends Notification
         // Nothing else will update it as far as I can tell.
         $payments = Payment::whereBetween('updated_at', [$startOfDay, $endOfDay])
             ->where('amount', '>', 0)
-            ->where('payable_type', DuesTransaction::class)
+            ->where('payable_type', DuesTransaction::getMorphClassStatic())
             ->get();
 
         return $payments;

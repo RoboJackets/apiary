@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\DuesPackage;
 use App\Jobs\DuesPackageSync;
+use App\Models\DuesPackage;
 
 class DuesPackageObserver
 {
