@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80881b0ff9440627d275633d63677010",
+    "content-hash": "bb2a5a339c41ad1536e3ef300995f6ca",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -123,21 +123,21 @@
         },
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.8.1",
+            "version": "v2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "affa55122f83575888d4ebf1728992686e8223de"
+                "reference": "5515cabea39b9cf55f98980d0f269dc9d85cfcca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/affa55122f83575888d4ebf1728992686e8223de",
-                "reference": "affa55122f83575888d4ebf1728992686e8223de",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/5515cabea39b9cf55f98980d0f269dc9d85cfcca",
+                "reference": "5515cabea39b9cf55f98980d0f269dc9d85cfcca",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/reflection-docblock": "^2.0.6",
-                "composer/composer": "^1.6 || ^2.0@dev",
+                "composer/composer": "^1.6 || ^2",
                 "doctrine/dbal": "~2.3",
                 "ext-json": "*",
                 "illuminate/console": "^6 || ^7 || ^8",
@@ -147,13 +147,14 @@
                 "phpdocumentor/type-resolver": "^1.1.0"
             },
             "require-dev": {
+                "ext-pdo_sqlite": "*",
                 "friendsofphp/php-cs-fixer": "^2",
                 "illuminate/config": "^6 || ^7 || ^8",
                 "illuminate/view": "^6 || ^7 || ^8",
-                "mockery/mockery": "^1.3",
+                "mockery/mockery": "^1.3.3",
                 "orchestra/testbench": "^4 || ^5 || ^6",
                 "phpunit/phpunit": "^8.5 || ^9",
-                "spatie/phpunit-snapshot-assertions": "^1.4 || ^2.2 || ^3",
+                "spatie/phpunit-snapshot-assertions": "^1.4 || ^2.2 || ^3 || ^4",
                 "vimeo/psalm": "^3.12"
             },
             "type": "library",
@@ -196,7 +197,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-ide-helper/issues",
-                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/master"
+                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v2.8.2"
             },
             "funding": [
                 {
@@ -204,7 +205,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-07T07:36:37+00:00"
+            "time": "2020-12-06T08:55:05+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -621,16 +622,16 @@
         },
         {
             "name": "chelout/laravel-relationship-events",
-            "version": "v1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chelout/laravel-relationship-events.git",
-                "reference": "88adfd2caa52c22821595fa25e935d029aa35fd8"
+                "reference": "2d454338bbcf28a07151098fac621fe672855902"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/88adfd2caa52c22821595fa25e935d029aa35fd8",
-                "reference": "88adfd2caa52c22821595fa25e935d029aa35fd8",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/2d454338bbcf28a07151098fac621fe672855902",
+                "reference": "2d454338bbcf28a07151098fac621fe672855902",
                 "shasum": ""
             },
             "require": {
@@ -638,7 +639,7 @@
                 "illuminate/database": "^6.0|^7.0|^8.0",
                 "illuminate/events": "^6.0|^7.0|^8.0",
                 "illuminate/support": "^6.0|^7.0|^8.0",
-                "php": "^7.2"
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^4.0|^5.0|^6.0",
@@ -677,9 +678,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chelout/laravel-relationship-events/issues",
-                "source": "https://github.com/chelout/laravel-relationship-events/tree/v1.3.0"
+                "source": "https://github.com/chelout/laravel-relationship-events/tree/1.4.0"
             },
-            "time": "2020-09-08T17:18:57+00:00"
+            "time": "2020-12-09T13:28:52+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -2227,16 +2228,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.17.2",
+            "version": "v8.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b89363b540bd8ad6e727ee165b510a19fe170a28"
+                "reference": "31747193c26ba0a9cb7929a912895d3cdefd10cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b89363b540bd8ad6e727ee165b510a19fe170a28",
-                "reference": "b89363b540bd8ad6e727ee165b510a19fe170a28",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/31747193c26ba0a9cb7929a912895d3cdefd10cf",
+                "reference": "31747193c26ba0a9cb7929a912895d3cdefd10cf",
                 "shasum": ""
             },
             "require": {
@@ -2256,15 +2257,15 @@
                 "psr/simple-cache": "^1.0",
                 "ramsey/uuid": "^4.0",
                 "swiftmailer/swiftmailer": "^6.0",
-                "symfony/console": "^5.1",
-                "symfony/error-handler": "^5.1",
-                "symfony/finder": "^5.1",
-                "symfony/http-foundation": "^5.1",
-                "symfony/http-kernel": "^5.1",
-                "symfony/mime": "^5.1",
-                "symfony/process": "^5.1",
-                "symfony/routing": "^5.1",
-                "symfony/var-dumper": "^5.1",
+                "symfony/console": "^5.1.4",
+                "symfony/error-handler": "^5.1.4",
+                "symfony/finder": "^5.1.4",
+                "symfony/http-foundation": "^5.1.4",
+                "symfony/http-kernel": "^5.1.4",
+                "symfony/mime": "^5.1.4",
+                "symfony/process": "^5.1.4",
+                "symfony/routing": "^5.1.4",
+                "symfony/var-dumper": "^5.1.4",
                 "tijsverkoyen/css-to-inline-styles": "^2.2.2",
                 "vlucas/phpdotenv": "^5.2",
                 "voku/portable-ascii": "^1.4.8"
@@ -2315,11 +2316,11 @@
                 "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
                 "league/flysystem-cached-adapter": "^1.0",
                 "mockery/mockery": "^1.4.2",
-                "orchestra/testbench-core": "^6.5",
+                "orchestra/testbench-core": "^6.8",
                 "pda/pheanstalk": "^4.0",
                 "phpunit/phpunit": "^8.5.8|^9.3.3",
                 "predis/predis": "^1.1.1",
-                "symfony/cache": "^5.1"
+                "symfony/cache": "^5.1.4"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.155).",
@@ -2344,8 +2345,8 @@
                 "predis/predis": "Required to use the predis connector (^1.1.2).",
                 "psr/http-message": "Required to allow Storage::put to accept a StreamInterface (^1.0).",
                 "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0).",
-                "symfony/cache": "Required to PSR-6 cache bridge (^5.1).",
-                "symfony/filesystem": "Required to enable support for relative symbolic links (^5.1).",
+                "symfony/cache": "Required to PSR-6 cache bridge (^5.1.4).",
+                "symfony/filesystem": "Required to enable support for relative symbolic links (^5.1.4).",
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^2.0).",
                 "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
             },
@@ -2390,20 +2391,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2020-12-03T13:47:59+00:00"
+            "time": "2020-12-08T22:05:12+00:00"
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.6.0",
+            "version": "v5.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "4e21779357d1f1abc0282a940855be635bf4f1be"
+                "reference": "e3809cfaf575a79bc1c846e217d1aa9d4950b316"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/4e21779357d1f1abc0282a940855be635bf4f1be",
-                "reference": "4e21779357d1f1abc0282a940855be635bf4f1be",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/e3809cfaf575a79bc1c846e217d1aa9d4950b316",
+                "reference": "e3809cfaf575a79bc1c846e217d1aa9d4950b316",
                 "shasum": ""
             },
             "require": {
@@ -2465,9 +2466,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.6.0"
+                "source": "https://github.com/laravel/horizon/tree/v5.6.1"
             },
-            "time": "2020-12-01T15:13:23+00:00"
+            "time": "2020-12-08T18:29:48+00:00"
         },
         {
             "name": "laravel/nova",
@@ -3451,9 +3452,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
+                "url": "https://composer.robojackets.org/1607878418/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
                 "reference": "7caf590d32760a304772419303a109261406763a",
-                "shasum": "39c013f9510ac030c99a0f2357963ad7ebedfa9b"
+                "shasum": "a26bc426a3096719a94ef65bee909675b7e598a0"
             },
             "require": {
                 "ext-json": "*",
@@ -4642,9 +4643,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
+                "url": "https://composer.robojackets.org/1607878418/robojackets/error-pages/robojackets-error-pages-22e01ddd8df96f297407095be5cd74480aa10469-zip-4a4769.zip",
                 "reference": "22e01ddd8df96f297407095be5cd74480aa10469",
-                "shasum": "8695ee6ff5c6f74a77c98d97f5f82d5d40a1ca82"
+                "shasum": "12c49dc16f96c2e7191fc4e13ef0a3d49c752109"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -4683,17 +4684,21 @@
         },
         {
             "name": "robojackets/network-check",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/network-check.git",
-                "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c"
+                "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/robojackets/network-check/robojackets-network-check-2fed18379f699e0e215b999b8c59c8dda5d7d00c-zip-2a429c.zip",
-                "reference": "2fed18379f699e0e215b999b8c59c8dda5d7d00c",
-                "shasum": "fb71255227f174c714c6a330911f23d57d34ea80"
+                "url": "https://composer.robojackets.org/1607878418/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
+                "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7",
+                "shasum": "6abee297c43031cd09f843ba05538b9099567978"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.0",
+                "robojackets/static-analysis": "*"
             },
             "type": "library",
             "autoload": {
@@ -4714,10 +4719,10 @@
             "description": "Determines what GT network a client is connected to",
             "homepage": "https://github.gatech.edu/RoboJackets/network-check",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/network-check/tree/v1.0.1",
+                "source": "https://github.gatech.edu/RoboJackets/network-check/tree/v1.1.0",
                 "issues": "https://github.gatech.edu/RoboJackets/network-check/issues"
             },
-            "time": "2019-09-18T23:54:27+00:00"
+            "time": "2020-12-12T22:40:57+00:00"
         },
         {
             "name": "seld/jsonlint",
@@ -5221,32 +5226,31 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.2.3",
+            "version": "v6.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "149cfdf118b169f7840bbe3ef0d4bc795d1780c9"
+                "reference": "56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/149cfdf118b169f7840bbe3ef0d4bc795d1780c9",
-                "reference": "149cfdf118b169f7840bbe3ef0d4bc795d1780c9",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e",
+                "reference": "56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e",
                 "shasum": ""
             },
             "require": {
-                "egulias/email-validator": "~2.0",
+                "egulias/email-validator": "^2.0",
                 "php": ">=7.0.0",
                 "symfony/polyfill-iconv": "^1.0",
                 "symfony/polyfill-intl-idn": "^1.10",
                 "symfony/polyfill-mbstring": "^1.0"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "^3.4.19|^4.1.8"
+                "mockery/mockery": "^1.0",
+                "symfony/phpunit-bridge": "^4.4|^5.0"
             },
             "suggest": {
-                "ext-intl": "Needed to support internationalized email addresses",
-                "true/punycode": "Needed to support internationalized email addresses, if ext-intl is not installed"
+                "ext-intl": "Needed to support internationalized email addresses"
             },
             "type": "library",
             "extra": {
@@ -5281,9 +5285,19 @@
             ],
             "support": {
                 "issues": "https://github.com/swiftmailer/swiftmailer/issues",
-                "source": "https://github.com/swiftmailer/swiftmailer/tree/v6.2.3"
+                "source": "https://github.com/swiftmailer/swiftmailer/tree/v6.2.4"
             },
-            "time": "2019-11-12T09:31:26+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/swiftmailer/swiftmailer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-12-08T18:02:06+00:00"
         },
         {
             "name": "symfony/console",
@@ -8610,22 +8624,22 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.7.0",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7"
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/e8d808670b8f882188368faaf1144448c169c0b7",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/fe390591e0241955f22eb9ba327d137e501c771c",
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
                 "php": ">=5.3",
-                "squizlabs/php_codesniffer": "^2 || ^3 || 4.0.x-dev"
+                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
@@ -8676,7 +8690,7 @@
                 "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
                 "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
             },
-            "time": "2020-06-25T14:57:39+00:00"
+            "time": "2020-12-07T18:04:37+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -8814,16 +8828,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.5.2",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "08668034beb185fa2ac6f09b1034eaa440952ace"
+                "reference": "d8dc4f90ed469f9f9313b976fb078c20585d5c99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/08668034beb185fa2ac6f09b1034eaa440952ace",
-                "reference": "08668034beb185fa2ac6f09b1034eaa440952ace",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/d8dc4f90ed469f9f9313b976fb078c20585d5c99",
+                "reference": "d8dc4f90ed469f9f9313b976fb078c20585d5c99",
                 "shasum": ""
             },
             "require": {
@@ -8887,7 +8901,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2020-11-17T09:18:51+00:00"
+            "time": "2020-12-09T20:25:45+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -8944,16 +8958,16 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.12.0",
+            "version": "v1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "9aa6c9e289860951e6b4d010c7a841802d015cd8"
+                "reference": "841e8bdde345cc1ea9f98e776959e7531cadea0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/9aa6c9e289860951e6b4d010c7a841802d015cd8",
-                "reference": "9aa6c9e289860951e6b4d010c7a841802d015cd8",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/841e8bdde345cc1ea9f98e776959e7531cadea0e",
+                "reference": "841e8bdde345cc1ea9f98e776959e7531cadea0e",
                 "shasum": ""
             },
             "require": {
@@ -8990,9 +9004,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.12.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.12.1"
             },
-            "time": "2020-11-23T09:33:08+00:00"
+            "time": "2020-12-11T10:39:41+00:00"
         },
         {
             "name": "felixfbecker/advanced-json-rpc",
@@ -9527,16 +9541,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.6.10",
+            "version": "v0.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "555d4cefde563ec9bf93925951615ef344cebd86"
+                "reference": "a036948cdcb09bc374f8be77db4c1262374cb297"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/555d4cefde563ec9bf93925951615ef344cebd86",
-                "reference": "555d4cefde563ec9bf93925951615ef344cebd86",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/a036948cdcb09bc374f8be77db4c1262374cb297",
+                "reference": "a036948cdcb09bc374f8be77db4c1262374cb297",
                 "shasum": ""
             },
             "require": {
@@ -9600,7 +9614,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v0.6.10"
+                "source": "https://github.com/nunomaduro/larastan/tree/v0.6.11"
             },
             "funding": [
                 {
@@ -9620,7 +9634,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2020-11-25T22:57:13+00:00"
+            "time": "2020-12-07T17:05:45+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
@@ -9677,22 +9691,22 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v6.5.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "dc73c0415db859ea252b1633d8b269ffdd96e36d"
+                "reference": "9e59b54262d6c0aee0a3843d95e3930acad3120f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/dc73c0415db859ea252b1633d8b269ffdd96e36d",
-                "reference": "dc73c0415db859ea252b1633d8b269ffdd96e36d",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/9e59b54262d6c0aee0a3843d95e3930acad3120f",
+                "reference": "9e59b54262d6c0aee0a3843d95e3930acad3120f",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^8.0",
                 "mockery/mockery": "^1.3.1",
-                "orchestra/testbench-core": "^6.7",
+                "orchestra/testbench-core": "^6.8",
                 "php": ">=7.3 || >=8.0",
                 "phpunit/phpunit": "^8.4 || ^9.0"
             },
@@ -9725,7 +9739,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v6.5.0"
+                "source": "https://github.com/orchestral/testbench/tree/v6.6.0"
             },
             "funding": [
                 {
@@ -9737,20 +9751,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2020-12-01T11:28:02+00:00"
+            "time": "2020-12-09T14:38:58+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v6.7.0",
+            "version": "v6.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "4f9fe7b3f901984c4e012fc29354ccc9eaf9e66f"
+                "reference": "7d038b444813cda4ffd637a2008aa487edb5afed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/4f9fe7b3f901984c4e012fc29354ccc9eaf9e66f",
-                "reference": "4f9fe7b3f901984c4e012fc29354ccc9eaf9e66f",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/7d038b444813cda4ffd637a2008aa487edb5afed",
+                "reference": "7d038b444813cda4ffd637a2008aa487edb5afed",
                 "shasum": ""
             },
             "require": {
@@ -9821,20 +9835,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2020-12-01T11:00:52+00:00"
+            "time": "2020-12-09T14:20:37+00:00"
         },
         {
             "name": "phan/phan",
-            "version": "3.2.6",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "e14110d4bef8643562b02a4003015c2c0dcc9fe4"
+                "reference": "642844acf5acf755d32cc104a4e3ced5521b00d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/e14110d4bef8643562b02a4003015c2c0dcc9fe4",
-                "reference": "e14110d4bef8643562b02a4003015c2c0dcc9fe4",
+                "url": "https://api.github.com/repos/phan/phan/zipball/642844acf5acf755d32cc104a4e3ced5521b00d3",
+                "reference": "642844acf5acf755d32cc104a4e3ced5521b00d3",
                 "shasum": ""
             },
             "require": {
@@ -9896,9 +9910,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/3.2.6"
+                "source": "https://github.com/phan/phan/tree/3.2.7"
             },
-            "time": "2020-11-27T19:39:49+00:00"
+            "time": "2020-12-13T16:39:58+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -10136,16 +10150,16 @@
         },
         {
             "name": "phpstan/extension-installer",
-            "version": "1.0.5",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/extension-installer.git",
-                "reference": "5c2da3846819f951385cb6a25d3277051481c48a"
+                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/5c2da3846819f951385cb6a25d3277051481c48a",
-                "reference": "5c2da3846819f951385cb6a25d3277051481c48a",
+                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
+                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
                 "shasum": ""
             },
             "require": {
@@ -10155,13 +10169,9 @@
             },
             "require-dev": {
                 "composer/composer": "^1.8",
-                "consistence/coding-standard": "^3.8",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "ergebnis/composer-normalize": "^2.0.2",
-                "phing/phing": "^2.16",
+                "phing/phing": "^2.16.3",
                 "php-parallel-lint/php-parallel-lint": "^1.2.0",
-                "phpstan/phpstan-strict-rules": "^0.11",
-                "slevomat/coding-standard": "^5.0.4"
+                "phpstan/phpstan-strict-rules": "^0.11 || ^0.12"
             },
             "type": "composer-plugin",
             "extra": {
@@ -10179,9 +10189,9 @@
             "description": "Composer plugin for automatic installation of PHPStan extensions",
             "support": {
                 "issues": "https://github.com/phpstan/extension-installer/issues",
-                "source": "https://github.com/phpstan/extension-installer/tree/1.0.5"
+                "source": "https://github.com/phpstan/extension-installer/tree/1.1.0"
             },
-            "time": "2020-08-30T12:06:42+00:00"
+            "time": "2020-12-13T13:06:13+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -10238,16 +10248,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.58",
+            "version": "0.12.62",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5"
+                "reference": "632393159335bbbdd7ca07d19b3ad50d76aa7fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2a4847df6047b30af28854ed9dc95304cdb56ae5",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/632393159335bbbdd7ca07d19b3ad50d76aa7fd8",
+                "reference": "632393159335bbbdd7ca07d19b3ad50d76aa7fd8",
                 "shasum": ""
             },
             "require": {
@@ -10278,7 +10288,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.58"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.62"
             },
             "funding": [
                 {
@@ -10294,35 +10304,31 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-29T13:32:03+00:00"
+            "time": "2020-12-13T13:59:38+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
-            "version": "0.12.5",
+            "version": "0.12.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-deprecation-rules.git",
-                "reference": "bfabc6a1b4617fbcbff43f03a4c04eae9bafae21"
+                "reference": "46dbd43c2db973d2876d6653e53f5c2cc3a01fbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/bfabc6a1b4617fbcbff43f03a4c04eae9bafae21",
-                "reference": "bfabc6a1b4617fbcbff43f03a4c04eae9bafae21",
+                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/46dbd43c2db973d2876d6653e53f5c2cc3a01fbb",
+                "reference": "46dbd43c2db973d2876d6653e53f5c2cc3a01fbb",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.26"
+                "phpstan/phpstan": "^0.12.60"
             },
             "require-dev": {
-                "consistence/coding-standard": "^3.0.1",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "ergebnis/composer-normalize": "^2.0.2",
-                "jakub-onderka/php-parallel-lint": "^1.0",
-                "phing/phing": "^2.16.0",
+                "phing/phing": "^2.16.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
                 "phpstan/phpstan-phpunit": "^0.12",
-                "phpunit/phpunit": "^7.0",
-                "slevomat/coding-standard": "^4.5.2"
+                "phpunit/phpunit": "^7.5.20"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -10347,37 +10353,33 @@
             "description": "PHPStan rules for detecting usage of deprecated classes, methods, properties, constants and traits.",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-deprecation-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/0.12.5"
+                "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/0.12.6"
             },
-            "time": "2020-07-21T14:52:30+00:00"
+            "time": "2020-12-13T10:20:54+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "0.12.5",
+            "version": "0.12.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "334898a32217e4605e0f9cfa3d3fc3101bda26be"
+                "reference": "03807e3410747ec18cd5f05a6342384adcc423bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/334898a32217e4605e0f9cfa3d3fc3101bda26be",
-                "reference": "334898a32217e4605e0f9cfa3d3fc3101bda26be",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/03807e3410747ec18cd5f05a6342384adcc423bf",
+                "reference": "03807e3410747ec18cd5f05a6342384adcc423bf",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.33"
+                "phpstan/phpstan": "^0.12.60"
             },
             "require-dev": {
-                "consistence/coding-standard": "^3.0.1",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "ergebnis/composer-normalize": "^2.0.2",
-                "jakub-onderka/php-parallel-lint": "^1.0",
-                "phing/phing": "^2.16.0",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpunit/phpunit": "^7.0",
-                "slevomat/coding-standard": "^4.5.2"
+                "phing/phing": "^2.16.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/phpstan-phpunit": "^0.12.16",
+                "phpunit/phpunit": "^7.5.20"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -10402,9 +10404,9 @@
             "description": "Extra strict and opinionated rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/master"
+                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/0.12.7"
             },
-            "time": "2020-08-30T15:42:06+00:00"
+            "time": "2020-12-13T13:27:14+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10829,16 +10831,16 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "71a93c472c398fe62bf0d3c0d6ad1e281320f87f"
+                "reference": "baf53624a2647a887eee3b43e87f4f44f64eb6e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/71a93c472c398fe62bf0d3c0d6ad1e281320f87f",
-                "reference": "71a93c472c398fe62bf0d3c0d6ad1e281320f87f",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/baf53624a2647a887eee3b43e87f4f44f64eb6e7",
+                "reference": "baf53624a2647a887eee3b43e87f4f44f64eb6e7",
                 "shasum": ""
             },
             "require": {
@@ -10859,7 +10861,7 @@
                 "codeception/module-phpbrowser": "^1.0.0",
                 "slevomat/coding-standard": "^6.2",
                 "squizlabs/php_codesniffer": "*",
-                "weirdan/codeception-psalm-module": "^0.8"
+                "weirdan/codeception-psalm-module": "^0.13.1"
             },
             "type": "psalm-plugin",
             "extra": {
@@ -10888,23 +10890,23 @@
             "description": "A Laravel plugin for Psalm",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v1.4.1"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v1.4.2"
             },
-            "time": "2020-10-20T00:24:26+00:00"
+            "time": "2020-12-07T14:56:40+00:00"
         },
         {
             "name": "robojackets/static-analysis",
-            "version": "v1.1",
+            "version": "v1.2",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/static-analysis.git",
-                "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d"
+                "reference": "1a1c4fff67e3727f20cd33814f29a0724405f211"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1607096058/robojackets/static-analysis/robojackets-static-analysis-c2bb4f016bab81c4a59b008f876e066b74facb9d-zip-5370fe.zip",
-                "reference": "c2bb4f016bab81c4a59b008f876e066b74facb9d",
-                "shasum": "13bb371bc493555d092ae0a66e2753664a774d84"
+                "url": "https://composer.robojackets.org/1607896556/robojackets/static-analysis/robojackets-static-analysis-1a1c4fff67e3727f20cd33814f29a0724405f211-zip-ab0a59.zip",
+                "reference": "1a1c4fff67e3727f20cd33814f29a0724405f211",
+                "shasum": "3725a23d2be63e422cbed810645ebadb0b4c143c"
             },
             "require": {
                 "phan/phan": "*",
@@ -10934,9 +10936,9 @@
             "description": "Standard static analyzers for PHP, with sensible defaults",
             "homepage": "https://github.gatech.edu/RoboJackets/static-analysis",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/static-analysis/tree/v1.1"
+                "source": "https://github.gatech.edu/RoboJackets/static-analysis/tree/v1.2"
             },
-            "time": "2020-09-10T00:31:02+00:00"
+            "time": "2020-12-13T21:52:12+00:00"
         },
         {
             "name": "sabre/event",
