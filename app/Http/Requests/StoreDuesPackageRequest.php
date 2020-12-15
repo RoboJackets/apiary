@@ -19,17 +19,33 @@ class StoreDuesPackageRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'name'               => 'required|string',
-            'eligible_for_shirt' => 'boolean',
-            'eligible_for_polo'  => 'boolean',
-            'effective_start'    => 'required|date',
-            'effective_end'      => 'required|date',
-            'cost'               => 'required|numeric',
+            'name' => [
+                'required',
+                'string',
+            ],
+            'eligible_for_shirt' => [
+                'boolean',
+            ],
+            'eligible_for_polo' => [
+                'boolean',
+            ],
+            'effective_start' => [
+                'required',
+                'date',
+            ],
+            'effective_end' => [
+                'required',
+                'date',
+            ],
+            'cost' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 

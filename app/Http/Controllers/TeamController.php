@@ -45,7 +45,7 @@ class TeamController extends Controller
 
     public function indexWeb(Request $request): View
     {
-        $teams = Team::visible()->orderBy('visible_on_kiosk', 'desc')->orderBy('name', 'asc')->get();
+        $teams = Team::visible()->orderBy('visible_on_kiosk', 'desc')->orderBy('name')->get();
 
         // Send only what's necessary to the front end
         $user_id = $request->user()->id;

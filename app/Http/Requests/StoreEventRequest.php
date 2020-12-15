@@ -19,18 +19,35 @@ class StoreEventRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'name'                 => 'required|max:255',
-            'cost'                 => 'numeric',
-            'allow_anonymous_rsvp' => 'required|boolean',
-            'organizer_id'         => 'required|exists:users,id',
-            'location'             => 'max:255',
-            'start_time'           => 'date',
-            'end_time'             => 'date',
+            'name' => [
+                'required',
+                'max:255',
+            ],
+            'cost' => [
+                'numeric',
+            ],
+            'allow_anonymous_rsvp' => [
+                'required',
+                'boolean',
+            ],
+            'organizer_id' => [
+                'required',
+                'exists:users,id',
+            ],
+            'location' => [
+                'max:255',
+            ],
+            'start_time' => [
+                'date',
+            ],
+            'end_time' => [
+                'date',
+            ],
         ];
     }
 

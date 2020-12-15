@@ -19,16 +19,28 @@ class UpdateDuesTransactionRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'swag_shirt_provided' => 'boolean|nullable',
-            'swag_polo_provided'  => 'boolean|nullable',
-            'dues_package_id'     => 'exists:dues_packages,id',
-            'payment_id'          => 'exists:payments,id',
-            'user_id'             => 'exists:users,id',
+            'swag_shirt_provided' => [
+                'boolean',
+                'nullable',
+            ],
+            'swag_polo_provided' => [
+                'boolean',
+                'nullable',
+            ],
+            'dues_package_id' => [
+                'exists:dues_packages,id',
+            ],
+            'payment_id' => [
+                'exists:payments,id',
+            ],
+            'user_id' => [
+                'exists:users,id',
+            ],
         ];
     }
 

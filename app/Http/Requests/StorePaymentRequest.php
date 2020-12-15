@@ -21,20 +21,33 @@ class StorePaymentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string|array<string|\Illuminate\Validation\Rules\In>>
+     * @return array<string,array<string|\Illuminate\Validation\Rules\In>>
      */
     public function rules(): array
     {
         return [
-            'amount'       => 'required|numeric',
-            'method'       => [
+            'amount' => [
+                'required',
+                'numeric',
+            ],
+            'method' => [
                 'required',
                 'string',
                 Rule::in(array_keys(Payment::$methods)),
             ],
-            'recorded_by'  => 'required|numeric|exists:users,id',
-            'payable_type' => 'required|string',
-            'payable_id'   => 'required|numeric',
+            'recorded_by' => [
+                'required',
+                'numeric',
+                'exists:users,id',
+            ],
+            'payable_type' => [
+                'required',
+                'string',
+            ],
+            'payable_id' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 

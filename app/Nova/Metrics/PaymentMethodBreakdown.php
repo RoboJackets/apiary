@@ -38,7 +38,7 @@ class PaymentMethodBreakdown extends Partition
                     ->select('method')
                     ->selectRaw('count(payments.id) as aggregate')
                     ->groupBy('method')
-                    ->orderBy('aggregate', 'desc')
+                    ->orderByDesc('aggregate')
                     ->get()
                     ->mapWithKeys(static function (Payment $item): array {
                         return [Payment::$methods[$item->method] => $item->aggregate];
