@@ -26,8 +26,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function boot(): void
     {

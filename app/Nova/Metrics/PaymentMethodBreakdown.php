@@ -21,8 +21,6 @@ class PaymentMethodBreakdown extends Partition
 
     /**
      * Calculate the value of the metric.
-     *
-     * @SuppressWarnings(PHPMD.UndefinedVariable)
      */
     public function calculate(Request $request): PartitionResult
     {
