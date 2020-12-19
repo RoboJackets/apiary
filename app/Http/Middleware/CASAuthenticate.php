@@ -36,7 +36,7 @@ class CASAuthenticate
     protected $cas;
 
     /**
-     * List of attributes that may be set during masquerade
+     * List of attributes that may be set during masquerade.
      *
      * @var array<string>
      *
@@ -52,7 +52,7 @@ class CASAuthenticate
     ];
 
     /**
-     * List of array attributes that may be set during masquerade
+     * List of array attributes that may be set during masquerade.
      *
      * @var array<string>
      *
