@@ -32,7 +32,7 @@
     "vue": "2.6.12",
     "vue-flatpickr-component": "8.1.6",
     "vue-moment": "4.1.0",
-    "vue-select": "3.11.0",
+    "vue-select": "3.11.1",
     "vue-template-compiler": "2.6.12",
     "vuelidate": "0.7.6"
   }
