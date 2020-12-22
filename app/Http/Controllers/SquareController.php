@@ -18,6 +18,7 @@ use Square\Models\Money;
 use Square\Models\Order;
 use Square\Models\OrderLineItem;
 use Square\Models\OrderServiceCharge;
+use Square\Models\OrderServiceChargeCalculationPhase;
 use Square\Models\OrderState;
 use Square\SquareClient;
 
@@ -84,6 +85,7 @@ class SquareController extends Controller
         $orderServiceCharge = new OrderServiceCharge();
         $orderServiceCharge->setName('Card Processing Surcharge');
         $orderServiceCharge->setAmountMoney($surcharge);
+        $orderServiceCharge->setCalculationPhase(OrderServiceChargeCalculationPhase::TOTAL_PHASE);
 
         $order = new Order(config('square.location_id'));
         $order->setReferenceId((string) $payment->id);
