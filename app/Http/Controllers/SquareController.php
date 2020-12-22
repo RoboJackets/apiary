@@ -1,0 +1,197 @@
+<?php
+
+declare(strict_types=1);
+
+// phpcs:disable Generic.Formatting.SpaceBeforeCast.NoSpace
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\SquareCompleteRequest;
+use App\Models\DuesTransaction;
+use App\Models\Payment;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Square\Models\CreateCheckoutRequest;
+use Square\Models\CreateOrderRequest;
+use Square\Models\Money;
+use Square\Models\Order;
+use Square\Models\OrderLineItem;
+use Square\Models\OrderServiceCharge;
+use Square\Models\OrderState;
+use Square\SquareClient;
+
+class SquareController extends Controller
+{
+    private const PER_TRANSACTION_FEE = 30;  // cents
+    private const PERCENTAGE_FEE = 2.9;
+
+    public function payDues(Request $request)
+    {
+        $user = $request->user();
+
+        $transactionWithNoPayment = DuesTransaction::doesntHave('payment')
+            ->where('user_id', $user->id)
+            ->latest('updated_at')
+            ->first();
+
+        $transactionWithIncompletePayment = DuesTransaction::where('user_id', $user->id)
+            ->whereHas('package', static function (Builder $q): void {
+                $q->whereDate('effective_end', '>=', date('Y-m-d'));
+            })->whereHas('payment', static function (Builder $q): void {
+                $q->where('amount', 0.00);
+                $q->where('method', 'square');
+            })->first();
+
+        if (null !== $transactionWithIncompletePayment) {
+            $transaction = $transactionWithIncompletePayment;
+
+            $payment = $transaction->payment[0];
+        } elseif (null !== $transactionWithNoPayment) {
+            $transaction = $transactionWithNoPayment;
+
+            $payment = new Payment();
+            $payment->amount = 0.00;
+            $payment->method = 'square';
+            $payment->recorded_by = $user->id;
+            $payment->unique_id = self::generateUniqueId();
+            $payment->notes = 'Checkout flow started';
+
+            $transaction->payment()->save($payment);
+        } else {
+            return view(
+                'square.error',
+                [
+                    'message' => 'We could not find a transaction ready for payment.',
+                ]
+            );
+        }
+
+        $amount = (int) ($transaction->package->cost * 100);
+
+        $basePrice = new Money();
+        $basePrice->setAmount($amount);
+        $basePrice->setCurrency('USD');
+
+        $surcharge = new Money();
+        $surcharge->setAmount(self::calculateSurcharge($amount));
+        $surcharge->setCurrency('USD');
+
+        $orderLineItem = new OrderLineItem('1');
+        $orderLineItem->setName('Dues - ' . $transaction->package->name);
+        $orderLineItem->setBasePriceMoney($basePrice);
+
+        $orderServiceCharge = new OrderServiceCharge();
+        $orderServiceCharge->setName('Card Processing Surcharge');
+        $orderServiceCharge->setAmountMoney($surcharge);
+
+        $order = new Order(config('square.location_id'));
+        $order->setReferenceId((string) $payment->id);
+        $order->setLineItems([$orderLineItem]);
+        $order->setServiceCharges([$orderServiceCharge]);
+
+        $orderRequest = new CreateOrderRequest();
+        $orderRequest->setOrder($order);
+        $orderRequest->setLocationId(config('square.location_id'));
+        $orderRequest->setIdempotencyKey($payment->unique_id);
+
+        $checkoutRequest = new CreateCheckoutRequest($payment->unique_id, $orderRequest);
+        $checkoutRequest->setMerchantSupportEmail('treasurer@robojackets.org');
+        $checkoutRequest->setPrePopulateBuyerEmail($user->gt_email);
+        $checkoutRequest->setRedirectUrl(route('pay.complete'));
+
+        $square = new SquareClient([
+            'accessToken' => config('square.access_token'),
+            'environment' => config('square.environment'),
+        ]);
+
+        $checkoutApi = $square->getCheckoutApi();
+        $checkoutResponse = $checkoutApi->createCheckout(config('square.location_id'), $checkoutRequest);
+
+        if (!$checkoutResponse->isSuccess()) {
+            return view(
+                'square.error',
+                [
+                    'message' => 'We could not contact Square to begin your payment.',
+                ]
+            );
+        }
+
+        $payment->checkout_id = $checkoutResponse->getCheckout()->getId();
+        $payment->save();
+
+        return redirect($checkoutResponse->getCheckout()->getCheckoutPageUrl());
+    }
+
+    public function complete(SquareCompleteRequest $request)
+    {
+        $payment = Payment::firstOrFail($request->input('referenceId'));
+
+        if ($payment->checkout_id !== $request->input('checkoutId')) {
+            return view(
+                'square.error',
+                [
+                    'message' => 'We could not match your payment in our database.',
+                ]
+            );
+        }
+
+        $payment->order_id = $request->input('orderId');
+        $payment->save();
+
+        $square = new SquareClient([
+            'accessToken' => config('square.access_token'),
+            'environment' => config('square.environment'),
+        ]);
+
+        $ordersApi = $square->getOrdersApi();
+
+        $retrieveOrderResponse = $ordersApi->retrieveOrder($request->input('orderId'));
+
+        if (!$retrieveOrderResponse->isSuccess()) {
+            return view(
+                'square.error',
+                [
+                    'message' => 'We could not contact Square to finalize your payment.',
+                ]
+            );
+        }
+
+        $order = $retrieveOrderResponse->getOrder();
+
+        switch ($order->getState()) {
+            case OrderState::COMPLETED:
+                $tender = $order->getTenders()[0];
+                $payment->amount = $tender->amountMoney()->getAmount() / 100;
+                $payment->processing_fee = $tender->getProcessingFeeMoney()->getAmount() / 100;
+                $payment->notes = 'Checkout flow completed';
+                $payment->save();
+
+                alert()->success("We've received your payment", 'Success!');
+
+                return redirect('/');
+            case OrderState::CANCELED:
+                return view(
+                    'square.error',
+                    [
+                        'message' => 'Your order was canceled.',
+                    ]
+                );
+            case OrderState::OPEN:
+                return view('square.processing');
+        }
+    }
+
+    private static function generateUniqueId(): string
+    {
+        return bin2hex(openssl_random_pseudo_bytes(32));
+    }
+
+    private static function calculateSurcharge(int $amount): int
+    {
+        return (int) round(
+            (($amount + self::PER_TRANSACTION_FEE) / ((100 - self::PERCENTAGE_FEE) / 100)) - $amount,
+            0,
+            PHP_ROUND_HALF_UP
+        );
+    }
+}

@@ -6,13 +6,13 @@ We've received your RoboJackets dues form!
 
 Next, you need to make a payment for **${{$duesPackage->cost}}**.
 
-When completing the form, you chose the **{{$duesPackage->name}}** dues package. If this was selected in error, simply return to the [dues form]({{ route('payDues')}}) and select the proper dues package. Notify the person collecting your dues that you have multiple pending requests.
+When completing the form, you chose the **{{$duesPackage->name}}** dues package. If this was selected in error, simply return to the [dues form]({{ route('showDuesFlow')}}) and select the proper dues package. Notify the person collecting your dues that you have multiple pending requests.
 
 ## We accept the following forms of payment:
 @if (config('features.card-present-payments'))
-1. Credit/Debit Card - Pay [online]({{ route('dues.payOne') }}) now. Prefer to pay in-person? See an officer at the shop. *Additional processing fees apply for all credit or debit card transactions.*
+1. Credit/Debit Card - Pay [online]({{ route('pay.dues') }}) now. Prefer to pay in-person? See an officer at the shop. *Additional processing fees apply for all credit or debit card transactions.*
 @else
-1. Credit/Debit Card - Pay [online]({{ route('dues.payOne') }}) now. *Additional processing fees apply for all credit or debit card transactions.*
+1. Credit/Debit Card - Pay [online]({{ route('pay.dues') }}) now. *Additional processing fees apply for all credit or debit card transactions.*
 @endif
 1. Cash - Pay an officer or project manager at the shop.
 2. Check - Make a check out to RoboJackets and give it to an officer or your PM. Don't forget to sign it!

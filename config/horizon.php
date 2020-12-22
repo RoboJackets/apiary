@@ -76,10 +76,10 @@ return [
         'production' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square'],
                 'balance' => 'simple',
-                'processes' => 3,
-                'tries' => 3,
+                'processes' => 5,
+                'tries' => 1,
                 'block_for' => null,
             ],
         ],
@@ -87,9 +87,9 @@ return [
         'test' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square'],
                 'balance' => 'simple',
-                'processes' => 3,
+                'processes' => 1,
                 'tries' => 1,
                 'block_for' => null,
             ],
@@ -98,7 +98,7 @@ return [
         'local' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
