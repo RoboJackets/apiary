@@ -110,6 +110,7 @@ class SquareController extends Controller
 
         if (! $checkoutResponse->isSuccess()) {
             Log::error(self::class.' Error creating checkout - '.json_encode($checkoutResponse->jsonSerialize()));
+
             return view(
                 'square.error',
                 [
@@ -151,6 +152,7 @@ class SquareController extends Controller
 
         if (! $retrieveOrderResponse->isSuccess()) {
             Log::error(self::class.'Error retrieving order - '.json_encode($retrieveOrderResponse->jsonSerialize()));
+
             return view(
                 'square.error',
                 [
