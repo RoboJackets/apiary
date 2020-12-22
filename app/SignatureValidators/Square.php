@@ -28,7 +28,7 @@ class Square implements SignatureValidator
             throw new Exception('Payload is not a string');
         }
 
-        $calculatedSignature = base64_encode(hash_hmac('sha1', $request->url.$payload, $secret, true));
+        $calculatedSignature = base64_encode(hash_hmac('sha1', $request->url().$payload, $secret, true));
 
         return sha1($calculatedSignature) === sha1($sentSignature);
     }
