@@ -19,7 +19,7 @@
         "fideloper/proxy": "4.4.1",
         "fruitcake/laravel-cors": "2.0.3",
         "guzzlehttp/guzzle": "7.2.0",
-        "laravel/framework": "8.19.0",
+        "laravel/framework": "8.20.0",
         "laravel/horizon": "5.6.2",
         "laravel/nova": "3.17.0",
         "laravel/slack-notification-channel": "2.3.0",
