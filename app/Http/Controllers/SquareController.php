@@ -77,7 +77,7 @@ class SquareController extends Controller
         $surcharge->setCurrency('USD');
 
         $orderLineItem = new OrderLineItem('1');
-        $orderLineItem->setName('Dues - ' . $transaction->package->name);
+        $orderLineItem->setName('Dues - '.$transaction->package->name);
         $orderLineItem->setBasePriceMoney($basePrice);
 
         $orderServiceCharge = new OrderServiceCharge();
@@ -107,7 +107,7 @@ class SquareController extends Controller
         $checkoutApi = $square->getCheckoutApi();
         $checkoutResponse = $checkoutApi->createCheckout(config('square.location_id'), $checkoutRequest);
 
-        if (!$checkoutResponse->isSuccess()) {
+        if (! $checkoutResponse->isSuccess()) {
             return view(
                 'square.error',
                 [
@@ -147,7 +147,7 @@ class SquareController extends Controller
 
         $retrieveOrderResponse = $ordersApi->retrieveOrder($request->input('orderId'));
 
-        if (!$retrieveOrderResponse->isSuccess()) {
+        if (! $retrieveOrderResponse->isSuccess()) {
             return view(
                 'square.error',
                 [

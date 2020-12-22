@@ -11,7 +11,6 @@ use Spatie\WebhookClient\ProcessWebhookJob;
 
 class ProcessSquareWebhook extends ProcessWebhookJob
 {
-
     /**
      * The queue this job will run on. This is fairly arbitrary since it only touches the local DB.
      *
