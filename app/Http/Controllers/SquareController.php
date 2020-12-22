@@ -121,10 +121,12 @@ class SquareController extends Controller
             );
         }
 
-        $payment->checkout_id = $checkoutResponse->getCheckout()->getId();
+        $checkout = $checkoutResponse->getResult()->getCheckout();
+
+        $payment->checkout_id = $checkout->getId();
         $payment->save();
 
-        return redirect($checkoutResponse->getCheckout()->getCheckoutPageUrl());
+        return redirect($checkout->getCheckoutPageUrl());
     }
 
     public function complete(SquareCompleteRequest $request)
@@ -163,7 +165,7 @@ class SquareController extends Controller
             );
         }
 
-        $order = $retrieveOrderResponse->getOrder();
+        $order = $retrieveOrderResponse->getResult()->getOrder();
 
         switch ($order->getState()) {
             case OrderState::COMPLETED:
