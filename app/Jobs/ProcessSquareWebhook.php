@@ -38,9 +38,10 @@ class ProcessSquareWebhook extends ProcessWebhookJob
         $details = $this->webhookCall->payload['data']['object']['payment'];
 
         $payment = Payment::firstOrFail($details['reference_id']);
-        $payment->processing_fee = $details['processing_fee'];
         $payment->amount = $details['amount_money']['amount'] / 100;
+        $payment->processing_fee = $details['processing_fee'];
         $payment->order_id = $details['order_id'];
+        $payment->notes = 'Checkout flow completed';
         $payment->save();
 
         $payment->payable->user->notify(new ConfirmationNotification($payment));
