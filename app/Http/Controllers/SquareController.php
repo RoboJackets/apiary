@@ -109,7 +109,7 @@ class SquareController extends Controller
         $checkoutResponse = $checkoutApi->createCheckout(config('square.location_id'), $checkoutRequest);
 
         if (! $checkoutResponse->isSuccess()) {
-            Log::error(self::class.' Error creating checkout - '.json_encode($checkoutResponse->jsonSerialize()));
+            Log::error(self::class.' Error creating checkout - '.json_encode($checkoutResponse->getErrors()));
 
             return view(
                 'square.error',
@@ -151,7 +151,7 @@ class SquareController extends Controller
         $retrieveOrderResponse = $ordersApi->retrieveOrder($request->input('orderId'));
 
         if (! $retrieveOrderResponse->isSuccess()) {
-            Log::error(self::class.'Error retrieving order - '.json_encode($retrieveOrderResponse->jsonSerialize()));
+            Log::error(self::class.'Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
 
             return view(
                 'square.error',
