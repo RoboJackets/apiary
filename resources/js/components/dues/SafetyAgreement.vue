@@ -69,7 +69,7 @@ export default {
         return;
       }
 
-      var currentTimestamp = Math.round(Date.now() / 1000);
+      var currentTimestamp = (new Date()).toISOString();
 
       var payload = {
         uid: this.userUid,
