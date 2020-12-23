@@ -178,7 +178,7 @@ class SquareCheckoutController extends Controller
 
                 $cardDetails = $tender->getCardDetails();
                 if (null !== $cardDetails) {
-                    $card = $tender->getCard();
+                    $card = $cardDetails->getCard();
                     if (null !== $card) {
                         $payment->card_brand = $card->getCardBrand();
                         $payment->card_type = $card->getCardType();
