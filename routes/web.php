@@ -15,7 +15,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
-use App\Http\Controllers\SquareController;
+use App\Http\Controllers\SquareCheckoutController;
 use App\Http\Controllers\SUMSController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
@@ -54,8 +54,8 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     });
 
     Route::prefix('pay')->group(static function (): void {
-        Route::get('/dues', [SquareController::class, 'payDues'])->name('pay.dues');
-        Route::get('/complete', [SquareController::class, 'complete'])->name('pay.complete');
+        Route::get('/dues', [SquareCheckoutController::class, 'payDues'])->name('pay.dues');
+        Route::get('/complete', [SquareCheckoutController::class, 'complete'])->name('pay.complete');
     });
 
     Route::get('github', [GitHubController::class, 'redirectToProvider']);

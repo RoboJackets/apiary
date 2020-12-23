@@ -60,10 +60,6 @@ class Payment extends Resource
             Currency::make('Amount')
                 ->sortable(),
 
-            Currency::make('Processing Fee')
-                ->onlyOnDetail()
-                ->sortable(),
-
             BelongsTo::make('Recorded By', 'user', User::class)
                 ->help('The user that recorded the payment')
                 ->sortable(),
@@ -72,7 +68,61 @@ class Payment extends Resource
                 ->onlyOnDetail()
                 ->alwaysShow(),
 
-            new Panel('Metadata', $this->metaFields()),
+            new Panel('Square Metadata', $this->squareFields()),
+
+            new Panel('Timestamps', $this->metaFields()),
+        ];
+    }
+
+    /**
+     * Square fields.
+     *
+     * @return array<\Laravel\Nova\Fields\Field>
+     */
+    protected function squareFields(): array
+    {
+        return [
+            Currency::make('Processing Fee')
+                ->onlyOnDetail(),
+
+            String::make('Checkout ID')
+                ->onlyOnDetail(),
+
+            String::make('Client Transaction ID', 'client_txn_id')
+                ->onlyOnDetail(),
+
+            String::make('Server Transaction ID', 'server_txn_id')
+                ->onlyOnDetail(),
+
+            String::make('Idempotency Key', 'unique_id')
+                ->onlyOnDetail(),
+
+            String::make('Order ID')
+                ->onlyOnDetail(),
+
+            String::make('Card Brand')
+                ->onlyOnDetail(),
+
+            String::make('Card Type')
+                ->onlyOnDetail(),
+
+            String::make('Last 4')
+                ->onlyOnDetail(),
+
+            String::make('Prepaid Type')
+                ->onlyOnDetail(),
+
+            String::make('Entry Method')
+                ->onlyOnDetail(),
+
+            String::make('Statement Description')
+                ->onlyOnDetail(),
+
+            String::make('Receipt Number')
+                ->onlyOnDetail(),
+
+            String::make('Receipt URL')
+                ->onlyOnDetail(),
         ];
     }
 

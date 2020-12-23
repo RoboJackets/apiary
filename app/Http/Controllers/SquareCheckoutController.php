@@ -17,8 +17,7 @@ use Square\Models\CreateOrderRequest;
 use Square\Models\Money;
 use Square\Models\Order;
 use Square\Models\OrderLineItem;
-use Square\Models\OrderServiceCharge;
-use Square\Models\OrderServiceChargeCalculationPhase;
+use Square\Models\OrderLineItemTax;
 use Square\Models\OrderState;
 use Square\SquareClient;
 
@@ -74,23 +73,19 @@ class SquareController extends Controller
         $basePrice->setAmount($amount);
         $basePrice->setCurrency('USD');
 
-        $surcharge = new Money();
-        $surcharge->setAmount(self::calculateSurcharge($amount));
-        $surcharge->setCurrency('USD');
-
         $orderLineItem = new OrderLineItem('1');
-        $orderLineItem->setName('Dues - '.$transaction->package->name);
+        $orderLineItem->setName('Dues');
+        $orderLineItem->setVariationName($transaction->package->name);
         $orderLineItem->setBasePriceMoney($basePrice);
 
-        $orderServiceCharge = new OrderServiceCharge();
-        $orderServiceCharge->setName('Card Processing Surcharge');
-        $orderServiceCharge->setAmountMoney($surcharge);
-        $orderServiceCharge->setCalculationPhase(OrderServiceChargeCalculationPhase::TOTAL_PHASE);
+        $orderLineItemTax = new OrderLineItemTax();
+        $orderLineItemTax->setName('Card Processing Surcharge');
+        $orderLineItemTax->setPercentage(self::calculateSurchargeAsTax($amount));
 
         $order = new Order(config('square.location_id'));
         $order->setReferenceId((string) $payment->id);
         $order->setLineItems([$orderLineItem]);
-        $order->setServiceCharges([$orderServiceCharge]);
+        $order->setTaxes([$orderLineItemTax]);
 
         $orderRequest = new CreateOrderRequest();
         $orderRequest->setOrder($order);
@@ -172,6 +167,15 @@ class SquareController extends Controller
                 if (null !== $tender->getProcessingFeeMoney()) {
                     $payment->processing_fee = $tender->getProcessingFeeMoney()->getAmount() / 100;
                 }
+                if (null !== $tender->getCard()) {
+                    $card = $tender->getCard();
+
+                    $payment->card_brand = $card->getCardBrand();
+                    $payment->card_type = $card->getCardType();
+                    $payment->last_4 = $card->getLast4();
+                    $payment->prepaid_type = $card->getPrepaidType();
+                }
+                $payment->entry_method = $tender->getEntryMethod();
                 $payment->notes = 'Checkout flow completed';
                 $payment->save();
 
@@ -202,5 +206,10 @@ class SquareController extends Controller
             0,
             PHP_ROUND_HALF_UP
         );
+    }
+
+    private static function calculateSurchargeAsTax(int $amount): string
+    {
+        return strval(self::calculateSurcharge($amount) / $amount);
     }
 }
