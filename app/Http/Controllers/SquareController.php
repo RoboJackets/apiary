@@ -169,7 +169,9 @@ class SquareController extends Controller
             case OrderState::COMPLETED:
                 $tender = $order->getTenders()[0];
                 $payment->amount = $tender->getAmountMoney()->getAmount() / 100;
-                $payment->processing_fee = $tender->getProcessingFeeMoney()->getAmount() / 100;
+                if (null !== $tender->getProcessingFeeMoney()) {
+                    $payment->processing_fee = $tender->getProcessingFeeMoney()->getAmount() / 100;
+                }
                 $payment->notes = 'Checkout flow completed';
                 $payment->save();
 
