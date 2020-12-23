@@ -153,7 +153,7 @@ class SquareController extends Controller
         $retrieveOrderResponse = $ordersApi->retrieveOrder($payment->order_id);
 
         if (! $retrieveOrderResponse->isSuccess()) {
-            Log::error(self::class.'Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
+            Log::error(self::class.' Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
 
             return view(
                 'square.error',
