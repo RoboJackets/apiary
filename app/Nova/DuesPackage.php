@@ -74,6 +74,8 @@ class DuesPackage extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
+            BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class),
+
             Boolean::make('Active', 'is_active')
                 ->sortable()
                 ->hideWhenCreating()
@@ -92,6 +94,9 @@ class DuesPackage extends Resource
                 ->rules('required'),
 
             Boolean::make('Available for Purchase')
+                ->sortable(),
+
+            Boolean::make('Restricted to Students')
                 ->sortable(),
 
             new Panel('Swag', $this->swagFields()),

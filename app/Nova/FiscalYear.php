@@ -42,9 +42,10 @@ class FiscalYear extends Resource
     public function fields(Request $request): array
     {
         return [
-            Number::make('Ending Year'),
+            Number::make('Ending Year')
+                ->required(),
 
-            HasMany::make('Dues Packages'),
+            HasMany::make('Dues Packages', 'packages'),
         ];
     }
 
