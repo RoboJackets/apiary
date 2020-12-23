@@ -31,7 +31,7 @@
         "sensiolabs/security-checker": "6.0.3",
         "spatie/laravel-failed-job-monitor": "3.4.0",
         "spatie/laravel-permission": "3.18.0",
-        "spatie/laravel-webhook-client": "^2.7",
+        "spatie/laravel-webhook-client": "2.7.4",
         "square/square": "*",
         "subfission/cas": "4.0.0",
         "ukfast/laravel-health-check": "1.8.0",
