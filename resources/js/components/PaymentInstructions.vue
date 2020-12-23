@@ -11,10 +11,8 @@
               Credit/Debit Card
             </h4>
             <p class="card-text">
-              Pay with your credit/debit card online. There is a $3 surcharge to cover payment processing fees.
-                <!-- TODO this needs to be toggleable with the feature flag -->
-                Prefer to pay in-person? See an officer at the shop.<br/>
-                <b><a href="/dues/pay">Pay Online Now</a></b>
+              Pay with your credit/debit card online. There is an additional surcharge to cover payment processing fees.
+                <b><a href="/pay/dues">Pay Online Now</a></b>
             </p>
           </div>
         </div>

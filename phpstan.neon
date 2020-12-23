@@ -40,7 +40,6 @@ parameters:
     - '#Method App\\Notifications\\[a-zA-Z]+::via\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Nova\\[a-zA-Z]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method Illuminate\\Routing\\RouteRegistrar::middleware\(\) invoked with 2 parameters, 1 required\.#'
-    - '#Offset .+ does not exist on SquareConnect\\Model\\CreateCheckoutResponse\.#'
     - '#Parameter \#1 \$data of function bin2hex expects string, string\|false given\.#'
     - '#Parameter \#1 \$query of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Attendance>::selectSub\(\) expects Closure\|Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Attendance>\|string, Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User> given\.#'
     - '#Parameter \#1 \$str of function strtolower expects string, string\|null given\.#'

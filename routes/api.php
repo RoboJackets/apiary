@@ -97,3 +97,5 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
         Route::resource('teams', TeamController::class)->except('create', 'edit');
     }
 );
+
+Route::webhooks('/v1/square', 'square');
