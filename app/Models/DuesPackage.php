@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Actions\Actionable;
@@ -51,7 +52,8 @@ use Laravel\Nova\Actions\Actionable;
  * @property bool $eligible_for_shirt Whether this DuesPackage grants eligibility for a shirt
  * @property bool $is_active Whether this DuesPackage is considered active
  * @property float $cost the cost of this package
- * @property int $available_for_purchase
+ * @property bool $available_for_purchase
+ * @property bool $restricted_to_students
  * @property int $id The database identifier for this DuesPackage
  * @property string $name
  *
@@ -97,10 +99,12 @@ class DuesPackage extends Model
         'access_start' => 'datetime',
         'access_end' => 'datetime',
         'cost' => 'float',
+        'available_for_purchase' => 'boolean',
+        'restricted_to_students' => 'boolean',
     ];
 
     /**
-     * Get the DuesTransaction associated with the DuesPackage model.
+     * Get the DuesTransactions associated with the DuesPackage model.
      */
     public function duesTransactions(): HasMany
     {
@@ -108,11 +112,19 @@ class DuesPackage extends Model
     }
 
     /**
-     * Get the DuesTransaction associated with the DuesPackage model.
+     * Get the DuesTransactions associated with the DuesPackage model.
      */
     public function transactions(): HasMany
     {
         return $this->hasMany(DuesTransaction::class);
+    }
+
+    /**
+     * Get the FiscalYear associated with the DuesPackage model.
+     */
+    public function fiscalYear(): BelongsTo
+    {
+        return $this->belongsTo(FiscalYear::class);
     }
 
     /**
