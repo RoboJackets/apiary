@@ -124,6 +124,7 @@ class SquareController extends Controller
         $checkout = $checkoutResponse->getResult()->getCheckout();
 
         $payment->checkout_id = $checkout->getId();
+        $payment->order_id = $checkout->getOrder()->getId();
         $payment->save();
 
         return redirect($checkout->getCheckoutPageUrl());
@@ -142,9 +143,6 @@ class SquareController extends Controller
             );
         }
 
-        $payment->order_id = $request->input('orderId');
-        $payment->save();
-
         $square = new SquareClient([
             'accessToken' => config('square.access_token'),
             'environment' => config('square.environment'),
@@ -152,7 +150,7 @@ class SquareController extends Controller
 
         $ordersApi = $square->getOrdersApi();
 
-        $retrieveOrderResponse = $ordersApi->retrieveOrder($request->input('orderId'));
+        $retrieveOrderResponse = $ordersApi->retrieveOrder($payment->order_id);
 
         if (! $retrieveOrderResponse->isSuccess()) {
             Log::error(self::class.'Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));

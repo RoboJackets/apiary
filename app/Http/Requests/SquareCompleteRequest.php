@@ -32,11 +32,6 @@ class SquareCompleteRequest extends FormRequest
                 'alpha_dash',
                 'exists:payments,checkout_id',
             ],
-            'orderId' => [
-                'required',
-                'string',
-                'alpha_num',
-            ],
             'referenceId' => [
                 'required',
                 'integer',

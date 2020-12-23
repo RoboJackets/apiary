@@ -30,16 +30,13 @@ class ProcessSquareWebhook extends ProcessWebhookJob
      */
     public function handle(): void
     {
-        if ('payment.created' !== $this->webhookCall->payload['type']) {
-            return;
-        }
-
         $details = $this->webhookCall->payload['data']['object']['payment'];
 
-        $payment = Payment::firstOrFail($details['reference_id']);
+        $payment = Payment::where('order_id', $details['order_id'])->firstOrFail();
         $payment->amount = $details['amount_money']['amount'] / 100;
-        $payment->processing_fee = $details['processing_fee'];
-        $payment->order_id = $details['order_id'];
+        if (array_key_exists('processing_fee', $details)) {
+            $payment->processing_fee = $details['processing_fee'];
+        }
         $payment->notes = 'Checkout flow completed';
         $payment->save();
 
