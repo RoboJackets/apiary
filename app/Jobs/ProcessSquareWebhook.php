@@ -76,9 +76,11 @@ class ProcessSquareWebhook extends ProcessWebhookJob
         $payment->notes = 'Checkout flow completed';
         $payment->save();
 
-        if ($type == 'payment.created') {
-            $payment->payable->user->notify(new ConfirmationNotification($payment));
-            event(new PaymentSuccess($payment));
+        if ('payment.created' !== $type) {
+            return;
         }
+
+        $payment->payable->user->notify(new ConfirmationNotification($payment));
+        event(new PaymentSuccess($payment));
     }
 }

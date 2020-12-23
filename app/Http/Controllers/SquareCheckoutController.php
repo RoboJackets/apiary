@@ -21,7 +21,7 @@ use Square\Models\OrderLineItemTax;
 use Square\Models\OrderState;
 use Square\SquareClient;
 
-class SquareController extends Controller
+class SquareCheckoutController extends Controller
 {
     private const PER_TRANSACTION_FEE = 30;  // cents
     private const PERCENTAGE_FEE = 2.9;

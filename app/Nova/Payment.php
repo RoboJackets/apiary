@@ -12,7 +12,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
 class Payment extends Resource
@@ -64,9 +64,8 @@ class Payment extends Resource
                 ->help('The user that recorded the payment')
                 ->sortable(),
 
-            Textarea::make('Notes')
-                ->onlyOnDetail()
-                ->alwaysShow(),
+            Text::make('Notes')
+                ->onlyOnDetail(),
 
             new Panel('Square Metadata', $this->squareFields()),
 
@@ -85,43 +84,43 @@ class Payment extends Resource
             Currency::make('Processing Fee')
                 ->onlyOnDetail(),
 
-            String::make('Checkout ID')
+            Text::make('Checkout ID')
                 ->onlyOnDetail(),
 
-            String::make('Client Transaction ID', 'client_txn_id')
+            Text::make('Client Transaction ID', 'client_txn_id')
                 ->onlyOnDetail(),
 
-            String::make('Server Transaction ID', 'server_txn_id')
+            Text::make('Server Transaction ID', 'server_txn_id')
                 ->onlyOnDetail(),
 
-            String::make('Idempotency Key', 'unique_id')
+            Text::make('Idempotency Key', 'unique_id')
                 ->onlyOnDetail(),
 
-            String::make('Order ID')
+            Text::make('Order ID')
                 ->onlyOnDetail(),
 
-            String::make('Card Brand')
+            Text::make('Card Brand')
                 ->onlyOnDetail(),
 
-            String::make('Card Type')
+            Text::make('Card Type')
                 ->onlyOnDetail(),
 
-            String::make('Last 4')
+            Text::make('Last 4')
                 ->onlyOnDetail(),
 
-            String::make('Prepaid Type')
+            Text::make('Prepaid Type')
                 ->onlyOnDetail(),
 
-            String::make('Entry Method')
+            Text::make('Entry Method')
                 ->onlyOnDetail(),
 
-            String::make('Statement Description')
+            Text::make('Statement Description')
                 ->onlyOnDetail(),
 
-            String::make('Receipt Number')
+            Text::make('Receipt Number')
                 ->onlyOnDetail(),
 
-            String::make('Receipt URL')
+            Text::make('Receipt URL')
                 ->onlyOnDetail(),
         ];
     }
