@@ -132,7 +132,7 @@ class SquareController extends Controller
 
     public function complete(SquareCompleteRequest $request)
     {
-        $payment = Payment::firstOrFail($request->input('referenceId'));
+        $payment = Payment::where('id', $request->input('referenceId'))->firstOrFail();
 
         if ($payment->checkout_id !== $request->input('checkoutId')) {
             return view(

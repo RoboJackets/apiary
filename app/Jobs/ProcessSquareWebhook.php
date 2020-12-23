@@ -35,7 +35,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
         $payment = Payment::where('order_id', $details['order_id'])->firstOrFail();
         $payment->amount = $details['amount_money']['amount'] / 100;
         if (array_key_exists('processing_fee', $details)) {
-            $payment->processing_fee = $details['processing_fee'];
+            $payment->processing_fee = $details['processing_fee'][0]['amount_money'];
         }
         $payment->notes = 'Checkout flow completed';
         $payment->save();
