@@ -37,9 +37,8 @@ class SquareCheckoutController extends Controller
             ->first();
 
         $transactionWithIncompletePayment = DuesTransaction::where('user_id', $user->id)
-            ->whereHas('package', static function (Builder $q): void {
-                $q->whereDate('effective_end', '>=', date('Y-m-d'));
-            })->whereHas('payment', static function (Builder $q): void {
+            ->current()
+            ->whereHas('payment', static function (Builder $q): void {
                 $q->where('amount', 0.00);
                 $q->where('method', 'square');
             })->first();
