@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use \App\Models\FiscalYear as AppModelsFiscalYear;
+use App\Models\FiscalYear as AppModelsFiscalYear;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;

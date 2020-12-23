@@ -38,8 +38,8 @@ class CreateDuesPackages extends Action
         $startingYear = $fiscalYear->ending_year - 1;
         $endingYear = $fiscalYear->ending_year;
 
-        $fallPackageName = 'Fall ' . $startingYear;
-        $springPackageName = 'Spring ' . $endingYear;
+        $fallPackageName = 'Fall '.$startingYear;
+        $springPackageName = 'Spring '.$endingYear;
         $studentFullYear = 'Full Year ('.$startingYear.'-'.$endingYear.')';
         $nonStudentFullYear = 'Full Year ('.$startingYear.'-'.$endingYear.') - Non-Student';
 
