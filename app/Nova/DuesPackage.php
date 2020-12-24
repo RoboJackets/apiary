@@ -104,7 +104,7 @@ class DuesPackage extends Resource
                 ->sortable(),
 
             BelongsTo::make('Conflicts With', 'conflictsWith', self::class)
-                ->required(false)
+                ->nullable()
                 ->hideFromIndex()
                 ->help('Current dues package prevents purchase of other dues package'),
 
