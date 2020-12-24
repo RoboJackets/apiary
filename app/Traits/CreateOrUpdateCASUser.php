@@ -56,7 +56,7 @@ trait CreateOrUpdateCASUser
 
         foreach ($attrs as $attr) {
             if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
-                throw new Exception('Missing attributes from CAS');
+                throw new Exception('Missing attribute '.$attr.' from CAS');
             }
         }
 

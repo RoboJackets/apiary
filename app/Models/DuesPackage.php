@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\JoinClause;
 use Laravel\Nova\Actions\Actionable;
 
 /**
@@ -55,6 +56,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property bool $available_for_purchase
  * @property bool $restricted_to_students
  * @property int $id The database identifier for this DuesPackage
+ * @property int $conflicts_with_dues_package_id The dues package that would restrict purchase of this package
  * @property string $name
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
@@ -142,7 +144,27 @@ class DuesPackage extends Model
      */
     public function scopeAvailableForPurchase(Builder $query): Builder
     {
-        return $query->where('available_for_purchase', 1);
+        return $query->where('available_for_purchase', true);
+    }
+
+    public function scopeUserCanPurchase(Builder $query, User $user): Builder
+    {
+        return $query
+            ->select('dues_packages.*')
+            ->leftJoin('dues_transactions', static function (JoinClause $join) use ($user): void {
+                $join->on('dues_packages.conflicts_with_package_id', '=', 'dues_transactions.dues_package_id')
+                     ->where('dues_transactions.user_id', $user->id);
+            })
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('payments.payable_id', '=', 'dues_transactions.id')
+                        ->where('payments.payable_type', '=', DuesTransaction::getMorphClassStatic())
+                        ->where('payments.deleted_at', '=', null)
+                        ->where('payments.amount', '>', 0);
+            })
+            ->where('available_for_purchase', true)
+            ->where('dues_packages.effective_end', '>=', date('Y-m-d'))
+            ->where('restricted_to_students', 'student' === $user->primary_affiliation)
+            ->where('payments.id', null);
     }
 
     /**

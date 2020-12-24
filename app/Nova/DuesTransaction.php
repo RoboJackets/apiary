@@ -107,7 +107,7 @@ class DuesTransaction extends Resource
                 [
                     Text::make('Status', 'swag_shirt_status')
                         ->onlyOnDetail(),
-                    Text::make('Size', function (): string {
+                    Text::make('Size', function (): ?string {
                         $shirt_sizes = [
                             's' => 'Small',
                             'm' => 'Medium',
@@ -117,7 +117,7 @@ class DuesTransaction extends Resource
                             'xxxl' => 'XXXL',
                         ];
 
-                        return $shirt_sizes[$this->user->shirt_size];
+                        return null === $this->user->shirt_size ? null : $shirt_sizes[$this->user->shirt_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_shirt_provided')
                         ->onlyOnDetail(),
@@ -132,7 +132,7 @@ class DuesTransaction extends Resource
                 [
                     Text::make('Status', 'swag_polo_status')
                         ->onlyOnDetail(),
-                    Text::make('Size', function (): string {
+                    Text::make('Size', function (): ?string {
                         $shirt_sizes = [
                             's' => 'Small',
                             'm' => 'Medium',
@@ -142,7 +142,7 @@ class DuesTransaction extends Resource
                             'xxxl' => 'XXXL',
                         ];
 
-                        return $shirt_sizes[$this->user->polo_size];
+                        return null === $this->user->shirt_size ? null : $shirt_sizes[$this->user->polo_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
                         ->onlyOnDetail(),

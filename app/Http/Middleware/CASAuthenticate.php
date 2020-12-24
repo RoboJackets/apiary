@@ -84,7 +84,7 @@ class CASAuthenticate
                     }
                     // Split the attributes that we need to split
                     foreach (self::$arrayAttrs as $attr) {
-                        $masq_attrs[$attr] = explode(',', $masq_attrs[$attr]);
+                        $masq_attrs[$attr] = explode(',', config('cas.cas_masquerade_'.$attr));
                     }
                     $this->cas->setAttributes($masq_attrs);
                 }

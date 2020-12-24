@@ -103,12 +103,11 @@ class DuesPackage extends Resource
             Boolean::make('Restricted to Students')
                 ->sortable(),
 
-            BelongsTo::make('Conflicts With', 'conflictsWith', self::class)
+            BelongsTo::make('Cannot Be Purchased After', 'conflictsWith', self::class)
                 ->nullable()
-                ->hideFromIndex()
-                ->help('Current dues package prevents purchase of other dues package'),
+                ->hideFromIndex(),
 
-            HasMany::make('Has Conflict With', 'hasConflictWith', self::class),
+            HasMany::make('Prevents Purchase Of', 'hasConflictWith', self::class),
 
             new Panel('Swag', $this->swagFields()),
 
