@@ -101,7 +101,7 @@ class CreateDuesPackages extends Action
             $duesPackage->available_for_purchase = false;
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
-            $duesPackage->conflicts_with_dues_package_id = DuesPackage::where(
+            $duesPackage->conflicts_with_package_id = DuesPackage::where(
                 'name',
                 $fallPackageName
             )->firstOrFail()->id;
