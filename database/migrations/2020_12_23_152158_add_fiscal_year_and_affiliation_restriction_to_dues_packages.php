@@ -15,6 +15,7 @@ class AddFiscalYearAndAffiliationRestrictionToDuesPackages extends Migration
     {
         Schema::table('dues_packages', static function (Blueprint $table): void {
             $table->foreignId('fiscal_year_id')->nullable()->constrained();
+            $table->foreignId('conflicts_with_package_id')->nullable()->constrained('dues_packages');
             $table->boolean('restricted_to_students')->nullable();
             $table->string('name')->unique()->change();
         });
@@ -26,8 +27,10 @@ class AddFiscalYearAndAffiliationRestrictionToDuesPackages extends Migration
     public function down(): void
     {
         Schema::table('dues_packages', static function (Blueprint $table): void {
-            $table->dropForeign('fiscal_year_id_foreign');
+            $table->dropForeign('dues_packages_fiscal_year_id_foreign');
+            $table->dropForeign('dues_packages_conflicts_with_package_id_foreign');
             $table->dropColumn('fiscal_year_id');
+            $table->dropColumn('conflicts_with_package_id');
             $table->dropColumn('restricted_to_students');
         });
     }

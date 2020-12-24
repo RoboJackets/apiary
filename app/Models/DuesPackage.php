@@ -127,6 +127,16 @@ class DuesPackage extends Model
         return $this->belongsTo(FiscalYear::class);
     }
 
+    public function conflictsWith(): BelongsTo
+    {
+        return $this->belongsTo(DuesPackage::class, 'conflicts_with_package_id');
+    }
+
+    public function hasConflictWith(): HasMany
+    {
+        return $this->hasMany(DuesPackage::class, 'id', 'conflicts_with_package_id');
+    }
+
     /**
      * Scope a query to only include DuesPackages available for purchase.
      */

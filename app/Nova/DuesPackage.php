@@ -74,8 +74,11 @@ class DuesPackage extends Resource
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+                ->creationRules('unique:dues_packages,name')
+                ->updateRules('unique:dues_packages,name,{{resourceId}}'),
 
-            BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class),
+            BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
+                ->sortable(),
 
             Boolean::make('Active', 'is_active')
                 ->sortable()
@@ -99,6 +102,12 @@ class DuesPackage extends Resource
 
             Boolean::make('Restricted to Students')
                 ->sortable(),
+
+            BelongsTo::make('Conflicts With', 'conflictsWith', self::class)
+                ->hideFromIndex()
+                ->help('Current dues package prevents purchase of other dues package'),
+
+            HasMany::make('Has Conflict With', 'hasConflictWith', self::class),
 
             new Panel('Swag', $this->swagFields()),
 
