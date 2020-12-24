@@ -33,6 +33,7 @@ class AddFiscalYearAndAffiliationRestrictionToDuesPackages extends Migration
             $table->dropColumn('fiscal_year_id');
             $table->dropColumn('conflicts_with_package_id');
             $table->dropColumn('restricted_to_students');
+            $table->dropUnique('dues_packages_name_unique');
         });
     }
 }
