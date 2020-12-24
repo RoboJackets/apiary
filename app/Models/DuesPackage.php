@@ -134,7 +134,7 @@ class DuesPackage extends Model
 
     public function hasConflictWith(): HasMany
     {
-        return $this->hasMany(self::class, 'id', 'conflicts_with_package_id');
+        return $this->hasMany(self::class, 'conflicts_with_package_id');
     }
 
     /**
