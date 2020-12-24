@@ -29,7 +29,7 @@ class DashboardController extends Controller
 
         //User needs a transaction if they don't have one for an active dues package
         $needsTransaction = (0 === DuesTransaction::current()->where('user_id', $user->id)->count());
-        $needsTransaction = $needsTransaction && (DuesPackage::availableForPurchase()->count() > 0);
+        $needsTransaction = $needsTransaction && (DuesPackage::userCanPurchase($user)->count() > 0);
 
         //User needs a payment if they don't have enough payments to cover their pending dues transaction
         //Don't change this to use ->count(). It won't work - trust me.
