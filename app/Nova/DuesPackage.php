@@ -73,7 +73,7 @@ class DuesPackage extends Resource
         return [
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
                 ->creationRules('unique:dues_packages,name')
                 ->updateRules('unique:dues_packages,name,{{resourceId}}'),
 

@@ -129,12 +129,12 @@ class DuesPackage extends Model
 
     public function conflictsWith(): BelongsTo
     {
-        return $this->belongsTo(DuesPackage::class, 'conflicts_with_package_id');
+        return $this->belongsTo(self::class, 'conflicts_with_package_id');
     }
 
     public function hasConflictWith(): HasMany
     {
-        return $this->hasMany(DuesPackage::class, 'id', 'conflicts_with_package_id');
+        return $this->hasMany(self::class, 'id', 'conflicts_with_package_id');
     }
 
     /**
