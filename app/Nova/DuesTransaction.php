@@ -142,7 +142,7 @@ class DuesTransaction extends Resource
                             'xxxl' => 'XXXL',
                         ];
 
-                        return null === $this->user->shirt_size ? null : $shirt_sizes[$this->user->polo_size];
+                        return null === $this->user->polo_size ? null : $shirt_sizes[$this->user->polo_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
                         ->onlyOnDetail(),
