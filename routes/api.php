@@ -78,6 +78,7 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
         // Dues Packages
         Route::get('dues/packages/active', [DuesPackageController::class, 'indexActive']);
         Route::get('dues/packages/available', [DuesPackageController::class, 'indexAvailable']);
+        Route::get('dues/packages/purchase', [DuesPackageController::class, 'indexUserCanPurchase']);
         Route::resource('dues/packages', DuesPackageController::class)->except('create', 'edit');
 
         // Dues Transactions

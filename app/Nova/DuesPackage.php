@@ -9,6 +9,7 @@ use App\Nova\Metrics\ShirtSizeBreakdown;
 use App\Nova\Metrics\SwagPickupRate;
 use App\Nova\Metrics\TotalCollections;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
@@ -72,7 +73,12 @@ class DuesPackage extends Resource
         return [
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->creationRules('unique:dues_packages,name')
+                ->updateRules('unique:dues_packages,name,{{resourceId}}'),
+
+            BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
+                ->sortable(),
 
             Boolean::make('Active', 'is_active')
                 ->sortable()
@@ -93,6 +99,15 @@ class DuesPackage extends Resource
 
             Boolean::make('Available for Purchase')
                 ->sortable(),
+
+            Boolean::make('Restricted to Students')
+                ->sortable(),
+
+            BelongsTo::make('Cannot Be Purchased After', 'conflictsWith', self::class)
+                ->nullable()
+                ->hideFromIndex(),
+
+            HasMany::make('Prevents Purchase Of', 'hasConflictWith', self::class),
 
             new Panel('Swag', $this->swagFields()),
 
