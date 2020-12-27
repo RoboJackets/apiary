@@ -43,7 +43,7 @@ class FiscalYear extends Resource
     {
         return [
             Number::make('Ending Year')
-                ->rules('required', 'max:255')
+                ->rules('required', 'integer', 'digits:4', 'min:2010', 'max:2030')
                 ->creationRules('unique:fiscal_years,ending_year')
                 ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}'),
 
