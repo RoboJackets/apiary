@@ -65,7 +65,7 @@ class SquareCashTransaction extends Model
         $query = self::whereDate('transaction_timestamp', '>=', $transaction->package->effective_start)
             ->whereDate('transaction_timestamp', '<=', $transaction->package->effective_end)
             ->where('amount', $transaction->package->cost)
-            ->where('name_of_sender', $transaction->user->first_name . ' ' . $transaction->user->last_name)
+            ->where('name_of_sender', $transaction->user->first_name.' '.$transaction->user->last_name)
             ->get();
 
         if (1 === $query->count()) {

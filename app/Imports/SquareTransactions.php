@@ -16,7 +16,7 @@ class SquareTransactions implements ToModel, WithHeadingRow, WithProgressBar
     use Importable;
 
     /**
-     * Convert a Square transaction row into a model if it is an inbound payment
+     * Convert a Square transaction row into a model if it is an inbound payment.
      *
      * @param array<string,?string> $row
      *

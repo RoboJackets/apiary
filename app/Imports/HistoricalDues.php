@@ -32,14 +32,14 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
     private const USER_CREATION_REASON_STRING = 'historical_dues_import';
 
     /**
-     * The calling command, used for interactively resolving ambiguous records
+     * The calling command, used for interactively resolving ambiguous records.
      *
      * @var \App\Console\Commands\ImportHistoricalDues
      */
     private $command;
 
     /**
-     * The fiscal year being imported
+     * The fiscal year being imported.
      *
      * @var int
      */
@@ -61,7 +61,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
     }
 
     /**
-     * Convert row from historical dues spreadsheet to User + DuesTransaction + Payment
+     * Convert row from historical dues spreadsheet to User + DuesTransaction + Payment.
      */
     public function onRow(Row $objRow): void
     {
@@ -126,7 +126,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
     }
 
     /**
-     * Guesses the user
+     * Guesses the user.
      *
      * @param array<string,string|int|null> $row
      *
@@ -212,7 +212,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             if (count($account->gtAccountEntitlement) < 6) {
                 continue;
             }
-            if (!Str::endsWith($account->mail, '@gatech.edu')) {
+            if (! Str::endsWith($account->mail, '@gatech.edu')) {
                 continue;
             }
             $possible_accounts[] = $account;
@@ -238,7 +238,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
     }
 
     /**
-     * Guesses the user's shirt size
+     * Guesses the user's shirt size.
      *
      * @param array<string,string|int|null> $row
      *
@@ -284,7 +284,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
     }
 
     /**
-     * Guesses the dues package(s)
+     * Guesses the dues package(s).
      *
      * @param array<string,string|int|null> $row
      *
@@ -360,7 +360,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
     }
 
     /**
-     * Guesses whether the shirt was provided
+     * Guesses whether the shirt was provided.
      *
      * @param array<string,string|int|null> $row
      */
@@ -383,7 +383,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
     }
 
     /**
-     * Guesses whether the polo was provided
+     * Guesses whether the polo was provided.
      *
      * @param array<string,string|int|null> $row
      */

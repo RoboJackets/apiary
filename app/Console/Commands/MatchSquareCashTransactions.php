@@ -72,7 +72,7 @@ class MatchSquareCashTransactions extends Command
                     $payment = Payment::where('payable_id', $duesTransaction->id)->firstOrFail();
                 } else {
                     $id = $this->ask(
-                        'Found ' . $paymentCount . ' associated payments. Enter Payment ID or leave blank to skip.'
+                        'Found '.$paymentCount.' associated payments. Enter Payment ID or leave blank to skip.'
                     );
 
                     if ('' === $id) {
