@@ -38,6 +38,7 @@ class MatchSquareTransactions extends Command
                 'payments.server_txn_id'
             )
                 ->whereNull('payments.id')
+                ->whereNotNull('square_transactions.customer_name')
                 ->where('square_transactions.amount', '>=', 50)
                 ->where('square_transactions.amount', '<', 200)
                 ->get();
