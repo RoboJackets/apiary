@@ -70,7 +70,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         $packages = self::guessDuesPackages($row, $this->fiscalYear);
 
         if (0 === count($packages)) {
-            $this->newLine();
+            $this->command->newLine();
             $this->command->error('Failed to match package(s)');
             $this->command->table(array_keys($row), [$row]);
 
@@ -80,7 +80,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
                 return;
             }
 
-            $packages = collect(explode(',', $packages))->map(static function (string $packageId): DuesPackage {
+            $packages = collect(explode(',', $packagesResponse))->map(static function (string $packageId): DuesPackage {
                 return DuesPackage::where('id', trim($packageId))->firstOrFail();
             });
         }
@@ -88,7 +88,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         try {
             $user = self::guessUser($row);
         } catch (Throwable $e) {
-            $this->newLine();
+            $this->command->newLine();
             $this->command->error($e->getMessage());
             $this->command->table(array_keys($row), [$row]);
 
