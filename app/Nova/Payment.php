@@ -39,6 +39,24 @@ class Payment extends Resource
     public static $displayInNavigation = false;
 
     /**
+     * The columns that should be searched.
+     *
+     * @var array<string>
+     */
+    public static $search = [
+        'checkout_id',
+        'client_txn_id',
+        'server_txn_id',
+        'unique_id',
+        'order_id',
+        'notes',
+        'last_4',
+        'receipt_number',
+        'receipt_url',
+        'square_cash_transaction_id',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array
@@ -82,6 +100,9 @@ class Payment extends Resource
     {
         return [
             Currency::make('Processing Fee')
+                ->onlyOnDetail(),
+
+            Text::make('Square Cash Transaction ID')
                 ->onlyOnDetail(),
 
             Text::make('Checkout ID')

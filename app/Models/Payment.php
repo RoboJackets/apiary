@@ -42,7 +42,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property float $amount The amount of this Payment
- * @property float $processing_fee
+ * @property ?float $processing_fee
  * @property int $id The database ID of this Payment
  * @property int $payable_id the ID of the payable model
  * @property int $recorded_by The ID of the user that recorded this Payment
@@ -96,6 +96,7 @@ class Payment extends Model
         'swipe' => 'Swiped Card',
         'square' => 'Square Checkout',
         'waiver' => 'Waiver',
+        'unknown' => 'Unknown',
     ];
 
     /**
@@ -133,5 +134,30 @@ class Payment extends Model
             'user' => 'users',
             'payable' => 'dues-transactions',
         ];
+    }
+
+    public function updateFromSquareCashTransaction(SquareCashTransaction $transaction): void
+    {
+        $this->amount = $transaction->amount;
+        $this->processing_fee = null;
+        $this->method = 'squarecash';
+        $this->square_cash_transaction_id = $transaction->transaction_id;
+        $this->created_at = $transaction->transaction_timestamp;
+        $this->save();
+    }
+
+    public function updateFromSquareTransaction(SquareTransaction $transaction): void
+    {
+        $this->method = 'swipe';  // note that some POS transactions are actually keyed for some reason
+        $this->amount = $transaction->amount;
+        $this->processing_fee = $transaction->processing_fee;
+        $this->created_at = $transaction->transaction_timestamp;
+        $this->updated_at = $transaction->transaction_timestamp;
+        $this->server_txn_id = $transaction->transaction_id;
+        $this->recorded_by = $transaction->guessRecordedBy() ?? $this->recorded_by;
+        $this->card_brand = $transaction->card_brand;
+        $this->last_4 = $transaction->last_4;
+        $this->entry_method = $transaction->entry_method;
+        $this->save();
     }
 }

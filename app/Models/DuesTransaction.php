@@ -47,11 +47,11 @@ use Illuminate\Database\Query\JoinClause;
  *
  * @property ?int $swag_polo_providedBy the user ID that distributed a polo for this transaction
  * @property ?int $swag_shirt_providedBy the user ID that distributed a shirt for this transaction
- * @property ?string $swag_polo_provided The timestamp of when a polo was given for this DuesTransaction, or null
- * @property ?string $swag_shirt_provided The timestamp of when a shirt was given for this DuesTransaction, or null
+ * @property ?\Carbon\Carbon $swag_polo_provided The timestamp of when a polo was given for this DuesTransaction
+ * @property ?\Carbon\Carbon $swag_shirt_provided The timestamp of when a shirt was given for this DuesTransaction
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property ?\Carbon\Carbon $deleted_at
  * @property bool $is_paid whether this transaction is paid in full
  * @property int $dues_package_id
  * @property int $id The database ID for this DuesTransaction

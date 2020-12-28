@@ -7,8 +7,10 @@ namespace App\Nova\Actions;
 use App\Models\DuesPackage;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Boolean;
 
 class CreateDuesPackages extends Action
 {
@@ -110,7 +112,7 @@ class CreateDuesPackages extends Action
             $createdPackages++;
         }
 
-        if (0 === DuesPackage::where('name', $nonStudentFullYear)->count()) {
+        if (0 === DuesPackage::where('name', $nonStudentFullYear)->count() && true === $fields->non_student) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $nonStudentFullYear;
             $duesPackage->eligible_for_shirt = false;
@@ -132,7 +134,7 @@ class CreateDuesPackages extends Action
             return Action::message('All packages already exist; no changes were made.');
         }
 
-        return Action::message('Created '.$createdPackages.' package'.(1 === $createdPackages ? '' : 's').'!');
+        return Action::message('Created '.$createdPackages.' '.Str::plural('package', $createdPackages).'!');
     }
 
     /**
@@ -142,6 +144,10 @@ class CreateDuesPackages extends Action
      */
     public function fields(): array
     {
-        return [];
+        return [
+            Boolean::make('Non-Student Package', 'non_student')
+                ->help('Whether to create a package for non-students')
+                ->default(true),
+        ];
     }
 }
