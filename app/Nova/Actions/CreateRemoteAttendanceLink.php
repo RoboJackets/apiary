@@ -6,9 +6,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Attendance;
+use App\Models\Attendance;
 use App\Nova\RemoteAttendanceLink;
-use App\RemoteAttendanceLink;
+use App\Models\RemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
