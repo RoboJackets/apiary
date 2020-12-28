@@ -81,7 +81,7 @@ class CreateRemoteAttendanceLink extends Action
     {
         $notes = collect(RemoteAttendanceLink::$recommendedNotes)
             ->concat(['Other'])->mapWithKeys(static function (string $note): array {
-                return $note => $note;
+                return [$note => $note];
             });
 
         /* The following regex will match any of the following:
