@@ -14,8 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
+use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 class CreateRemoteAttendanceLink extends Action
 {
@@ -50,7 +49,7 @@ class CreateRemoteAttendanceLink extends Action
         $link->redirect_url = $fields->redirect_url;
         // If Purpose is other, set it to the Other Purpose value or null if that's empty. If the Purpose isn't other,
         // use that value. This deliberately allows empty values.
-        $link->note = 'Other' === $fields->purpose ? $fields->other_purpose : $fields->purpose;
+        $link->note = $fields->purpose;
         $link->save();
         $link->refresh(); // Update id field
 
@@ -105,15 +104,10 @@ class CreateRemoteAttendanceLink extends Action
                     'you add a redirect URL, do not share that URL directly. Only Google Meet and '.
                     'BlueJeans calls are supported currently. Ask in #it-helpdesk for other redirect URLs.'),
 
-            Select::make('Purpose')
+            SelectOrCustom::make('Purpose')
                 ->required(true)
                 ->rules('required')
                 ->options($notes),
-
-            Text::make('Other Purpose')
-                ->required(false)
-                ->rules('nullable', 'max:255')
-                ->help('Only fill this in if you picked "Other" above.'),
         ];
     }
 }
