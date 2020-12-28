@@ -141,6 +141,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             }
 
             CreateOrUpdateUserFromBuzzAPI::dispatchNow('gtid', $row['gtid'], self::USER_CREATION_REASON_STRING);
+
             return User::where('gtid', $row['gtid'])->firstOrFail();
         }
 
@@ -196,6 +197,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             }
 
             CreateOrUpdateUserFromBuzzAPI::dispatchNow('gtid', $account->gtGTID, self::USER_CREATION_REASON_STRING);
+
             return User::where('gtid', $row['gtid'])->firstOrFail();
         }
 
@@ -224,6 +226,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
                 $possible_accounts[0]->gtGTID,
                 self::USER_CREATION_REASON_STRING
             );
+
             return User::where('gtid', $row['gtid'])->firstOrFail();
         }
 
