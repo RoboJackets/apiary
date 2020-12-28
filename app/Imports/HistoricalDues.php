@@ -80,9 +80,11 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
                 return;
             }
 
-            $packages = collect(explode(',', $packagesResponse))->map(static function (string $packageId): DuesPackage {
-                return DuesPackage::where('id', trim($packageId))->firstOrFail();
-            });
+            $packages = collect(explode(',', $packagesResponse))->map(
+                static function (string $packageId): DuesPackage {
+                    return DuesPackage::where('id', trim($packageId))->firstOrFail();
+                }
+            );
         }
 
         try {
