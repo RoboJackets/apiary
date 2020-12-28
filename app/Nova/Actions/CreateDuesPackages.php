@@ -146,7 +146,7 @@ class CreateDuesPackages extends Action
     {
         return [
             Boolean::make('Non-Student Package', 'non_student')
-                ->help('Whether to create a package for non-students')
+                ->help('Whether to create a package for non-students. This should generally be left checked.')
                 ->default(true),
         ];
     }
