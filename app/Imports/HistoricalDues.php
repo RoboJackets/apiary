@@ -70,29 +70,31 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         $packages = self::guessDuesPackages($row, $this->fiscalYear);
 
         if (0 === count($packages)) {
+            $this->newLine();
             $this->command->error('Failed to match package(s)');
             $this->command->table(array_keys($row), [$row]);
 
-            $packages = $this->command->ask('Enter comma-separated list of package(s) or leave blank to skip.');
+            $packagesResponse = $this->command->ask('Enter comma-separated list of package(s) or leave blank to skip.');
+
+            if (null === $packagesResponse) {
+                return;
+            }
 
             $packages = collect(explode(',', $packages))->map(static function (string $packageId): DuesPackage {
                 return DuesPackage::where('id', trim($packageId))->firstOrFail();
             });
-
-            if (0 === count($packages)) {
-                return;
-            }
         }
 
         try {
             $user = self::guessUser($row);
         } catch (Throwable $e) {
+            $this->newLine();
             $this->command->error($e->getMessage());
             $this->command->table(array_keys($row), [$row]);
 
             $gtid = $this->command->ask('Enter correct GTID for user or leave blank to skip.');
 
-            if ('' === $gtid) {
+            if (null === $gtid) {
                 return;
             }
 

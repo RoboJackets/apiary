@@ -46,6 +46,7 @@ class MatchSquareCashTransactions extends Command
             $bar->start();
 
             foreach ($possibleTransactions as $squareCashTransaction) {
+                $this->newLine();
                 $this->table(
                     [
                         'transaction_id',
@@ -59,9 +60,10 @@ class MatchSquareCashTransactions extends Command
                     ]
                 );
 
+                $this->newLine();
                 $id = $this->ask('Enter DuesTransaction ID or leave blank to skip.');
 
-                if ('' === $id) {
+                if (null === $id) {
                     $bar->advance();
                     continue;
                 }
@@ -73,11 +75,12 @@ class MatchSquareCashTransactions extends Command
                 if (1 === $paymentCount) {
                     $payment = Payment::where('payable_id', $duesTransaction->id)->firstOrFail();
                 } else {
+                    $this->newLine();
                     $id = $this->ask(
                         'Found '.$paymentCount.' associated payments. Enter Payment ID or leave blank to skip.'
                     );
 
-                    if ('' === $id) {
+                    if (null === $id) {
                         $bar->advance();
                         continue;
                     }
