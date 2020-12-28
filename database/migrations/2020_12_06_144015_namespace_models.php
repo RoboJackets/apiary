@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 
 class NamespaceModels extends Migration
@@ -20,9 +21,9 @@ class NamespaceModels extends Migration
             ->update(['payable_type' => 'dues-transaction']);
 
         DB::table('model_has_roles')
-            ->update(['model_type' => 'App\Models\User']);
+            ->update(['model_type' => User::class]);
         DB::table('model_has_permissions')
-            ->update(['model_type' => 'App\Models\User']);
+            ->update(['model_type' => User::class]);
     }
 
     /**

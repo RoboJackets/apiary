@@ -99,11 +99,9 @@ class DuesTransaction extends Model
      *
      * @var array<string>
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'swag_shirt_provided',
-        'swag_polo_provided',
+    protected $casts = [
+        'swag_shirt_provided' => 'datetime',
+        'swag_polo_provided' => 'datetime',
     ];
 
     /**

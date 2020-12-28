@@ -8,8 +8,10 @@ use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\JoinClause;
 use Laravel\Nova\Actions\Actionable;
 
 /**
@@ -51,8 +53,10 @@ use Laravel\Nova\Actions\Actionable;
  * @property bool $eligible_for_shirt Whether this DuesPackage grants eligibility for a shirt
  * @property bool $is_active Whether this DuesPackage is considered active
  * @property float $cost the cost of this package
- * @property int $available_for_purchase
+ * @property bool $available_for_purchase
+ * @property bool $restricted_to_students
  * @property int $id The database identifier for this DuesPackage
+ * @property int $conflicts_with_dues_package_id The dues package that would restrict purchase of this package
  * @property string $name
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
@@ -87,30 +91,22 @@ class DuesPackage extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'effective_start',
-        'effective_end',
-        'access_start',
-        'access_end',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string,string>
      */
     protected $casts = [
+        'effective_start' => 'datetime',
+        'effective_end' => 'datetime',
+        'access_start' => 'datetime',
+        'access_end' => 'datetime',
         'cost' => 'float',
+        'available_for_purchase' => 'boolean',
+        'restricted_to_students' => 'boolean',
     ];
 
     /**
-     * Get the DuesTransaction associated with the DuesPackage model.
+     * Get the DuesTransactions associated with the DuesPackage model.
      */
     public function duesTransactions(): HasMany
     {
@@ -118,7 +114,7 @@ class DuesPackage extends Model
     }
 
     /**
-     * Get the DuesTransaction associated with the DuesPackage model.
+     * Get the DuesTransactions associated with the DuesPackage model.
      */
     public function transactions(): HasMany
     {
@@ -126,11 +122,49 @@ class DuesPackage extends Model
     }
 
     /**
+     * Get the FiscalYear associated with the DuesPackage model.
+     */
+    public function fiscalYear(): BelongsTo
+    {
+        return $this->belongsTo(FiscalYear::class);
+    }
+
+    public function conflictsWith(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'conflicts_with_package_id');
+    }
+
+    public function hasConflictWith(): HasMany
+    {
+        return $this->hasMany(self::class, 'conflicts_with_package_id');
+    }
+
+    /**
      * Scope a query to only include DuesPackages available for purchase.
      */
     public function scopeAvailableForPurchase(Builder $query): Builder
     {
-        return $query->where('available_for_purchase', 1);
+        return $query->where('available_for_purchase', true);
+    }
+
+    public function scopeUserCanPurchase(Builder $query, User $user): Builder
+    {
+        return $query
+            ->select('dues_packages.*')
+            ->leftJoin('dues_transactions', static function (JoinClause $join) use ($user): void {
+                $join->on('dues_packages.conflicts_with_package_id', '=', 'dues_transactions.dues_package_id')
+                     ->where('dues_transactions.user_id', $user->id);
+            })
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('payments.payable_id', '=', 'dues_transactions.id')
+                        ->where('payments.payable_type', '=', DuesTransaction::getMorphClassStatic())
+                        ->where('payments.deleted_at', '=', null)
+                        ->where('payments.amount', '>', 0);
+            })
+            ->where('available_for_purchase', true)
+            ->where('dues_packages.effective_end', '>=', date('Y-m-d'))
+            ->where('restricted_to_students', 'student' === $user->primary_affiliation)
+            ->where('payments.id', null);
     }
 
     /**

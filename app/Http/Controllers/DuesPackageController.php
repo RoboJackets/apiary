@@ -72,6 +72,19 @@ class DuesPackageController extends Controller
     }
 
     /**
+     * Display a listing of DuesPackages that this user can purchase.
+     */
+    public function indexUserCanPurchase(Request $request): JsonResponse
+    {
+        $include = $request->input('include');
+        $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))
+            ->userCanPurchase($request->user())
+            ->get();
+
+        return response()->json(['status' => 'success', 'dues_packages' => DuesPackageResource::collection($packages)]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreDuesPackageRequest $request): JsonResponse

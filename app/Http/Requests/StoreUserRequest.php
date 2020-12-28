@@ -19,29 +19,82 @@ class StoreUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'uid' => 'required|unique:users|max:127',
-            'gtid' => 'required|unique:users|max:10',
-            'slack_id' => 'unique:users|max:21|nullable',
-            'gt_email' => 'required|unique:users|max:255',
-            'personal_email' => 'unique:users|max:255|nullable',
-            'first_name' => 'required|max:127',
-            'middle_name' => 'max:127',
-            'last_name' => 'required|max:127',
-            'preferred_first_name' => 'max:127',
-            'phone' => 'max:15',
-            'emergency_contact_name' => 'max:255',
-            'emergency_contact_phone' => 'max:15',
-            'join_semester' => 'max:6',
-            'graduation_semester' => 'max:6',
-            'shirt_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'polo_size' => 'in:s,m,l,xl,xxl,xxxl|nullable',
-            'accept_safety_agreement' => 'date|nullable',
-            'generateToken' => 'boolean',
+            'uid' => [
+                'required',
+                'unique:users',
+                'max:127',
+            ],
+            'gtid' => [
+                'required',
+                'unique:users',
+                'max:10',
+            ],
+            'slack_id' => [
+                'unique:users',
+                'max:21',
+                'nullable',
+            ],
+            'gt_email' => [
+                'required',
+                'unique:users',
+                'max:255',
+                'email:rfc,strict,dns,spoof',
+            ],
+            'personal_email' => [
+                'unique:users',
+                'max:255',
+                'nullable',
+                'email:rfc,strict,dns,spoof',
+            ],
+            'first_name' => [
+                'required',
+                'max:127',
+            ],
+            'middle_name' => [
+                'max:127',
+            ],
+            'last_name' => [
+                'required',
+                'max:127',
+            ],
+            'preferred_first_name' => [
+                'max:127',
+            ],
+            'phone' => [
+                'max:15',
+            ],
+            'emergency_contact_name' => [
+                'max:255',
+            ],
+            'emergency_contact_phone' => [
+                'max:15',
+            ],
+            'join_semester' => [
+                'max:6',
+            ],
+            'graduation_semester' => [
+                'max:6',
+            ],
+            'shirt_size' => [
+                'in:s,m,l,xl,xxl,xxxl',
+                'nullable',
+            ],
+            'polo_size' => [
+                'in:s,m,l,xl,xxl,xxxl',
+                'nullable',
+            ],
+            'accept_safety_agreement' => [
+                'date',
+                'nullable',
+            ],
+            'generateToken' => [
+                'boolean',
+            ],
         ];
     }
 }

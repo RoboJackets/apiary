@@ -19,13 +19,20 @@ class UpdateMembersTeamRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'user_id' => 'required|numeric|exists:users,id',
-            'action'  => 'required|in:join,leave',
+            'user_id' => [
+                'required',
+                'numeric',
+                'exists:users,id',
+            ],
+            'action' => [
+                'required',
+                'in:join,leave',
+            ],
         ];
     }
 

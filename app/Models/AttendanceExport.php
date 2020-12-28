@@ -67,14 +67,11 @@ class AttendanceExport extends Model
      *
      * @var array<string>
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'start_time',
-        'end_time',
-        'expires_at',
-        'downloaded_at',
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'expires_at' => 'datetime',
+        'downloaded_at' => 'datetime',
     ];
 
     public function downloadUser(): BelongsTo

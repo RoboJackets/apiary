@@ -68,8 +68,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function store(StoreUserRequest $request): JsonResponse
     {

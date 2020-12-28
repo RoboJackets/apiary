@@ -26,8 +26,6 @@ trait CreateOrUpdateCASUser
 
     /**
      * Creates the logged in CAS user if they don't already exist, or update attributes if they do.
-     *
-     * @SuppressWarnings(PHPMD.ExitExpression)
      */
     public function createOrUpdateCASUser(): User
     {
@@ -58,7 +56,7 @@ trait CreateOrUpdateCASUser
 
         foreach ($attrs as $attr) {
             if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
-                throw new Exception('Missing attributes from CAS');
+                throw new Exception('Missing attribute '.$attr.' from CAS');
             }
         }
 

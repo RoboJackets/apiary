@@ -19,13 +19,17 @@ class UpdateNotificationTemplateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'name'    => 'string',
-            'subject' => 'string',
+            'name' => [
+                'string',
+            ],
+            'subject' => [
+                'string',
+            ],
         ];
     }
 

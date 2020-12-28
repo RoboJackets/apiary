@@ -11,7 +11,6 @@
     ],
     "reviewers": [],
     "ignoreDeps": [
-        "square/connect"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,

@@ -108,7 +108,7 @@ export default {
     };
   },
   mounted() {
-    var dataUrl = '/api/v1/dues/packages/available';
+    var dataUrl = '/api/v1/dues/packages/purchase';
     axios
       .get(dataUrl)
       .then(response => {

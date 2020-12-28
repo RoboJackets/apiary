@@ -98,10 +98,7 @@ class Team extends Model
      *
      * @var array<string>
      */
-    protected $dates = [
-        'created_at',
-        'deleted_at',
-        'updated_at',
+    protected $casts = [
     ];
 
     /**

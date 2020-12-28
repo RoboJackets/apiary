@@ -48,16 +48,6 @@ class Major extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
      *  Get the Users that are members of this Major.
      */
     public function members(): BelongsToMany

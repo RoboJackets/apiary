@@ -19,16 +19,28 @@ class UpdateAttendanceRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'attendable_type' => 'string',
-            'attendable_id'   => 'numeric',
-            'gtid'            => 'numeric|exists:users',
-            'source'          => 'string',
-            'recorded_by'     => 'numeric|exists:users',
+            'attendable_type' => [
+                'string',
+            ],
+            'attendable_id' => [
+                'numeric',
+            ],
+            'gtid' => [
+                'numeric',
+                'exists:users',
+            ],
+            'source' => [
+                'string',
+            ],
+            'recorded_by' => [
+                'numeric',
+                'exists:users',
+            ],
         ];
     }
 

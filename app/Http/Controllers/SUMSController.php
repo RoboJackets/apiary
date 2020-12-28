@@ -38,7 +38,7 @@ class SUMSController extends Controller
         }
 
         $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
-            ->orderBy('created_at', 'desc')->first();
+            ->orderByDesc('created_at')->first();
 
         if (null !== $lastAttendance
             && $lastAttendance->created_at < new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')

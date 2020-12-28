@@ -21,7 +21,7 @@
   "dependencies": {
     "@bugsnag/js": "7.5.4",
     "@bugsnag/plugin-vue": "7.5.4",
-    "axios": "0.21.0",
+    "axios": "0.21.1",
     "chartist": "0.11.4",
     "chartist-plugin-legend": "0.6.2",
     "chartist-plugin-pointlabels": "0.0.6",
@@ -32,7 +32,7 @@
     "vue": "2.6.12",
     "vue-flatpickr-component": "8.1.6",
     "vue-moment": "4.1.0",
-    "vue-select": "3.10.8",
+    "vue-select": "3.11.2",
     "vue-template-compiler": "2.6.12",
     "vuelidate": "0.7.6"
   }

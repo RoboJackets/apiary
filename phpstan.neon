@@ -7,7 +7,7 @@ parameters:
     - storage/*
     - vendor/*
   ignoreErrors:
-    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|pluck|withTrashed)\(\)\.#'
+    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed)\(\)\.#'
     - '#Access to an undefined property App\\Models\\Payment::\$aggregate\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Permission::\$id\.#'
@@ -40,15 +40,16 @@ parameters:
     - '#Method App\\Notifications\\[a-zA-Z]+::via\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Nova\\[a-zA-Z]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method Illuminate\\Routing\\RouteRegistrar::middleware\(\) invoked with 2 parameters, 1 required\.#'
-    - '#Offset .+ does not exist on SquareConnect\\Model\\CreateCheckoutResponse\.#'
     - '#Parameter \#1 \$data of function bin2hex expects string, string\|false given\.#'
     - '#Parameter \#1 \$query of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Attendance>::selectSub\(\) expects Closure\|Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Attendance>\|string, Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User> given\.#'
     - '#Parameter \#1 \$str of function strtolower expects string, string\|null given\.#'
     - '#Parameter \#1 \$string of function strlen expects string, string\|null given\.#'
+    - '#Parameter \#1 \$year of static method Carbon\\Carbon::create\(\) expects int\|null, float\|int given\.#'
     - '#Parameter \#2 \$str of function explode expects string, array\|string given\.#'
     - '#Parameter \#2 \$timestamp of function date expects int, int\|false given\.#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
+    - '#Property App\\Models\\DuesPackage::\$[a-zA-Z_]+ \(Carbon\\Carbon\) does not accept Carbon\\Carbon\|false\.#'
     - '#Property App\\Models\\User::\$access_override_until \(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\Carbon\.#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'

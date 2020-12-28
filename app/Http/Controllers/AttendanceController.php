@@ -182,7 +182,7 @@ class AttendanceController extends Controller
             ->where('attendable_type', Team::getMorphClassStatic())
             ->selectRaw('date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
             ->groupBy('day')
-            ->orderBy('day', 'asc')
+            ->orderBy('day')
             ->get()
             ->mapWithKeys(static function (object $item) use ($numberOfWeeks): array {
                 return [substr($item->day, 1) => $item->aggregate / $numberOfWeeks];
@@ -192,7 +192,7 @@ class AttendanceController extends Controller
             ->where('attendable_type', Team::getMorphClassStatic())
             ->selectRaw('attendable_id, date_format(created_at, \'%w%W\') as day, count(gtid) as aggregate')
             ->groupBy('day', 'attendable_id')
-            ->orderBy('day', 'asc')
+            ->orderBy('day')
             ->get()
             ->groupBy('attendable_id')
             ->mapWithKeys(static function (Collection $item, int $attendable_id) use ($numberOfWeeks, $user): array {
@@ -234,9 +234,9 @@ class AttendanceController extends Controller
                 $query->where('visible', 1);
             })->leftJoin('teams', 'attendance.attendable_id', '=', 'teams.id')
             ->groupBy('week', 'attendable_id')
-            ->orderBy('visible', 'desc')
-            ->orderBy('name', 'asc')
-            ->orderBy('week', 'asc')
+            ->orderByDesc('visible')
+            ->orderBy('name')
+            ->orderBy('week')
             ->get();
 
         // phpcs:enable

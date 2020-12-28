@@ -43,7 +43,7 @@
                         <p class="card-text">
                             To continue your membership in RoboJackets, we need you to update your information and pay dues.
                         </p>
-                        <a href="/dues">Update Info Now</a>
+                        <a href="{{ route('showDuesFlow') }}">Update Info Now</a>
                     </div>
                 </div>
             </div>
@@ -62,8 +62,8 @@
                             Dues payments are accepted online with credit/debit cards or in-person with cash/check.
                             @endif
                         </p>
-                        <a style="margin-bottom: 0.5rem;display:block" href="/dues/pay">Pay Online Now</a>
-                        <a href="/dues">Change Dues Term</a>
+                        <a style="margin-bottom: 0.5rem;display:block" href="{{ route('pay.dues') }}">Pay Online Now</a>
+                        <a href="{{ route('showDuesFlow') }}">Change Dues Term</a>
                     </div>
                 </div>
             </div>

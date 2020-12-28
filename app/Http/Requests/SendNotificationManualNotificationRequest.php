@@ -19,14 +19,26 @@ class SendNotificationManualNotificationRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function rules(): array
     {
         return [
-            'emails'        => 'required',
-            'template_type' => 'required|in:recruiting,database',
-            'template_id'   => 'numeric',
+            'emails' => [
+                'required',
+                'array',
+            ],
+            'emails.*' => [
+                'required',
+                'email:rfc,strict,dns,spoof',
+            ],
+            'template_type' => [
+                'required',
+                'in:recruiting,database',
+            ],
+            'template_id' => [
+                'numeric',
+            ],
         ];
     }
 

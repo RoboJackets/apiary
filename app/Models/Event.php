@@ -60,18 +60,6 @@ class Event extends Model
     use SoftDeletes;
 
     /**
-     * Attributes to mutate to dates.
-     *
-     * @var array<string>
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'start_time',
-        'end_time',
-    ];
-
-    /**
      * The attributes that are not mass assignable.
      *
      * @var array<string>
@@ -99,6 +87,8 @@ class Event extends Model
      * @var array<string,string>
      */
     protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
         'allow_anonymous_rsvp' => 'boolean',
     ];
 
