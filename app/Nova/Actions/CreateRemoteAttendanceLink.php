@@ -8,7 +8,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Attendance;
 use App\Nova\RemoteAttendanceLink;
-use App\Models\RemoteAttendanceLink;
+use App\Models\RemoteAttendanceLink as RAL;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +40,7 @@ class CreateRemoteAttendanceLink extends Action
         // Only on detail, so it will only ever have one model.
         $attendable = $models->first();
 
-        $link = new RemoteAttendanceLink();
+        $link = new RAL();
 
         $link->attendable_type = get_class($attendable);
         $link->attendable_id = $attendable->id;
@@ -79,7 +79,7 @@ class CreateRemoteAttendanceLink extends Action
      */
     public function fields(): array
     {
-        $notes = collect(RemoteAttendanceLink::$recommendedNotes)
+        $notes = collect(RAL::$recommendedNotes)
             ->concat(['Other'])->mapWithKeys(static function (string $note): array {
                 return [$note => $note];
             });

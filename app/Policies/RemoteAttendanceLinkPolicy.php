@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\RemoteAttendanceLink;
-use App\Team;
-use App\User;
+use App\Models\RemoteAttendanceLink;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RemoteAttendanceLinkPolicy

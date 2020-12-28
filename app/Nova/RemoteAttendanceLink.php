@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\RemoteAttendanceLink as RAL;
+use App\Models\RemoteAttendanceLink as RAL;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
@@ -24,7 +24,7 @@ class RemoteAttendanceLink extends Resource
      *
      * @var string
      */
-    public static $model = \App\RemoteAttendanceLink::class;
+    public static $model = RAL::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
