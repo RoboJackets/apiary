@@ -54,7 +54,9 @@ class MatchSquareCashTransactions extends Command
                         'note',
                         'name_of_sender',
                     ],
-                    $squareCashTransaction->toArray()
+                    [
+                        $squareCashTransaction->toArray(),
+                    ]
                 );
 
                 $id = $this->ask('Enter DuesTransaction ID or leave blank to skip.');

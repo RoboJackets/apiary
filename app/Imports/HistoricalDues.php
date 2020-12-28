@@ -71,7 +71,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
 
         if (0 === count($packages)) {
             $this->command->error('Failed to match package(s)');
-            $this->command->table(array_keys($row), $row);
+            $this->command->table(array_keys($row), [$row]);
 
             $packages = $this->command->ask('Enter comma-separated list of package(s) or leave blank to skip.');
 
@@ -88,7 +88,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             $user = self::guessUser($row);
         } catch (Throwable $e) {
             $this->command->error($e->getMessage());
-            $this->command->table(array_keys($row), $row);
+            $this->command->table(array_keys($row), [$row]);
 
             $gtid = $this->command->ask('Enter correct GTID for user or leave blank to skip.');
 
@@ -198,7 +198,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
 
             CreateOrUpdateUserFromBuzzAPI::dispatchNow('gtid', $account->gtGTID, self::USER_CREATION_REASON_STRING);
 
-            return User::where('gtid', $row['gtid'])->firstOrFail();
+            return User::where('gtid', $account->gtGTID)->firstOrFail();
         }
 
         $possible_accounts = [];
@@ -227,7 +227,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
                 self::USER_CREATION_REASON_STRING
             );
 
-            return User::where('gtid', $row['gtid'])->firstOrFail();
+            return User::where('gtid', $possible_accounts[0]->gtGTID)->firstOrFail();
         }
 
         throw new Exception(

@@ -57,7 +57,9 @@ class MatchSquareTransactions extends Command
                         'entry_method',
                         'customer_name',
                     ],
-                    $squareTransaction->toArray()
+                    [
+                        $squareTransaction->toArray(),
+                    ]
                 );
 
                 $id = $this->ask('Enter DuesTransaction ID or leave blank to skip.');
