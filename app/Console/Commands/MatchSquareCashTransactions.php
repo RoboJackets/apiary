@@ -97,7 +97,7 @@ class MatchSquareCashTransactions extends Command
         } else {
             $possibleTransactions = DuesTransaction::crossJoin(
                 'payments',
-                'dues_transaction.id',
+                'dues_transactions.id',
                 '=',
                 'payable_id'
             )

@@ -98,7 +98,7 @@ class MatchSquareTransactions extends Command
 
             $bar->finish();
         } else {
-            $possibleTransactions = DuesTransaction::crossJoin('payments', 'dues_transaction.id', '=', 'payable_id')
+            $possibleTransactions = DuesTransaction::crossJoin('payments', 'dues_transactions.id', '=', 'payable_id')
                 ->whereNull('payments.server_txn_id')
                 ->orWhereNull('payments.processing_fee')
                 ->orWhereNull('payments.card_brand')
