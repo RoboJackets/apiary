@@ -378,6 +378,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             'fall_recieved_shirt',
             'recieved_shirt',
             'received_shirt',
+            'received_shirt_spring',
         ];
 
         foreach ($candidateColumns as $column) {
@@ -401,6 +402,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             'spring_recieved_shirt',
             'received_polo',
             'recieved_polo',
+            'received_polo_fall',
         ];
 
         foreach ($candidateColumns as $column) {
