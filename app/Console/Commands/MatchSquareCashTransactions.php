@@ -31,6 +31,7 @@ class MatchSquareCashTransactions extends Command
     public function handle(): void
     {
         if (true === $this->option('interactive')) {
+            $this->info('Manually matching Square Cash transactions');
             $possibleTransactions = SquareCashTransaction::leftJoin(
                 'payments',
                 'square_cash_transactions.transaction_id',
@@ -94,7 +95,9 @@ class MatchSquareCashTransactions extends Command
             }
 
             $bar->finish();
+            $this->info('Manual match successful');
         } else {
+            $this->info('Automatching Square Cash transactions');
             $possibleTransactions = DuesTransaction::crossJoin(
                 'payments',
                 'dues_transactions.id',
@@ -127,6 +130,7 @@ class MatchSquareCashTransactions extends Command
             }
 
             $bar->finish();
+            $this->info('Automatch successful');
         }
     }
 }

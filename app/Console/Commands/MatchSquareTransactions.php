@@ -16,7 +16,7 @@ class MatchSquareTransactions extends Command
      *
      * @var string
      */
-    protected $signature = 'match:squarecash {--interactive : Whether to use interactive mode }';
+    protected $signature = 'match:square {--interactive : Whether to use interactive mode }';
 
     /**
      * The console command description.
@@ -31,6 +31,7 @@ class MatchSquareTransactions extends Command
     public function handle(): void
     {
         if (true === $this->option('interactive')) {
+            $this->info('Manually matching Square transactions');
             $possibleTransactions = SquareTransaction::leftJoin(
                 'payments',
                 'square_transactions.transaction_id',
@@ -97,7 +98,9 @@ class MatchSquareTransactions extends Command
             }
 
             $bar->finish();
+            $this->info('Manual match successful');
         } else {
+            $this->info('Automatching Square transactions');
             $possibleTransactions = DuesTransaction::crossJoin('payments', 'dues_transactions.id', '=', 'payable_id')
                 ->whereNull('payments.server_txn_id')
                 ->orWhereNull('payments.processing_fee')
@@ -128,6 +131,7 @@ class MatchSquareTransactions extends Command
             }
 
             $bar->finish();
+            $this->info('Automatch successful');
         }
     }
 }
