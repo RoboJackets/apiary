@@ -154,7 +154,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         if (array_key_exists('gtid', $row) && null !== $row['gtid'] && $row['gtid'] > 900000000) {
             $user = User::where('gtid', $row['gtid'])->first();
             if (null !== $user) {
-                if ($user->last_name !== $last_name) {
+                if (strtolower($user->last_name) !== strtolower($last_name)) {
                     throw new Exception(
                         'Last name in sheet '.$last_name.' does not match last name in database '.$user->last_name
                         .' for GTID '.$row['gtid']
@@ -168,7 +168,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
 
             $user = User::where('gtid', $row['gtid'])->firstOrFail();
 
-            if ($user->last_name !== $last_name) {
+            if (strtolower($user->last_name) !== strtolower($last_name)) {
                 throw new Exception(
                     'Last name in sheet '.$last_name.' does not match last name in database '.$user->last_name
                     .' for GTID '.$row['gtid']
@@ -353,6 +353,13 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             if (1 === $row['full_yr']) {
                 return [DuesPackage::where('name', $fullYear)->firstOrFail()];
             }
+
+            if (1 === $row[$fallSlug] && 1 === $row[$springSlug]) {
+                return [
+                    DuesPackage::where('name', $fall)->firstOrFail(),
+                    DuesPackage::where('name', $spring)->firstOrFail(),
+                ];
+            }
         }
 
         if (array_key_exists($fallSlug, $row) && array_key_exists($springSlug, $row)) {
@@ -412,7 +419,10 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         ];
 
         foreach ($candidateColumns as $column) {
-            if (array_key_exists($column, $row) && (1 === $row[$column] || 'Yes' === $row[$column])) {
+            if (
+                array_key_exists($column, $row)
+                && (1 === $row[$column] || 'Yes' === $row[$column] || 'Y' === $row[$column])
+            ) {
                 return Carbon::now();
             }
         }
@@ -437,7 +447,10 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         ];
 
         foreach ($candidateColumns as $column) {
-            if (array_key_exists($column, $row) && (1 === $row[$column] || 'Yes' === $row[$column])) {
+            if (
+                array_key_exists($column, $row)
+                && (1 === $row[$column] || 'Yes' === $row[$column] || 'Y' === $row[$column])
+            ) {
                 return Carbon::now();
             }
         }
