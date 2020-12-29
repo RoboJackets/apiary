@@ -49,13 +49,7 @@ class MatchSquareCashTransactions extends Command
             foreach ($possibleTransactions as $squareCashTransaction) {
                 $this->newLine();
                 $this->table(
-                    [
-                        'transaction_id',
-                        'transaction_timestamp',
-                        'amount',
-                        'note',
-                        'name_of_sender',
-                    ],
+                    array_keys($squareCashTransaction->toArray()),
                     [
                         $squareCashTransaction->toArray(),
                     ]
