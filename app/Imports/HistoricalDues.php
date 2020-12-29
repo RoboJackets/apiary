@@ -74,7 +74,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             $this->command->error('Failed to match package(s)');
             $this->command->table(array_keys($row), [$row]);
 
-            $packagesResponse = $this->command->ask('Enter comma-separated list of package(s) or leave blank to skip.');
+            $packagesResponse = $this->command->ask('Enter comma-separated list of package(s) or leave blank to skip');
 
             if (null === $packagesResponse) {
                 return;
@@ -94,7 +94,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             $this->command->error($e->getMessage());
             $this->command->table(array_keys($row), [$row]);
 
-            $gtid = $this->command->ask('Enter correct GTID for user or leave blank to skip.');
+            $gtid = $this->command->ask('Enter correct GTID for user or leave blank to skip');
 
             if (null === $gtid) {
                 return;

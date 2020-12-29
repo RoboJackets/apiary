@@ -64,7 +64,7 @@ class MatchSquareTransactions extends Command
                 );
 
                 $this->newLine();
-                $id = $this->ask('Enter DuesTransaction ID or leave blank to skip.');
+                $id = $this->ask('Enter DuesTransaction ID or leave blank to skip');
 
                 if (null === $id) {
                     $bar->advance();
@@ -80,7 +80,7 @@ class MatchSquareTransactions extends Command
                 } else {
                     $this->newLine();
                     $id = $this->ask(
-                        'Found '.$paymentCount.' associated payments. Enter Payment ID or leave blank to skip.'
+                        'Found '.$paymentCount.' associated payments - enter Payment ID or leave blank to skip'
                     );
 
                     if (null === $id) {
