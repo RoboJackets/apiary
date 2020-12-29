@@ -32,15 +32,23 @@ class MatchSquareCashTransactions extends Command
     {
         if (true === $this->option('interactive')) {
             $this->info('Manually matching Square Cash transactions');
-            $possibleTransactions = SquareCashTransaction::leftJoin(
-                'payments',
-                'square_cash_transactions.transaction_id',
-                '=',
-                'payments.square_cash_transaction_id'
-            )
+            $possibleTransactions = SquareCashTransaction::select(
+                    'square_cash_transactions.transaction_id',
+                    'square_cash_transactions.transaction_timestamp',
+                    'square_cash_transactions.amount',
+                    'square_cash_transactions.note',
+                    'square_cash_transactions.name_of_sender'
+                )
+                ->leftJoin(
+                    'payments',
+                    'square_cash_transactions.transaction_id',
+                    '=',
+                    'payments.square_cash_transaction_id'
+                )
                 ->whereNull('payments.id')
                 ->where('square_cash_transactions.amount', '>=', 50)
                 ->where('square_cash_transactions.amount', '<', 200)
+                ->orderBy('square_cash_transactions.transaction_timestamp')
                 ->get();
 
             $bar = $this->output->createProgressBar(count($possibleTransactions));
@@ -89,6 +97,7 @@ class MatchSquareCashTransactions extends Command
             }
 
             $bar->finish();
+            $this->newLine();
             $this->info('Manual match successful');
         } else {
             $this->info('Automatching Square Cash transactions');
@@ -124,6 +133,7 @@ class MatchSquareCashTransactions extends Command
             }
 
             $bar->finish();
+            $this->newLine();
             $this->info('Automatch successful');
         }
     }

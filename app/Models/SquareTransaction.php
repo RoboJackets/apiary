@@ -71,7 +71,7 @@ class SquareTransaction extends Model
         }
 
         if (null !== $this->staff_name && '' !== $this->staff_name) {
-            $name = explode('0', $this->staff_name);
+            $name = explode(' ', $this->staff_name);
 
             return User::where('first_name', $name[0])->where('last_name', $name[1])->firstOrFail()->id;
         }

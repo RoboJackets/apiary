@@ -32,16 +32,28 @@ class MatchSquareTransactions extends Command
     {
         if (true === $this->option('interactive')) {
             $this->info('Manually matching Square transactions');
-            $possibleTransactions = SquareTransaction::leftJoin(
-                'payments',
-                'square_transactions.transaction_id',
-                '=',
-                'payments.server_txn_id'
-            )
+            $possibleTransactions = SquareTransaction::select(
+                    'square_transactions.transaction_id',
+                    'square_transactions.transaction_timestamp',
+                    'square_transactions.amount',
+                    'square_transactions.source',
+                    'square_transactions.entry_method',
+                    'square_transactions.device_name',
+                    'square_transactions.staff_name',
+                    'square_transactions.description',
+                    'square_transactions.customer_name'
+                )
+                ->leftJoin(
+                    'payments',
+                    'square_transactions.transaction_id',
+                    '=',
+                    'payments.server_txn_id'
+                )
                 ->whereNull('payments.id')
                 ->whereNotNull('square_transactions.customer_name')
                 ->where('square_transactions.amount', '>=', 50)
                 ->where('square_transactions.amount', '<', 200)
+                ->orderBy('square_transactions.transaction_timestamp')
                 ->get();
 
             $bar = $this->output->createProgressBar(count($possibleTransactions));
@@ -90,6 +102,7 @@ class MatchSquareTransactions extends Command
             }
 
             $bar->finish();
+            $this->newLine();
             $this->info('Manual match successful');
         } else {
             $this->info('Automatching Square transactions');
@@ -123,6 +136,7 @@ class MatchSquareTransactions extends Command
             }
 
             $bar->finish();
+            $this->newLine();
             $this->info('Automatch successful');
         }
     }
