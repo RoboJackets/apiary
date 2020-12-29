@@ -144,16 +144,6 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
      */
     private static function guessUser(array $row): User
     {
-        if (array_key_exists('gtid', $row) && null !== $row['gtid'] && $row['gtid'] > 900000000) {
-            $user = User::where('gtid', $row['gtid'])->first();
-            if (null !== $user) {
-                return $user;
-            }
-
-            CreateOrUpdateUserFromBuzzAPI::dispatchNow('gtid', $row['gtid'], self::USER_CREATION_REASON_STRING);
-
-            return User::where('gtid', $row['gtid'])->firstOrFail();
-        }
 
         $name = trim($row['name'] ?? $row['members_name']);
 
@@ -161,6 +151,33 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
 
         $first_name = $split_name[0];
         $last_name = $split_name[count($split_name) - 1];
+
+        if (array_key_exists('gtid', $row) && null !== $row['gtid'] && $row['gtid'] > 900000000) {
+            $user = User::where('gtid', $row['gtid'])->first();
+            if (null !== $user) {
+                if ($user->last_name !== $last_name) {
+                    throw new Exception(
+                        'Last name in sheet '.$last_name.' does not match last name in database '.$user->last_name
+                        .' for GTID '.$row['gtid']
+                    );
+                }
+
+                return $user;
+            }
+
+            CreateOrUpdateUserFromBuzzAPI::dispatchNow('gtid', $row['gtid'], self::USER_CREATION_REASON_STRING);
+
+            $user = User::where('gtid', $row['gtid'])->firstOrFail();
+
+            if ($user->last_name !== $last_name) {
+                throw new Exception(
+                    'Last name in sheet '.$last_name.' does not match last name in database '.$user->last_name
+                    .' for GTID '.$row['gtid']
+                );
+            }
+
+            return $user;
+        }
 
         $user = User::where('first_name', $first_name)->where('last_name', $last_name)->first();
 
