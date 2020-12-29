@@ -125,7 +125,13 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             $transaction->swag_polo_provided = self::guessPoloProvided($row);
             $transaction->save();
 
-            self::guessPayment($transaction);
+            $date = null;
+
+            if (array_key_exists('date', $row)) {
+                $date = $row['date'];
+            }
+
+            self::guessPayment($transaction, $date);
         }
     }
 
@@ -414,7 +420,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         return null;
     }
 
-    private static function guessPayment(DuesTransaction $transaction): void
+    private static function guessPayment(DuesTransaction $transaction, ?string $date): void
     {
         $countExisting = Payment::where('payable_id', $transaction->id)->count();
         if (0 === $countExisting) {
@@ -445,6 +451,10 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             $payment->updateFromSquareTransaction($squareTransaction);
 
             return;
+        }
+
+        if (null !== $date) {
+            $payment->created_at = Carbon::parse($date, config('app.timezone'))->startOfDay();
         }
 
         $payment->save();
