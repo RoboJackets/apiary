@@ -324,6 +324,13 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
             if (1 === $row['both']) {
                 return [DuesPackage::where('name', $fullYear)->firstOrFail()];
             }
+
+            if (1 === $row[$fallSlug] && 1 === $row[$springSlug]) {
+                return [
+                    DuesPackage::where('name', $fall)->firstOrFail(),
+                    DuesPackage::where('name', $spring)->firstOrFail(),
+                ];
+            }
         }
 
         if (array_key_exists('full_yr', $row)) {
