@@ -26,6 +26,13 @@ class FiscalYear extends Resource
     public static $title = 'ending_year';
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Dues';
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
