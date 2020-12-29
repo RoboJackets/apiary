@@ -33,28 +33,26 @@ class MatchSquareTransactions extends Command
         if (true === $this->option('interactive')) {
             $this->info('Manually matching Square transactions');
             $possibleTransactions = SquareTransaction::select(
-                    'square_transactions.transaction_id',
-                    'square_transactions.transaction_timestamp',
-                    'square_transactions.amount',
-                    'square_transactions.source',
-                    'square_transactions.entry_method',
-                    'square_transactions.device_name',
-                    'square_transactions.staff_name',
-                    'square_transactions.description',
-                    'square_transactions.customer_name'
-                )
-                ->leftJoin(
-                    'payments',
-                    'square_transactions.transaction_id',
-                    '=',
-                    'payments.server_txn_id'
-                )
-                ->whereNull('payments.id')
-                ->whereNotNull('square_transactions.customer_name')
-                ->where('square_transactions.amount', '>=', 50)
-                ->where('square_transactions.amount', '<', 200)
-                ->orderBy('square_transactions.transaction_timestamp')
-                ->get();
+                'square_transactions.transaction_id',
+                'square_transactions.transaction_timestamp',
+                'square_transactions.amount',
+                'square_transactions.source',
+                'square_transactions.entry_method',
+                'square_transactions.device_name',
+                'square_transactions.staff_name',
+                'square_transactions.description',
+                'square_transactions.customer_name'
+            )->leftJoin(
+                'payments',
+                'square_transactions.transaction_id',
+                '=',
+                'payments.server_txn_id'
+            )->whereNull('payments.id')
+            ->whereNotNull('square_transactions.customer_name')
+            ->where('square_transactions.amount', '>=', 50)
+            ->where('square_transactions.amount', '<', 200)
+            ->orderBy('square_transactions.transaction_timestamp')
+            ->get();
 
             $bar = $this->output->createProgressBar(count($possibleTransactions));
             $bar->start();
@@ -107,12 +105,12 @@ class MatchSquareTransactions extends Command
         } else {
             $this->info('Automatching Square transactions');
             $possibleTransactions = DuesTransaction::crossJoin('payments', 'dues_transactions.id', '=', 'payable_id')
-                ->whereNull('payments.server_txn_id')
-                ->orWhereNull('payments.processing_fee')
-                ->orWhereNull('payments.card_brand')
-                ->orWhereNull('payments.last_4')
-                ->orWhereNull('payments.entry_method')
-                ->get();
+            ->whereNull('payments.server_txn_id')
+            ->orWhereNull('payments.processing_fee')
+            ->orWhereNull('payments.card_brand')
+            ->orWhereNull('payments.last_4')
+            ->orWhereNull('payments.entry_method')
+            ->get();
 
             $bar = $this->output->createProgressBar(count($possibleTransactions));
             $bar->start();
