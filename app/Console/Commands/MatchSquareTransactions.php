@@ -41,7 +41,10 @@ class MatchSquareTransactions extends Command
                 'square_transactions.device_name',
                 'square_transactions.staff_name',
                 'square_transactions.description',
-                'square_transactions.customer_name'
+                'square_transactions.customer_name',
+                'square_transactions.processing_fee',
+                'square_transactions.card_brand',
+                'square_transactions.last_4'
             )->leftJoin(
                 'payments',
                 'square_transactions.transaction_id',
