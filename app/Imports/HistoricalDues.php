@@ -412,6 +412,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         $candidateColumns = [
             'fall_received_shirt',
             'fall_recieved_shirt',
+            'recieved_t_shirt',
             'recieved_shirt',
             'received_shirt',
             'received_shirt_spring',
