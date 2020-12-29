@@ -144,7 +144,6 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
      */
     private static function guessUser(array $row): User
     {
-
         $name = trim($row['name'] ?? $row['members_name']);
 
         $split_name = explode(' ', $name);
