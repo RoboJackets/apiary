@@ -147,6 +147,7 @@ class Payment extends Model
         $this->method = 'squarecash';
         $this->square_cash_transaction_id = $transaction->transaction_id;
         $this->created_at = $transaction->transaction_timestamp;
+        $this->updated_at = $transaction->transaction_timestamp;
         $this->save();
     }
 

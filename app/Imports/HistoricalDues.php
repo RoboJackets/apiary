@@ -455,6 +455,7 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
 
         if (null !== $date) {
             $payment->created_at = Carbon::parse($date, config('app.timezone'))->startOfDay();
+            $payment->updated_at = $payment->created_at;
         }
 
         $payment->save();
