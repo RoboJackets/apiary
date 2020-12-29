@@ -78,11 +78,9 @@ class MatchSquareCashTransactions extends Command
                     $payment->payable_id = $duesTransaction->id;
                     $payment->payable_type = $duesTransaction->getMorphClass();
                     $payment->notes = 'Historical dues import';
-                }
-                if (1 === $paymentCount) {
+                } elseif (1 === $paymentCount) {
                     $payment = Payment::where('payable_id', $duesTransaction->id)->firstOrFail();
-                }
-                if ($paymentCount > 1) {
+                } else {
                     $this->newLine();
                     $id = $this->ask(
                         'Found '.$paymentCount.' associated payments - enter Payment ID or leave blank to skip'
