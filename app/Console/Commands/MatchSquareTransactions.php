@@ -78,9 +78,16 @@ class MatchSquareTransactions extends Command
 
                 $paymentCount = Payment::where('payable_id', $duesTransaction->id)->count();
 
+                if (0 === $paymentCount) {
+                    $payment = new Payment();
+                    $payment->payable_id = $duesTransaction->id;
+                    $payment->payable_type = $duesTransaction->getMorphClass();
+                    $payment->notes = 'Historical dues import';
+                }
                 if (1 === $paymentCount) {
                     $payment = Payment::where('payable_id', $duesTransaction->id)->firstOrFail();
-                } else {
+                }
+                if ($paymentCount > 1) {
                     $this->newLine();
                     $id = $this->ask(
                         'Found '.$paymentCount.' associated payments - enter Payment ID or leave blank to skip'
