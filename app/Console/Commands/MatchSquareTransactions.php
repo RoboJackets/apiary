@@ -8,6 +8,7 @@ use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\SquareTransaction;
 use Illuminate\Console\Command;
+use Illuminate\Database\Query\JoinClause;
 
 class MatchSquareTransactions extends Command
 {

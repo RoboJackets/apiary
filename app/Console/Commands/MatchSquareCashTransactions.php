@@ -8,6 +8,7 @@ use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\SquareCashTransaction;
 use Illuminate\Console\Command;
+use Illuminate\Database\Query\JoinClause;
 
 class MatchSquareCashTransactions extends Command
 {
@@ -104,11 +105,10 @@ class MatchSquareCashTransactions extends Command
             $this->info('Manual match successful');
         } else {
             $this->info('Automatching Square Cash transactions');
-            $possibleTransactions = DuesTransaction::crossJoin(
-                'payments',
-                'dues_transactions.id',
-                '=',
-                'payable_id'
+            $possibleTransactions = DuesTransaction::leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('dues_transactions.id', '=', 'payable_id')
+                     ->where('payments.amount', '>', 0);
+            })
             )->whereNull('payments.square_cash_transaction_id')
             ->get();
 
