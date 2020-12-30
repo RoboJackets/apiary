@@ -113,10 +113,16 @@ class MatchSquareTransactions extends Command
             $this->info('Manual match successful');
         } else {
             $this->info('Automatching Square transactions');
-            $possibleTransactions = DuesTransaction::leftJoin('payments', static function (JoinClause $join): void {
+            $possibleTransactions = DuesTransaction::select(
+                'dues_transactions.id',
+                'dues_transactions.user_id',
+                'dues_transcations.dues_package_id'
+            )
+            ->leftJoin('payments', static function (JoinClause $join): void {
                 $join->on('dues_transactions.id', '=', 'payable_id')
                      ->where('payments.amount', '>', 0);
-            })->whereNull('payments.server_txn_id')
+            })
+            ->whereNull('payments.server_txn_id')
             ->orWhereNull('payments.processing_fee')
             ->orWhereNull('payments.card_brand')
             ->orWhereNull('payments.last_4')
