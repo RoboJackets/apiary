@@ -28,6 +28,7 @@ class MemberSince extends TextMetric
                  ->where('payments.amount', '>', 0);
         })
         ->where('user_id', $request->resourceId)
+        ->whereNotNull('payments.id')
         ->orderBy('payments.updated_at')
         ->first();
 

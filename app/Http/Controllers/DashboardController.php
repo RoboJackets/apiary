@@ -46,20 +46,8 @@ class DashboardController extends Controller
                      ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
                      ->where('payments.amount', '>', 0);
             })
-            ->leftJoin(
-                'dues_packages',
-                'dues_transactions.dues_package_id',
-                '=',
-                'dues_packages.id'
-            )
-            ->leftJoin(
-                'fiscal_years',
-                'dues_packages.fiscal_year_id',
-                '=',
-                'fiscal_years.id'
-            )
             ->where('user_id', $user->id)
-            ->orderBy('fiscal_years.ending_year')
+            ->whereNotNull('payments.id')
             ->orderBy('payments.updated_at')
             ->get();
 
