@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Models\DuesPackage;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder as Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\Partition;
@@ -55,15 +56,34 @@ class ShirtSizeBreakdown extends Partition
             ->selectRaw('count('.$column.') as aggregate')
             ->when(
                 $request->resourceId,
-                static function (Eloquent $query, int $resourceId): Eloquent {
+                static function (Builder $query, int $resourceId) use ($request): void {
                     // When on the detail page, look at the particular package
-                    return $query->whereHas('dues', static function (Eloquent $q) use ($resourceId): Eloquent {
-                        return $q->where('dues_package_id', $resourceId)->paid();
+                    $query->whereHas('dues', static function (Builder $query) use ($request): void {
+                        $query->when(
+                            'fiscal-years' === $request->resource,
+                            static function (Builder $query, bool $isFiscalYear) use ($request): void {
+                                $query
+                                    ->whereIn(
+                                        'dues_package_id',
+                                        DuesPackage::where(
+                                            'fiscal_year_id',
+                                            $request->resourceId
+                                        )
+                                        ->get()
+                                        ->map(static function (DuesPackage $package): int {
+                                            return $package->id;
+                                        })
+                                    );
+                            },
+                            static function (Builder $query) use ($request): void {
+                                $query->where('dues_package_id', $request->resourceId);
+                            }
+                        )->paid();
                     });
                 },
-                static function (Eloquent $query): Eloquent {
+                static function (Builder $query): void {
                     // When on the index, just look at all active users
-                    return $query->active();
+                    $query->active();
                 }
             )
             ->groupBy('size')

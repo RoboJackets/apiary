@@ -11,8 +11,9 @@ use App\Nova\Cards\MakeAWish;
 use App\Nova\Dashboards\Demographics;
 use App\Nova\Dashboards\JEDI;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
-use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
+use App\Nova\Metrics\DuesRevenueByFiscalYear;
+use App\Nova\Metrics\MembersByFiscalYear;
 use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Tools\AttendanceReport;
 use Illuminate\Http\Request;
@@ -67,8 +68,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new PaymentsPerDay())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-payments');
             }),
-            (new ActiveMembers())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
+            (new MembersByFiscalYear())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-dues-transactions');
+            }),
+            (new DuesRevenueByFiscalYear())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-dues-transactions');
             }),
             (new AttendancePerWeek())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-attendance');

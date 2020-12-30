@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
 use Illuminate\Database\Query\Builder;
@@ -22,14 +23,33 @@ class TotalCollections extends Value
             ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')
-                    ->where('dues_package_id', $request->resourceId)
+                    ->when(
+                        'fiscal-years' === $request->resource,
+                        static function (Builder $query, bool $isFiscalYear) use ($request): void {
+                            $query
+                                ->whereIn(
+                                    'dues_package_id',
+                                    DuesPackage::where(
+                                        'fiscal_year_id',
+                                        $request->resourceId
+                                    )
+                                    ->get()
+                                    ->map(static function (DuesPackage $package): int {
+                                        return $package->id;
+                                    })
+                                );
+                        },
+                        static function (Builder $query) use ($request): void {
+                            $query->where('dues_package_id', $request->resourceId);
+                        }
+                    )
                     ->whereNull('deleted_at');
             });
         if ($request->range > 0) {
             $query = $query->whereBetween('created_at', [now()->subDays($request->range)->startOfDay(), now()]);
         }
 
-        return $this->result($query->sum('amount'))->dollars()->allowZeroResult();
+        return $this->result($query->sum('amount') - $query->sum('processing_fee'))->dollars()->allowZeroResult();
     }
 
     /**

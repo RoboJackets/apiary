@@ -184,11 +184,6 @@ class DuesPackage extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-payments');
                 }),
-            (new PaymentMethodBreakdown())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
             (new SwagPickupRate('shirt'))
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
@@ -199,13 +194,10 @@ class DuesPackage extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-dues-transactions');
                 }),
-            (new ShirtSizeBreakdown('shirt'))
+            (new PaymentMethodBreakdown())
+                ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new ShirtSizeBreakdown('polo'))
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
+                    return $request->user()->can('read-payments');
                 }),
             (new ShirtSizeBreakdown('shirt'))
                 ->onlyOnDetail()

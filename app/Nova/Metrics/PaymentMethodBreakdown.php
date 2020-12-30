@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Models\DuesPackage;
+use App\Models\DuesTransaction;
 use App\Models\Payment;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -25,12 +27,31 @@ class PaymentMethodBreakdown extends Partition
     public function calculate(Request $request): PartitionResult
     {
         return $this->result(
-            Payment::where('payable_type', $request->model()->getMorphClass())
+            Payment::where('payable_type', DuesTransaction::getMorphClassStatic())
                     ->where('amount', '>', 0)
-                    ->whereIn('payable_id', static function (Builder $q) use ($request): void {
-                        $q->select('id')
+                    ->whereIn('payable_id', static function (Builder $query) use ($request): void {
+                        $query->select('id')
                             ->from('dues_transactions')
-                            ->where('dues_package_id', $request->resourceId)
+                            ->when(
+                                'fiscal-years' === $request->resource,
+                                static function (Builder $query, bool $isFiscalYear) use ($request): void {
+                                    $query
+                                        ->whereIn(
+                                            'dues_package_id',
+                                            DuesPackage::where(
+                                                'fiscal_year_id',
+                                                $request->resourceId
+                                            )
+                                            ->get()
+                                            ->map(static function (DuesPackage $package): int {
+                                                return $package->id;
+                                            })
+                                        );
+                                },
+                                static function (Builder $query) use ($request): void {
+                                    $query->where('dues_package_id', $request->resourceId);
+                                }
+                            )
                             ->whereNull('deleted_at');
                     })
                     ->select('method')
