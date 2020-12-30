@@ -153,7 +153,14 @@ class Payment extends Model
 
     public function updateFromSquareTransaction(SquareTransaction $transaction): void
     {
-        $this->method = 'swipe';  // note that some POS transactions are actually keyed for some reason
+        $squareSourceToPaymentMethod = [
+            'Point of Sale' => 'swipe',
+            'Online Store' => 'square',
+            'MyRoboJackets' => 'square',
+            'eCommerce Integrations' => 'square',
+        ];
+
+        $this->method = $squareSourceToPaymentMethod[$transaction->source];
         $this->amount = $transaction->amount;
         $this->processing_fee = $transaction->processing_fee;
         $this->created_at = $transaction->transaction_timestamp;

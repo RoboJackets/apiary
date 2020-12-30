@@ -41,11 +41,92 @@ class SquareTransaction extends Model
 
     public static function guessFromDuesTransaction(DuesTransaction $transaction): ?self
     {
+        // Customer name field matches user's name
         $query = self::whereDate('transaction_timestamp', '>=', $transaction->package->effective_start)
             ->whereDate('transaction_timestamp', '<=', $transaction->package->effective_end)
             ->where('amount', '>=', $transaction->package->cost)
             ->where('amount', '<=', $transaction->package->cost + 5)
             ->where('customer_name', $transaction->user->first_name.' '.$transaction->user->last_name)
+            ->where('description', 'not like', '%retreat%')
+            ->get();
+
+        if (1 === $query->count()) {
+            return $query->first();
+        }
+        if ($query->count() > 1) {
+            throw new Exception('Multiple Square transactions matched for '.$transaction->id);
+        }
+
+        // Customer name field matches user's GT email
+        $query = self::whereDate('transaction_timestamp', '>=', $transaction->package->effective_start)
+            ->whereDate('transaction_timestamp', '<=', $transaction->package->effective_end)
+            ->where('amount', '>=', $transaction->package->cost)
+            ->where('amount', '<=', $transaction->package->cost + 5)
+            ->where('customer_name', $transaction->user->gt_email)
+            ->where('description', 'not like', '%retreat%')
+            ->get();
+
+        if (1 === $query->count()) {
+            return $query->first();
+        }
+        if ($query->count() > 1) {
+            throw new Exception('Multiple Square transactions matched for '.$transaction->id);
+        }
+
+        // Customer name field matches user's GT username@gatech.edu
+        $query = self::whereDate('transaction_timestamp', '>=', $transaction->package->effective_start)
+            ->whereDate('transaction_timestamp', '<=', $transaction->package->effective_end)
+            ->where('amount', '>=', $transaction->package->cost)
+            ->where('amount', '<=', $transaction->package->cost + 5)
+            ->where('customer_name', $transaction->user->uid.'@gatech.edu')
+            ->where('description', 'not like', '%retreat%')
+            ->get();
+
+        if (1 === $query->count()) {
+            return $query->first();
+        }
+        if ($query->count() > 1) {
+            throw new Exception('Multiple Square transactions matched for '.$transaction->id);
+        }
+
+        // Customer name field matches user's GT username@gmail.com
+        $query = self::whereDate('transaction_timestamp', '>=', $transaction->package->effective_start)
+            ->whereDate('transaction_timestamp', '<=', $transaction->package->effective_end)
+            ->where('amount', '>=', $transaction->package->cost)
+            ->where('amount', '<=', $transaction->package->cost + 5)
+            ->where('customer_name', $transaction->user->uid.'@gmail.com')
+            ->where('description', 'not like', '%retreat%')
+            ->get();
+
+        if (1 === $query->count()) {
+            return $query->first();
+        }
+        if ($query->count() > 1) {
+            throw new Exception('Multiple Square transactions matched for '.$transaction->id);
+        }
+
+        // Customer name field matches user's verified Gmail address
+        $query = self::whereDate('transaction_timestamp', '>=', $transaction->package->effective_start)
+            ->whereDate('transaction_timestamp', '<=', $transaction->package->effective_end)
+            ->where('amount', '>=', $transaction->package->cost)
+            ->where('amount', '<=', $transaction->package->cost + 5)
+            ->where('customer_name', $transaction->user->gmail_address)
+            ->where('description', 'not like', '%retreat%')
+            ->get();
+
+        if (1 === $query->count()) {
+            return $query->first();
+        }
+        if ($query->count() > 1) {
+            throw new Exception('Multiple Square transactions matched for '.$transaction->id);
+        }
+
+        // Customer name field matches user's personal email
+        $query = self::whereDate('transaction_timestamp', '>=', $transaction->package->effective_start)
+            ->whereDate('transaction_timestamp', '<=', $transaction->package->effective_end)
+            ->where('amount', '>=', $transaction->package->cost)
+            ->where('amount', '<=', $transaction->package->cost + 5)
+            ->where('customer_name', $transaction->user->personal_email)
             ->where('description', 'not like', '%retreat%')
             ->get();
 
