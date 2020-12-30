@@ -116,7 +116,7 @@ class MatchSquareTransactions extends Command
             $possibleTransactions = DuesTransaction::select(
                 'dues_transactions.id',
                 'dues_transactions.user_id',
-                'dues_transcations.dues_package_id'
+                'dues_transactions.dues_package_id'
             )
             ->leftJoin('payments', static function (JoinClause $join): void {
                 $join->on('dues_transactions.id', '=', 'payable_id')
