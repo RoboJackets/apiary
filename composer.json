@@ -12,11 +12,9 @@
     "require": {
         "php": "^7.4",
         "apereo/phpcas": "1.3.8",
-        "barryvdh/laravel-ide-helper": "2.9.0",
         "bugsnag/bugsnag-laravel": "2.21.0",
         "chelout/laravel-relationship-events": "1.4.0",
         "doctrine/dbal": "2.12.1",
-        "fideloper/proxy": "4.4.1",
         "fruitcake/laravel-cors": "2.0.3",
         "guzzlehttp/guzzle": "7.2.0",
         "laravel/framework": "8.20.1",
@@ -40,6 +38,7 @@
         "vyuldashev/nova-permission": "2.10.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.9",
         "beyondcode/laravel-dump-server": "1.7.0",
         "facade/ignition": "2.5.8",
         "fakerphp/faker": "1.13.0",
