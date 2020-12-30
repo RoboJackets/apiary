@@ -47,6 +47,7 @@ class SquareTransaction extends Model
             ->where('amount', '<=', $transaction->package->cost + 5)
             ->where('source', 'Point of Sale')
             ->where('customer_name', $transaction->user->first_name.' '.$transaction->user->last_name)
+            ->where('description', 'not like', '%retreat%')
             ->get();
 
         if (1 === $query->count()) {
