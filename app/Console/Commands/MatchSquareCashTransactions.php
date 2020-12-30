@@ -108,8 +108,7 @@ class MatchSquareCashTransactions extends Command
             $possibleTransactions = DuesTransaction::leftJoin('payments', static function (JoinClause $join): void {
                 $join->on('dues_transactions.id', '=', 'payable_id')
                      ->where('payments.amount', '>', 0);
-            })
-            )->whereNull('payments.square_cash_transaction_id')
+            })->whereNull('payments.square_cash_transaction_id')
             ->get();
 
             $bar = $this->output->createProgressBar(count($possibleTransactions));
