@@ -36,7 +36,32 @@ class DashboardController extends Controller
         $needsPayment = (count(DuesTransaction::pending()->where('user_id', $user->id)->get()) > 0);
 
         if (! $isNew) {
-            $paidTransactions = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->get();
+            $paidTransactions = DuesTransaction::select(
+                'dues_transactions.id',
+                'dues_transactions.dues_package_id'
+            )
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('dues_transactions.id', '=', 'payable_id')
+                     ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                     ->where('payments.amount', '>', 0);
+            })
+            ->leftJoin(
+                'dues_packages',
+                'dues_transactions.dues_package_id',
+                '=',
+                'dues_packages.id'
+            )
+            ->leftJoin(
+                'fiscal_years',
+                'dues_packages.fiscal_year_id',
+                '=',
+                'fiscal_years.id'
+            )
+            ->where('user_id', $user->id)
+            ->orderBy('fiscal_years.ending_year')
+            ->orderBy('payments.updated_at')
+            ->get();
+
             $firstPaidTransact = $paidTransactions->first();
             $lastPaidTransact = $paidTransactions->last();
             $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end->toDateTimeString()));

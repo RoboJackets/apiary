@@ -18,7 +18,17 @@ class MemberSince extends TextMetric
     public function calculate(Request $request): ValueResult
     {
         // Same logic as in DashboardController
-        $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
+        $transaction = DuesTransaction::select(
+            'dues_transactions.id'
+        )
+        ->leftJoin('payments', static function (JoinClause $join): void {
+            $join->on('dues_transactions.id', '=', 'payable_id')
+                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                 ->where('payments.amount', '>', 0);
+        })
+        ->where('user_id', $request->resourceId)
+        ->orderBy('payments.updated_at')
+        ->first();
 
         if (null !== $transaction) {
             return $this->result(date('F j, Y', strtotime(
