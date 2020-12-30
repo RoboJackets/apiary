@@ -115,6 +115,7 @@ class MatchSquareCashTransactions extends Command
                      ->where('payments.amount', '>', 0);
             })
             ->whereNull('payments.square_cash_transaction_id')
+            ->whereNull('payments.server_txn_id')
             ->get();
 
             $bar = $this->output->createProgressBar(count($possibleTransactions));
