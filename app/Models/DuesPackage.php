@@ -56,8 +56,9 @@ use Laravel\Nova\Actions\Actionable;
  * @property bool $available_for_purchase
  * @property bool $restricted_to_students
  * @property int $id The database identifier for this DuesPackage
- * @property int $conflicts_with_dues_package_id The dues package that would restrict purchase of this package
+ * @property int $conflicts_with_package_id The dues package that would restrict purchase of this package
  * @property string $name
+ * @property int $fiscal_year_id
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions

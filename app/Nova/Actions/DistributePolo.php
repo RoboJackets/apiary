@@ -6,11 +6,13 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
@@ -34,7 +36,7 @@ class DistributePolo extends Action
             if ($model->package()->first()->eligible_for_polo) {
                 if ($model->is_paid) {
                     if (null === $model->swag_polo_provided) {
-                        $model->swag_polo_provided = date('Y-m-d H:i:s');
+                        $model->swag_polo_provided = Carbon::now();
                         $model->swag_polo_providedBy = Auth::user()->id;
                         $model->save();
                     } else {
@@ -72,7 +74,7 @@ class DistributePolo extends Action
             return Action::danger('No selected dues transactions are currently eligible for a polo.');
         }
 
-        return Action::message('Polo'.(1 === count($models) ? '' : 's').' marked as picked up!');
+        return Action::message(Str::plural('Polo', count($models)).' marked as picked up!');
     }
 
     /**

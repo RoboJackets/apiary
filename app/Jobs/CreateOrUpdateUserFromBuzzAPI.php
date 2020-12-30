@@ -32,6 +32,17 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     public const IDENTIFIER_USER = 'user';
     public const IDENTIFIER_GTDIRGUID = 'gtPersonDirectoryID';
 
+    public const EXPECTED_ATTRIBUTES = [
+        'uid',
+        'gtGTID',
+        'mail',
+        'givenName',
+        'sn',
+        'eduPersonPrimaryAffiliation',
+        'gtPersonDirectoryId',
+        'gtPrimaryGTAccountUsername',
+    ];
+
     /**
      * The number of attempts for this job.
      *
@@ -117,7 +128,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         }
         $numResults = count($accountsResponse->json->api_result_data);
         if (0 === $numResults) {
-            throw new Exception('GTED accounts search was successful but gave no results');
+            throw new Exception('GTED accounts search was successful but gave no results for '.$searchValue);
         }
 
         // If there's multiple results, find the one for their primary GT account or of the User we're searching for.
@@ -136,6 +147,13 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         if ($user->is_service_account) {
             throw new Exception('BuzzAPI job attempted to create/update an account for an existing service account');
         }
+
+        foreach (self::EXPECTED_ATTRIBUTES as $attr) {
+            if (! property_exists($account, $attr)) {
+                throw new Exception('Selected account for '.$searchValue.' is missing expected attribute '.$attr);
+            }
+        }
+
         $user->uid = $account->uid;
         $user->gtid = $account->gtGTID;
         $user->gt_email = $account->mail;
