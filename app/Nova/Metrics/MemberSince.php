@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\DuesTransaction;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\ValueResult;
 
