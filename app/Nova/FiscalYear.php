@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\FiscalYear as AppModelsFiscalYear;
-use App\Nova\Metrics\PaymentMethodBreakdown;
-use App\Nova\Metrics\ShirtSizeBreakdown;
-use App\Nova\Metrics\SwagPickupRate;
-use App\Nova\Metrics\TotalCollections;
+use App\Nova\Traits\DuesPackageCards;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 
 class FiscalYear extends Resource
 {
+    use DuesPackageCards;
+
     /**
      * The model the resource corresponds to.
      *
@@ -59,47 +58,6 @@ class FiscalYear extends Resource
                 ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}'),
 
             HasMany::make('Dues Packages', 'packages'),
-        ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [
-            (new TotalCollections())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-            (new SwagPickupRate('shirt'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new SwagPickupRate('polo'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new PaymentMethodBreakdown())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-            (new ShirtSizeBreakdown('shirt'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new ShirtSizeBreakdown('polo'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
         ];
     }
 

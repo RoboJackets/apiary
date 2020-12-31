@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
-use App\Nova\Metrics\PaymentMethodBreakdown;
-use App\Nova\Metrics\ShirtSizeBreakdown;
-use App\Nova\Metrics\SwagPickupRate;
-use App\Nova\Metrics\TotalCollections;
+use App\Nova\Traits\DuesPackageCards;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -27,6 +24,8 @@ use Laravel\Nova\Panel;
  */
 class DuesPackage extends Resource
 {
+    use DuesPackageCards;
+
     /**
      * The model the resource corresponds to.
      *
@@ -187,76 +186,5 @@ class DuesPackage extends Resource
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
         ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [
-            (new TotalCollections())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-            (new SwagPickupRate('shirt'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new SwagPickupRate('polo'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new PaymentMethodBreakdown())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-            (new ShirtSizeBreakdown('shirt'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new ShirtSizeBreakdown('polo'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-        ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function actions(Request $request): array
-    {
-        return [];
     }
 }
