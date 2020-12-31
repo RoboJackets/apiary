@@ -55,12 +55,12 @@ class PaymentMethodBreakdown extends Partition
                             ->whereNull('deleted_at');
                     })
                     ->select('method')
-                    ->selectRaw('count(payments.id) as aggregate')
+                    ->selectRaw('count(payments.id) as count')
                     ->groupBy('method')
-                    ->orderByDesc('aggregate')
+                    ->orderByDesc('count')
                     ->get()
-                    ->mapWithKeys(static function (Payment $item): array {
-                        return [Payment::$methods[$item->method] => $item->aggregate];
+                    ->mapWithKeys(static function (object $row): array {
+                        return [Payment::$methods[$row->method] => $row->count];
                     })->toArray()
         );
     }
