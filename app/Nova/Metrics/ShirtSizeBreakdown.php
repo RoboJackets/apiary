@@ -7,6 +7,7 @@ namespace App\Nova\Metrics;
 use App\Models\DuesPackage;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\Partition;
@@ -76,18 +77,12 @@ class ShirtSizeBreakdown extends Partition
                                 $query
                                     ->whereIn(
                                         'dues_package_id',
-                                        DuesPackage::where(
-                                            'fiscal_year_id',
-                                            $request->resourceId
-                                        )
-                                        ->where(
-                                            'eligible_for_'.$swagType,
-                                            true
-                                        )
-                                        ->get()
-                                        ->map(static function (DuesPackage $package): int {
-                                            return $package->id;
-                                        })
+                                        static function (QueryBuilder $query) use ($request, $swagType): void {
+                                            $query->select('id')
+                                                ->from('dues_packages')
+                                                ->where('fiscal_year_id', $request->resourceId)
+                                                ->where('eligible_for_'.$swagType, true);
+                                        }
                                     );
                             },
                             static function (Builder $query) use ($request): void {

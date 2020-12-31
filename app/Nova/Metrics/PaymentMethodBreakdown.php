@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
 use Illuminate\Database\Query\Builder;
@@ -38,14 +37,11 @@ class PaymentMethodBreakdown extends Partition
                                     $query
                                         ->whereIn(
                                             'dues_package_id',
-                                            DuesPackage::where(
-                                                'fiscal_year_id',
-                                                $request->resourceId
-                                            )
-                                            ->get()
-                                            ->map(static function (DuesPackage $package): int {
-                                                return $package->id;
-                                            })
+                                            static function (Builder $query) use ($request): void {
+                                                $query->select('id')
+                                                    ->from('dues_packages')
+                                                    ->where('fiscal_year_id', $request->resourceId);
+                                            }
                                         );
                                 },
                                 static function (Builder $query) use ($request): void {
