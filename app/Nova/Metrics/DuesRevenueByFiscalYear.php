@@ -19,8 +19,11 @@ class DuesRevenueByFiscalYear extends Trend
     {
         return (new TrendResult())
         ->trend(
-            DuesTransaction::selectRaw(
-                'ending_year, (sum(payments.amount) - sum(payments.processing_fee)) as revenue'
+            DuesTransaction::select(
+                'ending_year'
+            )
+            ->selectRaw(
+                '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'
             )
             ->leftJoin('payments', static function (JoinClause $join): void {
                 $join->on('dues_transactions.id', '=', 'payable_id')
