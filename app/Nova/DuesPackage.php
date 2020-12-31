@@ -87,7 +87,7 @@ class DuesPackage extends Resource
             BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
                 ->sortable(),
 
-            Number::make('Transactions', function (): int {
+            Number::make('Paid Transactions', function (): int {
                 return AppModelsDuesTransaction::leftJoin('payments', static function (JoinClause $join): void {
                     $join->on('dues_transactions.id', '=', 'payable_id')
                          ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
