@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\DuesTransaction;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\ValueResult;
 
@@ -18,7 +19,18 @@ class MemberSince extends TextMetric
     public function calculate(Request $request): ValueResult
     {
         // Same logic as in DashboardController
-        $transaction = DuesTransaction::paid()->where('user_id', $request->resourceId)->with('package')->first();
+        $transaction = DuesTransaction::select(
+            'dues_transactions.id'
+        )
+        ->leftJoin('payments', static function (JoinClause $join): void {
+            $join->on('dues_transactions.id', '=', 'payable_id')
+                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                 ->where('payments.amount', '>', 0);
+        })
+        ->where('user_id', $request->resourceId)
+        ->whereNotNull('payments.id')
+        ->orderBy('payments.updated_at')
+        ->first();
 
         if (null !== $transaction) {
             return $this->result(date('F j, Y', strtotime(

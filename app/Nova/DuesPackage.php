@@ -4,21 +4,28 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Metrics\PaymentMethodBreakdown;
-use App\Nova\Metrics\ShirtSizeBreakdown;
-use App\Nova\Metrics\SwagPickupRate;
-use App\Nova\Metrics\TotalCollections;
+use App\Models\DuesTransaction as AppModelsDuesTransaction;
+use App\Nova\Traits\DuesPackageCards;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for dues packages.
+ *
+ * @property int $id
+ */
 class DuesPackage extends Resource
 {
+    use DuesPackageCards;
+
     /**
      * The model the resource corresponds to.
      *
@@ -79,6 +86,16 @@ class DuesPackage extends Resource
 
             BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
                 ->sortable(),
+
+            Number::make('Paid Transactions', function (): int {
+                return AppModelsDuesTransaction::leftJoin('payments', static function (JoinClause $join): void {
+                    $join->on('dues_transactions.id', '=', 'payable_id')
+                         ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
+                         ->where('payments.amount', '>', 0);
+                })
+                ->whereNotNull('payments.id')
+                ->where('dues_package_id', $this->id)->count();
+            })->onlyOnIndex(),
 
             Boolean::make('Active', 'is_active')
                 ->sortable()
@@ -169,84 +186,5 @@ class DuesPackage extends Resource
             DateTime::make('Last Updated', 'updated_at')
                 ->onlyOnDetail(),
         ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [
-            (new TotalCollections())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-            (new PaymentMethodBreakdown())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-            (new SwagPickupRate('shirt'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new SwagPickupRate('polo'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new ShirtSizeBreakdown('shirt'))
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new ShirtSizeBreakdown('polo'))
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new ShirtSizeBreakdown('shirt'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-            (new ShirtSizeBreakdown('polo'))
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
-        ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function actions(Request $request): array
-    {
-        return [];
     }
 }

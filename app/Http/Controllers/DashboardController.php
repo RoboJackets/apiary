@@ -8,6 +8,7 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Team;
 use Carbon\Carbon;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -36,7 +37,20 @@ class DashboardController extends Controller
         $needsPayment = (count(DuesTransaction::pending()->where('user_id', $user->id)->get()) > 0);
 
         if (! $isNew) {
-            $paidTransactions = DuesTransaction::paid()->where('user_id', $user->id)->with('package')->get();
+            $paidTransactions = DuesTransaction::select(
+                'dues_transactions.id',
+                'dues_transactions.dues_package_id'
+            )
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('dues_transactions.id', '=', 'payable_id')
+                     ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                     ->where('payments.amount', '>', 0);
+            })
+            ->where('user_id', $user->id)
+            ->whereNotNull('payments.id')
+            ->orderBy('payments.updated_at')
+            ->get();
+
             $firstPaidTransact = $paidTransactions->first();
             $lastPaidTransact = $paidTransactions->last();
             $packageEnd = date('F j, Y', strtotime($lastPaidTransact->package->effective_end->toDateTimeString()));

@@ -76,7 +76,7 @@ class UserController extends Controller
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
         }
 
-        foreach ($request->rules() as $key => $value) {
+        foreach (array_keys($request->rules()) as $key) {
             $user->$key = $request->input($key);
         }
 

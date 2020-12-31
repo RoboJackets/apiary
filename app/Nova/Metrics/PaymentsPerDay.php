@@ -16,7 +16,13 @@ class PaymentsPerDay extends Trend
      */
     public function calculate(Request $request): TrendResult
     {
-        return $this->countByDays($request, Payment::class)->showLatestValue();
+        return $this->countByDays(
+            $request,
+            Payment::select('payments.updated_at')
+                ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'unknown'),
+            'payments.updated_at'
+        )->showLatestValue();
     }
 
     /**

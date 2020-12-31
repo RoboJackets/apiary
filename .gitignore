@@ -34,3 +34,4 @@ pause-monitoring.sh
 resume-monitoring.sh
 .vapor/
 .env.production
+/storage/framework/laravel-excel/
