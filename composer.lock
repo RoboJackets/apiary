@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a234a1cc304219edba7c5c673c50258a",
+    "content-hash": "2a3d90d5298283e4a6c2f1648ef3f915",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -10344,16 +10344,16 @@
         },
         {
             "name": "phan/phan",
-            "version": "3.2.9",
+            "version": "3.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "39d52b47bbd9e423a76b7a4ce25b1dd8742ee131"
+                "reference": "08978125063189a3e43448c99d50afd3b216234c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/39d52b47bbd9e423a76b7a4ce25b1dd8742ee131",
-                "reference": "39d52b47bbd9e423a76b7a4ce25b1dd8742ee131",
+                "url": "https://api.github.com/repos/phan/phan/zipball/08978125063189a3e43448c99d50afd3b216234c",
+                "reference": "08978125063189a3e43448c99d50afd3b216234c",
                 "shasum": ""
             },
             "require": {
@@ -10415,9 +10415,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/3.2.9"
+                "source": "https://github.com/phan/phan/tree/3.2.10"
             },
-            "time": "2020-12-26T19:12:51+00:00"
+            "time": "2020-12-31T20:11:44+00:00"
         },
         {
             "name": "phar-io/manifest",
