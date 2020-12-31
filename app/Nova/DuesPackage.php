@@ -4,19 +4,27 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Nova\Metrics\PaymentMethodBreakdown;
 use App\Nova\Metrics\ShirtSizeBreakdown;
 use App\Nova\Metrics\SwagPickupRate;
 use App\Nova\Metrics\TotalCollections;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for dues packages.
+ *
+ * @property int $id
+ */
 class DuesPackage extends Resource
 {
     /**
@@ -79,6 +87,16 @@ class DuesPackage extends Resource
 
             BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
                 ->sortable(),
+
+            Number::make('Transactions', function (): int {
+                return AppModelsDuesTransaction::leftJoin('payments', static function (JoinClause $join): void {
+                    $join->on('dues_transactions.id', '=', 'payable_id')
+                         ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
+                         ->where('payments.amount', '>', 0);
+                })
+                ->whereNotNull('payments.id')
+                ->where('dues_package_id', $this->id)->count();
+            })->onlyOnIndex(),
 
             Boolean::make('Active', 'is_active')
                 ->sortable()
