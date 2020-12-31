@@ -18,7 +18,8 @@ class TotalCollections extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        $query = Payment::where('payable_type', DuesTransaction::getMorphClassStatic())
+        $query = Payment::selectRaw('(sum(payments.amount) - sum(payments.processing_fee)) as revenue')
+            ->where('payable_type', DuesTransaction::getMorphClassStatic())
             ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')
@@ -45,7 +46,7 @@ class TotalCollections extends Value
             $query = $query->whereBetween('created_at', [now()->subDays($request->range)->startOfDay(), now()]);
         }
 
-        return $this->result($query->sum('amount') - $query->sum('processing_fee'))->dollars()->allowZeroResult();
+        return $this->result($query->first()->revenue)->dollars()->allowZeroResult();
     }
 
     /**
