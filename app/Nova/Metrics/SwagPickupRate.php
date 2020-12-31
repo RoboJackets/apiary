@@ -7,6 +7,7 @@ namespace App\Nova\Metrics;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\ValueResult;
@@ -48,9 +49,11 @@ class SwagPickupRate extends TextMetric
      */
     public function calculate(Request $request): ValueResult
     {
+        $swagType = $this->swagType;
+
         if ('dues-packages' === $request->resource) {
             $package = DuesPackage::where('id', $request->resourceId)->withTrashed()->first();
-            $eligible = 'shirt' === $this->swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
+            $eligible = 'shirt' === $swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
 
             if (! $eligible) {
                 return $this->result('n/a');
@@ -59,13 +62,17 @@ class SwagPickupRate extends TextMetric
 
         $result = DuesTransaction::when(
             'fiscal-years' === $request->resource,
-            static function (Builder $query, bool $isFiscalYear) use ($request): void {
+            static function (Builder $query, bool $isFiscalYear) use ($request, $swagType): void {
                 $query
                     ->whereIn(
                         'dues_package_id',
                         DuesPackage::where(
                             'fiscal_year_id',
                             $request->resourceId
+                        )
+                        ->where(
+                            'eligible_for_'.$swagType,
+                            true
                         )
                         ->get()
                         ->map(static function (DuesPackage $package): int {
@@ -77,8 +84,14 @@ class SwagPickupRate extends TextMetric
                 $query->where('dues_package_id', $request->resourceId);
             }
         )
-        ->selectRaw('`swag_'.$this->swagType.'_provided` is not null as provided')
-        ->selectRaw('count(id) as aggregate')
+        ->selectRaw('`swag_'.$swagType.'_provided` is not null as provided')
+        ->selectRaw('count(dues_transactions.id) as aggregate')
+        ->leftJoin('payments', static function (JoinClause $join): void {
+            $join->on('dues_transactions.id', '=', 'payable_id')
+                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                 ->where('payments.amount', '>', 0);
+        })
+        ->whereNotNull('payments.id')
         ->groupBy('provided')
         ->get()
         ->mapWithKeys(static function (object $item): array {

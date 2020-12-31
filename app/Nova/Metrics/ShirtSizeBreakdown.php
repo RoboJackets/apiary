@@ -49,25 +49,40 @@ class ShirtSizeBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $column = 'shirt' === $this->swagType ? 'shirt_size' : 'polo_size';
+        $swagType = $this->swagType;
+
+        if ('dues-packages' === $request->resource) {
+            $package = DuesPackage::where('id', $request->resourceId)->withTrashed()->first();
+            $eligible = 'shirt' === $swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
+
+            if (! $eligible) {
+                return $this->result([]);
+            }
+        }
+
+        $column = 'shirt' === $swagType ? 'shirt_size' : 'polo_size';
 
         return $this->result(
             User::select($column.' as size')
-            ->selectRaw('count('.$column.') as aggregate')
+            ->selectRaw('count(id) as count')
             ->when(
                 $request->resourceId,
-                static function (Builder $query, int $resourceId) use ($request): void {
+                static function (Builder $query, int $resourceId) use ($request, $swagType): void {
                     // When on the detail page, look at the particular package
-                    $query->whereHas('dues', static function (Builder $query) use ($request): void {
+                    $query->whereHas('dues', static function (Builder $query) use ($request, $swagType): void {
                         $query->when(
                             'fiscal-years' === $request->resource,
-                            static function (Builder $query, bool $isFiscalYear) use ($request): void {
+                            static function (Builder $query, bool $isFiscalYear) use ($request, $swagType): void {
                                 $query
                                     ->whereIn(
                                         'dues_package_id',
                                         DuesPackage::where(
                                             'fiscal_year_id',
                                             $request->resourceId
+                                        )
+                                        ->where(
+                                            'eligible_for_'.$swagType,
+                                            true
                                         )
                                         ->get()
                                         ->map(static function (DuesPackage $package): int {
@@ -99,7 +114,7 @@ class ShirtSizeBreakdown extends Partition
                     'xxxl' => 'XXXL',
                 ];
 
-                return [$item->size ? $shirt_sizes[$item->size] : 'Unknown' => $item->aggregate];
+                return [null !== $item->size ? $shirt_sizes[$item->size] : 'Unknown' => $item->count];
             })->toArray()
         );
     }
