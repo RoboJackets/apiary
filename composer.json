@@ -31,10 +31,10 @@
         "spatie/laravel-failed-job-monitor": "3.4.0",
         "spatie/laravel-permission": "3.18.0",
         "spatie/laravel-webhook-client": "2.7.4",
-        "square/square": "*",
+        "square/square": "8.0.0.20201216",
         "subfission/cas": "4.0.0",
         "ukfast/laravel-health-check": "1.8.0",
-        "uxweb/sweet-alert": "*",
+        "uxweb/sweet-alert": "2.0.5",
         "vyuldashev/nova-permission": "2.10.0"
     },
     "require-dev": {
@@ -46,7 +46,7 @@
         "mockery/mockery": "1.4.2",
         "nunomaduro/collision": "5.1.0",
         "nunomaduro/larastan": "0.6.11",
-        "phan/phan": "3.2.10",
+        "phan/phan": "4.0.1",
         "phpstan/extension-installer": "1.1.0",
         "phpunit/phpunit": "9.5.0",
         "psalm/plugin-laravel": "1.4.2",
