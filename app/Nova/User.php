@@ -27,7 +27,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for users.
  *
- * @property string $resume_date When this user's resume was uploaded
+ * @property ?\Carbon\Carbon $resume_date
  * @property string $uid this user's username
  */
 class User extends Resource
