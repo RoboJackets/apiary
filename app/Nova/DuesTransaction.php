@@ -110,6 +110,7 @@ class DuesTransaction extends Resource
                         ->onlyOnDetail(),
                     Text::make('Size', function (): ?string {
                         $shirt_size = $this->user->shirt_size;
+
                         return null === $shirt_size ? null : AppModelsUser::$shirt_sizes[$shirt_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_shirt_provided')
@@ -127,6 +128,7 @@ class DuesTransaction extends Resource
                         ->onlyOnDetail(),
                     Text::make('Size', function (): ?string {
                         $polo_size = $this->user->polo_size;
+
                         return null === $polo_size ? null : AppModelsUser::$shirt_sizes[$polo_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
