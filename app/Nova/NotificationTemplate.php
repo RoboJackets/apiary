@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
@@ -72,7 +70,7 @@ class NotificationTemplate extends Resource
 
             new Panel('Email Content', $this->basicFields()),
 
-            new Panel('Metadata', $this->metaFields()),
+            self::metadataPanel(),
         ];
     }
 
@@ -99,68 +97,5 @@ class NotificationTemplate extends Resource
                 ->rules('required')
                 ->hideFromIndex(),
         ];
-    }
-
-    /**
-     * Timestamp and creator fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-
-            BelongsTo::make('User', 'creator')
-                ->searchable()
-                ->rules('required')
-                ->hideFromIndex()
-                ->hideWhenUpdating(),
-
-            DateTime::make('Created At')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
-        ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function actions(Request $request): array
-    {
-        return [];
     }
 }

@@ -91,7 +91,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon|null $accept_safety_agreement
  * @property Carbon|null $access_override_until
  * @property Carbon|null $deleted_at
- * @property Carbon|null $resume_date
+ * @property ?\Carbon\Carbon $resume_date
  * @property int $gtid
  * @property int $id
  * @property int|null $access_override_by_id
@@ -236,6 +236,22 @@ class User extends Authenticatable
         'exists_in_sums' => 'boolean',
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
+    ];
+
+    /**
+     * List of valid shirt sizes and display names for them.
+     *
+     * @var array<string,string>
+     *
+     * @phan-suppress PhanReadOnlyPublicProperty
+     */
+    public static $shirt_sizes = [
+        's' => 'Small',
+        'm' => 'Medium',
+        'l' => 'Large',
+        'xl' => 'Extra-Large',
+        'xxl' => 'XXL',
+        'xxxl' => 'XXXL',
     ];
 
     /**

@@ -14,7 +14,6 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 
 /**
  * A Nova resource for events.
@@ -89,7 +88,7 @@ class Event extends Resource
                 return route('events.rsvp', ['event' => $this->id]);
             })->onlyOnDetail(),
 
-            new Panel('Metadata', $this->metaFields()),
+            self::metadataPanel(),
 
             HasMany::make('RSVPs')
                 ->canSee(static function (Request $request): bool {
@@ -105,22 +104,6 @@ class Event extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('create-attendance');
                 }),
-        ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
         ];
     }
 
@@ -143,35 +126,5 @@ class Event extends Resource
                     return $request->user()->can('read-attendance');
                 }),
         ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function actions(Request $request): array
-    {
-        return [];
     }
 }

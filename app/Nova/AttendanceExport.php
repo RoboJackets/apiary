@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 
 class AttendanceExport extends Resource
 {
@@ -88,23 +87,7 @@ class AttendanceExport extends Resource
                 ->hideFromIndex()
                 ->nullable(),
 
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->exceptOnForms(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
+            self::metadataPanel(),
         ];
     }
 }

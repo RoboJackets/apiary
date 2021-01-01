@@ -152,7 +152,7 @@ class DuesPackage extends Resource
                     return $request->user()->can('read-dues-transactions');
                 }),
 
-            new Panel('Metadata', $this->metaFields()),
+            self::metadataPanel(),
         ];
     }
 
@@ -169,22 +169,6 @@ class DuesPackage extends Resource
 
             Boolean::make('Eligible for Polo')
                 ->hideFromIndex(),
-        ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
         ];
     }
 }
