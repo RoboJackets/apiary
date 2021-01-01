@@ -242,6 +242,8 @@ class User extends Authenticatable
      * List of valid shirt sizes and display names for them.
      *
      * @var array<string,string>
+     *
+     * @phan-suppress PhanReadOnlyPublicProperty
      */
     public static $shirt_sizes = [
         's' => 'Small',
