@@ -239,6 +239,20 @@ class User extends Authenticatable
     ];
 
     /**
+     * List of valid shirt sizes and display names for them.
+     *
+     * @var array<string,string>
+     */
+    public static $shirt_sizes = [
+        's' => 'Small',
+        'm' => 'Medium',
+        'l' => 'Large',
+        'xl' => 'Extra-Large',
+        'xxl' => 'XXL',
+        'xxxl' => 'XXXL',
+    ];
+
+    /**
      *  Get the recruiting visits associated with this user.
      */
     public function recruitingVisits(): HasMany

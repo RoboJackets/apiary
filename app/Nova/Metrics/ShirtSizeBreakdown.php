@@ -100,16 +100,7 @@ class ShirtSizeBreakdown extends Partition
             ->orderBy('size')
             ->get()
             ->mapWithKeys(static function (object $item): array {
-                $shirt_sizes = [
-                    's' => 'Small',
-                    'm' => 'Medium',
-                    'l' => 'Large',
-                    'xl' => 'Extra-Large',
-                    'xxl' => 'XXL',
-                    'xxxl' => 'XXXL',
-                ];
-
-                return [null !== $item->size ? $shirt_sizes[$item->size] : 'Unknown' => $item->count];
+                return [null !== $item->size ? User::$shirt_sizes[$item->size] : 'Unknown' => $item->count];
             })->toArray()
         );
     }

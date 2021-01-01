@@ -6,9 +6,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 
 class ClassStanding extends Resource
 {
@@ -52,16 +50,7 @@ class ClassStanding extends Resource
 
             BelongsToMany::make('Members', 'members', User::class),
 
-            new Panel(
-                'Metadata',
-                [
-                    DateTime::make('Created', 'created_at')
-                        ->onlyOnDetail(),
-
-                    DateTime::make('Last Updated', 'updated_at')
-                        ->onlyOnDetail(),
-                ]
-            ),
+            self::metadataPanel(),
         ];
     }
 }
