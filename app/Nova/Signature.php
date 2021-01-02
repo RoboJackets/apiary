@@ -150,7 +150,7 @@ class Signature extends Resource
                 ->onlyOnForms(),
 
             Hidden::make('Uploaded By', 'uploaded_by')
-                ->defaultValue('$request->user()->id')
+                ->defaultValue(strval($request->user()->id))
                 ->onlyOnForms(),
         ];
     }
