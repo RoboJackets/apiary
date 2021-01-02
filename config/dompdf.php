@@ -200,7 +200,7 @@ return [
         'enable_javascript' => false,
 
         /**
-         * Enable remote file access
+         * Enable remote file access.
          *
          * If this setting is set to true, DOMPDF will access remote sites for
          * images and CSS files as required.
