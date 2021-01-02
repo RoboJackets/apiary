@@ -146,7 +146,7 @@ class Signature extends Resource
             self::metadataPanel(),
 
             Hidden::make('Complete')
-                ->defaultValue('true')
+                ->defaultValue('1')
                 ->onlyOnForms(),
 
             Hidden::make('Uploaded By', 'uploaded_by')
