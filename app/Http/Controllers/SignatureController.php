@@ -102,7 +102,18 @@ class SignatureController extends Controller
             ->where('complete', false)
             ->firstOrFail();
 
-        $signature->ip_address = $request->ip();
+        $ip = $request->ip();
+
+        if (null === $ip) { // I have no idea what could possibly cause this, but that's what the contract says
+            return view(
+                'agreement.error',
+                [
+                    'message' => 'We could not detect your IP address.',
+                ]
+            );
+        }
+
+        $signature->ip_address = $ip;
         $signature->user_agent = $request->header('User-Agent');
         $signature->redirect_to_cas_timestamp = Carbon::now();
 
