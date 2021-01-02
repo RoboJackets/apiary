@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
 namespace App\Nova;
 
 use Carbon\Carbon;
@@ -88,29 +90,6 @@ class Signature extends Resource
             DateTime::make('Rendered', 'render_timestamp')
                 ->onlyOnDetail(),
 
-            ...(! $this->electronic ? [
-                new Panel(
-                    'Paper Upload',
-                    [
-                        File::make('Scanned Agreement')
-                            ->help('Upload the entire agreement as a single file.')
-                            ->disk('local')
-                            ->deletable(false)
-                            ->required()
-                            ->rules('required'),
-
-                        BelongsTo::make('Uploaded By', 'uploadedBy', User::class)
-                            ->onlyOnDetail(),
-
-                        DateTime::make('Uploaded At', 'updated_at')
-                            ->resolveUsing(function (Carbon $str): ?Carbon {
-                                return null === $this->scanned_agreement ? null : $this->updated_at;
-                            })
-                            ->onlyOnDetail(),
-                    ]
-                ),
-            ] : []),
-
             ...($this->electronic ? [
                 new Panel(
                     'Electronic Signature',
@@ -141,7 +120,31 @@ class Signature extends Resource
                             ->onlyOnDetail(),
                     ]
                 ),
-            ] : []),
+            ] : [
+                new Panel(
+                    'Paper Upload',
+                    [
+                        File::make('Scanned Agreement')
+                            ->help(
+                                'Upload the entire agreement as a single file. Verify that the revision date at the top'
+                                .' of the document matches the revision date shown above.'
+                            )
+                            ->disk('local')
+                            ->deletable(false)
+                            ->required()
+                            ->rules('required'),
+
+                        BelongsTo::make('Uploaded By', 'uploadedBy', User::class)
+                            ->onlyOnDetail(),
+
+                        DateTime::make('Uploaded At', 'updated_at')
+                            ->resolveUsing(function (Carbon $str): ?Carbon {
+                                return null === $this->scanned_agreement ? null : $this->updated_at;
+                            })
+                            ->onlyOnDetail(),
+                    ]
+                ),
+            ]),
 
             self::metadataPanel(),
 

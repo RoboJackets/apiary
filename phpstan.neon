@@ -7,7 +7,7 @@ parameters:
     - storage/*
     - vendor/*
   ignoreErrors:
-    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed)\(\)\.#'
+    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit)\(\)\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Permission::\$id\.#'
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Permission::\$name\.#'
@@ -29,6 +29,7 @@ parameters:
     - '#Cannot call method members\(\) on App\\Models\\Major\|null\.#'
     - '#Cannot call method members\(\) on App\\Models\\Team\|null\.#'
     - '#Cannot call method name\(\) on array\|Illuminate\\Routing\\Route\.#'
+    - '#Cannot call method renderForUser\(\) on App\\Models\\MembershipAgreementTemplate\|null\.#'
     - '#Dynamic call to static method App\\Models\\DuesPackage::withTrashed\(\)\.#'
     - '#Dynamic call to static method App\\Models\\DuesTransaction::withTrashed\(\)\.#'
     - '#Dynamic call to static method Barryvdh\\DomPDF\\PDF::stream\(\)\.#'

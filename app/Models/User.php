@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -639,5 +640,22 @@ class User extends Authenticatable
     public function signatures(): HasMany
     {
         return $this->hasMany(Signature::class);
+    }
+
+    public function hasSignedLatestAgreement(): bool
+    {
+        return $this
+            ->signatures()
+            ->where('complete', true)
+            ->where(
+                'membership_agreement_template_id',
+                static function (QueryBuilder $query): void {
+                    $query->select('id')
+                        ->from('membership_agreement_templates')
+                        ->orderByDesc('updated_at')
+                        ->limit(1);
+                }
+            )
+            ->exists();
     }
 }

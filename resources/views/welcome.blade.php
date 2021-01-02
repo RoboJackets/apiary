@@ -33,7 +33,32 @@
                 </div>
             </div>
         </div>
-        @if($needsTransaction)
+        @if(!$signedLatestAgreement)
+            <div class="col-sm-6 col-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        @if(!$signedAnyAgreement)
+                            <h4 class="card-title">
+                                Sign Membership Agreement
+                            </h4>
+                            <p class="card-text">
+                                Please review and sign the RoboJackets membership agreement. This document describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
+                            </p>
+                            <a href="{{ route('agreement.render') }}">Sign Electronically</a> or <a href="{{ route('agreement.print') }}">Print</a>
+                        @else
+                            <h4 class="card-title">
+                                Updated Membership Agreement
+                            </h4>
+                            <p class="card-text">
+                                We have revised our membership agreement. Please review and sign it to maintain your membership.
+                            </p>
+                            <a href="{{ route('agreement.render') }}">Sign Electronically</a> or <a href="{{ route('agreement.print') }}">Print</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+        @if($signedLatestAgreement && $needsTransaction)
             <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -48,7 +73,7 @@
                 </div>
             </div>
         @endif
-        @if($needsPayment)
+        @if($signedLatestAgreement && $needsPayment)
             <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -98,7 +123,7 @@
                 </div>
             </div>
         @endif
-        @if($needsResume)
+        @if($signedLatestAgreement && $needsResume)
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -128,7 +153,7 @@
                 </div>
             </div>
         @endif
-        @if($sumsAccessPending)
+        @if($signedLatestAgreement && $sumsAccessPending)
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">

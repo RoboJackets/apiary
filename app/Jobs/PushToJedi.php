@@ -107,6 +107,7 @@ class PushToJedi implements ShouldQueue
             'clickup_invite_pending' => $this->user->clickup_invite_pending,
             'autodesk_email' => $this->user->autodesk_email,
             'autodesk_invite_pending' => $this->user->autodesk_invite_pending,
+            'signed_latest_agreement' => $this->user->hasSignedLatestAgreement(),
         ];
 
         foreach ($this->user->teams as $team) {

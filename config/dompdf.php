@@ -73,7 +73,7 @@ return [
          * direct class use like:
          * $dompdf = new DOMPDF();  $dompdf->load_html($htmldata); $dompdf->render(); $pdfdata = $dompdf->output();
          */
-        'chroot' => realpath(base_path()),
+        'chroot' => storage_path('app/dompdf/'),
 
         /**
          * Whether to enable font subsetting or not.

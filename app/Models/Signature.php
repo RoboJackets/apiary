@@ -8,6 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Represents a signed membership agreement.
+ *
+ * @property bool $complete Whether the agreement has been completed
+ */
 class Signature extends Model
 {
     /**
@@ -50,8 +55,8 @@ class Signature extends Model
         return $this->belongsTo(User::class, 'uploaded_by');
     }
 
-    public static function hash(string $ipAddress, string $userAgent, Carbon $timestamp): string
+    public static function hash(string $username, string $ipAddress, string $userAgent, Carbon $timestamp): string
     {
-        return hash('sha256', $ipAddress.$userAgent.$timestamp->toIso8601String());
+        return hash('sha256', strtolower($username).$ipAddress.$userAgent.$timestamp->toIso8601String());
     }
 }

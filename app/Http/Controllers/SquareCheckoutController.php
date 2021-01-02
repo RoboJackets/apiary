@@ -31,6 +31,10 @@ class SquareCheckoutController extends Controller
     {
         $user = $request->user();
 
+        if (!$user->hasSignedLatestAgreement()) {
+            return view('dues.agreementrequired');
+        }
+
         $transactionWithNoPayment = DuesTransaction::doesntHave('payment')
             ->where('user_id', $user->id)
             ->latest('updated_at')

@@ -23,16 +23,17 @@ class SignatureController extends Controller
      */
     public function print(Request $request)
     {
+        $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
-        if ($this->alreadySigned($request, $template)) {
+        if ($user->hasSignedLatestAgreement()) {
             return view('agreement.alreadysigned');
         }
 
         $signature = Signature::firstOrNew(
             [
                 'membership_agreement_template_id' => $template->id,
-                'user_id' => $request->user()->id,
+                'user_id' => $user->id,
                 'electronic' => false,
                 'complete' => false,
             ]
@@ -45,7 +46,7 @@ class SignatureController extends Controller
             'agreement.print',
             [
                 'updated_at' => $template->updated_at,
-                'text' => $template->renderForUser($request->user()),
+                'text' => $template->renderForUser($user),
             ]
         )->stream('agreement.pdf');
     }
@@ -55,16 +56,17 @@ class SignatureController extends Controller
      */
     public function render(Request $request)
     {
+        $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
-        if ($this->alreadySigned($request, $template)) {
+        if ($user->hasSignedLatestAgreement()) {
             return view('agreement.alreadysigned');
         }
 
         $signature = Signature::firstOrNew(
             [
                 'membership_agreement_template_id' => $template->id,
-                'user_id' => $request->user()->id,
+                'user_id' => $user->id,
                 'electronic' => true,
                 'complete' => false,
             ]
@@ -77,7 +79,7 @@ class SignatureController extends Controller
             'agreement.render',
             [
                 'updated_at' => $template->updated_at,
-                'text' => $template->renderForUser($request->user()),
+                'text' => $template->renderForUser($user),
             ]
         );
     }
@@ -87,14 +89,15 @@ class SignatureController extends Controller
      */
     public function redirect(MembershipAgreementRedirectRequest $request)
     {
+        $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
-        if ($this->alreadySigned($request, $template)) {
+        if ($user->hasSignedLatestAgreement()) {
             return view('agreement.alreadysigned');
         }
 
         $signature = Signature::where('membership_agreement_template_id', $template->id)
-            ->where('user_id', $request->user()->id)
+            ->where('user_id', $user->id)
             ->where('electronic', true)
             ->where('complete', false)
             ->firstOrFail();
@@ -105,6 +108,7 @@ class SignatureController extends Controller
 
         $signature->cas_host = config('cas.cas_hostname');
         $signature->cas_service_url_hash = Signature::hash(
+            $signature->user->uid,
             $signature->ip_address,
             $signature->user_agent,
             $signature->redirect_to_cas_timestamp
@@ -220,14 +224,6 @@ class SignatureController extends Controller
         alert()->success('Agreement saved!', 'Success!');
 
         return redirect('/');
-    }
-
-    private function alreadySigned(Request $request, MembershipAgreementTemplate $template): bool
-    {
-        return null !== Signature::where('membership_agreement_template_id', $template->id)
-            ->where('user_id', $request->user()->id)
-            ->where('complete', true)
-            ->first();
     }
 
     private function getUsernameFromCasResponse(string $text_response): ?string

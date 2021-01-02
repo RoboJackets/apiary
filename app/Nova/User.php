@@ -29,6 +29,8 @@ use Laravel\Nova\Panel;
  *
  * @property ?\Carbon\Carbon $resume_date
  * @property string $uid this user's username
+ *
+ * @method bool hasSignedLatestAgreement()
  */
 class User extends Resource
 {
@@ -151,6 +153,10 @@ class User extends Resource
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+
+            Boolean::make('Latest Agreement Signed', function (): bool {
+                return $this->hasSignedLatestAgreement();
+            })->onlyOnDetail(),
 
             HasMany::make('Signatures'),
 
