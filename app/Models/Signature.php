@@ -11,7 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Represents a signed membership agreement.
  *
- * @property bool $complete Whether the agreement has been completed
+ * @property bool $electronic
+ * @property bool $complete
+ * @property string $ip_address
+ * @property object $ip_address_location_estimate
+ * @property \App\Models\MembershipAgreementTemplate $membershipAgreementTemplate
+ * @property \App\Models\User $user
  */
 class Signature extends Model
 {
