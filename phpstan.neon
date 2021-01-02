@@ -31,6 +31,7 @@ parameters:
     - '#Cannot call method name\(\) on array\|Illuminate\\Routing\\Route\.#'
     - '#Dynamic call to static method App\\Models\\DuesPackage::withTrashed\(\)\.#'
     - '#Dynamic call to static method App\\Models\\DuesTransaction::withTrashed\(\)\.#'
+    - '#Dynamic call to static method Barryvdh\\DomPDF\\PDF::stream\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Auth\\SessionGuard::authenticate\(\)\.#'
     - '#Method App\\Http\\Controllers\\[a-zA-Z]+::[a-zA-Z]+\(\) has no return typehint specified\.#'
     - '#Method App\\Http\\Middleware\\[a-zA-Z]+::handle\(\) has no return typehint specified\.#'

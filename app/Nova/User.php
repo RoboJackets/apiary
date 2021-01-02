@@ -152,6 +152,8 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
+            HasMany::make('Signatures'),
+
             new Panel(
                 'System Access',
                 [

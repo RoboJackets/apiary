@@ -635,4 +635,9 @@ class User extends Authenticatable
 
         return count($new_class_standings);
     }
+
+    public function signatures(): HasMany
+    {
+        return $this->hasMany(Signature::class);
+    }
 }
