@@ -27,7 +27,7 @@ class RetrieveIpAddressGeoLocationForSignature implements ShouldQueue
     public $tries = 1;
 
     /**
-     * The signature to update
+     * The signature to update.
      *
      * @var \App\Models\Signature
      */
@@ -51,7 +51,7 @@ class RetrieveIpAddressGeoLocationForSignature implements ShouldQueue
             [
                 'base_uri' => config('ipstack.base_url'),
                 'headers' => [
-                    'User-Agent' => 'Apiary on ' . config('app.url'),
+                    'User-Agent' => 'Apiary on '.config('app.url'),
                 ],
                 'http_errors' => true,
                 'allow_redirects' => false,

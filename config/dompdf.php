@@ -17,7 +17,7 @@ return [
     'orientation' => 'portrait',
     'defines' => [
         /**
-         * The location of the DOMPDF font directory
+         * The location of the DOMPDF font directory.
          *
          * The location of the directory where DOMPDF will store fonts and font metrics
          * Note: This directory must exist and be writable by the webserver process.
@@ -43,7 +43,7 @@ return [
         'font_dir' => storage_path('fonts/'), // advised by dompdf (https://github.com/dompdf/dompdf/pull/782)
 
         /**
-         * The location of the DOMPDF font cache directory
+         * The location of the DOMPDF font cache directory.
          *
          * This directory contains the cached font metrics for the fonts used by DOMPDF.
          * This directory can be the same as DOMPDF_FONT_DIR
@@ -81,12 +81,12 @@ return [
         'enable_font_subsetting' => false,
 
         /**
-         * The PDF rendering backend to use
+         * The PDF rendering backend to use.
          *
          * Valid settings are 'PDFLib', 'CPDF' (the bundled R&OS PDF class), 'GD' and
          * 'auto'. 'auto' will look for PDFLib and use it if found, or if not it will
-         * fall back on CPDF. 'GD' renders PDFs to graphic files. {@link
-         * Canvas_Factory} ultimately determines which rendering class to instantiate
+         * fall back on CPDF. 'GD' renders PDFs to graphic files. {@link Canvas_Factory}
+         * ultimately determines which rendering class to instantiate
          * based on this setting.
          *
          * Both PDFLib & CPDF rendering backends provide sufficient rendering
@@ -132,7 +132,7 @@ return [
         'default_paper_size' => 'letter',
 
         /**
-         * The default font family
+         * The default font family.
          *
          * Used if no suitable fonts can be found. This must exist in the font folder.
          *
@@ -141,7 +141,7 @@ return [
         'default_font' => 'sans-serif',
 
         /**
-         * Image DPI setting
+         * Image DPI setting.
          *
          * This setting determines the default DPI setting for images and fonts.  The
          * DPI may be overridden for inline images by explictly setting the
@@ -176,7 +176,7 @@ return [
         'dpi' => 96,
 
         /**
-         * Enable inline PHP
+         * Enable inline PHP.
          *
          * If this setting is set to true then DOMPDF will automatically evaluate
          * inline PHP contained within <script type="text/php"> ... </script> tags.
@@ -190,7 +190,7 @@ return [
         'enable_php' => false,
 
         /**
-         * Enable inline Javascript
+         * Enable inline Javascript.
          *
          * If this setting is set to true then DOMPDF will automatically insert
          * JavaScript code contained within <script type="text/javascript"> ... </script> tags.
@@ -219,12 +219,12 @@ return [
         'enable_remote' => false,
 
         /**
-         * A ratio applied to the fonts height to be more like browsers' line height
+         * A ratio applied to the fonts height to be more like browsers' line height.
          */
         'font_height_ratio' => 1.1,
 
         /**
-         * Use the more-than-experimental HTML5 Lib parser
+         * Use the more-than-experimental HTML5 Lib parser.
          */
         'enable_html5_parser' => false,
     ],

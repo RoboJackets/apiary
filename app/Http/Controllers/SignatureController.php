@@ -152,9 +152,9 @@ class SignatureController extends Controller
 
         $client = new Client(
             [
-                'base_uri' => 'https://' . $signature->cas_host,
+                'base_uri' => 'https://'.$signature->cas_host,
                 'headers' => [
-                    'User-Agent' => 'Apiary on ' . config('app.url'),
+                    'User-Agent' => 'Apiary on '.config('app.url'),
                 ],
                 'http_errors' => true,
                 'allow_redirects' => false,
@@ -181,6 +181,7 @@ class SignatureController extends Controller
 
         if (200 !== $response->getStatusCode()) {
             Log::error(self::class.' CAS said '.$responseContents);
+
             return view(
                 'agreement.error',
                 [
@@ -193,6 +194,7 @@ class SignatureController extends Controller
 
         if (null === $username) {
             Log::error(self::class.' CAS said '.$responseContents);
+
             return view(
                 'agreement.error',
                 [
