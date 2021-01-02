@@ -16,7 +16,7 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
     use Queueable;
 
     /**
-     * The signature that was just signed
+     * The signature that was just signed.
      *
      * @var \App\Models\Signature
      */
