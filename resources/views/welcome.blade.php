@@ -153,7 +153,7 @@
                 </div>
             </div>
         @endif
-        @if($signedLatestAgreement && $sumsAccessPending)
+        @if($sumsAccessPending)
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">

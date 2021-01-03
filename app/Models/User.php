@@ -37,7 +37,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
  * @method static Builder|User role($roles, $guard = null)
- * @method static Builder|User whereAcceptSafetyAgreement($value)
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
  * @method static Builder|User whereApiToken($value)
@@ -89,7 +88,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
  * @property bool $is_active whether the user is currently active
  * @property bool $is_service_account whether the user is a service account (vs human)
- * @property Carbon|null $accept_safety_agreement
  * @property Carbon|null $access_override_until
  * @property Carbon|null $deleted_at
  * @property ?\Carbon\Carbon $resume_date
@@ -228,7 +226,6 @@ class User extends Authenticatable
      * @var array<string,string>
      */
     protected $casts = [
-        'accept_safety_agreement' => 'datetime',
         'access_override_until' => 'datetime',
         'resume_date' => 'datetime',
         'github_invite_pending' => 'boolean',

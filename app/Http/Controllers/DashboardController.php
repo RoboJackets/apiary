@@ -77,31 +77,35 @@ class DashboardController extends Controller
         $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
             ->orderByDesc('created_at')->first();
 
+        $sumsRequiresAgreement = config('sums.requires_agreement');
+
         $sumsAccessPending = $user->is_access_active
             && ! $user->exists_in_sums
             && null !== $lastAttendance
             // Not sure if this is an actual problem
             // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
-            && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York');
+            && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')
+            && ($signedLatestAgreement || ! $sumsRequiresAgreement);
 
-        $data = [
-            'needsTransaction' => $needsTransaction,
-            'needsPayment' => $needsPayment,
-            'status' => $status,
-            'packageEnd' => $packageEnd,
-            'firstPayment' => $firstPayment,
-            'preferredName' => $preferredName,
-            'isNew' => $isNew,
-            'hasOverride' => $hasOverride,
-            'hasExpiredOverride' => $hasExpiredOverride,
-            'overrideDate' => $overrideDate,
-            'needsResume' => $needsResume,
-            'githubInvitePending' => $user->github_invite_pending,
-            'sumsAccessPending' => $sumsAccessPending,
-            'signedLatestAgreement' => $signedLatestAgreement,
-            'signedAnyAgreement' => $signedAnyAgreement,
-        ];
-
-        return view('welcome', $data);
+        return view(
+            'welcome',
+            [
+                'needsTransaction' => $needsTransaction,
+                'needsPayment' => $needsPayment,
+                'status' => $status,
+                'packageEnd' => $packageEnd,
+                'firstPayment' => $firstPayment,
+                'preferredName' => $preferredName,
+                'isNew' => $isNew,
+                'hasOverride' => $hasOverride,
+                'hasExpiredOverride' => $hasExpiredOverride,
+                'overrideDate' => $overrideDate,
+                'needsResume' => $needsResume,
+                'githubInvitePending' => $user->github_invite_pending,
+                'sumsAccessPending' => $sumsAccessPending,
+                'signedLatestAgreement' => $signedLatestAgreement,
+                'signedAnyAgreement' => $signedAnyAgreement,
+            ]
+        );
     }
 }

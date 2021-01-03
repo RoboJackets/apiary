@@ -70,10 +70,6 @@ class UpdateUserRequest extends FormRequest
                 'in:'.implode(',', array_keys(User::$shirt_sizes)),
                 'nullable',
             ],
-            'accept_safety_agreement' => [
-                'date',
-                'nullable',
-            ],
             'generateToken' => [
                 'boolean',
             ],
