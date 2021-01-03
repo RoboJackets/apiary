@@ -10,7 +10,7 @@ Membership Agreement | {{ config('app.name') }}
 @endcomponent
 
 <p>
-We already have a signed agreement on file for you for the most recent revision of the membership agreement.
+We already have a signed agreement on file for you for the most recent revision of the membership agreement. You can now pay dues if you haven't already.
 </p>
 
 <a href="/">Go back to the dashboard</a>

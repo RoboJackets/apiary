@@ -29,7 +29,7 @@ Revised {{ $updated_at }}
 </div>
 <div class="form-check">
 <input type="checkbox" class="form-check-input" id="acknowledgement" name="acknowledgement" required>
-<label class="form-check-label" for="acknowledgement">I have read the above membership agreement and agree to it. I understand that clicking "Submit" below will send me to Georgia Tech Login, where I will need to log in again to electronically sign this document.</label>
+<label class="form-check-label" for="acknowledgement">I have read and agree to the above membership agreement. I understand that clicking "Submit" below will send me to Georgia Tech Login, where I will need to log in again to electronically sign this document.</label>
 </div>
 <br>
 <button class="btn btn-primary" type="submit">Submit</button>

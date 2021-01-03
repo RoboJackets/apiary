@@ -47,6 +47,7 @@ class SignatureController extends Controller
             [
                 'updated_at' => $template->updated_at,
                 'text' => $template->renderForUser($user),
+                'user' => $user,
             ]
         )->stream('agreement.pdf');
     }
