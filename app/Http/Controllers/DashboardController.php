@@ -85,7 +85,7 @@ class DashboardController extends Controller
             // Not sure if this is an actual problem
             // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
             && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')
-            && ($signedLatestAgreement || ! $sumsRequiresAgreement);
+            && ($signedLatestAgreement || true !== $sumsRequiresAgreement);
 
         return view(
             'welcome',
