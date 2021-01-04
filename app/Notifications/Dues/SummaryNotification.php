@@ -71,7 +71,7 @@ class SummaryNotification extends Notification
             })->map(static function (Collection $payment, string $method): string {
                 return $payment->count().' paid with '.Payment::$methods[$method];
             })->join(', ', ' and ');
-        $packages = $payments->groupBy(static function (Payment $payment) {
+        $packages = $payments->groupBy(static function (Payment $payment): string {
             // We know it's a DuesTransaction because of filtering in getPayments. Include trashed because in some
             // cases transactions can be trashed, but payments that aren't still refer to them.
             return DuesTransaction::with('package')->withTrashed()->find($payment->payable_id)->package->name;
