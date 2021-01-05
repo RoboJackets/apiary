@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "b70c77f681f30e61d9551b3112ba09b8",
-=======
-    "content-hash": "c784be5475a77e906aaa41cab3fe135e",
->>>>>>> Rough cut of paper and electronic workflows for membership agreements
+    "content-hash": "62199a55d7eac146e51d6bb40e249965",
     "packages": [
         {
             "name": "apereo/phpcas",

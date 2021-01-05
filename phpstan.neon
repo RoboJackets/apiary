@@ -29,7 +29,6 @@ parameters:
     - '#Cannot call method members\(\) on App\\Models\\Major\|null\.#'
     - '#Cannot call method members\(\) on App\\Models\\Team\|null\.#'
     - '#Cannot call method name\(\) on array\|Illuminate\\Routing\\Route\.#'
-    - '#Cannot call method renderForUser\(\) on App\\Models\\MembershipAgreementTemplate\|null\.#'
     - '#Dynamic call to static method App\\Models\\DuesPackage::withTrashed\(\)\.#'
     - '#Dynamic call to static method App\\Models\\DuesTransaction::withTrashed\(\)\.#'
     - '#Dynamic call to static method Barryvdh\\DomPDF\\PDF::stream\(\)\.#'
