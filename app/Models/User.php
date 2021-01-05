@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -36,7 +37,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
  * @method static Builder|User role($roles, $guard = null)
- * @method static Builder|User whereAcceptSafetyAgreement($value)
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
  * @method static Builder|User whereApiToken($value)
@@ -88,7 +88,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
  * @property bool $is_active whether the user is currently active
  * @property bool $is_service_account whether the user is a service account (vs human)
- * @property Carbon|null $accept_safety_agreement
  * @property Carbon|null $access_override_until
  * @property Carbon|null $deleted_at
  * @property ?\Carbon\Carbon $resume_date
@@ -227,7 +226,6 @@ class User extends Authenticatable
      * @var array<string,string>
      */
     protected $casts = [
-        'accept_safety_agreement' => 'datetime',
         'access_override_until' => 'datetime',
         'resume_date' => 'datetime',
         'github_invite_pending' => 'boolean',
@@ -634,5 +632,27 @@ class User extends Authenticatable
         }
 
         return count($new_class_standings);
+    }
+
+    public function signatures(): HasMany
+    {
+        return $this->hasMany(Signature::class);
+    }
+
+    public function hasSignedLatestAgreement(): bool
+    {
+        return $this
+            ->signatures()
+            ->where('complete', true)
+            ->where(
+                'membership_agreement_template_id',
+                static function (QueryBuilder $query): void {
+                    $query->select('id')
+                        ->from('membership_agreement_templates')
+                        ->orderByDesc('updated_at')
+                        ->limit(1);
+                }
+            )
+            ->exists();
     }
 }

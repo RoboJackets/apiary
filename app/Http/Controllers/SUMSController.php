@@ -19,6 +19,15 @@ class SUMSController extends Controller
     {
         $user = $request->user();
 
+        if (! $user->hasSignedLatestAgreement() && true === config('sums.requires_agreement')) {
+            return view(
+                'sums',
+                [
+                    'message' => 'You need to sign the latest membership agreement to gain access to SUMS.',
+                ]
+            );
+        }
+
         if (! $user->is_access_active) {
             return view(
                 'sums',

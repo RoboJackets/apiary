@@ -47,7 +47,6 @@ class UserFactory extends Factory
             'ethnicity' => $this->faker->randomElement(
                 ['white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none']
             ),
-            'accept_safety_agreement' => $this->faker->optional()->dateTime,
         ];
     }
 }

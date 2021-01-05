@@ -10,12 +10,16 @@ use App\Models\Attendance;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
+use App\Models\MembershipAgreementTemplate;
 use App\Models\Payment;
+use App\Models\Signature;
 use App\Models\Team;
 use App\Models\User;
 use App\Observers\AttendanceObserver;
 use App\Observers\DuesPackageObserver;
+use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
+use App\Observers\SignatureObserver;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -51,10 +55,12 @@ class AppServiceProvider extends ServiceProvider
             // No return as this is unreachable.
         });
 
-        User::observe(UserObserver::class);
-        Payment::observe(PaymentObserver::class);
         Attendance::observe(AttendanceObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
+        MembershipAgreementTemplate::observe(MembershipAgreementTemplateObserver::class);
+        Payment::observe(PaymentObserver::class);
+        Signature::observe(SignatureObserver::class);
+        User::observe(UserObserver::class);
 
         Relation::morphMap([
             'event' => Event::class,

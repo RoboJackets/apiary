@@ -8,6 +8,7 @@ use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Models\DuesTransaction;
+use App\Models\User;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\AuthorizeInclude;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
@@ -101,6 +102,12 @@ class DuesTransactionController extends Controller
 
         if (! $request->filled('user_id')) {
             $request->merge(['user_id' => $user->id]);
+        }
+
+        if (! User::where('id', $request->input('user_id'))->firstOrFail()->hasSignedLatestAgreement()) {
+            return response()->json(['status' => 'error',
+                'message' => 'User has not signed latest agreement',
+            ], 422);
         }
 
         //Translate boolean from client to time/date stamp for DB
@@ -240,8 +247,14 @@ class DuesTransactionController extends Controller
 
     public function showDuesFlow(Request $request)
     {
-        return true === $request->user()->is_active ? response()->view('dues.alreadypaid', [], 400) : view(
-            'dues/payDues'
-        );
+        if ($request->user()->is_active) {
+            return view('dues.alreadypaid');
+        }
+
+        if (! $request->user()->hasSignedLatestAgreement()) {
+            return view('dues.agreementrequired');
+        }
+
+        return view('dues.flow');
     }
 }

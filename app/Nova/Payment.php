@@ -14,6 +14,11 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for payments.
+ *
+ * @property string $method
+ */
 class Payment extends Resource
 {
     /**
@@ -84,7 +89,9 @@ class Payment extends Resource
             Text::make('Notes')
                 ->onlyOnDetail(),
 
-            new Panel('Square Metadata', $this->squareFields()),
+            ...(in_array($this->method, ['square', 'squarecash', 'swiped'], true) ? [
+                new Panel('Square Metadata', $this->squareFields()),
+            ] : []),
 
             self::metadataPanel(),
         ];

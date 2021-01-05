@@ -228,6 +228,10 @@ class DuesTransaction extends Resource
                     if (! $transaction->package->is_active) {
                         return false;
                     }
+
+                    if (! $transaction->user->hasSignedLatestAgreement()) {
+                        return false;
+                    }
                 }
 
                 return $request->user()->can('create-payments');

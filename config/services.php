@@ -65,4 +65,6 @@ return [
     'core_officers_slack_webhook_url' => env('CORE_OFFICERS_SLACK_WEBHOOK_URL'),
 
     'attendance_email' => env('ATTENDANCE_EMAIL'),
+
+    'membership_agreement_archive_email' => env('MEMBERSHIP_AGREEMENT_ARCHIVE_EMAIL'),
 ];

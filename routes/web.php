@@ -15,6 +15,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
+use App\Http\Controllers\SignatureController;
 use App\Http\Controllers\SquareCheckoutController;
 use App\Http\Controllers\SUMSController;
 use App\Http\Controllers\TeamController;
@@ -67,6 +68,10 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('clickup', [ClickUpController::class, 'index']);
 
     Route::get('autodesk', [AutodeskLibraryController::class, 'index']);
+
+    Route::get('agreement/print', [SignatureController::class, 'print'])->name('agreement.print');
+    Route::get('agreement/render', [SignatureController::class, 'render'])->name('agreement.render');
+    Route::post('agreement/redirect', [SignatureController::class, 'redirect'])->name('agreement.redirect');
 });
 
 Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])
@@ -86,3 +91,5 @@ Route::get('attendance/export/{secret}', [AttendanceExportController::class, 'sh
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::view('privacy', 'privacy');
+
+Route::get('agreement/complete', [SignatureController::class, 'complete'])->name('agreement.complete');
