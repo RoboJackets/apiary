@@ -73,6 +73,19 @@ class SignatureController extends Controller
             ]
         );
 
+        $ip = $request->ip();
+
+        if (null === $ip) { // I have no idea what could possibly cause this, but that's what the contract says
+            return view(
+                'agreement.error',
+                [
+                    'message' => 'We could not detect your IP address.',
+                ]
+            );
+        }
+
+        $signature->ip_address = $ip;
+        $signature->user_agent = $request->header('User-Agent');
         $signature->render_timestamp = Carbon::now();
         $signature->save();
 
@@ -103,19 +116,12 @@ class SignatureController extends Controller
             ->where('complete', false)
             ->firstOrFail();
 
-        $ip = $request->ip();
+        $deviceCheck = $this->ipAddressAndUserAgentMatch($signature, $request);
 
-        if (null === $ip) { // I have no idea what could possibly cause this, but that's what the contract says
-            return view(
-                'agreement.error',
-                [
-                    'message' => 'We could not detect your IP address.',
-                ]
-            );
+        if (null !== $deviceCheck) {
+            return $deviceCheck;
         }
 
-        $signature->ip_address = $ip;
-        $signature->user_agent = $request->header('User-Agent');
         $signature->redirect_to_cas_timestamp = Carbon::now();
 
         $signature->cas_host = config('cas.cas_hostname');
@@ -148,22 +154,10 @@ class SignatureController extends Controller
     {
         $signature = Signature::where('cas_service_url_hash', $request->input('hash'))->firstOrFail();
 
-        if ($signature->ip_address !== $request->ip()) {
-            return view(
-                'agreement.error',
-                [
-                    'message' => 'Your IP address has changed since beginning the signature process.',
-                ]
-            );
-        }
+        $deviceCheck = $this->ipAddressAndUserAgentMatch($signature, $request);
 
-        if ($signature->user_agent !== $request->header('User-Agent')) {
-            return view(
-                'agreement.error',
-                [
-                    'message' => 'Your User-Agent header has changed since beginning the signature process.',
-                ]
-            );
+        if (null !== $deviceCheck) {
+            return $deviceCheck;
         }
 
         $client = new Client(
@@ -289,5 +283,28 @@ class SignatureController extends Controller
         }
 
         return trim($element->nodeValue);
+    }
+
+    private function ipAddressAndUserAgentMatch(Signature $signature, Request $request)
+    {
+        if ($signature->ip_address !== $request->ip()) {
+            return view(
+                'agreement.error',
+                [
+                    'message' => 'Your IP address has changed since beginning the signature process.',
+                ]
+            );
+        }
+
+        if ($signature->user_agent !== $request->header('User-Agent')) {
+            return view(
+                'agreement.error',
+                [
+                    'message' => 'Your User-Agent header has changed since beginning the signature process.',
+                ]
+            );
+        }
+
+        return null;
     }
 }
