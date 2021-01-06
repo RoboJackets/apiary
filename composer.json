@@ -105,6 +105,13 @@
                 "robojackets/*",
                 "oitnetworkservices/*"
             ]
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/RoboJackets/select-or-text",
+            "only": [
+                "lynndigital/select-or-custom"
+            ]
         }
     ]
 }
