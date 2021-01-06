@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "8c90e013031f402ac448dcf35b4c53ab",
-=======
-    "content-hash": "bd3ade9b5be58739371f361c55a15863",
->>>>>>> c29f12dd13daec32acd77050cc09f178fac6797e
+    "content-hash": "883d2eab3fe9ccf34cd53e8b42b8e798",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3003,7 +2999,6 @@
             "time": "2020-09-28T09:39:08+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "lynndigital/select-or-custom",
             "version": "dev-master",
             "source": {
@@ -3021,7 +3016,33 @@
                 "php": ">=7.1.0"
             },
             "default-branch": true,
-=======
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lynndigital\\SelectOrCustom\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lynndigital\\SelectOrCustom\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "source": "https://github.com/RoboJackets/select-or-text/tree/master"
+            },
+            "time": "2021-01-06T04:01:14+00:00"
+        },
+        {
             "name": "maatwebsite/excel",
             "version": "3.1.26",
             "source": {
@@ -3045,42 +3066,19 @@
                 "orchestra/testbench": "^6.0",
                 "predis/predis": "^1.1"
             },
->>>>>>> c29f12dd13daec32acd77050cc09f178fac6797e
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-<<<<<<< HEAD
-                        "Lynndigital\\SelectOrCustom\\FieldServiceProvider"
-                    ]
-=======
                         "Maatwebsite\\Excel\\ExcelServiceProvider"
                     ],
                     "aliases": {
                         "Excel": "Maatwebsite\\Excel\\Facades\\Excel"
                     }
->>>>>>> c29f12dd13daec32acd77050cc09f178fac6797e
                 }
             },
             "autoload": {
                 "psr-4": {
-<<<<<<< HEAD
-                    "Lynndigital\\SelectOrCustom\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "support": {
-                "source": "https://github.com/RoboJackets/select-or-text/tree/master"
-            },
-            "time": "2021-01-06T04:01:14+00:00"
-=======
                     "Maatwebsite\\Excel\\": "src/"
                 }
             },
@@ -3365,7 +3363,6 @@
                 "source": "https://github.com/MarkBaker/PHPMatrix/tree/PHP8"
             },
             "time": "2020-08-28T17:11:00+00:00"
->>>>>>> c29f12dd13daec32acd77050cc09f178fac6797e
         },
         {
             "name": "monolog/monolog",
