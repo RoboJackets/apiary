@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd3ade9b5be58739371f361c55a15863",
+    "content-hash": "085d924a012f69c50b7c7158a69d41b3",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2327,17 +2327,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.19.0",
+            "version": "3.19.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "24d02e29e9330c5f58b26db89293c42552302c5a"
+                "reference": "cd0538fd8abbdc831d6e1e090829b2432d732b3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-24d02e29e9330c5f58b26db89293c42552302c5a-zip-1641b1.zip",
-                "reference": "24d02e29e9330c5f58b26db89293c42552302c5a",
-                "shasum": "7c8214182658838318aa3f4de330c4ddc683f9c4"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-cd0538fd8abbdc831d6e1e090829b2432d732b3b-zip-3c5b4b.zip",
+                "reference": "cd0538fd8abbdc831d6e1e090829b2432d732b3b",
+                "shasum": "530ce03b5b3ed2651ae59aa11abd19293dcf02db"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2414,7 +2414,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2021-01-05T16:39:48+00:00"
+            "time": "2021-01-06T09:22:32+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -5596,23 +5596,24 @@
         },
         {
             "name": "spatie/once",
-            "version": "2.2.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/once.git",
-                "reference": "e6c13ae474a7d4b30975ef6a502a593874ac12d2"
+                "reference": "edf25d4f87e3a91666298ebe78ee2e89f9761bf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/once/zipball/e6c13ae474a7d4b30975ef6a502a593874ac12d2",
-                "reference": "e6c13ae474a7d4b30975ef6a502a593874ac12d2",
+                "url": "https://api.github.com/repos/spatie/once/zipball/edf25d4f87e3a91666298ebe78ee2e89f9761bf7",
+                "reference": "edf25d4f87e3a91666298ebe78ee2e89f9761bf7",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^9.3",
+                "symfony/var-dumper": "^5.1"
             },
             "type": "library",
             "autoload": {
@@ -5646,7 +5647,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/once/issues",
-                "source": "https://github.com/spatie/once/tree/2.2.1"
+                "source": "https://github.com/spatie/once/tree/3.0.0"
             },
             "funding": [
                 {
@@ -5654,7 +5655,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-10-29T18:22:10+00:00"
+            "time": "2020-11-03T13:23:06+00:00"
         },
         {
             "name": "square/square",
