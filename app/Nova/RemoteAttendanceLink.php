@@ -65,6 +65,8 @@ class RemoteAttendanceLink extends Resource
      * The list of recommended values for the note field.
      *
      * @var array<string>
+     *
+     * @phan-suppress PhanReadOnlyPublicProperty
      */
     public static $recommendedNotes = [
         'Electrical Subteam', 'Mechanical/Mechatronics Subteam', 'Software Subteam', 'Whole Team', 'Training',
