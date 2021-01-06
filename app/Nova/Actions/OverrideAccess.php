@@ -33,6 +33,11 @@ class OverrideAccess extends Action
             if ($user->id === Auth::user()->id) {
                 return Action::danger('You cannot override your own access!');
             }
+
+            if (! $user->hasSignedLatestAgreement()) {
+                return Action::danger('This user has not signed the latest agreement!');
+            }
+
             $date = Carbon::createFromFormat('Y-m-d', $fields->access_override_until);
             if (false === $date) {
                 return Action::danger('You must select a date!');

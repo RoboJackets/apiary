@@ -27,8 +27,10 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for users.
  *
- * @property string $resume_date When this user's resume was uploaded
+ * @property ?\Carbon\Carbon $resume_date
  * @property string $uid this user's username
+ *
+ * @method bool hasSignedLatestAgreement()
  */
 class User extends Resource
 {
@@ -37,7 +39,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = AppModelsUser::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -151,6 +153,12 @@ class User extends Resource
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+
+            Boolean::make('Latest Agreement Signed', function (): bool {
+                return $this->hasSignedLatestAgreement();
+            })->onlyOnDetail(),
+
+            HasMany::make('Signatures'),
 
             new Panel(
                 'System Access',
@@ -322,23 +330,14 @@ class User extends Resource
      */
     protected function swagFields(): array
     {
-        $shirt_sizes = [
-            's' => 'Small',
-            'm' => 'Medium',
-            'l' => 'Large',
-            'xl' => 'Extra-Large',
-            'xxl' => 'XXL',
-            'xxxl' => 'XXXL',
-        ];
-
         return [
             Select::make('T-Shirt Size', 'shirt_size')
-                ->options($shirt_sizes)
+                ->options(AppModelsUser::$shirt_sizes)
                 ->displayUsingLabels()
                 ->hideFromIndex(),
 
             Select::make('Polo Size')
-                ->options($shirt_sizes)
+                ->options(AppModelsUser::$shirt_sizes)
                 ->displayUsingLabels()
                 ->hideFromIndex(),
         ];
@@ -427,16 +426,6 @@ class User extends Resource
             new Filters\UserType(),
             new Filters\UserTeam(),
         ];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
     }
 
     /**

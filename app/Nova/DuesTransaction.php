@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
+use App\Models\User as AppModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -108,16 +109,9 @@ class DuesTransaction extends Resource
                     Text::make('Status', 'swag_shirt_status')
                         ->onlyOnDetail(),
                     Text::make('Size', function (): ?string {
-                        $shirt_sizes = [
-                            's' => 'Small',
-                            'm' => 'Medium',
-                            'l' => 'Large',
-                            'xl' => 'Extra-Large',
-                            'xxl' => 'XXL',
-                            'xxxl' => 'XXXL',
-                        ];
+                        $shirt_size = $this->user->shirt_size;
 
-                        return null === $this->user->shirt_size ? null : $shirt_sizes[$this->user->shirt_size];
+                        return null === $shirt_size ? null : AppModelsUser::$shirt_sizes[$shirt_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_shirt_provided')
                         ->onlyOnDetail(),
@@ -133,16 +127,9 @@ class DuesTransaction extends Resource
                     Text::make('Status', 'swag_polo_status')
                         ->onlyOnDetail(),
                     Text::make('Size', function (): ?string {
-                        $shirt_sizes = [
-                            's' => 'Small',
-                            'm' => 'Medium',
-                            'l' => 'Large',
-                            'xl' => 'Extra-Large',
-                            'xxl' => 'XXL',
-                            'xxxl' => 'XXXL',
-                        ];
+                        $polo_size = $this->user->polo_size;
 
-                        return null === $this->user->polo_size ? null : $shirt_sizes[$this->user->polo_size];
+                        return null === $polo_size ? null : AppModelsUser::$shirt_sizes[$polo_size];
                     })->onlyOnDetail(),
                     DateTime::make('Timestamp', 'swag_polo_provided')
                         ->onlyOnDetail(),
@@ -155,34 +142,8 @@ class DuesTransaction extends Resource
             MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
 
-            new Panel('Metadata', $this->metaFields()),
+            self::metadataPanel(),
         ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
-        ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [];
     }
 
     /**
@@ -200,16 +161,6 @@ class DuesTransaction extends Resource
             new Filters\DuesTransactionPaymentStatus(),
             new Filters\DuesTransactionSwagStatus(),
         ];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
     }
 
     /**
@@ -275,6 +226,10 @@ class DuesTransaction extends Resource
                     }
 
                     if (! $transaction->package->is_active) {
+                        return false;
+                    }
+
+                    if (! $transaction->user->hasSignedLatestAgreement()) {
                         return false;
                     }
                 }

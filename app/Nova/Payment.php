@@ -8,13 +8,17 @@ use App\Models\Payment as AppModelsPayment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for payments.
+ *
+ * @property string $method
+ */
 class Payment extends Resource
 {
     /**
@@ -37,6 +41,24 @@ class Payment extends Resource
      * @var bool
      */
     public static $displayInNavigation = false;
+
+    /**
+     * The columns that should be searched.
+     *
+     * @var array<string>
+     */
+    public static $search = [
+        'checkout_id',
+        'client_txn_id',
+        'server_txn_id',
+        'unique_id',
+        'order_id',
+        'notes',
+        'last_4',
+        'receipt_number',
+        'receipt_url',
+        'square_cash_transaction_id',
+    ];
 
     /**
      * Get the fields displayed by the resource.
@@ -67,9 +89,11 @@ class Payment extends Resource
             Text::make('Notes')
                 ->onlyOnDetail(),
 
-            new Panel('Square Metadata', $this->squareFields()),
+            ...(in_array($this->method, ['square', 'squarecash', 'swiped'], true) ? [
+                new Panel('Square Metadata', $this->squareFields()),
+            ] : []),
 
-            new Panel('Timestamps', $this->metaFields()),
+            self::metadataPanel(),
         ];
     }
 
@@ -82,6 +106,9 @@ class Payment extends Resource
     {
         return [
             Currency::make('Processing Fee')
+                ->onlyOnDetail(),
+
+            Text::make('Square Cash Transaction ID')
                 ->onlyOnDetail(),
 
             Text::make('Checkout ID')
@@ -123,61 +150,5 @@ class Payment extends Resource
             Text::make('Receipt URL')
                 ->onlyOnDetail(),
         ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
-        ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function actions(Request $request): array
-    {
-        return [];
     }
 }

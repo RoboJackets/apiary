@@ -18,18 +18,35 @@ class TotalCollections extends Value
      */
     public function calculate(Request $request): ValueResult
     {
-        $query = Payment::where('payable_type', DuesTransaction::getMorphClassStatic())
+        $query = Payment::selectRaw('(sum(payments.amount) - sum(payments.processing_fee)) as revenue')
+            ->where('payable_type', DuesTransaction::getMorphClassStatic())
             ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')
-                    ->where('dues_package_id', $request->resourceId)
+                    ->when(
+                        'fiscal-years' === $request->resource,
+                        static function (Builder $query, bool $isFiscalYear) use ($request): void {
+                            $query
+                                ->whereIn(
+                                    'dues_package_id',
+                                    static function (Builder $query) use ($request): void {
+                                        $query->select('id')
+                                            ->from('dues_packages')
+                                            ->where('fiscal_year_id', $request->resourceId);
+                                    }
+                                );
+                        },
+                        static function (Builder $query) use ($request): void {
+                            $query->where('dues_package_id', $request->resourceId);
+                        }
+                    )
                     ->whereNull('deleted_at');
             });
         if ($request->range > 0) {
             $query = $query->whereBetween('created_at', [now()->subDays($request->range)->startOfDay(), now()]);
         }
 
-        return $this->result($query->sum('amount'))->dollars()->allowZeroResult();
+        return $this->result($query->first()->revenue)->dollars()->allowZeroResult();
     }
 
     /**

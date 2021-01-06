@@ -10,9 +10,7 @@ use App\Nova\Metrics\StudentsInMajor;
 use App\Nova\Metrics\TotalMajors;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 
 class Major extends Resource
 {
@@ -73,16 +71,7 @@ class Major extends Resource
 
             BelongsToMany::make('Members', 'members', User::class),
 
-            new Panel(
-                'Metadata',
-                [
-                    DateTime::make('Created', 'created_at')
-                        ->onlyOnDetail(),
-
-                    DateTime::make('Last Updated', 'updated_at')
-                        ->onlyOnDetail(),
-                ]
-            ),
+            self::metadataPanel(),
         ];
     }
 

@@ -78,8 +78,6 @@ class Team extends Resource
 
             new Panel('Controls', $this->controlFields()),
 
-            new Panel('Metadata', $this->metaFields()),
-
             BelongsToMany::make('Members', 'members', User::class)
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-teams-membership') && $request->user()->can('read-users');
@@ -115,6 +113,8 @@ class Team extends Resource
 
                     return $request->user()->can('create-attendance');
                 }),
+
+            self::metadataPanel(),
         ];
     }
 
@@ -175,18 +175,44 @@ class Team extends Resource
     }
 
     /**
-     * Timestamp fields.
+     * Remote attendance fields.
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    protected function metaFields(): array
+    protected function remoteAttendanceFields(): array
     {
         return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
+            Text::make('Link', 'attendance_secret')
+                ->onlyOnDetail()
+                ->resolveUsing(static function (?string $secret): ?string {
+                    return null === $secret ? null : route('attendance.remote', ['secret' => $secret]);
+                })
+                ->readonly(static function (Request $request): bool {
+                    return true;
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                }),
 
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
+            Text::make('Secret', 'attendance_secret')
+                ->onlyOnForms()
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin');
+                })
+                ->creationRules('unique:teams,attendance_secret')
+                ->updateRules('unique:teams,attendance_secret,{{resourceId}}'),
+
+            DateTime::make('Expiration', 'attendance_secret_expiration')
+                ->hideFromIndex()
+                ->readonly(static function (Request $request): bool {
+                    return ! $request->user()->hasRole('admin');
+                })
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('create-attendance');
+                }),
         ];
     }
 
@@ -233,26 +259,6 @@ class Team extends Resource
                     return $request->user()->can('read-attendance');
                 }),
         ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
     }
 
     /**

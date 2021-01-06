@@ -31,6 +31,10 @@ class SquareCheckoutController extends Controller
     {
         $user = $request->user();
 
+        if (! $user->hasSignedLatestAgreement()) {
+            return view('dues.agreementrequired');
+        }
+
         $transactionWithNoPayment = DuesTransaction::doesntHave('payment')
             ->where('user_id', $user->id)
             ->latest('updated_at')
@@ -134,7 +138,7 @@ class SquareCheckoutController extends Controller
     {
         $payment = Payment::where('id', $request->input('referenceId'))->firstOrFail();
 
-        if ($payment->checkout_id !== $request->input('checkoutId')) {
+        if ($payment->checkout_id !== $request->input('checkoutId') || null === $payment->order_id) {
             return view(
                 'square.error',
                 [

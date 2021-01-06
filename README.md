@@ -1,7 +1,7 @@
 Apiary
 =======
 
-[![GitHub license](https://img.shields.io/github/license/robojackets/apiary.svg?style=flat-square)](https://raw.githubusercontent.com/robojackets/apiary/master/LICENSE) [![Maintainability](https://api.codeclimate.com/v1/badges/73e3a7cd07c32ef15e09/maintainability)](https://codeclimate.com/github/RoboJackets/apiary/maintainability)
+[![GitHub license](https://img.shields.io/github/license/robojackets/apiary.svg?style=flat-square)](https://raw.githubusercontent.com/robojackets/apiary/master/LICENSE) [![CI](https://concourse.robojackets.org/api/v1/teams/information-technology/pipelines/apiary/jobs/build-master/badge)](https://concourse.robojackets.org/teams/information-technology/pipelines/apiary)
 
 Apiary is a tool for managing the membership and operations of RoboJackets, a student organization at Georgia Tech.
 

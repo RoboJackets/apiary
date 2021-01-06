@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Models\DuesPackage;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder as Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Metrics\Partition;
@@ -48,38 +50,57 @@ class ShirtSizeBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $column = 'shirt' === $this->swagType ? 'shirt_size' : 'polo_size';
+        $swagType = $this->swagType;
+
+        if ('dues-packages' === $request->resource) {
+            $package = DuesPackage::where('id', $request->resourceId)->withTrashed()->first();
+            $eligible = 'shirt' === $swagType ? $package->eligible_for_shirt : $package->eligible_for_polo;
+
+            if (! $eligible) {
+                return $this->result([]);
+            }
+        }
+
+        $column = 'shirt' === $swagType ? 'shirt_size' : 'polo_size';
 
         return $this->result(
             User::select($column.' as size')
-            ->selectRaw('count('.$column.') as aggregate')
+            ->selectRaw('count(id) as count')
             ->when(
                 $request->resourceId,
-                static function (Eloquent $query, int $resourceId): Eloquent {
+                static function (Builder $query, int $resourceId) use ($request, $swagType): void {
                     // When on the detail page, look at the particular package
-                    return $query->whereHas('dues', static function (Eloquent $q) use ($resourceId): Eloquent {
-                        return $q->where('dues_package_id', $resourceId)->paid();
+                    $query->whereHas('dues', static function (Builder $query) use ($request, $swagType): void {
+                        $query->when(
+                            'fiscal-years' === $request->resource,
+                            static function (Builder $query, bool $isFiscalYear) use ($request, $swagType): void {
+                                $query
+                                    ->whereIn(
+                                        'dues_package_id',
+                                        static function (QueryBuilder $query) use ($request, $swagType): void {
+                                            $query->select('id')
+                                                ->from('dues_packages')
+                                                ->where('fiscal_year_id', $request->resourceId)
+                                                ->where('eligible_for_'.$swagType, true);
+                                        }
+                                    );
+                            },
+                            static function (Builder $query) use ($request): void {
+                                $query->where('dues_package_id', $request->resourceId);
+                            }
+                        )->paid();
                     });
                 },
-                static function (Eloquent $query): Eloquent {
+                static function (Builder $query): void {
                     // When on the index, just look at all active users
-                    return $query->active();
+                    $query->active();
                 }
             )
             ->groupBy('size')
             ->orderBy('size')
             ->get()
             ->mapWithKeys(static function (object $item): array {
-                $shirt_sizes = [
-                    's' => 'Small',
-                    'm' => 'Medium',
-                    'l' => 'Large',
-                    'xl' => 'Extra-Large',
-                    'xxl' => 'XXL',
-                    'xxxl' => 'XXXL',
-                ];
-
-                return [$item->size ? $shirt_sizes[$item->size] : 'Unknown' => $item->aggregate];
+                return [null !== $item->size ? User::$shirt_sizes[$item->size] : 'Unknown' => $item->count];
             })->toArray()
         );
     }

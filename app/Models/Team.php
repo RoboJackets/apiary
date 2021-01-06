@@ -52,6 +52,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $self_serviceable whether this team can be joined/left voluntarily
  * @property bool $visible whether this team is visible to non-admins
+ * @property bool $attendable
  * @property int $id the database identifier for this team
  * @property int|null $project_manager_id
  * @property string $name The name of the team
@@ -94,11 +95,14 @@ class Team extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
-     * @var array<string>
+     * @var array<string,string>
      */
     protected $casts = [
+        'attendable' => 'boolean',
+        'self_serviceable' => 'boolean',
+        'visible' => 'boolean',
     ];
 
     /**

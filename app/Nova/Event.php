@@ -15,7 +15,6 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 
 /**
  * A Nova resource for events.
@@ -95,6 +94,8 @@ class Event extends Resource
                     return $request->user()->can('read-remote-attendance-links');
                 }),
 
+            self::metadataPanel(),
+
             HasMany::make('RSVPs')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-rsvps');
@@ -109,24 +110,6 @@ class Event extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('create-attendance');
                 }),
-
-            new Panel('Metadata', $this->metaFields()),
-        ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
         ];
     }
 
@@ -150,6 +133,7 @@ class Event extends Resource
                 }),
         ];
     }
+<<<<<<< HEAD
 
     /**
      * Get the filters available for the resource.
@@ -191,4 +175,6 @@ class Event extends Resource
                 ->cancelButtonText('Cancel'),
         ];
     }
+=======
+>>>>>>> c29f12dd13daec32acd77050cc09f178fac6797e
 }

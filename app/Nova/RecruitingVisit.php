@@ -8,7 +8,6 @@ use App\Models\RecruitingResponse;
 use App\Nova\Actions\SendRecruitingEmail;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
@@ -106,7 +105,7 @@ class RecruitingVisit extends Resource
 
             new Panel('Tracking Information', $this->trackingFields()),
 
-            new Panel('Metadata', $this->metaFields()),
+            self::metadataPanel(),
         ];
     }
 
@@ -126,52 +125,6 @@ class RecruitingVisit extends Resource
                 ->nullable()
                 ->searchable(),
         ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
-        ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -62,15 +63,11 @@ class UpdateUserRequest extends FormRequest
                 'max:6',
             ],
             'shirt_size' => [
-                'in:s,m,l,xl,xxl,xxxl',
+                'in:'.implode(',', array_keys(User::$shirt_sizes)),
                 'nullable',
             ],
             'polo_size' => [
-                'in:s,m,l,xl,xxl,xxxl',
-                'nullable',
-            ],
-            'accept_safety_agreement' => [
-                'date',
+                'in:'.implode(',', array_keys(User::$shirt_sizes)),
                 'nullable',
             ],
             'generateToken' => [

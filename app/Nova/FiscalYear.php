@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\FiscalYear as AppModelsFiscalYear;
+use App\Nova\Traits\DuesPackageCards;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 
 class FiscalYear extends Resource
 {
+    use DuesPackageCards;
+
     /**
      * The model the resource corresponds to.
      *
@@ -24,6 +27,13 @@ class FiscalYear extends Resource
      * @var string
      */
     public static $title = 'ending_year';
+
+    /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Dues';
 
     /**
      * The columns that should be searched.
