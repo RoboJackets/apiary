@@ -89,8 +89,8 @@ class Team extends Resource
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
-                        $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -212,8 +212,8 @@ class Team extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
-                        $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -224,8 +224,8 @@ class Team extends Resource
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
-                        $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -266,8 +266,8 @@ class Team extends Resource
             (new Actions\CreateRemoteAttendanceLink())
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
-                        $resource = AppTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppTeam::class) && ! $resource->attendable) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }

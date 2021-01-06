@@ -7,13 +7,13 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\Attendance;
-use App\Nova\RemoteAttendanceLink;
-use App\Models\RemoteAttendanceLink as RAL;
+use App\Models\RemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Text;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 class CreateRemoteAttendanceLink extends Action
@@ -40,7 +40,7 @@ class CreateRemoteAttendanceLink extends Action
         // Only on detail, so it will only ever have one model.
         $attendable = $models->first();
 
-        $link = new RAL();
+        $link = new RemoteAttendanceLink();
 
         $link->attendable_type = get_class($attendable);
         $link->attendable_id = $attendable->id;
@@ -79,7 +79,7 @@ class CreateRemoteAttendanceLink extends Action
      */
     public function fields(): array
     {
-        $notes = collect(RAL::$recommendedNotes)
+        $notes = collect(RemoteAttendanceLinks::$recommendedNotes)
             ->concat(['Other'])->mapWithKeys(static function (string $note): array {
                 return [$note => $note];
             });
@@ -107,7 +107,7 @@ class CreateRemoteAttendanceLink extends Action
             SelectOrCustom::make('Purpose')
                 ->required(true)
                 ->rules('required')
-                ->options($notes),
+                ->options($notes->toArray()),
         ];
     }
 }
