@@ -133,27 +133,6 @@ class Event extends Resource
                 }),
         ];
     }
-<<<<<<< HEAD
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
-    }
 
     /**
      * Get the actions available for the resource.
@@ -175,6 +154,4 @@ class Event extends Resource
                 ->cancelButtonText('Cancel'),
         ];
     }
-=======
->>>>>>> c29f12dd13daec32acd77050cc09f178fac6797e
 }
