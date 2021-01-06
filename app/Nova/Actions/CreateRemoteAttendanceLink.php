@@ -8,6 +8,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Attendance;
 use App\Models\RemoteAttendanceLink;
+use App\Nova\RemoteAttendanceLink as NovaRemoteAttendanceLink;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -79,7 +80,7 @@ class CreateRemoteAttendanceLink extends Action
      */
     public function fields(): array
     {
-        $notes = collect(RemoteAttendanceLink::$recommendedNotes)
+        $notes = collect(NovaRemoteAttendanceLink::$recommendedNotes)
             ->concat(['Other'])->mapWithKeys(static function (string $note): array {
                 return [$note => $note];
             });
