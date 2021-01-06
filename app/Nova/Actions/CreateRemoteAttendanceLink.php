@@ -81,7 +81,7 @@ class CreateRemoteAttendanceLink extends Action
     public function fields(): array
     {
         $notes = collect(NovaRemoteAttendanceLink::$recommendedNotes)
-            ->concat(['Other'])->mapWithKeys(static function (string $note): array {
+            ->mapWithKeys(static function (string $note): array {
                 return [$note => $note];
             });
 
