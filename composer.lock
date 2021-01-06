@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd3ade9b5be58739371f361c55a15863",
+    "content-hash": "085d924a012f69c50b7c7158a69d41b3",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2327,17 +2327,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.19.0",
+            "version": "3.19.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "24d02e29e9330c5f58b26db89293c42552302c5a"
+                "reference": "cd0538fd8abbdc831d6e1e090829b2432d732b3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-24d02e29e9330c5f58b26db89293c42552302c5a-zip-1641b1.zip",
-                "reference": "24d02e29e9330c5f58b26db89293c42552302c5a",
-                "shasum": "7c8214182658838318aa3f4de330c4ddc683f9c4"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-cd0538fd8abbdc831d6e1e090829b2432d732b3b-zip-3c5b4b.zip",
+                "reference": "cd0538fd8abbdc831d6e1e090829b2432d732b3b",
+                "shasum": "530ce03b5b3ed2651ae59aa11abd19293dcf02db"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2414,7 +2414,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2021-01-05T16:39:48+00:00"
+            "time": "2021-01-06T09:22:32+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",

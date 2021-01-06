@@ -64,32 +64,6 @@ jobs:
     - get: pull-request
       trigger: true
 
-  - task: composer-verify-lock-out-of-date
-    config:
-      platform: linux
-
-      image_resource:
-        type: registry-image
-        source:
-          repository: docker.robojackets.org/robojackets/php-build
-          username: ((docker-robojackets-org.username))
-          password: ((docker-robojackets-org.password))
-
-      inputs:
-      - name: pull-request
-
-      run:
-        path: bash
-        dir: pull-request
-        args:
-        - -o
-        - pipefail
-        - -c
-        - >-
-            composer install --dry-run --no-interaction --no-progress
-            2>&1 | grep --fixed-strings "outdated"
-
-
   - load_var: pr-branch-two
     file: pull-request/.git/resource/head_name
     format: trim
