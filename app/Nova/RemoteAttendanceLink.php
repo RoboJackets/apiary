@@ -73,8 +73,6 @@ class RemoteAttendanceLink extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(Request $request): array
     {
@@ -145,7 +143,7 @@ class RemoteAttendanceLink extends Resource
                 ->required(false)
                 ->help('This can be used to keep track of what this link was used for more specifically. Press the '.
                     'down arrow for suggestions.')
-                ->suggestions($this->recommendedNotes),
+                ->suggestions(self::recommendedNotes),
 
             new Panel('Metadata', $this->metaFields()),
         ];

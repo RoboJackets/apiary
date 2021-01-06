@@ -28,7 +28,7 @@ class CreateRemoteAttendanceLink extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\Team|\App\Event>  $models
+     * @param \Illuminate\Support\Collection<\App\Models\Team|\App\Models\Event>  $models
      *
      * @return array<string,string>
      */
@@ -79,7 +79,7 @@ class CreateRemoteAttendanceLink extends Action
      */
     public function fields(): array
     {
-        $notes = collect(RemoteAttendanceLinks::$recommendedNotes)
+        $notes = collect(RemoteAttendanceLink::$recommendedNotes)
             ->concat(['Other'])->mapWithKeys(static function (string $note): array {
                 return [$note => $note];
             });
