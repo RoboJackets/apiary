@@ -13,7 +13,6 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 /**
