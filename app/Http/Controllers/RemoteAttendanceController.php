@@ -70,8 +70,9 @@ class RemoteAttendanceController extends Controller
             $att->attendable_type = $attendable_type;
             $att->attendable_id = $attendable_id;
             $att->gtid = $gtid;
-            $att->source = 'secret-link-'.$link->id;
+            $att->source = 'remote-attendance-link';
             $att->recorded_by = $request->user()->id;
+            $att->remote_attendance_link_id = $link->id;
             $att->save();
         }
 

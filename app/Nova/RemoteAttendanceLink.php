@@ -151,6 +151,11 @@ class RemoteAttendanceLink extends Resource
                 ->onlyOnForms()
                 ->options(self::$recommendedNotes),
 
+            HasMany::make('Attendance')
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-attendance');
+                }),
+
             new Panel('Metadata', $this->metaFields()),
         ];
     }

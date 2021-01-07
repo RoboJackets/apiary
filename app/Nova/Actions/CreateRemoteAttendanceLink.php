@@ -63,8 +63,9 @@ class CreateRemoteAttendanceLink extends Action
             $att->attendable_type = get_class($attendable);
             $att->attendable_id = $attendable->id;
             $att->gtid = $user->gtid;
-            $att->source = 'secret-link-creation-'.$link->id;
+            $att->source = 'remote-attendance-link-creation';
             $att->recorded_by = $user->id;
+            $att->remote_attendance_link_id = $link->id;
             $att->save();
         }
 
