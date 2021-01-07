@@ -51,4 +51,9 @@ class RemoteAttendanceLink extends Model
     {
         return $this->morphTo();
     }
+
+    public function attendance(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

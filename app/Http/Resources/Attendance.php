@@ -33,6 +33,7 @@ class Attendance extends JsonResource
 
             // Relationships
             'attendee' => new UserResource($this->whenLoaded('attendee')),
+            // This deliberately doesn't include the remote attendance link as there is no HTTP resource for it
         ];
     }
 }

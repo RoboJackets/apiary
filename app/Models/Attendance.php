@@ -100,6 +100,14 @@ class Attendance extends Model
     }
 
     /**
+     * Get the RemoteAttendanceLink that created the Attendance model.
+     */
+    public function remoteAttendanceLink(): BelongsTo
+    {
+        return $this->belongsTo(RemoteAttendanceLink::class);
+    }
+
+    /**
      * Scope query to start at given date.
      */
     public function scopeStart(Builder $query, string $date): Builder
