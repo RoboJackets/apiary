@@ -37,6 +37,10 @@ class AttendanceSourceBreakdown extends Partition
                     return 'Swipe/contactless, not kiosk';
                 case 'secret-link':
                     return 'Secret link';
+                case 'remote-attendance-link':
+                    return 'Remote attendance link';
+                case 'remote-attendance-link-creation':
+                    return 'Remote attendance link creation';
                 case null:
                     return 'Unknown';
                 default:
