@@ -175,48 +175,6 @@ class Team extends Resource
     }
 
     /**
-     * Remote attendance fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function remoteAttendanceFields(): array
-    {
-        return [
-            Text::make('Link', 'attendance_secret')
-                ->onlyOnDetail()
-                ->resolveUsing(static function (?string $secret): ?string {
-                    return null === $secret ? null : route('attendance.remote', ['secret' => $secret]);
-                })
-                ->readonly(static function (Request $request): bool {
-                    return true;
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
-                }),
-
-            Text::make('Secret', 'attendance_secret')
-                ->onlyOnForms()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })
-                ->creationRules('unique:teams,attendance_secret')
-                ->updateRules('unique:teams,attendance_secret,{{resourceId}}'),
-
-            DateTime::make('Expiration', 'attendance_secret_expiration')
-                ->hideFromIndex()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
-                }),
-        ];
-    }
-
-    /**
      * Get the cards available for the request.
      *
      * @return array<\Laravel\Nova\Card>
