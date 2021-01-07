@@ -70,7 +70,7 @@ class RemoteAttendanceLink extends Resource
      */
     public static $recommendedNotes = [
         'Electrical Subteam', 'Mechanical/Mechatronics Subteam', 'Software Subteam', 'Whole Team', 'Training',
-        'Trainers Only', 'Discipline Core (n/a)', 'Event (n/a)',
+        'Trainers Only', 'Discipline Core', 'Event',
     ];
 
     /**
@@ -118,7 +118,7 @@ class RemoteAttendanceLink extends Resource
 
             Text::make('Secret')
                 ->onlyOnForms()
-                ->default(hash('sha256', random_bytes(64)))
+                ->default(bin2hex(openssl_random_pseudo_bytes(32)))
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('update-remote-attendance-links');
                 })
@@ -140,70 +140,17 @@ class RemoteAttendanceLink extends Resource
                     'you add a redirect URL, do not share that URL directly. Only Google Meet and '.
                     'BlueJeans calls are supported currently in the user-facing action.'),
 
+            // SelectOrCustom only works on forms, so use this instead on detail
             Text::make('Note')
-                ->hideFromIndex()
+                ->onlyOnDetail(),
+
+            SelectOrCustom::make('Note')
+                ->help('This can be used to keep track of what this link was used for more specifically.')
                 ->required(false)
-                ->help('This can be used to keep track of what this link was used for more specifically. Press the '.
-                    'down arrow for suggestions.')
-                ->suggestions(self::$recommendedNotes),
+                ->onlyOnForms()
+                ->options(self::$recommendedNotes),
 
             new Panel('Metadata', $this->metaFields()),
         ];
-    }
-
-    /**
-     * Timestamp fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function metaFields(): array
-    {
-        return [
-            DateTime::make('Created', 'created_at')
-                ->onlyOnDetail(),
-
-            DateTime::make('Last Updated', 'updated_at')
-                ->onlyOnDetail(),
-        ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(Request $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function actions(Request $request): array
-    {
-        return [];
     }
 }

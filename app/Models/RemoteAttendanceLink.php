@@ -36,15 +36,12 @@ class RemoteAttendanceLink extends Model
     protected $with = ['attendable'];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
-     * @var array<string>
+     * @var array<string,string>
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'expires_at',
+    protected $casts = [
+        'expires_at' => 'datetime',
     ];
 
     /**

@@ -45,22 +45,20 @@ class CreateRemoteAttendanceLink extends Action
 
         $link->attendable_type = get_class($attendable);
         $link->attendable_id = $attendable->id;
-        $link->secret = hash('sha256', random_bytes(64));
+        $link->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $link->expires_at = $expiration;
         $link->redirect_url = $fields->redirect_url;
-        // If Purpose is other, set it to the Other Purpose value or null if that's empty. If the Purpose isn't other,
-        // use that value. This deliberately allows empty values.
         $link->note = $fields->purpose;
         $link->save();
         $link->refresh(); // Update id field
 
         $user = Auth::user();
-        $attExisting = Attendance::where('attendable_type', get_class($attendable))
+        $attExists = Attendance::where('attendable_type', get_class($attendable))
             ->where('attendable_id', $attendable->id)
             ->where('gtid', $user->gtid)
-            ->whereDate('created_at', date('Y-m-d'))->count();
+            ->whereDate('created_at', date('Y-m-d'))->exists();
 
-        if (0 === $attExisting) {
+        if (! $attExists) {
             $att = new Attendance();
             $att->attendable_type = get_class($attendable);
             $att->attendable_id = $attendable->id;

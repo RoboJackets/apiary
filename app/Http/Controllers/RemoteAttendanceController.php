@@ -77,8 +77,7 @@ class RemoteAttendanceController extends Controller
             $att->save();
         }
 
-        $name = is_a($link->attendable, Team::class) || is_a($link->attendable, Event::class) ?
-            $link->attendable->name : 'this event';
+        $name = $link->attendable->name;
 
         if (! $urlIsValid) {
             return view(
