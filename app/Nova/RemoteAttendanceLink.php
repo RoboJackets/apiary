@@ -157,7 +157,7 @@ class RemoteAttendanceLink extends Resource
                     return $request->user()->can('read-attendance');
                 }),
 
-            new Panel('Metadata', $this->metaFields()),
+            self::metadataPanel(),
         ];
     }
 }
