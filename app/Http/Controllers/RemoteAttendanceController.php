@@ -7,9 +7,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
-use App\Models\Event;
 use App\Models\RemoteAttendanceLink;
-use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
