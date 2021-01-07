@@ -120,6 +120,7 @@ class Attendance extends Resource
                 ->sortable(),
 
             BelongsTo::make('Remote Attendance Link')
+                ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-remote-attendance-links');
                 }),
