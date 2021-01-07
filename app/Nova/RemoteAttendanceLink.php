@@ -141,10 +141,10 @@ class RemoteAttendanceLink extends Resource
                 ->sortable()
                 ->required(false)
                 ->rules('nullable', 'url')
-                ->help('If you put a link to a BlueJeans or Google Meet meeting here, everyone who clicks the '.
-                    'attendance link will be redirected to that meeting after their attendance is recorded. If '.
-                    'you add a redirect URL, do not share that URL directly. Only Google Meet and '.
-                    'BlueJeans calls are supported currently in the user-facing action.'),
+                ->help('If you put a link here, everyone who clicks the attendance link will be redirected to that '.
+                    'meeting after their attendance is recorded. If you add a redirect URL, do not share that URL '.
+                    'directly. Only Google Meet and BlueJeans and Google Meet calls are supported currently in the '.
+                    'user-facing action.'),
 
             // SelectOrCustom only works on forms, so use this instead on detail
             Text::make('Note')
