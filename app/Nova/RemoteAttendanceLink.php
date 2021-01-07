@@ -80,6 +80,11 @@ class RemoteAttendanceLink extends Resource
      */
     public function fields(Request $request): array
     {
+        $notes = collect(self::$recommendedNotes)
+            ->mapWithKeys(static function (string $note): array {
+                return [$note => $note];
+            })->toArray();
+
         return [
             MorphTo::make('Team/Event', 'attendable')
                 ->types([
@@ -150,7 +155,7 @@ class RemoteAttendanceLink extends Resource
                 ->help('This can be used to keep track of what this link was used for more specifically.')
                 ->required(false)
                 ->onlyOnForms()
-                ->options(self::$recommendedNotes),
+                ->options($notes),
 
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
