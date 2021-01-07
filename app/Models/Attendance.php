@@ -102,7 +102,7 @@ class Attendance extends Model
     /**
      * Get the RemoteAttendanceLink that created the Attendance model.
      */
-    public function remoteAttendanceLink(): BelongsTo
+    public function remote_attendance_link(): BelongsTo
     {
         return $this->belongsTo(RemoteAttendanceLink::class);
     }
