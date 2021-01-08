@@ -60,7 +60,7 @@ class CreateRemoteAttendanceLink extends Action
 
         if (! $attExists) {
             $att = new Attendance();
-            $att->attendable_type = get_class($attendable);
+            $att->attendable_type = $attendable->getMorphClass();
             $att->attendable_id = $attendable->id;
             $att->gtid = $user->gtid;
             $att->source = 'remote-attendance-link-creation';
