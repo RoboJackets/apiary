@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
+use App\Models\MembershipAgreementTemplate;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
