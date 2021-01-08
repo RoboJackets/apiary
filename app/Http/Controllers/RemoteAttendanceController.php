@@ -62,12 +62,12 @@ class RemoteAttendanceController extends Controller
         $attendable_id = $link->attendable_id;
         $gtid = $request->user()->gtid;
 
-        $attExisting = Attendance::where('attendable_type', $attendable_type)
+        $attExists = Attendance::where('attendable_type', $attendable_type)
             ->where('attendable_id', $attendable_id)
             ->where('gtid', $gtid)
-            ->whereDate('created_at', date('Y-m-d'))->count();
+            ->whereDate('created_at', date('Y-m-d'))->exists();
 
-        if (0 === $attExisting) {
+        if (! $attExists) {
             $att = new Attendance();
             $att->attendable_type = $attendable_type;
             $att->attendable_id = $attendable_id;

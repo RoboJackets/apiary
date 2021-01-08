@@ -43,7 +43,7 @@ class CreateRemoteAttendanceLink extends Action
 
         $link = new RemoteAttendanceLink();
 
-        $link->attendable_type = get_class($attendable);
+        $link->attendable_type = $attendable->getMorphClass();
         $link->attendable_id = $attendable->id;
         $link->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $link->expires_at = $expiration;
@@ -53,7 +53,7 @@ class CreateRemoteAttendanceLink extends Action
         $link->refresh(); // Update id field
 
         $user = Auth::user();
-        $attExists = Attendance::where('attendable_type', get_class($attendable))
+        $attExists = Attendance::where('attendable_type', $attendable->getMorphClass())
             ->where('attendable_id', $attendable->id)
             ->where('gtid', $user->gtid)
             ->whereDate('created_at', date('Y-m-d'))->exists();

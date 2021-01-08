@@ -45,6 +45,7 @@ use Illuminate\Support\Collection;
  * @property int|null $recorded_by
  * @property string $attendable_type
  * @property string|null $source
+ * @property int|null $remote_attendance_link_id
  *
  * @property-read \App\Models\Team|\App\Models\Event $attendable
  * @property-read \App\Models\User $attendee
