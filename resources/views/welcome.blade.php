@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        @if(!$signedLatestAgreement)
+        @if(!$signedLatestAgreement && $agreementExists)
             <div class="col-sm-6 col-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">

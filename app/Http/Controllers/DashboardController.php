@@ -24,6 +24,7 @@ class DashboardController extends Controller
         $preferredName = $user->preferred_first_name;
         $status = $user->is_active;
 
+        $agreementExists = MembershipAgreementTemplate::exists();
         $signedLatestAgreement = $user->hasSignedLatestAgreement();
         $signedAnyAgreement = $user->signatures()->where('complete', true)->exists();
 
@@ -105,6 +106,7 @@ class DashboardController extends Controller
                 'sumsAccessPending' => $sumsAccessPending,
                 'signedLatestAgreement' => $signedLatestAgreement,
                 'signedAnyAgreement' => $signedAnyAgreement,
+                'agreementExists' => $agreementExists,
             ]
         );
     }
