@@ -119,6 +119,12 @@ class Attendance extends Resource
                 ->hideFromIndex()
                 ->sortable(),
 
+            BelongsTo::make('Remote Attendance Link', 'remoteAttendanceLink')
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-remote-attendance-links');
+                }),
+
             self::metadataPanel(),
         ];
     }

@@ -15,8 +15,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -74,8 +73,6 @@ class Team extends Resource
                 ->searchable()
                 ->nullable(),
 
-            new Panel('Remote Attendance', $this->remoteAttendanceFields()),
-
             new Panel('Communications', $this->commFields()),
 
             new Panel('Controls', $this->controlFields()),
@@ -86,7 +83,19 @@ class Team extends Resource
                 })
                 ->required(true),
 
-            HasMany::make('Attendance')
+            MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
+                ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                            return false;
+                        }
+                    }
+
+                    return $request->user()->can('read-remote-attendance-links');
+                }),
+
+            MorphMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
                 }),
@@ -165,48 +174,6 @@ class Team extends Resource
     }
 
     /**
-     * Remote attendance fields.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function remoteAttendanceFields(): array
-    {
-        return [
-            Text::make('Link', 'attendance_secret')
-                ->onlyOnDetail()
-                ->resolveUsing(static function (?string $secret): ?string {
-                    return null === $secret ? null : route('attendance.remote', ['secret' => $secret]);
-                })
-                ->readonly(static function (Request $request): bool {
-                    return true;
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
-                }),
-
-            Text::make('Secret', 'attendance_secret')
-                ->onlyOnForms()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })
-                ->creationRules('unique:teams,attendance_secret')
-                ->updateRules('unique:teams,attendance_secret,{{resourceId}}'),
-
-            DateTime::make('Expiration', 'attendance_secret_expiration')
-                ->hideFromIndex()
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                })
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
-                }),
-        ];
-    }
-
-    /**
      * Get the cards available for the request.
      *
      * @return array<\Laravel\Nova\Card>
@@ -227,11 +194,25 @@ class Team extends Resource
             (new AttendancePerWeek())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                            return false;
+                        }
+                    }
+
                     return $request->user()->can('read-attendance');
                 }),
             (new ActiveAttendanceBreakdown())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
+                    if (isset($request->resourceId)) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                            return false;
+                        }
+                    }
+
                     return $request->user()->can('read-attendance');
                 }),
         ];
@@ -245,15 +226,22 @@ class Team extends Resource
     public function actions(Request $request): array
     {
         return [
-            (new Actions\ResetRemoteAttendance())
+            (new Actions\CreateRemoteAttendanceLink())
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
+                    if (isset($request->resourceId)) {
+                        $resource = AppModelsTeam::find($request->resourceId);
+                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                            return false;
+                        }
+                    }
+
+                    return $request->user()->can('create-remote-attendance-links');
                 })
                 ->canRun(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
+                    return $request->user()->can('create-remote-attendance-links');
                 })
-                ->confirmText('Are you sure you want to reset the remote attendance link?')
-                ->confirmButtonText('Reset Link')
+                ->confirmText('Are you sure you want to create a remote attendance link?')
+                ->confirmButtonText('Create Link')
                 ->cancelButtonText('Cancel'),
         ];
     }

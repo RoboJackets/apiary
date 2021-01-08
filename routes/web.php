@@ -84,6 +84,10 @@ Route::get('attendance/remote/{secret}', [RemoteAttendanceController::class, 'in
     ->middleware('auth.cas.force')
     ->name('attendance.remote');
 
+Route::get('attendance/remote/{secret}/redirect', [RemoteAttendanceController::class, 'redirect'])
+    ->middleware('auth.cas.force')
+    ->name('attendance.remote.redirect');
+
 Route::get('attendance/export/{secret}', [AttendanceExportController::class, 'show'])
     ->middleware('auth.cas.force')
     ->name('attendance.export');

@@ -111,6 +111,14 @@ class Event extends Model
     }
 
     /**
+     * Get all of the event's remote attendance links.
+     */
+    public function remoteAttendanceLinks(): MorphMany
+    {
+        return $this->morphMany(RemoteAttendanceLink::class, 'attendable');
+    }
+
+    /**
      * Get the Payable amount.
      */
     public function getPayableAmount(): float
