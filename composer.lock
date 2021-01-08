@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebe5c7afa6b9b2f24f2e46219df02c68",
+    "content-hash": "5bd460e2d82f6a3118cac2965384940d",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5442,23 +5442,23 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "2.7.4",
+            "version": "2.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "aea9c0dbaba2aeb9883a9d69d092da7d63212eaa"
+                "reference": "aa6864027c9ca5c184f8a9d974c68dbe8b66b337"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/aea9c0dbaba2aeb9883a9d69d092da7d63212eaa",
-                "reference": "aea9c0dbaba2aeb9883a9d69d092da7d63212eaa",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/aa6864027c9ca5c184f8a9d974c68dbe8b66b337",
+                "reference": "aa6864027c9ca5c184f8a9d974c68dbe8b66b337",
                 "shasum": ""
             },
             "require": {
                 "illuminate/bus": "^7.0|^8.0",
                 "illuminate/database": "^7.0|^8.0",
                 "illuminate/support": "^7.0|^8.0",
-                "php": "8.0|^7.4"
+                "php": "^8.0|^7.4"
             },
             "require-dev": {
                 "orchestra/testbench": "^5.0|^6.0",
@@ -5497,7 +5497,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/2.7.4"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/2.7.5"
             },
             "funding": [
                 {
@@ -5505,7 +5505,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-11-28T23:46:01+00:00"
+            "time": "2021-01-08T09:22:21+00:00"
         },
         {
             "name": "spatie/once",
