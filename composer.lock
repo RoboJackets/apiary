@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8db8a74990d7d05f60d92fd2bd46a7e",
+    "content-hash": "0b7de0f0cbcf71ec53ee28d2f75ca346",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2117,25 +2117,25 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.6.4",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "619f9a203971684f6fed7c8623d44835af0b92a1"
+                "reference": "9f0ed546f82e2290e6c8de6151d4da8d29f34a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/619f9a203971684f6fed7c8623d44835af0b92a1",
-                "reference": "619f9a203971684f6fed7c8623d44835af0b92a1",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/9f0ed546f82e2290e6c8de6151d4da8d29f34a0f",
+                "reference": "9f0ed546f82e2290e6c8de6151d4da8d29f34a0f",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-pcntl": "*",
                 "ext-posix": "*",
-                "illuminate/contracts": "^8.0",
-                "illuminate/queue": "^8.0",
-                "illuminate/support": "^8.0",
+                "illuminate/contracts": "^8.17",
+                "illuminate/queue": "^8.17",
+                "illuminate/support": "^8.17",
                 "nesbot/carbon": "^2.17",
                 "php": "^7.3|^8.0",
                 "ramsey/uuid": "^4.0",
@@ -2188,9 +2188,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.6.4"
+                "source": "https://github.com/laravel/horizon/tree/v5.6.5"
             },
-            "time": "2021-01-05T16:34:43+00:00"
+            "time": "2021-01-12T16:51:53+00:00"
         },
         {
             "name": "laravel/nova",
