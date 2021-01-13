@@ -51,7 +51,7 @@
         "fakerphp/faker": "1.13.0",
         "filp/whoops": "2.9.1",
         "mockery/mockery": "1.4.2",
-        "nunomaduro/collision": "5.1.0",
+        "nunomaduro/collision": "5.2.0",
         "nunomaduro/larastan": "0.6.12",
         "phan/phan": "4.0.2",
         "phpstan/extension-installer": "1.1.0",
