@@ -9,6 +9,8 @@ Membership Agreement | {{ config('app.name') }}
 
 @markdown($text)
 
+<hr>
+
 @if ($errors->any())
             @foreach ($errors->all() as $error)
     <div class="alert alert-danger" role="alert">{{ $error }}</div>
