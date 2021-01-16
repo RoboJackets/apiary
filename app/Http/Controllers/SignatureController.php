@@ -45,8 +45,7 @@ class SignatureController extends Controller
         return PDF::loadView(
             'agreement.print',
             [
-                'updated_at' => $template->updated_at,
-                'text' => $template->renderForUser($user),
+                'text' => $template->renderForUser($user, $signature->electronic),
                 'user' => $user,
             ]
         )->stream('agreement.pdf');
@@ -92,8 +91,7 @@ class SignatureController extends Controller
         return view(
             'agreement.render',
             [
-                'updated_at' => $template->updated_at,
-                'text' => $template->renderForUser($user),
+                'text' => $template->renderForUser($user, $signature->electronic),
             ]
         );
     }

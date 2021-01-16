@@ -24,6 +24,10 @@ class MembershipAgreementRedirectRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'over18' => [
+                'required',
+                'accepted',
+            ],
             'eSignConsent' => [
                 'required',
                 'accepted',

@@ -47,7 +47,8 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
                 'mail.agreement.signed',
                 [
                     'agreement_text' => $this->signature->membershipAgreementTemplate->renderForUser(
-                        $this->signature->user
+                        $this->signature->user,
+                        $this->signature->electronic
                     ),
                 ]
             );
