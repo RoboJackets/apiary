@@ -5,13 +5,7 @@ Membership Agreement | {{ config('app.name') }}
 @endsection
 
 @section('content')
-@component('layouts/title')
-  Membership Agreement
-@endcomponent
-
-<p>
-Revised {{ $updated_at }}
-</p>
+<br>
 
 @markdown($text)
 
@@ -23,6 +17,10 @@ Revised {{ $updated_at }}
 
 <form method="POST" action="{{ route('agreement.redirect') }}">
 @csrf
+<div class="form-check">
+<input type="checkbox" class="form-check-input" id="over18" name="over18" required>
+<label class="form-check-label" for="over18">I am over 18 years of age.</label>
+</div>
 <div class="form-check">
 <input type="checkbox" class="form-check-input" id="electronicSignatureConsent" name="eSignConsent" required>
 <label class="form-check-label" for="electronicSignatureConsent">I consent to signing this document electronically. I understand that I can print a paper copy at <a href="{{ route('agreement.print') }}">this link</a> and submit it to a project manager or officer if I prefer not to sign electronically.</label>
