@@ -27,14 +27,14 @@ class MembershipAgreementTemplate extends Model
         return self::render(
             $this->text,
             [
-                'full_name' => $user->first_name . ' ' . $user->last_name,
+                'full_name' => $user->first_name.' '.$user->last_name,
                 'is_electronic' => $isElectronic,
             ]
         );
     }
 
     /**
-     * Wrapper around Blade engine stolen from https://stackoverflow.com/a/39802153
+     * Wrapper around Blade engine stolen from https://stackoverflow.com/a/39802153.
      *
      * @param array<string,string|bool> $data data to pass to the template
      */
@@ -47,7 +47,7 @@ class MembershipAgreementTemplate extends Model
         extract($data, EXTR_SKIP);
 
         try {
-            eval('?' . '>' . $php);
+            eval('?'.'>'.$php);
         } catch (Throwable $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();
