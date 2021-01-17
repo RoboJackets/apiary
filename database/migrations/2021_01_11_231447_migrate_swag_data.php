@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Migrations\Migration;
+
 class MigrateSwagData extends Migration
 {
     /**
@@ -36,6 +38,7 @@ class MigrateSwagData extends Migration
             $studentFullYearPackage->merch()->attach($polo, ['group' => 'Spring']);
 
             $fy->transactions->each(static function (DuesTransaction $dt) use ($shirt, $polo): void {
+                // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
                 if (null !== $dt->swag_shirt_provided) {
                     $dt->merch()->attach($shirt, [
                         'provided_at' => $dt->swag_shirt_provided,
@@ -49,6 +52,7 @@ class MigrateSwagData extends Migration
                         'provided_by' => $dt->swag_polo_providedBy,
                     ]);
                 }
+                // phpcs:enable
             });
         });
     }
@@ -69,17 +73,16 @@ class MigrateSwagData extends Migration
             ]);
 
             DuesTransaction::get()->each(static function (DuesTransaction $dt) use ($shirt, $polo): void {
-                $dt->merch()->whereNotNull('provided_at')->each(static function (Merch $merch) use ($dt, $shirt, $polo): void {
-                    if ($merch->id === $shirt->id) {
-                        $dt->swag_shirt_provided = $merch->pivot->provided_at;
-                        $dt->swag_shirt_providedBy = $merch->pivot->provided_by;
-                    }
-
-                    if ($merch->id === $polo->id) {
-                        $dt->swag_polo_provided = $merch->pivot->provided_at;
-                        $dt->swag_polo_providedBy = $merch->pivot->provided_by;
-                    }
-                });
+                $dt->merch()->whereNotNull('provided_at')
+                    ->each(static function (Merch $merch) use ($dt, $shirt, $polo): void {
+                        if ($merch->id === $shirt->id) {
+                            $dt->swag_shirt_provided = $merch->pivot->provided_at;
+                            $dt->swag_shirt_providedBy = $merch->pivot->provided_by;
+                        } else if ($merch->id === $polo->id) {
+                            $dt->swag_polo_provided = $merch->pivot->provided_at;
+                            $dt->swag_polo_providedBy = $merch->pivot->provided_by;
+                        }
+                    });
             });
         });
     }
