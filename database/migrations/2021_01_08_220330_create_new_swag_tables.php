@@ -13,7 +13,7 @@ class CreateNewSwagTables extends Migration
      */
     public function up(): void
     {
-        Schema::create('merch', static function (Blueprint $table): void {
+        Schema::create('merchandise', static function (Blueprint $table): void {
             $table->id();
             $table->string('name', 255);
             $table->foreignId('fiscal_year_id')->constrained();
@@ -21,10 +21,10 @@ class CreateNewSwagTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('dues_package_merch', static function (Blueprint $table): void {
+        Schema::create('dues_package_merchandise', static function (Blueprint $table): void {
             $table->id();
             $table->unsignedInteger('dues_package_id');
-            $table->foreignId('merch_id')->constrained();
+            $table->foreignId('merchandise_id')->constrained();
             $table->string('group', 255);
             $table->timestamps();
 
@@ -32,10 +32,10 @@ class CreateNewSwagTables extends Migration
             $table->foreign('dues_package_id')->references('id')->on('users');
         });
 
-        Schema::create('dues_transaction_merch', static function (Blueprint $table): void {
+        Schema::create('dues_transaction_merchandise', static function (Blueprint $table): void {
             $table->id();
             $table->unsignedInteger('dues_transaction_id');
-            $table->foreignId('merch_id')->constrained();
+            $table->foreignId('merchandise_id')->constrained();
             $table->timestamp('provided_at')->nullable();
             $table->unsignedInteger('provided_by')->nullable();
             $table->timestamps();
@@ -50,8 +50,8 @@ class CreateNewSwagTables extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dues_transaction_merch');
-        Schema::dropIfExists('dues_package_merch');
-        Schema::dropIfExists('merch');
+        Schema::dropIfExists('dues_transaction_merchandise');
+        Schema::dropIfExists('dues_package_merchandise');
+        Schema::dropIfExists('merchandise');
     }
 }

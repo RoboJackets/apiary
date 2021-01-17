@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Represents one option of merch/swag related to a fiscal year and its dues packages.
  */
-class Merch extends Model
+class Merchandise extends Model
 {
     use SoftDeletes;
 

@@ -128,7 +128,7 @@ class DuesPackage extends Resource
 
             HasMany::make('Prevents Purchase Of', 'hasConflictWith', self::class),
 
-            BelongsToMany::make('Merch')
+            BelongsToMany::make('Merchandise')
                 ->fields(static function (): array {
                     return [
                         SelectOrCustom::make('Group')->options([

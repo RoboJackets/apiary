@@ -141,9 +141,9 @@ class DuesPackage extends Model
         return $this->hasMany(self::class, 'conflicts_with_package_id');
     }
 
-    public function merch(): BelongsToMany
+    public function merchandise(): BelongsToMany
     {
-        return $this->belongsToMany(Merch::class)->withPivot('group')->withTimestamps();
+        return $this->belongsToMany(Merchandise::class)->withPivot('group')->withTimestamps();
     }
 
     /**

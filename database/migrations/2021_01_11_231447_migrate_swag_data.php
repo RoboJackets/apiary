@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use App\Models\DuesTransaction;
 use App\Models\FiscalYear;
-use App\Models\Merch;
+use App\Models\Merchandise;
 
 class MigrateSwagData extends Migration
 {
@@ -19,11 +19,11 @@ class MigrateSwagData extends Migration
                 return;
             }
 
-            $shirt = Merch::firstOrCreate([
+            $shirt = Merchandise::firstOrCreate([
                 'name' => 'T-Shirt',
                 'fiscal_year_id' => $fy->id,
             ]);
-            $polo = Merch::firstOrCreate([
+            $polo = Merchandise::firstOrCreate([
                 'name' => 'Polo',
                 'fiscal_year_id' => $fy->id,
             ]);
@@ -40,27 +40,27 @@ class MigrateSwagData extends Migration
             $studentFullYearPackage = $fy->packages()->where('name', $studentFullYearName)->first();
 
             if (null !== $fallPackage) {
-                $fallPackage->merch()->attach($shirt, ['group' => 'Fall']);
+                $fallPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
             }
             if (null !== $springPackage) {
-                $springPackage->merch()->attach($polo, ['group' => 'Spring']);
+                $springPackage->merchandise()->attach($polo, ['group' => 'Spring']);
             }
             if (null !== $studentFullYearPackage) {
-                $studentFullYearPackage->merch()->attach($shirt, ['group' => 'Fall']);
-                $studentFullYearPackage->merch()->attach($polo, ['group' => 'Spring']);
+                $studentFullYearPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
+                $studentFullYearPackage->merchandise()->attach($polo, ['group' => 'Spring']);
             }
 
             $fy->transactions->each(static function (DuesTransaction $dt) use ($shirt, $polo): void {
                 // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
                 if (null !== $dt->swag_shirt_provided) {
-                    $dt->merch()->attach($shirt, [
+                    $dt->merchandise()->attach($shirt, [
                         'provided_at' => $dt->swag_shirt_provided,
                         'provided_by' => $dt->swag_shirt_providedBy,
                     ]);
                 }
 
                 if (null !== $dt->swag_polo_provided) {
-                    $dt->merch()->attach($polo, [
+                    $dt->merchandise()->attach($polo, [
                         'provided_at' => $dt->swag_polo_provided,
                         'provided_by' => $dt->swag_polo_providedBy,
                     ]);
@@ -76,18 +76,18 @@ class MigrateSwagData extends Migration
     public function down(): void
     {
         FiscalYear::get()->each(static function (FiscalYear $fy): void {
-            $shirt = Merch::firstOrCreate([
+            $shirt = Merchandise::firstOrCreate([
                 'name' => 'T-Shirt',
                 'fiscal_year_id' => $fy->id,
             ]);
-            $polo = Merch::firstOrCreate([
+            $polo = Merchandise::firstOrCreate([
                 'name' => 'Polo',
                 'fiscal_year_id' => $fy->id,
             ]);
 
             DuesTransaction::get()->each(static function (DuesTransaction $dt) use ($shirt, $polo): void {
-                $dt->merch()->whereNotNull('provided_at')
-                    ->each(static function (Merch $merch) use ($dt, $shirt, $polo): void {
+                $dt->merchandise()->whereNotNull('provided_at')
+                    ->each(static function (Merchandise $merch) use ($dt, $shirt, $polo): void {
                         // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
                         if ($merch->id === $shirt->id) {
                             $dt->swag_shirt_provided = $merch->pivot->provided_at;

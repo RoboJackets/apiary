@@ -153,9 +153,9 @@ class DuesTransaction extends Model
         return $this->package();
     }
 
-    public function merch(): BelongsToMany
+    public function merchandise(): BelongsToMany
     {
-        return $this->belongsToMany(Merch::class)->withPivot(['provided_at', 'provided_by'])->withTimestamps();
+        return $this->belongsToMany(Merchandise::class)->withPivot(['provided_at', 'provided_by'])->withTimestamps();
     }
 
     /**
