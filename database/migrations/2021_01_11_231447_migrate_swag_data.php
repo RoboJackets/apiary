@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Migrations\Migration;
 use App\Models\DuesTransaction;
 use App\Models\FiscalYear;
 use App\Models\Merchandise;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Migrations\Migration;
 
 class MigrateSwagData extends Migration
 {
@@ -50,7 +51,9 @@ class MigrateSwagData extends Migration
                 $studentFullYearPackage->merchandise()->attach($polo, ['group' => 'Spring']);
             }
 
-            $fy->transactions->each(static function (DuesTransaction $dt) use ($shirt, $polo): void {
+            DuesTransaction::whereHas('package', static function (Builder $q) use ($fy): void {
+                $q->where('fiscal_year_id', $fy->id);
+            })->each(static function (DuesTransaction $dt) use ($shirt, $polo): void {
                 // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
                 if (null !== $dt->swag_shirt_provided) {
                     $dt->merchandise()->attach($shirt, [

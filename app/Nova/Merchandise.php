@@ -6,8 +6,10 @@ namespace App\Nova;
 
 use App\Models\Merchandise as AppModelsMerchandise;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Text;
+use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 class Merchandise extends Resource
 {
@@ -16,7 +18,7 @@ class Merchandise extends Resource
      *
      * @var string
      */
-    public static $model = Merchandise::class;
+    public static $model = AppModelsMerchandise::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -52,7 +54,7 @@ class Merchandise extends Resource
             Text::make('Name')
                 ->rules('required'),
 
-            BelongsTo::make('Fiscal Year'),
+            BelongsTo::make('Fiscal Year', 'fiscalYear'),
 
             BelongsToMany::make('Dues Packages', 'packages')
                 ->fields(static function (): array {

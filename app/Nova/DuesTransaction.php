@@ -8,6 +8,7 @@ use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
@@ -97,7 +98,7 @@ class DuesTransaction extends Resource
             })
                 ->onlyOnDetail(),
 
-            HasMany::make('Merchandise', 'merchandise'),
+            BelongsToMany::make('Merchandise', 'merchandise'),
 
             // TODO: remove old swag fields
             Text::make('Shirt Status', 'swag_shirt_status')

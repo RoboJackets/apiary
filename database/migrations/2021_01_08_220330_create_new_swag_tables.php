@@ -24,23 +24,26 @@ class CreateNewSwagTables extends Migration
         Schema::create('dues_package_merchandise', static function (Blueprint $table): void {
             $table->id();
             $table->unsignedInteger('dues_package_id');
-            $table->foreignId('merchandise_id')->constrained();
+            $table->unsignedBigInteger('merchandise_id');
             $table->string('group', 255);
             $table->timestamps();
 
-
-            $table->foreign('dues_package_id')->references('id')->on('users');
+            $table->foreign('dues_package_id')->references('id')->on('dues_packages');
+            // This has to be manually created because the table name is not a typical plural form ("merchandises").
+            $table->foreign('merchandise_id')->references('id')->on('merchandise');
         });
 
         Schema::create('dues_transaction_merchandise', static function (Blueprint $table): void {
             $table->id();
             $table->unsignedInteger('dues_transaction_id');
-            $table->foreignId('merchandise_id')->constrained();
+            $table->unsignedBigInteger('merchandise_id');
             $table->timestamp('provided_at')->nullable();
             $table->unsignedInteger('provided_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('dues_transaction_id')->references('id')->on('users');
+            $table->foreign('dues_transaction_id')->references('id')->on('dues_transactions');
+            // This has to be manually created because the table name is not a typical plural form ("merchandises").
+            $table->foreign('merchandise_id')->references('id')->on('merchandise');
             $table->foreign('provided_by')->references('id')->on('users');
         });
     }
