@@ -25,6 +25,7 @@ class CreateNewSwagTables extends Migration
             $table->id();
             $table->foreignId('fiscal_year_id')->constrained();
             $table->foreignId('merch_id')->constrained();
+            $table->string('group', 255);
             $table->timestamps();
         });
 
@@ -32,8 +33,8 @@ class CreateNewSwagTables extends Migration
             $table->id();
             $table->foreignId('fiscal_year_id')->constrained();
             $table->foreignId('merch_id')->constrained();
-            $table->timestamp('provided_at');
-            $table->unsignedInteger('provided_by');
+            $table->timestamp('provided_at')->nullable();
+            $table->unsignedInteger('provided_by')->nullable();
             $table->timestamps();
 
             $table->foreign('provided_by')->references('id')->on('users');

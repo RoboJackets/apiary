@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
@@ -138,6 +139,11 @@ class DuesPackage extends Model
     public function hasConflictWith(): HasMany
     {
         return $this->hasMany(self::class, 'conflicts_with_package_id');
+    }
+
+    public function merch(): BelongsToMany
+    {
+        return $this->belongsToMany(Merch::class)->withPivot('group')->withTimestamps();
     }
 
     /**

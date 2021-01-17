@@ -152,6 +152,11 @@ class DuesTransaction extends Model
         return $this->package();
     }
 
+    public function merch(): BelongsToMany
+    {
+        return $this->belongsToMany(Merch::class)->withPivot('provided_at', 'provided_by')->withTimestamps();
+    }
+
     /**
      * Get the status flag for the Transaction.
      */
