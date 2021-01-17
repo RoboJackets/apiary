@@ -97,6 +97,9 @@ class DuesTransaction extends Resource
             })
                 ->onlyOnDetail(),
 
+            HasMany::make('Merchandise', 'merchandise'),
+
+            // TODO: remove old swag fields
             Text::make('Shirt Status', 'swag_shirt_status')
                 ->onlyOnIndex(),
 

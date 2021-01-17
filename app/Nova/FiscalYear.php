@@ -58,6 +58,8 @@ class FiscalYear extends Resource
                 ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}'),
 
             HasMany::make('Dues Packages', 'packages'),
+
+            HasMany::make('Merchandise', 'merchandise'),
         ];
     }
 
