@@ -23,20 +23,24 @@ class CreateNewSwagTables extends Migration
 
         Schema::create('dues_package_merch', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('fiscal_year_id')->constrained();
+            $table->unsignedInteger('dues_package_id')->constrained();
             $table->foreignId('merch_id')->constrained();
             $table->string('group', 255);
             $table->timestamps();
+
+
+            $table->foreign('dues_package_id')->references('id')->on('users');
         });
 
         Schema::create('dues_transaction_merch', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('fiscal_year_id')->constrained();
+            $table->unsignedInteger('dues_transaction_id')->constrained();
             $table->foreignId('merch_id')->constrained();
             $table->timestamp('provided_at')->nullable();
             $table->unsignedInteger('provided_by')->nullable();
             $table->timestamps();
 
+            $table->foreign('dues_transaction_id')->references('id')->on('users');
             $table->foreign('provided_by')->references('id')->on('users');
         });
     }

@@ -126,7 +126,17 @@ class DuesPackage extends Resource
 
             HasMany::make('Prevents Purchase Of', 'hasConflictWith', self::class),
 
-            new Panel('Swag', $this->swagFields()),
+            BelongsToMany::make('Merch')
+                ->fields(static function (): array {
+                    return [
+                        SelectOrCustom::make('Group')->options([
+                            'Fall' => 'Fall',
+                            'Spring' => 'Spring',
+                        ]),
+                    ];
+                }),
+
+            new Panel('Swag', $this->swagFields()), // FIXME remove this
 
             new Panel('Access', [
                 Boolean::make('Active', 'is_access_active')

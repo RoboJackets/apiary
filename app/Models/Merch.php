@@ -28,6 +28,8 @@ class Merch extends Model
 
     public function transactions(): BelongsToMany
     {
-        return $this->belongsToMany(DuesTransaction::class)->withPivot('provided_at', 'provided_by')->withTimestamps();
+        return $this->belongsToMany(DuesTransaction::class)
+            ->withPivot(['provided_at', 'provided_by'])
+            ->withTimestamps();
     }
 }
