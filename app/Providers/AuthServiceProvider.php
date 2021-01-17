@@ -10,6 +10,7 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
 use App\Models\Major;
+use App\Models\Merchandise;
 use App\Models\NotificationTemplate;
 use App\Models\Payment;
 use App\Models\RecruitingVisit;
@@ -23,6 +24,7 @@ use App\Policies\DuesPackagePolicy;
 use App\Policies\DuesTransactionPolicy;
 use App\Policies\EventPolicy;
 use App\Policies\MajorPolicy;
+use App\Policies\MerchandisePolicy;
 use App\Policies\NotificationTemplatePolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
@@ -58,6 +60,7 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
         Major::class => MajorPolicy::class,
+        Merchandise::class => MerchandisePolicy::class,
         RemoteAttendanceLink::class => RemoteAttendanceLinkPolicy::class,
     ];
 
