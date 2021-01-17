@@ -15,6 +15,10 @@ class MigrateSwagData extends Migration
     public function up(): void
     {
         FiscalYear::get()->each(static function (FiscalYear $fy): void {
+            if (0 === $fy->packages()->count()) {
+                return;
+            }
+
             $shirt = Merch::firstOrCreate([
                 'name' => 'T-Shirt',
                 'fiscal_year_id' => $fy->id,
@@ -33,12 +37,18 @@ class MigrateSwagData extends Migration
 
             $fallPackage = $fy->packages()->where('name', $fallPackageName)->first();
             $springPackage = $fy->packages()->where('name', $springPackageName)->first();
-            $studentFullYearPackage = $fy->packages()->where('name', $studentFullYearPackageName)->first();
+            $studentFullYearPackage = $fy->packages()->where('name', $studentFullYearName)->first();
 
-            $fallPackage->merch()->attach($shirt, ['group' => 'Fall']);
-            $springPackage->merch()->attach($polo, ['group' => 'Spring']);
-            $studentFullYearPackage->merch()->attach($shirt, ['group' => 'Fall']);
-            $studentFullYearPackage->merch()->attach($polo, ['group' => 'Spring']);
+            if (null !== $fallPackage) {
+                $fallPackage->merch()->attach($shirt, ['group' => 'Fall']);
+            }
+            if (null !== $springPackage) {
+                $springPackage->merch()->attach($polo, ['group' => 'Spring']);
+            }
+            if (null !== $studentFullYearPackage) {
+                $studentFullYearPackage->merch()->attach($shirt, ['group' => 'Fall']);
+                $studentFullYearPackage->merch()->attach($polo, ['group' => 'Spring']);
+            }
 
             $fy->transactions->each(static function (DuesTransaction $dt) use ($shirt, $polo): void {
                 // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
