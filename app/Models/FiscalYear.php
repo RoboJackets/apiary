@@ -27,4 +27,9 @@ class FiscalYear extends Model
     {
         return $this->hasMany(DuesPackage::class);
     }
+
+    public function merchandise(): HasMany
+    {
+        return $this->hasMany(Merchandise::class);
+    }
 }

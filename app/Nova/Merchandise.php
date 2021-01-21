@@ -44,6 +44,22 @@ class Merchandise extends Resource
     ];
 
     /**
+     * Get the displayble label of the resource.
+     */
+    public static function label(): string
+    {
+        return 'Merchandise';
+    }
+
+    /**
+     * Get the displayble singular label of the resource.
+     */
+    public static function singularLabel(): string
+    {
+        return 'Merchandise';
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array<\Laravel\Nova\Fields\Field>

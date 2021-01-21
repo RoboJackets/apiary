@@ -40,6 +40,8 @@ class MigrateSwagData extends Migration
             $springPackage = $fy->packages()->where('name', $springPackageName)->first();
             $studentFullYearPackage = $fy->packages()->where('name', $studentFullYearName)->first();
 
+            // This ignores the swag eligibility columns and instead assumes that fall==shirt and spring==polo.
+            // In practice that assumption is correct at the time this migration will be run.
             if (null !== $fallPackage) {
                 $fallPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
             }
@@ -60,6 +62,8 @@ class MigrateSwagData extends Migration
                         'provided_at' => $dt->swag_shirt_provided,
                         'provided_by' => $dt->swag_shirt_providedBy,
                     ]);
+                } elseif ($dt->package->eligible_for_shirt) {
+                    $dt->merchandise()->attach($shirt);
                 }
 
                 if (null !== $dt->swag_polo_provided) {
@@ -67,6 +71,8 @@ class MigrateSwagData extends Migration
                         'provided_at' => $dt->swag_polo_provided,
                         'provided_by' => $dt->swag_polo_providedBy,
                     ]);
+                } elseif ($dt->package->eligible_for_polo) {
+                    $dt->merchandise()->attach($polo);
                 }
                 // phpcs:enable
             });
