@@ -143,7 +143,7 @@ class RemoteAttendanceLink extends Resource
                 ->rules('nullable', 'url')
                 ->help('If you put a link here, everyone who clicks the attendance link will be redirected to that '.
                     'meeting after their attendance is recorded. If you add a redirect URL, do not share that URL '.
-                    'directly. Only Google Meet and BlueJeans and Google Meet calls are supported currently in the '.
+                    'directly. Only Google Meet, BlueJeans, and Microsoft Teams calls are supported currently in the '.
                     'user-facing action.'),
 
             // SelectOrCustom only works on forms, so use this instead on detail
