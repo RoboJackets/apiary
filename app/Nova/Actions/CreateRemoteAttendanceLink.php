@@ -100,7 +100,7 @@ class CreateRemoteAttendanceLink extends Action
                 ->required(false)
                 ->rules('nullable', 'url', 'regex:/^https:\/\/((gatech\.)?bluejeans\.com\/[0-9]+(\/[0-9]+)?|primetime\.'
                     .'bluejeans\.com\/a2m\/live-event\/[a-z]+|meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
-                    .'meetup-join\/[-a-z0-9%\.]+\/[0-9]+)(\?[^@]*)?$/', 'max:1023')
+                    .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+)(\?[^@]*)?$/', 'max:1023')
                 ->help('If you put a link to a Google Meet, BlueJeans, or Microsoft Teams meeting here, everyone who '.
                     'clicks the attendance link will be redirected to that meeting after their attendance is recorded.'.
                     'If you add a redirect URL, do not share that URL directly. Only Google Meet, BlueJeans, and '.
