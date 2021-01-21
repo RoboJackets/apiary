@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\MembershipAgreementTemplate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -34,7 +35,7 @@ class OverrideAccess extends Action
                 return Action::danger('You cannot override your own access!');
             }
 
-            if (! $user->hasSignedLatestAgreement()) {
+            if (! $user->hasSignedLatestAgreement() && MembershipAgreementTemplate::exists()) {
                 return Action::danger('This user has not signed the latest agreement!');
             }
 

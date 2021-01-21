@@ -81,8 +81,8 @@ class MembershipAgreementTemplate extends Resource
 
             Markdown::make('Text')
                 ->help(
-                    'Please only use h2\'s or smaller in this field. You can use {{ $user->first_name }} and '
-                    .'{{ $user->last_name }} to have the user\'s name fields substituted.'
+                    'Please only use h2\'s or smaller in this field. You can use {{ $full_name }} to have the user\'s '.
+                    'name field substituted, and {{ $is_electronic }} to selectively render text on different versions.'
                 )
                 ->alwaysShow(),
 
