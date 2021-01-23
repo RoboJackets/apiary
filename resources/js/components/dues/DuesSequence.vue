@@ -5,10 +5,6 @@
       </dues-required-info>
     </div>
 
-    <div v-show="currentStepName == 'safety-agreement'">
-      <safety-agreement :user-uid="user.uid" @next="next" @back="back"></safety-agreement>
-    </div>
-
     <div v-show="currentStepName == 'dues-additional-info'">
       <dues-additional-info :user="user" @next="next" @back="back"></dues-additional-info>
     </div>
@@ -63,7 +59,6 @@ export default {
     return {
       steps: [
         'dues-required-info',
-        'safety-agreement',
         'dues-additional-info',
         'dues-demographics-info',
         'join-teams',
