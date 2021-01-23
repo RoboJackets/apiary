@@ -82,10 +82,13 @@
         <div v-for="(merchlist, group) in merchGroups" class="form-group row">
           <label :for="'merch-'+group" class="col-sm-2 col-form-label">{{group}}</label>
           <div class="col-sm-10 col-lg-4">
-            <select :id="'merch-'+group" class="custom-select" v-model="merchlist.selection">
+            <select :id="'merch-'+group" class="custom-select" v-model="merchlist.selection" :class="{ 'is-invalid': $v.merchGroups.$each[group].$error }" @input="$v.merchGroups.$each[group].$touch()">
               <option value="" style="display:none">Select One</option>
               <option v-for="merch in merchlist.list" :value="merch.id">{{merch.name}}</option>
             </select>
+            <div class="invalid-feedback">
+              You must choose an item.
+            </div>
           </div>
         </div>
         <div class="form-group row">
@@ -214,7 +217,7 @@ export default {
         } else {
           // Use .$set because if you add a property to an object without it, Vue will not follow its changes.
           tempthis.$set(tempthis.merchGroups, merch.group, {
-            selection: -1,
+            selection: '',
             list: [merch],
           });
           groupNames.push(merch.group);
@@ -243,6 +246,14 @@ export default {
     duesPackageChoice: {
       required,
       numeric,
+    },
+    merchGroups: {
+      $each: {
+        selection: {
+          required,
+          numeric,
+        },
+      },
     },
   },
 };
