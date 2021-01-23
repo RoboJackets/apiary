@@ -54,56 +54,6 @@
           </div>
         </div>
 
-        <h4>Information for Merchandise</h4>
-        <div class="form-group row">
-          <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
-          <div class="col-sm-10 col-lg-4">
-            <custom-radio-buttons
-              v-model="localUser.shirt_size"
-              :options="shirtSizeOptions"
-              id="user-shirtsize"
-              :is-error="$v.localUser.shirt_size.$error"
-              @input="$v.localUser.shirt_size.$touch()">
-            </custom-radio-buttons>
-            <div class="invalid-feedback">
-              You must choose a shirt size.
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
-          <div class="col-sm-10 col-lg-4">
-            <custom-radio-buttons
-              v-model="localUser.polo_size"
-              :options="shirtSizeOptions"
-              id="user-polosize"
-              :is-error="$v.localUser.polo_size.$error"
-              @input="$v.localUser.polo_size.$touch()">
-            </custom-radio-buttons>
-            <div class="invalid-feedback">
-              You must choose a polo size.
-            </div>
-          </div>
-        </div>
-
-        <h4>Merchandise Selection</h4>
-        <p v-if="null === duesPackage">Loading...</p>
-        <p v-else>One item of RoboJackets merch from each group below is included with your dues payment.</p>
-        <div v-for="(merchlist, group) in merchGroups" class="form-group row">
-          <label :for="'merch-'+group" class="col-sm-2 col-form-label">{{group}}</label>
-          <div class="col-sm-10 col-lg-4">
-            <select :id="'merch-'+group" class="custom-select" v-model="merchlist.selection">
-              <option value="" style="display:none">Select One</option>
-              <option v-for="merch in merchlist.list" :value="merch.id">{{merch.name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group row">
-          <pre v-if="null !== duesPackage">{{ duesPackage }}</pre>
-          <pre>{{ merchGroups }}</pre>
-        </div>
-
         <h4>Emergency Contact Information</h4>
         <p>You may optionally provide information on who to contact in the event of an emergency. This information is required should you go on any RoboJackets trips.</p>
 
@@ -158,49 +108,7 @@ import notGTEmail from '../../customValidators/notGTEmail';
 export default {
   props: ['user', 'packageid'],
   data() {
-    return {
-      shirtSizeOptions: [
-        { value: 's', text: 'S' },
-        { value: 'm', text: 'M' },
-        { value: 'l', text: 'L' },
-        { value: 'xl', text: 'XL' },
-        { value: 'xxl', text: 'XXL' },
-        { value: 'xxxl', text: 'XXXL' },
-      ],
-      duesPackage: null,
-      merchGroups: {},
-    };
-  },
-  watch: {
-    packageid: function(packageid, old) {
-      if (packageid == -1) return;
-      var dataUrl = '/api/v1/dues/packages/' + packageid + '?include=merchandise';
-      axios
-        .get(dataUrl)
-        .then(response => {
-          this.duesPackage = response.data.dues_package;
-          var tempthis = this;
-          this.duesPackage.merchandise.forEach(function (merch) {
-            if (merch.group in tempthis.merchGroups) {
-              tempthis.merchGroups[merch.group].list.push(merch);
-            } else {
-              // Use .$set because if you add a property to an object without it, Vue will not follow its changes.
-              tempthis.$set(tempthis.merchGroups, merch.group, {
-                selection: -1,
-                list: [merch],
-              });
-            }
-          });
-        })
-        .catch(response => {
-          console.log(response);
-          Swal.fire(
-            'Connection Error',
-            'Unable to load dues packages. Check your internet connection or try refreshing the page.',
-            'error'
-          );
-        });
-    }
+    return {};
   },
   methods: {
     submit() {
@@ -241,8 +149,6 @@ export default {
       preferred_first_name: { alpha },
       emergency_contact_name: {},
       emergency_contact_phone: { maxLength: maxLength(15) },
-      shirt_size: { required },
-      polo_size: { required },
     },
   },
 };
