@@ -96,4 +96,12 @@ class Merchandise extends Resource
                 }),
         ];
     }
+
+    /**
+     * Get the URI key for the resource.
+     */
+    public static function uriKey(): string
+    {
+        return 'merchandise';
+    }
 }
