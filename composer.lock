@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "028012aa153c89b8ae5804eaf8927d4c",
+    "content-hash": "e3eeec358d1372e3f853de940f1f6829",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -683,16 +683,16 @@
         },
         {
             "name": "cakephp/chronos",
-            "version": "2.0.6",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "30baea51824076719921c6c2d720bfd6b49e6dca"
+                "reference": "3f119d1eb8105ed2c43bb72e8fc5c78487620089"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/30baea51824076719921c6c2d720bfd6b49e6dca",
-                "reference": "30baea51824076719921c6c2d720bfd6b49e6dca",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/3f119d1eb8105ed2c43bb72e8fc5c78487620089",
+                "reference": "3f119d1eb8105ed2c43bb72e8fc5c78487620089",
                 "shasum": ""
             },
             "require": {
@@ -700,8 +700,7 @@
             },
             "require-dev": {
                 "cakephp/cakephp-codesniffer": "^4.0",
-                "phpbench/phpbench": "^1.0@dev",
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^8.0 || ^9.0"
             },
             "type": "library",
             "autoload": {
@@ -739,7 +738,7 @@
                 "issues": "https://github.com/cakephp/chronos/issues",
                 "source": "https://github.com/cakephp/chronos"
             },
-            "time": "2020-08-22T02:42:12+00:00"
+            "time": "2021-01-16T14:35:30+00:00"
         },
         {
             "name": "chelout/laravel-relationship-events",
@@ -2794,30 +2793,30 @@
         },
         {
             "name": "league/oauth1-client",
-            "version": "v1.8.2",
+            "version": "v1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth1-client.git",
-                "reference": "159c3d2bf27568f9af87d6c3f4bb616a251eb12b"
+                "reference": "1e7e6be2dc543bf466236fb171e5b20e1b06aee6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/159c3d2bf27568f9af87d6c3f4bb616a251eb12b",
-                "reference": "159c3d2bf27568f9af87d6c3f4bb616a251eb12b",
+                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/1e7e6be2dc543bf466236fb171e5b20e1b06aee6",
+                "reference": "1e7e6be2dc543bf466236fb171e5b20e1b06aee6",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-openssl": "*",
                 "guzzlehttp/guzzle": "^6.0|^7.0",
-                "php": ">=7.1"
+                "php": ">=7.1||>=8.0"
             },
             "require-dev": {
                 "ext-simplexml": "*",
-                "friendsofphp/php-cs-fixer": "^2.16.1",
-                "mockery/mockery": "^1.3",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "mockery/mockery": "^1.3.3",
                 "phpstan/phpstan": "^0.12.42",
-                "phpunit/phpunit": "^7.5"
+                "phpunit/phpunit": "^7.5||9.5"
             },
             "suggest": {
                 "ext-simplexml": "For decoding XML-based responses."
@@ -2863,9 +2862,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth1-client/issues",
-                "source": "https://github.com/thephpleague/oauth1-client/tree/v1.8.2"
+                "source": "https://github.com/thephpleague/oauth1-client/tree/v1.9.0"
             },
-            "time": "2020-09-28T09:39:08+00:00"
+            "time": "2021-01-20T01:40:53+00:00"
         },
         {
             "name": "lynndigital/select-or-custom",
@@ -3163,20 +3162,20 @@
         },
         {
             "name": "markbaker/matrix",
-            "version": "2.0.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarkBaker/PHPMatrix.git",
-                "reference": "9567d9c4c519fbe40de01dbd1e4469dbbb66f46a"
+                "reference": "35a2d1a919a1de732402f694925168c53c17c838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/9567d9c4c519fbe40de01dbd1e4469dbbb66f46a",
-                "reference": "9567d9c4c519fbe40de01dbd1e4469dbbb66f46a",
+                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/35a2d1a919a1de732402f694925168c53c17c838",
+                "reference": "35a2d1a919a1de732402f694925168c53c17c838",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0"
+                "php": "^7.1 || ^8.0"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -3194,22 +3193,22 @@
                     "Matrix\\": "classes/src/"
                 },
                 "files": [
-                    "classes/src/functions/adjoint.php",
-                    "classes/src/functions/antidiagonal.php",
-                    "classes/src/functions/cofactors.php",
-                    "classes/src/functions/determinant.php",
-                    "classes/src/functions/diagonal.php",
-                    "classes/src/functions/identity.php",
-                    "classes/src/functions/inverse.php",
-                    "classes/src/functions/minors.php",
-                    "classes/src/functions/trace.php",
-                    "classes/src/functions/transpose.php",
-                    "classes/src/operations/add.php",
-                    "classes/src/operations/directsum.php",
-                    "classes/src/operations/subtract.php",
-                    "classes/src/operations/multiply.php",
-                    "classes/src/operations/divideby.php",
-                    "classes/src/operations/divideinto.php"
+                    "classes/src/Functions/adjoint.php",
+                    "classes/src/Functions/antidiagonal.php",
+                    "classes/src/Functions/cofactors.php",
+                    "classes/src/Functions/determinant.php",
+                    "classes/src/Functions/diagonal.php",
+                    "classes/src/Functions/identity.php",
+                    "classes/src/Functions/inverse.php",
+                    "classes/src/Functions/minors.php",
+                    "classes/src/Functions/trace.php",
+                    "classes/src/Functions/transpose.php",
+                    "classes/src/Operations/add.php",
+                    "classes/src/Operations/directsum.php",
+                    "classes/src/Operations/subtract.php",
+                    "classes/src/Operations/multiply.php",
+                    "classes/src/Operations/divideby.php",
+                    "classes/src/Operations/divideinto.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3231,9 +3230,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MarkBaker/PHPMatrix/issues",
-                "source": "https://github.com/MarkBaker/PHPMatrix/tree/PHP8"
+                "source": "https://github.com/MarkBaker/PHPMatrix/tree/2.1.1"
             },
-            "time": "2020-08-28T17:11:00+00:00"
+            "time": "2021-01-21T13:53:09+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3842,60 +3841,6 @@
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
             "time": "2020-12-06T15:14:20+00:00"
-        },
-        {
-            "name": "paragonie/random_compat",
-            "version": "v2.0.19",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "446fc9faa5c2a9ddf65eb7121c0af7e857295241"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/446fc9faa5c2a9ddf65eb7121c0af7e857295241",
-                "reference": "446fc9faa5c2a9ddf65eb7121c0af7e857295241",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*|5.*"
-            },
-            "suggest": {
-                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/random.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paragon Initiative Enterprises",
-                    "email": "security@paragonie.com",
-                    "homepage": "https://paragonie.com"
-                }
-            ],
-            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-            "keywords": [
-                "csprng",
-                "polyfill",
-                "pseudorandom",
-                "random"
-            ],
-            "support": {
-                "email": "info@paragonie.com",
-                "issues": "https://github.com/paragonie/random_compat/issues",
-                "source": "https://github.com/paragonie/random_compat"
-            },
-            "time": "2020-10-15T10:06:57+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -4890,16 +4835,16 @@
         },
         {
             "name": "ramsey/collection",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/collection.git",
-                "reference": "a2a85f56ac8f0f973f0e43fcbad5464355bcfe1f"
+                "reference": "28a5c4ab2f5111db6a60b2b4ec84057e0f43b9c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/collection/zipball/a2a85f56ac8f0f973f0e43fcbad5464355bcfe1f",
-                "reference": "a2a85f56ac8f0f973f0e43fcbad5464355bcfe1f",
+                "url": "https://api.github.com/repos/ramsey/collection/zipball/28a5c4ab2f5111db6a60b2b4ec84057e0f43b9c1",
+                "reference": "28a5c4ab2f5111db6a60b2b4ec84057e0f43b9c1",
                 "shasum": ""
             },
             "require": {
@@ -4951,7 +4896,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/collection/issues",
-                "source": "https://github.com/ramsey/collection/tree/1.1.2"
+                "source": "https://github.com/ramsey/collection/tree/1.1.3"
             },
             "funding": [
                 {
@@ -4963,7 +4908,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-21T02:12:46+00:00"
+            "time": "2021-01-21T17:40:04+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -5578,16 +5523,16 @@
         },
         {
             "name": "square/square",
-            "version": "8.0.0.20201216",
+            "version": "8.1.0.20210121",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "26e3ee075b43ec1bedcbb9f61d446c82454070ee"
+                "reference": "9afc33f6152626b35e7572df27133545b1108364"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/26e3ee075b43ec1bedcbb9f61d446c82454070ee",
-                "reference": "26e3ee075b43ec1bedcbb9f61d446c82454070ee",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/9afc33f6152626b35e7572df27133545b1108364",
+                "reference": "9afc33f6152626b35e7572df27133545b1108364",
                 "shasum": ""
             },
             "require": {
@@ -5629,9 +5574,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/8.0.0.20201216"
+                "source": "https://github.com/square/square-php-sdk/tree/8.1.0.20210121"
             },
-            "time": "2020-12-16T18:24:37+00:00"
+            "time": "2021-01-21T18:18:38+00:00"
         },
         {
             "name": "subfission/cas",
@@ -9971,16 +9916,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v6.11.1",
+            "version": "v6.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "c24ff775c73442e3e132fbcd4bde9116f964a1e3"
+                "reference": "185a16ffa1ce56001e7a5559e2c1855c17bf5c29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/c24ff775c73442e3e132fbcd4bde9116f964a1e3",
-                "reference": "c24ff775c73442e3e132fbcd4bde9116f964a1e3",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/185a16ffa1ce56001e7a5559e2c1855c17bf5c29",
+                "reference": "185a16ffa1ce56001e7a5559e2c1855c17bf5c29",
                 "shasum": ""
             },
             "require": {
@@ -10052,7 +9997,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2021-01-17T23:13:04+00:00"
+            "time": "2021-01-21T01:13:06+00:00"
         },
         {
             "name": "phan/phan",

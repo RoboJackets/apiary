@@ -38,7 +38,8 @@
         "spatie/laravel-failed-job-monitor": "3.4.0",
         "spatie/laravel-permission": "3.18.0",
         "spatie/laravel-webhook-client": "2.7.5",
-        "square/square": "8.0.0.20201216",
+        "spatie/once": "^2.2",
+        "square/square": "8.1.0.20210121",
         "subfission/cas": "4.0.0",
         "ukfast/laravel-health-check": "1.8.0",
         "uxweb/sweet-alert": "2.0.5",
@@ -78,7 +79,8 @@
         "symfony/polyfill-php73": "*",
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-util": "*",
-        "symfony/polyfill-uuid": "*"
+        "symfony/polyfill-uuid": "*",
+        "paragonie/random_compat": "*"
     },
     "autoload": {
         "classmap": [
