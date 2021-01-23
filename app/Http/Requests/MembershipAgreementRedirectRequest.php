@@ -24,6 +24,11 @@ class MembershipAgreementRedirectRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'templateId' => [
+                'required',
+                'int',
+                'exists:membership_agreement_templates,id',
+            ],
             'over18' => [
                 'required',
                 'accepted',

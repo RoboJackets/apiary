@@ -19,6 +19,7 @@ Membership Agreement | {{ config('app.name') }}
 
 <form method="POST" action="{{ route('agreement.redirect') }}">
 @csrf
+<input type="hidden" name="templateId" value="{{ $template->id }}">
 <div class="form-check">
 <input type="checkbox" class="form-check-input" id="over18" name="over18" required>
 <label class="form-check-label" for="over18">I am over 18 years of age.</label>
