@@ -102,14 +102,11 @@
 </template>
 
 <script>
-import { required, alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
+import { alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
 import notGTEmail from '../../customValidators/notGTEmail';
 
 export default {
-  props: ['user', 'packageid'],
-  data() {
-    return {};
-  },
+  props: ['user'],
   methods: {
     submit() {
       if (this.$v.$invalid) {
