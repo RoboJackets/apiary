@@ -92,7 +92,6 @@ class SignatureController extends Controller
             'agreement.render',
             [
                 'text' => $template->renderForUser($user, $signature->electronic),
-                'template' => $template,
             ]
         );
     }
@@ -103,7 +102,7 @@ class SignatureController extends Controller
     public function redirect(MembershipAgreementRedirectRequest $request)
     {
         $user = $request->user();
-        $template = MembershipAgreementTemplate::where('id', $request->input('templateId'))->sole();
+        $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
         if ($user->hasSignedLatestAgreement()) {
             return view('agreement.alreadysigned');
