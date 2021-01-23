@@ -42,6 +42,9 @@ class StoreDuesTransactionRequest extends FormRequest
             'user_id' => [
                 'exists:users,id',
             ],
+            'merchandise.*' => [
+                'exists:merchandise,id',
+            ],
         ];
     }
 

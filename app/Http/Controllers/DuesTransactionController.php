@@ -7,7 +7,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
+use App\Models\Merchandise;
 use App\Models\User;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\AuthorizeInclude;
@@ -128,6 +130,61 @@ class DuesTransactionController extends Controller
             }
         }
 
+        if ($request->filled('merchandise')) {
+            $selectedMerch = collect($request->input('merchandise'));
+            $package = DuesPackage::find($request->input('dues_package_id'));
+            $groups = $package->merchandise->groupBy(static function (Merchandise $merch): string {
+                return $merch->pivot->group;
+            });
+
+            if (count($selectedMerch) !== $groups->count()) {
+                return response()->json(['status' => 'error',
+                    'message' => 'You must select one item of merchandise from every group.',
+                ], 422);
+            } elseif (count($selectedMerch) !== $selectedMerch->unique()) {
+                return response()->json(['status' => 'error',
+                    'message' => 'You cannot select duplicate merchandise.',
+                ], 422);
+            }
+
+            // For every merch group, ensure that one of the selected merch is in it. This assumes that merch is not
+            // in multiple groups.
+            $valid = $groups->every(function (Collection $collection, string $group) {
+                // Ensure one of the selectedMerch is contained in the group.
+                return $selectedMerch->contains(static function (int $selectedID): bool {
+                    $collection->contains('id', $selectedID);
+                });
+            });
+
+            if (! $valid) {
+                return response()->json(['status' => 'error',
+                    'message' => 'You must select one item of merchandise from every group.',
+                ], 422);
+            }
+
+            if (! $user->has_ordered_polo) {
+                // For each group, ensure that if there is a polo, the user selected it.
+                // This assumes that there are not multiple Merchandise in a group that start with Polo.
+                $selectedPolo = $groups->every(static function (Collection $collection): bool {
+                    $collectionContainsPolo = $collection->contains(static function (Merchandise $merch): bool {
+                        return Str::startsWith($merch->name, 'Polo ');
+                    });
+
+                    if ($collectionContainsPolo) {
+                        return $selectedMerch->contains($merch->id);
+                    }
+
+                    return true;
+                });
+
+                if (! $selectedPolo) {
+                    return response()->json(['status' => 'error',
+                        'message' => 'You have not ordered a polo before, so you must order a polo.',
+                    ]);
+                }
+            }
+        }
+
         // If there's an existing active transaction that hasn't been paid, delete it
         // and replace it with the one currently being requested
         if ($user->dues->count() > 0) {
@@ -156,6 +213,13 @@ class DuesTransactionController extends Controller
         }
 
         $dbTransact = DuesTransaction::findOrFail($transact->id);
+
+        if ($request->filled('merchandise')) {
+            $selectedMerch = collect($request->input('merchandise'));
+            $selectedMerch->each(static function (int $merch) use ($dbTransact): void {
+                $dbTransact->attach(Merchandise::find($merch));
+            });
+        }
 
         $user->notify(new Confirm($dbTransact->package));
 
