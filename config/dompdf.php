@@ -221,7 +221,7 @@ return [
         /**
          * A ratio applied to the fonts height to be more like browsers' line height.
          */
-        'font_height_ratio' => 1.1,
+        'font_height_ratio' => 1.05,
 
         /**
          * Use the more-than-experimental HTML5 Lib parser.
