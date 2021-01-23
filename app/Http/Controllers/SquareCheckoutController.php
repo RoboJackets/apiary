@@ -58,7 +58,7 @@ class SquareCheckoutController extends Controller
             $payment->amount = 0.00;
             $payment->method = 'square';
             $payment->recorded_by = $user->id;
-            $payment->unique_id = self::generateUniqueId();
+            $payment->unique_id = Payment::generateUniqueId();
             $payment->notes = 'Checkout flow started';
 
             $transaction->payment()->save($payment);
@@ -206,11 +206,6 @@ class SquareCheckoutController extends Controller
             case OrderState::OPEN:
                 return view('square.processing');
         }
-    }
-
-    private static function generateUniqueId(): string
-    {
-        return bin2hex(openssl_random_pseudo_bytes(32));
     }
 
     private static function calculateSurcharge(int $amount): int

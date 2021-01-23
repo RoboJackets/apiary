@@ -7,9 +7,6 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use Carbon\Carbon;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -18,10 +15,6 @@ use Laravel\Nova\Fields\ActionFields;
 
 class DistributePolo extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-
     /**
      * Perform the action on the given models.
      *

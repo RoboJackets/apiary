@@ -9,9 +9,6 @@ namespace App\Nova\Actions;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Notifications\Payment\ConfirmationNotification;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
@@ -21,10 +18,6 @@ use Laravel\Nova\Fields\Select;
 
 class AddPayment extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-
     /**
      * Perform the action on the given models.
      *
