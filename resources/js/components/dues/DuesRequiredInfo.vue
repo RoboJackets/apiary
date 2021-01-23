@@ -93,11 +93,13 @@ export default {
         this.createDuesRequest(this.localUser.id, this.duesPackageChoice),
       ])
         .then(response => {
+          this.$emit('packageselected', this.duesPackageChoice);
           this.$emit('next');
         })
         .catch(error => {
           console.log(error.response.status);
           if (error.response.status == 400) {
+            this.$emit('packageselected', this.duesPackageChoice);
             this.$emit('next');
           } else {
             console.log(error);
