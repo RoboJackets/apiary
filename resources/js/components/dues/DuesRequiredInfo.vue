@@ -26,6 +26,40 @@
           </div>
         </div>
 
+        <h4>Information for Apparel</h4>
+
+        <div class="form-group row">
+          <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
+          <div class="col-sm-10 col-lg-4">
+            <custom-radio-buttons
+              v-model="localUser.shirt_size"
+              :options="shirtSizeOptions"
+              id="user-shirtsize"
+              :is-error="$v.localUser.shirt_size.$error"
+              @input="$v.localUser.shirt_size.$touch()">
+            </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a shirt size.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
+          <div class="col-sm-10 col-lg-4">
+            <custom-radio-buttons
+              v-model="localUser.polo_size"
+              :options="shirtSizeOptions"
+              id="user-polosize"
+              :is-error="$v.localUser.polo_size.$error"
+              @input="$v.localUser.polo_size.$touch()">
+            </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a polo size.
+            </div>
+          </div>
+        </div>
+
         <h4>Membership Information</h4>
 
         <div class="form-group row">
@@ -61,6 +95,14 @@ export default {
   props: ['user'],
   data() {
     return {
+      shirtSizeOptions: [
+        { value: 's', text: 'S' },
+        { value: 'm', text: 'M' },
+        { value: 'l', text: 'L' },
+        { value: 'xl', text: 'XL' },
+        { value: 'xxl', text: 'XXL' },
+        { value: 'xxxl', text: 'XXXL' },
+      ],
       duesPackages: null,
       duesPackageChoice: '',
     };
@@ -90,6 +132,7 @@ export default {
       }
 
       Promise.all([
+        this.saveUserUpdates(this.localUser),
         this.createDuesRequest(this.localUser.id, this.duesPackageChoice),
       ])
         .then(response => {
@@ -110,6 +153,14 @@ export default {
             );
           }
         });
+    },
+    saveUserUpdates: function(user) {
+      var baseUserUrl = '/api/v1/users/';
+      var dataUserUrl = baseUserUrl + user.id;
+
+      delete this.localUser.dues;
+
+      return axios.put(dataUserUrl, this.localUser);
     },
     createDuesRequest: function(userId, duesPackageId) {
       var duesRequest = {
