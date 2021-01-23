@@ -1,12 +1,12 @@
 <template>
   <div>
     <div v-show="currentStepName == 'dues-required-info'">
-      <dues-required-info :user="user" @next="next" @back="back" @packageselected="packageSelected">
+      <dues-required-info :user="user" @next="next" @back="back">
       </dues-required-info>
     </div>
 
     <div v-show="currentStepName == 'dues-additional-info'">
-      <dues-additional-info :packageid="packageID" :user="user" @next="next" @back="back"></dues-additional-info>
+      <dues-additional-info :user="user" @next="next" @back="back"></dues-additional-info>
     </div>
 
     <div v-show="currentStepName == 'dues-demographics-info'">
@@ -70,7 +70,6 @@ export default {
       baseUrl: '/api/v1/users/',
       teamsUrl: '/api/v1/teams',
       teams: {},
-      packageID: -1,
     };
   },
   mounted() {
@@ -124,9 +123,6 @@ export default {
       } else {
         warn('No step to go back to');
       }
-    },
-    packageSelected: function(packageID) {
-      this.packageID = packageID;
     },
   },
   computed: {

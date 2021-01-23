@@ -26,7 +26,24 @@
           </div>
         </div>
 
-        <h4>Information for Apparel</h4>
+        <h4>Membership Information</h4>
+
+        <div class="form-group row">
+          <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>
+          <div class="col-sm-10 col-lg-4">
+            <select id="duesPackage" v-model="duesPackageChoice" class="custom-select" :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
+              <option value="" style="display:none" v-if="!duesPackages">Loading...</option>
+              <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages Available</option>
+              <option value="" style="display:none" v-if="duesPackages && duesPackages.length > 0">Select One</option>
+              <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}} - ${{duesPackage.cost}}</option>
+            </select>
+            <div class="invalid-feedback">
+              Select a dues package.
+            </div>
+          </div>
+        </div>
+
+        <h4>Information for Merchandise</h4>
 
         <div class="form-group row">
           <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
@@ -60,21 +77,20 @@
           </div>
         </div>
 
-        <h4>Membership Information</h4>
-
-        <div class="form-group row">
-          <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>
+        <h4>Merchandise Selection</h4>
+        <p>One item of RoboJackets merch from each group below is included with your dues payment. {{merchDependencyText}}</p>
+        <div v-for="(merchlist, group) in merchGroups" class="form-group row">
+          <label :for="'merch-'+group" class="col-sm-2 col-form-label">{{group}}</label>
           <div class="col-sm-10 col-lg-4">
-            <select id="duesPackage" v-model="duesPackageChoice" class="custom-select" :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
-              <option value="" style="display:none" v-if="!duesPackages">Loading...</option>
-              <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages Available</option>
-              <option value="" style="display:none" v-if="duesPackages && duesPackages.length > 0">Select One</option>
-              <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}} - ${{duesPackage.cost}}</option>
+            <select :id="'merch-'+group" class="custom-select" v-model="merchlist.selection">
+              <option value="" style="display:none">Select One</option>
+              <option v-for="merch in merchlist.list" :value="merch.id">{{merch.name}}</option>
             </select>
-            <div class="invalid-feedback">
-              Select a dues package.
-            </div>
           </div>
+        </div>
+        <div class="form-group row">
+          <pre v-if="null !== selectedPackage">{{ selectedPackage }}</pre>
+          <pre>{{ merchGroups }}</pre>
         </div>
 
         <div class="row">
@@ -105,10 +121,11 @@ export default {
       ],
       duesPackages: null,
       duesPackageChoice: '',
+      merchGroups: {},
     };
   },
   mounted() {
-    var dataUrl = '/api/v1/dues/packages/purchase';
+    var dataUrl = '/api/v1/dues/packages/purchase?include=merchandise';
     axios
       .get(dataUrl)
       .then(response => {
@@ -136,13 +153,11 @@ export default {
         this.createDuesRequest(this.localUser.id, this.duesPackageChoice),
       ])
         .then(response => {
-          this.$emit('packageselected', this.duesPackageChoice);
           this.$emit('next');
         })
         .catch(error => {
           console.log(error.response.status);
           if (error.response.status == 400) {
-            this.$emit('packageselected', this.duesPackageChoice);
             this.$emit('next');
           } else {
             console.log(error);
@@ -176,6 +191,34 @@ export default {
     localUser: function() {
       return this.user;
     },
+    selectedPackage: function() {
+      if (null === this.duesPackages) return null;
+      return this.duesPackages.find(duespackage => duespackage.id == this.duesPackageChoice);
+    },
+    merchDependencyText: function() {
+      var base = 'The options depend on your dues term selection above';
+      if (!this.selectedPackage) return base + ', so please select that first.';
+      else return base + '.';
+    },
+  },
+  watch: {
+    duesPackageChoice: function(packageid, old) {
+      if (null === this.selectedPackage) return;
+      var dataUrl = '/api/v1/dues/packages/' + packageid + '?include=merchandise';
+      this.merchGroups = {};
+      var tempthis = this;
+      this.selectedPackage.merchandise.forEach(function (merch) {
+        if (merch.group in tempthis.merchGroups) {
+          tempthis.merchGroups[merch.group].list.push(merch);
+        } else {
+          // Use .$set because if you add a property to an object without it, Vue will not follow its changes.
+          tempthis.$set(tempthis.merchGroups, merch.group, {
+            selection: -1,
+            list: [merch],
+          });
+        }
+      });
+    }
   },
   validations: {
     localUser: {
