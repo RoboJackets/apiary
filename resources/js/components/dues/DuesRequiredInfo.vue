@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <form id="DuesRequiredInfoForm" v-on:submit.prevent="submit">
-        <h3>GT Directory Info</h3>
+        <h4>GT Directory Info</h4>
         <p>Information obtained via GT Single Sign-On. Update at <a href="https://passport.gatech.edu">Passport</a>.</p>
 
         <div class="form-group row">
@@ -26,7 +26,7 @@
           </div>
         </div>
 
-        <h3>Information for Apparel</h3>
+        <h4>Information for Apparel</h4>
 
         <div class="form-group row">
           <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <h3>Membership Information</h3>
+        <h4>Membership Information</h4>
 
         <div class="form-group row">
           <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>

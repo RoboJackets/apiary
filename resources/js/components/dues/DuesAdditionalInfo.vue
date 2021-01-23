@@ -54,6 +54,39 @@
           </div>
         </div>
 
+        <h4>Information for Merchandise</h4>
+        <div class="form-group row">
+          <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
+          <div class="col-sm-10 col-lg-4">
+            <custom-radio-buttons
+              v-model="localUser.shirt_size"
+              :options="shirtSizeOptions"
+              id="user-shirtsize"
+              :is-error="$v.localUser.shirt_size.$error"
+              @input="$v.localUser.shirt_size.$touch()">
+            </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a shirt size.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
+          <div class="col-sm-10 col-lg-4">
+            <custom-radio-buttons
+              v-model="localUser.polo_size"
+              :options="shirtSizeOptions"
+              id="user-polosize"
+              :is-error="$v.localUser.polo_size.$error"
+              @input="$v.localUser.polo_size.$touch()">
+            </custom-radio-buttons>
+            <div class="invalid-feedback">
+              You must choose a polo size.
+            </div>
+          </div>
+        </div>
+
         <h4>Emergency Contact Information</h4>
         <p>You may optionally provide information on who to contact in the event of an emergency. This information is required should you go on any RoboJackets trips.</p>
 
@@ -102,11 +135,23 @@
 </template>
 
 <script>
-import { alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
+import { required, alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
 import notGTEmail from '../../customValidators/notGTEmail';
 
 export default {
   props: ['user'],
+  data() {
+    return {
+      shirtSizeOptions: [
+        { value: 's', text: 'S' },
+        { value: 'm', text: 'M' },
+        { value: 'l', text: 'L' },
+        { value: 'xl', text: 'XL' },
+        { value: 'xxl', text: 'XXL' },
+        { value: 'xxxl', text: 'XXXL' },
+      ],
+    };
+  },
   methods: {
     submit() {
       if (this.$v.$invalid) {
@@ -146,6 +191,8 @@ export default {
       preferred_first_name: { alpha },
       emergency_contact_name: {},
       emergency_contact_phone: { maxLength: maxLength(15) },
+      shirt_size: { required },
+      polo_size: { required },
     },
   },
 };
