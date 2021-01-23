@@ -101,9 +101,11 @@ class MigrateSwagData extends Migration
                         if ($merch->id === $shirt->id) {
                             $dt->swag_shirt_provided = $merch->pivot->provided_at;
                             $dt->swag_shirt_providedBy = $merch->pivot->provided_by;
+                            $dt->save();
                         } elseif ($merch->id === $polo->id) {
                             $dt->swag_polo_provided = $merch->pivot->provided_at;
                             $dt->swag_polo_providedBy = $merch->pivot->provided_by;
+                            $dt->save();
                         }
                         // phpcs:enable
                     });
