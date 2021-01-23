@@ -121,6 +121,7 @@ export default {
       duesPackages: null,
       duesPackageChoice: '',
       merchGroups: {},
+      merchGroupNames: [],
     };
   },
   mounted() {
@@ -149,7 +150,7 @@ export default {
 
       Promise.all([
         this.saveUserUpdates(this.localUser),
-        this.createDuesRequest(this.localUser.id, this.duesPackageChoice),
+        this.createDuesRequest(this.localUser.id, this.duesPackageChoice, this.merchGroups),
       ])
         .then(response => {
           this.$emit('next');
@@ -176,10 +177,15 @@ export default {
 
       return axios.put(dataUserUrl, this.localUser);
     },
-    createDuesRequest: function(userId, duesPackageId) {
+    createDuesRequest: function(userId, duesPackageId, merchGroups) {
+      var merch = [];
+      this.merchGroupNames.forEach(function(group) {
+        merch.push(merchGroups[group].selection);
+      });
       var duesRequest = {
         user_id: userId,
         dues_package_id: duesPackageId,
+        merchandise: merch,
       };
       var duesTransactionsUrl = '/api/v1/dues/transactions';
 
@@ -219,6 +225,7 @@ export default {
           groupNames.push(merch.group);
         }
       });
+      this.merchGroupNames = groupNames;
       // If the user has never ordered a polo, only give them the polo option if there is a polo option in a group.
       if (!this.user.has_ordered_polo) {
         groupNames.forEach(function (group) {
