@@ -47,6 +47,7 @@ class Merchandise extends Model
     {
         return $this->belongsToMany(DuesTransaction::class)
             ->withPivot(['provided_at', 'provided_by'])
-            ->withTimestamps();
+            ->withTimestamps()
+            ->using(DuesTransactionMerchandise::class);
     }
 }

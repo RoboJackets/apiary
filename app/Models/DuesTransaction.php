@@ -155,7 +155,10 @@ class DuesTransaction extends Model
 
     public function merchandise(): BelongsToMany
     {
-        return $this->belongsToMany(Merchandise::class)->withPivot(['provided_at', 'provided_by'])->withTimestamps();
+        return $this->belongsToMany(Merchandise::class)
+            ->withPivot(['provided_at', 'provided_by'])
+            ->withTimestamps()
+            ->using(DuesTransactionMerchandise::class);
     }
 
     /**
