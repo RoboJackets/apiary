@@ -8,10 +8,13 @@ import Vue from 'vue'
 import Bugsnag from '@bugsnag/js'
 import BugsnagPluginVue from '@bugsnag/plugin-vue'
 
-Bugsnag.start({
-    apiKey: document.head.querySelector('meta[name="bugsnag-api-key"]').content,
-    plugins: [new BugsnagPluginVue()]
-})
+var bugsnagKey = document.head.querySelector('meta[name="bugsnag-api-key"]').content;
+if (bugsnagKey) {
+    Bugsnag.start({
+        apiKey: bugsnagKey,
+        plugins: [new BugsnagPluginVue()]
+    })
+}
 
 require('./bootstrap');
 var axios = require('axios');
@@ -20,8 +23,9 @@ var axios = require('axios');
 import Swal from 'sweetalert2';
 window.Swal = Swal;
 
-Bugsnag.getPlugin('vue')
-  .installVueErrorHandler(Vue)
+if (bugsnagKey) {
+    Bugsnag.getPlugin('vue').installVueErrorHandler(Vue)
+}
 
 // Import the Vuelidate validation plugin
 import Vuelidate from 'vuelidate';
