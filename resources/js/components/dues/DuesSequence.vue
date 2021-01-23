@@ -74,6 +74,7 @@ export default {
       dataUrl: '',
       baseUrl: '/api/v1/users/',
       teamsUrl: '/api/v1/teams',
+      teams: {},
     };
   },
   mounted() {
