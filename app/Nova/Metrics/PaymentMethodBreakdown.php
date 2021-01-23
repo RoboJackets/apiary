@@ -28,6 +28,7 @@ class PaymentMethodBreakdown extends Partition
         return $this->result(
             Payment::where('payable_type', DuesTransaction::getMorphClassStatic())
                     ->where('amount', '>', 0)
+                    ->where('method', '!=', 'waiver')
                     ->whereIn('payable_id', static function (Builder $query) use ($request): void {
                         $query->select('id')
                             ->from('dues_transactions')

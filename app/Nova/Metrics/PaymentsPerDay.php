@@ -20,6 +20,7 @@ class PaymentsPerDay extends Trend
             $request,
             Payment::select('payments.updated_at')
                 ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'waiver')
                 ->where('payments.method', '!=', 'unknown'),
             'payments.updated_at'
         )->showLatestValue();

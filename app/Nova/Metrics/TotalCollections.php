@@ -20,6 +20,7 @@ class TotalCollections extends Value
     {
         $query = Payment::selectRaw('(sum(payments.amount) - sum(payments.processing_fee)) as revenue')
             ->where('payable_type', DuesTransaction::getMorphClassStatic())
+            ->where('method', '!=', 'waiver')
             ->whereIn('payable_id', static function (Builder $q) use ($request): void {
                 $q->select('id')
                     ->from('dues_transactions')
