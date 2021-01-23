@@ -16,7 +16,7 @@
 
 @markdown($text)
 <hr>
-<p>By signing below, I/we, the Participant and Guardian, if applicable, have read and agree to the above membership agreement.</p>
+<p>By signing below, I/we, the Participant and Guardian, if applicable, affirm that I/we have read and agree to the above membership agreement.</p>
 <br><br>
 
 <div>
