@@ -38,7 +38,7 @@
         "spatie/laravel-failed-job-monitor": "3.4.0",
         "spatie/laravel-permission": "3.18.0",
         "spatie/laravel-webhook-client": "2.7.5",
-        "spatie/once": "^2.2",
+        "spatie/once": "2.2.1",
         "square/square": "8.1.0.20210121",
         "subfission/cas": "4.0.0",
         "ukfast/laravel-health-check": "1.8.0",
