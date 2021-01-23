@@ -39,6 +39,7 @@ class DuesTransaction extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'package' => new DuesPackageResource($this->whenLoaded('package')),
             'payment' => PaymentResource::collection($this->whenLoaded('payment')),
+            'merchandise' => Merchandise::collection($this->whenLoaded('merchandise')),
         ];
     }
 }

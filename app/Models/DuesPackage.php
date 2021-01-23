@@ -225,6 +225,7 @@ class DuesPackage extends Model
     {
         return [
             'transactions' => 'dues-transactions',
+            'merchandise' => 'merchandise',
         ];
     }
 }

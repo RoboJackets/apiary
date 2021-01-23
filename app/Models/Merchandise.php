@@ -50,4 +50,17 @@ class Merchandise extends Model
             ->withTimestamps()
             ->using(DuesTransactionMerchandise::class);
     }
+
+    /**
+     * Map of relationships to permissions for dynamic inclusion.
+     *
+     * @return array<string,string>
+     */
+    public function getRelationshipPermissionMap(): array
+    {
+        return [
+            'packages' => 'dues-packages',
+            'transactions' => 'dues-transactions',
+        ];
+    }
 }

@@ -35,6 +35,7 @@ class DuesPackage extends JsonResource
 
             // Relationships
             'transactions' => DuesTransactionResource::collection($this->whenLoaded('transactions')),
+            'merchandise' => Merchandise::collection($this->whenLoaded('merchandise')),
         ];
     }
 }

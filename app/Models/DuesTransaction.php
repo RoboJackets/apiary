@@ -215,6 +215,7 @@ class DuesTransaction extends Model
             'package' => 'dues-packages',
             'payment' => 'payments',
             'user.teams' => 'teams-membership',
+            'merchandise' => 'merchandise',
         ];
     }
 
