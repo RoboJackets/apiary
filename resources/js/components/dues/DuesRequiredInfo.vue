@@ -91,10 +91,6 @@
             </div>
           </div>
         </div>
-        <div class="form-group row">
-          <pre v-if="null !== selectedPackage">{{ selectedPackage }}</pre>
-          <pre>{{ merchGroups }}</pre>
-        </div>
 
         <div class="row">
           <div class="col-lg-6 col-12">
