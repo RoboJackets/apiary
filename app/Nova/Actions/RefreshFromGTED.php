@@ -5,19 +5,12 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
 class RefreshFromGTED extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-
     /**
      * The displayable name of the action.
      *

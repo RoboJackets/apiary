@@ -172,4 +172,9 @@ class Payment extends Model
         $this->entry_method = $transaction->entry_method;
         $this->save();
     }
+
+    public static function generateUniqueId(): string
+    {
+        return bin2hex(openssl_random_pseudo_bytes(32));
+    }
 }
