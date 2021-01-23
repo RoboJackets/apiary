@@ -223,7 +223,7 @@ export default {
       // If the user has never ordered a polo, only give them the polo option if there is a polo option in a group.
       if (!this.user.has_ordered_polo) {
         groupNames.forEach(function (group) {
-          var polo = tempthis.merchGroups[group].list.find(merch => merch.name == 'Polo');
+          var polo = tempthis.merchGroups[group].list.find(merch => merch.name.startsWith('Polo '));
           if (polo) {
             tempthis.merchGroups[group].list = [polo];
           }

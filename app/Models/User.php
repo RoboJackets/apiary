@@ -469,7 +469,7 @@ class User extends Authenticatable
     public function getHasOrderedPoloAttribute(): bool
     {
         return $this->paidDues()->whereHas('merchandise', static function (Builder $q): void {
-            $q->where('name', 'Polo');
+            $q->where('name', 'like', 'Polo %');
         })->exists();
     }
 

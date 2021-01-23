@@ -69,7 +69,9 @@ class Merchandise extends Resource
     {
         return [
             Text::make('Name')
-                ->rules('required'),
+                ->rules('required')
+                ->creationRules('unique:merchandise,name')
+                ->updateRules('unique:merchandise,name,{{resourceId}}'),
 
             BelongsTo::make('Fiscal Year', 'fiscalYear'),
 

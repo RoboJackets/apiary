@@ -20,17 +20,18 @@ class MigrateSwagData extends Migration
                 return;
             }
 
+            $startingYear = $fy->ending_year - 1;
+            $endingYear = $fy->ending_year;
+            $yearRangeStr = $startingYear.'-'.$endingYear;
+
             $shirt = Merchandise::firstOrCreate([
-                'name' => 'T-Shirt',
+                'name' => 'T-Shirt '.$yearRangeStr,
                 'fiscal_year_id' => $fy->id,
             ]);
             $polo = Merchandise::firstOrCreate([
-                'name' => 'Polo',
+                'name' => 'Polo'.$yearRangeStr,
                 'fiscal_year_id' => $fy->id,
             ]);
-
-            $startingYear = $fy->ending_year - 1;
-            $endingYear = $fy->ending_year;
 
             $fallPackageName = 'Fall '.$startingYear;
             $springPackageName = 'Spring '.$endingYear;
@@ -85,12 +86,16 @@ class MigrateSwagData extends Migration
     public function down(): void
     {
         FiscalYear::get()->each(static function (FiscalYear $fy): void {
+            $startingYear = $fy->ending_year - 1;
+            $endingYear = $fy->ending_year;
+            $yearRangeStr = $startingYear.'-'.$endingYear;
+
             $shirt = Merchandise::firstOrCreate([
-                'name' => 'T-Shirt',
+                'name' => 'T-Shirt '.$yearRangeStr,
                 'fiscal_year_id' => $fy->id,
             ]);
             $polo = Merchandise::firstOrCreate([
-                'name' => 'Polo',
+                'name' => 'Polo'.$yearRangeStr,
                 'fiscal_year_id' => $fy->id,
             ]);
 

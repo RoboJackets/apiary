@@ -15,7 +15,7 @@ class CreateNewSwagTables extends Migration
     {
         Schema::create('merchandise', static function (Blueprint $table): void {
             $table->id();
-            $table->string('name', 255);
+            $table->string('name', 255)->unique();
             $table->foreignId('fiscal_year_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
