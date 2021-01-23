@@ -67,6 +67,9 @@ class User extends JsonResource
             'autodesk_email' => $this->autodesk_email,
             'autodesk_invite_pending' => $this->autodesk_invite_pending,
             'exists_in_sums' => $this->exists_in_sums,
+            $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-dues-transactions'), [
+                'has_ordered_polo' => $this->has_ordered_polo,
+            ]),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,

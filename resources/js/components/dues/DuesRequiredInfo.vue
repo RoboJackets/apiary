@@ -207,6 +207,7 @@ export default {
       var dataUrl = '/api/v1/dues/packages/' + packageid + '?include=merchandise';
       this.merchGroups = {};
       var tempthis = this;
+      var groupNames = [];
       this.selectedPackage.merchandise.forEach(function (merch) {
         if (merch.group in tempthis.merchGroups) {
           tempthis.merchGroups[merch.group].list.push(merch);
@@ -216,8 +217,18 @@ export default {
             selection: -1,
             list: [merch],
           });
+          groupNames.push(merch.group);
         }
       });
+      // If the user has never ordered a polo, only give them the polo option if there is a polo option in a group.
+      if (!this.user.has_ordered_polo) {
+        groupNames.forEach(function (group) {
+          var polo = tempthis.merchGroups[group].list.find(merch => merch.name == 'Polo');
+          if (polo) {
+            tempthis.merchGroups[group].list = [polo];
+          }
+        });
+      }
     }
   },
   validations: {
