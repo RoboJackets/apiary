@@ -32,6 +32,7 @@ class MigrateSwagData extends Migration
                 'name' => 'Polo '.$yearRangeStr,
                 'fiscal_year_id' => $fy->id,
             ]);
+            // This deliberately doesn't create the Waive packages because nobody would have selected it historically.
 
             $fallPackageName = 'Fall '.$startingYear;
             $springPackageName = 'Spring '.$endingYear;

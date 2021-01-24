@@ -50,6 +50,14 @@ class CreateDuesPackages extends Action
             'name' => 'Polo '.$yearRangeStr,
             'fiscal_year_id' => $fiscalYear->id,
         ]);
+        $waiveShirt = Merchandise::firstOrCreate([
+            'name' => 'Waive Fall '.$startingYear.' Merchandise',
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
+        $waivePolo = Merchandise::firstOrCreate([
+            'name' => 'Waive Spring '.$endingYear.' Merchandise',
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
 
         $fallPackageName = 'Fall '.$startingYear;
         $springPackageName = 'Spring '.$endingYear;
@@ -78,6 +86,7 @@ class CreateDuesPackages extends Action
             $duesPackage->restricted_to_students = true;
             $duesPackage->save();
             $duesPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
+            $duesPackage->merchandise()->attach($waiveShirt, ['group' => 'Fall']);
 
             $createdPackages++;
         }
@@ -95,6 +104,7 @@ class CreateDuesPackages extends Action
             $duesPackage->restricted_to_students = true;
             $duesPackage->save();
             $duesPackage->merchandise()->attach($polo, ['group' => 'Spring']);
+            $duesPackage->merchandise()->attach($waivePolo, ['group' => 'Spring']);
 
             $createdPackages++;
         }
@@ -116,7 +126,9 @@ class CreateDuesPackages extends Action
             )->firstOrFail()->id;
             $duesPackage->save();
             $duesPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
+            $duesPackage->merchandise()->attach($waiveShirt, ['group' => 'Fall']);
             $duesPackage->merchandise()->attach($polo, ['group' => 'Spring']);
+            $duesPackage->merchandise()->attach($waivePolo, ['group' => 'Spring']);
 
             $createdPackages++;
         }
