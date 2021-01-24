@@ -17,6 +17,8 @@ use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class DuesTransactionController extends Controller
 {
@@ -141,7 +143,9 @@ class DuesTransactionController extends Controller
                 return response()->json(['status' => 'error',
                     'message' => 'You must select one item of merchandise from every group.',
                 ], 422);
-            } elseif (count($selectedMerch) !== $selectedMerch->unique()) {
+            }
+
+            if (count($selectedMerch) !== $selectedMerch->unique()->count()) {
                 return response()->json(['status' => 'error',
                     'message' => 'You cannot select duplicate merchandise.',
                 ], 422);
@@ -149,9 +153,9 @@ class DuesTransactionController extends Controller
 
             // For every merch group, ensure that one of the selected merch is in it. This assumes that merch is not
             // in multiple groups.
-            $valid = $groups->every(function (Collection $collection, string $group) {
+            $valid = $groups->every(static function (Collection $collection) use ($selectedMerch): bool {
                 // Ensure one of the selectedMerch is contained in the group.
-                return $selectedMerch->contains(static function (int $selectedID): bool {
+                return $selectedMerch->contains(static function (int $selectedID) use ($collection): bool {
                     $collection->contains('id', $selectedID);
                 });
             });
@@ -165,13 +169,13 @@ class DuesTransactionController extends Controller
             if (! $user->has_ordered_polo) {
                 // For each group, ensure that if there is a polo, the user selected it.
                 // This assumes that there are not multiple Merchandise in a group that start with Polo.
-                $selectedPolo = $groups->every(static function (Collection $collection): bool {
-                    $collectionContainsPolo = $collection->contains(static function (Merchandise $merch): bool {
+                $selectedPolo = $groups->every(static function (Collection $collection) use ($selectedMerch): bool {
+                    $polo = $collection->first(static function (Merchandise $merch): bool {
                         return Str::startsWith($merch->name, 'Polo ');
                     });
 
-                    if ($collectionContainsPolo) {
-                        return $selectedMerch->contains($merch->id);
+                    if (null !== $polo) {
+                        return $selectedMerch->contains($polo->id);
                     }
 
                     return true;
@@ -217,7 +221,7 @@ class DuesTransactionController extends Controller
         if ($request->filled('merchandise')) {
             $selectedMerch = collect($request->input('merchandise'));
             $selectedMerch->each(static function (int $merch) use ($dbTransact): void {
-                $dbTransact->attach(Merchandise::find($merch));
+                $dbTransact->merchandise()->attach(Merchandise::find($merch));
             });
         }
 
