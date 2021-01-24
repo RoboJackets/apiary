@@ -197,13 +197,18 @@ export default {
       return this.user;
     },
     selectedPackage: function() {
-      if (null === this.duesPackages) return null;
+      if (null === this.duesPackages) {
+        return null;
+      }
       return this.duesPackages.find(duespackage => duespackage.id == this.duesPackageChoice);
     },
     merchDependencyText: function() {
       var base = 'The options depend on your dues term selection above';
-      if (!this.selectedPackage) return base + ', so please select that first.';
-      else return base + '.';
+      if (!this.selectedPackage) {
+        return base + ', so please select that first.';
+      } else {
+        return base + '.';
+      }
     },
   },
   watch: {
