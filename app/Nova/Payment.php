@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
 namespace App\Nova;
 
 use App\Models\Payment as AppModelsPayment;
+use App\Models\User as AppModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -13,11 +16,14 @@ use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
+use Square\Models\OrderState;
+use Square\SquareClient;
 
 /**
  * A Nova resource for payments.
  *
  * @property string $method
+ * @property ?string $order_id
  */
 class Payment extends Resource
 {
@@ -126,6 +132,24 @@ class Payment extends Resource
             Text::make('Order ID')
                 ->onlyOnDetail(),
 
+            Text::make('Order State (retrieved from Square)', function (): ?string {
+                if (null === $this->order_id) {
+                    return null;
+                }
+
+                return (new SquareClient(
+                    [
+                        'accessToken' => config('square.access_token'),
+                        'environment' => config('square.environment'),
+                    ]
+                ))->getOrdersApi()
+                ->retrieveOrder($this->order_id)
+                ->getResult()
+                ->getOrder()
+                ->getState();
+            })
+                ->onlyOnDetail(),
+
             Text::make('Card Brand')
                 ->onlyOnDetail(),
 
@@ -150,5 +174,66 @@ class Payment extends Resource
             Text::make('Receipt URL')
                 ->onlyOnDetail(),
         ];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    public function actions(Request $request): array
+    {
+        return [
+            (new Actions\ResetIdempotencyKey())->canSee(static function (Request $request): bool {
+                $payment = AppModelsPayment::find($request->resourceId);
+
+                if (null !== $payment && is_a($payment, AppModelsPayment::class)) {
+                    return self::canResetKey($request->user(), $payment);
+                }
+
+                return $request->user()->can('delete-payments');
+            })->canRun(static function (Request $request, AppModelsPayment $payment): bool {
+                return self::canResetKey($request->user(), $payment);
+            })->confirmText(
+                'Are you sure you want to reset the idempotency key for this payment? This can result in duplicate'
+                .'payments and should only be used if you are sure that the associated Square order is canceled.'
+            )->confirmButtonText(
+                'Reset Idempotency Key'
+            ),
+        ];
+    }
+
+    private static function canResetKey(AppModelsUser $user, AppModelsPayment $payment): bool
+    {
+        if ($payment->amount > 0) {
+            return false;
+        }
+
+        if (null === $payment->unique_id) {
+            return false;
+        }
+
+        $order_id = $payment->order_id;
+
+        if (null === $order_id) {
+            return false;
+        }
+
+        if (
+            OrderState::COMPLETED === (new SquareClient(
+                [
+                    'accessToken' => config('square.access_token'),
+                    'environment' => config('square.environment'),
+                ]
+            ))->getOrdersApi()
+            ->retrieveOrder($order_id)
+            ->getResult()
+            ->getOrder()
+            ->getState()
+        ) {
+            return false;
+        }
+
+        return $user->can('delete-payments');
     }
 }

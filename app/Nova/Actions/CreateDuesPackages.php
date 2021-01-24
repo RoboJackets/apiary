@@ -65,7 +65,7 @@ class CreateDuesPackages extends Action
         $springAccessStart = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
         $springAccessEnd = Carbon::create($endingYear, 9, 31, 12, 0, 0, config('app.timezone'));
 
-        if (0 === DuesPackage::where('name', $fallPackageName)->count()) {
+        if (DuesPackage::where('name', $fallPackageName)->doesntExist()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $fallPackageName;
             $duesPackage->effective_start = $fallEffectiveStart;
@@ -82,7 +82,7 @@ class CreateDuesPackages extends Action
             $createdPackages++;
         }
 
-        if (0 === DuesPackage::where('name', $springPackageName)->count()) {
+        if (DuesPackage::where('name', $springPackageName)->doesntExist()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $springPackageName;
             $duesPackage->effective_start = $springEffectiveStart;
@@ -99,7 +99,7 @@ class CreateDuesPackages extends Action
             $createdPackages++;
         }
 
-        if (0 === DuesPackage::where('name', $studentFullYear)->count()) {
+        if (DuesPackage::where('name', $studentFullYear)->doesntExist()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $studentFullYear;
             $duesPackage->effective_start = $fallEffectiveStart;
@@ -121,7 +121,7 @@ class CreateDuesPackages extends Action
             $createdPackages++;
         }
 
-        if (0 === DuesPackage::where('name', $nonStudentFullYear)->count() && true === $fields->non_student) {
+        if (DuesPackage::where('name', $nonStudentFullYear)->doesntExist() && true === $fields->non_student) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $nonStudentFullYear;
             $duesPackage->effective_start = $fallEffectiveStart;

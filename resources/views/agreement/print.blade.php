@@ -12,8 +12,12 @@
 </head>
 <body>
 
+<p>Revised {{ $template->updated_at }}</p>
+
 @markdown($text)
-<br><br><br>
+<hr>
+<p>By signing below, I/we, the Participant and Guardian, if applicable, affirm that I/we have read and agree to the above membership agreement.</p>
+<br><br>
 
 <div>
   <span class="alignleft">_________________________</span>
@@ -26,7 +30,7 @@
 </div>
 <div style="clear: both;"></div>
 
-<br><br><br>
+<br><br>
 
 <div>
   <span class="alignleft">_________________________</span>
@@ -37,6 +41,5 @@
   <span class="alignleft">Parent or Guardian Signature</span>
   <span class="alignright">Date</span>
 </div>
-<div style="clear: both;"></div>
 </body>
 </html>

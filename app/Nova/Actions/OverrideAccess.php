@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\MembershipAgreementTemplate;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +14,6 @@ use Laravel\Nova\Fields\Date;
 
 class OverrideAccess extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-
     /**
      * Perform the action on the given models.
      *

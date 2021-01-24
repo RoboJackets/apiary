@@ -46,7 +46,7 @@ class SignatureController extends Controller
             'agreement.print',
             [
                 'text' => $template->renderForUser($user, $signature->electronic),
-                'user' => $user,
+                'template' => $template,
             ]
         )->stream('agreement.pdf');
     }

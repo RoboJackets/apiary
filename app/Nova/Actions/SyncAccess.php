@@ -5,19 +5,12 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Jobs\PushToJedi;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
 class SyncAccess extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-
     /**
      * Perform the action on the given models.
      *
