@@ -41,6 +41,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
 
         if ('COMPLETED' !== $details['status']) {
             Log::warning('Payment for Order ID '.$details['order_id'].'was pushed as '.$details['status']);
+
             return;
         }
 
