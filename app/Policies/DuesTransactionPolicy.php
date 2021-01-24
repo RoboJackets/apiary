@@ -46,4 +46,19 @@ class DuesTransactionPolicy
     {
         return false;
     }
+
+    public function attachMerchandise(User $user, DuesTransaction $merch): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function attachAnyMerchandise(User $user, DuesTransaction $merch): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function detachMerchandise(User $user, DuesTransaction $merch): bool
+    {
+        return $user->hasRole('admin');
+    }
 }

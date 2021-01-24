@@ -67,4 +67,34 @@ class MerchandisePolicy
     {
         return false;
     }
+
+    public function attachDuesTransaction(User $user, Merchandise $duesTransaction): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function attachAnyDuesTransaction(User $user, Merchandise $duesTransaction): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function detachDuesTransaction(User $user, Merchandise $duesTransaction): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function attachDuesPackage(User $user, Merchandise $duesPackage): bool
+    {
+        return $user->can('create-merchandise');
+    }
+
+    public function attachAnyDuesPackage(User $user, Merchandise $duesPackage): bool
+    {
+        return $user->can('create-merchandise');
+    }
+
+    public function detachDuesPackage(User $user, Merchandise $duesPackage): bool
+    {
+        return $user->can('create-merchandise');
+    }
 }
