@@ -49,7 +49,7 @@
                                 Updated Membership Agreement
                             </h4>
                             <p class="card-text">
-                                We have revised our membership agreement. Please review and sign it to maintain your membership.
+                                The RoboJackets membership agreement has changed since the last time you signed it.  Please review and sign the updated version to continue your membership.
                             </p>
                         @endif
                             <a href="{{ route('agreement.render') }}">Sign Electronically</a> or <a href="{{ route('agreement.print') }}">Print</a>
