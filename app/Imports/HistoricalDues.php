@@ -121,8 +121,6 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
                     'user_id' => $user->id,
                 ]
             );
-            $transaction->swag_shirt_provided = self::guessShirtProvided($row);
-            $transaction->swag_polo_provided = self::guessPoloProvided($row);
             $transaction->save();
 
             $date = null;
@@ -400,63 +398,6 @@ class HistoricalDues implements WithHeadingRow, WithProgressBar, OnEachRow
         }
 
         return [];
-    }
-
-    /**
-     * Guesses whether the shirt was provided.
-     *
-     * @param array<string,string|int|null> $row
-     */
-    private static function guessShirtProvided(array $row): ?Carbon
-    {
-        $candidateColumns = [
-            'fall_received_shirt',
-            'fall_recieved_shirt',
-            'recieved_t_shirt',
-            'recieved_shirt',
-            'received_shirt',
-            'received_shirt_spring',
-            'received_shirt_fall',
-        ];
-
-        foreach ($candidateColumns as $column) {
-            if (
-                array_key_exists($column, $row)
-                && (1 === $row[$column] || 'Yes' === $row[$column] || 'Y' === $row[$column])
-            ) {
-                return Carbon::now();
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Guesses whether the polo was provided.
-     *
-     * @param array<string,string|int|null> $row
-     */
-    private static function guessPoloProvided(array $row): ?Carbon
-    {
-        $candidateColumns = [
-            'spring_received_shirt',
-            'spring_recieved_shirt',
-            'received_polo',
-            'recieved_polo',
-            'received_polo_fall',
-            'received_polo_spring',
-        ];
-
-        foreach ($candidateColumns as $column) {
-            if (
-                array_key_exists($column, $row)
-                && (1 === $row[$column] || 'Yes' === $row[$column] || 'Y' === $row[$column])
-            ) {
-                return Carbon::now();
-            }
-        }
-
-        return null;
     }
 
     private static function guessPayment(DuesTransaction $transaction, ?string $date): void
