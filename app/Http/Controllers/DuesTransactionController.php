@@ -134,7 +134,7 @@ class DuesTransactionController extends Controller
 
         if ($request->filled('merchandise')) {
             $selectedMerch = collect($request->input('merchandise'));
-            $package = DuesPackage::find($request->input('dues_package_id'));
+            $package = DuesPackage::where('id', $request->input('dues_package_id'))->firstOrFail();
             $groups = $package->merchandise->groupBy(static function (Merchandise $merch): string {
                 return $merch->pivot->group;
             });
@@ -156,7 +156,7 @@ class DuesTransactionController extends Controller
             $valid = $groups->every(static function (Collection $collection) use ($selectedMerch): bool {
                 // Ensure one of the selectedMerch is contained in the group.
                 return $selectedMerch->contains(static function (int $selectedID) use ($collection): bool {
-                    $collection->contains('id', $selectedID);
+                    return $collection->contains('id', $selectedID);
                 });
             });
 
