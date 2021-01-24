@@ -102,7 +102,7 @@ class DuesTransactionController extends Controller
 
         if ($request->filled('merchandise')) {
             $selectedMerch = collect($request->input('merchandise'));
-            $package = DuesPackage::where('id', $request->input('dues_package_id'))->sole();
+            $package = (DuesPackage) DuesPackage::where('id', $request->input('dues_package_id'))->sole();
             $groups = $package->merchandise->groupBy(static function (Merchandise $merch): string {
                 return $merch->pivot->group;
             });
