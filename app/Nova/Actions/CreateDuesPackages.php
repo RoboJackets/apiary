@@ -39,6 +39,16 @@ class CreateDuesPackages extends Action
 
         $startingYear = $fiscalYear->ending_year - 1;
         $endingYear = $fiscalYear->ending_year;
+        $yearRangeStr = $startingYear.'-'.$endingYear;
+
+        $shirt = Merchandise::firstOrCreate([
+            'name' => 'T-Shirt '.$yearRangeStr,
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
+        $polo = Merchandise::firstOrCreate([
+            'name' => 'Polo'.$yearRangeStr,
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
 
         $fallPackageName = 'Fall '.$startingYear;
         $springPackageName = 'Spring '.$endingYear;
@@ -66,6 +76,7 @@ class CreateDuesPackages extends Action
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
             $duesPackage->save();
+            $duesPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
 
             $createdPackages++;
         }
@@ -82,6 +93,7 @@ class CreateDuesPackages extends Action
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
             $duesPackage->save();
+            $duesPackage->merchandise()->attach($polo, ['group' => 'Spring']);
 
             $createdPackages++;
         }
@@ -102,6 +114,8 @@ class CreateDuesPackages extends Action
                 $fallPackageName
             )->firstOrFail()->id;
             $duesPackage->save();
+            $duesPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
+            $duesPackage->merchandise()->attach($polo, ['group' => 'Spring']);
 
             $createdPackages++;
         }
@@ -118,6 +132,7 @@ class CreateDuesPackages extends Action
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = false;
             $duesPackage->save();
+            // Non-students don't get the merch options
 
             $createdPackages++;
         }
