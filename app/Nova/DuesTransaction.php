@@ -100,49 +100,6 @@ class DuesTransaction extends Resource
 
             BelongsToMany::make('Merchandise', 'merchandise'),
 
-            // TODO: remove old swag fields
-            Text::make('Shirt Status', 'swag_shirt_status')
-                ->onlyOnIndex(),
-
-            Text::make('Polo Status', 'swag_polo_status')
-                ->onlyOnIndex(),
-
-            new Panel(
-                'T-Shirt Distribution',
-                [
-                    Text::make('Status', 'swag_shirt_status')
-                        ->onlyOnDetail(),
-                    Text::make('Size', function (): ?string {
-                        $shirt_size = $this->user->shirt_size;
-
-                        return null === $shirt_size ? null : AppModelsUser::$shirt_sizes[$shirt_size];
-                    })->onlyOnDetail(),
-                    DateTime::make('Timestamp', 'swag_shirt_provided')
-                        ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swagShirtProvidedBy', User::class)
-                        ->help('The user that recorded the distribution of the t-shirt')
-                        ->onlyOnDetail(),
-                ]
-            ),
-
-            new Panel(
-                'Polo Distribution',
-                [
-                    Text::make('Status', 'swag_polo_status')
-                        ->onlyOnDetail(),
-                    Text::make('Size', function (): ?string {
-                        $polo_size = $this->user->polo_size;
-
-                        return null === $polo_size ? null : AppModelsUser::$shirt_sizes[$polo_size];
-                    })->onlyOnDetail(),
-                    DateTime::make('Timestamp', 'swag_polo_provided')
-                        ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swagPoloProvidedBy', User::class)
-                        ->help('The user that recorded the distribution of the polo')
-                        ->onlyOnDetail(),
-                ]
-            ),
-
             MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
 
@@ -160,10 +117,8 @@ class DuesTransaction extends Resource
         return $request->user()->can('read-teams-membership') ? [
             new Filters\DuesTransactionTeam(),
             new Filters\DuesTransactionPaymentStatus(),
-            new Filters\DuesTransactionSwagStatus(),
         ] : [
             new Filters\DuesTransactionPaymentStatus(),
-            new Filters\DuesTransactionSwagStatus(),
         ];
     }
 
@@ -175,48 +130,6 @@ class DuesTransaction extends Resource
     public function actions(Request $request): array
     {
         return [
-            (new Actions\DistributeShirt())->canSee(static function (Request $request): bool {
-                $transaction = AppModelsDuesTransaction::find($request->resourceId);
-
-                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
-                    if (! $transaction->package->eligible_for_shirt) {
-                        return false;
-                    }
-
-                    if (! $transaction->is_paid) {
-                        return false;
-                    }
-
-                    if (null !== $transaction->swag_shirt_provided) {
-                        return false;
-                    }
-                }
-
-                return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
-                return $request->user()->can('distribute-swag');
-            }),
-            (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
-                $transaction = AppModelsDuesTransaction::find($request->resourceId);
-
-                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
-                    if (! $transaction->package->eligible_for_polo) {
-                        return false;
-                    }
-
-                    if (! $transaction->is_paid) {
-                        return false;
-                    }
-
-                    if (null !== $transaction->swag_polo_provided) {
-                        return false;
-                    }
-                }
-
-                return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
-                return $request->user()->can('distribute-swag');
-            }),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
                 $transaction = AppModelsDuesTransaction::find($request->resourceId);
 

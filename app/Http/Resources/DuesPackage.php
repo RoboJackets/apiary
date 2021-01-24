@@ -26,8 +26,6 @@ class DuesPackage extends JsonResource
             'available_for_purchase' => $this->available_for_purchase,
             'effective_start' => $this->effective_start,
             'effective_end' => $this->effective_end,
-            'eligible_for_shirt' => $this->eligible_for_shirt,
-            'eligible_for_polo' => $this->eligible_for_polo,
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

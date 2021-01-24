@@ -138,8 +138,6 @@ class DuesPackage extends Resource
                     ];
                 }),
 
-            new Panel('Swag', $this->swagFields()), // FIXME remove this
-
             new Panel('Access', [
                 Boolean::make('Active', 'is_access_active')
                     ->onlyOnDetail(),
@@ -165,22 +163,6 @@ class DuesPackage extends Resource
                 }),
 
             self::metadataPanel(),
-        ];
-    }
-
-    /**
-     * Swag information.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function swagFields(): array
-    {
-        return [
-            Boolean::make('Eligible for T-Shirt', 'eligible_for_shirt')
-                ->hideFromIndex(),
-
-            Boolean::make('Eligible for Polo')
-                ->hideFromIndex(),
         ];
     }
 }

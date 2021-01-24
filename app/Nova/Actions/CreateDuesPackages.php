@@ -57,8 +57,6 @@ class CreateDuesPackages extends Action
         if (0 === DuesPackage::where('name', $fallPackageName)->count()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $fallPackageName;
-            $duesPackage->eligible_for_shirt = true;
-            $duesPackage->eligible_for_polo = false;
             $duesPackage->effective_start = $fallEffectiveStart;
             $duesPackage->effective_end = $fallEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
@@ -75,8 +73,6 @@ class CreateDuesPackages extends Action
         if (0 === DuesPackage::where('name', $springPackageName)->count()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $springPackageName;
-            $duesPackage->eligible_for_shirt = false;
-            $duesPackage->eligible_for_polo = true;
             $duesPackage->effective_start = $springEffectiveStart;
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $springAccessStart;
@@ -93,8 +89,6 @@ class CreateDuesPackages extends Action
         if (0 === DuesPackage::where('name', $studentFullYear)->count()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $studentFullYear;
-            $duesPackage->eligible_for_shirt = true;
-            $duesPackage->eligible_for_polo = true;
             $duesPackage->effective_start = $fallEffectiveStart;
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
@@ -115,8 +109,6 @@ class CreateDuesPackages extends Action
         if (0 === DuesPackage::where('name', $nonStudentFullYear)->count() && true === $fields->non_student) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $nonStudentFullYear;
-            $duesPackage->eligible_for_shirt = false;
-            $duesPackage->eligible_for_polo = false;
             $duesPackage->effective_start = $fallEffectiveStart;
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;

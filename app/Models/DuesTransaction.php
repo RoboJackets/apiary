@@ -21,7 +21,6 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Eloquent\Builder current() Scopes a query to only current transactions
  * @method static \Illuminate\Database\Eloquent\Builder paid() Scopes a query to only paid transactions
  * @method static \Illuminate\Database\Eloquent\Builder pending() Scopes a query to only pending transactions
- * @method static \Illuminate\Database\Eloquent\Builder pendingSwag() Scopes a query to only transactions that need
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction newModelQuery()
  * @method \Illuminate\Database\Eloquent\Builder newQuery()
@@ -32,12 +31,6 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|DuesTransaction whereDuesPackageId($value)
  * @method static Builder|DuesTransaction whereId($value)
  * @method static Builder|DuesTransaction wherePaymentId($value)
- * @method static Builder|DuesTransaction whereReceivedPolo($value)
- * @method static Builder|DuesTransaction whereReceivedShirt($value)
- * @method static Builder|DuesTransaction whereSwagPoloProvided($value)
- * @method static Builder|DuesTransaction whereSwagPoloProvidedBy($value)
- * @method static Builder|DuesTransaction whereSwagShirtProvided($value)
- * @method static Builder|DuesTransaction whereSwagShirtProvidedBy($value)
  * @method static Builder|DuesTransaction whereUpdatedAt($value)
  * @method static Builder|DuesTransaction whereUserId($value)
  * @method static QueryBuilder|DuesTransaction onlyTrashed()
@@ -46,31 +39,21 @@ use Illuminate\Database\Query\JoinClause;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  *
- * @property ?int $swag_polo_providedBy the user ID that distributed a polo for this transaction
- * @property ?int $swag_shirt_providedBy the user ID that distributed a shirt for this transaction
- * @property ?\Carbon\Carbon $swag_polo_provided The timestamp of when a polo was given for this DuesTransaction
- * @property ?\Carbon\Carbon $swag_shirt_provided The timestamp of when a shirt was given for this DuesTransaction
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property ?\Carbon\Carbon $deleted_at
  * @property bool $is_paid whether this transaction is paid in full
  * @property int $dues_package_id
  * @property int $id The database ID for this DuesTransaction
- * @property int $received_polo
- * @property int $received_shirt
  * @property int $user_id
  * @property int|null $payment_id
  * @property string $status the status of this transaction
  *
  * @property-read \App\Models\DuesPackage $for
  * @property-read \App\Models\DuesPackage $package
- * @property-read \App\Models\User $swagPoloProvidedBy
- * @property-read \App\Models\User $swagShirtProvidedBy
  * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection $payment
  * @property-read int|null $payment_count
- * @property-read string $swag_polo_status
- * @property-read string $swag_shirt_status
  */
 class DuesTransaction extends Model
 {
@@ -83,7 +66,7 @@ class DuesTransaction extends Model
      *
      * @var array<string>
      */
-    protected $appends = ['status', 'swag_polo_status', 'swag_shirt_status'];
+    protected $appends = ['status'];
 
     /**
      * The attributes that aren't mass assignable.
@@ -93,16 +76,6 @@ class DuesTransaction extends Model
     protected $guarded = [
         'id',
         'status',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-    protected $casts = [
-        'swag_shirt_provided' => 'datetime',
-        'swag_polo_provided' => 'datetime',
     ];
 
     /**
@@ -127,22 +100,6 @@ class DuesTransaction extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the User associated with the swag_shirt_providedBy field on the DuesTransaction model.
-     */
-    public function swagShirtProvidedBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'swag_shirt_providedBy', 'id');
-    }
-
-    /**
-     * Get the User associated with the swag_polo_providedBy field on the DuesTransaction model.
-     */
-    public function swagPoloProvidedBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'swag_polo_providedBy', 'id');
     }
 
     /**
@@ -180,30 +137,6 @@ class DuesTransaction extends Model
     }
 
     /**
-     * Get the swag polo status attribute for the Transaction.
-     */
-    public function getSwagPoloStatusAttribute(): string
-    {
-        if ($this->package->eligible_for_polo) {
-            return null === $this->swag_polo_provided ? 'Not Picked Up' : 'Picked Up';
-        }
-
-        return 'Not Eligible';
-    }
-
-    /**
-     * Get the swag shirt status attribute for the Transaction.
-     */
-    public function getSwagShirtStatusAttribute(): string
-    {
-        if ($this->package->eligible_for_shirt) {
-            return null === $this->swag_shirt_provided ? 'Not Picked Up' : 'Picked Up';
-        }
-
-        return 'Not Eligible';
-    }
-
-    /**
      * Map of relationships to permissions for dynamic inclusion.
      *
      * @return array<string,string>
@@ -227,35 +160,6 @@ class DuesTransaction extends Model
     public function scopePending(Builder $query): Builder
     {
         return $query->current()->unpaid();
-    }
-
-    /**
-     * Scope a query to only include swag-pending transactions.
-     * Swag-pending defined as a paid transaction that has not provided shirt/polo
-     * Note that you can't just chain the paid() scope to this because it breaks the joins.
-     */
-    public function scopePendingSwag(Builder $query): Builder
-    {
-        return $query->select(
-            'dues_transactions.*',
-            'dues_packages.eligible_for_shirt',
-            'dues_packages.eligible_for_polo'
-        )->join('dues_packages', static function (JoinClause $j): void {
-            $j->on('dues_packages.id', '=', 'dues_transactions.dues_package_id')
-                ->where(static function (QueryBuilder $q): void {
-                    $q->where('dues_packages.eligible_for_shirt', '=', true)
-                        ->where('dues_transactions.swag_shirt_provided', '=', null)
-                        ->orWhere(static function (QueryBuilder $q): void {
-                            $q->where('dues_packages.eligible_for_polo', '=', true)
-                                ->where('dues_transactions.swag_polo_provided', '=', null);
-                        });
-                });
-        })->leftJoin('payments', function (JoinClause $j): void {
-            $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                ->where('payments.payable_type', '=', $this->getMorphClass())
-                ->where('payments.deleted_at', '=', null);
-        })->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
-            ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
     }
 
     /**

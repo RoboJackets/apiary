@@ -28,7 +28,7 @@ class DuesTransactionController extends Controller
     {
         $this->middleware(
             'permission:read-dues-transactions',
-            ['only' => ['index', 'indexPaid', 'indexPending', 'indexPendingSwag']]
+            ['only' => ['index', 'indexPaid', 'indexPending']]
         );
         $this->middleware('permission:create-dues-transactions-own|create-dues-transactions', ['only' => ['store']]);
         $this->middleware(
@@ -76,20 +76,6 @@ class DuesTransactionController extends Controller
     }
 
     /**
-     * Display a listing of swag pending resources.
-     */
-    public function indexPendingSwag(Request $request): JsonResponse
-    {
-        $include = $request->input('include');
-        $transact = DuesTransaction::pendingSwag()
-            ->with($this->authorizeInclude(DuesTransaction::class, $include))
-            ->get();
-        $transact = DuesTransactionResource::collection($transact);
-
-        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreDuesTransactionRequest $request): JsonResponse
@@ -112,24 +98,6 @@ class DuesTransactionController extends Controller
             return response()->json(['status' => 'error',
                 'message' => 'User has not signed latest agreement',
             ], 422);
-        }
-
-        //Translate boolean from client to time/date stamp for DB
-        //Also set "providedBy" for each swag item to the submitting user
-        $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];
-        foreach ($swagItems as $item) {
-            if (! $request->exists($item)) {
-                continue;
-            }
-
-            $provided = $request->input($item);
-            if (null !== $provided && true === $provided) {
-                $now = date('Y-m-d H:i:s');
-                $request->merge([$item => $now, $item.'By' => $request->user()->id]);
-            } else {
-                //Remove the parameter from the request to avoid overwriting existing data
-                unset($request[$item]);
-            }
         }
 
         if ($request->filled('merchandise')) {
@@ -263,24 +231,6 @@ class DuesTransactionController extends Controller
      */
     public function update(UpdateDuesTransactionRequest $request, int $id): JsonResponse
     {
-        //Translate boolean from client to time/date stamp for DB
-        //Also set "providedBy" for each swag item to the submitting user
-        $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];
-        foreach ($swagItems as $item) {
-            if (! $request->exists($item)) {
-                continue;
-            }
-
-            $provided = $request->input($item);
-            if (null !== $provided && true === $provided) {
-                $now = date('Y-m-d H:i:s');
-                $request->merge([$item => $now, $item.'By' => $request->user()->id]);
-            } else {
-                //Remove the parameter from the request to avoid overwriting existing data
-                unset($request[$item]);
-            }
-        }
-
         $transact = DuesTransaction::find($id);
         if (null === $transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);

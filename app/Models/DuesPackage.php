@@ -35,8 +35,6 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|DuesPackage whereDeletedAt($value)
  * @method static Builder|DuesPackage whereEffectiveEnd($value)
  * @method static Builder|DuesPackage whereEffectiveStart($value)
- * @method static Builder|DuesPackage whereEligibleForPolo($value)
- * @method static Builder|DuesPackage whereEligibleForShirt($value)
  * @method static Builder|DuesPackage whereId($value)
  * @method static Builder|DuesPackage whereName($value)
  * @method static Builder|DuesPackage whereUpdatedAt($value)
@@ -50,8 +48,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property \Carbon\Carbon $effective_end The timestamp when the DuesPackage is considered no longer active
  * @property \Carbon\Carbon $effective_start The timestamp when the DuesPackage is considered newly active
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property bool $eligible_for_polo Whether this DuesPackage grants eligibility for a polo
- * @property bool $eligible_for_shirt Whether this DuesPackage grants eligibility for a shirt
  * @property bool $is_active Whether this DuesPackage is considered active
  * @property float $cost the cost of this package
  * @property bool $available_for_purchase

@@ -28,12 +28,6 @@ class StoreDuesPackageRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'eligible_for_shirt' => [
-                'boolean',
-            ],
-            'eligible_for_polo' => [
-                'boolean',
-            ],
             'effective_start' => [
                 'required',
                 'date',
