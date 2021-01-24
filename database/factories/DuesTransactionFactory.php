@@ -26,10 +26,6 @@ class DuesTransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'swag_shirt_provided' => $this->faker->optional()->dateTime,
-            'swag_shirt_providedBy' => User::all()->random()->id,
-            'swag_polo_provided' => $this->faker->optional()->dateTime,
-            'swag_polo_providedBy' => User::all()->random()->id,
             'dues_package_id' => DuesPackage::all()->random()->id,
             'user_id' => User::all()->random()->id,
         ];

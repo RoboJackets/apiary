@@ -25,8 +25,6 @@ class DuesPackageFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'eligible_for_shirt' => $this->faker->numberBetween(0, 1),
-            'eligible_for_polo' => $this->faker->numberBetween(0, 1),
             'effective_start' => $this->faker->dateTimeBetween('-5 years', '-1 year'),
             'effective_end' => $this->faker->dateTimeBetween('-11 months', 'now'),
             'cost' => (string) $this->faker->randomFloat(2, 0, 1000),
