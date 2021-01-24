@@ -9,6 +9,7 @@ use App\Nova\Traits\DuesPackageCards;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
@@ -16,6 +17,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
+use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 /**
  * A Nova resource for dues packages.
@@ -126,7 +128,15 @@ class DuesPackage extends Resource
 
             HasMany::make('Prevents Purchase Of', 'hasConflictWith', self::class),
 
-            new Panel('Swag', $this->swagFields()),
+            BelongsToMany::make('Merchandise')
+                ->fields(static function (): array {
+                    return [
+                        SelectOrCustom::make('Group')->options([
+                            'Fall' => 'Fall',
+                            'Spring' => 'Spring',
+                        ]),
+                    ];
+                }),
 
             new Panel('Access', [
                 Boolean::make('Active', 'is_access_active')
@@ -153,22 +163,6 @@ class DuesPackage extends Resource
                 }),
 
             self::metadataPanel(),
-        ];
-    }
-
-    /**
-     * Swag information.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    protected function swagFields(): array
-    {
-        return [
-            Boolean::make('Eligible for T-Shirt', 'eligible_for_shirt')
-                ->hideFromIndex(),
-
-            Boolean::make('Eligible for Polo')
-                ->hideFromIndex(),
         ];
     }
 }

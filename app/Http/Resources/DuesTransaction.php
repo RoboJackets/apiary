@@ -25,12 +25,6 @@ class DuesTransaction extends JsonResource
             'user_id' => $this->user_id,
             'dues_package_id' => $this->dues_package_id,
             'status' => $this->status,
-            'swag_shirt_provided' => $this->swag_shirt_provided,
-            'swag_shirt_providedBy' => $this->swag_shirt_providedBy,
-            'swag_shirt_status' => $this->swag_shirt_status,
-            'swag_polo_provided' => $this->swag_polo_provided,
-            'swag_polo_providedBy' => $this->swag_polo_providedBy,
-            'swag_polo_status' => $this->swag_polo_status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -39,6 +33,7 @@ class DuesTransaction extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'package' => new DuesPackageResource($this->whenLoaded('package')),
             'payment' => PaymentResource::collection($this->whenLoaded('payment')),
+            'merchandise' => Merchandise::collection($this->whenLoaded('merchandise')),
         ];
     }
 }

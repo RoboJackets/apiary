@@ -68,4 +68,19 @@ class DuesPackagePolicy
     {
         return false;
     }
+
+    public function attachMerchandise(User $user, DuesPackage $merch): bool
+    {
+        return $user->can('create-merchandise');
+    }
+
+    public function attachAnyMerchandise(User $user, DuesPackage $merch): bool
+    {
+        return $user->can('create-merchandise');
+    }
+
+    public function detachMerchandise(User $user, DuesPackage $merch): bool
+    {
+        return $user->can('create-merchandise');
+    }
 }

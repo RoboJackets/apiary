@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DuesPackage extends JsonResource
+class Merchandise extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,19 +20,17 @@ class DuesPackage extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'cost' => $this->cost,
-            'is_active' => $this->is_active,
-            'available_for_purchase' => $this->available_for_purchase,
-            'effective_start' => $this->effective_start,
-            'effective_end' => $this->effective_end,
-
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
 
+            // Instead of defining a resource for the pivot model, this will contain the group from the pivot, or null
+            // if there is not the correct pivot or no pivot at all.
+            'group' => optional($this->pivot)->group,
+
             // Relationships
-            'transactions' => DuesTransactionResource::collection($this->whenLoaded('transactions')),
-            'merchandise' => Merchandise::collection($this->whenLoaded('merchandise')),
+            'dues_transactions' => DuesTransaction::collection($this->whenLoaded('transactions')),
+            'dues_packages' => DuesTransaction::collection($this->whenLoaded('packages')),
         ];
     }
 }

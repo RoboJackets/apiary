@@ -189,6 +189,11 @@ class UserController extends Controller
             }
         }
 
+        if ($request->filled('preferred_first_name')) {
+            // This uses a setter and is not the same as the database column, so set it manually.
+            $user->preferred_first_name = $validatedFields['preferred_first_name'];
+        }
+
         $user->update($validatedFields);
 
         if ($request->filled('roles')) {

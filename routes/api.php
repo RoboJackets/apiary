@@ -84,7 +84,6 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
         // Dues Transactions
         Route::get('dues/transactions/paid', [DuesTransactionController::class, 'indexPaid']);
         Route::get('dues/transactions/pending', [DuesTransactionController::class, 'indexPending']);
-        Route::get('dues/transactions/pendingSwag', [DuesTransactionController::class, 'indexPendingSwag']);
         Route::resource('dues/transactions', DuesTransactionController::class)->except('create', 'edit');
 
         // Roles + Permissions

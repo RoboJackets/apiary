@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
@@ -34,8 +35,6 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|DuesPackage whereDeletedAt($value)
  * @method static Builder|DuesPackage whereEffectiveEnd($value)
  * @method static Builder|DuesPackage whereEffectiveStart($value)
- * @method static Builder|DuesPackage whereEligibleForPolo($value)
- * @method static Builder|DuesPackage whereEligibleForShirt($value)
  * @method static Builder|DuesPackage whereId($value)
  * @method static Builder|DuesPackage whereName($value)
  * @method static Builder|DuesPackage whereUpdatedAt($value)
@@ -49,8 +48,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property \Carbon\Carbon $effective_end The timestamp when the DuesPackage is considered no longer active
  * @property \Carbon\Carbon $effective_start The timestamp when the DuesPackage is considered newly active
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property bool $eligible_for_polo Whether this DuesPackage grants eligibility for a polo
- * @property bool $eligible_for_shirt Whether this DuesPackage grants eligibility for a shirt
  * @property bool $is_active Whether this DuesPackage is considered active
  * @property float $cost the cost of this package
  * @property bool $available_for_purchase
@@ -140,6 +137,11 @@ class DuesPackage extends Model
         return $this->hasMany(self::class, 'conflicts_with_package_id');
     }
 
+    public function merchandise(): BelongsToMany
+    {
+        return $this->belongsToMany(Merchandise::class)->withPivot('group')->withTimestamps();
+    }
+
     /**
      * Scope a query to only include DuesPackages available for purchase.
      */
@@ -219,6 +221,7 @@ class DuesPackage extends Model
     {
         return [
             'transactions' => 'dues-transactions',
+            'merchandise' => 'merchandise',
         ];
     }
 }

@@ -11,7 +11,7 @@
             <input
               v-model="localUser.preferred_first_name"
               type="text"
-              class="form-control" 
+              class="form-control"
               id="user-preferredname"
               :class="{ 'is-invalid': $v.localUser.preferred_first_name.$error }"
               @input="$v.localUser.preferred_first_name.$touch()">

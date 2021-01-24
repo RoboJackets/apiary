@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\DuesPackage;
+use App\Models\Merchandise;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -39,6 +40,24 @@ class CreateDuesPackages extends Action
 
         $startingYear = $fiscalYear->ending_year - 1;
         $endingYear = $fiscalYear->ending_year;
+        $yearRangeStr = $startingYear.'-'.$endingYear;
+
+        $shirt = Merchandise::firstOrCreate([
+            'name' => 'T-Shirt '.$yearRangeStr,
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
+        $polo = Merchandise::firstOrCreate([
+            'name' => 'Polo '.$yearRangeStr,
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
+        $waiveShirt = Merchandise::firstOrCreate([
+            'name' => 'Waive Fall '.$startingYear.' Merchandise',
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
+        $waivePolo = Merchandise::firstOrCreate([
+            'name' => 'Waive Spring '.$endingYear.' Merchandise',
+            'fiscal_year_id' => $fiscalYear->id,
+        ]);
 
         $fallPackageName = 'Fall '.$startingYear;
         $springPackageName = 'Spring '.$endingYear;
@@ -57,8 +76,6 @@ class CreateDuesPackages extends Action
         if (DuesPackage::where('name', $fallPackageName)->doesntExist()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $fallPackageName;
-            $duesPackage->eligible_for_shirt = true;
-            $duesPackage->eligible_for_polo = false;
             $duesPackage->effective_start = $fallEffectiveStart;
             $duesPackage->effective_end = $fallEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
@@ -68,6 +85,8 @@ class CreateDuesPackages extends Action
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
             $duesPackage->save();
+            $duesPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
+            $duesPackage->merchandise()->attach($waiveShirt, ['group' => 'Fall']);
 
             $createdPackages++;
         }
@@ -75,8 +94,6 @@ class CreateDuesPackages extends Action
         if (DuesPackage::where('name', $springPackageName)->doesntExist()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $springPackageName;
-            $duesPackage->eligible_for_shirt = false;
-            $duesPackage->eligible_for_polo = true;
             $duesPackage->effective_start = $springEffectiveStart;
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $springAccessStart;
@@ -86,6 +103,8 @@ class CreateDuesPackages extends Action
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
             $duesPackage->save();
+            $duesPackage->merchandise()->attach($polo, ['group' => 'Spring']);
+            $duesPackage->merchandise()->attach($waivePolo, ['group' => 'Spring']);
 
             $createdPackages++;
         }
@@ -93,8 +112,6 @@ class CreateDuesPackages extends Action
         if (DuesPackage::where('name', $studentFullYear)->doesntExist()) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $studentFullYear;
-            $duesPackage->eligible_for_shirt = true;
-            $duesPackage->eligible_for_polo = true;
             $duesPackage->effective_start = $fallEffectiveStart;
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
@@ -108,6 +125,10 @@ class CreateDuesPackages extends Action
                 $fallPackageName
             )->firstOrFail()->id;
             $duesPackage->save();
+            $duesPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
+            $duesPackage->merchandise()->attach($waiveShirt, ['group' => 'Fall']);
+            $duesPackage->merchandise()->attach($polo, ['group' => 'Spring']);
+            $duesPackage->merchandise()->attach($waivePolo, ['group' => 'Spring']);
 
             $createdPackages++;
         }
@@ -115,8 +136,6 @@ class CreateDuesPackages extends Action
         if (DuesPackage::where('name', $nonStudentFullYear)->doesntExist() && true === $fields->non_student) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $nonStudentFullYear;
-            $duesPackage->eligible_for_shirt = false;
-            $duesPackage->eligible_for_polo = false;
             $duesPackage->effective_start = $fallEffectiveStart;
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
@@ -126,6 +145,7 @@ class CreateDuesPackages extends Action
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = false;
             $duesPackage->save();
+            // Non-students don't get the merch options
 
             $createdPackages++;
         }

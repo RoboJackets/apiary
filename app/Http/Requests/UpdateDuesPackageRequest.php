@@ -27,12 +27,6 @@ class UpdateDuesPackageRequest extends FormRequest
             'name' => [
                 'string',
             ],
-            'eligible_for_shirt' => [
-                'boolean',
-            ],
-            'eligible_for_polo' => [
-                'boolean',
-            ],
             'effective_start' => [
                 'date',
             ],

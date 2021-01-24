@@ -464,6 +464,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get whether the user has ever chosen a polo wtih their dues.
+     */
+    public function getHasOrderedPoloAttribute(): bool
+    {
+        return $this->paidDues()->whereHas('merchandise', static function (Builder $q): void {
+            $q->where('name', 'like', 'Polo %');
+        })->exists();
+    }
+
+    /**
      * Scope a query to automatically determine user identifier.
      */
     public function scopeFindByIdentifier(Builder $query, string $id): Builder

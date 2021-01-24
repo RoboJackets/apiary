@@ -7,7 +7,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
+use App\Models\Merchandise;
 use App\Models\User;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\AuthorizeInclude;
@@ -15,6 +17,8 @@ use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class DuesTransactionController extends Controller
 {
@@ -24,7 +28,7 @@ class DuesTransactionController extends Controller
     {
         $this->middleware(
             'permission:read-dues-transactions',
-            ['only' => ['index', 'indexPaid', 'indexPending', 'indexPendingSwag']]
+            ['only' => ['index', 'indexPaid', 'indexPending']]
         );
         $this->middleware('permission:create-dues-transactions-own|create-dues-transactions', ['only' => ['store']]);
         $this->middleware(
@@ -72,20 +76,6 @@ class DuesTransactionController extends Controller
     }
 
     /**
-     * Display a listing of swag pending resources.
-     */
-    public function indexPendingSwag(Request $request): JsonResponse
-    {
-        $include = $request->input('include');
-        $transact = DuesTransaction::pendingSwag()
-            ->with($this->authorizeInclude(DuesTransaction::class, $include))
-            ->get();
-        $transact = DuesTransactionResource::collection($transact);
-
-        return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreDuesTransactionRequest $request): JsonResponse
@@ -110,21 +100,60 @@ class DuesTransactionController extends Controller
             ], 422);
         }
 
-        //Translate boolean from client to time/date stamp for DB
-        //Also set "providedBy" for each swag item to the submitting user
-        $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];
-        foreach ($swagItems as $item) {
-            if (! $request->exists($item)) {
-                continue;
+        if ($request->filled('merchandise')) {
+            $selectedMerch = collect($request->input('merchandise'));
+            $package = DuesPackage::where('id', $request->input('dues_package_id'))->sole();
+            $groups = $package->merchandise->groupBy(static function (Merchandise $merch): string {
+                return $merch->pivot->group;
+            });
+
+            if (count($selectedMerch) !== $groups->count()) {
+                return response()->json(['status' => 'error',
+                    'message' => 'You must select one item of merchandise from every group.',
+                ], 422);
             }
 
-            $provided = $request->input($item);
-            if (null !== $provided && true === $provided) {
-                $now = date('Y-m-d H:i:s');
-                $request->merge([$item => $now, $item.'By' => $request->user()->id]);
-            } else {
-                //Remove the parameter from the request to avoid overwriting existing data
-                unset($request[$item]);
+            if (count($selectedMerch) !== $selectedMerch->unique()->count()) {
+                return response()->json(['status' => 'error',
+                    'message' => 'You cannot select duplicate merchandise.',
+                ], 422);
+            }
+
+            // For every merch group, ensure that one of the selected merch is in it. This assumes that merch is not
+            // in multiple groups.
+            $valid = $groups->every(static function (Collection $collection) use ($selectedMerch): bool {
+                // Ensure one of the selectedMerch is contained in the group.
+                return $selectedMerch->contains(static function (int $selectedID) use ($collection): bool {
+                    return $collection->contains('id', $selectedID);
+                });
+            });
+
+            if (! $valid) {
+                return response()->json(['status' => 'error',
+                    'message' => 'You must select one item of merchandise from every group.',
+                ], 422);
+            }
+
+            if (! $user->has_ordered_polo) {
+                // For each group, ensure that if there is a polo, the user selected it.
+                // This assumes that there are not multiple Merchandise in a group that start with Polo.
+                $selectedPolo = $groups->every(static function (Collection $collection) use ($selectedMerch): bool {
+                    $polo = $collection->first(static function (Merchandise $merch): bool {
+                        return Str::startsWith($merch->name, 'Polo ');
+                    });
+
+                    if (null !== $polo) {
+                        return $selectedMerch->contains($polo->id);
+                    }
+
+                    return true;
+                });
+
+                if (! $selectedPolo) {
+                    return response()->json(['status' => 'error',
+                        'message' => 'You have not ordered a polo before, so you must order a polo.',
+                    ]);
+                }
             }
         }
 
@@ -156,6 +185,13 @@ class DuesTransactionController extends Controller
         }
 
         $dbTransact = DuesTransaction::findOrFail($transact->id);
+
+        if ($request->filled('merchandise')) {
+            $selectedMerch = collect($request->input('merchandise'));
+            $selectedMerch->each(static function (int $merch) use ($dbTransact): void {
+                $dbTransact->merchandise()->attach(Merchandise::find($merch));
+            });
+        }
 
         $user->notify(new Confirm($dbTransact->package));
 
@@ -195,24 +231,6 @@ class DuesTransactionController extends Controller
      */
     public function update(UpdateDuesTransactionRequest $request, int $id): JsonResponse
     {
-        //Translate boolean from client to time/date stamp for DB
-        //Also set "providedBy" for each swag item to the submitting user
-        $swagItems = ['swag_shirt_provided', 'swag_polo_provided'];
-        foreach ($swagItems as $item) {
-            if (! $request->exists($item)) {
-                continue;
-            }
-
-            $provided = $request->input($item);
-            if (null !== $provided && true === $provided) {
-                $now = date('Y-m-d H:i:s');
-                $request->merge([$item => $now, $item.'By' => $request->user()->id]);
-            } else {
-                //Remove the parameter from the request to avoid overwriting existing data
-                unset($request[$item]);
-            }
-        }
-
         $transact = DuesTransaction::find($id);
         if (null === $transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);

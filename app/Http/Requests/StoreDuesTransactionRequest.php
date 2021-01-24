@@ -24,14 +24,6 @@ class StoreDuesTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'swag_shirt_provided' => [
-                'boolean',
-                'nullable',
-            ],
-            'swag_polo_provided' => [
-                'boolean',
-                'nullable',
-            ],
             'dues_package_id' => [
                 'required',
                 'exists:dues_packages,id',
@@ -41,6 +33,12 @@ class StoreDuesTransactionRequest extends FormRequest
             ],
             'user_id' => [
                 'exists:users,id',
+            ],
+            'merchandise.*' => [
+                'exists:merchandise,id',
+            ],
+            'merchandise' => [
+                'array',
             ],
         ];
     }

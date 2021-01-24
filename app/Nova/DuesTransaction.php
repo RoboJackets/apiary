@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
-use App\Models\User as AppModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * A Nova resource for dues transactions.
@@ -97,47 +97,16 @@ class DuesTransaction extends Resource
             })
                 ->onlyOnDetail(),
 
-            Text::make('Shirt Status', 'swag_shirt_status')
-                ->onlyOnIndex(),
+            BelongsToMany::make('Merchandise', 'merchandise')
+                ->fields(static function (): array {
+                    return [
+                        DateTime::make('Provided At'),
 
-            Text::make('Polo Status', 'swag_polo_status')
-                ->onlyOnIndex(),
-
-            new Panel(
-                'T-Shirt Distribution',
-                [
-                    Text::make('Status', 'swag_shirt_status')
-                        ->onlyOnDetail(),
-                    Text::make('Size', function (): ?string {
-                        $shirt_size = $this->user->shirt_size;
-
-                        return null === $shirt_size ? null : AppModelsUser::$shirt_sizes[$shirt_size];
-                    })->onlyOnDetail(),
-                    DateTime::make('Timestamp', 'swag_shirt_provided')
-                        ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swagShirtProvidedBy', User::class)
-                        ->help('The user that recorded the distribution of the t-shirt')
-                        ->onlyOnDetail(),
-                ]
-            ),
-
-            new Panel(
-                'Polo Distribution',
-                [
-                    Text::make('Status', 'swag_polo_status')
-                        ->onlyOnDetail(),
-                    Text::make('Size', function (): ?string {
-                        $polo_size = $this->user->polo_size;
-
-                        return null === $polo_size ? null : AppModelsUser::$shirt_sizes[$polo_size];
-                    })->onlyOnDetail(),
-                    DateTime::make('Timestamp', 'swag_polo_provided')
-                        ->onlyOnDetail(),
-                    BelongsTo::make('Distributed By', 'swagPoloProvidedBy', User::class)
-                        ->help('The user that recorded the distribution of the polo')
-                        ->onlyOnDetail(),
-                ]
-            ),
+                        // I tried a BelongsTo but it appeared to be looking for the relationship on the model itself,
+                        // not the pivot model. This is a temporary fallback.
+                        Text::make('Provided By', 'provided_by_name'),
+                    ];
+                }),
 
             MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
@@ -156,10 +125,8 @@ class DuesTransaction extends Resource
         return $request->user()->can('read-teams-membership') ? [
             new Filters\DuesTransactionTeam(),
             new Filters\DuesTransactionPaymentStatus(),
-            new Filters\DuesTransactionSwagStatus(),
         ] : [
             new Filters\DuesTransactionPaymentStatus(),
-            new Filters\DuesTransactionSwagStatus(),
         ];
     }
 
@@ -171,48 +138,6 @@ class DuesTransaction extends Resource
     public function actions(Request $request): array
     {
         return [
-            (new Actions\DistributeShirt())->canSee(static function (Request $request): bool {
-                $transaction = AppModelsDuesTransaction::find($request->resourceId);
-
-                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
-                    if (! $transaction->package->eligible_for_shirt) {
-                        return false;
-                    }
-
-                    if (! $transaction->is_paid) {
-                        return false;
-                    }
-
-                    if (null !== $transaction->swag_shirt_provided) {
-                        return false;
-                    }
-                }
-
-                return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
-                return $request->user()->can('distribute-swag');
-            }),
-            (new Actions\DistributePolo())->canSee(static function (Request $request): bool {
-                $transaction = AppModelsDuesTransaction::find($request->resourceId);
-
-                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
-                    if (! $transaction->package->eligible_for_polo) {
-                        return false;
-                    }
-
-                    if (! $transaction->is_paid) {
-                        return false;
-                    }
-
-                    if (null !== $transaction->swag_polo_provided) {
-                        return false;
-                    }
-                }
-
-                return $request->user()->can('distribute-swag');
-            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
-                return $request->user()->can('distribute-swag');
-            }),
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
                 $transaction = AppModelsDuesTransaction::find($request->resourceId);
 
@@ -240,5 +165,11 @@ class DuesTransaction extends Resource
                     && ($dues_transaction->user()->first()->id !== $request->user()->id);
             }),
         ];
+    }
+
+    // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
+    public function authorizedToUpdateForSerialization(NovaRequest $request): bool
+    {
+        return $request->user()->can('update-dues-transactions');
     }
 }
