@@ -32,9 +32,9 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|DuesTransaction wherePaymentId($value)
  * @method static Builder|DuesTransaction whereUpdatedAt($value)
  * @method static Builder|DuesTransaction whereUserId($value)
- * @method static QueryBuilder|DuesTransaction onlyTrashed()
- * @method static QueryBuilder|DuesTransaction withoutTrashed()
- * @method static QueryBuilder|DuesTransaction withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|DuesTransaction onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  *
