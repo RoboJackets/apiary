@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
@@ -95,7 +96,16 @@ class DuesTransaction extends Resource
             })
                 ->onlyOnDetail(),
 
-            BelongsToMany::make('Merchandise', 'merchandise'),
+            BelongsToMany::make('Merchandise', 'merchandise')
+                ->fields(static function (): array {
+                    return [
+                        DateTime::make('Provided At'),
+
+                        // I tried a BelongsTo but it appeared to be looking for the relationship on the model itself,
+                        // not the pivot model. This is a temporary fallback.
+                        Text::make('Provided By', 'provided_by_name'),
+                    ];
+                }),
 
             MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
