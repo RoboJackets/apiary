@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 class Merchandise extends Resource
@@ -104,5 +105,11 @@ class Merchandise extends Resource
     public static function uriKey(): string
     {
         return 'merchandise';
+    }
+
+    // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
+    public function authorizedToUpdateForSerialization(NovaRequest $request): bool
+    {
+        return $request->user()->can('update-merchandise');
     }
 }

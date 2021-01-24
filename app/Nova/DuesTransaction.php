@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * A Nova resource for dues transactions.
@@ -164,5 +165,11 @@ class DuesTransaction extends Resource
                     && ($dues_transaction->user()->first()->id !== $request->user()->id);
             }),
         ];
+    }
+
+    // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
+    public function authorizedToUpdateForSerialization(NovaRequest $request): bool
+    {
+        return $request->user()->can('update-dues-transactions');
     }
 }
