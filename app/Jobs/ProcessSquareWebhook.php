@@ -7,6 +7,8 @@ namespace App\Jobs;
 use App\Events\PaymentSuccess;
 use App\Models\Payment;
 use App\Notifications\Payment\ConfirmationNotification;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\ProcessWebhookJob;
 
 class ProcessSquareWebhook extends ProcessWebhookJob
@@ -32,6 +34,14 @@ class ProcessSquareWebhook extends ProcessWebhookJob
     {
         $type = $this->webhookCall->payload['type'];
         $details = $this->webhookCall->payload['data']['object']['payment'];
+
+        if (! array_key_exists('status', $details)) {
+            throw new Exception('data.object.payment.status field not present');
+        }
+
+        if ('COMPLETED' !== $details['status']) {
+            Log::warning('Payment for Order ID '.$details['order_id'].'was pushed as '.$details['status']);
+        }
 
         $payment = Payment::where('order_id', $details['order_id'])->firstOrFail();
 
