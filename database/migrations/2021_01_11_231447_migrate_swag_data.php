@@ -29,7 +29,7 @@ class MigrateSwagData extends Migration
                 'fiscal_year_id' => $fy->id,
             ]);
             $polo = Merchandise::firstOrCreate([
-                'name' => 'Polo'.$yearRangeStr,
+                'name' => 'Polo '.$yearRangeStr,
                 'fiscal_year_id' => $fy->id,
             ]);
 
@@ -95,7 +95,7 @@ class MigrateSwagData extends Migration
                 'fiscal_year_id' => $fy->id,
             ]);
             $polo = Merchandise::firstOrCreate([
-                'name' => 'Polo'.$yearRangeStr,
+                'name' => 'Polo '.$yearRangeStr,
                 'fiscal_year_id' => $fy->id,
             ]);
 

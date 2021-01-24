@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
-use App\Models\User as AppModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Panel;
 
 /**
  * A Nova resource for dues transactions.

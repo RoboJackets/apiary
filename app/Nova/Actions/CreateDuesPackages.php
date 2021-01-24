@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\DuesPackage;
+use App\Models\Merchandise;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -46,7 +47,7 @@ class CreateDuesPackages extends Action
             'fiscal_year_id' => $fiscalYear->id,
         ]);
         $polo = Merchandise::firstOrCreate([
-            'name' => 'Polo'.$yearRangeStr,
+            'name' => 'Polo '.$yearRangeStr,
             'fiscal_year_id' => $fiscalYear->id,
         ]);
 
