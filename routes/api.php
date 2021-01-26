@@ -11,6 +11,7 @@ use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationTemplateController;
+use App\Http\Controllers\NovaExportController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RecruitingCampaignController;
@@ -95,6 +96,10 @@ Route::prefix('v1/')->name('api.v1.')->middleware('auth.token', 'auth.cas.force'
         Route::get('teams/{id}/members', [TeamController::class, 'showMembers'])->name('teams.show.members');
         Route::post('teams/{id}/members', [TeamController::class, 'updateMembers'])->name('teams.update.members');
         Route::resource('teams', TeamController::class)->except('create', 'edit');
+
+        // Nova Extra Stuff
+        Route::get('nova/export/{file}', [NovaExportController::class, 'export'])->name('nova.export')
+            ->middleware(['signed', 'can:access-nova']);
     }
 );
 
