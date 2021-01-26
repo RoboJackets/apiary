@@ -234,6 +234,7 @@ class User extends Authenticatable
         'exists_in_sums' => 'boolean',
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
+        'buzzcard_access_opt_out' => 'boolean',
     ];
 
     /**
@@ -537,6 +538,14 @@ class User extends Authenticatable
         })->where(static function (Builder $query): void {
             $query->where('access_override_until', '<=', date('Y-m-d H:i:s'))->orWhereNull('access_override_until');
         });
+    }
+
+    /**
+     * Scope a query to automatically include only those eligible to be granted BuzzCard access
+     */
+    public function scopeBuzzCardAccessEligible(Builder $query): Builder
+    {
+        return $query->accessActive()->where('buzzcard_access_opt_out', false);
     }
 
     /**
