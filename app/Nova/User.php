@@ -475,6 +475,15 @@ class User extends Resource
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 }),
+            (new Actions\ExportUsersBuzzCardAccess())
+                ->standalone()
+                ->onlyOnIndex()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-users');
+                })
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                    return $request->user()->can('read-users');
+                }),
         ];
     }
 }
