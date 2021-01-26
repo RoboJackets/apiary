@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b263cdceb5a0d801fa96504e79f46c4",
+    "content-hash": "d9ab2d02654fce79b9fe8726de573f89",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2540,6 +2540,67 @@
             "time": "2021-01-06T19:20:22+00:00"
         },
         {
+            "name": "laravie/serialize-queries",
+            "version": "v0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravie/serialize-queries.git",
+                "reference": "0b73889e102db6708d64ff003b028b42687ceeb4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravie/serialize-queries/zipball/0b73889e102db6708d64ff003b028b42687ceeb4",
+                "reference": "0b73889e102db6708d64ff003b028b42687ceeb4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.8 || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/queue": "^5.8 || ^6.0 || ^7.0 || ^8.0",
+                "opis/closure": "^3.4.2",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.8 || ^4.0 || ^5.0 || ^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravie\\SerializesQuery\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com"
+                }
+            ],
+            "description": "Serializable Laravel Query Builder",
+            "support": {
+                "issues": "https://github.com/laravie/serialize-queries/issues",
+                "source": "https://github.com/laravie/serialize-queries/tree/v0.2.3"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/crynobone",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://liberapay.com/crynobone",
+                    "type": "liberapay"
+                }
+            ],
+            "time": "2020-10-25T04:39:37+00:00"
+        },
+        {
             "name": "league/commonmark",
             "version": "1.5.7",
             "source": {
@@ -2989,6 +3050,64 @@
                 }
             ],
             "time": "2020-11-27T16:17:38+00:00"
+        },
+        {
+            "name": "maatwebsite/laravel-nova-excel",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Maatwebsite/Laravel-Nova-Excel.git",
+                "reference": "12a696e53be79e0f212c089abaa5f248d74eeb13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/12a696e53be79e0f212c089abaa5f248d74eeb13",
+                "reference": "12a696e53be79e0f212c089abaa5f248d74eeb13",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "*",
+                "laravie/serialize-queries": "^0.2",
+                "maatwebsite/excel": "^3.1",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Maatwebsite\\LaravelNovaExcel\\LaravelNovaExcelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Maatwebsite\\LaravelNovaExcel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patrick Brouwers",
+                    "email": "patrick@maatwebsite.nl"
+                }
+            ],
+            "description": "Supercharged Excel exports for Laravel Nova Resources",
+            "keywords": [
+                "PHPExcel",
+                "actions",
+                "laravel",
+                "laravel-nova",
+                "nova",
+                "phpspreadsheet"
+            ],
+            "support": {
+                "issues": "https://github.com/Maatwebsite/Laravel-Nova-Excel/issues",
+                "source": "https://github.com/Maatwebsite/Laravel-Nova-Excel/tree/1.2.3"
+            },
+            "time": "2020-10-08T14:10:40+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -10518,16 +10637,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.68",
+            "version": "0.12.69",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "ddbe01af0706ee094c3f1ce9730b35aebb508d3d"
+                "reference": "8f436ea35241da33487fd0d38b4bc3e6dfe30ea8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ddbe01af0706ee094c3f1ce9730b35aebb508d3d",
-                "reference": "ddbe01af0706ee094c3f1ce9730b35aebb508d3d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8f436ea35241da33487fd0d38b4bc3e6dfe30ea8",
+                "reference": "8f436ea35241da33487fd0d38b4bc3e6dfe30ea8",
                 "shasum": ""
             },
             "require": {
@@ -10558,7 +10677,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.68"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.69"
             },
             "funding": [
                 {
@@ -10574,7 +10693,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-18T12:29:17+00:00"
+            "time": "2021-01-24T14:55:37+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
