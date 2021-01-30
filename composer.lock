@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d004e0afff9b804a9c33e5b83eb93fe",
+    "content-hash": "5d4bad117d1e4f6f44424b661eba2f76",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7855,21 +7855,21 @@
         },
         {
             "name": "vyuldashev/nova-permission",
-            "version": "v2.10.0",
+            "version": "v2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vyuldashev/nova-permission.git",
-                "reference": "29413157778ce2974f5250e399770942e5652531"
+                "reference": "fdec1ac8d8f5b96988d51cc39231fa0a06c9060c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/29413157778ce2974f5250e399770942e5652531",
-                "reference": "29413157778ce2974f5250e399770942e5652531",
+                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/fdec1ac8d8f5b96988d51cc39231fa0a06c9060c",
+                "reference": "fdec1ac8d8f5b96988d51cc39231fa0a06c9060c",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "spatie/laravel-permission": "^3.0"
+                "spatie/laravel-permission": "^3.0|^4.0"
             },
             "type": "library",
             "extra": {
@@ -7899,9 +7899,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vyuldashev/nova-permission/issues",
-                "source": "https://github.com/vyuldashev/nova-permission/tree/v2.10.0"
+                "source": "https://github.com/vyuldashev/nova-permission/tree/v2.11.0"
             },
-            "time": "2020-12-03T18:53:49+00:00"
+            "time": "2021-01-30T20:16:51+00:00"
         },
         {
             "name": "webmozart/assert",
