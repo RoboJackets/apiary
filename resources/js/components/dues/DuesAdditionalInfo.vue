@@ -81,7 +81,7 @@
               :class="{ 'is-invalid': $v.localUser.emergency_contact_phone.$error }"
               @input="$v.localUser.emergency_contact_phone.$touch()">
               <div class="invalid-feedback">
-                Must be a valid phone number with no punctuation
+                Must be a valid phone number with no punctuation, different from your phone number provided above
               </div>
           </div>
         </div>
@@ -124,8 +124,24 @@ export default {
         .then(response => {
           this.$emit('next');
         })
-        .catch(response => {
-          console.log(response);
+        .catch(error => {
+          if (
+            error &&
+            error.response &&
+            error.response.status === 422 &&
+            error.response.data &&
+            error.response.data.errors &&
+            typeof error.response.data.errors === 'object' &&
+            error.response.data.errors !== null &&
+            Object.keys(error.response.data.errors).length > 0 &&
+            typeof error.response.data.errors[Object.keys(error.response.data.errors)[0]] === 'object' &&
+            error.response.data.errors[Object.keys(error.response.data.errors)[0]].length > 0
+          ) {
+            let errors = error.response.data.errors;
+            Swal.fire('Invalid Data', errors[Object.keys(errors)[0]][0], 'error');
+            return;
+          }
+          console.log(error);
           Swal.fire(
             'Connection Error',
             'Unable to save data. Check your internet connection or try refreshing the page.',
