@@ -2,7 +2,6 @@
   <div>
     <h3>Payment Instructions</h3>
       <slot></slot>
-    <h3>Accepted Payment Methods</h3>
     <div class="row">
       <div class="col-12 col-lg-4">
         <div class="card">

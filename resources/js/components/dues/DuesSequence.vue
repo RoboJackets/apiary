@@ -40,7 +40,7 @@
     <div v-show="currentStepName == 'dues-payment-instructions'">
       <payment-instructions>
         <p>
-          To complete your annual registration, please submit the SGA-mandated dues payments. RoboJackets dues are $100 for the year or $55 for the semester.
+          To complete your registration, please make a payment using one of the following methods.
         </p>
       </payment-instructions>
     </div>
