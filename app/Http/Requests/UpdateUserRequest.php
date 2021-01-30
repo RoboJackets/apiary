@@ -52,15 +52,13 @@ class UpdateUserRequest extends FormRequest
                 'digits_between:10,15',
             ],
             'emergency_contact_name' => [
-                'nullable',
+                'required',
                 'max:255',
-                'required_with:emergency_contact_phone',
             ],
             'emergency_contact_phone' => [
-                'nullable',
+                'required',
                 'digits_between:10,15',
                 'different:phone',
-                'required_with:emergency_contact_name',
             ],
             'join_semester' => [
                 'max:6',
