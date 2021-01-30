@@ -124,12 +124,24 @@ export default {
         .then(response => {
           this.$emit('next');
         })
-        .catch(response => {
-          if (response.response.status === 422) {
-            Swal.fire('Invalid Data', response.response.data.errors[Object.keys(response.response.data.errors)[0]][0], 'error');
+        .catch(error => {
+          if (
+            error &&
+            error.response &&
+            error.response.status === 422 &&
+            error.response.data &&
+            error.response.data.errors &&
+            typeof error.response.data.errors === 'object' &&
+            error.response.data.errors !== null &&
+            Object.keys(error.response.data.errors).length > 0 &&
+            typeof error.response.data.errors[Object.keys(error.response.data.errors)[0]] === 'object' &&
+            error.response.data.errors[Object.keys(error.response.data.errors)[0]].length > 0
+          ) {
+            let errors = error.response.data.errors;
+            Swal.fire('Invalid Data', errors[Object.keys(errors)[0]][0], 'error');
             return;
           }
-          console.log(response);
+          console.log(error);
           Swal.fire(
             'Connection Error',
             'Unable to save data. Check your internet connection or try refreshing the page.',
