@@ -54,7 +54,7 @@
         "mockery/mockery": "1.4.2",
         "nunomaduro/collision": "5.3.0",
         "nunomaduro/larastan": "0.6.13",
-        "phan/phan": "4.0.2",
+        "phan/phan": "4.0.3",
         "phpstan/extension-installer": "1.1.0",
         "phpunit/phpunit": "9.5.1",
         "psalm/plugin-laravel": "1.4.2",
