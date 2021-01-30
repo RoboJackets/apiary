@@ -34,6 +34,7 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
                 'nullable',
                 'unique:users,personal_email,'.$this->user()->id,
+                'email:rfc,strict,dns,spoof',
             ],
             'first_name' => [
                 'max:127',
@@ -48,13 +49,18 @@ class UpdateUserRequest extends FormRequest
                 'max:127',
             ],
             'phone' => [
-                'max:15',
+                'digits_between:10,15',
             ],
             'emergency_contact_name' => [
+                'nullable',
                 'max:255',
+                'required_with:emergency_contact_phone',
             ],
             'emergency_contact_phone' => [
-                'max:15',
+                'nullable',
+                'digits_between:10,15',
+                'different:phone',
+                'required_with:emergency_contact_name',
             ],
             'join_semester' => [
                 'max:6',
@@ -90,7 +96,7 @@ class UpdateUserRequest extends FormRequest
             'clickup_email' => [
                 'string',
                 'nullable',
-                'email',
+                'email:rfc,strict,dns,spoof',
             ],
             'clickup_id' => [
                 'integer',
@@ -102,7 +108,7 @@ class UpdateUserRequest extends FormRequest
             'autodesk_email' => [
                 'string',
                 'nullable',
-                'email',
+                'email:rfc,strict,dns,spoof',
             ],
             'autodesk_invite_pending' => [
                 'boolean',

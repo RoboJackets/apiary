@@ -315,6 +315,10 @@ export default {
           console.log('success');
         })
         .catch(response => {
+          if (response.response.status === 422) {
+            Swal.fire('Invalid Data', response.response.data.errors[Object.keys(response.response.data.errors)[0]][0], 'error');
+            return;
+          }
           this.hasError = true;
           this.feedback = '';
           console.log(response);

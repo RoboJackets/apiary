@@ -81,7 +81,7 @@
               :class="{ 'is-invalid': $v.localUser.emergency_contact_phone.$error }"
               @input="$v.localUser.emergency_contact_phone.$touch()">
               <div class="invalid-feedback">
-                Must be a valid phone number with no punctuation
+                Must be a valid phone number with no punctuation, different from your phone number provided above
               </div>
           </div>
         </div>
@@ -125,6 +125,10 @@ export default {
           this.$emit('next');
         })
         .catch(response => {
+          if (response.response.status === 422) {
+            Swal.fire('Invalid Data', response.response.data.errors[Object.keys(response.response.data.errors)[0]][0], 'error');
+            return;
+          }
           console.log(response);
           Swal.fire(
             'Connection Error',
