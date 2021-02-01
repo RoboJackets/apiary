@@ -39,7 +39,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             throw new Exception('data.object.payment.status field not present');
         }
 
-        if ('COMPLETED' !== $details['status']) {
+        if ('COMPLETED' !== $details['status'] && 'APPROVED' !== $details['status']) {
             Log::warning('Payment for Order ID '.$details['order_id'].'was pushed as '.$details['status']);
 
             return;

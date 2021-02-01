@@ -100,11 +100,11 @@ class DuesTransaction extends Resource
             BelongsToMany::make('Merchandise', 'merchandise')
                 ->fields(static function (): array {
                     return [
-                        DateTime::make('Provided At'),
+                        DateTime::make('Provided At')->onlyOnIndex(),
 
                         // I tried a BelongsTo but it appeared to be looking for the relationship on the model itself,
                         // not the pivot model. This is a temporary fallback.
-                        Text::make('Provided By', 'provided_by_name'),
+                        Text::make('Provided By', 'provided_by_name')->onlyOnIndex(),
                     ];
                 }),
 

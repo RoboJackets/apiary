@@ -34,5 +34,6 @@ Membership Agreement | {{ config('app.name') }}
 <br>
 <button class="btn btn-primary" type="submit">Submit</button>
 </form>
+<br><br><br>
 
 @endsection
