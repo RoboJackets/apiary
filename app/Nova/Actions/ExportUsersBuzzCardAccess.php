@@ -36,7 +36,7 @@ class ExportUsersBuzzCardAccess extends Action
      *
      * @return array|string
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
         $population = $fields->population;
         $query = User::query();
