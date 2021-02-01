@@ -8,7 +8,7 @@ parameters:
     - vendor/*
     - database/migrations/2021_01_11_231447_migrate_swag_data.php
   ignoreErrors:
-    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist)\(\)\.#'
+    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel)\(\)\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$pivot\.#'
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$merchandise\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
@@ -43,6 +43,7 @@ parameters:
     - '#Method App\\Notifications\\[a-zA-Z]+::toMail\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Notifications\\[a-zA-Z]+::via\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Nova\\[a-zA-Z]+::fields\(\) return type has no value type specified in iterable type array\.#'
+    - '#Method App\\Nova\\Actions\\[a-zA-Z]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method Illuminate\\Routing\\RouteRegistrar::middleware\(\) invoked with 2 parameters, 1 required\.#'
     - '#Parameter \#1 \$data of function bin2hex expects string, string\|false given\.#'
     - '#Parameter \#1 \$filePath of method App\\Imports\\[a-zA-Z]+::import\(\) expects string\|Symfony\\Component\\HttpFoundation\\File\\UploadedFile\|null, array\|string\|null given\.#'

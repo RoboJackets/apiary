@@ -14,7 +14,6 @@ use Laravel\Nova\Fields\Select;
 
 class ExportUsersBuzzCardAccess extends Action
 {
-
     /**
      * The displayable name of the action.
      *
@@ -34,42 +33,41 @@ class ExportUsersBuzzCardAccess extends Action
      *
      * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     *
+     * @return array|string[]
      */
     public function handle(ActionFields $fields, Collection $models)
     {
         $population = $fields->population;
         $query = User::query();
 
-        $query->when($population === 'core', function ($q) {
+        $query->when('core' === $population, static function (Builder $q) {
             return $q->select('gtid')->BuzzCardAccessEligible()
-                ->whereHas('teams', function (Builder $query) {
+                ->whereHas('teams', static function (Builder $query): void {
                     $query->where('name', 'Core');
                 });
         });
-        $query->when($population === 'general', function ($q) {
+        $query->when('general' === $population, static function (Builder $q) {
             return $q->select('gtid')->BuzzCardAccessEligible()
-                ->whereDoesntHave('teams', function (Builder $query) {
+                ->whereDoesntHave('teams', static function (Builder $query): void {
                     $query->where('name', 'Core');
                 });
         });
 
         $users = $query->get();
 
-        if (count($users) == 0) {
+        if (0 === count($users)) {
             return Action::danger('No users match the provided criteria!');
         }
 
         // Exclude fields that we don't care about (Everything except GTID)
         $users->pluck('gtid');
 
-        $filename = "robojackets-$population-buzzcard-".time().'.csv';
-        $path = "nova-exports/$filename";
+        $filename = 'robojackets-'.$population.'-buzzcard-'.time().'.csv';
+        $path = 'nova-exports/' . $filename;
         $users->storeExcel(
             $path,
             'local',
-            $writerType = null,
-            $headings = false
         );
 
         // Generate signed URL to pass to backend to facilitate file download

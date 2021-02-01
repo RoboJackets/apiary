@@ -38,6 +38,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
  * @method static Builder|User role($roles, $guard = null)
+ * @method static Builder|User when($value, $closure)
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
  * @method static Builder|User whereApiToken($value)
@@ -362,12 +363,13 @@ class User extends Authenticatable
     public function duesPackages(): HasManyThrough
     {
         return $this->hasManyThrough(
-            DuesPackage::class,
-            DuesTransaction::class,
-            'user_id',
-            'id',
-            'id',
-            'dues_package_id');
+        DuesPackage::class,
+       DuesTransaction::class,
+        'user_id',
+        'id',
+        'id',
+        'dues_package_id'
+        );
     }
 
     /**
