@@ -171,6 +171,9 @@ class User extends Resource
 
                     BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
                         ->onlyOnDetail(),
+
+                    Boolean::make('BuzzCard Access Opt-Out', 'buzzcard_access_opt_out')
+                        ->hideFromIndex(),
                 ]
             ),
 
@@ -479,10 +482,10 @@ class User extends Resource
                 ->standalone()
                 ->onlyOnIndex()
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users');
+                    return $request->user()->can('read-users-gtid');
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
-                    return $request->user()->can('read-users');
+                    return $request->user()->can('read-users-gtid');
                 }),
         ];
     }

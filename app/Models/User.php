@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -355,6 +356,20 @@ class User extends Authenticatable
         return $this->hasMany(DuesTransaction::class)->paid();
     }
 
+    /*
+     * Get the DuesPackages belonging to the User through DuesTransactions
+     */
+    public function duesPackages(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            DuesPackage::class,
+            DuesTransaction::class,
+            'user_id',
+            'id',
+            'id',
+            'dues_package_id');
+    }
+
     /**
      * Get the events organized by the User.
      */
@@ -541,11 +556,16 @@ class User extends Authenticatable
     }
 
     /**
-     * Scope a query to automatically include only those eligible to be granted BuzzCard access
+     * Scope a query to automatically include only those eligible to be granted BuzzCard access.
      */
     public function scopeBuzzCardAccessEligible(Builder $query): Builder
     {
-        return $query->accessActive()->where('buzzcard_access_opt_out', false);
+        return $query->accessActive()
+            ->where('buzzcard_access_opt_out', false)
+            ->whereIn('primary_affiliation', ['student', 'faculty', 'staff'])
+            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                $q->where('restricted_to_students', true);
+            });
     }
 
     /**

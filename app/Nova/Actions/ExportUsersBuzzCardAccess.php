@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\User;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -19,7 +14,6 @@ use Laravel\Nova\Fields\Select;
 
 class ExportUsersBuzzCardAccess extends Action
 {
-    use InteractsWithQueue, Queueable;
 
     /**
      * The displayable name of the action.
@@ -45,28 +39,31 @@ class ExportUsersBuzzCardAccess extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $population = $fields->population;
-        if ($population === 'core') {
-            $users = User::select('gtid')->BuzzCardAccessEligible()
+        $query = User::query();
+
+        $query->when($population === 'core', function ($q) {
+            return $q->select('gtid')->BuzzCardAccessEligible()
                 ->whereHas('teams', function (Builder $query) {
                     $query->where('name', 'Core');
-                })->get();
-        } elseif ($population === 'general') {
-            $users = User::select('gtid')->BuzzCardAccessEligible()
+                });
+        });
+        $query->when($population === 'general', function ($q) {
+            return $q->select('gtid')->BuzzCardAccessEligible()
                 ->whereDoesntHave('teams', function (Builder $query) {
                     $query->where('name', 'Core');
-                })->get();
-        } else {
-            return Action::danger('Invalid population!');
-        }
+                });
+        });
+
+        $users = $query->get();
 
         if (count($users) == 0) {
-            return Action::danger('No users match the provided criteria');
+            return Action::danger('No users match the provided criteria!');
         }
 
         // Exclude fields that we don't care about (Everything except GTID)
-        $users->forget("name","full_name","preferred_first_name","is_active","is_access_active");
+        $users->pluck('gtid');
 
-        $filename = "robojackets-$population-buzzcard-" . time() . '.csv';
+        $filename = "robojackets-$population-buzzcard-".time().'.csv';
         $path = "nova-exports/$filename";
         $users->storeExcel(
             $path,
@@ -91,7 +88,7 @@ class ExportUsersBuzzCardAccess extends Action
         return [
             Select::make('Population')->options([
                 'core' => 'Core',
-                'general' => 'General'
+                'general' => 'General',
             ]),
         ];
     }
