@@ -31,10 +31,10 @@ class ExportUsersBuzzCardAccess extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
+     * @param \Laravel\Nova\Fields\ActionFields  $fields
+     * @param \Illuminate\Support\Collection  $models
      *
-     * @return array|string[]
+     * @return array|string
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -64,7 +64,7 @@ class ExportUsersBuzzCardAccess extends Action
         $users->pluck('gtid');
 
         $filename = 'robojackets-'.$population.'-buzzcard-'.time().'.csv';
-        $path = 'nova-exports/' . $filename;
+        $path = 'nova-exports/'.$filename;
         $users->storeExcel(
             $path,
             'local',

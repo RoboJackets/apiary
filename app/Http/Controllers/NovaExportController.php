@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class NovaExportController extends Controller
 {
     /**
-     * Trigger a download of the specified file
+     * Trigger a download of the specified file.
      *
      * @param string $file
      */

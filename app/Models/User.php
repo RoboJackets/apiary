@@ -363,12 +363,12 @@ class User extends Authenticatable
     public function duesPackages(): HasManyThrough
     {
         return $this->hasManyThrough(
-        DuesPackage::class,
-       DuesTransaction::class,
-        'user_id',
-        'id',
-        'id',
-        'dues_package_id'
+            DuesPackage::class,
+            DuesTransaction::class,
+            'user_id',
+            'id',
+            'id',
+            'dues_package_id'
         );
     }
 
