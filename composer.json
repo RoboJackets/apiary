@@ -48,7 +48,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.9.0",
         "beyondcode/laravel-dump-server": "1.7.0",
-        "facade/ignition": "2.5.10",
+        "facade/ignition": "2.5.11",
         "fakerphp/faker": "1.13.0",
         "filp/whoops": "2.9.2",
         "mockery/mockery": "1.4.2",
