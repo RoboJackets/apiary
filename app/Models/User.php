@@ -566,7 +566,7 @@ class User extends Authenticatable
             ->where('buzzcard_access_opt_out', false)
             ->whereIn('primary_affiliation', ['student', 'faculty', 'staff'])
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                $q->where('restricted_to_students', true);
+                $q->where('restricted_to_students', false);
             });
     }
 
