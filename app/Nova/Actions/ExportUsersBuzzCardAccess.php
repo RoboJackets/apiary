@@ -39,20 +39,18 @@ class ExportUsersBuzzCardAccess extends Action
     public function handle(ActionFields $fields, Collection $models): array
     {
         $population = $fields->population;
-        $query = User::when('core' === $population, static function (Builder $q): void {
-            $q->select('gtid')->BuzzCardAccessEligible()
-                ->whereHas('teams', static function (Builder $query): void {
+        $users = User::select('gtid')->BuzzCardAccessEligible()
+            ->when('core' === $population, static function (Builder $q): void {
+                $q->whereHas('teams', static function (Builder $query): void {
                     $query->where('name', 'Core');
                 });
             },
             static function (Builder $q): void {
-            $q->select('gtid')->BuzzCardAccessEligible()
-                ->whereDoesntHave('teams', static function (Builder $query): void {
+                $q->whereDoesntHave('teams', static function (Builder $query): void {
                     $query->where('name', 'Core');
                 });
-        });
-
-        $users = $query->get();
+            })
+            ->get();
 
         if (0 === count($users)) {
             return Action::danger('No users match the provided criteria!');
@@ -77,7 +75,7 @@ class ExportUsersBuzzCardAccess extends Action
     /**
      * Get the fields available on the action.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function fields(): array
     {
