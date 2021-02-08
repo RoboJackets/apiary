@@ -39,16 +39,14 @@ class ExportUsersBuzzCardAccess extends Action
     public function handle(ActionFields $fields, Collection $models): array
     {
         $population = $fields->population;
-        $query = User::query();
-
-        $query->when('core' === $population, static function (Builder $q) {
-            return $q->select('gtid')->BuzzCardAccessEligible()
+        $query = User::when('core' === $population, static function (Builder $q): void {
+            $q->select('gtid')->BuzzCardAccessEligible()
                 ->whereHas('teams', static function (Builder $query): void {
                     $query->where('name', 'Core');
                 });
-        });
-        $query->when('general' === $population, static function (Builder $q) {
-            return $q->select('gtid')->BuzzCardAccessEligible()
+            },
+            static function (Builder $q): void {
+            $q->select('gtid')->BuzzCardAccessEligible()
                 ->whereDoesntHave('teams', static function (Builder $query): void {
                     $query->where('name', 'Core');
                 });
@@ -81,7 +79,7 @@ class ExportUsersBuzzCardAccess extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return [
             Select::make('Population')->options([

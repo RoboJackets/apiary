@@ -8,10 +8,6 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "build-apiary-nova-data-export": "cd nova-components/ApiaryNovaDataExport && npm run dev",
-        "build-apiary-nova-data-export-prod": "cd nova-components/ApiaryNovaDataExport && npm run prod",
-        "build-data-export": "cd nova-components/DataExport && npm run dev",
-        "build-data-export-prod": "cd nova-components/DataExport && npm run prod"
     },
     "devDependencies": {
         "bootstrap": "4.6.0",

@@ -13,7 +13,7 @@ class AddBuzzcardAccessOptOutToUsers extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', static function (Blueprint $table): void {
             $table->addColumn('boolean', 'buzzcard_access_opt_out')->default(false);
@@ -25,7 +25,7 @@ class AddBuzzcardAccessOptOutToUsers extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('buzzcard_access_opt_out');

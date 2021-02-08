@@ -43,7 +43,6 @@ parameters:
     - '#Method App\\Notifications\\[a-zA-Z]+::toMail\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Notifications\\[a-zA-Z]+::via\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Nova\\[a-zA-Z]+::fields\(\) return type has no value type specified in iterable type array\.#'
-    - '#Method App\\Nova\\Actions\\[a-zA-Z]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method Illuminate\\Routing\\RouteRegistrar::middleware\(\) invoked with 2 parameters, 1 required\.#'
     - '#Parameter \#1 \$data of function bin2hex expects string, string\|false given\.#'
     - '#Parameter \#1 \$filePath of method App\\Imports\\[a-zA-Z]+::import\(\) expects string\|Symfony\\Component\\HttpFoundation\\File\\UploadedFile\|null, array\|string\|null given\.#'
