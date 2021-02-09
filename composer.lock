@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "14307dabb599ea137b264181da61f7d0",
+    "content-hash": "dbc5e95a0c808e823c00f8e0cfffbf4c",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2118,16 +2118,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.6.5",
+            "version": "v5.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "9f0ed546f82e2290e6c8de6151d4da8d29f34a0f"
+                "reference": "26682428b9c580abc690086f816643325427f0fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/9f0ed546f82e2290e6c8de6151d4da8d29f34a0f",
-                "reference": "9f0ed546f82e2290e6c8de6151d4da8d29f34a0f",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/26682428b9c580abc690086f816643325427f0fb",
+                "reference": "26682428b9c580abc690086f816643325427f0fb",
                 "shasum": ""
             },
             "require": {
@@ -2189,9 +2189,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.6.5"
+                "source": "https://github.com/laravel/horizon/tree/v5.6.6"
             },
-            "time": "2021-01-12T16:51:53+00:00"
+            "time": "2021-02-09T16:23:38+00:00"
         },
         {
             "name": "laravel/nova",
