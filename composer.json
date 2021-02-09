@@ -23,7 +23,7 @@
         "doctrine/dbal": "2.12.1",
         "guzzlehttp/guzzle": "7.2.0",
         "laravel/framework": "8.27.0",
-        "laravel/horizon": "5.6.5",
+        "laravel/horizon": "5.6.6",
         "laravel/nova": "3.21.0",
         "laravel/slack-notification-channel": "2.3.1",
         "laravel/socialite": "5.1.3",
