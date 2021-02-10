@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbc5e95a0c808e823c00f8e0cfffbf4c",
+    "content-hash": "dccb3f38125c154452ae844283c89182",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -494,16 +494,16 @@
         },
         {
             "name": "bugsnag/bugsnag",
-            "version": "v3.25.0",
+            "version": "v3.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bugsnag/bugsnag-php.git",
-                "reference": "5a62ea2449e090ac103b1e9883a8fc33567d4241"
+                "reference": "36d7a22d60e72b6c750ad1600dc5ae5d4073598d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/5a62ea2449e090ac103b1e9883a8fc33567d4241",
-                "reference": "5a62ea2449e090ac103b1e9883a8fc33567d4241",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/36d7a22d60e72b6c750ad1600dc5ae5d4073598d",
+                "reference": "36d7a22d60e72b6c750ad1600dc5ae5d4073598d",
                 "shasum": ""
             },
             "require": {
@@ -551,26 +551,26 @@
             ],
             "support": {
                 "issues": "https://github.com/bugsnag/bugsnag-php/issues",
-                "source": "https://github.com/bugsnag/bugsnag-php/tree/v3.25.0"
+                "source": "https://github.com/bugsnag/bugsnag-php/tree/v3.26.0"
             },
-            "time": "2020-11-25T13:15:13+00:00"
+            "time": "2021-02-10T09:35:17+00:00"
         },
         {
             "name": "bugsnag/bugsnag-laravel",
-            "version": "v2.21.0",
+            "version": "v2.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bugsnag/bugsnag-laravel.git",
-                "reference": "b470a34b2b6ba33b2aa4ef1a01c64843ae8ab91b"
+                "reference": "89eb615267840e67c6771a492c725428706e66d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/b470a34b2b6ba33b2aa4ef1a01c64843ae8ab91b",
-                "reference": "b470a34b2b6ba33b2aa4ef1a01c64843ae8ab91b",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/89eb615267840e67c6771a492c725428706e66d7",
+                "reference": "89eb615267840e67c6771a492c725428706e66d7",
                 "shasum": ""
             },
             "require": {
-                "bugsnag/bugsnag": "^3.20",
+                "bugsnag/bugsnag": "^3.26.0",
                 "bugsnag/bugsnag-psr-logger": "^1.4",
                 "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
                 "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
@@ -615,9 +615,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bugsnag/bugsnag-laravel/issues",
-                "source": "https://github.com/bugsnag/bugsnag-laravel/tree/v2.21.0"
+                "source": "https://github.com/bugsnag/bugsnag-laravel/tree/v2.22.0"
             },
-            "time": "2020-11-25T13:26:13+00:00"
+            "time": "2021-02-10T18:00:31+00:00"
         },
         {
             "name": "bugsnag/bugsnag-psr-logger",
