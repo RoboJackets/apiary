@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -60,17 +61,16 @@ class ExportUsersBuzzCardAccess extends Action
             return Action::danger('No users match the provided criteria!');
         }
 
-        // Exclude fields that we don't care about (Everything except GTID)
-        $users->pluck('gtid');
+        $output = $users->pluck('gtid')->reduce(static function (?string $carry, int $item): string {
+            return ($carry ?? '').$item."\n";
+        });
 
         $phrasing = 'core' === $population ? 'with' : 'without';
         $timestamp = Carbon::now()->toDateTimeLocalString();
         $filename = '575F-GRP_SCC_'.$phrasing.'_RoboJackets-'.$timestamp.'.csv';
         $path = 'nova-exports/'.$filename;
-        $users->storeExcel(
-            $path,
-            'local',
-        );
+
+        Storage::put($path, $output);
 
         // Generate signed URL to pass to backend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
@@ -86,10 +86,13 @@ class ExportUsersBuzzCardAccess extends Action
     public function fields(): array
     {
         return [
-            Select::make('Population')->options([
-                'core' => 'Core',
-                'general' => 'General',
-            ]),
+            Select::make('Population')
+                ->options([
+                    'core' => 'Core',
+                    'general' => 'General',
+                ])
+                ->required()
+                ->rules('required'),
         ];
     }
 }
