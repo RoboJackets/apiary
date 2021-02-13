@@ -66,7 +66,8 @@
               class="form-control"
               id="user-emergencycontactname"
               :class="{ 'is-invalid': $v.localUser.emergency_contact_name.$error }"
-              @input="$v.localUser.emergency_contact_name.$touch()">
+              @input="$v.localUser.emergency_contact_name.$touch()"
+              required>
           </div>
         </div>
         <div class="form-group row">
@@ -79,7 +80,8 @@
               id="user-emergencycontactphone"
               maxlength="15"
               :class="{ 'is-invalid': $v.localUser.emergency_contact_phone.$error }"
-              @input="$v.localUser.emergency_contact_phone.$touch()">
+              @input="$v.localUser.emergency_contact_phone.$touch()"
+              required>
               <div class="invalid-feedback">
                 Must be a valid phone number with no punctuation, different from your phone number provided above
               </div>
@@ -102,7 +104,7 @@
 </template>
 
 <script>
-import { alpha, email, minLength, maxLength } from 'vuelidate/lib/validators';
+import { alpha, email, minLength, maxLength, required } from 'vuelidate/lib/validators';
 import notGTEmail from '../../customValidators/notGTEmail';
 
 export default {
@@ -160,8 +162,8 @@ export default {
       personal_email: { email, notGTEmail },
       phone: { maxLength: maxLength(15) },
       preferred_first_name: { alpha },
-      emergency_contact_name: {},
-      emergency_contact_phone: { maxLength: maxLength(15) },
+      emergency_contact_name: { required },
+      emergency_contact_phone: { required, maxLength: maxLength(15) },
     },
   },
 };
