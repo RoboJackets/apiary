@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
         'auth.token' => \App\Http\Middleware\APITokenAuthenticate::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
     ];
 
     /**
