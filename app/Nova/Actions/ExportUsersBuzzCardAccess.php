@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
@@ -62,7 +63,9 @@ class ExportUsersBuzzCardAccess extends Action
         // Exclude fields that we don't care about (Everything except GTID)
         $users->pluck('gtid');
 
-        $filename = 'robojackets-'.$population.'-buzzcard-'.time().'.csv';
+        $phrasing = ('core' === $population) ? 'with' : 'without';
+        $timestamp = Carbon::now()->toDateTimeLocalString();
+        $filename = '575F-GRP_SCC_'.$phrasing.'_RoboJackets-'.$timestamp.'.csv';
         $path = 'nova-exports/'.$filename;
         $users->storeExcel(
             $path,
