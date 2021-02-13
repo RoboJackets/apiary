@@ -113,7 +113,8 @@
                 id="user-emergencyname"
                 placeholder="None on record"
                 :class="{ 'is-invalid': $v.user.emergency_contact_name.$error }"
-                @input="$v.user.emergency_contact_name.$touch()">
+                @input="$v.user.emergency_contact_name.$touch()"
+                required>
           </div>
         </div>
 
@@ -127,7 +128,8 @@
                 id="user-emergencyphone"
                 placeholder="None on record"
                 :class="{ 'is-invalid': $v.user.emergency_contact_phone.$error }"
-                @input="$v.user.emergency_contact_phone.$touch()">
+                @input="$v.user.emergency_contact_phone.$touch()"
+                required>
             <div class="invalid-feedback">
               Must be a valid phone number with no punctuation
             </div>
@@ -349,8 +351,8 @@ export default {
       preferred_first_name: { alpha },
       shirt_size: {},
       polo_size: {},
-      emergency_contact_name: {},
-      emergency_contact_phone: { maxLength: maxLength(15) },
+      emergency_contact_name: { required },
+      emergency_contact_phone: { required, maxLength: maxLength(15) },
     },
   },
 };
