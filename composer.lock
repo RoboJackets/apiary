@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ef2e8c2ca7406033d1d667bc2e58769",
+    "content-hash": "710e93ab7734194ec00da8fea3f682ea",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5009,17 +5009,17 @@
         },
         {
             "name": "robojackets/auth-stickler",
-            "version": "v0.2",
+            "version": "v0.3",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/auth-stickler.git",
-                "reference": "7c81356ab8ab87d7731188c23d3c251b3b3ce385"
+                "reference": "014d2261078db6c985dae8628907c49488773a46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1610988621/robojackets/auth-stickler/robojackets-auth-stickler-7c81356ab8ab87d7731188c23d3c251b3b3ce385-zip-762dd0.zip",
-                "reference": "7c81356ab8ab87d7731188c23d3c251b3b3ce385",
-                "shasum": "a4dac1c3540773734b396121793417f3385a6124"
+                "url": "https://composer.robojackets.org/1613228593/robojackets/auth-stickler/robojackets-auth-stickler-014d2261078db6c985dae8628907c49488773a46-zip-fc802a.zip",
+                "reference": "014d2261078db6c985dae8628907c49488773a46",
+                "shasum": "78a3d77b921a5645956862149afd2a9175bfa533"
             },
             "require": {
                 "apereo/phpcas": "^1.3",
@@ -5050,10 +5050,10 @@
             "description": "phpCAS wrapper with entirely too many opinions",
             "homepage": "https://github.gatech.edu/RoboJackets/auth-stickler",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/auth-stickler/tree/v0.2",
+                "source": "https://github.gatech.edu/RoboJackets/auth-stickler/tree/v0.3",
                 "issues": "https://github.gatech.edu/RoboJackets/auth-stickler/issues"
             },
-            "time": "2021-01-18T16:37:40+00:00"
+            "time": "2021-02-13T14:55:55+00:00"
         },
         {
             "name": "robojackets/error-pages",
@@ -5065,9 +5065,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1610988621/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
+                "url": "https://composer.robojackets.org/1613228593/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
                 "reference": "ce83cc96d3f3ba637b76480a71d6d7adba1fa134",
-                "shasum": "07ab52be57c7fd224fb29f8e4c7a8ad6c0180d29"
+                "shasum": "15b8edfaf8902318f91f9c2b53afb8d4fa584c0b"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -5110,9 +5110,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1610988621/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
+                "url": "https://composer.robojackets.org/1613228593/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
                 "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7",
-                "shasum": "05b6ea64a3e5091d7774249667455a7a725ecbff"
+                "shasum": "00704acaac227e27b1575c8889173e4186a49b8e"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
