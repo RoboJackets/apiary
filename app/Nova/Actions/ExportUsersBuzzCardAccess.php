@@ -63,7 +63,7 @@ class ExportUsersBuzzCardAccess extends Action
         // Exclude fields that we don't care about (Everything except GTID)
         $users->pluck('gtid');
 
-        $phrasing = ('core' === $population) ? 'with' : 'without';
+        $phrasing = 'core' === $population ? 'with' : 'without';
         $timestamp = Carbon::now()->toDateTimeLocalString();
         $filename = '575F-GRP_SCC_'.$phrasing.'_RoboJackets-'.$timestamp.'.csv';
         $path = 'nova-exports/'.$filename;
