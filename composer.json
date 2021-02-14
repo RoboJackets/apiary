@@ -43,7 +43,7 @@
         "subfission/cas": "4.0.0",
         "ukfast/laravel-health-check": "1.9.0",
         "uxweb/sweet-alert": "2.0.5",
-        "vyuldashev/nova-permission": "2.11.0"
+        "vyuldashev/nova-permission": "2.11.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.9.0",
