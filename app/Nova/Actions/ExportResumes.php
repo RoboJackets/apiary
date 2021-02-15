@@ -100,6 +100,7 @@ class ExportResumes extends Action
 
         if (0 !== $gsExit) {
             Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
+
             return Action::danger('Error exporting resumes');
         }
 
@@ -115,6 +116,7 @@ class ExportResumes extends Action
         if (0 !== $exifExit) {
             Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '
                 .implode("\n", $exifOutput));
+
             return Action::danger('Error exporting resumes');
         }
 
