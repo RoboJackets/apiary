@@ -108,6 +108,12 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
+        ],
+        "ci": [
+            "vendor/bin/phpcs",
+            "vendor/bin/phpstan analyse --level=max .",
+            "vendor/bin/phan",
+            "vendor/bin/psalm"
         ]
     },
     "config": {
