@@ -38,9 +38,6 @@ class ExportResumes extends Action
             return Action::danger('Sorry! You are not authorized to perform this action.');
         }
 
-        ray($fields->major);
-        ray($fields->resume_date_cutoff);
-
         $users = User::active()
             ->whereNotNull('resume_date')
             ->where('resume_date', '>', $fields->resume_date_cutoff)
