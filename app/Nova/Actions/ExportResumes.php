@@ -28,8 +28,6 @@ class ExportResumes extends Action
      * @param \Illuminate\Support\Collection<\App\Models\User>  $models
      *
      * @return array<string,string>
-     *
-     * @suppress PhanTypeMismatchArgumentNullableInternal
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
