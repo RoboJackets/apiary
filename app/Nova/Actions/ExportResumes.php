@@ -68,11 +68,11 @@ class ExportResumes extends Action
             return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
         });
 
-        $datecode = now()->format('Y-m-d-Hi');
-        $filename = 'robojackets-resumes-'.Str::slug(implode('-', $majors)).'-'.$datecode.'.pdf';
+        $datecode = now()->format('Y-m-d');
+        $filename = 'robojackets-resumes-'.$datecode.'.pdf';
         $path = Storage::disk('local')->path('nova-exports/'.$filename);
 
-        $coverfilename = 'robojackets-resumes-'.Str::slug(implode('-', $majors)).'-'.$datecode.'-cover.pdf';
+        $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
         $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
 
         PDF::loadView(
@@ -102,8 +102,7 @@ class ExportResumes extends Action
         }
 
         // This is not perfect! The original metadata is recoverable (exiftool can't remove it permanently).
-        $cmdExif = 'exiftool -Title="RoboJackets Resumes - '.
-            implode(', ', $majors).'" -Creator="MyRoboJackets" -Author="RoboJackets" ';
+        $cmdExif = 'exiftool -Title="RoboJackets Resumes" -Creator="MyRoboJackets" -Author="RoboJackets" ';
         $cmdExif .= escapeshellarg($path);
         Log::debug('Running shell command: '.$cmdExif);
         $exifOutput = [];
@@ -162,7 +161,8 @@ class ExportResumes extends Action
             BooleanGroup::make('Majors')
                 ->options($majors)
                 ->help('Only include resumes for these majors')
-                ->required(),
+                ->required()
+                ->rules('exists:majors,display_name'),
 
             DateTime::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date')
