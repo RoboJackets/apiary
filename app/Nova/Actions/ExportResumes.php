@@ -38,10 +38,8 @@ class ExportResumes extends Action
 
         $majors = array_keys($fields->majors);
 
-        if (count($majors) !== Major::whereIn('display_name', $majors)->count()) {
-            Log::error('Display names don\'t exist in database');
-
-            return Action::danger('Error exporting resumes');
+        foreach ($majors as $major) {
+            Major::where('display_name', $major)->firstOrFail();
         }
 
         $users = User::active()
@@ -74,7 +72,7 @@ class ExportResumes extends Action
             return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
         });
 
-        $datecode = now()->format('Y-m-d');
+        $datecode = now()->format('Y-m-d-H-i-s');
         $filename = 'robojackets-resumes-'.$datecode.'.pdf';
         $path = Storage::disk('local')->path('nova-exports/'.$filename);
 
