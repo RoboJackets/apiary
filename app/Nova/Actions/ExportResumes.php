@@ -39,7 +39,7 @@ class ExportResumes extends Action
         $majors = [];
 
         foreach ($fields->majors as $major => $selected) {
-            if (! $selected) {
+            if (false === $selected) {
                 continue;
             }
 
