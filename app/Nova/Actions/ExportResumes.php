@@ -40,6 +40,7 @@ class ExportResumes extends Action
 
         if (count($majors) !== Major::whereIn('display_name', $majors)->count()) {
             Log::error('Display names don\'t exist in database');
+
             return Action::danger('Error exporting resumes');
         }
 
