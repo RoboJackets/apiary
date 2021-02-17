@@ -6,14 +6,14 @@
 <h2>Majors</h2>
 <ul>
 @foreach ($majors as $major)
-    <li>$major</li>
+    <li>{{ $major }}</li>
 @endforeach
 </ul>
 
 <h2>Class Standings</h2>
 <ul>
 @foreach ($class_standings as $standing)
-    <li>$standing</li>
+    <li>{{ $standing }}</li>
 @endforeach
 </ul>
 
