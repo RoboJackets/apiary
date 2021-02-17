@@ -114,6 +114,7 @@ class ExportResumes extends Action
             'resumecover',
             [
                 'majors' => $majors,
+                'class_standings' => $classStandings,
                 'cutoff_date' => $fields->resume_date_cutoff,
                 'generation_date' => $datecode,
             ]
