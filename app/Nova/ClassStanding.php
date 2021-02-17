@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 
 class ClassStanding extends Resource
@@ -47,6 +48,8 @@ class ClassStanding extends Resource
     {
         return [
             Text::make('Name')->sortable(),
+
+            Number::make('Rank Order')->sortable(),
 
             BelongsToMany::make('Members', 'members', User::class),
 
