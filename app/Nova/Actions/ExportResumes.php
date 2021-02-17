@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\ClassStanding;
 use App\Models\Major;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\BooleanGroup;
-use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Date;
 
 class ExportResumes extends Action
 {
@@ -48,7 +50,20 @@ class ExportResumes extends Action
             $majors[] = $major;
         }
 
-        $users = User::active()
+        $classStandings = [];
+
+        foreach ($fields->class_standings as $classStanding => $selected) {
+            if (false === $selected) {
+                continue;
+            }
+
+            ClassStanding::where('name', $classStanding)->sole();
+
+            $classStandings[] = $classStanding;
+        }
+
+        $users = User::selectRaw('distinct(uid) as distinct_uid')
+            ->active()
             ->whereNotNull('resume_date')
             ->where('resume_date', '>', $fields->resume_date_cutoff)
             ->where('primary_affiliation', 'student')
@@ -65,10 +80,21 @@ class ExportResumes extends Action
                 '=',
                 'majors.id'
             )
+            ->leftJoin('class_standing_user', static function (JoinClause $join): void {
+                $join->on('users.id', '=', 'class_standing_user.user_id')
+                     ->whereNull('class_standing_user.deleted_at');
+            })
+            ->leftJoin(
+                'class_standings',
+                'class_standing_user.class_standing_id',
+                '=',
+                'class_standings.id'
+            )
             ->whereIn('majors.display_name', $majors)
+            ->whereIn('class_standings.name', $classStandings)
             ->orderBy('last_name')
             ->orderBy('first_name')
-            ->pluck('uid');
+            ->pluck('distinct_uid');
 
         if (0 === $users->count()) {
             return Action::danger('No resumes matched the criteria!');
@@ -167,14 +193,56 @@ class ExportResumes extends Action
                 ->toArray();
         });
 
+        $classStandings = Cache::remember('class_standings_with_resumes', 30, static function (): array {
+            return User::selectRaw('distinct(class_standings.name) as distinct_class_standings')
+                ->active()
+                ->whereNotNull('resume_date')
+                ->where('primary_affiliation', 'student')
+                ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                    $q->where('restricted_to_students', false);
+                })
+                ->leftJoin('class_standing_user', static function (JoinClause $join): void {
+                    $join->on('users.id', '=', 'class_standing_user.user_id')
+                         ->whereNull('class_standing_user.deleted_at');
+                })
+                ->leftJoin(
+                    'class_standings',
+                    'class_standing_user.class_standing_id',
+                    '=',
+                    'class_standings.id'
+                )
+                ->orderBy('class_standings.rank_order')
+                ->pluck('distinct_class_standings')
+                ->mapWithKeys(static function (?string $displayName): array {
+                    return null === $displayName ? [] : [$displayName => $displayName];
+                })
+                ->toArray();
+        });
+
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+
+        if ($month <= 8) {
+            $year--;
+        }
+
+        $defaultDate = Carbon::create($year, 8, 1, 0, 0, 0, config('app.timezone'));
+
         return [
             BooleanGroup::make('Majors')
                 ->options($majors)
                 ->help('Only include resumes for these majors')
                 ->required(),
 
-            DateTime::make('Resume Date Cutoff')
+            BooleanGroup::make('Class Standings')
+                ->options($classStandings)
+                ->help('Only include resumes for these class standings')
+                ->required(),
+
+            Date::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date')
+                ->default($defaultDate)
                 ->required()
                 ->rules('required'),
         ];
