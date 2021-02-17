@@ -62,8 +62,7 @@ class ExportResumes extends Action
             $classStandings[] = $classStanding;
         }
 
-        $users = User::selectRaw('distinct(uid) as distinct_uid')
-            ->active()
+        $users = User::active()
             ->whereNotNull('resume_date')
             ->where('resume_date', '>', $fields->resume_date_cutoff)
             ->where('primary_affiliation', 'student')
@@ -94,13 +93,13 @@ class ExportResumes extends Action
             ->whereIn('class_standings.name', $classStandings)
             ->orderBy('last_name')
             ->orderBy('first_name')
-            ->pluck('distinct_uid');
+            ->pluck('uid');
 
         if (0 === $users->count()) {
             return Action::danger('No resumes matched the criteria!');
         }
 
-        $filenames = $users->map(static function (string $uid): string {
+        $filenames = $users->uniqueStrict()->map(static function (string $uid): string {
             return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
         });
 
