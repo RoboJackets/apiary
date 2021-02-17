@@ -36,10 +36,16 @@ class ExportResumes extends Action
             return Action::danger('Sorry! You are not authorized to perform this action.');
         }
 
-        $majors = array_keys($fields->majors);
+        $majors = [];
 
-        foreach ($majors as $major) {
+        foreach ($fields->majors as $major => $selected) {
+            if (!$selected) {
+                continue;
+            }
+
             Major::where('display_name', $major)->firstOrFail();
+
+            $majors[] = $major;
         }
 
         $users = User::active()
