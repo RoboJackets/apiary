@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\Major;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,6 +37,11 @@ class ExportResumes extends Action
         }
 
         $majors = array_keys($fields->majors);
+
+        if (count($majors) !== Major::whereIn('display_name', $majors)->count()) {
+            Log::error('Display names don\'t exist in database');
+            return Action::danger('Error exporting resumes');
+        }
 
         $users = User::active()
             ->whereNotNull('resume_date')
@@ -150,8 +156,8 @@ class ExportResumes extends Action
                 )
                 ->orderBy('distinct_display_names')
                 ->pluck('distinct_display_names')
-                ->mapWithKeys(static function (string $displayName): array {
-                    return [$displayName => $displayName];
+                ->mapWithKeys(static function (?string $displayName): array {
+                    return null === $displayName ? [] : [$displayName => $displayName];
                 })
                 ->toArray();
         });
@@ -160,8 +166,7 @@ class ExportResumes extends Action
             BooleanGroup::make('Majors')
                 ->options($majors)
                 ->help('Only include resumes for these majors')
-                ->required()
-                ->rules('exists:majors,display_name'),
+                ->required(),
 
             DateTime::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date')
