@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Select;
 
 class ExportResumes extends Action
 {
@@ -35,6 +35,8 @@ class ExportResumes extends Action
         if (! Auth::user()->can('read-users-resume')) {
             return Action::danger('Sorry! You are not authorized to perform this action.');
         }
+
+        $majors = array_keys($fields->majors);
 
         $users = User::active()
             ->whereNotNull('resume_date')
@@ -53,7 +55,7 @@ class ExportResumes extends Action
                 '=',
                 'majors.id'
             )
-            ->where('majors.display_name', $fields->major)
+            ->whereIn('majors.display_name', $majors)
             ->orderBy('last_name')
             ->orderBy('first_name')
             ->pluck('uid');
@@ -67,16 +69,16 @@ class ExportResumes extends Action
         });
 
         $datecode = now()->format('Y-m-d-Hi');
-        $filename = 'robojackets-resumes-'.Str::slug($fields->major).'-'.$datecode.'.pdf';
+        $filename = 'robojackets-resumes-'.Str::slug(implode('-', $majors)).'-'.$datecode.'.pdf';
         $path = Storage::disk('local')->path('nova-exports/'.$filename);
 
-        $coverfilename = 'robojackets-resumes-'.Str::slug($fields->major).'-'.$datecode.'-cover.pdf';
+        $coverfilename = 'robojackets-resumes-'.Str::slug(implode('-', $majors)).'-'.$datecode.'-cover.pdf';
         $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
 
         PDF::loadView(
             'resumecover',
             [
-                'major' => $fields->major,
+                'majors' => $majors,
                 'cutoff_date' => $fields->resume_date_cutoff,
                 'generation_date' => $datecode,
             ]
@@ -101,7 +103,7 @@ class ExportResumes extends Action
 
         // This is not perfect! The original metadata is recoverable (exiftool can't remove it permanently).
         $cmdExif = 'exiftool -Title="RoboJackets Resumes - '.
-            $fields->major.'" -Creator="MyRoboJackets" -Author="RoboJackets" ';
+            implode(', ', $majors).'" -Creator="MyRoboJackets" -Author="RoboJackets" ';
         $cmdExif .= escapeshellarg($path);
         Log::debug('Running shell command: '.$cmdExif);
         $exifOutput = [];
@@ -148,6 +150,7 @@ class ExportResumes extends Action
                     '=',
                     'majors.id'
                 )
+                ->orderBy('distinct_display_names')
                 ->pluck('distinct_display_names')
                 ->mapWithKeys(static function (string $displayName): array {
                     return [$displayName => $displayName];
@@ -156,12 +159,10 @@ class ExportResumes extends Action
         });
 
         return [
-            Select::make('Major')
+            BooleanGroup::make('Majors')
                 ->options($majors)
-                ->searchable()
-                ->help('Only include resumes for this major')
-                ->required()
-                ->rules('required'),
+                ->help('Only include resumes for these majors')
+                ->required(),
 
             DateTime::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date')
