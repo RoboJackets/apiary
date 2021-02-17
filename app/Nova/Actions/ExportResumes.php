@@ -194,7 +194,9 @@ class ExportResumes extends Action
         });
 
         $classStandings = Cache::remember('class_standings_with_resumes', 30, static function (): array {
-            return User::selectRaw('distinct(class_standings.name) as distinct_class_standings')
+            return User::selectRaw(
+                'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
+            )
                 ->active()
                 ->whereNotNull('resume_date')
                 ->where('primary_affiliation', 'student')
