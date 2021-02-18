@@ -163,7 +163,7 @@ class DuesTransaction extends Resource
             })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('create-payments')
                     && ($dues_transaction->user()->first()->id !== $request->user()->id);
-            }),
+            })->confirmButtonText('Add Payment'),
         ];
     }
 

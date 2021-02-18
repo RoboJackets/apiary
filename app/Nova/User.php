@@ -445,21 +445,21 @@ class User extends Resource
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
-                }),
+                })->confirmButtonText('Sync Access'),
             (new Actions\OverrideAccess())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
-                }),
+                })->confirmButtonText('Override Access'),
             (new Actions\ResetApiToken())
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-                }),
+                })->confirmButtonText('Reset API Token'),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('send-notifications');
@@ -467,17 +467,19 @@ class User extends Resource
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->can('send-notifications');
                 }),
-            (new Actions\GenerateResumeBook())
+            (new Actions\ExportResumes())
+                ->standalone()
+                ->onlyOnIndex()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-resume');
-                })->standalone(),
+                })->confirmButtonText('Export Resumes'),
             (new Actions\RefreshFromGTED())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
-                }),
+                })->confirmButtonText('Refresh from GTED'),
             (new Actions\ExportUsersBuzzCardAccess())
                 ->standalone()
                 ->onlyOnIndex()
@@ -486,7 +488,7 @@ class User extends Resource
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->can('read-users-gtid');
-                }),
+                })->confirmButtonText('Export List'),
         ];
     }
 }

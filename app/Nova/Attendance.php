@@ -182,7 +182,7 @@ class Attendance extends Resource
                 return $request->user()->can('read-attendance');
             })->canRun(static function (Request $request): bool {
                 return $request->user()->can('read-attendance');
-            }),
+            })->confirmButtonText('Export Attendance'),
         ];
     }
 

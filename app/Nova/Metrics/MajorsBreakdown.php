@@ -18,7 +18,7 @@ class MajorsBreakdown extends MajorDemographicsBreakdown
      */
     public function __construct()
     {
-        parent::__construct('whitepages_ou');
+        parent::__construct('display_name');
     }
 
     /**

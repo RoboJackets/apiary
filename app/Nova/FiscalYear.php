@@ -77,7 +77,7 @@ class FiscalYear extends Resource
                 })
                 ->canRun(static function (Request $request, AppModelsFiscalYear $fiscalYear): bool {
                     return $request->user()->can('create-dues-packages');
-                }),
+                })->confirmButtonText('Create Packages'),
         ];
     }
 }
