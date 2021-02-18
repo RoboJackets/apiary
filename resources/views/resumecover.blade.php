@@ -13,7 +13,7 @@
 <h2>Class Standings</h2>
 <ul>
 @foreach ($class_standings as $standing)
-    <li>{{ $standing }}</li>
+    <li>{{ ucfirst($standing) }}</li>
 @endforeach
 </ul>
 

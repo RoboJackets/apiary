@@ -215,8 +215,8 @@ class ExportResumes extends Action
                 )
                 ->orderBy('class_standings.rank_order')
                 ->pluck('distinct_class_standings')
-                ->mapWithKeys(static function (?string $displayName): array {
-                    return null === $displayName ? [] : [$displayName => $displayName];
+                ->mapWithKeys(static function (?string $name): array {
+                    return null === $name ? [] : [$name => ucfirst($name)];
                 })
                 ->toArray();
         });
