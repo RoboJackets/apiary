@@ -468,9 +468,11 @@ class User extends Resource
                     return $request->user()->can('send-notifications');
                 }),
             (new Actions\ExportResumes())
+                ->standalone()
+                ->onlyOnIndex()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-resume');
-                })->standalone()->confirmButtonText('Export Resumes'),
+                })->confirmButtonText('Export Resumes'),
             (new Actions\RefreshFromGTED())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
