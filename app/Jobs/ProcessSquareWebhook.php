@@ -40,12 +40,18 @@ class ProcessSquareWebhook extends ProcessWebhookJob
         }
 
         if ('COMPLETED' !== $details['status'] && 'APPROVED' !== $details['status']) {
-            Log::warning('Payment for Order ID '.$details['order_id'].'was pushed as '.$details['status']);
+            Log::warning('Payment for Order ID '.$details['order_id'].' was pushed as '.$details['status']);
 
             return;
         }
 
-        $payment = Payment::where('order_id', $details['order_id'])->firstOrFail();
+        $payment = Payment::where('order_id', $details['order_id'])->first();
+
+        if (null === $payment) {
+            Log::warning('Payment object with Order ID '.$details['order_id'].' not found, ignoring');
+
+            return;
+        }
 
         $payment->amount = $details['amount_money']['amount'] / 100;
 
