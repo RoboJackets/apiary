@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b0f1fb060a52043190f240668d8f93b",
+    "content-hash": "c5957e59f7fa50c13cf306662d7979ed",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -12669,16 +12669,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.19.5",
+            "version": "1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "01266d47eda32c57ad43639b99ce4efc523e7336"
+                "reference": "27400a44a1130e660a07b374a10dd96db70d6d0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/01266d47eda32c57ad43639b99ce4efc523e7336",
-                "reference": "01266d47eda32c57ad43639b99ce4efc523e7336",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/27400a44a1130e660a07b374a10dd96db70d6d0a",
+                "reference": "27400a44a1130e660a07b374a10dd96db70d6d0a",
                 "shasum": ""
             },
             "require": {
@@ -12686,7 +12686,7 @@
                 "ext-json": "*",
                 "php": "^7.3|^8.0",
                 "ramsey/uuid": "^3.0|^4.1",
-                "spatie/backtrace": "^1.0",
+                "spatie/backtrace": "^1.1",
                 "spatie/macroable": "^1.0",
                 "symfony/stopwatch": "^4.0|^5.1",
                 "symfony/var-dumper": "^4.2|^5.1"
@@ -12728,7 +12728,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.19.5"
+                "source": "https://github.com/spatie/ray/tree/1.20.0"
             },
             "funding": [
                 {
@@ -12740,7 +12740,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-02-17T12:24:31+00:00"
+            "time": "2021-02-22T12:01:10+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
