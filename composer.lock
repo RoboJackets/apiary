@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d0cea4b57613b164d53233e99498c1e",
+    "content-hash": "90219b0afad76737ffc6940e9fbda794",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -12669,16 +12669,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.20.0",
+            "version": "1.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "27400a44a1130e660a07b374a10dd96db70d6d0a"
+                "reference": "f51ef21fe88c4d4628f1656a73db540fdbc28773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/27400a44a1130e660a07b374a10dd96db70d6d0a",
-                "reference": "27400a44a1130e660a07b374a10dd96db70d6d0a",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/f51ef21fe88c4d4628f1656a73db540fdbc28773",
+                "reference": "f51ef21fe88c4d4628f1656a73db540fdbc28773",
                 "shasum": ""
             },
             "require": {
@@ -12728,7 +12728,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.20.0"
+                "source": "https://github.com/spatie/ray/tree/1.20.1"
             },
             "funding": [
                 {
@@ -12740,7 +12740,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-02-22T12:01:10+00:00"
+            "time": "2021-02-26T11:06:59+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
