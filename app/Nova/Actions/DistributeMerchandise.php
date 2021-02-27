@@ -19,7 +19,6 @@ use Outhebox\NovaHiddenField\HiddenField as Hidden;
 
 class DistributeMerchandise extends Action
 {
-
     /**
      * Perform the action on the given models.
      *
