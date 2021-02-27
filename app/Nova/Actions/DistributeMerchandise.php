@@ -86,7 +86,7 @@ class DistributeMerchandise extends Action
                     return User::whereHas('duesTransactions', static function (Builder $query): void {
                         $query->whereHas('merchandise', static function (Builder $query): void {
                             $query->whereHas('fiscalYear', static function (Builder $query): void {
-                                $query->where('ending_year', '>=', Carbon::now()->year - 4);
+                                $query->where('ending_year', '>=', Carbon::now()->year - 1);
                             })->whereNull('provided_at');
                         })
                         ->whereHas('payment', static function (Builder $query): void {
