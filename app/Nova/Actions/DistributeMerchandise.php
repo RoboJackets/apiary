@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\DuesTransaction;
 use App\Models\DuesTransactionMerchandise;
 use App\Models\User;
 use Carbon\Carbon;
@@ -47,6 +48,12 @@ class DistributeMerchandise extends Action
                      ->where('user_id', '=', $provided_to->id);
             }
         )
+        ->leftJoin('payments', static function (JoinClause $join): void {
+            $join->on('dues_transactions.id', '=', 'payable_id')
+                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                 ->where('payments.amount', '>', 0);
+        })
+        ->whereNotNull('payments.id')
         ->where('merchandise_id', $merchandise->id)
         ->where('user_id', $provided_to->id)
         ->first();
@@ -79,8 +86,11 @@ class DistributeMerchandise extends Action
                     return User::whereHas('duesTransactions', static function (Builder $query): void {
                         $query->whereHas('merchandise', static function (Builder $query): void {
                             $query->whereHas('fiscalYear', static function (Builder $query): void {
-                                $query->where('ending_year', '>=', Carbon::now()->year - 1);
+                                $query->where('ending_year', '>=', Carbon::now()->year - 4);
                             })->whereNull('provided_at');
+                        })
+                        ->whereHas('payment', static function (Builder $query): void {
+                            $query->where('amount', '>', 0);
                         });
                     })
                     ->get()
