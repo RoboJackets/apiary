@@ -93,7 +93,7 @@ class DistributeMerchandise extends Action
                 ->required()
                 ->help(
                     'Note that this dropdown includes users who are not eligible to receive this merchandise or already'
-                    .'picked it up. Please pay attention to the result of this action.'
+                    .' picked it up. Please pay attention to the result of this action.'
                 )
                 ->rules('required'),
 
