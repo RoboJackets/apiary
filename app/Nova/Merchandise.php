@@ -100,6 +100,25 @@ class Merchandise extends Resource
     }
 
     /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    public function actions(Request $request): array
+    {
+        return [
+            (new Actions\DistributeMerchandise())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('distribute-swag');
+                })
+                ->canRun(static function (Request $request, AppModelsMerchandise $merchandise): bool {
+                    return $request->user()->can('distribute-swag');
+                })->confirmButtonText('Mark as Picked Up')
+                ->onlyOnDetail(),
+        ];
+    }
+
+    /**
      * Get the URI key for the resource.
      */
     public static function uriKey(): string
