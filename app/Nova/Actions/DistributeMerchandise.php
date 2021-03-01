@@ -8,6 +8,7 @@ namespace App\Nova\Actions;
 
 use App\Models\DuesTransaction;
 use App\Models\DuesTransactionMerchandise;
+use App\Models\Merchandise;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,6 +21,17 @@ use Outhebox\NovaHiddenField\HiddenField as Hidden;
 
 class DistributeMerchandise extends Action
 {
+    /**
+     * The Merchandise model that will be distributed. This is used to build the list of users.
+     *
+     * @var \App\Models\Merchandise
+     */
+    private $resource;
+
+    public function __construct(string $resourceId)
+    {
+        $this->resource = Merchandise::where('id', '=', $resourceId)->sole();
+    }
     /**
      * Perform the action on the given models.
      *
@@ -80,14 +92,14 @@ class DistributeMerchandise extends Action
      */
     public function fields(): array
     {
+        $resource = $this->resource;
         return [
             Select::make('User', 'provided_to')
-                ->options(static function (): array {
-                    return User::whereHas('duesTransactions', static function (Builder $query): void {
-                        $query->whereHas('merchandise', static function (Builder $query): void {
-                            $query->whereHas('fiscalYear', static function (Builder $query): void {
-                                $query->where('ending_year', '>=', Carbon::now()->year - 1);
-                            })->whereNull('provided_at');
+                ->options(static function () use ($resource): array {
+                    return User::whereHas('duesTransactions', static function (Builder $query) use ($resource): void {
+                        $query->whereHas('merchandise', static function (Builder $query) use ($resource): void {
+                            $query->where('merchandise.id', $resource->id)
+                                  ->whereNull('dues_transaction_merchandise.provided_at');
                         })
                         ->whereHas('payment', static function (Builder $query): void {
                             $query->where('amount', '>', 0);
@@ -101,10 +113,6 @@ class DistributeMerchandise extends Action
                 })
                 ->searchable()
                 ->required()
-                ->help(
-                    'Note that this dropdown includes users who are not eligible to receive this merchandise or already'
-                    .' picked it up. Please pay attention to the result of this action.'
-                )
                 ->rules('required'),
 
             Hidden::make('Provided By', 'provided_by')
