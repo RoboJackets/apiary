@@ -32,6 +32,7 @@ class DistributeMerchandise extends Action
     {
         $this->resource = Merchandise::where('id', '=', $resourceId)->sole();
     }
+
     /**
      * Perform the action on the given models.
      *
@@ -93,6 +94,7 @@ class DistributeMerchandise extends Action
     public function fields(): array
     {
         $resource = $this->resource;
+
         return [
             Select::make('User', 'provided_to')
                 ->options(static function () use ($resource): array {
