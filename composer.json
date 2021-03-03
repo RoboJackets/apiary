@@ -59,7 +59,7 @@
         "phpunit/phpunit": "9.5.2",
         "psalm/plugin-laravel": "1.4.2",
         "robojackets/static-analysis": "1.2",
-        "spatie/ray": "1.20.1"
+        "spatie/ray": "1.21.0"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
