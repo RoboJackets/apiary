@@ -106,10 +106,6 @@ class Merchandise extends Resource
      */
     public function actions(Request $request): array
     {
-        if (null === $request->resourceId) {
-            return [];
-        }
-
         return [
             (new Actions\DistributeMerchandise($request->resourceId))
                 ->canSee(static function (Request $request): bool {

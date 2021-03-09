@@ -28,8 +28,11 @@ class DistributeMerchandise extends Action
      */
     private $resource;
 
-    public function __construct(string $resourceId)
+    public function __construct(?string $resourceId)
     {
+        if (null === $resourceId) {
+            return;
+        }
         $this->resource = Merchandise::where('id', '=', $resourceId)->sole();
     }
 
@@ -100,8 +103,13 @@ class DistributeMerchandise extends Action
                 ->options(static function () use ($resource): array {
                     return User::whereHas('duesTransactions', static function (Builder $query) use ($resource): void {
                         $query->whereHas('merchandise', static function (Builder $query) use ($resource): void {
-                            $query->where('merchandise.id', $resource->id)
-                                  ->whereNull('dues_transaction_merchandise.provided_at');
+                            $query->when(
+                                null !== $resource,
+                                static function (Builder $query) use ($resource): void {
+                                    $query->where('merchandise.id', $resource->id);
+                                }
+                            )
+                            ->whereNull('dues_transaction_merchandise.provided_at');
                         })
                         ->whereHas('payment', static function (Builder $query): void {
                             $query->where('amount', '>', 0);
