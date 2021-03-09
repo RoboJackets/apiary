@@ -24,7 +24,7 @@ class DistributeMerchandise extends Action
     /**
      * The Merchandise model that will be distributed. This is used to build the list of users.
      *
-     * @var \App\Models\Merchandise
+     * @var ?\App\Models\Merchandise
      */
     private $resource;
 
@@ -33,6 +33,7 @@ class DistributeMerchandise extends Action
         if (null === $resourceId) {
             return;
         }
+
         $this->resource = Merchandise::where('id', '=', $resourceId)->sole();
     }
 

@@ -59,7 +59,7 @@ parameters:
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Property App\\Models\\DuesPackage::\$[a-zA-Z_]+ \(Carbon\\Carbon\) does not accept Carbon\\Carbon\|false\.#'
     - '#Property App\\Models\\User::\$access_override_until \(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\Carbon\.#'
-    - '#Property App\\Nova\\Actions\\DistributeMerchandise::\$resource \(App\\Models\\Merchandise\) does not accept Illuminate\\Database\\Eloquent\\Model\.#'
+    - '#Property App\\Nova\\Actions\\DistributeMerchandise::\$resource \(App\\Models\\Merchandise\|null\) does not accept Illuminate\\Database\\Eloquent\\Model\.#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder\|Illuminate\\Database\\Eloquent\\Relations\\HasMany\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
