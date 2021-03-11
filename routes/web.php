@@ -72,6 +72,8 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('agreement/print', [SignatureController::class, 'print'])->name('agreement.print');
     Route::get('agreement/render', [SignatureController::class, 'render'])->name('agreement.render');
     Route::post('agreement/redirect', [SignatureController::class, 'redirect'])->name('agreement.redirect');
+
+    Route::redirect('admin', '/nova');
 });
 
 Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])
