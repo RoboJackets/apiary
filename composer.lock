@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41519d401970d5d056e90fa4fa98f52e",
+    "content-hash": "70997b442c722067426f2ca58c514e9c",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5470,16 +5470,16 @@
         },
         {
             "name": "square/square",
-            "version": "8.1.0.20210121",
+            "version": "9.0.0.20210226",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "9afc33f6152626b35e7572df27133545b1108364"
+                "reference": "5d4c6e40f3b0849dc4501a6bdd1405301d424c4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/9afc33f6152626b35e7572df27133545b1108364",
-                "reference": "9afc33f6152626b35e7572df27133545b1108364",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/5d4c6e40f3b0849dc4501a6bdd1405301d424c4b",
+                "reference": "5d4c6e40f3b0849dc4501a6bdd1405301d424c4b",
                 "shasum": ""
             },
             "require": {
@@ -5521,9 +5521,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/8.1.0.20210121"
+                "source": "https://github.com/square/square-php-sdk/tree/9.0.0.20210226"
             },
-            "time": "2021-01-21T18:18:38+00:00"
+            "time": "2021-02-26T18:27:38+00:00"
         },
         {
             "name": "subfission/cas",
