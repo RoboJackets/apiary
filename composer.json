@@ -81,7 +81,8 @@
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-util": "*",
         "symfony/polyfill-uuid": "*",
-        "paragonie/random_compat": "*"
+        "paragonie/random_compat": "*",
+        "sensiolabs/security-checker": "*"
     },
     "autoload": {
         "classmap": [
