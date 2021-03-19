@@ -98,7 +98,6 @@ class SquareCheckoutController extends Controller
 
         $orderRequest = new CreateOrderRequest();
         $orderRequest->setOrder($order);
-        $orderRequest->setLocationId(config('square.location_id'));
         $orderRequest->setIdempotencyKey($payment->unique_id);
 
         $checkoutRequest = new CreateCheckoutRequest($payment->unique_id, $orderRequest);

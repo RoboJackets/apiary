@@ -10,6 +10,7 @@ parameters:
   ignoreErrors:
     - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel|BuzzCardAccessEligible)\(\)\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$pivot\.#'
+    - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$(aggregate|day|rsvpsource|count|ending_year|member_count|active|revenue)\.#'
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$(merchandise|id)\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Permission::\$id\.#'
