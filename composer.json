@@ -34,7 +34,6 @@
         "outhebox/nova-hidden-field": "1.0.3",
         "predis/predis": "1.1.6",
         "robojackets/auth-stickler": "0.3",
-        "sensiolabs/security-checker": "6.0.3",
         "spatie/laravel-failed-job-monitor": "3.4.0",
         "spatie/laravel-permission": "3.18.0",
         "spatie/laravel-webhook-client": "2.7.5",
@@ -80,8 +79,7 @@
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-util": "*",
         "symfony/polyfill-uuid": "*",
-        "paragonie/random_compat": "*",
-        "sensiolabs/security-checker": "*"
+        "paragonie/random_compat": "*"
     },
     "autoload": {
         "classmap": [
