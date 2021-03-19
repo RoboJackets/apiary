@@ -9,8 +9,8 @@ parameters:
     - database/migrations/2021_01_11_231447_migrate_swag_data.php
   ignoreErrors:
     - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel|BuzzCardAccessEligible)\(\)\.#'
-    - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$pivot\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$(aggregate|day|rsvpsource|count|ending_year|member_count|active|revenue)\.#'
+    - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$pivot\.#'
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$(merchandise|id)\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Permission::\$id\.#'
@@ -54,8 +54,11 @@ parameters:
     - '#Parameter \#1 \$str of function trim expects string, int\|string\|null given\.#'
     - '#Parameter \#1 \$string of function substr expects string, string\|null given\.#'
     - '#Parameter \#1 \$year of static method Carbon\\Carbon::create\(\) expects int\|null, float\|int given\.#'
+    - '#Parameter \#2 \$callback of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::when\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>, mixed\): null\)\|Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>, Closure\(Illuminate\\Database\\Eloquent\\Builder\): void given\.#'
+    - '#Parameter \#2 \$callback of method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::when\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>, mixed\): null\)\|Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>, Closure\(Illuminate\\Database\\Eloquent\\Builder\): void given\.#'
     - '#Parameter \#2 \$str of function explode expects string, array\|string given\.#'
     - '#Parameter \#2 \$timestamp of function date expects int, int\|false given\.#'
+    - '#Parameter \#3 \$default of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::when\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>, mixed\): null\)\|Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>\|null, Closure\(Illuminate\\Database\\Eloquent\\Builder\): void given\.#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Property App\\Models\\DuesPackage::\$[a-zA-Z_]+ \(Carbon\\Carbon\) does not accept Carbon\\Carbon\|false\.#'
