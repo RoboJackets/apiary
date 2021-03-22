@@ -35,6 +35,13 @@ class ExportUsernames extends Action
     public $withoutConfirmation = true;
 
     /**
+     * The number of models that should be included in each chunk.
+     *
+     * @var int
+     */
+    public static $chunkCount = 100000;
+
+    /**
      * Perform the action on the given models.
      *
      * @param \Laravel\Nova\Fields\ActionFields  $fields
