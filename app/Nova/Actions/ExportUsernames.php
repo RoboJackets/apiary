@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Select;
 
 class ExportUsernames extends Action
 {
