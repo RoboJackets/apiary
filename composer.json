@@ -21,7 +21,7 @@
         "bugsnag/bugsnag-laravel": "2.22.0",
         "chelout/laravel-relationship-events": "1.4.0",
         "doctrine/dbal": "2.12.1",
-        "guzzlehttp/guzzle": "7.2.0",
+        "guzzlehttp/guzzle": "7.3.0",
         "laravel/framework": "8.33.1",
         "laravel/horizon": "5.7.2",
         "laravel/nova": "3.22.0",
