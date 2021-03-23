@@ -51,6 +51,7 @@ class PaymentMethodBreakdown extends Partition
                             )
                             ->whereNull('deleted_at');
                     })
+                    ->whereNull('payments.deleted_at')
                     ->select('method')
                     ->selectRaw('count(payments.id) as count')
                     ->groupBy('method')

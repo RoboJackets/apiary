@@ -29,7 +29,8 @@ class DuesRevenueByFiscalYear extends Trend
                 $join->on('dues_transactions.id', '=', 'payable_id')
                      ->where('payments.amount', '>', 0)
                      ->where('payments.method', '!=', 'waiver')
-                     ->where('payments.payable_type', DuesTransaction::getMorphClassStatic());
+                     ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                     ->whereNull('payments.deleted_at');
             })
             ->leftJoin(
                 'dues_packages',

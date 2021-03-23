@@ -25,7 +25,8 @@ class MemberSince extends TextMetric
         ->leftJoin('payments', static function (JoinClause $join): void {
             $join->on('dues_transactions.id', '=', 'payable_id')
                  ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                 ->where('payments.amount', '>', 0);
+                 ->where('payments.amount', '>', 0)
+                 ->whereNull('payments.deleted_at');
         })
         ->where('user_id', $request->resourceId)
         ->whereNotNull('payments.id')
