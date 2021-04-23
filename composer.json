@@ -20,7 +20,7 @@
         "barryvdh/laravel-dompdf": "0.9.0",
         "bugsnag/bugsnag-laravel": "2.22.0",
         "chelout/laravel-relationship-events": "1.4.0",
-        "doctrine/dbal": "2.13.0",
+        "doctrine/dbal": "2.13.1",
         "guzzlehttp/guzzle": "7.3.0",
         "laravel/framework": "8.38.0",
         "laravel/horizon": "5.7.4",
