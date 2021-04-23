@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e8218b09047ca532cfaffd2c445b521",
+    "content-hash": "5d4b80a7cd6ecb406cf0c0bd08c97a37",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2272,17 +2272,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.22.0",
+            "version": "3.23.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "41465f17785d04d946172f530bf01666e16dab0b"
+                "reference": "3520781b6a64dab93f68b9412383bf622b6d09b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-41465f17785d04d946172f530bf01666e16dab0b-zip-106723.zip",
-                "reference": "41465f17785d04d946172f530bf01666e16dab0b",
-                "shasum": "c521d11f45775d61b2b405b1cad8cd7aaabc9b4b"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-3520781b6a64dab93f68b9412383bf622b6d09b9-zip-4de43f.zip",
+                "reference": "3520781b6a64dab93f68b9412383bf622b6d09b9",
+                "shasum": "9b62802f2b1e334fb548a9dc5b80fb14034027a6"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2302,7 +2302,7 @@
                 "laravel/legacy-factories": "^1.0",
                 "laravel/nova-dusk-suite": "8.x-dev",
                 "mockery/mockery": "^1.3.3|^1.4.2",
-                "orchestra/testbench-dusk": "^6.5",
+                "orchestra/testbench-dusk": "^6.17",
                 "phpunit/phpunit": "^8.4",
                 "predis/predis": "^1.1"
             },
@@ -2334,7 +2334,8 @@
                 "dusk:prepare": [
                     "./vendor/bin/dusk-updater detect --auto-update",
                     "@php -r \"file_exists('phpunit.dusk.xml') || copy('phpunit.dusk.xml.dist', 'phpunit.dusk.xml'); \"",
-                    "@php -r \"if (file_exists('.env.dusk')) { copy('.env.dusk', 'vendor/laravel/nova-dusk-suite/.env'); } else { copy('.env.dusk.example', 'vendor/laravel/nova-dusk-suite/.env'); }\""
+                    "@php -r \"if (file_exists('.env.dusk')) { copy('.env.dusk', 'vendor/laravel/nova-dusk-suite/.env'); } else { copy('.env.dusk.example', 'vendor/laravel/nova-dusk-suite/.env'); }\"",
+                    "./vendor/bin/testbench-dusk package:discover"
                 ],
                 "dusk:assets": [
                     "yarn install",
@@ -2360,9 +2361,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v3.22.0"
+                "source": "https://github.com/laravel/nova/tree/v3.23.2"
             },
-            "time": "2021-02-17T00:16:53+00:00"
+            "time": "2021-04-14T08:09:25+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
