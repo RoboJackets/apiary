@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65d5532664cfcf4394ae85b8bf2232f3",
+    "content-hash": "ccb781f6ce76870bd064db47c5d88e7c",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7647,16 +7647,16 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.10.1",
+            "version": "v1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "d3969e9d0825d69b9b8c8fbc57585c4b76557b7e"
+                "reference": "087a73ef920fd17eb498b6ea7c9022c1f43cd6fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/d3969e9d0825d69b9b8c8fbc57585c4b76557b7e",
-                "reference": "d3969e9d0825d69b9b8c8fbc57585c4b76557b7e",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/087a73ef920fd17eb498b6ea7c9022c1f43cd6fe",
+                "reference": "087a73ef920fd17eb498b6ea7c9022c1f43cd6fe",
                 "shasum": ""
             },
             "require": {
@@ -7664,6 +7664,7 @@
                 "illuminate/console": "^5.4|^6.0|^7.0|^8.0",
                 "illuminate/http": "^5.4|^6.0|^7.0|^8.0",
                 "illuminate/support": "^5.4|^6.0|^7.0|^8.0",
+                "nesbot/carbon": "^1.26.3|^2.0",
                 "php": ">=5.6"
             },
             "require-dev": {
@@ -7727,7 +7728,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2021-03-17T23:13:46+00:00"
+            "time": "2021-04-09T08:21:42+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
