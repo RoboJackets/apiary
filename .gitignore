@@ -36,3 +36,4 @@ resume-monitoring.sh
 .vapor/
 .env.production
 /storage/framework/laravel-excel/
+/.phpunit.result.cache
