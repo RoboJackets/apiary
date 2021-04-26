@@ -84,23 +84,10 @@ class CreateRemoteAttendanceLink extends Action
                 return [$note => $note];
             });
 
-        /* The following regex will match any of the following:
-         * https://bluejeans.com/<digits, optional query string>
-         * https://bluejeans.com/<digits>/<digits, optional query string>
-         * https://gatech.bluejeans.com/<digits, optional query string>
-         * https://gatech.bluejeans.com/<digits>/<digits, optional query string>
-         * https://primetime.bluejeans.com/a2m/live-event/<alpha>
-         * https://meet.google.com/<alpha and dashes>
-         * https://teams.microsoft.com/l/meetup-join/<alphanumeric, -, %, .>/<digits, optional query string>
-         *
-         * This keeps the redirects sane. Admins can manually create a RemoteAttendanceLink model with arbitrary URLs.
-         */
         return [
             Text::make('Redirect URL')
                 ->required(false)
-                ->rules('nullable', 'url', 'regex:/^https:\/\/((gatech\.)?bluejeans\.com\/[0-9]+(\/[0-9]+)?|primetime\.'
-                    .'bluejeans\.com\/a2m\/live-event\/[a-z]+|meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
-                    .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+)(\?[^@]*)?$/', 'max:1023')
+                ->rules('nullable', 'url', 'regex:'.RemoteAttendanceLink::$redirectRegex, 'max:1023')
                 ->help('If you put a link to a Google Meet, BlueJeans, or Microsoft Teams meeting here, everyone who '.
                     'clicks the attendance link will be redirected to that meeting after their attendance is recorded.'.
                     'If you add a redirect URL, do not share that URL directly. Only Google Meet, BlueJeans, and '.
