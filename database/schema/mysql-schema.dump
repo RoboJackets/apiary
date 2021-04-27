@@ -1,0 +1,1299 @@
+-- MySQL dump 10.13  Distrib 8.0.22, for Linux (x86_64)
+--
+-- Host: localhost    Database: apiary
+-- ------------------------------------------------------
+-- Server version	8.0.22-0ubuntu0.20.04.3
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `action_events`
+--
+
+DROP TABLE IF EXISTS `action_events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `action_events` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `batch_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `actionable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `actionable_id` bigint unsigned NOT NULL,
+  `target_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `target_id` bigint unsigned NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint unsigned DEFAULT NULL,
+  `fields` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'running',
+  `exception` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `original` mediumtext COLLATE utf8mb4_unicode_ci,
+  `changes` mediumtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `action_events_actionable_type_actionable_id_index` (`actionable_type`,`actionable_id`),
+  KEY `action_events_batch_id_model_type_model_id_index` (`batch_id`,`model_type`,`model_id`),
+  KEY `action_events_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `action_events`
+--
+
+LOCK TABLES `action_events` WRITE;
+/*!40000 ALTER TABLE `action_events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `action_events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `attendance`
+--
+
+DROP TABLE IF EXISTS `attendance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `attendance` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `attendable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attendable_id` int unsigned NOT NULL,
+  `gtid` int NOT NULL,
+  `source` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recorded_by` int unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `remote_attendance_link_id` int unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `attendance_recorded_by_foreign` (`recorded_by`),
+  KEY `attendance_remote_attendance_link_id_foreign` (`remote_attendance_link_id`),
+  CONSTRAINT `attendance_recorded_by_foreign` FOREIGN KEY (`recorded_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `attendance_remote_attendance_link_id_foreign` FOREIGN KEY (`remote_attendance_link_id`) REFERENCES `remote_attendance_links` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attendance`
+--
+
+LOCK TABLES `attendance` WRITE;
+/*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `attendance_exports`
+--
+
+DROP TABLE IF EXISTS `attendance_exports`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `attendance_exports` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `secret` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expires_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `download_user_id` int unsigned DEFAULT NULL,
+  `downloaded_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `attendance_exports_secret_unique` (`secret`),
+  KEY `attendance_exports_download_user_id_foreign` (`download_user_id`),
+  CONSTRAINT `attendance_exports_download_user_id_foreign` FOREIGN KEY (`download_user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attendance_exports`
+--
+
+LOCK TABLES `attendance_exports` WRITE;
+/*!40000 ALTER TABLE `attendance_exports` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attendance_exports` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `class_standing_user`
+--
+
+DROP TABLE IF EXISTS `class_standing_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `class_standing_user` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `class_standing_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `class_standing_user_class_standing_id_foreign` (`class_standing_id`),
+  KEY `class_standing_user_user_id_foreign` (`user_id`),
+  CONSTRAINT `class_standing_user_class_standing_id_foreign` FOREIGN KEY (`class_standing_id`) REFERENCES `class_standings` (`id`),
+  CONSTRAINT `class_standing_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `class_standing_user`
+--
+
+LOCK TABLES `class_standing_user` WRITE;
+/*!40000 ALTER TABLE `class_standing_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `class_standing_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `class_standings`
+--
+
+DROP TABLE IF EXISTS `class_standings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `class_standings` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `rank_order` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `class_standings_name_unique` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `class_standings`
+--
+
+LOCK TABLES `class_standings` WRITE;
+/*!40000 ALTER TABLE `class_standings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `class_standings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dues_package_merchandise`
+--
+
+DROP TABLE IF EXISTS `dues_package_merchandise`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dues_package_merchandise` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `dues_package_id` int unsigned NOT NULL,
+  `merchandise_id` bigint unsigned NOT NULL,
+  `group` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dues_package_merchandise_dues_package_id_foreign` (`dues_package_id`),
+  KEY `dues_package_merchandise_merchandise_id_foreign` (`merchandise_id`),
+  CONSTRAINT `dues_package_merchandise_dues_package_id_foreign` FOREIGN KEY (`dues_package_id`) REFERENCES `dues_packages` (`id`),
+  CONSTRAINT `dues_package_merchandise_merchandise_id_foreign` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dues_package_merchandise`
+--
+
+LOCK TABLES `dues_package_merchandise` WRITE;
+/*!40000 ALTER TABLE `dues_package_merchandise` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dues_package_merchandise` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dues_packages`
+--
+
+DROP TABLE IF EXISTS `dues_packages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dues_packages` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `effective_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `effective_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `access_start` timestamp NULL DEFAULT NULL,
+  `access_end` timestamp NULL DEFAULT NULL,
+  `cost` decimal(8,2) NOT NULL,
+  `available_for_purchase` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `fiscal_year_id` bigint unsigned DEFAULT NULL,
+  `conflicts_with_package_id` int unsigned DEFAULT NULL,
+  `restricted_to_students` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `dues_packages_name_unique` (`name`),
+  KEY `dues_packages_fiscal_year_id_foreign` (`fiscal_year_id`),
+  KEY `dues_packages_conflicts_with_package_id_foreign` (`conflicts_with_package_id`),
+  CONSTRAINT `dues_packages_conflicts_with_package_id_foreign` FOREIGN KEY (`conflicts_with_package_id`) REFERENCES `dues_packages` (`id`),
+  CONSTRAINT `dues_packages_fiscal_year_id_foreign` FOREIGN KEY (`fiscal_year_id`) REFERENCES `fiscal_years` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dues_packages`
+--
+
+LOCK TABLES `dues_packages` WRITE;
+/*!40000 ALTER TABLE `dues_packages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dues_packages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dues_transaction_merchandise`
+--
+
+DROP TABLE IF EXISTS `dues_transaction_merchandise`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dues_transaction_merchandise` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `dues_transaction_id` int unsigned NOT NULL,
+  `merchandise_id` bigint unsigned NOT NULL,
+  `provided_at` timestamp NULL DEFAULT NULL,
+  `provided_by` int unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dues_transaction_merchandise_dues_transaction_id_foreign` (`dues_transaction_id`),
+  KEY `dues_transaction_merchandise_merchandise_id_foreign` (`merchandise_id`),
+  KEY `dues_transaction_merchandise_provided_by_foreign` (`provided_by`),
+  CONSTRAINT `dues_transaction_merchandise_dues_transaction_id_foreign` FOREIGN KEY (`dues_transaction_id`) REFERENCES `dues_transactions` (`id`),
+  CONSTRAINT `dues_transaction_merchandise_merchandise_id_foreign` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`),
+  CONSTRAINT `dues_transaction_merchandise_provided_by_foreign` FOREIGN KEY (`provided_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dues_transaction_merchandise`
+--
+
+LOCK TABLES `dues_transaction_merchandise` WRITE;
+/*!40000 ALTER TABLE `dues_transaction_merchandise` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dues_transaction_merchandise` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dues_transactions`
+--
+
+DROP TABLE IF EXISTS `dues_transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dues_transactions` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `dues_package_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dues_transactions_dues_package_id_foreign` (`dues_package_id`),
+  KEY `dues_transactions_user_id_foreign` (`user_id`),
+  CONSTRAINT `dues_transactions_dues_package_id_foreign` FOREIGN KEY (`dues_package_id`) REFERENCES `dues_packages` (`id`),
+  CONSTRAINT `dues_transactions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dues_transactions`
+--
+
+LOCK TABLES `dues_transactions` WRITE;
+/*!40000 ALTER TABLE `dues_transactions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dues_transactions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `events`
+--
+
+DROP TABLE IF EXISTS `events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `events` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cost` double NOT NULL DEFAULT '0',
+  `allow_anonymous_rsvp` tinyint(1) NOT NULL DEFAULT '0',
+  `organizer_id` int unsigned NOT NULL COMMENT 'user_id of the organizer',
+  `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `events_organizer_foreign` (`organizer_id`),
+  CONSTRAINT `events_organizer_foreign` FOREIGN KEY (`organizer_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `events`
+--
+
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `failed_jobs`
+--
+
+DROP TABLE IF EXISTS `failed_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `failed_jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `failed_jobs`
+--
+
+LOCK TABLES `failed_jobs` WRITE;
+/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fiscal_years`
+--
+
+DROP TABLE IF EXISTS `fiscal_years`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fiscal_years` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `ending_year` year NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fiscal_years_ending_year_unique` (`ending_year`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fiscal_years`
+--
+
+LOCK TABLES `fiscal_years` WRITE;
+/*!40000 ALTER TABLE `fiscal_years` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fiscal_years` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `jobs`
+--
+
+DROP TABLE IF EXISTS `jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint unsigned NOT NULL,
+  `reserved_at` int unsigned DEFAULT NULL,
+  `available_at` int unsigned NOT NULL,
+  `created_at` int unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobs_queue_reserved_at_index` (`queue`,`reserved_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jobs`
+--
+
+LOCK TABLES `jobs` WRITE;
+/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `major_user`
+--
+
+DROP TABLE IF EXISTS `major_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `major_user` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `major_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `major_user_major_id_foreign` (`major_id`),
+  KEY `major_user_user_id_foreign` (`user_id`),
+  CONSTRAINT `major_user_major_id_foreign` FOREIGN KEY (`major_id`) REFERENCES `majors` (`id`),
+  CONSTRAINT `major_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `major_user`
+--
+
+LOCK TABLES `major_user` WRITE;
+/*!40000 ALTER TABLE `major_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `major_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `majors`
+--
+
+DROP TABLE IF EXISTS `majors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `majors` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gtad_majorgroup_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `whitepages_ou` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `school` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `majors_gtad_majorgroup_name_unique` (`gtad_majorgroup_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `majors`
+--
+
+LOCK TABLES `majors` WRITE;
+/*!40000 ALTER TABLE `majors` DISABLE KEYS */;
+/*!40000 ALTER TABLE `majors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `membership_agreement_templates`
+--
+
+DROP TABLE IF EXISTS `membership_agreement_templates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `membership_agreement_templates` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `text` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `membership_agreement_templates`
+--
+
+LOCK TABLES `membership_agreement_templates` WRITE;
+/*!40000 ALTER TABLE `membership_agreement_templates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `membership_agreement_templates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `merchandise`
+--
+
+DROP TABLE IF EXISTS `merchandise`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `merchandise` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fiscal_year_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `merchandise_name_unique` (`name`),
+  KEY `merchandise_fiscal_year_id_foreign` (`fiscal_year_id`),
+  CONSTRAINT `merchandise_fiscal_year_id_foreign` FOREIGN KEY (`fiscal_year_id`) REFERENCES `fiscal_years` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `merchandise`
+--
+
+LOCK TABLES `merchandise` WRITE;
+/*!40000 ALTER TABLE `merchandise` DISABLE KEYS */;
+/*!40000 ALTER TABLE `merchandise` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migrations`
+--
+
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` VALUES (1,'2017_06_04_231655_create_users_table',1),(2,'2017_06_05_230253_create_teams_table',1),(3,'2017_06_05_230254_create_faset_visits_table',1),(4,'2017_06_05_233452_create_faset_surveys_table',1),(5,'2017_06_05_233459_create_faset_responses_table',1),(6,'2017_06_06_000733_create_team_user',1),(7,'2017_07_13_035859_update_user_name_concat',1),(8,'2017_08_29_163537_create_events_table',1),(9,'2017_08_29_165222_create_rsvps_table',1),(10,'2017_08_30_025445_trivial_authorization',1),(11,'2017_08_30_055300_create_failed_jobs_table',1),(12,'2017_08_30_055356_base64_url_encode',1),(13,'2017_08_31_232343_create_jobs_table',1),(14,'2017_09_11_212843_create_dues_packages_table',1),(15,'2017_09_11_214123_create_payment_table',1),(16,'2017_09_17_232505_create_dues_transactions_table',1),(17,'2017_09_20_062736_add_safety_agreement_column',1),(18,'2017_09_21_012006_add_a4p_column_to_dues_packages',1),(19,'2017_09_21_020432_drop_virtual_columns_users_table',1),(20,'2017_09_26_003627_create_permission_tables',1),(21,'2017_10_02_014611_make_payments_polymorphic',1),(22,'2017_10_02_062013_add_demographics_columns',1),(23,'2017_10_04_045605_create_initial_roles_and_permissions',1),(24,'2017_11_04_104216_create_attendance_table',1),(25,'2017_11_04_124722_create_attendance_roles_permissions',1),(26,'2017_11_04_220944_encrypt_users_table',1),(27,'2017_11_14_220832_add_api_token_to_users_table',1),(28,'2017_11_19_104357_add_payment_processor_fields_to_payments',1),(29,'2017_12_04_214710_attendance_require_gtid',1),(30,'2017_12_04_223054_soft_delete_dues_packages',1),(31,'2017_12_04_223316_soft_delete_dues_transactions',1),(32,'2017_12_04_223433_soft_delete_events',1),(33,'2017_12_04_223648_soft_delete_faset_responses',1),(34,'2017_12_04_223750_soft_delete_faset_surveys',1),(35,'2017_12_04_223845_soft_delete_faset_visits',1),(36,'2017_12_04_224052_soft_delete_payments',1),(37,'2017_12_04_224201_soft_delete_rsvps',1),(38,'2017_12_04_224446_soft_delete_teams',1),(39,'2017_12_23_231508_add_processing_fee_to_payments',1),(40,'2018_01_01_000000_create_action_events_table',1),(41,'2018_01_08_174231_create_team_roles_permissions',1),(42,'2018_01_17_134137_add_swag_fields_to_dues_transactions',1),(43,'2018_02_10_150407_rename_event_price_to_cost',1),(44,'2018_02_10_184618_rename_event_organizer_to_organizer_id',1),(45,'2018_03_08_214424_multiple_changes_to_teams',1),(46,'2018_05_17_211938_remove_faset_survey_table',1),(47,'2018_05_27_220626_add_hidden_teams_permission',1),(48,'2018_06_12_190633_add_sympa_and_slack_links_to_teams',1),(49,'2018_08_22_224436_add_useragent_and_ip_to_rsvps',1),(50,'2018_08_22_234128_add_token_to_rsvps',1),(51,'2018_08_24_230328_create_notification_templates_table',1),(52,'2018_08_25_221616_create_recruiting_campaign_table',1),(53,'2018_08_25_221921_change_faset_to_recruiting',1),(54,'2018_08_28_214447_create_recruiting_campaign_recipients_table',1),(55,'2018_08_28_224346_add_start_end_dates_to_recruiting_campaign',1),(56,'2018_09_30_140630_drop_trivial_authorization',1),(57,'2018_09_30_161300_add_payment_method_permission',1),(58,'2018_10_01_144406_add_dues_transactions_own_permission',1),(59,'2018_10_02_073200_add_trainer_role',1),(60,'2018_10_11_152147_add_hidden_teams_permission_to_non_member',1),(61,'2018_11_01_200000_fix_rsvp_permission_naming',1),(62,'2018_11_01_205548_mass_update_roles_permissions',1),(63,'2018_11_07_213646_add_nova_horizon_templates_permission',1),(64,'2019_02_24_170905_project_manager_permissions',1),(65,'2019_02_25_171041_add_jedi_fields',1),(66,'2019_03_02_114324_delete_old_officer_roles',1),(67,'2019_03_02_114347_allow_admins_to_update_teams_membership',1),(68,'2019_03_02_182411_only_admins_can_update_teams',1),(69,'2019_03_16_160537_add_access_override_fields_to_user',1),(70,'2019_03_24_194754_role_permission_permissions',1),(71,'2019_05_10_000000_add_fields_to_action_events_table',1),(72,'2019_07_10_125633_add_git_hub_username_to_users',1),(73,'2019_09_13_104837_add_slack_private_to_teams',1),(74,'2019_10_20_193423_add_resume_permissions',1),(75,'2019_10_20_213006_add_resumes_to_users',1),(76,'2019_10_23_171828_add_github_invite_pending_to_users',1),(77,'2019_10_24_173744_add_gmail_address_to_users',1),(78,'2019_10_26_005612_add_google_group_to_team',1),(79,'2019_10_27_172503_add_exists_in_sums_flag_to_users',1),(80,'2019_11_17_141409_add_waiver_payment_method_permission',1),(81,'2020_01_12_160642_add_clickup_fields_to_users',1),(82,'2020_03_15_111618_create_majors_table',1),(83,'2020_03_15_112429_create_major_user_table',1),(84,'2020_03_15_122454_add_metadata_fields_to_users',1),(85,'2020_03_21_144319_create_class_standings_table',1),(86,'2020_03_21_144337_create_class_standing_user_table',1),(87,'2020_03_21_150221_make_gtad_group_names_unique',1),(88,'2020_03_21_170153_grant_team_leads_permission_to_create_attendance',1),(89,'2020_03_21_170412_add_remote_attendance_fields_to_teams_table',1),(90,'2020_03_26_203841_create_attendance_exports_table',1),(91,'2020_08_19_173728_extend_rsvp_user_agent',1),(92,'2020_10_01_165256_add_from_to_notification_templates',1),(93,'2020_10_03_142928_add_kiosk_flag_to_teams',1),(94,'2020_10_08_161930_create_remote_attendance_links_table',1),(95,'2020_10_14_131630_remove_remote_attendance_fields_from_teams_table',1),(96,'2020_10_15_141336_add_remote_attendance_links_permissions',1),(97,'2020_11_08_195344_add_autodesk_fields_to_users',1),(98,'2020_12_06_103042_add_uuid_to_failed_jobs_table',1),(99,'2020_12_06_144015_namespace_models',1),(100,'2020_12_22_105909_create_webhook_calls_table',1),(101,'2020_12_22_133750_add_order_id_column_to_payments_table',1),(102,'2020_12_23_103221_add_additional_transaction_fields_to_payments',1),(103,'2020_12_23_151528_create_fiscal_years_table',1),(104,'2020_12_23_152158_add_fiscal_year_and_affiliation_restriction_to_dues_packages',1),(105,'2020_12_24_104642_add_fiscal_year_permissions',1),(106,'2020_12_24_140423_create_square_cash_transactions_table',1),(107,'2020_12_24_143602_create_square_transactions_table',1),(108,'2020_12_25_144655_update_payments_table_for_historical_dues_import',1),(109,'2021_01_01_130254_create_membership_agreement_templates_table',1),(110,'2021_01_01_131555_create_signatures_table',1),(111,'2021_01_01_150634_add_membership_agreement_permissions',1),(112,'2021_01_02_142913_drop_safety_agreement_column',1),(113,'2021_01_06_210602_add_remote_attendance_link_id_column_to_attendance_table',1),(114,'2021_01_08_220330_create_new_swag_tables',1),(115,'2021_01_11_231447_migrate_swag_data',1),(116,'2021_01_17_132832_add_merch_permissions',1),(117,'2021_01_23_191612_remove_swag_fields_from_dues_transactions',1),(118,'2021_01_23_191816_remove_swag_fields_from_dues_packages',1),(119,'2021_01_24_230609_add_buzzcard_access_opt_out_to_users',1),(120,'2021_01_31_153259_give_non_members_access_to_read_merchandise',1),(121,'2021_02_17_174920_add_rank_order_column_to_class_standings',1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `model_has_permissions`
+--
+
+DROP TABLE IF EXISTS `model_has_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `model_has_permissions` (
+  `permission_id` int unsigned NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint unsigned NOT NULL,
+  PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  KEY `model_has_permissions_model_type_model_id_index` (`model_type`,`model_id`),
+  CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `model_has_permissions`
+--
+
+LOCK TABLES `model_has_permissions` WRITE;
+/*!40000 ALTER TABLE `model_has_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `model_has_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `model_has_roles`
+--
+
+DROP TABLE IF EXISTS `model_has_roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `model_has_roles` (
+  `role_id` int unsigned NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint unsigned NOT NULL,
+  PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  KEY `model_has_roles_model_type_model_id_index` (`model_type`,`model_id`),
+  CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `model_has_roles`
+--
+
+LOCK TABLES `model_has_roles` WRITE;
+/*!40000 ALTER TABLE `model_has_roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `model_has_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification_templates`
+--
+
+DROP TABLE IF EXISTS `notification_templates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification_templates` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `from` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'RoboJackets',
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body_markdown` longtext COLLATE utf8mb4_unicode_ci,
+  `created_by` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notification_templates_created_by_foreign` (`created_by`),
+  CONSTRAINT `notification_templates_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification_templates`
+--
+
+LOCK TABLES `notification_templates` WRITE;
+/*!40000 ALTER TABLE `notification_templates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification_templates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payments`
+--
+
+DROP TABLE IF EXISTS `payments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payments` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `payable_id` int NOT NULL,
+  `payable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `processing_fee` decimal(8,2) DEFAULT NULL,
+  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recorded_by` int unsigned DEFAULT NULL,
+  `checkout_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `client_txn_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `server_txn_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `unique_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notes` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `card_brand` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `card_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_4` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prepaid_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `entry_method` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `statement_description` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `receipt_number` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `receipt_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `square_cash_transaction_id` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `payments_unique_id_unique` (`unique_id`),
+  UNIQUE KEY `payments_server_txn_id_unique` (`server_txn_id`),
+  UNIQUE KEY `payments_client_txn_id_unique` (`client_txn_id`),
+  UNIQUE KEY `payments_checkout_id_unique` (`checkout_id`),
+  UNIQUE KEY `payments_order_id_unique` (`order_id`),
+  UNIQUE KEY `payments_receipt_number_unique` (`receipt_number`),
+  UNIQUE KEY `payments_receipt_url_unique` (`receipt_url`),
+  UNIQUE KEY `payments_square_cash_transaction_id_unique` (`square_cash_transaction_id`),
+  KEY `payments_recorded_by_foreign` (`recorded_by`),
+  CONSTRAINT `payments_recorded_by_foreign` FOREIGN KEY (`recorded_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payments`
+--
+
+LOCK TABLES `payments` WRITE;
+/*!40000 ALTER TABLE `payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `permissions`
+--
+
+DROP TABLE IF EXISTS `permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `permissions` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permissions`
+--
+
+LOCK TABLES `permissions` WRITE;
+/*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
+INSERT INTO `permissions` VALUES (1,'create-users','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(2,'read-users','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(3,'read-users-own','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(4,'update-users','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(5,'update-users-own','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(6,'delete-users','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(7,'create-events','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(8,'read-events','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(9,'update-events','web','2021-04-27 03:10:32','2021-04-27 03:10:32'),(10,'update-events-own','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(11,'delete-events','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(12,'create-rsvps','web','2021-04-27 03:10:33','2021-04-27 03:10:38'),(13,'create-rsvps-own','web','2021-04-27 03:10:33','2021-04-27 03:10:38'),(14,'read-rsvps','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(15,'read-rsvps-own','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(16,'update-rsvps','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(17,'update-rsvps-own','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(18,'delete-rsvps','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(19,'delete-rsvps-own','web','2021-04-27 03:10:33','2021-04-27 03:10:38'),(20,'create-payments','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(21,'create-payments-own','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(22,'read-payments','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(23,'read-payments-own','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(24,'update-payments','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(25,'delete-payments','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(26,'create-dues-packages','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(27,'read-dues-packages','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(28,'update-dues-packages','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(29,'delete-dues-packages','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(30,'create-dues-transactions','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(31,'read-dues-transactions','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(32,'read-dues-transactions-own','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(33,'update-dues-transactions','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(34,'delete-dues-transactions','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(35,'create-recruiting-visits','web','2021-04-27 03:10:33','2021-04-27 03:10:36'),(36,'read-recruiting-visits','web','2021-04-27 03:10:33','2021-04-27 03:10:37'),(37,'read-recruiting-visits-own','web','2021-04-27 03:10:33','2021-04-27 03:10:37'),(38,'update-recruiting-visits','web','2021-04-27 03:10:33','2021-04-27 03:10:37'),(39,'update-recruiting-visits-own','web','2021-04-27 03:10:33','2021-04-27 03:10:37'),(40,'delete-recruiting-visits','web','2021-04-27 03:10:33','2021-04-27 03:10:37'),(41,'delete-recruiting-visits-own','web','2021-04-27 03:10:33','2021-04-27 03:10:37'),(42,'send-notifications','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(43,'create-attendance','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(44,'read-attendance','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(45,'read-attendance-own','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(46,'update-attendance','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(47,'delete-attendance','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(48,'create-teams','web','2021-04-27 03:10:35','2021-04-27 03:10:35'),(49,'read-teams','web','2021-04-27 03:10:35','2021-04-27 03:10:35'),(50,'update-teams','web','2021-04-27 03:10:35','2021-04-27 03:10:35'),(51,'delete-teams','web','2021-04-27 03:10:35','2021-04-27 03:10:35'),(52,'read-teams-hidden','web','2021-04-27 03:10:36','2021-04-27 03:10:36'),(53,'update-teams-hidden','web','2021-04-27 03:10:36','2021-04-27 03:10:36'),(54,'update-teams-membership-own','web','2021-04-27 03:10:36','2021-04-27 03:10:36'),(55,'create-payments-cash','web','2021-04-27 03:10:37','2021-04-27 03:10:37'),(56,'create-payments-check','web','2021-04-27 03:10:37','2021-04-27 03:10:37'),(57,'create-payments-swipe','web','2021-04-27 03:10:37','2021-04-27 03:10:37'),(58,'create-payments-square','web','2021-04-27 03:10:37','2021-04-27 03:10:37'),(59,'create-payments-squarecash','web','2021-04-27 03:10:37','2021-04-27 03:10:37'),(60,'create-dues-transactions-own','web','2021-04-27 03:10:37','2021-04-27 03:10:37'),(61,'read-users-gtid','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(62,'read-users-api_token','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(63,'read-users-emergency_contact','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(64,'read-users-demographics','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(65,'read-teams-membership','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(66,'read-teams-membership-own','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(67,'create-recruiting-campaigns','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(68,'read-recruiting-campaigns','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(69,'update-recruiting-campaigns','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(70,'delete-recruiting-campaigns','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(71,'access-nova','web','2021-04-27 03:10:39','2021-04-27 03:10:39'),(72,'access-horizon','web','2021-04-27 03:10:39','2021-04-27 03:10:39'),(73,'manage-notification-templates','web','2021-04-27 03:10:39','2021-04-27 03:10:39'),(74,'distribute-swag','web','2021-04-27 03:10:39','2021-04-27 03:10:39'),(75,'update-teams-membership','web','2021-04-27 03:10:39','2021-04-27 03:10:39'),(76,'read-roles-and-permissions','web','2021-04-27 03:10:39','2021-04-27 03:10:39'),(77,'write-roles-and-permissions','web','2021-04-27 03:10:39','2021-04-27 03:10:39'),(78,'read-users-resume','web','2021-04-27 03:10:40','2021-04-27 03:10:40'),(79,'update-users-resume','web','2021-04-27 03:10:40','2021-04-27 03:10:40'),(80,'delete-users-resume','web','2021-04-27 03:10:40','2021-04-27 03:10:40'),(81,'create-payments-waiver','web','2021-04-27 03:10:40','2021-04-27 03:10:40'),(82,'create-remote-attendance-links','web','2021-04-27 03:10:42','2021-04-27 03:10:42'),(83,'read-remote-attendance-links','web','2021-04-27 03:10:42','2021-04-27 03:10:42'),(84,'update-remote-attendance-links','web','2021-04-27 03:10:42','2021-04-27 03:10:42'),(85,'delete-remote-attendance-links','web','2021-04-27 03:10:42','2021-04-27 03:10:42'),(86,'create-fiscal-years','web','2021-04-27 03:10:43','2021-04-27 03:10:43'),(87,'update-fiscal-years','web','2021-04-27 03:10:43','2021-04-27 03:10:43'),(88,'create-membership-agreement-templates','web','2021-04-27 03:10:44','2021-04-27 03:10:44'),(89,'update-membership-agreement-templates','web','2021-04-27 03:10:44','2021-04-27 03:10:44'),(90,'upload-signatures','web','2021-04-27 03:10:44','2021-04-27 03:10:44'),(91,'create-merchandise','web','2021-04-27 03:10:45','2021-04-27 03:10:45'),(92,'read-merchandise','web','2021-04-27 03:10:45','2021-04-27 03:10:45'),(93,'update-merchandise','web','2021-04-27 03:10:45','2021-04-27 03:10:45'),(94,'delete-merchandise','web','2021-04-27 03:10:45','2021-04-27 03:10:45');
+/*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recruiting_campaign_recipients`
+--
+
+DROP TABLE IF EXISTS `recruiting_campaign_recipients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recruiting_campaign_recipients` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `email_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `source` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recruiting_campaign_id` int unsigned NOT NULL,
+  `recruiting_visit_id` int unsigned DEFAULT NULL,
+  `user_id` int unsigned DEFAULT NULL,
+  `notified_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `recruiting_campaign_recipients_recruiting_campaign_id_foreign` (`recruiting_campaign_id`),
+  KEY `recruiting_campaign_recipients_recruiting_visit_id_foreign` (`recruiting_visit_id`),
+  KEY `recruiting_campaign_recipients_user_id_foreign` (`user_id`),
+  CONSTRAINT `recruiting_campaign_recipients_recruiting_campaign_id_foreign` FOREIGN KEY (`recruiting_campaign_id`) REFERENCES `recruiting_campaigns` (`id`),
+  CONSTRAINT `recruiting_campaign_recipients_recruiting_visit_id_foreign` FOREIGN KEY (`recruiting_visit_id`) REFERENCES `recruiting_visits` (`id`),
+  CONSTRAINT `recruiting_campaign_recipients_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recruiting_campaign_recipients`
+--
+
+LOCK TABLES `recruiting_campaign_recipients` WRITE;
+/*!40000 ALTER TABLE `recruiting_campaign_recipients` DISABLE KEYS */;
+/*!40000 ALTER TABLE `recruiting_campaign_recipients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recruiting_campaigns`
+--
+
+DROP TABLE IF EXISTS `recruiting_campaigns`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recruiting_campaigns` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('new','in_progress','completed') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notification_template_id` int unsigned DEFAULT NULL,
+  `end_date` date NOT NULL DEFAULT '1970-01-01',
+  `start_date` date NOT NULL DEFAULT '1970-01-01',
+  `created_by` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `recruiting_campaigns_created_by_foreign` (`created_by`),
+  KEY `recruiting_campaigns_notification_template_id_foreign` (`notification_template_id`),
+  CONSTRAINT `recruiting_campaigns_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `recruiting_campaigns_notification_template_id_foreign` FOREIGN KEY (`notification_template_id`) REFERENCES `notification_templates` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recruiting_campaigns`
+--
+
+LOCK TABLES `recruiting_campaigns` WRITE;
+/*!40000 ALTER TABLE `recruiting_campaigns` DISABLE KEYS */;
+/*!40000 ALTER TABLE `recruiting_campaigns` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recruiting_responses`
+--
+
+DROP TABLE IF EXISTS `recruiting_responses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recruiting_responses` (
+  `response` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recruiting_visit_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  KEY `recruiting_responses_recruiting_visit_id_foreign` (`recruiting_visit_id`),
+  CONSTRAINT `recruiting_responses_recruiting_visit_id_foreign` FOREIGN KEY (`recruiting_visit_id`) REFERENCES `recruiting_visits` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recruiting_responses`
+--
+
+LOCK TABLES `recruiting_responses` WRITE;
+/*!40000 ALTER TABLE `recruiting_responses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `recruiting_responses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recruiting_visits`
+--
+
+DROP TABLE IF EXISTS `recruiting_visits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recruiting_visits` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `recruiting_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recruiting_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visit_token` char(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `faset_visits_visit_token_unique` (`visit_token`),
+  KEY `faset_visits_user_id_foreign` (`user_id`),
+  CONSTRAINT `faset_visits_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recruiting_visits`
+--
+
+LOCK TABLES `recruiting_visits` WRITE;
+/*!40000 ALTER TABLE `recruiting_visits` DISABLE KEYS */;
+/*!40000 ALTER TABLE `recruiting_visits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `remote_attendance_links`
+--
+
+DROP TABLE IF EXISTS `remote_attendance_links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `remote_attendance_links` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `secret` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expires_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `redirect_url` varchar(1023) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `attendable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attendable_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_attendance_links_secret_unique` (`secret`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `remote_attendance_links`
+--
+
+LOCK TABLES `remote_attendance_links` WRITE;
+/*!40000 ALTER TABLE `remote_attendance_links` DISABLE KEYS */;
+/*!40000 ALTER TABLE `remote_attendance_links` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role_has_permissions`
+--
+
+DROP TABLE IF EXISTS `role_has_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role_has_permissions` (
+  `permission_id` int unsigned NOT NULL,
+  `role_id` int unsigned NOT NULL,
+  PRIMARY KEY (`permission_id`,`role_id`),
+  KEY `role_has_permissions_role_id_foreign` (`role_id`),
+  CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_has_permissions`
+--
+
+LOCK TABLES `role_has_permissions` WRITE;
+/*!40000 ALTER TABLE `role_has_permissions` DISABLE KEYS */;
+INSERT INTO `role_has_permissions` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),(14,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(21,1),(22,1),(23,1),(24,1),(25,1),(26,1),(27,1),(28,1),(29,1),(30,1),(31,1),(32,1),(33,1),(34,1),(35,1),(36,1),(37,1),(38,1),(39,1),(40,1),(41,1),(42,1),(43,1),(44,1),(45,1),(46,1),(47,1),(48,1),(49,1),(50,1),(51,1),(52,1),(53,1),(54,1),(55,1),(56,1),(57,1),(58,1),(59,1),(60,1),(61,1),(62,1),(63,1),(64,1),(65,1),(66,1),(67,1),(68,1),(69,1),(70,1),(71,1),(72,1),(73,1),(74,1),(75,1),(76,1),(77,1),(78,1),(79,1),(80,1),(81,1),(82,1),(83,1),(84,1),(85,1),(86,1),(87,1),(88,1),(89,1),(90,1),(91,1),(92,1),(93,1),(94,1),(3,5),(5,5),(8,5),(10,5),(13,5),(15,5),(17,5),(19,5),(21,5),(23,5),(27,5),(32,5),(37,5),(39,5),(41,5),(45,5),(49,5),(54,5),(60,5),(66,5),(92,5),(3,6),(5,6),(8,6),(10,6),(13,6),(15,6),(17,6),(19,6),(21,6),(23,6),(27,6),(32,6),(37,6),(39,6),(41,6),(45,6),(49,6),(54,6),(60,6),(66,6),(92,6),(2,7),(43,7),(44,7),(52,7),(63,7),(71,7),(82,7),(83,7),(2,8),(7,8),(9,8),(12,8),(14,8),(18,8),(20,8),(22,8),(26,8),(28,8),(30,8),(31,8),(33,8),(35,8),(36,8),(42,8),(43,8),(44,8),(46,8),(48,8),(52,8),(55,8),(56,8),(61,8),(63,8),(65,8),(67,8),(68,8),(69,8),(71,8),(74,8),(78,8),(81,8),(82,8),(83,8),(86,8),(87,8),(88,8),(89,8),(90,8),(91,8),(2,9),(14,9),(20,9),(22,9),(31,9),(35,9),(43,9),(44,9),(55,9),(56,9),(63,9),(65,9),(71,9),(74,9),(82,9),(83,9),(90,9),(2,10),(22,10),(31,10),(43,10),(63,10),(65,10),(71,10),(74,10),(82,10),(83,10);
+/*!40000 ALTER TABLE `role_has_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roles` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'admin','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(5,'member','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(6,'non-member','web','2021-04-27 03:10:33','2021-04-27 03:10:33'),(7,'trainer','web','2021-04-27 03:10:37','2021-04-27 03:10:37'),(8,'officer','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(9,'project-manager','web','2021-04-27 03:10:38','2021-04-27 03:10:38'),(10,'team-lead','web','2021-04-27 03:10:38','2021-04-27 03:10:38');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rsvps`
+--
+
+DROP TABLE IF EXISTS `rsvps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rsvps` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned DEFAULT NULL,
+  `user_agent` varchar(1023) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `event_id` int unsigned NOT NULL,
+  `source` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `response` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rsvps_user_id_foreign` (`user_id`),
+  KEY `rsvps_event_id_foreign` (`event_id`),
+  CONSTRAINT `rsvps_event_id_foreign` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+  CONSTRAINT `rsvps_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rsvps`
+--
+
+LOCK TABLES `rsvps` WRITE;
+/*!40000 ALTER TABLE `rsvps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rsvps` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `signatures`
+--
+
+DROP TABLE IF EXISTS `signatures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `signatures` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `membership_agreement_template_id` bigint unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `uploaded_by` int unsigned DEFAULT NULL,
+  `scanned_agreement` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `electronic` tinyint(1) NOT NULL,
+  `cas_host` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cas_service_url_hash` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cas_ticket` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address_location_estimate` json DEFAULT NULL,
+  `user_agent` longtext COLLATE utf8mb4_unicode_ci,
+  `complete` tinyint(1) NOT NULL DEFAULT '0',
+  `render_timestamp` datetime DEFAULT NULL,
+  `redirect_to_cas_timestamp` datetime DEFAULT NULL,
+  `cas_ticket_redeemed_timestamp` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `signatures_scanned_agreement_unique` (`scanned_agreement`),
+  UNIQUE KEY `signatures_cas_service_url_hash_unique` (`cas_service_url_hash`),
+  UNIQUE KEY `signatures_cas_ticket_unique` (`cas_ticket`),
+  KEY `signatures_membership_agreement_template_id_foreign` (`membership_agreement_template_id`),
+  KEY `signatures_user_id_foreign` (`user_id`),
+  KEY `signatures_uploaded_by_foreign` (`uploaded_by`),
+  CONSTRAINT `signatures_membership_agreement_template_id_foreign` FOREIGN KEY (`membership_agreement_template_id`) REFERENCES `membership_agreement_templates` (`id`),
+  CONSTRAINT `signatures_uploaded_by_foreign` FOREIGN KEY (`uploaded_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `signatures_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `signatures`
+--
+
+LOCK TABLES `signatures` WRITE;
+/*!40000 ALTER TABLE `signatures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `signatures` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `square_cash_transactions`
+--
+
+DROP TABLE IF EXISTS `square_cash_transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `square_cash_transactions` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `transaction_id` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `transaction_timestamp` datetime NOT NULL,
+  `amount` double(8,2) NOT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_of_sender` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `square_cash_transactions_transaction_id_unique` (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `square_cash_transactions`
+--
+
+LOCK TABLES `square_cash_transactions` WRITE;
+/*!40000 ALTER TABLE `square_cash_transactions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `square_cash_transactions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `square_transactions`
+--
+
+DROP TABLE IF EXISTS `square_transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `square_transactions` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `transaction_timestamp` datetime NOT NULL,
+  `amount` double(8,2) NOT NULL,
+  `source` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entry_method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `processing_fee` double(8,2) NOT NULL,
+  `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `card_brand` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_4` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `device_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `staff_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `square_transactions_transaction_id_unique` (`transaction_id`),
+  UNIQUE KEY `square_transactions_payment_id_unique` (`payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `square_transactions`
+--
+
+LOCK TABLES `square_transactions` WRITE;
+/*!40000 ALTER TABLE `square_transactions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `square_transactions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `team_user`
+--
+
+DROP TABLE IF EXISTS `team_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `team_user` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `team_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `team_user_team_id_foreign` (`team_id`),
+  KEY `team_user_user_id_foreign` (`user_id`),
+  CONSTRAINT `team_user_team_id_foreign` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`),
+  CONSTRAINT `team_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `team_user`
+--
+
+LOCK TABLES `team_user` WRITE;
+/*!40000 ALTER TABLE `team_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `team_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teams`
+--
+
+DROP TABLE IF EXISTS `teams`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `teams` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `self_serviceable` tinyint(1) NOT NULL DEFAULT '0',
+  `visible` tinyint(1) NOT NULL DEFAULT '0',
+  `visible_on_kiosk` tinyint(1) NOT NULL DEFAULT '0',
+  `attendable` tinyint(1) NOT NULL DEFAULT '0',
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mailing_list_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slack_channel_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slack_channel_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slack_private_channel_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_group` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `project_manager_id` int unsigned DEFAULT NULL COMMENT 'user_id of the project manager',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `teams_google_group_unique` (`google_group`),
+  KEY `teams_project_manager_id_foreign` (`project_manager_id`),
+  CONSTRAINT `teams_project_manager_id_foreign` FOREIGN KEY (`project_manager_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teams`
+--
+
+LOCK TABLES `teams` WRITE;
+/*!40000 ALTER TABLE `teams` DISABLE KEYS */;
+/*!40000 ALTER TABLE `teams` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `uid` varchar(127) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gtid` int unsigned NOT NULL,
+  `api_token` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slack_id` varchar(21) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `github_username` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmail_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `clickup_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `clickup_id` int DEFAULT NULL,
+  `clickup_invite_pending` tinyint(1) NOT NULL DEFAULT '0',
+  `autodesk_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `autodesk_invite_pending` tinyint(1) NOT NULL DEFAULT '0',
+  `gt_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(127) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `middle_name` varchar(127) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(127) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `preferred_name` varchar(127) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emergency_contact_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emergency_contact_phone` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `join_semester` char(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `graduation_semester` char(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shirt_size` enum('s','m','l','xl','xxl','xxxl') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `polo_size` enum('s','m','l','xl','xxl','xxxl') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` text COLLATE utf8mb4_unicode_ci,
+  `ethnicity` text COLLATE utf8mb4_unicode_ci,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `access_override_until` datetime DEFAULT NULL,
+  `access_override_by_id` int unsigned DEFAULT NULL COMMENT 'user_id of the user who entered access override',
+  `resume_date` timestamp NULL DEFAULT NULL,
+  `github_invite_pending` tinyint(1) NOT NULL DEFAULT '0',
+  `exists_in_sums` tinyint(1) NOT NULL DEFAULT '0',
+  `create_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `has_ever_logged_in` tinyint(1) NOT NULL,
+  `is_service_account` tinyint(1) NOT NULL DEFAULT '0',
+  `primary_affiliation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gtDirGUID` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buzzcard_access_opt_out` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_uid_unique` (`uid`),
+  UNIQUE KEY `users_gtid_unique` (`gtid`),
+  UNIQUE KEY `users_api_token_unique` (`api_token`),
+  UNIQUE KEY `users_github_username_unique` (`github_username`),
+  UNIQUE KEY `users_gmail_address_unique` (`gmail_address`),
+  UNIQUE KEY `users_clickup_email_unique` (`clickup_email`),
+  UNIQUE KEY `users_clickup_id_unique` (`clickup_id`),
+  UNIQUE KEY `users_autodesk_email_unique` (`autodesk_email`),
+  KEY `users_access_override_by_id_foreign` (`access_override_by_id`),
+  CONSTRAINT `users_access_override_by_id_foreign` FOREIGN KEY (`access_override_by_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `webhook_calls`
+--
+
+DROP TABLE IF EXISTS `webhook_calls`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `webhook_calls` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` text COLLATE utf8mb4_unicode_ci,
+  `exception` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `webhook_calls`
+--
+
+LOCK TABLES `webhook_calls` WRITE;
+/*!40000 ALTER TABLE `webhook_calls` DISABLE KEYS */;
+/*!40000 ALTER TABLE `webhook_calls` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-04-26 23:12:04
+
+ALTER TABLE 'users' ENCRYPTION='Y';
