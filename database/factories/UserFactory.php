@@ -47,6 +47,8 @@ class UserFactory extends Factory
             'ethnicity' => $this->faker->randomElement(
                 ['white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none']
             ),
+            'create_reason' => 'factory',
+            'has_ever_logged_in' => $this->faker->boolean(),
         ];
     }
 }
