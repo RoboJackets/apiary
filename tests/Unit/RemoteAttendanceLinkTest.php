@@ -12,7 +12,7 @@ class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test random links.
      */
-    public function test_redirectRegexRandom(): void
+    public function testRedirectRegexRandom(): void
     {
         $this->redirectRegexTestCase('https://google.com', false);
     }
@@ -20,7 +20,7 @@ class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test BlueJeans links.
      */
-    public function test_redirectRegexBlueJeans(): void
+    public function testRedirectRegexBlueJeans(): void
     {
         $this->redirectRegexTestCase('https://bluejeans.com/01234', true);
         $this->redirectRegexTestCase('https://bluejeans.com/01234/01234', true);
@@ -59,7 +59,7 @@ class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test Microsoft Teams links.
      */
-    public function test_redirectRegexMicrosoftTeams(): void
+    public function testRedirectRegexMicrosoftTeams(): void
     {
         $this->redirectRegexTestCase('https://teams.microsoft.com/l/meetup-join/abcd-%.0123/01234', true);
         $this->redirectRegexTestCase('https://teams.microsoft.com/l/meetup-join/abcd-%.0123/01234?querystring', true);
@@ -73,7 +73,7 @@ class RemoteAttendanceLinkTest extends TestCase
     /**
      * Test Google Meet links.
      */
-    public function test_redirectRegexGoogleMeet(): void
+    public function testRedirectRegexGoogleMeet(): void
     {
         $this->redirectRegexTestCase('https://meet.google.com/aaa-aaaa-aaa', true);
         $this->redirectRegexTestCase('https://meet.google.com/aaa-aaaa-aaa?querystring', true);

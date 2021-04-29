@@ -57,6 +57,7 @@ class RemoteAttendanceLink extends Model
      * https://primetime.bluejeans.com/a2m/live-event/<alpha>
      * https://meet.google.com/<alpha and dashes>
      * https://teams.microsoft.com/l/meetup-join/<alphanumeric, -, %, .>/<digits, optional query string>
+     * but nothing else, to avoid users redirecting to surprising things.
      *
      * @phan-suppress PhanReadOnlyPublicProperty
      */

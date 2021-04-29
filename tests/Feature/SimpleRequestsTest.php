@@ -15,7 +15,7 @@ class SimpleRequestsTest extends TestCase
     /**
      * Test simple, non-CAS requests work.
      */
-    public function test_unauthenticatedRequests(): void
+    public function testUnauthenticatedRequests(): void
     {
         $response = $this->get('/privacy');
         $response->assertStatus(200);
@@ -27,7 +27,7 @@ class SimpleRequestsTest extends TestCase
     /**
      * Test that the home page works.
      */
-    public function test_home(): void
+    public function testHome(): void
     {
         $user = new User();
         $user->create_reason = 'phpunit';
@@ -43,7 +43,6 @@ class SimpleRequestsTest extends TestCase
 
         $response = $this->actingAs($user, 'web')->get('/');
         $response->assertStatus(200);
-        $response->dump();
 
         $response = $this->actingAs($user, 'web')->get('/');
         $response->assertStatus(200);
