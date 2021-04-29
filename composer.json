@@ -118,6 +118,10 @@
             "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
             "vendor/bin/psalm"
+        ],
+        "test": [
+            "cp storage/db-clean.sqlite storage/db-testing.sqlite",
+            "php artisan test"
         ]
     },
     "config": {
