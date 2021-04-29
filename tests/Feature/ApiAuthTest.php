@@ -12,8 +12,6 @@ use Tests\TestCase;
 
 class ApiAuthTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * Test API auth.
      */

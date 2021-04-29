@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SimpleRequestsTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * Test simple, non-CAS requests load without any authentication.
      */
