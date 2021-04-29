@@ -37,3 +37,5 @@ resume-monitoring.sh
 .env.production
 /storage/framework/laravel-excel/
 /.phpunit.result.cache
+/storage/*.sqlite
+!/storage/db-clean.sqlite
