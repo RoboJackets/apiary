@@ -22,9 +22,9 @@
         "chelout/laravel-relationship-events": "1.4.0",
         "doctrine/dbal": "2.13.1",
         "guzzlehttp/guzzle": "7.3.0",
-        "laravel/framework": "8.38.0",
-        "laravel/horizon": "5.7.5",
-        "laravel/nova": "3.23.2",
+        "laravel/framework": "8.40.0",
+        "laravel/horizon": "5.7.6",
+        "laravel/nova": "3.24.0",
         "laravel/slack-notification-channel": "2.3.1",
         "laravel/socialite": "5.2.3",
         "laravel/tinker": "2.6.1",
@@ -58,7 +58,7 @@
         "phpstan/extension-installer": "1.1.0",
         "psalm/plugin-laravel": "1.4.2",
         "robojackets/static-analysis": "1.4",
-        "spatie/ray": "1.21.4"
+        "spatie/ray": "1.22.1"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
