@@ -29,22 +29,21 @@ class SimpleRequestsTest extends TestCase
      */
     public function testHome(): void
     {
-        $user = new User();
-        $user->create_reason = 'phpunit';
-        $user->is_service_account = false;
-        $user->uid = 'apiarytesting4';
-        $user->gtid = 901234567;
-        $user->gt_email = 'robojackets-it@lists.gatech.edu';
-        $user->first_name = 'Apiary';
-        $user->last_name = 'PHPUnit';
-        $user->primary_affiliation = 'student';
-        $user->has_ever_logged_in = true;
-        $user->save();
+        $response = $this->actingAs($this->getTestUser(['member']), 'web')->get('/');
+        $response->assertStatus(200);
+    }
 
-        $response = $this->actingAs($user, 'web')->get('/');
+    /**
+     * Test API auth.
+     */
+    public function testApiAuth(): void
+    {
+        $response = $this->actingAs($this->getTestUser(['member']), 'web')->get('/api/v1/users/1?include=roles');
+        // FIXME $response->dump();
         $response->assertStatus(200);
 
-        $response = $this->actingAs($user, 'web')->get('/');
+        $response = $this->actingAs($this->getTestUser(['member', 'admin']), 'web')->get('/api/v1/users/1?include=roles');
+        // FIXME $response->dump();
         $response->assertStatus(200);
     }
 }
