@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b053fcc0b77e0c0cae083465f303ffbd",
+    "content-hash": "5673ded7d06f9b416631ea308c44b2a8",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -562,16 +562,16 @@
         },
         {
             "name": "bugsnag/bugsnag-laravel",
-            "version": "v2.22.0",
+            "version": "v2.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bugsnag/bugsnag-laravel.git",
-                "reference": "89eb615267840e67c6771a492c725428706e66d7"
+                "reference": "22f57f3bda2a93b68fe56a380cfd88a18e0003a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/89eb615267840e67c6771a492c725428706e66d7",
-                "reference": "89eb615267840e67c6771a492c725428706e66d7",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/22f57f3bda2a93b68fe56a380cfd88a18e0003a4",
+                "reference": "22f57f3bda2a93b68fe56a380cfd88a18e0003a4",
                 "shasum": ""
             },
             "require": {
@@ -583,7 +583,8 @@
                 "php": ">=5.5"
             },
             "require-dev": {
-                "graham-campbell/testbench": "^3.1|^4.0|^5.0",
+                "graham-campbell/testbench": "^3.1|^4.0|^5.0 < 5.6",
+                "graham-campbell/testbench-core": "< 3.3",
                 "mockery/mockery": "^0.9.4|^1.3.1",
                 "phpunit/phpunit": "^4.8.36|^6.3.1|^7.5.15|^8.3.5|^9.3.10"
             },
@@ -620,9 +621,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bugsnag/bugsnag-laravel/issues",
-                "source": "https://github.com/bugsnag/bugsnag-laravel/tree/v2.22.0"
+                "source": "https://github.com/bugsnag/bugsnag-laravel/tree/v2.22.1"
             },
-            "time": "2021-02-10T18:00:31+00:00"
+            "time": "2021-04-29T08:21:36+00:00"
         },
         {
             "name": "bugsnag/bugsnag-psr-logger",
