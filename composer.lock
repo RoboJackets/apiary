@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5673ded7d06f9b416631ea308c44b2a8",
+    "content-hash": "242d0bea91b3f63db5c03d586804c16f",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -9005,16 +9005,16 @@
         },
         {
             "name": "facade/flare-client-php",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/flare-client-php.git",
-                "reference": "6bf380035890cb0a09b9628c491ae3866b858522"
+                "reference": "69742118c037f34ee1ef86dc605be4a105d9e984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/6bf380035890cb0a09b9628c491ae3866b858522",
-                "reference": "6bf380035890cb0a09b9628c491ae3866b858522",
+                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/69742118c037f34ee1ef86dc605be4a105d9e984",
+                "reference": "69742118c037f34ee1ef86dc605be4a105d9e984",
                 "shasum": ""
             },
             "require": {
@@ -9058,7 +9058,7 @@
             ],
             "support": {
                 "issues": "https://github.com/facade/flare-client-php/issues",
-                "source": "https://github.com/facade/flare-client-php/tree/1.7.0"
+                "source": "https://github.com/facade/flare-client-php/tree/1.8.0"
             },
             "funding": [
                 {
@@ -9066,20 +9066,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-12T09:30:36+00:00"
+            "time": "2021-04-30T11:11:50+00:00"
         },
         {
             "name": "facade/ignition",
-            "version": "2.8.3",
+            "version": "2.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "a8201d51aae83addceaef9344592a3b068b5d64d"
+                "reference": "87fb348dab0ae1a7c206c3e902a5a44ba541742f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/a8201d51aae83addceaef9344592a3b068b5d64d",
-                "reference": "a8201d51aae83addceaef9344592a3b068b5d64d",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/87fb348dab0ae1a7c206c3e902a5a44ba541742f",
+                "reference": "87fb348dab0ae1a7c206c3e902a5a44ba541742f",
                 "shasum": ""
             },
             "require": {
@@ -9143,7 +9143,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2021-04-09T20:45:59+00:00"
+            "time": "2021-04-29T13:55:26+00:00"
         },
         {
             "name": "facade/ignition-contracts",
