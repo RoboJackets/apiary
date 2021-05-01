@@ -19,7 +19,7 @@ class UserFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string,string|int|\DateTime|null>
+     * @return array<string,string|int|\DateTime|bool|null>
      */
     public function definition(): array
     {
