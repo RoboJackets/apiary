@@ -6,10 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResumeRequest;
 use App\Models\User;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class ResumeController extends Controller
 {
