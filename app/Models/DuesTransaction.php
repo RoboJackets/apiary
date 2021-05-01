@@ -17,42 +17,42 @@ use Illuminate\Database\Query\JoinClause;
 /**
  * Represents a completed or in progress dues payment.
  *
- * @method static \Illuminate\Database\Eloquent\Builder current() Scopes a query to only current transactions
- * @method static \Illuminate\Database\Eloquent\Builder paid() Scopes a query to only paid transactions
- * @method static \Illuminate\Database\Eloquent\Builder pending() Scopes a query to only pending transactions
- * @method static Builder|DuesTransaction accessCurrent()
- * @method static Builder|DuesTransaction newModelQuery()
- * @method \Illuminate\Database\Eloquent\Builder newQuery()
- * @method static Builder|DuesTransaction query()
- * @method static Builder|DuesTransaction unpaid()
- * @method static Builder|DuesTransaction whereCreatedAt($value)
- * @method static Builder|DuesTransaction whereDeletedAt($value)
- * @method static Builder|DuesTransaction whereDuesPackageId($value)
- * @method static Builder|DuesTransaction whereId($value)
- * @method static Builder|DuesTransaction wherePaymentId($value)
- * @method static Builder|DuesTransaction whereUpdatedAt($value)
- * @method static Builder|DuesTransaction whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|DuesTransaction onlyTrashed()
- * @method static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
- * @method static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- * @property \Carbon\Carbon $created_at when the model was created
- * @property \Carbon\Carbon $updated_at when the model was updated
- * @property ?\Carbon\Carbon $deleted_at
- * @property bool $is_paid whether this transaction is paid in full
- * @property int $dues_package_id
- * @property int $id The database ID for this DuesTransaction
- * @property int $user_id
- * @property int|null $payment_id
- * @property string $status the status of this transaction
+ * @method        static \Illuminate\Database\Eloquent\Builder current() Scopes a query to only current transactions
+ * @method        static \Illuminate\Database\Eloquent\Builder paid() Scopes a query to only paid transactions
+ * @method        static \Illuminate\Database\Eloquent\Builder pending() Scopes a query to only pending transactions
+ * @method        static Builder|DuesTransaction accessCurrent()
+ * @method        static Builder|DuesTransaction newModelQuery()
+ * @method        \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method        static Builder|DuesTransaction query()
+ * @method        static Builder|DuesTransaction unpaid()
+ * @method        static Builder|DuesTransaction whereCreatedAt($value)
+ * @method        static Builder|DuesTransaction whereDeletedAt($value)
+ * @method        static Builder|DuesTransaction whereDuesPackageId($value)
+ * @method        static Builder|DuesTransaction whereId($value)
+ * @method        static Builder|DuesTransaction wherePaymentId($value)
+ * @method        static Builder|DuesTransaction whereUpdatedAt($value)
+ * @method        static Builder|DuesTransaction whereUserId($value)
+ * @method        static \Illuminate\Database\Query\Builder|DuesTransaction onlyTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @property      \Carbon\Carbon $created_at when the model was created
+ * @property      \Carbon\Carbon $updated_at when the model was updated
+ * @property      ?\Carbon\Carbon $deleted_at
+ * @property      bool $is_paid whether this transaction is paid in full
+ * @property      int $dues_package_id
+ * @property      int $id The database ID for this DuesTransaction
+ * @property      int $user_id
+ * @property      int|null $payment_id
+ * @property      string $status the status of this transaction
  * @property-read \App\Models\DuesPackage $for
  * @property-read \App\Models\DuesPackage $package
  * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection $payment
  * @property-read int|null $payment_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Merchandise[] $merchandise
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
  * @property-read int|null $merchandise_count
- * @method static \Database\Factories\DuesTransactionFactory factory(...$parameters)
+ * @method        static \Database\Factories\DuesTransactionFactory factory(...$parameters)
  */
 class DuesTransaction extends Model
 {

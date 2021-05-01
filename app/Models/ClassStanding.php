@@ -10,22 +10,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * Represents a class standing (e.g. freshman).
  *
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
- * @method \Illuminate\Database\Eloquent\Builder newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding query()
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereUpdatedAt($value)
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- * @property \Carbon\Carbon $created_at when the model was created
- * @property \Carbon\Carbon $updated_at when the model was updated
- * @property int $id
- * @property string $name
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
+ * @method        \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding query()
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereCreatedAt($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereId($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereName($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereUpdatedAt($value)
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @property      \Carbon\Carbon $created_at when the model was created
+ * @property      \Carbon\Carbon $updated_at when the model was updated
+ * @property      int $id
+ * @property      string $name
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read int|null $members_count
- * @property int $rank_order
- * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereRankOrder($value)
+ * @property      int $rank_order
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereRankOrder($value)
  */
 class ClassStanding extends Model
 {

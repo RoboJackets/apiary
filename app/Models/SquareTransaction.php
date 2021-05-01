@@ -26,26 +26,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $customer_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction query()
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereCardBrand($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereCustomerName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereDeviceName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereEntryMethod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereLast4($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction wherePaymentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereProcessingFee($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereSource($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereStaffName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereTransactionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereTransactionTimestamp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction newModelQuery()
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction newQuery()
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction query()
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereAmount($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereCardBrand($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereCreatedAt($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereCustomerName($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereDescription($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereDeviceName($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereEntryMethod($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereId($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereLast4($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction wherePaymentId($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereProcessingFee($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereSource($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereStaffName($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereTransactionId($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereTransactionTimestamp($value)
+ * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereUpdatedAt($value)
+ * @mixin    \Eloquent
  */
 class SquareTransaction extends Model
 {

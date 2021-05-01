@@ -14,36 +14,36 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Represents a remote attendance link.
  *
- * @property int $id
- * @property string $secret
- * @property \Illuminate\Support\Carbon $expires_at
- * @property string|null $redirect_url
- * @property string|null $note
- * @property string $attendable_type
- * @property int $attendable_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property      int $id
+ * @property      string $secret
+ * @property      \Illuminate\Support\Carbon $expires_at
+ * @property      string|null $redirect_url
+ * @property      string|null $note
+ * @property      string $attendable_type
+ * @property      int $attendable_id
+ * @property      \Illuminate\Support\Carbon|null $created_at
+ * @property      \Illuminate\Support\Carbon|null $updated_at
+ * @property      \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Model|\Eloquent $attendable
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Attendance[] $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newQuery()
- * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink query()
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereAttendableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereAttendableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereExpiresAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereNote($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereRedirectUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereSecret($value)
- * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withTrashed()
- * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withoutTrashed()
- * @mixin \Eloquent
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newModelQuery()
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newQuery()
+ * @method        static \Illuminate\Database\Query\Builder|RemoteAttendanceLink onlyTrashed()
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink query()
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereAttendableId($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereAttendableType($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereCreatedAt($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereDeletedAt($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereExpiresAt($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereId($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereNote($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereRedirectUrl($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereSecret($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereUpdatedAt($value)
+ * @method        static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withoutTrashed()
+ * @mixin         \Eloquent
  */
 class RemoteAttendanceLink extends Model
 {

@@ -23,43 +23,43 @@ use Laravel\Nova\Actions\Actionable;
 /**
  * Represents a group of Users.
  *
- * @method static \Illuminate\Database\Eloquent\Builder visible() Scopes a query to only visible teams
- * @method static \Illuminate\Database\Query\Builder|Team onlyTrashed()
- * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
- * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
- * @method static Builder|Team attendable()
- * @method static Builder|Team newModelQuery()
- * @method \Illuminate\Database\Eloquent\Builder newQuery()
- * @method static Builder|Team query()
- * @method static Builder|Team selfServiceable()
- * @method static Builder|Team whereCreatedAt($value)
- * @method static Builder|Team whereDeletedAt($value)
- * @method static Builder|Team whereDescription($value)
- * @method static Builder|Team whereGoogleGroup($value)
- * @method static Builder|Team whereId($value)
- * @method static Builder|Team whereMailingListName($value)
- * @method static Builder|Team whereName($value)
- * @method static Builder|Team whereProjectManagerId($value)
- * @method static Builder|Team whereSlackChannelId($value)
- * @method static Builder|Team whereSlackChannelName($value)
- * @method static Builder|Team whereSlackPrivateChannelId($value)
- * @method static Builder|Team whereUpdatedAt($value)
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- * @property \Carbon\Carbon $created_at when the model was created
- * @property \Carbon\Carbon $updated_at when the model was updated
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property bool $self_serviceable whether this team can be joined/left voluntarily
- * @property bool $visible whether this team is visible to non-admins
- * @property bool $attendable
- * @property int $id the database identifier for this team
- * @property int|null $project_manager_id
- * @property string $name The name of the team
- * @property string $slack_private_channel_id the slack internal ID of the team's private channel
- * @property string|null $description
- * @property string|null $google_group
- * @property string|null $mailing_list_name
- * @property string|null $slack_channel_id
- * @property string|null $slack_channel_name
+ * @method        static \Illuminate\Database\Eloquent\Builder visible() Scopes a query to only visible teams
+ * @method        static \Illuminate\Database\Query\Builder|Team onlyTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|Team withoutTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|Team withTrashed()
+ * @method        static Builder|Team attendable()
+ * @method        static Builder|Team newModelQuery()
+ * @method        \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method        static Builder|Team query()
+ * @method        static Builder|Team selfServiceable()
+ * @method        static Builder|Team whereCreatedAt($value)
+ * @method        static Builder|Team whereDeletedAt($value)
+ * @method        static Builder|Team whereDescription($value)
+ * @method        static Builder|Team whereGoogleGroup($value)
+ * @method        static Builder|Team whereId($value)
+ * @method        static Builder|Team whereMailingListName($value)
+ * @method        static Builder|Team whereName($value)
+ * @method        static Builder|Team whereProjectManagerId($value)
+ * @method        static Builder|Team whereSlackChannelId($value)
+ * @method        static Builder|Team whereSlackChannelName($value)
+ * @method        static Builder|Team whereSlackPrivateChannelId($value)
+ * @method        static Builder|Team whereUpdatedAt($value)
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @property      \Carbon\Carbon $created_at when the model was created
+ * @property      \Carbon\Carbon $updated_at when the model was updated
+ * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property      bool $self_serviceable whether this team can be joined/left voluntarily
+ * @property      bool $visible whether this team is visible to non-admins
+ * @property      bool $attendable
+ * @property      int $id the database identifier for this team
+ * @property      int|null $project_manager_id
+ * @property      string $name The name of the team
+ * @property      string $slack_private_channel_id the slack internal ID of the team's private channel
+ * @property      string|null $description
+ * @property      string|null $google_group
+ * @property      string|null $mailing_list_name
+ * @property      string|null $slack_channel_id
+ * @property      string|null $slack_channel_name
  * @property-read \App\Models\User $projectManager
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
@@ -68,16 +68,16 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read int|null $attendance_count
  * @property-read int|null $members_count
  * @property-read int|null $notifications_count
- * @property int $visible_on_kiosk
- * @property string|null $slug
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\RemoteAttendanceLink[] $remoteAttendanceLinks
+ * @property      int $visible_on_kiosk
+ * @property      string|null $slug
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
  * @property-read int|null $remote_attendance_links_count
- * @method static Builder|Team whereAttendable($value)
- * @method static Builder|Team whereSelfServiceable($value)
- * @method static Builder|Team whereSlug($value)
- * @method static Builder|Team whereVisible($value)
- * @method static Builder|Team whereVisibleOnKiosk($value)
+ * @method        static Builder|Team whereAttendable($value)
+ * @method        static Builder|Team whereSelfServiceable($value)
+ * @method        static Builder|Team whereSlug($value)
+ * @method        static Builder|Team whereVisible($value)
+ * @method        static Builder|Team whereVisibleOnKiosk($value)
  */
 class Team extends Model
 {

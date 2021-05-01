@@ -24,104 +24,104 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Represents a user, possibly a member and possibly not.
  *
- * @method static \Illuminate\Database\Eloquent\Builder accessActive() scopes to only users that are access active
- * @method static \Illuminate\Database\Eloquent\Builder active() scopes to only users that are active
- * @method static \Illuminate\Database\Eloquent\Builder findByIdentifier(string $id) finds a user by any identifier
- * @method static \Illuminate\Database\Eloquent\Builder hasOverride() scopes to only users with an active override
- * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
- * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
- * @method static \Illuminate\Database\Query\Builder|User withTrashed()
- * @method static Builder|User accessInactive()
- * @method static Builder|User inactive()
- * @method static Builder|User newModelQuery()
- * @method \Illuminate\Database\Eloquent\Builder newQuery()
- * @method static Builder|User permission($permissions)
- * @method static Builder|User query()
- * @method static Builder|User role($roles, $guard = null)
- * @method static Builder|User when(bool $value, \Closure $closure, ?\Closure $closure)
- * @method static Builder|User whereAccessOverrideById($value)
- * @method static Builder|User whereAccessOverrideUntil($value)
- * @method static Builder|User whereApiToken($value)
- * @method static Builder|User whereAutodeskEmail($value)
- * @method static Builder|User whereAutodeskInvitePending($value)
- * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereCreateReason($value)
- * @method static Builder|User whereDeletedAt($value)
- * @method static Builder|User whereEmergencyContactName($value)
- * @method static Builder|User whereEmergencyContactPhone($value)
- * @method static Builder|User whereEthnicity($value)
- * @method static Builder|User whereExistsInSums($value)
- * @method static Builder|User whereFirstName($value)
- * @method static Builder|User whereFullName($value)
- * @method static Builder|User whereGender($value)
- * @method static Builder|User whereGithubInvitePending($value)
- * @method static Builder|User whereGithubUsername($value)
- * @method static Builder|User whereGmailAddress($value)
- * @method static Builder|User whereGraduationSemester($value)
- * @method static Builder|User whereGtDirGUID($value)
- * @method static Builder|User whereGtEmail($value)
- * @method static Builder|User whereGtid($value)
- * @method static Builder|User whereHasEverLoggedIn($value)
- * @method static Builder|User whereId($value)
- * @method static Builder|User whereIsServiceAccount($value)
- * @method static Builder|User whereJoinSemester($value)
- * @method static Builder|User whereLastName($value)
- * @method static Builder|User whereMiddleName($value)
- * @method static Builder|User whereName($value)
- * @method static Builder|User wherePersonalEmail($value)
- * @method static Builder|User wherePhone($value)
- * @method static Builder|User wherePoloSize($value)
- * @method static Builder|User wherePreferredName($value)
- * @method static Builder|User wherePrimaryAffiliation($value)
- * @method static Builder|User whereResumeDate($value)
- * @method static Builder|User whereShirtSize($value)
- * @method static Builder|User whereSlackId($value)
- * @method static Builder|User whereUid($value)
- * @method static Builder|User whereUpdatedAt($value)
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- * @property \Carbon\Carbon $created_at when the model was created
- * @property \Carbon\Carbon $updated_at when the model was updated
- * @property bool $exists_in_sums
- * @property bool $github_invite_pending
- * @property bool $clickup_invite_pending
- * @property bool $autodesk_invite_pending
- * @property bool $has_ever_logged_in whether the user has ever logged in with CAS
- * @property bool $is_active whether the user is currently active
- * @property bool $is_service_account whether the user is a service account (vs human)
- * @property Carbon|null $access_override_until
- * @property Carbon|null $deleted_at
- * @property ?\Carbon\Carbon $resume_date
- * @property int $gtid
- * @property int $id
- * @property int|null $access_override_by_id
- * @property int|null $clickup_id
- * @property string $create_reason
- * @property string $first_name
- * @property string $gt_email
- * @property string $last_name
- * @property string $name the display name for this user
- * @property string $uid
- * @property string|null $api_token
- * @property string|null $clickup_email
- * @property string|null $autodesk_email
- * @property string|null $emergency_contact_name
- * @property string|null $emergency_contact_phone
- * @property string|null $ethnicity
- * @property string|null $gender
- * @property string|null $github_username
- * @property string|null $gmail_address
- * @property string|null $graduation_semester
- * @property string|null $gtDirGUID
- * @property string|null $join_semester
- * @property string|null $middle_name
- * @property string|null $personal_email
- * @property string|null $phone
- * @property string|null $polo_size
- * @property string|null $preferred_first_name
- * @property string|null $preferred_name
- * @property string|null $primary_affiliation
- * @property string|null $shirt_size
- * @property string|null $slack_id
+ * @method        static \Illuminate\Database\Eloquent\Builder accessActive() scopes to only users that are access active
+ * @method        static \Illuminate\Database\Eloquent\Builder active() scopes to only users that are active
+ * @method        static \Illuminate\Database\Eloquent\Builder findByIdentifier(string $id) finds a user by any identifier
+ * @method        static \Illuminate\Database\Eloquent\Builder hasOverride() scopes to only users with an active override
+ * @method        static \Illuminate\Database\Query\Builder|User onlyTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|User withoutTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|User withTrashed()
+ * @method        static Builder|User accessInactive()
+ * @method        static Builder|User inactive()
+ * @method        static Builder|User newModelQuery()
+ * @method        \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method        static Builder|User permission($permissions)
+ * @method        static Builder|User query()
+ * @method        static Builder|User role($roles, $guard = null)
+ * @method        static Builder|User when(bool $value, \Closure $closure, ?\Closure $closure)
+ * @method        static Builder|User whereAccessOverrideById($value)
+ * @method        static Builder|User whereAccessOverrideUntil($value)
+ * @method        static Builder|User whereApiToken($value)
+ * @method        static Builder|User whereAutodeskEmail($value)
+ * @method        static Builder|User whereAutodeskInvitePending($value)
+ * @method        static Builder|User whereCreatedAt($value)
+ * @method        static Builder|User whereCreateReason($value)
+ * @method        static Builder|User whereDeletedAt($value)
+ * @method        static Builder|User whereEmergencyContactName($value)
+ * @method        static Builder|User whereEmergencyContactPhone($value)
+ * @method        static Builder|User whereEthnicity($value)
+ * @method        static Builder|User whereExistsInSums($value)
+ * @method        static Builder|User whereFirstName($value)
+ * @method        static Builder|User whereFullName($value)
+ * @method        static Builder|User whereGender($value)
+ * @method        static Builder|User whereGithubInvitePending($value)
+ * @method        static Builder|User whereGithubUsername($value)
+ * @method        static Builder|User whereGmailAddress($value)
+ * @method        static Builder|User whereGraduationSemester($value)
+ * @method        static Builder|User whereGtDirGUID($value)
+ * @method        static Builder|User whereGtEmail($value)
+ * @method        static Builder|User whereGtid($value)
+ * @method        static Builder|User whereHasEverLoggedIn($value)
+ * @method        static Builder|User whereId($value)
+ * @method        static Builder|User whereIsServiceAccount($value)
+ * @method        static Builder|User whereJoinSemester($value)
+ * @method        static Builder|User whereLastName($value)
+ * @method        static Builder|User whereMiddleName($value)
+ * @method        static Builder|User whereName($value)
+ * @method        static Builder|User wherePersonalEmail($value)
+ * @method        static Builder|User wherePhone($value)
+ * @method        static Builder|User wherePoloSize($value)
+ * @method        static Builder|User wherePreferredName($value)
+ * @method        static Builder|User wherePrimaryAffiliation($value)
+ * @method        static Builder|User whereResumeDate($value)
+ * @method        static Builder|User whereShirtSize($value)
+ * @method        static Builder|User whereSlackId($value)
+ * @method        static Builder|User whereUid($value)
+ * @method        static Builder|User whereUpdatedAt($value)
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @property      \Carbon\Carbon $created_at when the model was created
+ * @property      \Carbon\Carbon $updated_at when the model was updated
+ * @property      bool $exists_in_sums
+ * @property      bool $github_invite_pending
+ * @property      bool $clickup_invite_pending
+ * @property      bool $autodesk_invite_pending
+ * @property      bool $has_ever_logged_in whether the user has ever logged in with CAS
+ * @property      bool $is_active whether the user is currently active
+ * @property      bool $is_service_account whether the user is a service account (vs human)
+ * @property      Carbon|null $access_override_until
+ * @property      Carbon|null $deleted_at
+ * @property      ?\Carbon\Carbon $resume_date
+ * @property      int $gtid
+ * @property      int $id
+ * @property      int|null $access_override_by_id
+ * @property      int|null $clickup_id
+ * @property      string $create_reason
+ * @property      string $first_name
+ * @property      string $gt_email
+ * @property      string $last_name
+ * @property      string $name the display name for this user
+ * @property      string $uid
+ * @property      string|null $api_token
+ * @property      string|null $clickup_email
+ * @property      string|null $autodesk_email
+ * @property      string|null $emergency_contact_name
+ * @property      string|null $emergency_contact_phone
+ * @property      string|null $ethnicity
+ * @property      string|null $gender
+ * @property      string|null $github_username
+ * @property      string|null $gmail_address
+ * @property      string|null $graduation_semester
+ * @property      string|null $gtDirGUID
+ * @property      string|null $join_semester
+ * @property      string|null $middle_name
+ * @property      string|null $personal_email
+ * @property      string|null $phone
+ * @property      string|null $polo_size
+ * @property      string|null $preferred_first_name
+ * @property      string|null $preferred_name
+ * @property      string|null $primary_affiliation
+ * @property      string|null $shirt_size
+ * @property      string|null $slack_id
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $dues
@@ -154,19 +154,19 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @property-read string $full_name
  * @property-read User $accessOverrideBy
- * @property bool $buzzcard_access_opt_out
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesPackage[] $duesPackages
+ * @property      bool $buzzcard_access_opt_out
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $duesPackages
  * @property-read int|null $dues_packages_count
  * @property-read bool $has_ordered_polo
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Signature[] $signatures
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Signature> $signatures
  * @property-read int|null $signatures_count
- * @method static Builder|User buzzCardAccessEligible()
- * @method static \Database\Factories\UserFactory factory(...$parameters)
- * @method static Builder|User whereBuzzcardAccessOptOut($value)
- * @method static Builder|User whereClickupEmail($value)
- * @method static Builder|User whereClickupId($value)
- * @method static Builder|User whereClickupInvitePending($value)
+ * @method        static Builder|User buzzCardAccessEligible()
+ * @method        static \Database\Factories\UserFactory factory(...$parameters)
+ * @method        static Builder|User whereBuzzcardAccessOptOut($value)
+ * @method        static Builder|User whereClickupEmail($value)
+ * @method        static Builder|User whereClickupId($value)
+ * @method        static Builder|User whereClickupInvitePending($value)
  */
 class User extends Authenticatable
 {
