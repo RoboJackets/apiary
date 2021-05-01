@@ -155,6 +155,7 @@ class Payment extends Model
 
     public function updateFromSquareCashTransaction(SquareCashTransaction $transaction): void
     {
+        // @phan-suppress-next-line PhanTypeMismatchProperty
         $this->amount = $transaction->amount;
         $this->processing_fee = null;
         $this->method = 'squarecash';
@@ -174,7 +175,9 @@ class Payment extends Model
         ];
 
         $this->method = $squareSourceToPaymentMethod[$transaction->source];
+        // @phan-suppress-next-line PhanTypeMismatchProperty
         $this->amount = $transaction->amount;
+        // @phan-suppress-next-line PhanTypeMismatchProperty
         $this->processing_fee = $transaction->processing_fee;
         $this->created_at = $transaction->transaction_timestamp;
         $this->updated_at = $transaction->transaction_timestamp;

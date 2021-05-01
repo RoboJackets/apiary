@@ -92,6 +92,7 @@ class AddPayment extends Action
         $payment = new Payment();
         $payment->recorded_by = Auth::user()->id;
         $payment->method = $fields->method;
+        // @phan-suppress-next-line PhanTypeMismatchProperty
         $payment->amount = $entered_amount;
         $payment->payable_id = $models->first()->id;
         $payment->payable_type = DuesTransaction::getMorphClassStatic();
