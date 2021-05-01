@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * App\Models\DuesTransactionMerchandise
+ * App\Models\DuesTransactionMerchandise.
  *
  * @property      int $id
  * @property      int $dues_transaction_id

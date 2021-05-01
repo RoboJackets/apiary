@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\SquareTransaction
+ * App\Models\SquareTransaction.
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon $transaction_timestamp

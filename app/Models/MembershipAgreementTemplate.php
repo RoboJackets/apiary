@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Blade;
 use Throwable;
 
 /**
- * App\Models\MembershipAgreementTemplate
+ * App\Models\MembershipAgreementTemplate.
  *
  * @property      int $id
  * @property      string $text

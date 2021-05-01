@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * App\Models\FiscalYear
+ * App\Models\FiscalYear.
  *
  * @property      int $id
  * @property      string $ending_year

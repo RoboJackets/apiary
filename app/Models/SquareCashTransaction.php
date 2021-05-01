@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\SquareCashTransaction
+ * App\Models\SquareCashTransaction.
  *
  * @property int $id
  * @property string $transaction_id
