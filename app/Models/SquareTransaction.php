@@ -45,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereTransactionId($value)
  * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereTransactionTimestamp($value)
  * @method   static \Illuminate\Database\Eloquent\Builder|SquareTransaction whereUpdatedAt($value)
- * @mixin    \Eloquent
+ * @mixin    \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class SquareTransaction extends Model
 {

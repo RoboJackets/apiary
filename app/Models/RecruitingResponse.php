@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereUpdatedAt($value)
  * @method        static \Illuminate\Database\Query\Builder|RecruitingResponse withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|RecruitingResponse withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingResponse extends Model
 {

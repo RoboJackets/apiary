@@ -43,7 +43,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method        static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereUpdatedAt($value)
  * @method        static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RemoteAttendanceLink extends Model
 {

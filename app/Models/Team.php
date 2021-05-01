@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Commenting.DocComment.TagValueIndent
 
 namespace App\Models;
 
@@ -40,16 +40,16 @@ use Laravel\Nova\Actions\Actionable;
  * @property      \Illuminate\Support\Carbon|null $updated_at
  * @property      \Illuminate\Support\Carbon|null $deleted_at
  * @property      int|null $project_manager_id user_id of the project manager
+ * @property \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
+ * @property-read \App\Models\User|null $projectManager
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read int|null $members_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\User|null $projectManager
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
  * @property-read int|null $remote_attendance_links_count
  * @method        static Builder|Team attendable()
  * @method        static Builder|Team newModelQuery()
@@ -77,7 +77,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method        static Builder|Team whereVisibleOnKiosk($value)
  * @method        static \Illuminate\Database\Query\Builder|Team withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|Team withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Team extends Model
 {

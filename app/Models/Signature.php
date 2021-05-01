@@ -53,7 +53,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method        static \Illuminate\Database\Eloquent\Builder|Signature whereUploadedBy($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|Signature whereUserAgent($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|Signature whereUserId($value)
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Signature extends Model
 {

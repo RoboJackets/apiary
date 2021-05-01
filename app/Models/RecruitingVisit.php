@@ -25,7 +25,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property      \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingResponse> $recruitingResponses
  * @property-read int|null $recruiting_responses_count
@@ -45,7 +45,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingVisit whereVisitToken($value)
  * @method        static \Illuminate\Database\Query\Builder|RecruitingVisit withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|RecruitingVisit withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingVisit extends Model
 {

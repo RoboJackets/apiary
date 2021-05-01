@@ -50,7 +50,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method        static Builder|DuesTransaction whereUserId($value)
  * @method        static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesTransaction extends Model
 {

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Commenting.DocComment.TagValueIndent
+
 namespace App\Models;
 
 use App\Traits\GetMorphClassStatic;
@@ -25,11 +27,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property      \Illuminate\Support\Carbon|null $created_at
  * @property      \Illuminate\Support\Carbon|null $updated_at
  * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
  * @property-read string $organizer_name
  * @property-read \App\Models\User $organizer
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
  * @property-read int|null $remote_attendance_links_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
  * @property-read int|null $rsvps_count
@@ -50,7 +52,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method        static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
  * @method        static \Illuminate\Database\Query\Builder|Event withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|Event withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Event extends Model
 {
@@ -121,7 +123,7 @@ class Event extends Model
      */
     public function getPayableAmount(): float
     {
-        return $this->price;
+        return $this->cost;
     }
 
     /**

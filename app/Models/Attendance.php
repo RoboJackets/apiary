@@ -33,6 +33,7 @@ use Illuminate\Support\Collection;
  * @method        static Builder|Attendance whereRecordedBy($value)
  * @method        static Builder|Attendance whereSource($value)
  * @method        static Builder|Attendance whereUpdatedAt($value)
+ * @method        static Builder|Attendance whereRemoteAttendanceLinkId($value)
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  * @property      \Carbon\Carbon $created_at when the model was created
  * @property      \Carbon\Carbon $updated_at when the model was updated
@@ -48,7 +49,6 @@ use Illuminate\Support\Collection;
  * @property-read \App\Models\User $attendee
  * @property-read \App\Models\User $recorded
  * @property-read \App\Models\RemoteAttendanceLink|null $remoteAttendanceLink
- * @method        static Builder|Attendance whereRemoteAttendanceLinkId($value)
  */
 class Attendance extends Model
 {

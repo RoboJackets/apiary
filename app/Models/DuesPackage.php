@@ -71,7 +71,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method        static Builder|DuesPackage whereUpdatedAt($value)
  * @method        static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesPackage extends Model
 {

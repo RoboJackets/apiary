@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Commenting.DocComment.TagValueIndent
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +24,7 @@ use Illuminate\Notifications\Notifiable;
  * @property      \Illuminate\Support\Carbon|null $created_at
  * @property      \Illuminate\Support\Carbon|null $updated_at
  * @property      \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \App\Models\RecruitingCampaign $recruitingCampaign
  * @property-read \App\Models\RecruitingVisit|null $recruitingVisit
@@ -36,14 +38,14 @@ use Illuminate\Notifications\Notifiable;
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereEmailAddress($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereId($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereNotifiedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingCampaignId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingVisitId($value)
+ * @method    static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingCampaignId($value)
+ * @method       static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingVisitId($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereSource($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUpdatedAt($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUserId($value)
  * @method        static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingCampaignRecipient extends Model
 {

@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereTransactionId($value)
  * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereTransactionTimestamp($value)
  * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereUpdatedAt($value)
- * @mixin    \Eloquent
+ * @mixin    \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class SquareCashTransaction extends Model
 {

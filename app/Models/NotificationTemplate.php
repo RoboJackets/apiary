@@ -39,7 +39,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereUpdatedAt($value)
  * @method        static \Illuminate\Database\Query\Builder|NotificationTemplate withTrashed()
  * @method        static \Illuminate\Database\Query\Builder|NotificationTemplate withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class NotificationTemplate extends Model
 {

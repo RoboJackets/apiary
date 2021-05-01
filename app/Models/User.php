@@ -65,6 +65,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property      string|null $primary_affiliation
  * @property      string|null $gtDirGUID
  * @property      bool $buzzcard_access_opt_out
+ * @property      string|null $preferred_first_name
  * @property-read User|null $accessOverrideBy
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
@@ -85,12 +86,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read bool $is_access_active
  * @property-read bool $is_active
  * @property-read string $name
- * @property      string|null $preferred_first_name
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Major> $majors
  * @property-read int|null $majors_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $manages
  * @property-read int|null $manages_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $paidDues
  * @property-read int|null $paid_dues_count
@@ -163,7 +163,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method        static Builder|User whereUpdatedAt($value)
  * @method        static QueryBuilder|User withTrashed()
  * @method        static QueryBuilder|User withoutTrashed()
- * @mixin         \Eloquent
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class User extends Authenticatable
 {
