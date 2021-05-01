@@ -19,7 +19,7 @@ class UserFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string,string|int|\DateTime|null>
+     * @return array<string,string|int|\DateTime|bool|null>
      */
     public function definition(): array
     {
@@ -47,6 +47,8 @@ class UserFactory extends Factory
             'ethnicity' => $this->faker->randomElement(
                 ['white', 'asian', 'hispanic', 'black', 'native', 'islander', 'none']
             ),
+            'create_reason' => 'factory',
+            'has_ever_logged_in' => $this->faker->boolean(),
         ];
     }
 }

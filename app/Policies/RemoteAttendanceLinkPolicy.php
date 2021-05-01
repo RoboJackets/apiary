@@ -22,6 +22,7 @@ class RemoteAttendanceLinkPolicy
             return false;
         }
 
+        // @phan-suppress-next-line PhanPluginNonBoolBranch
         if (is_a($attendance->attendable, Team::class) && ! $attendance->attendable->visible) {
             return $user->can('read-teams-hidden');
         }

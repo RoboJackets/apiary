@@ -13,6 +13,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Blade;
 use Throwable;
 
+/**
+ * App\Models\MembershipAgreementTemplate.
+ *
+ * @property      int $id
+ * @property      string $text
+ * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property      \Illuminate\Support\Carbon|null $created_at
+ * @property      \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Signature> $signatures
+ * @property-read int|null $signatures_count
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate newModelQuery()
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate newQuery()
+ * @method        static \Illuminate\Database\Query\Builder|MembershipAgreementTemplate onlyTrashed()
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate query()
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate whereCreatedAt($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate whereDeletedAt($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate whereId($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate whereText($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate whereUpdatedAt($value)
+ * @method        static \Illuminate\Database\Query\Builder|MembershipAgreementTemplate withTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|MembershipAgreementTemplate withoutTrashed()
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ */
 class MembershipAgreementTemplate extends Model
 {
     use SoftDeletes;

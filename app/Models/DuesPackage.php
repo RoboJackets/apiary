@@ -18,52 +18,60 @@ use Laravel\Nova\Actions\Actionable;
 /**
  * Represents a possible dues payment and what privileges are associated with it.
  *
- * @method static \Illuminate\Database\Eloquent\Builder availableForPurchase()
- * @method static \Illuminate\Database\Query\Builder|DuesPackage onlyTrashed()
- * @method static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
- * @method static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
- * @method static Builder|DuesPackage accessActive()
- * @method static Builder|DuesPackage active()
- * @method static Builder|DuesPackage newModelQuery()
- * @method \Illuminate\Database\Eloquent\Builder newQuery()
- * @method static Builder|DuesPackage query()
- * @method static Builder|DuesPackage whereAccessEnd($value)
- * @method static Builder|DuesPackage whereAccessStart($value)
- * @method static Builder|DuesPackage whereAvailableForPurchase($value)
- * @method static Builder|DuesPackage whereCost($value)
- * @method static Builder|DuesPackage whereCreatedAt($value)
- * @method static Builder|DuesPackage whereDeletedAt($value)
- * @method static Builder|DuesPackage whereEffectiveEnd($value)
- * @method static Builder|DuesPackage whereEffectiveStart($value)
- * @method static Builder|DuesPackage whereId($value)
- * @method static Builder|DuesPackage whereName($value)
- * @method static Builder|DuesPackage whereUpdatedAt($value)
- *
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
- * @property \Carbon\Carbon $created_at when the model was created
- * @property \Carbon\Carbon $updated_at when the model was updated
- * @property \Carbon\Carbon $access_end The timestamp when users paid against this DuesPackage no longer have access to
- * @property \Carbon\Carbon $access_start The timestamp when users paid against this DuesPackage first are access active
- * @property \Carbon\Carbon $effective_end The timestamp when the DuesPackage is considered no longer active
- * @property \Carbon\Carbon $effective_start The timestamp when the DuesPackage is considered newly active
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property bool $is_active Whether this DuesPackage is considered active
- * @property float $cost the cost of this package
- * @property bool $available_for_purchase
- * @property bool $restricted_to_students
- * @property int $id The database identifier for this DuesPackage
- * @property int $conflicts_with_package_id The dues package that would restrict purchase of this package
- * @property string $name
- * @property int $fiscal_year_id
- *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
+ * @property      int $id
+ * @property      string $name
+ * @property      \Illuminate\Support\Carbon $effective_start
+ * @property      \Illuminate\Support\Carbon $effective_end
+ * @property      \Illuminate\Support\Carbon|null $access_start
+ * @property      \Illuminate\Support\Carbon|null $access_end
+ * @property      float $cost
+ * @property      bool $available_for_purchase
+ * @property      \Illuminate\Support\Carbon|null $created_at
+ * @property      \Illuminate\Support\Carbon|null $updated_at
+ * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property      int|null $fiscal_year_id
+ * @property      int|null $conflicts_with_package_id
+ * @property      bool|null $restricted_to_students
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
- * @property-read bool $is_access_active
  * @property-read int|null $actions_count
+ * @property-read DuesPackage|null $conflictsWith
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
  * @property-read int|null $dues_transactions_count
+ * @property-read \App\Models\FiscalYear|null $fiscalYear
+ * @property-read bool $is_access_active
+ * @property-read bool $is_active
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<DuesPackage> $hasConflictWith
+ * @property-read int|null $has_conflict_with_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
+ * @property-read int|null $merchandise_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
+ * @method        static Builder|DuesPackage accessActive()
+ * @method        static Builder|DuesPackage active()
+ * @method        static Builder|DuesPackage availableForPurchase()
+ * @method        static \Database\Factories\DuesPackageFactory factory(...$parameters)
+ * @method        static Builder|DuesPackage newModelQuery()
+ * @method        static Builder|DuesPackage newQuery()
+ * @method        static \Illuminate\Database\Query\Builder|DuesPackage onlyTrashed()
+ * @method        static Builder|DuesPackage query()
+ * @method        static Builder|DuesPackage userCanPurchase(\App\Models\User $user)
+ * @method        static Builder|DuesPackage whereAccessEnd($value)
+ * @method        static Builder|DuesPackage whereAccessStart($value)
+ * @method        static Builder|DuesPackage whereAvailableForPurchase($value)
+ * @method        static Builder|DuesPackage whereConflictsWithPackageId($value)
+ * @method        static Builder|DuesPackage whereCost($value)
+ * @method        static Builder|DuesPackage whereCreatedAt($value)
+ * @method        static Builder|DuesPackage whereDeletedAt($value)
+ * @method        static Builder|DuesPackage whereEffectiveEnd($value)
+ * @method        static Builder|DuesPackage whereEffectiveStart($value)
+ * @method        static Builder|DuesPackage whereFiscalYearId($value)
+ * @method        static Builder|DuesPackage whereId($value)
+ * @method        static Builder|DuesPackage whereName($value)
+ * @method        static Builder|DuesPackage whereRestrictedToStudents($value)
+ * @method        static Builder|DuesPackage whereUpdatedAt($value)
+ * @method        static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
+ * @method        static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
+ * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesPackage extends Model
 {

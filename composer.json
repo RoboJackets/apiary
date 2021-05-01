@@ -92,6 +92,11 @@
             "Database\\Seeders\\": "database/seeders/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "scripts": {
         "post-root-package-install": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -113,6 +118,10 @@
             "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
             "vendor/bin/psalm"
+        ],
+        "test": [
+            "cp storage/db-clean.sqlite storage/db-testing.sqlite",
+            "php artisan test"
         ]
     },
     "config": {

@@ -47,16 +47,6 @@
                 <directory name="app" />
             </errorLevel>
         </TooManyArguments>
-        <PossiblyUndefinedMethod>
-            <errorLevel type="suppress">
-                <directory name="database/migrations" />
-            </errorLevel>
-        </PossiblyUndefinedMethod>
-        <UndefinedInterfaceMethod>
-            <errorLevel type="suppress">
-                <directory name="database/migrations" />
-            </errorLevel>
-        </UndefinedInterfaceMethod>
         <MissingReturnType>
             <errorLevel type="suppress">
                 <directory name="app/Http/Controllers" />
