@@ -24,35 +24,119 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Represents a user, possibly a member and possibly not.
  *
- * @method        static \Illuminate\Database\Eloquent\Builder accessActive() scopes to only users that are access active
- * @method        static \Illuminate\Database\Eloquent\Builder active() scopes to only users that are active
- * @method        static \Illuminate\Database\Eloquent\Builder findByIdentifier(string $id) finds a user by any identifier
- * @method        static \Illuminate\Database\Eloquent\Builder hasOverride() scopes to only users with an active override
- * @method        static \Illuminate\Database\Query\Builder|User onlyTrashed()
- * @method        static \Illuminate\Database\Query\Builder|User withoutTrashed()
- * @method        static \Illuminate\Database\Query\Builder|User withTrashed()
+ * @property      int $id
+ * @property      string $uid
+ * @property      int $gtid
+ * @property      string|null $api_token
+ * @property      string|null $slack_id
+ * @property      string|null $github_username
+ * @property      string|null $gmail_address
+ * @property      string|null $clickup_email
+ * @property      int|null $clickup_id
+ * @property      bool $clickup_invite_pending
+ * @property      string|null $autodesk_email
+ * @property      bool $autodesk_invite_pending
+ * @property      string $gt_email
+ * @property      string|null $personal_email
+ * @property      string $first_name
+ * @property      string|null $middle_name
+ * @property      string $last_name
+ * @property      string|null $preferred_name
+ * @property      string|null $phone
+ * @property      string|null $emergency_contact_name
+ * @property      string|null $emergency_contact_phone
+ * @property      string|null $join_semester
+ * @property      string|null $graduation_semester
+ * @property      string|null $shirt_size
+ * @property      string|null $polo_size
+ * @property      string|null $gender
+ * @property      string|null $ethnicity
+ * @property      Carbon|null $deleted_at
+ * @property      Carbon|null $created_at
+ * @property      Carbon|null $updated_at
+ * @property      Carbon|null $access_override_until
+ * @property      int|null $access_override_by_id user_id of the user who entered access override
+ * @property      Carbon|null $resume_date
+ * @property      bool $github_invite_pending
+ * @property      bool $exists_in_sums
+ * @property      string $create_reason
+ * @property      bool $has_ever_logged_in
+ * @property      bool $is_service_account
+ * @property      string|null $primary_affiliation
+ * @property      string|null $gtDirGUID
+ * @property      bool $buzzcard_access_opt_out
+ * @property-read User|null $accessOverrideBy
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property-read int|null $actions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read int|null $attendance_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
+ * @property-read int|null $class_standing_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $dues
+ * @property-read int|null $dues_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $duesPackages
+ * @property-read int|null $dues_packages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
+ * @property-read int|null $dues_transactions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Event> $events
+ * @property-read int|null $events_count
+ * @property-read string $full_name
+ * @property-read bool $has_ordered_polo
+ * @property-read bool $is_access_active
+ * @property-read bool $is_active
+ * @property-read string $name
+ * @property      string|null $preferred_first_name
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Major> $majors
+ * @property-read int|null $majors_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $manages
+ * @property-read int|null $manages_count
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $paidDues
+ * @property-read int|null $paid_dues_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingVisit> $recruitingVisits
+ * @property-read int|null $recruiting_visits_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Role> $roles
+ * @property-read int|null $roles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
+ * @property-read int|null $rsvps_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Signature> $signatures
+ * @property-read int|null $signatures_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $teams
+ * @property-read int|null $teams_count
+ * @method        static Builder|User accessActive()
  * @method        static Builder|User accessInactive()
+ * @method        static Builder|User active()
+ * @method        static Builder|User buzzCardAccessEligible()
+ * @method        static \Database\Factories\UserFactory factory(...$parameters)
+ * @method        static Builder|User findByIdentifier(string $id)
+ * @method        static Builder|User hasOverride()
  * @method        static Builder|User inactive()
  * @method        static Builder|User newModelQuery()
- * @method        \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method        static Builder|User newQuery()
+ * @method        static QueryBuilder|User onlyTrashed()
  * @method        static Builder|User permission($permissions)
  * @method        static Builder|User query()
  * @method        static Builder|User role($roles, $guard = null)
- * @method        static Builder|User when(bool $value, \Closure $closure, ?\Closure $closure)
  * @method        static Builder|User whereAccessOverrideById($value)
  * @method        static Builder|User whereAccessOverrideUntil($value)
  * @method        static Builder|User whereApiToken($value)
  * @method        static Builder|User whereAutodeskEmail($value)
  * @method        static Builder|User whereAutodeskInvitePending($value)
- * @method        static Builder|User whereCreatedAt($value)
+ * @method        static Builder|User whereBuzzcardAccessOptOut($value)
+ * @method        static Builder|User whereClickupEmail($value)
+ * @method        static Builder|User whereClickupId($value)
+ * @method        static Builder|User whereClickupInvitePending($value)
  * @method        static Builder|User whereCreateReason($value)
+ * @method        static Builder|User whereCreatedAt($value)
  * @method        static Builder|User whereDeletedAt($value)
  * @method        static Builder|User whereEmergencyContactName($value)
  * @method        static Builder|User whereEmergencyContactPhone($value)
  * @method        static Builder|User whereEthnicity($value)
  * @method        static Builder|User whereExistsInSums($value)
  * @method        static Builder|User whereFirstName($value)
- * @method        static Builder|User whereFullName($value)
  * @method        static Builder|User whereGender($value)
  * @method        static Builder|User whereGithubInvitePending($value)
  * @method        static Builder|User whereGithubUsername($value)
@@ -67,7 +151,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method        static Builder|User whereJoinSemester($value)
  * @method        static Builder|User whereLastName($value)
  * @method        static Builder|User whereMiddleName($value)
- * @method        static Builder|User whereName($value)
  * @method        static Builder|User wherePersonalEmail($value)
  * @method        static Builder|User wherePhone($value)
  * @method        static Builder|User wherePoloSize($value)
@@ -78,95 +161,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @method        static Builder|User whereSlackId($value)
  * @method        static Builder|User whereUid($value)
  * @method        static Builder|User whereUpdatedAt($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
- * @property      \Carbon\Carbon $created_at when the model was created
- * @property      \Carbon\Carbon $updated_at when the model was updated
- * @property      bool $exists_in_sums
- * @property      bool $github_invite_pending
- * @property      bool $clickup_invite_pending
- * @property      bool $autodesk_invite_pending
- * @property      bool $has_ever_logged_in whether the user has ever logged in with CAS
- * @property      bool $is_active whether the user is currently active
- * @property      bool $is_service_account whether the user is a service account (vs human)
- * @property      Carbon|null $access_override_until
- * @property      Carbon|null $deleted_at
- * @property      ?\Carbon\Carbon $resume_date
- * @property      int $gtid
- * @property      int $id
- * @property      int|null $access_override_by_id
- * @property      int|null $clickup_id
- * @property      string $create_reason
- * @property      string $first_name
- * @property      string $gt_email
- * @property      string $last_name
- * @property      string $name the display name for this user
- * @property      string $uid
- * @property      string|null $api_token
- * @property      string|null $clickup_email
- * @property      string|null $autodesk_email
- * @property      string|null $emergency_contact_name
- * @property      string|null $emergency_contact_phone
- * @property      string|null $ethnicity
- * @property      string|null $gender
- * @property      string|null $github_username
- * @property      string|null $gmail_address
- * @property      string|null $graduation_semester
- * @property      string|null $gtDirGUID
- * @property      string|null $join_semester
- * @property      string|null $middle_name
- * @property      string|null $personal_email
- * @property      string|null $phone
- * @property      string|null $polo_size
- * @property      string|null $preferred_first_name
- * @property      string|null $preferred_name
- * @property      string|null $primary_affiliation
- * @property      string|null $shirt_size
- * @property      string|null $slack_id
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $dues
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $paidDues
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Event> $events
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Major> $majors
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingVisit> $recruitingVisits
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $manages
- * @property-read \Illuminate\Database\Eloquent\Collection $teams
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
- * @property-read \Illuminate\Database\Eloquent\Collection $roles
- * @property-read bool $is_access_active
- * @property-read int|null $actions_count
- * @property-read int|null $attendance_count
- * @property-read int|null $class_standing_count
- * @property-read int|null $dues_count
- * @property-read int|null $dues_transactions_count
- * @property-read int|null $events_count
- * @property-read int|null $majors_count
- * @property-read int|null $manages_count
- * @property-read int|null $notifications_count
- * @property-read int|null $paid_dues_count
- * @property-read int|null $permissions_count
- * @property-read int|null $recruiting_visits_count
- * @property-read int|null $roles_count
- * @property-read int|null $rsvps_count
- * @property-read int|null $teams_count
- * @property-read string $full_name
- * @property-read User $accessOverrideBy
- * @property      bool $buzzcard_access_opt_out
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $duesPackages
- * @property-read int|null $dues_packages_count
- * @property-read bool $has_ordered_polo
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Signature> $signatures
- * @property-read int|null $signatures_count
- * @method        static Builder|User buzzCardAccessEligible()
- * @method        static \Database\Factories\UserFactory factory(...$parameters)
- * @method        static Builder|User whereBuzzcardAccessOptOut($value)
- * @method        static Builder|User whereClickupEmail($value)
- * @method        static Builder|User whereClickupId($value)
- * @method        static Builder|User whereClickupInvitePending($value)
+ * @method        static QueryBuilder|User withTrashed()
+ * @method        static QueryBuilder|User withoutTrashed()
+ * @mixin         \Eloquent
  */
 class User extends Authenticatable
 {

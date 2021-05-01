@@ -14,8 +14,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Represents a one-off gathering where an RSVP may be requested or attendance may be taken.
  *
+ * @property      int $id
+ * @property      string $name
+ * @property      float $cost
+ * @property      bool $allow_anonymous_rsvp
+ * @property      int $organizer_id user_id of the organizer
+ * @property      string|null $location
+ * @property      \Illuminate\Support\Carbon|null $start_time
+ * @property      \Illuminate\Support\Carbon|null $end_time
+ * @property      \Illuminate\Support\Carbon|null $created_at
+ * @property      \Illuminate\Support\Carbon|null $updated_at
+ * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read int|null $attendance_count
+ * @property-read string $organizer_name
+ * @property-read \App\Models\User $organizer
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
+ * @property-read int|null $remote_attendance_links_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
+ * @property-read int|null $rsvps_count
  * @method        static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
- * @method        \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method        static \Illuminate\Database\Eloquent\Builder|Event newQuery()
+ * @method        static \Illuminate\Database\Query\Builder|Event onlyTrashed()
  * @method        static \Illuminate\Database\Eloquent\Builder|Event query()
  * @method        static \Illuminate\Database\Eloquent\Builder|Event whereAllowAnonymousRsvp($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|Event whereCost($value)
@@ -28,30 +48,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method        static \Illuminate\Database\Eloquent\Builder|Event whereOrganizerId($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|Event whereStartTime($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|Event onlyTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Event withoutTrashed()
  * @method        static \Illuminate\Database\Query\Builder|Event withTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
- * @property      \Carbon\Carbon $created_at when the model was created
- * @property      \Carbon\Carbon $updated_at when the model was updated
- * @property      \Illuminate\Support\Carbon|null $deleted_at
- * @property      \Illuminate\Support\Carbon|null $end_time
- * @property      \Illuminate\Support\Carbon|null $start_time
- * @property      bool $allow_anonymous_rsvp Whether anonymous RSVPs are allowed for this event
- * @property      float $cost
- * @property      float $price The cost to attend this event
- * @property      int $id The database ID for this Event
- * @property      int $organizer_id
- * @property      string $name The name of the event
- * @property      string|null $location
- * @property-read \App\Models\User $organizer
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
- * @property-read int|null $attendance_count
- * @property-read int|null $rsvps_count
- * @property-read string $organizer_name
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
- * @property-read int|null $remote_attendance_links_count
+ * @method        static \Illuminate\Database\Query\Builder|Event withoutTrashed()
+ * @mixin         \Eloquent
  */
 class Event extends Model
 {

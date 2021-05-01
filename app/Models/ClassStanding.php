@@ -10,22 +10,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * Represents a class standing (e.g. freshman).
  *
+ * @property      int $id
+ * @property      string $name
+ * @property      \Illuminate\Support\Carbon|null $created_at
+ * @property      \Illuminate\Support\Carbon|null $updated_at
+ * @property      int $rank_order
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
+ * @property-read int|null $members_count
  * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
- * @method        \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding newQuery()
  * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding query()
  * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereCreatedAt($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereId($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereName($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereUpdatedAt($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
- * @property      \Carbon\Carbon $created_at when the model was created
- * @property      \Carbon\Carbon $updated_at when the model was updated
- * @property      int $id
- * @property      string $name
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
- * @property-read int|null $members_count
- * @property      int $rank_order
  * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereRankOrder($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|ClassStanding whereUpdatedAt($value)
+ * @mixin         \Eloquent
  */
 class ClassStanding extends Model
 {
