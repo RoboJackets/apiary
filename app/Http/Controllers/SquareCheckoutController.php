@@ -55,7 +55,7 @@ class SquareCheckoutController extends Controller
             $transaction = $transactionWithNoPayment;
 
             $payment = new Payment();
-            // @phan-suppress-next-line PhanTypeMismatchProperty
+            // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
             $payment->amount = 0.00;
             $payment->method = 'square';
             $payment->recorded_by = $user->id;
