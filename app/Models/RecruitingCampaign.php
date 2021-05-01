@@ -28,9 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaign onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaign withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaign withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -41,7 +39,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $start_date
  * @property string $status the status of this campaign
- *
  * @property-read \App\Models\NotificationTemplate $template
  * @property-read \App\Models\User $creator
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingCampaignRecipient> $recipients

@@ -23,17 +23,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|RecruitingResponse onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingResponse withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingResponse withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int $faset_survey_id
  * @property int $faset_visit_id
  * @property string $response the response to the survey
- *
  * @property-read \App\Models\RecruitingVisit $recruitingVisit
+ * @property int $recruiting_visit_id
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereRecruitingVisitId($value)
  */
 class RecruitingResponse extends Model
 {

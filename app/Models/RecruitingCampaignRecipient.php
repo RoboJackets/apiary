@@ -28,9 +28,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -41,11 +39,11 @@ use Illuminate\Notifications\Notifiable;
  * @property string $email_address the email address to send to
  * @property string $notified_at the timestamp when this recipient was contacted
  * @property string $source the source of this recipient
- *
  * @property-read \App\Models\RecruitingCampaign $recruitingCampaign
  * @property-read \App\Models\RecruitingVisit $recruitingVisit
  * @property-read \App\Models\User $user
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  */
 class RecruitingCampaignRecipient extends Model
 {

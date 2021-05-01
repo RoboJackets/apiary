@@ -26,9 +26,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Query\Builder|NotificationTemplate onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|NotificationTemplate withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|NotificationTemplate withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -37,10 +35,11 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $body_markdown The body of this template
  * @property string $name The name of the template
  * @property string $subject The subject that will be used for emails sent using this template
- *
  * @property-read \App\Models\User $creator
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
+ * @property string $from
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereFrom($value)
  */
 class NotificationTemplate extends Model
 {

@@ -7,6 +7,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\FiscalYear
+ *
+ * @property int $id
+ * @property string $ending_year
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Merchandise[] $merchandise
+ * @property-read int|null $merchandise_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesPackage[] $packages
+ * @property-read int|null $packages_count
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear query()
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereEndingYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class FiscalYear extends Model
 {
     /**

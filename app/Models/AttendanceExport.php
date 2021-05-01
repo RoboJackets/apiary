@@ -27,9 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|AttendanceExport onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|AttendanceExport withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|AttendanceExport withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|\Carbon\Carbon $end_time
@@ -40,7 +38,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int|null $download_user_id
  * @property string $secret the secret in the URL
- *
  * @property-read \App\Models\User $downloadUser
  */
 class AttendanceExport extends Model

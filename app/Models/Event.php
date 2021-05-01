@@ -31,9 +31,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Event onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|Event withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|Event withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -46,13 +44,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $organizer_id
  * @property string $name The name of the event
  * @property string|null $location
- *
  * @property-read \App\Models\User $organizer
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
  * @property-read int|null $attendance_count
  * @property-read int|null $rsvps_count
  * @property-read string $organizer_name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\RemoteAttendanceLink[] $remoteAttendanceLinks
+ * @property-read int|null $remote_attendance_links_count
  */
 class Event extends Model
 {

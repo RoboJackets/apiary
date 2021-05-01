@@ -35,9 +35,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property ?\Carbon\Carbon $deleted_at
@@ -47,12 +45,14 @@ use Illuminate\Database\Query\JoinClause;
  * @property int $user_id
  * @property int|null $payment_id
  * @property string $status the status of this transaction
- *
  * @property-read \App\Models\DuesPackage $for
  * @property-read \App\Models\DuesPackage $package
  * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection $payment
  * @property-read int|null $payment_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Merchandise[] $merchandise
+ * @property-read int|null $merchandise_count
+ * @method static \Database\Factories\DuesTransactionFactory factory(...$parameters)
  */
 class DuesTransaction extends Model
 {

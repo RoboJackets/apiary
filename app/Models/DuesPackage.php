@@ -38,9 +38,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|DuesPackage whereId($value)
  * @method static Builder|DuesPackage whereName($value)
  * @method static Builder|DuesPackage whereUpdatedAt($value)
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Carbon\Carbon $access_end The timestamp when users paid against this DuesPackage no longer have access to
@@ -56,7 +54,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property int $conflicts_with_package_id The dues package that would restrict purchase of this package
  * @property string $name
  * @property int $fiscal_year_id
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
@@ -64,6 +61,17 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read int|null $actions_count
  * @property-read int|null $dues_transactions_count
  * @property-read int|null $transactions_count
+ * @property-read DuesPackage|null $conflictsWith
+ * @property-read \App\Models\FiscalYear|null $fiscalYear
+ * @property-read \Illuminate\Database\Eloquent\Collection|DuesPackage[] $hasConflictWith
+ * @property-read int|null $has_conflict_with_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Merchandise[] $merchandise
+ * @property-read int|null $merchandise_count
+ * @method static \Database\Factories\DuesPackageFactory factory(...$parameters)
+ * @method static Builder|DuesPackage userCanPurchase(\App\Models\User $user)
+ * @method static Builder|DuesPackage whereConflictsWithPackageId($value)
+ * @method static Builder|DuesPackage whereFiscalYearId($value)
+ * @method static Builder|DuesPackage whereRestrictedToStudents($value)
  */
 class DuesPackage extends Model
 {

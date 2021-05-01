@@ -35,9 +35,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Query\Builder|Payment onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|Payment withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -58,12 +56,27 @@ use Laravel\Nova\Actions\Actionable;
  * @property ?string $card_brand
  * @property ?string $last_4
  * @property ?string $entry_method
- *
  * @property-read \App\Models\DuesTransaction $payable
  * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read string $method_presentation
+ * @property string|null $card_type
+ * @property string|null $prepaid_type
+ * @property string|null $statement_description
+ * @property string|null $receipt_number
+ * @property string|null $receipt_url
+ * @method static \Database\Factories\PaymentFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCardBrand($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCardType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereEntryMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereLast4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePrepaidType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereSquareCashTransactionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereStatementDescription($value)
  */
 class Payment extends Model
 {

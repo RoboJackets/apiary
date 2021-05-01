@@ -78,9 +78,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereSlackId($value)
  * @method static Builder|User whereUid($value)
  * @method static Builder|User whereUpdatedAt($value)
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property bool $exists_in_sums
@@ -124,7 +122,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $primary_affiliation
  * @property string|null $shirt_size
  * @property string|null $slack_id
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $dues
@@ -157,6 +154,19 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @property-read string $full_name
  * @property-read User $accessOverrideBy
+ * @property bool $buzzcard_access_opt_out
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesPackage[] $duesPackages
+ * @property-read int|null $dues_packages_count
+ * @property-read bool $has_ordered_polo
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Signature[] $signatures
+ * @property-read int|null $signatures_count
+ * @method static Builder|User buzzCardAccessEligible()
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static Builder|User whereBuzzcardAccessOptOut($value)
+ * @method static Builder|User whereClickupEmail($value)
+ * @method static Builder|User whereClickupId($value)
+ * @method static Builder|User whereClickupInvitePending($value)
  */
 class User extends Authenticatable
 {

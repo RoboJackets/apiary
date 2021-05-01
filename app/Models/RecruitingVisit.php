@@ -29,9 +29,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Query\Builder|RecruitingVisit onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingVisit withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingVisit withTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -41,13 +39,17 @@ use Laravel\Nova\Actions\Actionable;
  * @property string $faset_name
  * @property string $recruiting_email the email address provided by the visitor
  * @property string $visit_token an identifier for this visit
- *
  * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingResponse> $recruitingResponses
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read int|null $notifications_count
  * @property-read int|null $recruiting_responses_count
+ * @property string $recruiting_name
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @method static \Database\Factories\RecruitingVisitFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit whereRecruitingEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit whereRecruitingName($value)
  */
 class RecruitingVisit extends Model
 {

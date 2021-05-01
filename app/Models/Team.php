@@ -44,9 +44,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|Team whereSlackChannelName($value)
  * @method static Builder|Team whereSlackPrivateChannelId($value)
  * @method static Builder|Team whereUpdatedAt($value)
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -62,7 +60,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property string|null $mailing_list_name
  * @property string|null $slack_channel_id
  * @property string|null $slack_channel_name
- *
  * @property-read \App\Models\User $projectManager
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
@@ -71,6 +68,16 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read int|null $attendance_count
  * @property-read int|null $members_count
  * @property-read int|null $notifications_count
+ * @property int $visible_on_kiosk
+ * @property string|null $slug
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\RemoteAttendanceLink[] $remoteAttendanceLinks
+ * @property-read int|null $remote_attendance_links_count
+ * @method static Builder|Team whereAttendable($value)
+ * @method static Builder|Team whereSelfServiceable($value)
+ * @method static Builder|Team whereSlug($value)
+ * @method static Builder|Team whereVisible($value)
+ * @method static Builder|Team whereVisibleOnKiosk($value)
  */
 class Team extends Model
 {

@@ -20,9 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereSchool($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereWhitepagesOu($value)
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property int $id
@@ -30,7 +28,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $school
  * @property string $whitepages_ou
  * @property string|null $display_name
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read int|null $members_count
  */
