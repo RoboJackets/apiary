@@ -42,7 +42,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read string $method_presentation
- * @property-read Model|\Eloquent $payable
+ * @property-read Model|\Barryvdh\LaravelIdeHelper\Eloquent $payable
  * @property-read \App\Models\User|null $user
  * @method        static \Database\Factories\PaymentFactory factory(...$parameters)
  * @method        static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
