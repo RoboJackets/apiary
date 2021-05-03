@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+// @phan-file-suppress PhanPossiblyFalseTypeArgument
+
 namespace Tests\Feature;
 
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
-use app\Models\Payment;
+use App\Models\Payment;
 use App\Models\User;
 use Database\Seeders\UsersSeeder;
 use Illuminate\Http\UploadedFile;
@@ -97,6 +99,7 @@ class ResumeTest extends TestCase
         $payment->payable_type = DuesTransaction::getMorphClassStatic();
         $payment->method = 'cash';
         $payment->amount = $package->cost;
+        // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
         $payment->processing_fee = 0;
         $payment->save();
 
@@ -204,11 +207,11 @@ class ResumeTest extends TestCase
     public function testNonexistentResumeDownload(): void
     {
         $user = $this->getTestUser(['member']);
-        $response = $this->actingAs($user, 'web')->get('/api/v1/users/nonexistentuser/resume');
+        $response = $this->actingAs($user, 'web')->get('/api/v1/users/_nonexistentuser/resume');
         $response->assertStatus(422);
 
         $user = $this->getTestUser(['admin']);
-        $response = $this->actingAs($user, 'web')->get('/api/v1/users/nonexistentuser/resume');
+        $response = $this->actingAs($user, 'web')->get('/api/v1/users/_nonexistentuser/resume');
         $response->assertStatus(422);
     }
 }
