@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e4bb345bc80d7c7d252f5396dbdd6bc",
+    "content-hash": "dedf9ed51d074fc06701f759ee4a6a67",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2273,17 +2273,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.24.0",
+            "version": "3.25.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "f6d60f63b29982f38abebcae623c305ed0390a34"
+                "reference": "827bfb8ee0c206962a2f3efb2c3bf389017884b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-f6d60f63b29982f38abebcae623c305ed0390a34-zip-abdd02.zip",
-                "reference": "f6d60f63b29982f38abebcae623c305ed0390a34",
-                "shasum": "8ced3fca95c78f292664017f0c95a3fba68c5e03"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-827bfb8ee0c206962a2f3efb2c3bf389017884b1-zip-579d9f.zip",
+                "reference": "827bfb8ee0c206962a2f3efb2c3bf389017884b1",
+                "shasum": "8688fc23898da23212a1a6c1acaf91a8b63e0a4b"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2362,9 +2362,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v3.24.0"
+                "source": "https://github.com/laravel/nova/tree/v3.25.0"
             },
-            "time": "2021-04-27T14:53:48+00:00"
+            "time": "2021-05-12T00:27:13+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -6688,16 +6688,16 @@
         },
         {
             "name": "symfony/intl",
-            "version": "v5.2.4",
+            "version": "v5.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/intl.git",
-                "reference": "11b4217e394c80a2e313d3a4a37262fbe65a7add"
+                "reference": "6d40be5e4331041aa14add5633986d95667ae624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/intl/zipball/11b4217e394c80a2e313d3a4a37262fbe65a7add",
-                "reference": "11b4217e394c80a2e313d3a4a37262fbe65a7add",
+                "url": "https://api.github.com/repos/symfony/intl/zipball/6d40be5e4331041aa14add5633986d95667ae624",
+                "reference": "6d40be5e4331041aa14add5633986d95667ae624",
                 "shasum": ""
             },
             "require": {
@@ -6756,7 +6756,7 @@
                 "localization"
             ],
             "support": {
-                "source": "https://github.com/symfony/intl/tree/v5.2.4"
+                "source": "https://github.com/symfony/intl/tree/v5.2.7"
             },
             "funding": [
                 {
@@ -6772,7 +6772,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-18T22:42:36+00:00"
+            "time": "2021-04-24T14:39:13+00:00"
         },
         {
             "name": "symfony/mime",
