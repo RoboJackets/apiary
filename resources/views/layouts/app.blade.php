@@ -28,6 +28,12 @@
             </li>
             @endif
 
+            @if (auth()->user()->assignments()->count() > 0)
+            <li class="nav-item {{ $request->is('travel*') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('travel.index') }}">Travel<sub><small>&nbspbeta</small></sub></a>
+            </li>
+            @endif
+
             @can('access-nova')
             <li class="nav-item">
               <a class="nav-link" href="/nova/">Admin</a>

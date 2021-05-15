@@ -89,6 +89,24 @@ class DashboardController extends Controller
             && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')
             && ($signedLatestAgreement || true !== $sumsRequiresAgreement);
 
+        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
+
+        $needTravelDocuments = false;
+        $needTravelPayment = false;
+        $travelName = '';
+
+        if (null !== $assignment) {
+            if (!$assignment->documents_received && null !== $assignment->travel->documents_required) {
+                $needTravelDocuments = true;
+            }
+
+            if (!$assignment->is_paid) {
+                $needTravelPayment = true;
+            }
+
+            $travelName = $assignment->travel->name;
+        }
+
         return view(
             'welcome',
             [
@@ -108,6 +126,9 @@ class DashboardController extends Controller
                 'signedLatestAgreement' => $signedLatestAgreement,
                 'signedAnyAgreement' => $signedAnyAgreement,
                 'agreementExists' => $agreementExists,
+                'needTravelDocuments' => $needTravelDocuments,
+                'needTravelPayment' => $needTravelPayment,
+                'travelName' => $travelName,
             ]
         );
     }

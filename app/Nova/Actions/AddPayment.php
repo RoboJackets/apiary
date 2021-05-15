@@ -34,7 +34,9 @@ class AddPayment extends Action
             );
         }
 
-        if ($models->first()->is_paid) {
+        $model = $models->first();
+
+        if ($model->is_paid) {
             $this->markAsFailed($models->first(), 'Transaction already paid in full');
 
             return Action::danger(
@@ -42,7 +44,7 @@ class AddPayment extends Action
             );
         }
 
-        if (! $models->first()->package->is_active) {
+        if (is_a($model, DuesTransaction::class) && ! $model->package->is_active) {
             $this->markAsFailed($models->first(), 'Package no longer active');
 
             return Action::danger(
@@ -59,8 +61,15 @@ class AddPayment extends Action
             );
         }
 
-        $package_amount = round($models->first()->package->cost, 2);
-        $entered_amount = round($fields->amount, 2);
+        $package_amount = is_a(
+            $model,
+            DuesTransaction::class
+        ) ? round($model->package->cost, 2) : intval($model->travel->fee_amount);
+
+        $entered_amount = is_a(
+            $model,
+            DuesTransaction::class
+        ) ? round($fields->amount, 2) : intval($fields->amount);
 
         if ('square' === $fields->method || 'swipe' === $fields->method) {
             if ($entered_amount !== round($package_amount + 3, 2)) {
@@ -94,8 +103,8 @@ class AddPayment extends Action
         $payment->method = $fields->method;
         // @phan-suppress-next-line PhanTypeMismatchProperty
         $payment->amount = $entered_amount;
-        $payment->payable_id = $models->first()->id;
-        $payment->payable_type = DuesTransaction::getMorphClassStatic();
+        $payment->payable_id = $model->id;
+        $payment->payable_type = $model->getMorphClass();
         $payment->notes = 'Added in Nova';
         $payment->save();
 

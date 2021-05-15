@@ -14,6 +14,7 @@ use App\Models\MembershipAgreementTemplate;
 use App\Models\Payment;
 use App\Models\Signature;
 use App\Models\Team;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use App\Observers\AttendanceObserver;
 use App\Observers\DuesPackageObserver;
@@ -66,6 +67,7 @@ class AppServiceProvider extends ServiceProvider
             'event' => Event::class,
             'dues-transaction' => DuesTransaction::class,
             'team' => Team::class,
+            'travel-assignment' => TravelAssignment::class,
         ]);
     }
 
