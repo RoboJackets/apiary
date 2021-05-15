@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
 
 /**
- * Maps together a Travel + User + Payment
+ * Maps together a Travel + User + Payment.
  *
  * @property int $id
  * @property int $user_id
