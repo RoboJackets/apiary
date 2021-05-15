@@ -96,11 +96,11 @@ class DashboardController extends Controller
         $travelName = '';
 
         if (null !== $assignment) {
-            if (!$assignment->documents_received && null !== $assignment->travel->documents_required) {
+            if (! $assignment->documents_received && null !== $assignment->travel->documents_required) {
                 $needTravelDocuments = true;
             }
 
-            if (!$assignment->is_paid) {
+            if (! $assignment->is_paid) {
                 $needTravelPayment = true;
             }
 
