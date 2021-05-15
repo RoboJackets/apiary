@@ -50,7 +50,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
  *
- * @mixin \Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Travel extends Model
 {

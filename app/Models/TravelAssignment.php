@@ -43,7 +43,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment withoutTrashed()
  *
- * @mixin \Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class TravelAssignment extends Model
 {
