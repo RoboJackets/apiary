@@ -85,16 +85,30 @@ class Travel extends Resource
                 ->min(1)
                 ->max(1000),
 
+            // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
             Markdown::make('Included with Fee')
                 ->required()
                 ->rules('required')
-                ->help('Describe what costs will be covered by RoboJackets.'),
+                ->help(
+                    'Describe what costs will be covered by RoboJackets. Typically, this is limited to registration '
+                    .'fees, plane tickets, rental vehicles, and fuel. Ground transportation and lodging may be covered '
+                    .'at the discretion of the project manager, president, and treasurer.'
+                ),
 
             Markdown::make('Not Included with Fee')
-                ->help('Describe what costs are anticipated to be covered by members themselves.'),
+                ->help(
+                    'Describe what costs are anticipated to be covered by members themselves. Typically, this '
+                    .'includes any meals not provided by the event, entertainment or leisure activities, lodging in '
+                    .'excess of the minimum for the event, visa or passport fees, personal luggage fees, and any item'
+                    .' that violates United States or local laws.'
+                ),
 
             Markdown::make('Documents Required')
-                ->help('Describe what documents will be required to travel.'),
+                ->help(
+                    'Describe what documents will be required to travel. This may include a Travel Authorization '
+                    .'Request form or documentation required by the event.'
+                ),
 
             HasMany::make('Assignments', 'assignments', TravelAssignment::class),
 
