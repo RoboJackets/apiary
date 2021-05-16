@@ -166,6 +166,7 @@
                 </div>
             </div>
         @endif
+        @if($signedLatestAgreement && !$needsTransaction && !$needsPayment)
         @if($needTravelDocuments)
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
@@ -195,6 +196,7 @@
                     </div>
                 </div>
             </div>
+        @endif
         @endif
     </div>
 

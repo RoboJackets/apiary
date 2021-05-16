@@ -11,12 +11,14 @@ class TravelAssignmentController extends Controller
 {
     public function index(Request $request)
     {
-        if (0 === $request->user()->assignments()->count()) {
+        $user = $request->user();
+
+        if (0 === $user->assignments()->count()) {
             return view('travel.noassignment');
         }
 
         if (
-            0 === $request->user()
+            0 === $user
                 ->assignments()
                 ->leftJoin('travel', static function (JoinClause $join): void {
                     $join->on('travel.id', '=', 'travel_assignments.travel_id');
@@ -27,7 +29,27 @@ class TravelAssignmentController extends Controller
             return view('travel.noassignment');
         }
 
-        $assignment = $request->user()->assignments()->orderByDesc('travel_assignments.id')->first();
+        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
+
+        if (! $user->is_active) {
+            return view(
+                'travel.actionrequired',
+                [
+                    'name' => $assignment->travel->name,
+                    'action' => 'pay dues',
+                ]
+            );
+        }
+
+        if (! $user->hasSignedLatestAgreement()) {
+            return view(
+                'travel.actionrequired',
+                [
+                    'name' => $assignment->travel->name,
+                    'action' => 'sign the latest membership agreement',
+                ]
+            );
+        }
 
         return view(
             'travel.index',

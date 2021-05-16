@@ -83,8 +83,26 @@ class SquareCheckoutController extends Controller
     {
         $user = $request->user();
 
+        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
+
+        if (! $user->is_active) {
+            return view(
+                'travel.actionrequired',
+                [
+                    'name' => $assignment->travel->name,
+                    'action' => 'pay dues',
+                ]
+            );
+        }
+
         if (! $user->hasSignedLatestAgreement()) {
-            return view('dues.agreementrequired');
+            return view(
+                'travel.actionrequired',
+                [
+                    'name' => $assignment->travel->name,
+                    'action' => 'sign the latest membership agreement',
+                ]
+            );
         }
 
         $transactionWithNoPayment = TravelAssignment::doesntHave('payment')
