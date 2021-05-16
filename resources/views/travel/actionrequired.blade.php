@@ -10,7 +10,7 @@ Travel | {{ config('app.name') }}
         Travel
     @endcomponent
 
-<p>You are assigned to {{ name }}; however, you need to {{ action }} before we can book travel for you. Check the dashboard for further information.</p>
+<p>You are assigned to {{ $name }}; however, you need to {{ $action }} before we can book travel for you. Check the dashboard for further information.</p>
 
 <a href="/">Go back to the dashboard</a>
 @endsection
