@@ -17,6 +17,8 @@ use App\Models\RecruitingVisit;
 use App\Models\RemoteAttendanceLink;
 use App\Models\Rsvp;
 use App\Models\Team;
+use App\Models\Travel;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use App\Policies\AttendanceExportPolicy;
 use App\Policies\AttendancePolicy;
@@ -33,6 +35,8 @@ use App\Policies\RemoteAttendanceLinkPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\RsvpPolicy;
 use App\Policies\TeamPolicy;
+use App\Policies\TravelAssignmentPolicy;
+use App\Policies\TravelPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Spatie\Permission\Models\Permission;
@@ -62,6 +66,8 @@ class AuthServiceProvider extends ServiceProvider
         Major::class => MajorPolicy::class,
         Merchandise::class => MerchandisePolicy::class,
         RemoteAttendanceLink::class => RemoteAttendanceLinkPolicy::class,
+        Travel::class => TravelPolicy::class,
+        TravelAssignment::class => TravelAssignmentPolicy::class,
     ];
 
     /**

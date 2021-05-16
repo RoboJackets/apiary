@@ -106,6 +106,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $signatures_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $teams
  * @property-read int|null $teams_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
+ * @property-read int|null $assignments_count
  * @method        static Builder|User accessActive()
  * @method        static Builder|User accessInactive()
  * @method        static Builder|User active()
@@ -702,5 +704,10 @@ class User extends Authenticatable
                 }
             )
             ->exists();
+    }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(TravelAssignment::class);
     }
 }

@@ -263,6 +263,8 @@ class User extends Resource
                     return $request->user()->can('read-dues-transactions');
                 }),
 
+            HasMany::make('Travel Assignments', 'assignments', TravelAssignment::class),
+
             BelongsToMany::make('Teams')
                 ->canSee(static function (Request $request): bool {
                     if ($request->resourceId === $request->user()->id) {

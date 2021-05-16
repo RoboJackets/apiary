@@ -19,6 +19,7 @@ use App\Http\Controllers\SignatureController;
 use App\Http\Controllers\SquareCheckoutController;
 use App\Http\Controllers\SUMSController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TravelAssignmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::prefix('pay')->group(static function (): void {
         Route::get('/dues', [SquareCheckoutController::class, 'payDues'])->name('pay.dues');
+        Route::get('/travel', [SquareCheckoutController::class, 'payTravel'])->name('pay.travel');
         Route::get('/complete', [SquareCheckoutController::class, 'complete'])->name('pay.complete');
     });
 
@@ -72,6 +74,8 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('agreement/print', [SignatureController::class, 'print'])->name('agreement.print');
     Route::get('agreement/render', [SignatureController::class, 'render'])->name('agreement.render');
     Route::post('agreement/redirect', [SignatureController::class, 'redirect'])->name('agreement.redirect');
+
+    Route::get('travel', [TravelAssignmentController::class, 'index'])->name('travel.index');
 
     Route::redirect('admin', '/nova');
 });

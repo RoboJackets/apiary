@@ -9,6 +9,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SquareCompleteRequest;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Models\TravelAssignment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -74,6 +76,78 @@ class SquareCheckoutController extends Controller
 
         $amount = (int) ($transaction->package->cost * 100);
 
+        return self::redirect($amount, $payment, $user, 'Dues', $transaction->package->name);
+    }
+
+    public function payTravel(Request $request)
+    {
+        $user = $request->user();
+
+        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
+
+        if (! $user->is_active) {
+            return view(
+                'travel.actionrequired',
+                [
+                    'name' => $assignment->travel->name,
+                    'action' => 'pay dues',
+                ]
+            );
+        }
+
+        if (! $user->hasSignedLatestAgreement()) {
+            return view(
+                'travel.actionrequired',
+                [
+                    'name' => $assignment->travel->name,
+                    'action' => 'sign the latest membership agreement',
+                ]
+            );
+        }
+
+        $transactionWithNoPayment = TravelAssignment::doesntHave('payment')
+            ->where('user_id', $user->id)
+            ->latest('updated_at')
+            ->first();
+
+        $transactionWithIncompletePayment = TravelAssignment::where('user_id', $user->id)
+            ->whereHas('payment', static function (Builder $q): void {
+                $q->where('amount', 0.00);
+                $q->where('method', 'square');
+            })->first();
+
+        if (null !== $transactionWithIncompletePayment) {
+            $transaction = $transactionWithIncompletePayment;
+
+            $payment = $transaction->payment[0];
+        } elseif (null !== $transactionWithNoPayment) {
+            $transaction = $transactionWithNoPayment;
+
+            $payment = new Payment();
+            // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
+            $payment->amount = 0.00;
+            $payment->method = 'square';
+            $payment->recorded_by = $user->id;
+            $payment->unique_id = Payment::generateUniqueId();
+            $payment->notes = 'Checkout flow started';
+
+            $transaction->payment()->save($payment);
+        } else {
+            return view(
+                'square.error',
+                [
+                    'message' => 'We could not find a transaction ready for payment.',
+                ]
+            );
+        }
+
+        $amount = (int) ($transaction->travel->fee_amount * 100);
+
+        return self::redirect($amount, $payment, $user, 'Travel Fee', $transaction->travel->name);
+    }
+
+    private static function redirect(int $amount, Payment $payment, User $user, string $name, string $variation_name)
+    {
         $basePrice = new Money();
         $basePrice->setAmount($amount);
         $basePrice->setCurrency('USD');
@@ -83,8 +157,8 @@ class SquareCheckoutController extends Controller
         $surcharge->setCurrency('USD');
 
         $orderLineItem = new OrderLineItem('1');
-        $orderLineItem->setName('Dues');
-        $orderLineItem->setVariationName($transaction->package->name);
+        $orderLineItem->setName($name);
+        $orderLineItem->setVariationName($variation_name);
         $orderLineItem->setBasePriceMoney($basePrice);
 
         $orderServiceCharge = new OrderServiceCharge();
