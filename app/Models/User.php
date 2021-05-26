@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -176,6 +177,7 @@ class User extends Authenticatable
     use HasRoles;
     use Notifiable;
     use SoftDeletes;
+    use HasApiTokens;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;

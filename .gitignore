@@ -39,3 +39,5 @@ resume-monitoring.sh
 /.phpunit.result.cache
 /storage/*.sqlite
 !/storage/db-clean.sqlite
+
+.envault.json

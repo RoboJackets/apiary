@@ -18,6 +18,7 @@ use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Tools\AttendanceReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Kristories\Novassport\Novassport;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -98,6 +99,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new AttendanceReport())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-attendance');
             }),
+            (new Novassport())->canSee(static function (Request $request): bool {
+                return true; // TODO
+            })
         ];
     }
 

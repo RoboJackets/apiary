@@ -12,6 +12,7 @@ use App\Models\Event;
 use App\Models\Major;
 use App\Models\Merchandise;
 use App\Models\NotificationTemplate;
+use App\Models\PassportClient;
 use App\Models\Payment;
 use App\Models\RecruitingVisit;
 use App\Models\RemoteAttendanceLink;
@@ -39,6 +40,7 @@ use App\Policies\TravelAssignmentPolicy;
 use App\Policies\TravelPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -76,5 +78,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+
+        if (! $this->app->routesAreCached()) {
+            Passport::routes();
+        }
+
+        Passport::useClientModel(PassportClient::class);
+        Passport::hashClientSecrets();
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }

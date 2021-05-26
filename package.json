@@ -22,6 +22,7 @@
     "@bugsnag/js": "7.10.0",
     "@bugsnag/plugin-vue": "7.10.0",
     "axios": "0.21.1",
+    "caniuse-lite": "^1.0.30001228",
     "chartist": "0.11.4",
     "chartist-plugin-legend": "0.6.2",
     "chartist-plugin-pointlabels": "0.0.6",
