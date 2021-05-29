@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08491941be9e8fcb7a0c9a5ea41d6b12",
+    "content-hash": "190b3df13d9288d96cbe1112312d18dc",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5760,16 +5760,16 @@
         },
         {
             "name": "subfission/cas",
-            "version": "v4.0.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/subfission/cas.git",
-                "reference": "cbf64efd00ce10de3d7d5f00aeab976cd88db23e"
+                "reference": "0b4912ab52a4c92f41d1e5c46f0861386e93e18c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/subfission/cas/zipball/cbf64efd00ce10de3d7d5f00aeab976cd88db23e",
-                "reference": "cbf64efd00ce10de3d7d5f00aeab976cd88db23e",
+                "url": "https://api.github.com/repos/subfission/cas/zipball/0b4912ab52a4c92f41d1e5c46f0861386e93e18c",
+                "reference": "0b4912ab52a4c92f41d1e5c46f0861386e93e18c",
                 "shasum": ""
             },
             "require": {
@@ -5821,9 +5821,9 @@
             ],
             "support": {
                 "issues": "https://github.com/subfission/cas/issues",
-                "source": "https://github.com/subfission/cas/tree/v4.0.0"
+                "source": "https://github.com/subfission/cas/tree/v4.1.0"
             },
-            "time": "2020-09-16T01:01:06+00:00"
+            "time": "2021-04-07T02:14:35+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
