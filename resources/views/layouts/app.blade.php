@@ -62,7 +62,7 @@
             </ul>
           @else
             <span class="navbar-item">
-              <a class="nav-link text-muted" href="{{'https://login.gatech.edu/cas/login?service=' . $request->fullUrl()}}">Login</a>
+              <a class="nav-link text-muted" href="{{'https://'.config('cas.cas_hostname').'/cas/login?service=' . $request->fullUrl()}}">Login</a>
             </span>
           @endif
         </div>
