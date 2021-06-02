@@ -83,10 +83,9 @@ class AuthServiceProvider extends ServiceProvider
             Passport::routes();
         }
 
-        Passport::useClientModel(PassportClient::class);
         Passport::hashClientSecrets();
         Passport::tokensExpireIn(now()->addDays(15));
         Passport::refreshTokensExpireIn(now()->addDays(30));
-        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+        Passport::personalAccessTokensExpireIn(now()->addYear());
     }
 }

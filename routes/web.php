@@ -7,6 +7,7 @@ declare(strict_types=1);
 use App\Http\Controllers\AttendanceExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutodeskLibraryController;
+use App\Http\Controllers\CASAuthAndRedirectController;
 use App\Http\Controllers\ClickUpController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DuesTransactionController;
@@ -78,6 +79,9 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('travel', [TravelAssignmentController::class, 'index'])->name('travel.index');
 
     Route::redirect('admin', '/nova');
+
+    Route::get('login/cas', [AuthController::class, "forceCasAuth"])
+        ->name("login.cas");
 });
 
 Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])

@@ -100,7 +100,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->can('read-attendance');
             }),
             (new Novassport())->canSee(static function (Request $request): bool {
-                return true; // TODO
+                return $request->user()->hasRole("admin");
             })
         ];
     }

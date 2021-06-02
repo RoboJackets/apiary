@@ -3,9 +3,11 @@
 declare(strict_types=1);
 
 namespace App\Http\Middleware;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Middleware\Authenticate as AuthenticateMiddleware;
+use Illuminate\Support\Facades\Log;
 
-class Authenticate extends Middleware
+class Authenticate extends AuthenticateMiddleware
 {
     /**
      * Get the path the user should be redirected to when they are not authenticated.
@@ -15,8 +17,8 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('home');
+        if (!$request->expectsJson()) {
+            return route("login.cas");
         }
     }
 }
