@@ -26,7 +26,7 @@ class Rsvp extends Resource
     public static $with = ['user'];
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
