@@ -168,4 +168,8 @@ class UserPolicy
     {
         return $user->hasRole('admin');
     }
+
+    public function addClient(User $user, User $userResource) {
+        return false;
+    }
 }
