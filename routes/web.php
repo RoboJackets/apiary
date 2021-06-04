@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\PassportClientController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
@@ -82,6 +83,8 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::get('login/cas', [AuthController::class, "forceCasAuth"])
         ->name("login.cas");
+
+    Route::view('oauth2/client', "oauth2clientcreated")->name("oauth2.client.created");
 });
 
 Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])

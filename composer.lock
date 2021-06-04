@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "334d6d04254591098ec9f80af686634c",
+    "content-hash": "7d355ed812eb2a01ad0b209858470d79",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2145,64 +2145,6 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.8.2"
             },
             "time": "2021-04-26T09:17:50+00:00"
-        },
-        {
-            "name": "kristories/novassport",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Kristories/novassport.git",
-                "reference": "99f494b885fb7c1088c32c98b2690889c75e4f03"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Kristories/novassport/zipball/99f494b885fb7c1088c32c98b2690889c75e4f03",
-                "reference": "99f494b885fb7c1088c32c98b2690889c75e4f03",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/nova": "^3.0",
-                "laravel/passport": "^10.1",
-                "php": "^8.0|^7.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Kristories\\Novassport\\ToolServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kristories\\Novassport\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova tool to manage API Authentication (Passport).",
-            "keywords": [
-                "Authentication",
-                "auth",
-                "laravel",
-                "nova",
-                "oauth",
-                "oauth2",
-                "passport"
-            ],
-            "support": {
-                "issues": "https://github.com/Kristories/novassport/issues",
-                "source": "https://github.com/Kristories/novassport/tree/v2.0.1"
-            },
-            "funding": [
-                {
-                    "url": "https://www.patreon.com/kristories",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2020-12-17T07:25:25+00:00"
         },
         {
             "name": "laravel/framework",
