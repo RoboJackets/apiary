@@ -3,9 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Http\Middleware;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as AuthenticateMiddleware;
-use Illuminate\Support\Facades\Log;
 
 class Authenticate extends AuthenticateMiddleware
 {
@@ -17,7 +15,7 @@ class Authenticate extends AuthenticateMiddleware
      */
     protected function redirectTo($request)
     {
-        if (!$request->expectsJson()) {
+        if (! $request->expectsJson()) {
             return route("login.cas");
         }
     }

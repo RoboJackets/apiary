@@ -17,17 +17,18 @@ class CreateOAuth2Client extends Action
 {
     use InteractsWithQueue, Queueable;
 
-    public $name = "Create OAuth2 Client";
+    public $name = 'Create OAuth2 Client';
 
     /**
      * @var ClientRepository Used to create new OAuth2 clients in Passport
      */
     private ClientRepository $clientRepository;
-    private const STANDARD_CLIENT = "standard";
-    private const PUBLIC_CLIENT = "public";
-    private const PASSWORD_ACCESS_CLIENT = "password_client";
+    private const STANDARD_CLIENT = 'standard';
+    private const PUBLIC_CLIENT = 'public';
+    private const PASSWORD_ACCESS_CLIENT = 'password_client';
 
-    public function __construct(ClientRepository $clientRepository) {
+    public function __construct(ClientRepository $clientRepository)
+    {
         $this->clientRepository = $clientRepository;
     }
 
@@ -48,7 +49,7 @@ class CreateOAuth2Client extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         if (sizeof($models) > 1) {
-            return Action::danger("This action can only be run on one model at a time.");
+            return Action::danger('This action can only be run on one model at a time.');
         }
 
         $user = $models[0];
@@ -68,9 +69,9 @@ class CreateOAuth2Client extends Action
         // If you submit the action before all the Nova requests finish, one of them might consume the flashes
         // before they can be shown in the Blade template. The solution? Be more patient, or change the code below
         // to store values in the session rather than flashing.
-        Session::flash("client_id", $client->id);
-        Session::flash("client_confidential", $client->confidential());
-        Session::flash("client_plain_secret", $client->plain_secret);
+        Session::flash('client_id', $client->id);
+        Session::flash('client_confidential', $client->confidential());
+        Session::flash('client_plain_secret', $client->plain_secret);
 
         return Action::redirect(route('oauth2.client.created'));
     }
@@ -84,9 +85,9 @@ class CreateOAuth2Client extends Action
     {
         return [
             Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action.</p>')->asHtml(),
-            Text::make("Client Name")->rules('required'),
-            Text::make("Redirect URLs")->rules('required')
-                ->help("Separate multiple values with commas.  Example: https://example.com,https://invalid.url"),
+            Text::make('Client Name')->rules('required'),
+            Text::make('Redirect URLs')->rules('required')
+                ->help('Separate multiple values with commas.  Example: https://example.com,https://invalid.url'),
             Heading::make('<p>Client Types:<ul><li><strong>Standard Client</strong> - Use for most' .
                 ' web use cases <em>except</em> single-page JavaScript applications (e.g., Vue.js or React)' .
                 ' or other use cases where the client secret cannot be kept secret on the backend.</li>' .
@@ -96,8 +97,8 @@ class CreateOAuth2Client extends Action
                 '</li>' .
                 '</ul></p>')->asHtml(),
             Select::make('Client Type')->options([
-                    self::STANDARD_CLIENT => "Standard Client (recommended)",
-                    self::PUBLIC_CLIENT => "Public (PKCE-Enabled) Client"
+                    self::STANDARD_CLIENT => 'Standard Client (recommended)',
+                    self::PUBLIC_CLIENT => 'Public (PKCE-Enabled) Client'
                 ])
                 ->rules('required'),
         ];

@@ -12,7 +12,6 @@ use App\Models\Event;
 use App\Models\Major;
 use App\Models\Merchandise;
 use App\Models\NotificationTemplate;
-use App\Models\PassportClient;
 use App\Models\Payment;
 use App\Models\RecruitingVisit;
 use App\Models\RemoteAttendanceLink;

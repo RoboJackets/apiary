@@ -63,7 +63,7 @@ class OAuth2Client extends Resource
             Text::make('Name', 'name')->sortable(),
             Boolean::make('Active', 'revoked')->trueValue(0)->falseValue(1),
             Boolean::make('Public (PKCE-Enabled Client)', function() {
-                return !is_null($this->secret);
+                return ! is_null($this->secret);
             }),
             Boolean::make('Password Client', 'password_client'),
             DateTime::make('Created At', 'created_at'),

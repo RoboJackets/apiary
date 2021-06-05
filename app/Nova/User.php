@@ -293,9 +293,9 @@ class User extends Resource
                     return $request->user()->can('read-recruiting-visits');
                 }),
 
-            HasMany::make("OAuth2 Clients", "clients")
+            HasMany::make('OAuth2 Clients', 'clients')
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole("admin");
+                    return $request->user()->hasRole('admin');
                 }),
 
             new Panel('Metadata', $this->metaFields()),
@@ -463,8 +463,8 @@ class User extends Resource
                     return true;
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
-                return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-            }),
+                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
+                }),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('send-notifications');

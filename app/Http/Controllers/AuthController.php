@@ -19,7 +19,8 @@ class AuthController extends Controller
      *
      * @return Application|RedirectResponse|Redirector
      */
-    public function forceCasAuth() {
+    public function forceCasAuth()
+    {
         return redirect(url()->previous());
     }
 

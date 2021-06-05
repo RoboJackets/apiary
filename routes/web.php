@@ -7,13 +7,11 @@ declare(strict_types=1);
 use App\Http\Controllers\AttendanceExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutodeskLibraryController;
-use App\Http\Controllers\CASAuthAndRedirectController;
 use App\Http\Controllers\ClickUpController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\PassportClientController;
 use App\Http\Controllers\RemoteAttendanceController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RsvpController;
@@ -32,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| contains the 'web' middleware group. Now create something great!
 |
 */
 
@@ -81,11 +79,11 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::redirect('admin', '/nova');
 
-    Route::get('login/cas', [AuthController::class, "forceCasAuth"])
-        ->name("login.cas");
+    Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
+        ->name('login.cas');
 
-    Route::view('oauth2/client', "oauth2clientcreated")->name("oauth2.client.created");
-    Route::view('oauth2/pat', "personalaccesstokencreated")->name("oauth2.pat.created");
+    Route::view('oauth2/client', 'oauth2clientcreated')->name('oauth2.client.created');
+    Route::view('oauth2/pat', 'personalaccesstokencreated')->name('oauth2.pat.created');
 });
 
 Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])

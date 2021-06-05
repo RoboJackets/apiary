@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command(CacheSchedulerRunning::class)->everyMinute();
+        $schedule->command('passport:purge')->twiceDaily();
 
         $schedule->job(new WeeklyAttendanceEmail())->weekly()->sundays()->at('1:00');
         $schedule->job(new WeeklyAttendanceSlack())->weekly()->sundays()->at('11:00');
