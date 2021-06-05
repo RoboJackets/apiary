@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Http\Middleware;
+
 use Illuminate\Auth\Middleware\Authenticate as AuthenticateMiddleware;
 
 class Authenticate extends AuthenticateMiddleware
@@ -16,7 +17,7 @@ class Authenticate extends AuthenticateMiddleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route("login.cas");
+            return route('login.cas');
         }
     }
 }

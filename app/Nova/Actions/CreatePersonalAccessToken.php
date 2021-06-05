@@ -30,19 +30,18 @@ class CreatePersonalAccessToken extends Action
 
         if (empty(config('passport.personal_access_client.id'))
             || empty(config('passport.personal_access_client.secret'))) {
-            return Action::danger('Passport personal access client ID and/or secret environment variables not' .
+            return Action::danger('Passport personal access client ID and/or secret environment variables not'.
                 ' set. Make sure they are set and try again.');
         }
 
         $user = $models[0];
 
-        $token = $user->createToken('[PAT] ' . $fields->name)->accessToken;
+        $token = $user->createToken('[PAT] '.$fields->name)->accessToken;
 
         Session::flash('pat_user_name', $user->name);
         Session::flash('pat_plain_token', $token);
 
         return Action::redirect(route('oauth2.pat.created'));
-
     }
 
     /**
@@ -53,10 +52,10 @@ class CreatePersonalAccessToken extends Action
     public function fields()
     {
         return [
-            Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action' .
+            Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action'.
                 '.</p>')->asHtml(),
-            Text::make('Name')->help('[PAT] will be automatically preprended to identify this token ' .
-                'as a Personal Access Token.')->rules('required')
+            Text::make('Name')->help('[PAT] will be automatically preprended to identify this token '.
+                'as a Personal Access Token.')->rules('required'),
         ];
     }
 }
