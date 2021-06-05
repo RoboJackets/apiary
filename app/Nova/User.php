@@ -7,6 +7,8 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\User as AppModelsUser;
+use App\Nova\Actions\CreateOAuth2Client;
+use App\Nova\Actions\CreatePersonalAccessToken;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
@@ -134,17 +136,6 @@ class User extends Resource
                 ->rules('required', 'integer', 'min:900000000', 'max:999999999')
                 ->creationRules('unique:users,gtid')
                 ->updateRules('unique:users,gtid,{{resourceId}}'),
-
-            Hidden::make('API Token')
-                ->onlyOnDetail()
-                ->monospaced()
-                ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId === $request->user()->id) {
-                        return true;
-                    }
-
-                    return $request->user()->can('read-users-api_token');
-                }),
 
             Text::make('Phone Number', 'phone')
                 ->hideFromIndex()
@@ -302,6 +293,11 @@ class User extends Resource
                     return $request->user()->can('read-recruiting-visits');
                 }),
 
+            HasMany::make("OAuth2 Clients", "clients")
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole("admin");
+                }),
+
             new Panel('Metadata', $this->metaFields()),
         ];
     }
@@ -455,13 +451,20 @@ class User extends Resource
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 })->confirmButtonText('Override Access'),
-            (new Actions\ResetApiToken())
+            resolve(CreatePersonalAccessToken::class)
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-                })->confirmButtonText('Reset API Token'),
+                }),
+            resolve(CreateOAuth2Client::class)
+                ->canSee(static function (Request $request): bool {
+                    return true;
+                })
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
+            }),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('send-notifications');

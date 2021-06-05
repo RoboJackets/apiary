@@ -11,14 +11,17 @@
 
     @if(Session::has("client_id"))
         <p>
-            Your OAuth2 client was successfully created, and the client credentials are shown below.
+            Your OAuth2 client was successfully created, and the client credentials are shown below.<br />
+            <small>Nova Actions can't show modals with information afterwards, so instead we had to send
+                you and your secrets to the Twilight Zone.</small>
         </p>
 
+
+
         @if(Session::has("client_plain_secret"))
-            <p>
-                <strong>Save the client secret now, as it will not be viewable
-                    in plain text after this!</strong>
-            </p>
+            <div class="alert alert-warning">
+                Save the client secret now—it will not be viewable in plaintext after this!
+            </div>
         @endif
 
         <p>
