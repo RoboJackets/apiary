@@ -9,7 +9,7 @@
         Personal Access Token Details
     @endcomponent
 
-{{--    @if(Session::has("pat_plain_token"))--}}
+    @if(Session::has("pat_plain_token"))
         <p>
             Successfully created a new personal access token for {{ Session::get("pat_user_name") }}. <br />
             <small>Nova Actions can't show modals with information afterwards, so instead we had to send
@@ -23,9 +23,9 @@
         <p class="text-break">
             <strong>Personal Access Token:</strong>
             <textarea readonly rows="11" onclick="this.select()" class="form-control text-break">{{ Session::get("pat_plain_token") ?? "Unavailable" }}</textarea></p>
-{{--    @else--}}
-{{--        This page's content has expired.--}}
-{{--    @endif--}}
+    @else
+        This page's content has expired.
+    @endif
 
     <a href="{{ url()->previous("/nova") }}">Go back to Nova</a>
 

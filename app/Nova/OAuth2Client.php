@@ -50,6 +50,8 @@ class OAuth2Client extends Resource
         return 'OAuth2 Client';
     }
 
+    public static $displayInNavigation = false;
+
     /**
      * Get the fields displayed by the resource.
      *
