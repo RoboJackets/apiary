@@ -101,6 +101,8 @@ For a basic development environment, you'll need to modify the following setting
 | CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
 | CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
 | CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user
+| PASSPORT_PERSONAL_ACCESS_CLIENT_ID | Client ID from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
+| PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET | Client secret from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
 
 #### Installing dependencies
 
@@ -124,6 +126,19 @@ Run database migrations to set up tables (run this for initial setup and when an
 
 ```
 $ php artisan migrate
+```
+
+Setup Laravel Passport:
+
+```
+$ php artisan passport:keys
+```
+
+*(Optional)* Create OAuth2 Personal Access Client.  Add the client ID and secret created to the
+`PASSPORT_PERSONAL_ACCESS_CLIENT_ID` and `PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET` environment variables.
+
+```
+$ php artisan passport:client --personal
 ```
 
 Seed the database tables with base content (run this only once for initial setup.)
