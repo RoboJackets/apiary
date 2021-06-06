@@ -214,7 +214,6 @@ class User extends Authenticatable
         'gt_email',
         'name',
         'gtid',
-        'api_token',
         'full_name',
         'is_active',
         'access_active',
@@ -231,7 +230,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
+    protected $hidden = ['gender', 'ethnicity', 'dues'];
 
     /**
      * The attributes that should be cast to native types.

@@ -31,7 +31,6 @@ class User extends JsonResource
             'id' => $this->id,
             'uid' => $this->uid,
             'gtid' => $this->when(Auth::user()->can('read-users-gtid'), $this->gtid),
-            'api_token' => $this->when(Auth::user()->can('read-users-api_token'), $this->api_token),
             'slack_id' => $this->slack_id,
             'gt_email' => $this->gt_email,
             'personal_email' => $this->personal_email,
