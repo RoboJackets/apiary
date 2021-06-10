@@ -58,7 +58,7 @@
         "phpstan/extension-installer": "1.1.0",
         "psalm/plugin-laravel": "1.4.6",
         "robojackets/static-analysis": "1.4",
-        "spatie/ray": "1.25.0"
+        "spatie/ray": "1.26.0"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
