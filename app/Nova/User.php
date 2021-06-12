@@ -295,7 +295,7 @@ class User extends Resource
 
             HasMany::make('OAuth2 Clients', 'clients')
                 ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
+                    return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
                 }),
 
             new Panel('Metadata', $this->metaFields()),
