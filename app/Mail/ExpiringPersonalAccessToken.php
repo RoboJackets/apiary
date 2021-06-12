@@ -37,7 +37,7 @@ class ExpiringPersonalAccessToken extends Mailable
             ->from('noreply@my.robojackets.org', 'RoboJackets')
             ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <support@robojackets.org>');
-            })->subject('Your MyRoboJackets Personal Access Token ' . ($this->token ? "Recently Expired" : "Will Expire Soon"))
+            })->subject('Your MyRoboJackets Personal Access Token '.($this->token ? 'Recently Expired' : 'Will Expire Soon'))
             ->markdown('mail.oauth2.pat_expiration',
                 [
                     'token' => $this->token,
