@@ -134,8 +134,9 @@ Setup Laravel Passport:
 $ php artisan passport:keys
 ```
 
-*(Optional)* Create OAuth2 Personal Access Client.  Add the client ID and secret created to the
-`PASSPORT_PERSONAL_ACCESS_CLIENT_ID` and `PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET` environment variables.
+*(Optional - Required to create Personal Access Tokens)* Create OAuth2 Personal Access Client: Add the client ID and
+secret created to the `PASSPORT_PERSONAL_ACCESS_CLIENT_ID` and `PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET` environment
+variables.
 
 ```
 $ php artisan passport:client --personal
