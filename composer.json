@@ -53,6 +53,7 @@
         "fakerphp/faker": "1.14.1",
         "filp/whoops": "2.12.1",
         "mockery/mockery": "1.4.3",
+        "mxl/laravel-job": "^1.2",
         "nunomaduro/collision": "5.4.0",
         "nunomaduro/larastan": "0.7.6",
         "phan/phan": "4.0.6",
