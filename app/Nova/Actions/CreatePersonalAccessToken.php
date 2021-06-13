@@ -36,7 +36,7 @@ class CreatePersonalAccessToken extends Action
 
         $user = $models[0];
 
-        $token = $user->createToken('[PAT] '.$fields->name)->accessToken;
+        $token = $user->createToken($fields->name)->accessToken;
 
         Session::flash('pat_user_name', $user->name);
         Session::flash('pat_plain_token', $token);
@@ -54,8 +54,9 @@ class CreatePersonalAccessToken extends Action
         return [
             Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action'.
                 '.</p>')->asHtml(),
-            Text::make('Name')->help('[PAT] will be automatically preprended to identify this token '.
-                'as a Personal Access Token.')->rules('required'),
+            Text::make('Name')
+                ->help('Enter a name to identify this token. It will be visible to the user.')
+                ->rules('required'),
         ];
     }
 }

@@ -17,7 +17,7 @@
         </p>
 
         <div class="alert alert-warning">
-            Save this token now—it will not be viewable in plaintext after this!
+            Save this token now—it will not be viewable after this!
         </div>
 
         <p class="text-break">

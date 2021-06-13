@@ -20,7 +20,7 @@
 
         @if(Session::has("client_plain_secret"))
             <div class="alert alert-warning">
-                Save the client secret now—it will not be viewable in plaintext after this!
+                Save the client secret now—it will not be viewable after this!
             </div>
         @endif
 
