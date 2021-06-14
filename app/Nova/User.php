@@ -9,6 +9,7 @@ namespace App\Nova;
 use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreateOAuth2Client;
 use App\Nova\Actions\CreatePersonalAccessToken;
+use App\Nova\Actions\RevokeOAuth2Tokens;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
@@ -459,6 +460,13 @@ class User extends Resource
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 }),
             resolve(CreateOAuth2Client::class)
+                ->canSee(static function (Request $request): bool {
+                    return true;
+                })
+                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
+                }),
+            resolve(RevokeOAuth2Tokens::class)
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })

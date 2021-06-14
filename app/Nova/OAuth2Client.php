@@ -32,6 +32,7 @@ class OAuth2Client extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
 
     /**
@@ -64,6 +65,7 @@ class OAuth2Client extends Resource
             ID::make(__('Client ID'), 'id')->sortable(),
             Text::make('Name', 'name')->sortable(),
             Boolean::make('Active', 'revoked')->trueValue(0)->falseValue(1),
+            Text::make('Redirect URL(s)', 'redirect')->onlyOnDetail(),
             Boolean::make('Public (PKCE-Enabled Client)', function () {
                 return ! is_null($this->secret);
             }),

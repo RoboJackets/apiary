@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9d53b9c14b98413e38950eab3f9de04",
+    "content-hash": "85eeddb63e92ee297a75bd49ada6105d",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3544,6 +3544,56 @@
                 }
             ],
             "time": "2021-04-06T17:17:02+00:00"
+        },
+        {
+            "name": "madewithlove/laravel-nova-uuid-support",
+            "version": "v1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/madewithlove/laravel-nova-uuid-support.git",
+                "reference": "70aa05cf600cdb4cba12837cfd398ccf5830c783"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/madewithlove/laravel-nova-uuid-support/zipball/70aa05cf600cdb4cba12837cfd398ccf5830c783",
+                "reference": "70aa05cf600cdb4cba12837cfd398ccf5830c783",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.7.15 | 5.8.* | ^6.0 | ^7.0 | ^8.0",
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Madewithlove\\NovaUuidSupport\\NovaUuidSupportServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Madewithlove\\NovaUuidSupport\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Adds uuid and other string identifier support to Laravel Nova",
+            "keywords": [
+                "identifiers",
+                "laravel",
+                "nova",
+                "primary",
+                "string",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/madewithlove/laravel-nova-uuid-support/issues",
+                "source": "https://github.com/madewithlove/laravel-nova-uuid-support/tree/v1.3"
+            },
+            "time": "2021-01-07T09:01:05+00:00"
         },
         {
             "name": "maennchen/zipstream-php",

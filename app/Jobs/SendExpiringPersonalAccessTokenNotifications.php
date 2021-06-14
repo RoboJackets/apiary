@@ -38,6 +38,7 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
         $pats = Passport::token()
             ->whereDate('expires_at', '>=', $recently_expired)
             ->whereDate('expires_at', '<', $expiring_soon)
+            ->whereRevoked(false)
             ->whereHas('client', function ($clientQuery) {
                 $clientQuery->where('user_id', '=', null); // PATs are created with a Personal Access Client that isn't associated with any user
             })->get();
