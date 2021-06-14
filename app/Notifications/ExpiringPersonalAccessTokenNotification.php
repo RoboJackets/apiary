@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\Mail\ExpiringPersonalAccessToken;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Laravel\Passport\Token;
 
 class ExpiringPersonalAccessTokenNotification extends Notification
 {
     use Queueable;
 
-    private $token;
+    private Token $token;
 
     /**
      * Create a new notification instance.
@@ -45,13 +48,10 @@ class ExpiringPersonalAccessTokenNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(User $notifiable): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

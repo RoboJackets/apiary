@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Notifications\ExpiringPersonalAccessTokenNotification;
@@ -13,17 +15,10 @@ use Laravel\Passport\Passport;
 
 class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Execute the job.
@@ -40,7 +35,8 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
             ->whereDate('expires_at', '<', $expiring_soon)
             ->whereRevoked(false)
             ->whereHas('client', function ($clientQuery) {
-                $clientQuery->where('user_id', '=', null); // PATs are created with a Personal Access Client that isn't associated with any user
+                $clientQuery->where('user_id', '=', null); // PATs are created with a Personal Access Client that
+                // isn't associated with any user
             })->get();
 
         foreach ($pats as $pat) {

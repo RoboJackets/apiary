@@ -6,14 +6,23 @@ use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Laravel\Passport\Token;
 use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
 
 class ExpiringPersonalAccessToken extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-    private $token;
-    private $already_expired;
+    /**
+     * @var Token The Personal Access Token that is expiring
+     */
+    private Token $token;
+
+    /**
+     * @var bool Indicates whether or not the token has already expired
+     */
+    private bool $already_expired;
 
     /**
      * Create a new message instance.
@@ -37,8 +46,10 @@ class ExpiringPersonalAccessToken extends Mailable
             ->from('noreply@my.robojackets.org', 'RoboJackets')
             ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <support@robojackets.org>');
-            })->subject('Your MyRoboJackets Personal Access Token '.($this->token ? 'Recently Expired' : 'Will Expire Soon'))
-            ->markdown('mail.oauth2.pat_expiration',
+            })->subject('Your MyRoboJackets Personal Access Token '
+                . ($this->token ? 'Recently Expired' : 'Will Expire Soon'))
+            ->markdown(
+                'mail.oauth2.pat_expiration',
                 [
                     'token' => $this->token,
                     'already_expired' => $this->already_expired,
