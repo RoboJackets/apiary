@@ -6,6 +6,7 @@ namespace App\Console;
 
 use App\Jobs\DailyDuesSummary;
 use App\Jobs\NoAttendanceJediPush;
+use App\Jobs\SendExpiringPersonalAccessTokenNotifications;
 use App\Jobs\WeeklyAttendanceEmail;
 use App\Jobs\WeeklyAttendanceSlack;
 use Bugsnag\BugsnagLaravel\Commands\DeployCommand;
@@ -35,6 +36,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->job(new WeeklyAttendanceEmail())->weekly()->sundays()->at('1:00');
         $schedule->job(new WeeklyAttendanceSlack())->weekly()->sundays()->at('11:00');
+        $schedule->job(new SendExpiringPersonalAccessTokenNotifications())->weekly()->mondays()->at('08:00');
         $schedule->job(new DailyDuesSummary())->daily()->at('11:00');
         $schedule->job(new NoAttendanceJediPush())->daily()->at('10:00');
     }
