@@ -38,13 +38,13 @@ class RevokeOAuth2Tokens extends Action
             $user_access_tokens = $user->tokens()
                 ->whereRevoked(false)
                 ->whereHas('client', function ($clientQuery) use ($fields) {
-                    if (!$fields->include_personal_access_tokens) {
+                    if (! $fields->include_personal_access_tokens) {
                         $clientQuery->whereNotNull('user_id'); // PATs are created with a Personal Access Client that isn't associated with any user
                     }
                 })
                 ->get();
 
-            foreach($user_access_tokens as $access_token) {
+            foreach ($user_access_tokens as $access_token) {
                 $tokenRepository->revokeAccessToken($access_token->id);
                 $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($access_token->id);
             }
@@ -61,10 +61,10 @@ class RevokeOAuth2Tokens extends Action
     public function fields()
     {
         return [
-            Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal' .
+            Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal'.
                 ' access tokens associated with this user.'),
             Boolean::make('Include Personal Access Tokens')
-                ->help('Check this box if you\'d like to revoke all of this user\'s personal access tokens as well.')
+                ->help('Check this box if you\'d like to revoke all of this user\'s personal access tokens as well.'),
         ];
     }
 }
