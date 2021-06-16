@@ -69,7 +69,7 @@ class RevokeOAuth2Tokens extends Action
     {
         return [
             // @codingStandardsIgnoreLine
-            Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal ' .
+            Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal '.
                 'access tokens associated with this user.'),
             Boolean::make('Include Personal Access Tokens')
                 ->help('Check this box if you\'d like to revoke all of this user\'s personal access tokens as well.'),

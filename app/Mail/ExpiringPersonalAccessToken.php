@@ -17,14 +17,14 @@ class ExpiringPersonalAccessToken extends Mailable
     use SerializesModels;
 
     /**
-     * The Personal Access Token that is expiring
+     * The Personal Access Token that is expiring.
      *
      * @var Token
      */
     private Token $token;
 
     /**
-     * Indicates whether or not the token has already expired
+     * Indicates whether or not the token has already expired.
      *
      * @var bool
      */
@@ -53,7 +53,7 @@ class ExpiringPersonalAccessToken extends Mailable
             ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <support@robojackets.org>');
             })->subject('Your MyRoboJackets Personal Access Token '
-                . ($this->token ? 'Recently Expired' : 'Will Expire Soon'))
+                .($this->token ? 'Recently Expired' : 'Will Expire Soon'))
             ->markdown(
                 'mail.oauth2.pat_expiration',
                 [

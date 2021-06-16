@@ -34,7 +34,7 @@ class CreatePersonalAccessToken extends Action
 
         if (is_null(config('passport.personal_access_client.id'))
             || is_null(config('passport.personal_access_client.secret'))) {
-            return Action::danger('Passport personal access client ID and/or secret environment variables not set. ' .
+            return Action::danger('Passport personal access client ID and/or secret environment variables not set. '.
                 'Make sure they are set and try again.');
         }
 
