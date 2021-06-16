@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
@@ -14,22 +16,25 @@ use Laravel\Passport\TokenRepository;
 
 class RevokeOAuth2Tokens extends Action
 {
-    use InteractsWithQueue, Queueable;
+    use InteractsWithQueue;
+    use Queueable;
 
+    /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
     public $name = 'Revoke All OAuth2 Tokens';
-
-    public function __construct()
-    {
-    }
 
     /**
      * Perform the action on the given models.
      *
      * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     *
+     * @return array
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
         $tokenRepository = app(TokenRepository::class);
         $refreshTokenRepository = app(RefreshTokenRepository::class);
@@ -37,10 +42,12 @@ class RevokeOAuth2Tokens extends Action
         foreach ($models as $user) {
             $user_access_tokens = $user->tokens()
                 ->whereRevoked(false)
-                ->whereHas('client', function ($clientQuery) use ($fields) {
-                    if (! $fields->include_personal_access_tokens) {
-                        $clientQuery->whereNotNull('user_id'); // PATs are created with a Personal Access Client that isn't associated with any user
+                ->whereHas('client', static function ($clientQuery) use ($fields) {
+                    if ($fields->include_personal_access_tokens) {
+                        return $clientQuery;
                     }
+                    $clientQuery->whereNotNull('user_id'); // PATs are created with a Personal Access Client that
+                    // isn't associated with any user
                 })
                 ->get();
 
@@ -61,8 +68,9 @@ class RevokeOAuth2Tokens extends Action
     public function fields()
     {
         return [
-            Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal'.
-                ' access tokens associated with this user.'),
+            // @codingStandardsIgnoreLine
+            Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal ' .
+                'access tokens associated with this user.'),
             Boolean::make('Include Personal Access Tokens')
                 ->help('Check this box if you\'d like to revoke all of this user\'s personal access tokens as well.'),
         ];

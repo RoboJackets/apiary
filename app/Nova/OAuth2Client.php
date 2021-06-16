@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova;
 
 use Illuminate\Http\Request;
@@ -28,7 +30,7 @@ class OAuth2Client extends Resource
     /**
      * The columns that should be searched.
      *
-     * @var array
+     * @var array<string>
      */
     public static $search = [
         'id',
@@ -51,12 +53,18 @@ class OAuth2Client extends Resource
         return 'OAuth2 Client';
     }
 
+    /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
     public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function fields(Request $request)
@@ -67,7 +75,7 @@ class OAuth2Client extends Resource
             Boolean::make('Active', 'revoked')->trueValue(0)->falseValue(1),
             Text::make('Redirect URL(s)', 'redirect')->onlyOnDetail(),
             Boolean::make('Public (PKCE-Enabled Client)', function () {
-                return ! is_null($this->secret);
+                return null !== $this->secret;
             }),
             Boolean::make('Password Client', 'password_client'),
             DateTime::make('Created At', 'created_at'),
@@ -79,6 +87,7 @@ class OAuth2Client extends Resource
      * Get the cards available for the request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function cards(Request $request)
@@ -90,6 +99,7 @@ class OAuth2Client extends Resource
      * Get the filters available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function filters(Request $request)
@@ -101,6 +111,7 @@ class OAuth2Client extends Resource
      * Get the lenses available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function lenses(Request $request)
@@ -112,6 +123,7 @@ class OAuth2Client extends Resource
      * Get the actions available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function actions(Request $request)

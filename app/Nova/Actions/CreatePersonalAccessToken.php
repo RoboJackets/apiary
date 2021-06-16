@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
@@ -13,25 +15,27 @@ use Laravel\Nova\Fields\Text;
 
 class CreatePersonalAccessToken extends Action
 {
-    use InteractsWithQueue, Queueable;
+    use InteractsWithQueue;
+    use Queueable;
 
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
-     * @return mixed
+     * @param \Laravel\Nova\Fields\ActionFields $fields
+     * @param \Illuminate\Support\Collection $models
+     *
+     * @return array
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
-        if (sizeof($models) > 1) {
+        if (count($models) > 1) {
             return Action::danger('This action can only be run on one model at a time.');
         }
 
-        if (empty(config('passport.personal_access_client.id'))
-            || empty(config('passport.personal_access_client.secret'))) {
-            return Action::danger('Passport personal access client ID and/or secret environment variables not'.
-                ' set. Make sure they are set and try again.');
+        if (is_null(config('passport.personal_access_client.id'))
+            || is_null(config('passport.personal_access_client.secret'))) {
+            return Action::danger('Passport personal access client ID and/or secret environment variables not set. ' .
+                'Make sure they are set and try again.');
         }
 
         $user = $models[0];
@@ -52,8 +56,8 @@ class CreatePersonalAccessToken extends Action
     public function fields()
     {
         return [
-            Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action'.
-                '.</p>')->asHtml(),
+            Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action.</p>')
+                ->asHtml(),
             Text::make('Name')
                 ->help('Enter a name to identify this token. It will be visible to the user.')
                 ->rules('required'),

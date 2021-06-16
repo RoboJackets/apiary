@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use Carbon\Carbon;
@@ -15,12 +17,16 @@ class ExpiringPersonalAccessToken extends Mailable
     use SerializesModels;
 
     /**
-     * @var Token The Personal Access Token that is expiring
+     * The Personal Access Token that is expiring
+     *
+     * @var Token
      */
     private Token $token;
 
     /**
-     * @var bool Indicates whether or not the token has already expired
+     * Indicates whether or not the token has already expired
+     *
+     * @var bool
      */
     private bool $already_expired;
 
