@@ -47,8 +47,6 @@ class ExpiringPersonalAccessTokenNotification extends Notification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @return array<string:array>
      */
     public function toArray(User $notifiable): array
     {
