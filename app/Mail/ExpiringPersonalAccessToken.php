@@ -31,7 +31,7 @@ class ExpiringPersonalAccessToken extends Mailable
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct(Token $token)
     {
         $this->token = $token;
         $this->already_expired = Carbon::now() < $token->expires_at;
@@ -49,7 +49,7 @@ class ExpiringPersonalAccessToken extends Mailable
             ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <support@robojackets.org>');
             })->subject('Your MyRoboJackets Personal Access Token '
-                .($this->token ? 'Recently Expired' : 'Will Expire Soon'))
+                .($this->already_expired ? 'Recently Expired' : 'Will Expire Soon'))
             ->markdown(
                 'mail.oauth2.pat_expiration',
                 [

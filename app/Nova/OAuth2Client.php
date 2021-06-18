@@ -64,70 +64,20 @@ class OAuth2Client extends Resource
      * Get the fields displayed by the resource.
      *
      * @param \Illuminate\Http\Request  $request
-     *
-     * @return array
      */
-    public function fields(Request $request)
+    public function fields(Request $request): array
     {
         return [
             ID::make(__('Client ID'), 'id')->sortable(),
             Text::make('Name', 'name')->sortable(),
             Boolean::make('Active', 'revoked')->trueValue(0)->falseValue(1),
             Text::make('Redirect URL(s)', 'redirect')->onlyOnDetail(),
-            Boolean::make('Public (PKCE-Enabled Client)', function () {
+            Boolean::make('Public (PKCE-Enabled Client)', function (): bool {
                 return null !== $this->secret;
             }),
             Boolean::make('Password Client', 'password_client'),
             DateTime::make('Created At', 'created_at'),
             DateTime::make('Updated At', 'updated_at')->onlyOnDetail(),
         ];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array
-     */
-    public function cards(Request $request)
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array
-     */
-    public function filters(Request $request)
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array
-     */
-    public function lenses(Request $request)
-    {
-        return [];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return array
-     */
-    public function actions(Request $request)
-    {
-        return [];
     }
 }

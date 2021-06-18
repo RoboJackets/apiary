@@ -47,7 +47,7 @@ class CreateOAuth2Client extends Action
     /**
      * Perform the action on the given models.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -89,7 +89,7 @@ class CreateOAuth2Client extends Action
     /**
      * Get the fields available on the action.
      *
-     * @return array
+     * @return array<\Laravel\Nova\Fields\Field>
      */
     public function fields()
     {

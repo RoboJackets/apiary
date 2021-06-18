@@ -20,7 +20,7 @@ class RemoveApiTokens extends Migration
         app()['cache']->forget('spatie.permission.cache');
         Permission::where('name', 'read-users-api_token')->delete();
 
-        Schema::table('users', static function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('api_token');
         });
     }
@@ -38,7 +38,7 @@ class RemoveApiTokens extends Migration
         $r_admin = Role::firstOrCreate(['name' => 'admin']);
         $r_admin->givePermissionTo($read_users_api_token);
 
-        Schema::table('users', static function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->string('api_token', 32);
         });
     }

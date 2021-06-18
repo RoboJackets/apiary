@@ -21,5 +21,6 @@ class Authenticate extends AuthenticateMiddleware
         if (! $request->expectsJson()) {
             return route('login.cas');
         }
+        // @phpstan-ignore-line
     }
 }

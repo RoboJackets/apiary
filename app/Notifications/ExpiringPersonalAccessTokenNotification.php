@@ -21,7 +21,7 @@ class ExpiringPersonalAccessTokenNotification extends Notification
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct(Token $token)
     {
         $this->token = $token;
     }
@@ -48,6 +48,7 @@ class ExpiringPersonalAccessTokenNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
+     * @phpstan-ignore-next-line
      * @return array
      */
     public function toArray(User $notifiable): array
