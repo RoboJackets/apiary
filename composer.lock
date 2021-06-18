@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd7d6103b63165746131b37181f598f3",
+    "content-hash": "36b0f9f8a70a764aa1fee84814eca859",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -7264,16 +7264,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.3.0",
+            "version": "v5.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "251de0d921c42ef0a81494d8f37405421deefdf6"
+                "reference": "7e2603bcc598e14804c4d2359d8dc4ee3c40391b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/251de0d921c42ef0a81494d8f37405421deefdf6",
-                "reference": "251de0d921c42ef0a81494d8f37405421deefdf6",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/7e2603bcc598e14804c4d2359d8dc4ee3c40391b",
+                "reference": "7e2603bcc598e14804c4d2359d8dc4ee3c40391b",
                 "shasum": ""
             },
             "require": {
@@ -7339,7 +7339,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.3.0"
+                "source": "https://github.com/symfony/translation/tree/v5.3.2"
             },
             "funding": [
                 {
@@ -7355,7 +7355,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-29T22:28:28+00:00"
+            "time": "2021-06-06T09:51:56+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -7657,16 +7657,16 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.12.1",
+            "version": "v1.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "95458842f543bb39fb7a4b2cc21db214b2713c1c"
+                "reference": "43fc12ee8b7221f5232f61aff9fc17f515ad1b02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/95458842f543bb39fb7a4b2cc21db214b2713c1c",
-                "reference": "95458842f543bb39fb7a4b2cc21db214b2713c1c",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/43fc12ee8b7221f5232f61aff9fc17f515ad1b02",
+                "reference": "43fc12ee8b7221f5232f61aff9fc17f515ad1b02",
                 "shasum": ""
             },
             "require": {
@@ -7738,7 +7738,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2021-05-19T15:21:47+00:00"
+            "time": "2021-06-18T09:04:00+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
