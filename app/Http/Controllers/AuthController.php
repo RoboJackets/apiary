@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 
 class AuthController extends Controller
 {
@@ -16,8 +13,7 @@ class AuthController extends Controller
      * signed in (using CAS) and then redirect them back to the original page they were going to. This function
      * largely exists as a workaround to not being able to specify what middleware is applied to Laravel Passport's
      * routes.
-     *
-     * @return Application|RedirectResponse|Redirector
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function forceCasAuth()
     {

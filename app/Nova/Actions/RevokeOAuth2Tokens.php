@@ -43,7 +43,7 @@ class RevokeOAuth2Tokens extends Action
             $user_access_tokens = $user->tokens()
                 ->whereRevoked(false)
                 ->whereHas('client', static function ($clientQuery) use ($fields) {
-                    // phpcs:disable
+                    // @phan-suppress-next-line PhanPluginNonBoolBranch
                     if ($fields->include_personal_access_tokens) {
                         return $clientQuery;
                     }
