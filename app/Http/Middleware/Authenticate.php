@@ -15,6 +15,7 @@ class Authenticate extends AuthenticateMiddleware
      *
      * @return string|null
      */
+    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {

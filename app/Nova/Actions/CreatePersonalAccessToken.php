@@ -32,8 +32,8 @@ class CreatePersonalAccessToken extends Action
             return Action::danger('This action can only be run on one model at a time.');
         }
 
-        if (config('passport.personal_access_client.id') === null
-            || config('passport.personal_access_client.secret') === null) {
+        if (null === config('passport.personal_access_client.id')
+            || null === config('passport.personal_access_client.secret')) {
             // phpcs:disable
             return Action::danger('Passport personal access client ID and/or secret environment variables not set. '.
                 'Make sure they are set and try again.');
