@@ -29,8 +29,8 @@ class RevokeOAuth2Tokens extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
+     * @param \Laravel\Nova\Fields\ActionFields  $fields
+     * @param \Illuminate\Support\Collection  $models
      *
      * @return array
      */
@@ -43,6 +43,7 @@ class RevokeOAuth2Tokens extends Action
             $user_access_tokens = $user->tokens()
                 ->whereRevoked(false)
                 ->whereHas('client', static function ($clientQuery) use ($fields) {
+                    // phpcs:disable
                     if ($fields->include_personal_access_tokens) {
                         return $clientQuery;
                     }

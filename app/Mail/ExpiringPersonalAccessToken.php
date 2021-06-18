@@ -18,15 +18,11 @@ class ExpiringPersonalAccessToken extends Mailable
 
     /**
      * The Personal Access Token that is expiring.
-     *
-     * @var Token
      */
     private Token $token;
 
     /**
      * Indicates whether or not the token has already expired.
-     *
-     * @var bool
      */
     private bool $already_expired;
 
