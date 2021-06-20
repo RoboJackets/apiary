@@ -173,6 +173,10 @@ Automatically rebuilds your front-end assets whenever the files change on disk. 
 
 Tinker allows you to interact with Apiary on the command line including the Eloquent ORM, jobs, events, and more. A good introduction to Tinker can be found [here](https://scotch.io/tutorials/tinker-with-the-data-in-your-laravel-apps-with-php-artisan-tinker).
 
+### `composer run test`
+
+Use this command to run unit/feature tests locally.
+
 ## Moving to Production
 
 ### `.env`
