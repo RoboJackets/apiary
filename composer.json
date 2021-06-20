@@ -123,6 +123,7 @@
             "vendor/bin/psalm"
         ],
         "test": [
+            "php artisan passport:keys --no-interaction",
             "cp storage/db-clean.sqlite storage/db-testing.sqlite",
             "php artisan test"
         ]
