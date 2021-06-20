@@ -13,8 +13,8 @@ class PermissionsAndRolesTest extends TestCase
     public function testPermissionsLoadedInDatabase(): void
     {
         $allPermissions = Permission::all();
-        $this->assertGreaterThan(0, $allPermissions->count(), 'The permissions table appears to be ' .
-            'empty, which means the database configuration for testing is not working. Are you running `composer run ' .
+        $this->assertGreaterThan(0, $allPermissions->count(), 'The permissions table appears to be '.
+            'empty, which means the database configuration for testing is not working. Are you running `composer run '.
             'test`?');
     }
 
