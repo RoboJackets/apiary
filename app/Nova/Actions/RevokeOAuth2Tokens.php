@@ -47,6 +47,7 @@ class RevokeOAuth2Tokens extends Action
                     if ($fields->include_personal_access_tokens) {
                         return $clientQuery;
                     }
+
                     return $clientQuery->whereNotNull('user_id'); // PATs are created with a Personal Access Client that
                     // isn't associated with any user
                 })
