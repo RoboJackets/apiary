@@ -175,7 +175,12 @@ Tinker allows you to interact with Apiary on the command line including the Eloq
 
 ### `composer run test`
 
-Use this command to run unit/feature tests locally.
+Use this command to run unit/feature tests locally. You shouldn't need to modify `.env.testing`. If you add migrations,
+there's no need to dump the schema again; the migrations will be run as part of the tests. (It's possible to squash the
+migrations again if the tests take too long, but simply dumping the schema is insufficient.)
+
+If you try to run PHPUnit directly, you may get various "file not found" errors since the `composer run test` command
+runs extra steps before the tests are run.
 
 ## Moving to Production
 
