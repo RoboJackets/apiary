@@ -27,10 +27,8 @@ class SimpleRequestsTest extends TestCase
     {
         $response = $this->actingAs($this->getTestUser(['member']), 'web')->get('/');
         $this->assertEquals(200, $response->status(), 'Response content: '.$response->getContent());
-//        $response->assertStatus(200);
 
         $response = $this->actingAs($this->getTestUser(['non-member']), 'web')->get('/');
         $this->assertEquals(200, $response->status(), 'Response content: '.$response->getContent());
-//        $response->assertStatus(200);
     }
 }
