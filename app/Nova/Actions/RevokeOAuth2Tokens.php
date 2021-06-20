@@ -69,7 +69,7 @@ class RevokeOAuth2Tokens extends Action
     public function fields()
     {
         return [
-            // @codingStandardsIgnoreLine
+            // phpcs:disable
             Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal '.
                 'access tokens associated with this user.'),
             Boolean::make('Include Personal Access Tokens')
