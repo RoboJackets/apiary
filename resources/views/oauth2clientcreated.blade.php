@@ -20,7 +20,7 @@
 
         @if(Session::has("client_plain_secret"))
             <div class="alert alert-warning">
-                Save the client secret now—it will not be viewable after this!
+                Save the client secret now&mdash;it will not be viewable after this!
             </div>
         @endif
 
@@ -37,7 +37,7 @@
             @endif
         </p>
     @else
-        This page's content has expired.
+        This page's content has expired. This might happen if you run the action quickly after loading the user's page due to a known technical limitation.
     @endif
 
     <a href="{{ url()->previous("/nova") }}">Go back to Nova</a>

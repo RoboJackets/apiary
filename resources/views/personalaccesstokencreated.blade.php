@@ -17,14 +17,14 @@
         </p>
 
         <div class="alert alert-warning">
-            Save this token now—it will not be viewable after this!
+            Save this token now&mdash;it will not be viewable after this!
         </div>
 
         <p class="text-break">
             <strong>Personal Access Token:</strong>
             <textarea readonly rows="11" onclick="this.select()" class="form-control text-break">{{ Session::get("pat_plain_token") ?? "Unavailable" }}</textarea></p>
     @else
-        This page's content has expired.
+        This page's content has expired. This might happen if you run the action quickly after loading the user's page due to a known technical limitation.
     @endif
 
     <a href="{{ url()->previous("/nova") }}">Go back to Nova</a>
