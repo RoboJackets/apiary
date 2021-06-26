@@ -34,10 +34,14 @@ This is a pretty conventional Laravel project, so we recommend following [the of
 
 *If you're using Homestead, this section is taken care of for you out of the box.*
 
-You can install all of the required php extensions with:
+You can install most of the required php extensions with:
 ```
 $ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath php-curl php-gd php-zip php-ldap
 ```
+
+On certain Linux flavors, you may need to manually install the PHP `sodium` extension, which is used by Laravel Passport's
+dependencies.  Sodium is likely not included on RHEL and has to be manually built and enabled.  For RHEL 8, [this third-party](https://gist.github.com/davidalger/c19a53ed293291ec2e93b5227f9e0a2d#file-install-php-sodium-on-el8-sh)
+script (use at your own risk) has worked to enable the `sodium` extension.
 
 For the resume book functionality, you'll also need to install `exiftool` and Ghostscript:
 ```
