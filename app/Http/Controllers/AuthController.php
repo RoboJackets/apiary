@@ -18,9 +18,7 @@ class AuthController extends Controller
      */
     public function forceCasAuth(Request $request)
     {
-        $request->session()->setPreviousUrl($request->query('next', route('home')));
-
-        return redirect($request->query('next', route('home')));
+        return redirect($request->query('next', route('home'))); // @phpstan-ignore-line
     }
 
     public function logout(Request $request)
