@@ -41,7 +41,18 @@ $ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-op
 
 On certain Linux flavors, you may need to manually install the PHP `sodium` extension, which is used by Laravel Passport's
 dependencies.  Sodium is likely not included on RHEL and has to be manually built and enabled.  For RHEL 8, [this third-party](https://gist.github.com/davidalger/c19a53ed293291ec2e93b5227f9e0a2d#file-install-php-sodium-on-el8-sh)
-script (use at your own risk) has worked to enable the `sodium` extension.
+script (reproduced below in case the Gist disappears, but use at your own risk) has worked to enable the `sodium` extension:
+
+```bash
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
+  && yum install -y php-cli libsodium \
+  && yum install -y php-pear php-devel libsodium-devel make \
+  && pecl channel-update pecl.php.net \
+  && pecl install libsodium \
+  && yum remove -y php-pear php-devel libsodium-devel make \
+  && echo 'extension=sodium.so' > /etc/php.d/20-sodium.ini \
+  && php -i | grep sodium
+```
 
 For the resume book functionality, you'll also need to install `exiftool` and Ghostscript:
 ```
