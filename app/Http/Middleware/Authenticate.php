@@ -22,6 +22,7 @@ class Authenticate extends AuthenticateMiddleware
     {
         if (! $request->expectsJson()) {
             if ($request->is('oauth/*')) {
+                // @phpstan-ignore-next-line
                 return route('login.cas', ['next' => url()->full()]);
             }
 
