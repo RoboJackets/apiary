@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api', 'auth.cas.force'])->group(
+Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
     static function (): void {
         // Recruiting (Formerly known as FASET)
         Route::prefix('recruiting')->name('recruiting.')->group(static function (): void {
