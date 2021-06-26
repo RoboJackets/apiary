@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -19,7 +18,6 @@ class AuthController extends Controller
      */
     public function forceCasAuth(Request $request)
     {
-        Log::info("forceCasAuth next value: ". $request->query('next', route('home')));
         $request->session()->setPreviousUrl($request->query('next', route('home')));
         return redirect($request->query('next', route('home')));
     }
