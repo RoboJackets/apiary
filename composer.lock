@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c38c2631d3abd11cf793309a2796cd4a",
+    "content-hash": "586704907c7a8a20716f330c6cb755b8",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -12674,20 +12674,20 @@
         },
         {
             "name": "spatie/macroable",
-            "version": "1.0.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/macroable.git",
-                "reference": "7a99549fc001c925714b329220dea680c04bfa48"
+                "reference": "ec2c320f932e730607aff8052c44183cf3ecb072"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/macroable/zipball/7a99549fc001c925714b329220dea680c04bfa48",
-                "reference": "7a99549fc001c925714b329220dea680c04bfa48",
+                "url": "https://api.github.com/repos/spatie/macroable/zipball/ec2c320f932e730607aff8052c44183cf3ecb072",
+                "reference": "ec2c320f932e730607aff8052c44183cf3ecb072",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.0|^9.3"
@@ -12718,22 +12718,22 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/macroable/issues",
-                "source": "https://github.com/spatie/macroable/tree/1.0.1"
+                "source": "https://github.com/spatie/macroable/tree/2.0.0"
             },
-            "time": "2020-11-03T10:15:05+00:00"
+            "time": "2021-03-26T22:39:02+00:00"
         },
         {
             "name": "spatie/ray",
-            "version": "1.26.0",
+            "version": "1.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "67e2f4184e7acb40963358bd888341e27db484b8"
+                "reference": "b800636fb022b93df53bd90fa52e5ed07221eb6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/67e2f4184e7acb40963358bd888341e27db484b8",
-                "reference": "67e2f4184e7acb40963358bd888341e27db484b8",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/b800636fb022b93df53bd90fa52e5ed07221eb6a",
+                "reference": "b800636fb022b93df53bd90fa52e5ed07221eb6a",
                 "shasum": ""
             },
             "require": {
@@ -12783,7 +12783,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.26.0"
+                "source": "https://github.com/spatie/ray/tree/1.28.0"
             },
             "funding": [
                 {
@@ -12795,7 +12795,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-06-10T15:04:16+00:00"
+            "time": "2021-07-04T13:21:04+00:00"
         },
         {
             "name": "symfony/filesystem",
