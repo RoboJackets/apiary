@@ -20,7 +20,7 @@
     "vue-loader": "^15.9.7"
   },
   "dependencies": {
-    "@bugsnag/js": "7.10.1",
+    "@bugsnag/js": "7.10.5",
     "@bugsnag/plugin-vue": "7.10.0",
     "axios": "0.21.1",
     "caniuse-lite": "^1.0.30001228",
