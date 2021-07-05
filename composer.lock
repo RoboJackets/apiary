@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "586704907c7a8a20716f330c6cb755b8",
+    "content-hash": "a30c45f3e2b6f5c5a091a5ae33564da4",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -9887,16 +9887,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.7.8",
+            "version": "v0.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "dc05566a2e7c53049b52223ba45689ecde691206"
+                "reference": "e14fc866fa4291788be7f62725b7261ebe45904b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/dc05566a2e7c53049b52223ba45689ecde691206",
-                "reference": "dc05566a2e7c53049b52223ba45689ecde691206",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/e14fc866fa4291788be7f62725b7261ebe45904b",
+                "reference": "e14fc866fa4291788be7f62725b7261ebe45904b",
                 "shasum": ""
             },
             "require": {
@@ -9960,7 +9960,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v0.7.8"
+                "source": "https://github.com/nunomaduro/larastan/tree/v0.7.9"
             },
             "funding": [
                 {
@@ -9980,7 +9980,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-07-02T13:17:34+00:00"
+            "time": "2021-07-05T10:22:59+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
@@ -10646,16 +10646,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.90",
+            "version": "0.12.91",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "f0e4b56630fc3d4eb5be86606d07212ac212ede4"
+                "reference": "8226701cd228a0d63c2df995de7ab6070c69ac6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f0e4b56630fc3d4eb5be86606d07212ac212ede4",
-                "reference": "f0e4b56630fc3d4eb5be86606d07212ac212ede4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8226701cd228a0d63c2df995de7ab6070c69ac6a",
+                "reference": "8226701cd228a0d63c2df995de7ab6070c69ac6a",
                 "shasum": ""
             },
             "require": {
@@ -10686,7 +10686,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.90"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.91"
             },
             "funding": [
                 {
@@ -10706,7 +10706,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-18T07:15:38+00:00"
+            "time": "2021-07-04T15:31:48+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -13142,5 +13142,5 @@
     "platform-overrides": {
         "php": "7.4.13"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
