@@ -29,6 +29,7 @@ use App\Policies\EventPolicy;
 use App\Policies\MajorPolicy;
 use App\Policies\MerchandisePolicy;
 use App\Policies\NotificationTemplatePolicy;
+use App\Policies\OAuth2AccessTokenPolicy;
 use App\Policies\OAuth2ClientPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
@@ -42,6 +43,7 @@ use App\Policies\TravelPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
+use Laravel\Passport\Token;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -72,6 +74,7 @@ class AuthServiceProvider extends ServiceProvider
         Travel::class => TravelPolicy::class,
         TravelAssignment::class => TravelAssignmentPolicy::class,
         OAuth2Client::class => OAuth2ClientPolicy::class,
+        Token::class => OAuth2AccessTokenPolicy::class,
     ];
 
     /**

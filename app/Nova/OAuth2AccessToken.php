@@ -7,25 +7,26 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
-class OAuth2Client extends Resource
+class OAuth2AccessToken extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\OAuth2Client::class;
+    public static $model = \App\Models\OAuth2AccessToken::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The logical group associated with the resource.
@@ -49,7 +50,7 @@ class OAuth2Client extends Resource
      */
     public static function label(): string
     {
-        return 'Clients';
+        return 'Access Tokens';
     }
 
     /**
@@ -57,7 +58,7 @@ class OAuth2Client extends Resource
      */
     public static function singularLabel(): string
     {
-        return 'Client';
+        return 'Access Token';
     }
 
     /**
@@ -66,33 +67,30 @@ class OAuth2Client extends Resource
     public function fields(Request $request): array
     {
         return [
-            ID::make('Client ID', 'id')
+            ID::make('ID', 'id')
                 ->sortable(),
 
-            Text::make('Name', 'name')
-                ->sortable()
-                ->required()
-                ->rules('required'),
+            BelongsTo::make('User'),
 
-            BelongsTo::make('User')
-                ->nullable(),
+            BelongsTo::make('Client', 'client', OAuth2Client::class),
 
-            Boolean::make('Revoked', 'revoked')
-                ->sortable(),
+            Text::make('Name'),
 
-            Text::make('Redirect URL(s)', 'redirect')
-                ->required()
-                ->rules('required')
-                ->hideFromIndex(),
+            Boolean::make('Revoked'),
 
-            Boolean::make('Public (PKCE-Enabled Client)', function (): bool {
-                return null !== $this->secret;
-            })
-                ->hideFromIndex(),
+            new Panel(
+                'Metadata',
+                [
+                    DateTime::make('Created', 'created_at')
+                        ->onlyOnDetail(),
 
-            HasMany::make('Tokens', 'tokens', OAuth2AccessToken::class),
+                    DateTime::make('Last Updated', 'updated_at')
+                        ->onlyOnDetail(),
 
-            self::metadataPanel(),
+                    DateTime::make('Expires', 'expires_at')
+                        ->onlyOnDetail(),
+                ]
+            ),
         ];
     }
 }

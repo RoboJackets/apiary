@@ -7,14 +7,14 @@ namespace App\Nova\Actions;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
-use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\TokenRepository;
 
-class RevokeOAuth2Tokens extends Action
+class RevokeOAuth2Tokens extends DestructiveAction
 {
     use InteractsWithQueue;
     use Queueable;
@@ -59,7 +59,7 @@ class RevokeOAuth2Tokens extends Action
             }
         }
 
-        return Action::message('Successfully deleted OAuth2 tokens');
+        return DestructiveAction::message('Successfully deleted OAuth2 tokens');
     }
 
     /**

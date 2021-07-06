@@ -299,6 +299,11 @@ class User extends Resource
                     return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
                 }),
 
+            HasMany::make('OAuth2 Access Tokens', 'tokens', OAuth2AccessToken::class)
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
+                }),
+
             new Panel('Metadata', $this->metaFields()),
         ];
     }
@@ -458,21 +463,21 @@ class User extends Resource
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-                }),
+                })->confirmButtonText('Create Access Token'),
             resolve(CreateOAuth2Client::class)
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
-                }),
+                })->confirmButtonText('Create Client'),
             resolve(RevokeOAuth2Tokens::class)
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-                }),
+                })->confirmButtonText('Revoke Tokens'),
             (new Actions\SendNotification())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('send-notifications');
