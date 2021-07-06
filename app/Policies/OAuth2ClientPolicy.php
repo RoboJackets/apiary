@@ -8,7 +8,8 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class OAuth2ClientPolicy {
+class OAuth2ClientPolicy
+{
     use HandlesAuthorization;
 
     /**
@@ -16,7 +17,7 @@ class OAuth2ClientPolicy {
      */
     public function view(User $user, Client $client): bool
     {
-        return $user->hasRole("admin") || $user->id === $client->user_id;
+        return $user->hasRole('admin') || $user->id === $client->user_id;
     }
 
     /**
@@ -24,7 +25,7 @@ class OAuth2ClientPolicy {
      */
     public function create(User $user): bool
     {
-        return $user->hasRole("admin");
+        return $user->hasRole('admin');
     }
 
     /**
@@ -32,7 +33,7 @@ class OAuth2ClientPolicy {
      */
     public function update(User $user, Client $client): bool
     {
-        return $user->hasRole("admin") || $user->id === $client->user_id;
+        return $user->hasRole('admin') || $user->id === $client->user_id;
     }
 
     /**

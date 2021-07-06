@@ -78,7 +78,7 @@ class OAuth2Client extends Resource
                 return null !== $this->secret;
             }),
             Text::make('Hashed Secret', 'secret')->hideFromIndex()->readonly()
-                ->help('This is a hashed version of the client secret. The plaintext client secret is only ' .
+                ->help('This is a hashed version of the client secret. The plaintext client secret is only '.
                     'available immediately after creation.'),
             DateTime::make('Created At', 'created_at')->readonly(),
             DateTime::make('Updated At', 'updated_at')->hideFromIndex()->readonly(),
