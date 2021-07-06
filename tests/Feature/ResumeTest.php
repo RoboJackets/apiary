@@ -35,7 +35,7 @@ class ResumeTest extends TestCase
         Storage::fake('local');
 
         // Check they started with no resume uploaded
-        $response = $this->actingAs($user, 'web')->get('/api/v1/users/'.$user->id.'/resume');
+        $response = $this->actingAs($user, 'api')->get('/api/v1/users/'.$user->id.'/resume');
         $response->assertStatus(404);
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'error')
@@ -43,7 +43,7 @@ class ResumeTest extends TestCase
         });
 
         // Check they started with no resume uploaded when searching by uid instead of id
-        $response = $this->actingAs($user, 'web')->get('/api/v1/users/'.$user->uid.'/resume');
+        $response = $this->actingAs($user, 'api')->get('/api/v1/users/'.$user->uid.'/resume');
         $response->assertStatus(404);
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'error')
@@ -62,21 +62,21 @@ class ResumeTest extends TestCase
             ->createWithContent('resume.docx', file_get_contents(resource_path('test/resume-twopage.pdf')));
 
         // Check an upload for a nonexistent user fails
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$fakeUserId.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$fakeUserId.'/resume', [
             'resume' => $pdfOnePage,
         ]);
         $response->assertStatus(422);
         Storage::disk('local')->assertMissing('resumes/'.$fakeUserId.'.pdf');
 
         // Check an upload for another user fails
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$alternateId.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$alternateId.'/resume', [
             'resume' => $pdfOnePage,
         ]);
         $response->assertStatus(403);
         Storage::disk('local')->assertMissing('resumes/'.$alternateId.'.pdf');
 
         // Check an upload with no dues transaction fails
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$user->id.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $pdfOnePage,
         ]);
         $response->assertStatus(400);
@@ -106,7 +106,7 @@ class ResumeTest extends TestCase
         // Ideally this would check that uploading no file fails nicely, but there's no easy way to fake that.
 
         // Check an upload of a PNG fails
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$user->id.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $image,
         ]);
         $response->assertStatus(400);
@@ -117,7 +117,7 @@ class ResumeTest extends TestCase
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
 
         // Check an upload of a TXT fails
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$user->id.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $textFile,
         ]);
         $response->assertStatus(400);
@@ -129,7 +129,7 @@ class ResumeTest extends TestCase
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
 
         // Check an upload of a DOCX fails
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$user->id.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $docxFile,
         ]);
         $response->assertStatus(400);
@@ -140,7 +140,7 @@ class ResumeTest extends TestCase
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
 
         // Check an upload of a multi-page PDF fails
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$user->id.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $pdfTwoPage,
         ]);
         $response->assertStatus(400);
@@ -151,7 +151,7 @@ class ResumeTest extends TestCase
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
 
         // Check file size limit
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$user->id.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $bigTextFile,
         ]);
         $response->assertStatus(400);
@@ -162,7 +162,7 @@ class ResumeTest extends TestCase
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
 
         // Check an upload of a single page PDF passes
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$user->id.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $pdfOnePage,
         ]);
         $response->assertStatus(200);
@@ -177,18 +177,18 @@ class ResumeTest extends TestCase
         $this->assertEqualsWithDelta($user->resume_date->timestamp, now()->timestamp, 5);
 
         // Check that the resume can be downloaded
-        $response = $this->actingAs($user, 'web')->get('/api/v1/users/'.$user->id.'/resume');
+        $response = $this->actingAs($user, 'api')->get('/api/v1/users/'.$user->id.'/resume');
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/pdf');
         $response->assertHeader('Content-Length', strlen($onePagePdfContents));
         $response->assertSee($onePagePdfContents);
 
         // Check that another user's resume cannot be downloaded
-        $response = $this->actingAs($alternateUser, 'web')->get('/api/v1/users/'.$user->id.'/resume');
+        $response = $this->actingAs($alternateUser, 'api')->get('/api/v1/users/'.$user->id.'/resume');
         $response->assertStatus(403);
 
         // Check that a resume cannot be uploaded for another user
-        $response = $this->actingAs($user, 'web')->post('/api/v1/users/'.$alternateId.'/resume', [
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$alternateId.'/resume', [
             'resume' => $pdfOnePage,
         ]);
         $response->assertStatus(403);
@@ -207,11 +207,11 @@ class ResumeTest extends TestCase
     public function testNonexistentResumeDownload(): void
     {
         $user = $this->getTestUser(['member']);
-        $response = $this->actingAs($user, 'web')->get('/api/v1/users/_nonexistentuser/resume');
+        $response = $this->actingAs($user, 'api')->get('/api/v1/users/_nonexistentuser/resume');
         $response->assertStatus(422);
 
         $user = $this->getTestUser(['admin']);
-        $response = $this->actingAs($user, 'web')->get('/api/v1/users/_nonexistentuser/resume');
+        $response = $this->actingAs($user, 'api')->get('/api/v1/users/_nonexistentuser/resume');
         $response->assertStatus(422);
     }
 }

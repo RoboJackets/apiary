@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -77,5 +78,6 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
+        Passport::ignoreMigrations();
     }
 }

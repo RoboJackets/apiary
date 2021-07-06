@@ -12,6 +12,7 @@ use App\Models\Event;
 use App\Models\Major;
 use App\Models\Merchandise;
 use App\Models\NotificationTemplate;
+use App\Models\OAuth2Client;
 use App\Models\Payment;
 use App\Models\RecruitingVisit;
 use App\Models\RemoteAttendanceLink;
@@ -28,6 +29,7 @@ use App\Policies\EventPolicy;
 use App\Policies\MajorPolicy;
 use App\Policies\MerchandisePolicy;
 use App\Policies\NotificationTemplatePolicy;
+use App\Policies\OAuth2ClientPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RecruitingVisitPolicy;
@@ -39,6 +41,7 @@ use App\Policies\TravelAssignmentPolicy;
 use App\Policies\TravelPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -68,6 +71,7 @@ class AuthServiceProvider extends ServiceProvider
         RemoteAttendanceLink::class => RemoteAttendanceLinkPolicy::class,
         Travel::class => TravelPolicy::class,
         TravelAssignment::class => TravelAssignmentPolicy::class,
+        OAuth2Client::class => OAuth2ClientPolicy::class,
     ];
 
     /**
@@ -76,5 +80,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+
+        if (! $this->app->routesAreCached()) {
+            Passport::routes();
+        }
+
+        Passport::useClientModel(OAuth2Client::class);
+        Passport::hashClientSecrets();
+        Passport::tokensExpireIn(now()->addDay());
+        Passport::refreshTokensExpireIn(now()->addMonth());
+        Passport::personalAccessTokensExpireIn(now()->addYear());
     }
 }

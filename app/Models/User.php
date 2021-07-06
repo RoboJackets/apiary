@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -176,6 +177,7 @@ class User extends Authenticatable
     use HasRoles;
     use Notifiable;
     use SoftDeletes;
+    use HasApiTokens;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
@@ -212,7 +214,6 @@ class User extends Authenticatable
         'gt_email',
         'name',
         'gtid',
-        'api_token',
         'full_name',
         'is_active',
         'access_active',
@@ -229,7 +230,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    protected $hidden = ['api_token', 'gender', 'ethnicity', 'dues'];
+    protected $hidden = ['gender', 'ethnicity', 'dues'];
 
     /**
      * The attributes that should be cast to native types.

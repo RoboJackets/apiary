@@ -22,7 +22,7 @@ class ApiAuthTest extends TestCase
         $alternateId = $alternateUser->id;
 
         // Same user, read-users-own
-        $response = $this->actingAs($this->getTestUser(['member']), 'web')
+        $response = $this->actingAs($this->getTestUser(['member']), 'api')
                          ->get('/api/v1/users/'.$testId.'?include=roles');
         $response->assertStatus(200);
         $response->assertJson(static function (AssertableJson $json) use ($testId): void {
@@ -36,7 +36,7 @@ class ApiAuthTest extends TestCase
         });
 
         // Same user, with admin
-        $response = $this->actingAs($this->getTestUser(['member', 'admin']), 'web')
+        $response = $this->actingAs($this->getTestUser(['member', 'admin']), 'api')
                          ->get('/api/v1/users/'.$testId.'?include=roles');
         $response->assertJson(static function (AssertableJson $json) use ($testId): void {
             $json->where('status', 'success')
@@ -50,12 +50,12 @@ class ApiAuthTest extends TestCase
         $response->assertStatus(200);
 
         // Different user, no permissions
-        $response = $this->actingAs($this->getTestUser(['member']), 'web')
+        $response = $this->actingAs($this->getTestUser(['member']), 'api')
                          ->get('/api/v1/users/'.$alternateId);
         $response->assertStatus(403);
 
         // Different user, with permissions
-        $response = $this->actingAs($this->getTestUser(['member', 'admin']), 'web')
+        $response = $this->actingAs($this->getTestUser(['member', 'admin']), 'api')
                          ->get('/api/v1/users/'.$alternateId.'?include=roles');
         $response->assertStatus(200);
         $response->assertJson(static function (AssertableJson $json) use ($alternateId): void {

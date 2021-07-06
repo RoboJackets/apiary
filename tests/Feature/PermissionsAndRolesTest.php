@@ -10,6 +10,16 @@ use Tests\TestCase;
 
 class PermissionsAndRolesTest extends TestCase
 {
+    public function testPermissionsLoadedInDatabase(): void
+    {
+        $allPermissions = Permission::all();
+        // phpcs:disable
+        $this->assertGreaterThan(0, $allPermissions->count(), 'The permissions table appears to be '.
+            'empty, which means the database configuration for testing is not working, or a database dump was generated incorrectly (see https://github.com/RoboJackets/apiary/issues/1801). Are you running `composer run '.
+            'test`?');
+        // phpcs:enable
+    }
+
     /**
      * Ensure that the admin role has all permissions.
      */

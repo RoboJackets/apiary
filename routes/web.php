@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| contains the 'web' middleware group. Now create something great!
 |
 */
 
@@ -78,6 +78,12 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('travel', [TravelAssignmentController::class, 'index'])->name('travel.index');
 
     Route::redirect('admin', '/nova');
+
+    Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
+        ->name('login.cas');
+
+    Route::view('oauth2/client', 'oauth2clientcreated')->name('oauth2.client.created');
+    Route::view('oauth2/pat', 'personalaccesstokencreated')->name('oauth2.pat.created');
 });
 
 Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])

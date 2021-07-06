@@ -34,9 +34,24 @@ This is a pretty conventional Laravel project, so we recommend following [the of
 
 *If you're using Homestead, this section is taken care of for you out of the box.*
 
-You can install all of the required php extensions with:
+You can install most of the required php extensions with:
 ```
 $ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath php-curl php-gd php-zip php-ldap
+```
+
+On certain Linux flavors, you may need to manually install the PHP `sodium` extension, which is used by Laravel Passport's
+dependencies.  Sodium is likely not included on RHEL and has to be manually built and enabled.  For RHEL 8, [this third-party](https://gist.github.com/davidalger/c19a53ed293291ec2e93b5227f9e0a2d#file-install-php-sodium-on-el8-sh)
+script (reproduced below in case the Gist disappears, but use at your own risk) has worked to enable the `sodium` extension:
+
+```bash
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
+  && yum install -y php-cli libsodium \
+  && yum install -y php-pear php-devel libsodium-devel make \
+  && pecl channel-update pecl.php.net \
+  && pecl install libsodium \
+  && yum remove -y php-pear php-devel libsodium-devel make \
+  && echo 'extension=sodium.so' > /etc/php.d/20-sodium.ini \
+  && php -i | grep sodium
 ```
 
 For the resume book functionality, you'll also need to install `exiftool` and Ghostscript:
@@ -101,6 +116,8 @@ For a basic development environment, you'll need to modify the following setting
 | CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
 | CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
 | CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user
+| PASSPORT_PERSONAL_ACCESS_CLIENT_ID | Client ID from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
+| PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET | Client secret from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
 
 #### Installing dependencies
 
@@ -124,6 +141,20 @@ Run database migrations to set up tables (run this for initial setup and when an
 
 ```
 $ php artisan migrate
+```
+
+Setup Laravel Passport:
+
+```
+$ php artisan passport:keys
+```
+
+*(Optional - Required to create Personal Access Tokens)* Create OAuth2 Personal Access Client: Add the client ID and
+secret created to the `PASSPORT_PERSONAL_ACCESS_CLIENT_ID` and `PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET` environment
+variables.
+
+```
+$ php artisan passport:client --personal
 ```
 
 Seed the database tables with base content (run this only once for initial setup.)
@@ -156,6 +187,15 @@ Automatically rebuilds your front-end assets whenever the files change on disk. 
 ### `php artisan tinker`
 
 Tinker allows you to interact with Apiary on the command line including the Eloquent ORM, jobs, events, and more. A good introduction to Tinker can be found [here](https://scotch.io/tutorials/tinker-with-the-data-in-your-laravel-apps-with-php-artisan-tinker).
+
+### `composer run test`
+
+Use this command to run unit/feature tests locally. You shouldn't need to modify `.env.testing`. If you add migrations,
+there's no need to dump the schema again; the migrations will be run as part of the tests. (It's possible to squash the
+migrations again if the tests take too long, but simply dumping the schema is insufficient.)
+
+If you try to run PHPUnit directly, you may get various "file not found" errors since the `composer run test` command
+runs extra steps before the tests are run.
 
 ## Moving to Production
 
