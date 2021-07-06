@@ -12,6 +12,7 @@ use App\Models\Event;
 use App\Models\Major;
 use App\Models\Merchandise;
 use App\Models\NotificationTemplate;
+use App\Models\OAuth2AccessToken;
 use App\Models\OAuth2Client;
 use App\Models\Payment;
 use App\Models\RecruitingVisit;
@@ -43,7 +44,6 @@ use App\Policies\TravelPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
-use Laravel\Passport\Token;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -74,7 +74,7 @@ class AuthServiceProvider extends ServiceProvider
         Travel::class => TravelPolicy::class,
         TravelAssignment::class => TravelAssignmentPolicy::class,
         OAuth2Client::class => OAuth2ClientPolicy::class,
-        Token::class => OAuth2AccessTokenPolicy::class,
+        OAuth2AccessToken::class => OAuth2AccessTokenPolicy::class,
     ];
 
     /**
@@ -89,6 +89,7 @@ class AuthServiceProvider extends ServiceProvider
         }
 
         Passport::useClientModel(OAuth2Client::class);
+        Passport::useTokenModel(OAuth2AccessToken::class);
         Passport::hashClientSecrets();
         Passport::tokensExpireIn(now()->addDay());
         Passport::refreshTokensExpireIn(now()->addMonth());

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Passport\Client;
 
 /**
@@ -21,15 +19,5 @@ class OAuth2Client extends Client
     public function skipsAuthorization(): bool
     {
         return true;
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function tokens(): HasMany
-    {
-        return $this->hasMany(OAuth2AccessToken::class, 'client_id');
     }
 }

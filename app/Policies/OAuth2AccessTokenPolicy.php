@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Models\OAuth2AccessToken;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Laravel\Passport\Token;
 
 class OAuth2AccessTokenPolicy
 {
@@ -15,7 +15,7 @@ class OAuth2AccessTokenPolicy
     /**
      * Determine whether the user can view the OAuth2 access token.
      */
-    public function view(User $user, Token $client): bool
+    public function view(User $user, OAuth2AccessToken $token): bool
     {
         return true;
     }
@@ -31,15 +31,15 @@ class OAuth2AccessTokenPolicy
     /**
      * Determine whether the user can update the OAuth2 access token.
      */
-    public function update(User $user, Token $client): bool
+    public function update(User $user, OAuth2AccessToken $token): bool
     {
-        return false;  // not meaningful
+        return false;
     }
 
     /**
      * Determine whether the user can delete the OAuth2 access token.
      */
-    public function delete(User $user, Token $client): bool
+    public function delete(User $user, OAuth2AccessToken $token): bool
     {
         return false;  // use the action
     }
@@ -47,7 +47,7 @@ class OAuth2AccessTokenPolicy
     /**
      * Determine whether the user can restore the OAuth2 access token.
      */
-    public function restore(User $user, Token $client): bool
+    public function restore(User $user, OAuth2AccessToken $token): bool
     {
         return false;
     }
@@ -55,7 +55,7 @@ class OAuth2AccessTokenPolicy
     /**
      * Determine whether the user can permanently delete the OAuth2 access token.
      */
-    public function forceDelete(User $user, Token $client): bool
+    public function forceDelete(User $user, OAuth2AccessToken $token): bool
     {
         return false;
     }
