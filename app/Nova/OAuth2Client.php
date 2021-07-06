@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Models\Client;
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -18,7 +19,7 @@ class OAuth2Client extends Resource
      *
      * @var string
      */
-    public static $model = Client::class;
+    public static $model = \App\Models\OAuth2Client::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -70,17 +71,19 @@ class OAuth2Client extends Resource
     public function fields(Request $request): array
     {
         return [
-            ID::make(__('Client ID'), 'id')->sortable(),
+            ID::make('Client ID', 'id')->sortable(),
             Text::make('Name', 'name')->sortable(),
-            Boolean::make('Revoked', 'revoked'),
+            Boolean::make('Revoked', 'revoked')->sortable(),
             Text::make('Redirect URL(s)', 'redirect')->hideFromIndex(),
             Boolean::make('Public (PKCE-Enabled Client)', function (): bool {
                 return null !== $this->secret;
-            }),
+            })->hideFromIndex(),
             Text::make('Hashed Secret', 'secret')->hideFromIndex()->readonly()
-                ->help('This is a hashed version of the client secret. The plaintext client secret is only '.
-                    'available immediately after creation.'),
-            DateTime::make('Created At', 'created_at')->readonly(),
+                ->help(
+                    'This is a hashed version of the client secret. The plaintext client secret is only '.
+                    'available immediately after creation.'
+                ),
+            DateTime::make('Created At', 'created_at')->hideFromIndex()->readonly(),
             DateTime::make('Updated At', 'updated_at')->hideFromIndex()->readonly(),
         ];
     }

@@ -6,13 +6,13 @@ namespace App\Providers;
 
 use App\Models\Attendance;
 use App\Models\AttendanceExport;
-use App\Models\Client;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
 use App\Models\Major;
 use App\Models\Merchandise;
 use App\Models\NotificationTemplate;
+use App\Models\OAuth2Client;
 use App\Models\Payment;
 use App\Models\RecruitingVisit;
 use App\Models\RemoteAttendanceLink;
@@ -71,7 +71,7 @@ class AuthServiceProvider extends ServiceProvider
         RemoteAttendanceLink::class => RemoteAttendanceLinkPolicy::class,
         Travel::class => TravelPolicy::class,
         TravelAssignment::class => TravelAssignmentPolicy::class,
-        Client::class => OAuth2ClientPolicy::class,
+        OAuth2Client::class => OAuth2ClientPolicy::class,
     ];
 
     /**
@@ -85,7 +85,7 @@ class AuthServiceProvider extends ServiceProvider
             Passport::routes();
         }
 
-        Passport::useClientModel(Client::class); // Use the Client class in App\Models\Client
+        Passport::useClientModel(OAuth2Client::class);
         Passport::hashClientSecrets();
         Passport::tokensExpireIn(now()->addDay());
         Passport::refreshTokensExpireIn(now()->addMonth());

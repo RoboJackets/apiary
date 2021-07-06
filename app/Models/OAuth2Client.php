@@ -6,7 +6,12 @@ namespace App\Models;
 
 use Laravel\Passport\Client as PassportClient;
 
-class Client extends PassportClient
+/**
+ * An OAuth 2 client.
+ *
+ * @property int $user_id the user that owns this client
+ */
+class OAuth2Client extends PassportClient
 {
     /**
      * Determine if the client should skip the authorization prompt.
