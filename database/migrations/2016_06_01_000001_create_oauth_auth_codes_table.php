@@ -17,8 +17,6 @@ class CreateOauthAuthCodesTable extends Migration
 
     /**
      * Create a new migration instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -27,10 +25,8 @@ class CreateOauthAuthCodesTable extends Migration
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         $this->schema->create('oauth_auth_codes', static function (Blueprint $table): void {
             $table->string('id', 100)->primary();
@@ -44,20 +40,16 @@ class CreateOauthAuthCodesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $this->schema->dropIfExists('oauth_auth_codes');
     }
 
     /**
      * Get the migration connection name.
-     *
-     * @return string|null
      */
-    public function getConnection()
+    public function getConnection(): string
     {
         return config('passport.storage.database.connection');
     }

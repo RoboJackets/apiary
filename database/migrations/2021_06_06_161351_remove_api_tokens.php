@@ -12,10 +12,8 @@ class RemoveApiTokens extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         app()['cache']->forget('spatie.permission.cache');
         Permission::where('name', 'read-users-api_token')->delete();
@@ -27,10 +25,8 @@ class RemoveApiTokens extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         app()['cache']->forget('spatie.permission.cache');
 
