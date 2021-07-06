@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Passport\Client;
 
 class OAuth2Client extends Resource
 {
@@ -72,14 +72,16 @@ class OAuth2Client extends Resource
         return [
             ID::make(__('Client ID'), 'id')->sortable(),
             Text::make('Name', 'name')->sortable(),
-            Boolean::make('Active', 'revoked')->trueValue(0)->falseValue(1),
-            Text::make('Redirect URL(s)', 'redirect')->onlyOnDetail(),
+            Boolean::make('Revoked', 'revoked'),
+            Text::make('Redirect URL(s)', 'redirect')->hideFromIndex(),
             Boolean::make('Public (PKCE-Enabled Client)', function (): bool {
                 return null !== $this->secret;
             }),
-            Boolean::make('Password Client', 'password_client'),
-            DateTime::make('Created At', 'created_at'),
-            DateTime::make('Updated At', 'updated_at')->onlyOnDetail(),
+            Text::make('Hashed Secret', 'secret')->hideFromIndex()->readonly()
+                ->help('This is a hashed version of the client secret. The plaintext client secret is only ' .
+                    'available immediately after creation.'),
+            DateTime::make('Created At', 'created_at')->readonly(),
+            DateTime::make('Updated At', 'updated_at')->hideFromIndex()->readonly(),
         ];
     }
 }

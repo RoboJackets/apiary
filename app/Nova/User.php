@@ -461,10 +461,10 @@ class User extends Resource
                 }),
             resolve(CreateOAuth2Client::class)
                 ->canSee(static function (Request $request): bool {
-                    return true;
+                    return $request->user()->hasRole('admin');
                 })
                 ->canRun(static function (Request $request, AppModelsUser $user): bool {
-                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
+                    return $request->user()->hasRole('admin');
                 }),
             resolve(RevokeOAuth2Tokens::class)
                 ->canSee(static function (Request $request): bool {
