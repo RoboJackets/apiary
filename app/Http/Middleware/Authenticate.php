@@ -28,6 +28,5 @@ class Authenticate extends AuthenticateMiddleware
 
             throw new AuthorizationException('Unauthorized');
         }
-        // @phpstan-ignore-line
     }
 }
