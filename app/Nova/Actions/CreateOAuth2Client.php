@@ -89,7 +89,7 @@ class CreateOAuth2Client extends Action
     public function fields()
     {
         return [
-            Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client".</p>')
+            Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client."</p>')
                 ->asHtml(),
 
             Text::make('Client Name')

@@ -58,7 +58,7 @@ class CreatePersonalAccessToken extends Action
     {
         return [
             Heading::make(
-                '<p>To avoid issues, let the outer page load fully before clicking "Create Access Token".</p>'
+                '<p>To avoid issues, let the outer page load fully before clicking "Create Personal Access Token."</p>'
             )
                 ->asHtml(),
 
