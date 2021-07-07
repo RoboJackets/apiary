@@ -57,8 +57,11 @@ class CreatePersonalAccessToken extends Action
     public function fields()
     {
         return [
-            Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action.</p>')
+            Heading::make(
+                '<p>To avoid issues, let the outer page load fully before clicking "Create Personal Access Token."</p>'
+            )
                 ->asHtml(),
+
             Text::make('Name')
                 ->help('Enter a name to identify this token. It will be visible to the user.')
                 ->rules('required'),

@@ -12,6 +12,7 @@ use App\Models\Event;
 use App\Models\Major;
 use App\Models\Merchandise;
 use App\Models\NotificationTemplate;
+use App\Models\OAuth2AccessToken;
 use App\Models\OAuth2Client;
 use App\Models\Payment;
 use App\Models\RecruitingVisit;
@@ -29,6 +30,7 @@ use App\Policies\EventPolicy;
 use App\Policies\MajorPolicy;
 use App\Policies\MerchandisePolicy;
 use App\Policies\NotificationTemplatePolicy;
+use App\Policies\OAuth2AccessTokenPolicy;
 use App\Policies\OAuth2ClientPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
@@ -72,6 +74,7 @@ class AuthServiceProvider extends ServiceProvider
         Travel::class => TravelPolicy::class,
         TravelAssignment::class => TravelAssignmentPolicy::class,
         OAuth2Client::class => OAuth2ClientPolicy::class,
+        OAuth2AccessToken::class => OAuth2AccessTokenPolicy::class,
     ];
 
     /**
@@ -86,6 +89,7 @@ class AuthServiceProvider extends ServiceProvider
         }
 
         Passport::useClientModel(OAuth2Client::class);
+        Passport::useTokenModel(OAuth2AccessToken::class);
         Passport::hashClientSecrets();
         Passport::tokensExpireIn(now()->addDay());
         Passport::refreshTokensExpireIn(now()->addMonth());

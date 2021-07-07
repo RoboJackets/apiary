@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Laravel\Nova\Actions\Action;
@@ -17,9 +15,6 @@ use Laravel\Passport\ClientRepository;
 
 class CreateOAuth2Client extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-
     /**
      * The displayable name of the action.
      *
@@ -94,23 +89,24 @@ class CreateOAuth2Client extends Action
     public function fields()
     {
         return [
-            Heading::make('<p>To avoid issues, let the outer page load fully before clicking Run Action.</p>')
+            Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client."</p>')
                 ->asHtml(),
-            Text::make('Client Name')->rules('required'),
-            Text::make('Redirect URLs')->rules('required')
-                ->help('Separate multiple values with commas.  Example: https://example.com,https://invalid.url'),
-            // phpcs:disable
-            Heading::make('<p>Client Types:<ul><li><strong>Standard Client</strong> - Use for most web use '.
-                'cases <em>except</em> single-page JavaScript applications (e.g., Vue.js or React) or other use cases'.
-                ' where the client secret cannot be kept secret on the backend.</li><li><strong>Public (PKCE-Enabled)'.
-                ' Client</strong> - Use for mobile applications or uses not suitable for a standard client. </li><li>'.
-                '<strong>Password Grant Clients</strong> - Currently not supported due to technical limitations.</li>'.
-                '</ul></p>')->asHtml(),
-            // phpcs:enable
-            Select::make('Client Type')->options([
-                self::STANDARD_CLIENT => 'Standard Client (recommended)',
-                self::PUBLIC_CLIENT => 'Public (PKCE-Enabled) Client',
-            ])
+
+            Text::make('Client Name')
+                ->rules('required'),
+
+            Text::make('Redirect URLs')
+                ->rules('required')
+                ->help('Separate multiple values with commas. Example: https://example.com,https://invalid.url'),
+
+            Heading::make('<p>Read about client types <a href="https://oauth.net/2/client-types/">here</a>.')
+                ->asHtml(),
+
+            Select::make('Client Type')
+                ->options([
+                    self::STANDARD_CLIENT => 'Confidential',
+                    self::PUBLIC_CLIENT => 'Public',
+                ])
                 ->rules('required'),
         ];
     }
