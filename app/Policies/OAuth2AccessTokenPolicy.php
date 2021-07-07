@@ -13,6 +13,14 @@ class OAuth2AccessTokenPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view any OAuth2 access tokens.
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    /**
      * Determine whether the user can view the OAuth2 access token.
      */
     public function view(User $user, OAuth2AccessToken $token): bool

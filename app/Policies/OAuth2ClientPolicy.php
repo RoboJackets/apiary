@@ -13,6 +13,14 @@ class OAuth2ClientPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view any OAuth2 clients.
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    /**
      * Determine whether the user can view the OAuth2 client.
      */
     public function view(User $user, OAuth2Client $client): bool
