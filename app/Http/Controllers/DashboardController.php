@@ -74,7 +74,8 @@ class DashboardController extends Controller
         $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
 
         $needsResume = $user->is_active &&
-            (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date);
+            (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date)
+            && config('features.resumes') === true;
 
         $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
             ->orderByDesc('created_at')->first();
