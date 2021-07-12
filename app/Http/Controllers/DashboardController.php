@@ -75,7 +75,7 @@ class DashboardController extends Controller
 
         $needsResume = $user->is_active &&
             (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date)
-            && config('features.resumes') === true;
+            && true === config('features.resumes');
 
         $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
             ->orderByDesc('created_at')->first();
