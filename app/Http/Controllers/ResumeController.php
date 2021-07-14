@@ -82,14 +82,10 @@ class ResumeController extends Controller
             }
 
             if (true !== $user->is_active) {
-                if ($request->has('redirect')) {
-                    return redirect()->route('resume.index', ['resume_error' => 'inactive']);
-                }
-
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'inactive',
+                        'message' => 'You must be an active member to upload your resume.',
                     ],
                     400
                 );
@@ -98,14 +94,10 @@ class ResumeController extends Controller
             // Make sure there's exactly one file
             $file = $request->file('resume');
             if (null === $file || is_array($file)) {
-                if ($request->has('redirect')) {
-                    return redirect()->route('resume.index', ['resume_error' => 'resume_required']);
-                }
-
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'resume_required',
+                        'message' => 'Only one resume can be uploaded at a time',
                     ],
                     400
                 );
@@ -113,14 +105,10 @@ class ResumeController extends Controller
 
             // 1MB file size limit
             if ($file->getSize() > 1000000) {
-                if ($request->has('redirect')) {
-                    return redirect()->route('resume.index', ['resume_error' => 'too_big']);
-                }
-
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'too_big',
+                        'message' => 'Your resume is larger than the 1MB size limit.',
                     ],
                     400
                 );
@@ -170,10 +158,6 @@ class ResumeController extends Controller
 
             $user->resume_date = now();
             $user->save();
-
-            if ($request->has('redirect')) {
-                return redirect()->route('resume.index');
-            }
 
             return response()->json(
                 [
