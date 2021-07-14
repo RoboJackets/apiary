@@ -20,6 +20,7 @@ import 'flatpickr/dist/flatpickr.css';
 import VueMoment from 'vue-moment';
 import moment from 'moment';
 import Toast from "./mixins/Toast";
+import FileUploader from "./mixins/FileUploader";
 
 var bugsnagKey = document.head.querySelector('meta[name="bugsnag-api-key"]').content;
 if (bugsnagKey) {
@@ -32,7 +33,9 @@ if (bugsnagKey) {
 require('./bootstrap');
 var axios = require('axios');
 
-window.Swal = Swal;
+window.Swal = Swal.mixin({
+    confirmButtonColor: "#3085d6", // Swal's real default color is #7367f0 (purple), even though that's not what the docs say
+});
 
 // Borrowed from https://sweetalert2.github.io/
 const SwalToast = Swal.mixin({
@@ -100,5 +103,8 @@ Vue.component('loading-spinner', require('./components/LoadingSpinner').default)
 
 const app = new Vue({
     el: '#app',
-    mixins: [Toast],
+    mixins: [
+        Toast,
+        FileUploader,
+    ],
 });
