@@ -65,7 +65,6 @@ export default {
         this.user = response.data.user;
       })
       .catch(response => {
-        console.log(response);
         Swal.fire(
           'Connection Error',
           'Unable to load data. Check your internet connection or try refreshing the page.',
@@ -88,7 +87,6 @@ export default {
   },
   methods: {
     fileChange: function (e) {
-      console.log("fileChange")
       if (e.target.files.length > 0) {
         const file = e.target.files[0];
         if (file) {
@@ -99,14 +97,10 @@ export default {
     },
     onSubmit: function (event) {
       this.uploading = true;
-      console.log("onSubmit called", event)
       const formData = new FormData()
       formData.append("resume", this.selectedFile)
 
-      console.log("onsubmit selectedfile", this.selectedFile)
-      this.uploadFile(formData, this.actionUrl, (e) => {
-        console.log(e.loaded, e.total)
-      }).then(() => {
+      this.uploadFile(formData, this.actionUrl, null).then(() => {
           this.uploading = false;
           return Swal.fire({
             title: "Resume uploaded successfully",
