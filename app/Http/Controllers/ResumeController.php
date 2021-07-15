@@ -63,12 +63,13 @@ class ResumeController extends Controller
     }
 
     /**
-     * Get the MIME type of a file using the system `file` command
+     * Get the MIME type of a file using the system `file` command.
      *
      * @param string $filePath
      * @return string|null
      */
-    private function getFileCommandMimeType(string $filePath): ?string {
+    private function getFileCommandMimeType(string $filePath): ?string
+    {
         $output = null;
         // --mime-type to get just the MIME type
         // -b to be "brief" and return *just* the MIME type
@@ -82,7 +83,7 @@ class ResumeController extends Controller
 
         // Sanity check to make sure we got a MIME type back, rather than an error (file names can't contain the /
         // character so that was a good indicator)
-        if (null !== $output && strpos($output, "/") >= 0 && false === strpos($output, "cannot open")) {
+        if (null !== $output && strpos($output, '/') >= 0 && false === strpos($output, 'cannot open')) {
             return $output;
         }
 
@@ -142,12 +143,12 @@ class ResumeController extends Controller
             }
 
             $tempPath = $file->getPathname();
-            $PDF_MIME_TYPE = "application/pdf";
+            $PDF_MIME_TYPE = 'application/pdf';
 
             $fileCommandMimeType = $this->getFileCommandMimeType($tempPath);
 
             if ($PDF_MIME_TYPE !== $fileCommandMimeType) {
-                Log::debug("User resume uploaded for user $user->uid but was invalid (`file` command's " .
+                Log::debug("User resume uploaded for user $user->uid but was invalid (`file` command's ".
                     "reported MIME type was $fileCommandMimeType)");
 
                 return response()->json(
