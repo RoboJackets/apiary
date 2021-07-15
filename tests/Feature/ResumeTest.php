@@ -122,9 +122,8 @@ class ResumeTest extends TestCase
         ]);
         $response->assertStatus(400);
         $response->assertJson(static function (AssertableJson $json): void {
-            // This should be resume_not_pdf, but exiftool does not handle txt files nicely.
             $json->where('status', 'error')
-                ->where('message', 'unknown_error');
+                ->where('message', 'resume_not_pdf');
         });
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
 
