@@ -50,6 +50,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'phone' => [
                 'digits_between:10,15',
+                'nullable',
             ],
             'emergency_contact_name' => [
                 'required_with:emergency_contact_phone',
