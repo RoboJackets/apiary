@@ -63,6 +63,33 @@ class ResumeController extends Controller
     }
 
     /**
+     * Get the MIME type of a file using the system `file` command
+     *
+     * @param string $filePath
+     * @return string|null
+     */
+    private function getFileCommandMimeType(string $filePath): ?string {
+        $output = null;
+        // --mime-type to get just the MIME type
+        // -b to be "brief" and return *just* the MIME type
+        exec('file --mime-type -b '.escapeshellarg($filePath), $output);
+
+        if (count($output) === 0) {
+            return null;
+        }
+
+        $output = $output[0];
+
+        // Sanity check to make sure we got a MIME type back, rather than an error (file names can't contain the /
+        // character so that was a good indicator)
+        if (null !== $output && strpos($output, "/") >= 0 && false === strpos($output, "cannot open")) {
+            return $output;
+        }
+
+        return null;
+    }
+
+    /**
      * Store the user's resume.
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -85,7 +112,7 @@ class ResumeController extends Controller
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'You must be an active member to upload your resume.',
+                        'message' => 'inactive',
                     ],
                     400
                 );
@@ -97,7 +124,7 @@ class ResumeController extends Controller
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'Only one resume can be uploaded at a time',
+                        'message' => 'resume_required',
                     ],
                     400
                 );
@@ -108,13 +135,30 @@ class ResumeController extends Controller
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'Your resume is larger than the 1MB size limit.',
+                        'message' => 'too_big',
                     ],
                     400
                 );
             }
 
             $tempPath = $file->getPathname();
+            $PDF_MIME_TYPE = "application/pdf";
+
+            $fileCommandMimeType = $this->getFileCommandMimeType($tempPath);
+
+            if ($PDF_MIME_TYPE !== $fileCommandMimeType) {
+                Log::debug("User resume uploaded for user $user->uid but was invalid (`file` command's " .
+                    "reported MIME type was $fileCommandMimeType)");
+
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'resume_not_pdf',
+                    ],
+                    400
+                );
+            }
+
             $exifReturn = -1;
             $exifOutput = '';
             exec('exiftool -json '.escapeshellarg($tempPath), $exifOutput, $exifReturn);
@@ -126,7 +170,7 @@ class ResumeController extends Controller
             $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
             $exifError = array_key_exists('Error', $exifOutput) ? $exifOutput['Error'] : null;
 
-            $valid = null === $exifError && 'PDF' === $fileType && 'application/pdf' === $mimeType;
+            $valid = null === $exifError && 'PDF' === $fileType && $PDF_MIME_TYPE === $mimeType;
             $pageCountValid = 1 === $pageCount;
             $exifErrorInvalidType = 'Unknown file type' === $exifError;
 
