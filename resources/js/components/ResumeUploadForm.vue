@@ -13,7 +13,8 @@
         <div class="col-sm-10 col-lg-4">
           <div class="input-group mb-3">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="resume" name="resume" v-on:change="fileChange">
+              <input type="file" class="custom-file-input" id="resume" name="resume" accept="application/pdf"
+                     v-on:change="fileChange">
               <label class="custom-file-label" for="resume">{{ fileLabel }}</label>
             </div>
           </div>
@@ -21,7 +22,7 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-primary" v-on:click="onSubmit">Upload</button>
+        <button class="btn btn-primary" :disabled="uploading || !selectedFile" v-on:click="onSubmit">{{ uploading ? "Uploading file..." : "Upload" }}</button>
       </div>
     </div>
     <div class="col-12" v-else-if="loaded">
@@ -52,6 +53,7 @@ export default {
       actionUrl: '',
       fileLabel: 'Choose file...',
       selectedFile: null,
+      uploading: false,
     };
   },
   mounted() {
@@ -79,18 +81,6 @@ export default {
       if (!this.hasResume) return '';
       return moment(this.user.resume_date).format('dddd, MMMM Do, YYYY');
     },
-    messageText: function () {
-      if (!this.message || this.message.length === 0) return '';
-
-      const messages = {
-        'resume_not_one_page': 'Your resume must be one page long.',
-        'resume_not_pdf': 'Your resume must be a PDF.',
-        'inactive': 'You must be an active member to upload your resume.',
-        'resume_required': 'You must attach a resume to upload.',
-        'too_big': 'Uploaded files must be smaller than 1MB.',
-      };
-      return messages[this.message] || 'An unknown error occurred.';
-    },
     loaded: function () {
       // Pick an attribute users will always have
       return !!this.user.name;
@@ -108,6 +98,7 @@ export default {
       }
     },
     onSubmit: function (event) {
+      this.uploading = true;
       console.log("onSubmit called", event)
       const formData = new FormData()
       formData.append("resume", this.selectedFile)
@@ -115,15 +106,33 @@ export default {
       console.log("onsubmit selectedfile", this.selectedFile)
       this.uploadFile(formData, this.actionUrl, (e) => {
         console.log(e.loaded, e.total)
-      }).then(() => Swal.fire({
-          title: "Resume uploaded successfully",
-          icon: "success",
-        }).then(() => window.location = "/")
-      ).catch((e,g) => {
-        console.log(e.response.data.message)
+      }).then(() => {
+          this.uploading = false;
+          return Swal.fire({
+            title: "Resume uploaded successfully",
+            icon: "success",
+          }).then(() => window.location = "/");
+        }
+      ).catch((e) => {
+        this.uploading = false;
+
+        const messages = {
+          'resume_not_one_page': 'Your resume must be one page long.',
+          'resume_not_pdf': 'Your resume must be a PDF.',
+          'inactive': 'You must be an active member to upload your resume.',
+          'resume_required': 'You must attach a resume to upload.',
+          'too_big': 'Uploaded files must be smaller than 1MB.',
+        };
+
+        let errorMsg = e.message || 'An unknown error occurred.';
+
+        if (e.response && e.response.data && e.response.data.message) {
+          errorMsg = messages[e.response.data.message];
+        }
+
         Swal.fire({
-          title: "Error uploading resume",
-          text: `We were unable to upload your resume due to an error: ${e.message || "Unknown error"}`,
+          title: "Upload error",
+          text: errorMsg,
           icon: "error",
         });
       })
