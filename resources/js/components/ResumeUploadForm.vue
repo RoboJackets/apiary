@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-12" v-if="loaded && user.is_active">
       <div class="alert alert-danger" role="alert" v-if="message" v-html="messageText"></div>
-      <p v-if="hasResume">You last uploaded your resume on {{ resumeDate }}. You can view it <a
-        :href="actionUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
+      <p v-if="hasResume && viewUrl">You last uploaded your resume on {{ resumeDate }}. You can view it <a
+        :href="viewUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
       <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly
         to ensure they're always accurate.</p>
       <p>Your resume must be a one page PDF. The maximum file size is 1MB.</p>
@@ -51,6 +51,7 @@ export default {
       dataUrl: '',
       baseUrl: '/api/v1/users/',
       actionUrl: '',
+      viewUrl: '',
       fileLabel: 'Choose file...',
       selectedFile: null,
       uploading: false,
@@ -58,6 +59,7 @@ export default {
   },
   mounted() {
     this.dataUrl = this.baseUrl + this.userUid;
+    this.viewUrl = `users/${this.userUid}/resume`;
     this.actionUrl = this.baseUrl + this.userUid + '/resume';
     axios
       .get(this.dataUrl)

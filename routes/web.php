@@ -54,6 +54,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::prefix('resume')->name('resume.')->group(static function (): void {
         Route::get('/', [ResumeController::class, 'showUploadPage'])->name('index');
     });
+    Route::get('users/{id}/resume', [ResumeController::class, 'show'])->name('resume.show');
 
     Route::prefix('pay')->group(static function (): void {
         Route::get('/dues', [SquareCheckoutController::class, 'payDues'])->name('pay.dues');
