@@ -35,7 +35,7 @@ class ResumeTest extends TestCase
         Storage::fake('local');
 
         // Check they started with no resume uploaded
-        $response = $this->actingAs($user, 'api')->get('/api/v1/users/'.$user->id.'/resume');
+        $response = $this->actingAs($user, 'api')->get('/users/'.$user->id.'/resume');
         $response->assertStatus(404);
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'error')
@@ -43,7 +43,7 @@ class ResumeTest extends TestCase
         });
 
         // Check they started with no resume uploaded when searching by uid instead of id
-        $response = $this->actingAs($user, 'api')->get('/api/v1/users/'.$user->uid.'/resume');
+        $response = $this->actingAs($user, 'api')->get('/users/'.$user->uid.'/resume');
         $response->assertStatus(404);
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'error')
@@ -122,9 +122,8 @@ class ResumeTest extends TestCase
         ]);
         $response->assertStatus(400);
         $response->assertJson(static function (AssertableJson $json): void {
-            // This should be resume_not_pdf, but exiftool does not handle txt files nicely.
             $json->where('status', 'error')
-                ->where('message', 'unknown_error');
+                ->where('message', 'resume_not_pdf');
         });
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
 
@@ -177,14 +176,14 @@ class ResumeTest extends TestCase
         $this->assertEqualsWithDelta($user->resume_date->timestamp, now()->timestamp, 5);
 
         // Check that the resume can be downloaded
-        $response = $this->actingAs($user, 'api')->get('/api/v1/users/'.$user->id.'/resume');
+        $response = $this->actingAs($user, 'api')->get('/users/'.$user->id.'/resume');
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/pdf');
         $response->assertHeader('Content-Length', strlen($onePagePdfContents));
         $response->assertSee($onePagePdfContents);
 
         // Check that another user's resume cannot be downloaded
-        $response = $this->actingAs($alternateUser, 'api')->get('/api/v1/users/'.$user->id.'/resume');
+        $response = $this->actingAs($alternateUser, 'api')->get('/users/'.$user->id.'/resume');
         $response->assertStatus(403);
 
         // Check that a resume cannot be uploaded for another user
@@ -207,11 +206,11 @@ class ResumeTest extends TestCase
     public function testNonexistentResumeDownload(): void
     {
         $user = $this->getTestUser(['member']);
-        $response = $this->actingAs($user, 'api')->get('/api/v1/users/_nonexistentuser/resume');
+        $response = $this->actingAs($user, 'web')->get('/users/_nonexistentuser/resume');
         $response->assertStatus(422);
 
         $user = $this->getTestUser(['admin']);
-        $response = $this->actingAs($user, 'api')->get('/api/v1/users/_nonexistentuser/resume');
+        $response = $this->actingAs($user, 'web')->get('/users/_nonexistentuser/resume');
         $response->assertStatus(422);
     }
 }

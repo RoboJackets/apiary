@@ -65,7 +65,6 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         Route::resource('attendance', AttendanceController::class)->except('create', 'edit');
         Route::get('users/search', [UserController::class, 'search']);
         Route::resource('users', UserController::class)->except('create', 'edit');
-        Route::get('users/{id}/resume', [ResumeController::class, 'show']);
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);
         Route::get('attendancereports/{hash}', [AttendanceReportController::class, 'show'])
             ->name('attendancereport.show');

@@ -63,6 +63,33 @@ class ResumeController extends Controller
     }
 
     /**
+     * Get the MIME type of a file using the system `file` command.
+     *
+     * @param string $filePath
+     */
+    private function getFileCommandMimeType(string $filePath): ?string
+    {
+        $output = null;
+        // --mime-type to get just the MIME type
+        // -b to be "brief" and return *just* the MIME type
+        exec('file --mime-type -b '.escapeshellarg($filePath), $output);
+
+        if (0 === count($output)) {
+            return null;
+        }
+
+        $output = $output[0];
+
+        // Sanity check to make sure we got a MIME type back, rather than an error (file names can't contain the /
+        // character so that was a good indicator)
+        if (null !== $output && false !== strpos($output, '/') && false === strpos($output, 'cannot open')) {
+            return $output;
+        }
+
+        return null;
+    }
+
+    /**
      * Store the user's resume.
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -82,10 +109,6 @@ class ResumeController extends Controller
             }
 
             if (true !== $user->is_active) {
-                if ($request->has('redirect')) {
-                    return redirect()->route('resume.index', ['resume_error' => 'inactive']);
-                }
-
                 return response()->json(
                     [
                         'status' => 'error',
@@ -98,10 +121,6 @@ class ResumeController extends Controller
             // Make sure there's exactly one file
             $file = $request->file('resume');
             if (null === $file || is_array($file)) {
-                if ($request->has('redirect')) {
-                    return redirect()->route('resume.index', ['resume_error' => 'resume_required']);
-                }
-
                 return response()->json(
                     [
                         'status' => 'error',
@@ -113,10 +132,6 @@ class ResumeController extends Controller
 
             // 1MB file size limit
             if ($file->getSize() > 1000000) {
-                if ($request->has('redirect')) {
-                    return redirect()->route('resume.index', ['resume_error' => 'too_big']);
-                }
-
                 return response()->json(
                     [
                         'status' => 'error',
@@ -127,6 +142,25 @@ class ResumeController extends Controller
             }
 
             $tempPath = $file->getPathname();
+            $PDF_MIME_TYPE = 'application/pdf';
+
+            $fileCommandMimeType = $this->getFileCommandMimeType($tempPath);
+
+            if ($PDF_MIME_TYPE !== $fileCommandMimeType) {
+                // phpcs:disable
+                Log::debug("User resume uploaded for user $user->uid but was invalid (`file` command's ".
+                    "reported MIME type was $fileCommandMimeType)");
+                // phpcs:enable
+
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'resume_not_pdf',
+                    ],
+                    400
+                );
+            }
+
             $exifReturn = -1;
             $exifOutput = '';
             exec('exiftool -json '.escapeshellarg($tempPath), $exifOutput, $exifReturn);
@@ -138,7 +172,7 @@ class ResumeController extends Controller
             $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
             $exifError = array_key_exists('Error', $exifOutput) ? $exifOutput['Error'] : null;
 
-            $valid = null === $exifError && 'PDF' === $fileType && 'application/pdf' === $mimeType;
+            $valid = null === $exifError && 'PDF' === $fileType && $PDF_MIME_TYPE === $mimeType;
             $pageCountValid = 1 === $pageCount;
             $exifErrorInvalidType = 'Unknown file type' === $exifError;
 
@@ -170,10 +204,6 @@ class ResumeController extends Controller
 
             $user->resume_date = now();
             $user->save();
-
-            if ($request->has('redirect')) {
-                return redirect()->route('resume.index');
-            }
 
             return response()->json(
                 [
