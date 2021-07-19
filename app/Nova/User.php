@@ -548,10 +548,10 @@ class User extends Resource
                 str_contains($team_name, 'Core') ||
                 str_contains($team_name, 'Outreach')
             ) {
-                return $team_name . ' Chair';
+                return $team_name.' Chair';
             }
 
-            return $team_name . ' Project Manager';
+            return $team_name.' Project Manager';
         }
 
         // This query is adapted from the dashboard controller
@@ -582,7 +582,7 @@ class User extends Resource
             // @phpstan-ignore-next-line
             $lastYear = (new Carbon($lastPaidTransact->effective_end, 'America/New_York'))->year;
 
-            return $firstYear === $lastYear ? 'Member ' . $firstYear : 'Member ' . $firstYear . '-' . $lastYear;
+            return $firstYear === $lastYear ? 'Member '.$firstYear : 'Member '.$firstYear.'-'.$lastYear;
         }
 
         $major_names = $this->majors()->pluck('display_name')->toArray();
@@ -593,7 +593,7 @@ class User extends Resource
         ray($class_standing_names);
 
         if (count($major_names) > 0 && null !== $major_names[0] && count($class_standing_names) > 0) {
-            return $major_names[0] . ' | ' . ucfirst($class_standing_names[0]);
+            return $major_names[0].' | '.ucfirst($class_standing_names[0]);
         }
 
         return null;

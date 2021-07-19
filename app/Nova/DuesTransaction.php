@@ -186,6 +186,6 @@ class DuesTransaction extends Resource
      */
     public function subtitle(): ?string
     {
-        return $this->user->full_name . ' | ' . $this->package->name . ' | ' . ucfirst($this->status);
+        return $this->user->full_name.' | '.$this->package->name.' | '.ucfirst($this->status);
     }
 }

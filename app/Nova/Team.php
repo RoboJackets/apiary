@@ -279,7 +279,7 @@ class Team extends Resource
     public function subtitle(): ?string
     {
         if (null !== $this->projectManager) {
-            return 'Project Manager: ' . $this->projectManager->full_name;
+            return 'Project Manager: '.$this->projectManager->full_name;
         }
 
         return null;

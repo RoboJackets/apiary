@@ -135,6 +135,6 @@ class TravelAssignment extends Resource
      */
     public function subtitle(): ?string
     {
-        return $this->user->full_name . ' | ' . $this->travel->name . ' | ' . ($this->is_paid ? 'Paid' : 'Unpaid');
+        return $this->user->full_name.' | '.$this->travel->name.' | '.($this->is_paid ? 'Paid' : 'Unpaid');
     }
 }

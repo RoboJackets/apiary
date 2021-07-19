@@ -157,11 +157,11 @@ class TravelAssignment extends Model
         $travel = $this->travel->toArray();
 
         foreach ($user as $key => $val) {
-            $array['user_' . $key] = $val;
+            $array['user_'.$key] = $val;
         }
 
         foreach ($travel as $key => $val) {
-            $array['travel_' . $key] = $val;
+            $array['travel_'.$key] = $val;
         }
 
         $array['payable_type'] = $this->getMorphClass();

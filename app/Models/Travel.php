@@ -91,7 +91,6 @@ class Travel extends Model
         'desc(return_date_unix)',
     ];
 
-
     public function primaryContact(): BelongsTo
     {
         return $this->belongsTo(User::class, 'primary_contact_user_id');

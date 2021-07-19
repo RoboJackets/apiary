@@ -283,11 +283,11 @@ class DuesTransaction extends Model
         $package = $this->package->toArray();
 
         foreach ($user as $key => $val) {
-            $array['user_' . $key] = $val;
+            $array['user_'.$key] = $val;
         }
 
         foreach ($package as $key => $val) {
-            $array['package_' . $key] = $val;
+            $array['package_'.$key] = $val;
         }
 
         $array['payable_type'] = $this->getMorphClass();
