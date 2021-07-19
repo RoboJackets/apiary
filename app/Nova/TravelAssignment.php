@@ -15,7 +15,7 @@ use Laravel\Nova\Fields\MorphMany;
  * A Nova resource for travel assignments.
  *
  * @property bool $is_paid
- * @property \App\Models\Travel $travel
+ * @property ?\App\Models\Travel $travel
  * @property \App\Models\User $user
  */
 class TravelAssignment extends Resource

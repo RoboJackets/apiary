@@ -47,7 +47,7 @@ use Laravel\Scout\Searchable;
  * @property      string|null $source
  * @property      int|null $remote_attendance_link_id
  * @property-read \App\Models\Team|\App\Models\Event $attendable
- * @property-read \App\Models\User $attendee
+ * @property-read ?\App\Models\User $attendee
  * @property-read \App\Models\User $recorded
  * @property-read \App\Models\RemoteAttendanceLink|null $remoteAttendanceLink
  */

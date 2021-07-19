@@ -24,7 +24,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for teams.
  *
- * @property \App\Models\User $projectManager
+ * @property ?\App\Models\User $projectManager
  */
 class Team extends Resource
 {

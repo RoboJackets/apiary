@@ -127,6 +127,6 @@ class Travel extends Resource
      */
     public function subtitle(): ?string
     {
-        return $this->destination.' | '.$this->departure_date->format('F jS, Y');
+        return $this->destination.' | '.$this->departure_date->format('F Y');
     }
 }

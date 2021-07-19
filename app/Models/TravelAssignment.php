@@ -20,8 +20,8 @@ use Laravel\Scout\Searchable;
  * @property int $user_id
  * @property int $travel_id
  * @property bool $documents_received
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  *
  * @property-read bool $is_paid

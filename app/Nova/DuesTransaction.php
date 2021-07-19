@@ -19,7 +19,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  * A Nova resource for dues transactions.
  *
  * @property bool $is_paid
- * @property \App\Models\DuesPackage $package
+ * @property ?\App\Models\DuesPackage $package
  * @property \App\Models\User $user
  * @property string $status
  */

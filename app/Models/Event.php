@@ -101,6 +101,7 @@ class Event extends Model
      */
     public $ranking_rules = [
         'desc(start_time_unix)',
+        'desc(end_time_unix)',
     ];
 
     public function organizer(): BelongsTo
@@ -170,6 +171,10 @@ class Event extends Model
 
         if (null !== $this->start_time) {
             $array['start_time_unix'] = $this->start_time->getTimestamp();
+        }
+
+        if (null !== $this->end_time) {
+            $array['end_time_unix'] = $this->end_time->getTimestamp();
         }
 
         return $array;

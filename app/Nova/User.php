@@ -589,9 +589,6 @@ class User extends Resource
 
         $class_standing_names = $this->classStanding()->pluck('name')->toArray();
 
-        ray($major_names);
-        ray($class_standing_names);
-
         if (count($major_names) > 0 && null !== $major_names[0] && count($class_standing_names) > 0) {
             return $major_names[0].' | '.ucfirst($class_standing_names[0]);
         }
