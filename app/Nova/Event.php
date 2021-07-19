@@ -19,7 +19,8 @@ use Laravel\Nova\Fields\Text;
 /**
  * A Nova resource for events.
  *
- * @property int $id The database ID for this event
+ * @property int $id
+ * @property \Carbon\Carbon $start_time
  */
 class Event extends Resource
 {
@@ -153,5 +154,13 @@ class Event extends Resource
                 ->confirmButtonText('Create Link')
                 ->cancelButtonText('Cancel'),
         ];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): ?string
+    {
+        return $this->start_time->format('F jS, Y');
     }
 }

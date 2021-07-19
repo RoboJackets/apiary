@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a one-off gathering where an RSVP may be requested or attendance may be taken.
@@ -58,6 +59,7 @@ class Event extends Model
 {
     use GetMorphClassStatic;
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -90,6 +92,15 @@ class Event extends Model
         'start_time' => 'datetime',
         'end_time' => 'datetime',
         'allow_anonymous_rsvp' => 'boolean',
+    ];
+
+    /**
+     * The rules to use for ranking results in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $ranking_rules = [
+        'desc(start_time_unix)',
     ];
 
     public function organizer(): BelongsTo
@@ -146,5 +157,19 @@ class Event extends Model
             'rsvps' => 'rsvps',
             'attendance' => 'attendance',
         ];
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $array['start_time_unix'] = $this->start_time->getTimestamp();
+
+        return $array;
     }
 }

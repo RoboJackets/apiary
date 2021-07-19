@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a completed or in progress dues payment.
@@ -57,6 +58,7 @@ class DuesTransaction extends Model
     use GetMorphClassStatic;
     use HasFactory;
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The accessors to append to the model's array form.
@@ -73,6 +75,43 @@ class DuesTransaction extends Model
     protected $guarded = [
         'id',
         'status',
+    ];
+
+    /**
+     * The attributes that should be searchable in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $searchable_attributes = [
+        'user_first_name',
+        'user_preferred_name',
+        'user_last_name',
+        'user_uid',
+        'user_gt_email',
+        'user_personal_email',
+        'user_gmail_address',
+        'user_clickup_email',
+        'user_autodesk_email',
+        'user_github_username',
+        'package_name',
+        'package_effective_start',
+        'package_effective_end',
+        'status',
+        'payable_type',
+    ];
+
+    /**
+     * The rules to use for ranking results in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $ranking_rules = [
+        'desc(user_revenue_total)',
+        'desc(user_attendance_count)',
+        'desc(user_signatures_count)',
+        'desc(user_recruiting_visits_count)',
+        'desc(user_gtid)',
+        'desc(updated_at_unix)',
     ];
 
     /**
@@ -229,5 +268,36 @@ class DuesTransaction extends Model
     public function getPayableAmount(): float
     {
         return $this->package->cost;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $user = $this->user->toSearchableArray();
+        $package = $this->package->toArray();
+
+        foreach ($user as $key => $val) {
+            $array['user_' . $key] = $val;
+        }
+
+        foreach ($package as $key => $val) {
+            $array['package_' . $key] = $val;
+        }
+
+        $array['payable_type'] = $this->getMorphClass();
+
+        $array['dues-packages_id'] = $this->package->id;
+
+        $array['users_id'] = $this->user->id;
+
+        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+
+        return $array;
     }
 }

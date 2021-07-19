@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a single attendance entry.
@@ -53,6 +54,7 @@ use Illuminate\Support\Collection;
 class Attendance extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The name of the database table for this model.
@@ -74,6 +76,15 @@ class Attendance extends Model
      * @var array<string>
      */
     protected $with = ['attendable'];
+
+    /**
+     * The rules to use for ranking results in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $ranking_rules = [
+        'desc(updated_at_unix)',
+    ];
 
     /**
      * Get all of the owning attendable models.
@@ -195,5 +206,50 @@ class Attendance extends Model
         }
 
         return $csv;
+    }
+
+    /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     */
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        // Not indexing recorded or remoteAttendanceLink relationships, I don't think those are useful
+
+        return $query->with('attendable')->with('attendee');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        if (! array_key_exists('attendable', $array)) {
+            $array['attendable'] = $this->attendable->toArray();
+        }
+
+        if (! array_key_exists('attendee', $array)) {
+            $array['attendee'] = $this->attendee->toArray();
+        }
+
+        if ($this->attendable_type === Team::getMorphClassStatic()) {
+            $array['teams_id'] = $this->attendable_id;
+        } elseif ($this->attendable_type === Event::getMorphClassStatic()) {
+            $array['events_id'] = $this->attendable_id;
+        }
+
+        if (null !== $this->attendee) {
+            $array['users_id'] = $this->attendee->id;
+        }
+
+        unset($array['attendable']['organizer']);
+        unset($array['attendable']['organizer_name']);
+
+        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+
+        return $array;
     }
 }

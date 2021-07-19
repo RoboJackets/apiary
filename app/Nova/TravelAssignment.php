@@ -14,9 +14,9 @@ use Laravel\Nova\Fields\MorphMany;
 /**
  * A Nova resource for travel assignments.
  *
- * @property bool $is_paid Whether this transaction is paid for
- * @property \App\Models\Travel $travel The package associated with this assignment
- * @property \App\Models\User $user the user associated with this assignment
+ * @property bool $is_paid
+ * @property \App\Models\Travel $travel
+ * @property \App\Models\User $user
  */
 class TravelAssignment extends Resource
 {
@@ -51,11 +51,11 @@ class TravelAssignment extends Resource
     ];
 
     /**
-     * Indicates if the resource should be globally searchable.
+     * The number of results to display in the global search.
      *
-     * @var bool
+     * @var int
      */
-    public static $globallySearchable = false;
+    public static $globalSearchResults = 2;
 
     /**
      * Get the fields displayed by the resource.
@@ -128,5 +128,13 @@ class TravelAssignment extends Resource
                     && ($assignment->user()->first()->id !== $request->user()->id);
             })->confirmButtonText('Add Payment'),
         ];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): ?string
+    {
+        return $this->user->full_name . ' | ' . $this->travel->name . ' | ' . ($this->is_paid ? 'Paid' : 'Unpaid');
     }
 }

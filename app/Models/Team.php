@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a group of Users.
@@ -88,6 +89,7 @@ class Team extends Model
     use HasRelationshipObservables;
     use Notifiable;
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -184,5 +186,31 @@ class Team extends Model
     public function routeNotificationForSlack(Notification $notification): ?string
     {
         return config('services.team_slack_webhook_url');
+    }
+
+    /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     */
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with('projectManager');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        if (! array_key_exists('project_manager', $array)) {
+            $array['project_manager'] = $this->projectManager->toArray();
+        }
+
+        $array['users_id'] = $this->members->modelKeys();
+
+        return $array;
     }
 }

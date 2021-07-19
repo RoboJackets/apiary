@@ -37,6 +37,7 @@ parameters:
     - '#Cannot call method [a-zA-Z]+\(\) on App\\Models\\User\|Illuminate\\Database\\Eloquent\\Collection<App\\Models\\User>\|null\.#'
     - '#Cannot call method [a-zA-Z_]+\(\) on mixed\.#'
     - '#Cannot call method delete\(\) on App\\Models\\[a-zA-Z]+\|null\.#'
+    - '#Cannot call method getTimestamp\(\) on Illuminate\\Support\\Carbon\|null\.#'
     - '#Cannot call method members\(\) on App\\Models\\Major\|Illuminate\\Database\\Eloquent\\Collection<App\\Models\\Major>\|null\.#'
     - '#Cannot call method name\(\) on array\|Illuminate\\Routing\\Route\.#'
     - '#Dynamic call to static method Barryvdh\\DomPDF\\PDF::(stream|save)\(\)\.#'

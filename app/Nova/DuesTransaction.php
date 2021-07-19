@@ -18,9 +18,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 /**
  * A Nova resource for dues transactions.
  *
- * @property bool $is_paid Whether this transaction is paid for
- * @property \App\Models\DuesPackage $package The package associated with this transaction
- * @property \App\Models\User $user the user associated with this transaction
+ * @property bool $is_paid
+ * @property \App\Models\DuesPackage $package
+ * @property \App\Models\User $user
+ * @property string $status
  */
 class DuesTransaction extends Resource
 {
@@ -60,6 +61,13 @@ class DuesTransaction extends Resource
      * @var string
      */
     public static $group = 'Dues';
+
+    /**
+     * The number of results to display in the global search.
+     *
+     * @var int
+     */
+    public static $globalSearchResults = 2;
 
     /**
      * Get the fields displayed by the resource.
@@ -171,5 +179,13 @@ class DuesTransaction extends Resource
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
         return $request->user()->can('update-dues-transactions');
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): ?string
+    {
+        return $this->user->full_name . ' | ' . $this->package->name . ' | ' . ucfirst($this->status);
     }
 }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a single trip.
@@ -55,6 +57,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Travel extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -78,6 +81,17 @@ class Travel extends Model
         'return_date' => 'date',
     ];
 
+    /**
+     * The rules to use for ranking results in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $ranking_rules = [
+        'desc(departure_date_unix)',
+        'desc(return_date_unix)',
+    ];
+
+
     public function primaryContact(): BelongsTo
     {
         return $this->belongsTo(User::class, 'primary_contact_user_id');
@@ -86,5 +100,33 @@ class Travel extends Model
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
+    }
+
+    /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     */
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with('primaryContact');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        if (! array_key_exists('primary_contact', $array)) {
+            $array['primary_contact'] = $this->primaryContact->toArray();
+        }
+
+        $array['departure_date_unix'] = $this->departure_date->getTimestamp();
+
+        $array['return_date_unix'] = $this->return_date->getTimestamp();
+
+        return $array;
     }
 }

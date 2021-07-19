@@ -4,21 +4,28 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Resource as NovaResource;
+use Laravel\Scout\Builder;
 
 abstract class Resource extends NovaResource
 {
     /**
-     * Build an "index" query for the given resource.
+     * Build a Scout search query for the given resource.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Scout\Builder  $query
+     *
+     * @return \Laravel\Scout\Builder
      */
-    public static function indexQuery(NovaRequest $request, $query): Builder
+    public static function scoutQuery(NovaRequest $request, $query): Builder
     {
+        if (null !== $request->viaResource) {
+            return $query->where($request->viaResource.'_id', $request->viaResourceId);
+        }
+
         return $query;
     }
 
