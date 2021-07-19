@@ -15,6 +15,7 @@ return [
         'public/',
         'resources/',
         'storage/',
+        'tests/',
         'vendor/',
     ],
 
@@ -40,6 +41,7 @@ return [
         'PhanUndeclaredMethod',
         'PhanUnreferencedClosure',
         'PhanUnreferencedPHPDocProperty',
+        'PhanUnreferencedProtectedMethod',
         'PhanUnreferencedProtectedProperty',
         'PhanUnreferencedPublicMethod',
         'PhanUnreferencedPublicProperty',
