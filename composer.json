@@ -59,7 +59,7 @@
         "nunomaduro/larastan": "0.7.10",
         "phan/phan": "4.0.7",
         "phpstan/extension-installer": "1.1.0",
-        "psalm/plugin-laravel": "1.4.6",
+        "psalm/plugin-laravel": "1.5.0",
         "robojackets/static-analysis": "1.4",
         "spatie/ray": "1.28.0"
     },
