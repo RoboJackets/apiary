@@ -5,10 +5,14 @@
         "This file is @generated automatically"
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     "content-hash": "dcd59b4b7b08f8305a650a29cf2dfe92",
 =======
     "content-hash": "0f696b98f22a7e6d92dd5a918a883bd7",
 >>>>>>> Add Laravel Scout
+=======
+    "content-hash": "ad17babf397407c2024cb6e894f79f0d",
+>>>>>>> Update Nova and Passport version specifiers
     "packages": [
         {
             "name": "apereo/phpcas",

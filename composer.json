@@ -25,7 +25,7 @@
         "http-interop/http-factory-guzzle": "^1.0",
         "laravel/framework": "8.51.0",
         "laravel/horizon": "5.7.9",
-        "laravel/nova": "*",
+        "laravel/nova": "^3.27",
         "laravel/passport": "^10.1",
         "laravel/scout": "^9.2",
         "laravel/slack-notification-channel": "2.3.1",
