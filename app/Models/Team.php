@@ -205,7 +205,7 @@ class Team extends Model
     {
         $array = $this->toArray();
 
-        if (! array_key_exists('project_manager', $array)) {
+        if (! array_key_exists('project_manager', $array) && null !== $this->projectManager) {
             $array['project_manager'] = $this->projectManager->toArray();
         }
 

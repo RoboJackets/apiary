@@ -31,6 +31,7 @@ fi
 php artisan up
 php artisan horizon:terminate
 php artisan bugsnag:deploy --repository "https://github.com/RoboJackets/apiary" --revision $(git rev-parse HEAD) --builder "mehvre05"
+php artisan meilisearch:update-index-settings --only-return-id
 
 ./resume-monitoring.sh
 

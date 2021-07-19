@@ -231,7 +231,7 @@ class Attendance extends Model
             $array['attendable'] = $this->attendable->toArray();
         }
 
-        if (! array_key_exists('attendee', $array)) {
+        if (! array_key_exists('attendee', $array) && null !== $this->attendee) {
             $array['attendee'] = $this->attendee->toArray();
         }
 

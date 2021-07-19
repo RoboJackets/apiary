@@ -168,7 +168,9 @@ class Event extends Model
     {
         $array = $this->toArray();
 
-        $array['start_time_unix'] = $this->start_time->getTimestamp();
+        if (null !== $this->start_time) {
+            $array['start_time_unix'] = $this->start_time->getTimestamp();
+        }
 
         return $array;
     }
