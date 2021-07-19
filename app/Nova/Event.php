@@ -56,6 +56,13 @@ class Event extends Resource
     ];
 
     /**
+     * The number of results to display in the global search.
+     *
+     * @var int
+     */
+    public static $globalSearchResults = 2;
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array
