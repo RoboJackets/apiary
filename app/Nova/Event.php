@@ -20,7 +20,8 @@ use Laravel\Nova\Fields\Text;
  * A Nova resource for events.
  *
  * @property int $id
- * @property \Carbon\Carbon $start_time
+ * @property ?\Carbon\Carbon $start_time
+ * @property ?\Carbon\Carbon $end_time
  */
 class Event extends Resource
 {
@@ -161,6 +162,14 @@ class Event extends Resource
      */
     public function subtitle(): ?string
     {
-        return $this->start_time->format('F jS, Y');
+        if (null === $this->start_time && null !== $this->end_time) {
+            return $this->end_time->format('F jS, Y');
+        }
+
+        if (null !== $this->start_time) {
+            return $this->start_time->format('F jS, Y');
+        }
+
+        return null;
     }
 }
