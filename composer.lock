@@ -4,15 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "content-hash": "dcd59b4b7b08f8305a650a29cf2dfe92",
-=======
-    "content-hash": "0f696b98f22a7e6d92dd5a918a883bd7",
->>>>>>> Add Laravel Scout
-=======
-    "content-hash": "ad17babf397407c2024cb6e894f79f0d",
->>>>>>> Update Nova and Passport version specifiers
+    "content-hash": "18eab967f4c0b4ab54923fd257e388d8",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -13904,6 +13896,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
