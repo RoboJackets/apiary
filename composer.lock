@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6264f96cbf5dbc42d4e8182236bccc72",
+    "content-hash": "dcd59b4b7b08f8305a650a29cf2dfe92",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -8407,16 +8407,16 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.12.2",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "43fc12ee8b7221f5232f61aff9fc17f515ad1b02"
+                "reference": "bcb4103cd8ea9275abad8d4898dc0f16e19d2b54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/43fc12ee8b7221f5232f61aff9fc17f515ad1b02",
-                "reference": "43fc12ee8b7221f5232f61aff9fc17f515ad1b02",
+                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/bcb4103cd8ea9275abad8d4898dc0f16e19d2b54",
+                "reference": "bcb4103cd8ea9275abad8d4898dc0f16e19d2b54",
                 "shasum": ""
             },
             "require": {
@@ -8441,6 +8441,7 @@
                 "illuminate/database": "Allows the database health check to function.",
                 "illuminate/log": "Allows the log health check to function.",
                 "illuminate/redis": "Allows the redis health check to function.",
+                "league/flysystem": "Allows the ftp health check to function.",
                 "sensiolabs/security-checker": "Allows the package security health check to function."
             },
             "type": "library",
@@ -8488,7 +8489,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2021-06-18T09:04:00+00:00"
+            "time": "2021-07-22T15:16:44+00:00"
         },
         {
             "name": "uxweb/sweet-alert",
