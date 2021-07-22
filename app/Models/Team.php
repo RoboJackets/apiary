@@ -115,6 +115,15 @@ class Team extends Model
     ];
 
     /**
+     * The rules to use for ranking results in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $ranking_rules = [
+        'desc(attendance_count)',
+    ];
+
+    /**
      *  Get the Users that are members of this Team.
      */
     public function members(): BelongsToMany
@@ -193,7 +202,7 @@ class Team extends Model
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
-        return $query->with('projectManager');
+        return $query->with('projectManager')->withCount('attendance');
     }
 
     /**
@@ -207,6 +216,10 @@ class Team extends Model
 
         if (! array_key_exists('project_manager', $array) && null !== $this->projectManager) {
             $array['project_manager'] = $this->projectManager->toArray();
+        }
+
+        if (! array_key_exists('attendance_count', $array)) {
+            $array['attendance_count'] = $this->attendance()->count();
         }
 
         $array['users_id'] = $this->members->modelKeys();
