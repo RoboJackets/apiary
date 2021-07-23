@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\GetMorphClassStatic;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
+use Laravel\Scout\Searchable;
 
 /**
  * Maps together a Travel + User + Payment.
@@ -18,8 +20,8 @@ use Illuminate\Database\Query\JoinClause;
  * @property int $user_id
  * @property int $travel_id
  * @property bool $documents_received
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  *
  * @property-read bool $is_paid
@@ -48,6 +50,8 @@ use Illuminate\Database\Query\JoinClause;
 class TravelAssignment extends Model
 {
     use SoftDeletes;
+    use GetMorphClassStatic;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -68,6 +72,43 @@ class TravelAssignment extends Model
      */
     protected $casts = [
         'documents_received' => 'boolean',
+    ];
+
+    /**
+     * The attributes that should be searchable in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $searchable_attributes = [
+        'user_first_name',
+        'user_preferred_name',
+        'user_last_name',
+        'user_uid',
+        'user_gt_email',
+        'user_personal_email',
+        'user_gmail_address',
+        'user_clickup_email',
+        'user_autodesk_email',
+        'user_github_username',
+        'travel_name',
+        'travel_destination',
+        'travel_departure_date',
+        'travel_return_date',
+        'payable_type',
+    ];
+
+    /**
+     * The rules to use for ranking results in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $ranking_rules = [
+        'desc(user_revenue_total)',
+        'desc(user_attendance_count)',
+        'desc(user_signatures_count)',
+        'desc(user_recruiting_visits_count)',
+        'desc(user_gtid)',
+        'desc(updated_at_unix)',
     ];
 
     public function user(): BelongsTo
@@ -101,5 +142,34 @@ class TravelAssignment extends Model
         })->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->groupBy('travel_assignments.id', 'travel_assignments.travel_id', 'travel.fee_amount')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= travel.fee_amount');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $user = $this->user->toSearchableArray();
+        $travel = $this->travel->toArray();
+
+        foreach ($user as $key => $val) {
+            $array['user_'.$key] = $val;
+        }
+
+        foreach ($travel as $key => $val) {
+            $array['travel_'.$key] = $val;
+        }
+
+        $array['payable_type'] = $this->getMorphClass();
+
+        $array['users_id'] = $this->user->id;
+
+        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+
+        return $array;
     }
 }

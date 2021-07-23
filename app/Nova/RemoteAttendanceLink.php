@@ -15,9 +15,6 @@ use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
-/**
- * A Nova resource for remote attendance links.
- */
 class RemoteAttendanceLink extends Resource
 {
     /**

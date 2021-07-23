@@ -46,6 +46,13 @@ class OAuth2AccessToken extends Resource
     ];
 
     /**
+     * Indicates if the resource should be globally searchable.
+     *
+     * @var bool
+     */
+    public static $globallySearchable = false;
+
+    /**
      * Get the displayable label of the resource.
      */
     public static function label(): string

@@ -21,6 +21,11 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for teams.
+ *
+ * @property ?\App\Models\User $projectManager
+ */
 class Team extends Resource
 {
     /**
@@ -266,5 +271,17 @@ class Team extends Resource
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         return $request->user()->cant('read-teams-hidden') ? $query->where('visible', 1) : $query;
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): ?string
+    {
+        if (null !== $this->projectManager) {
+            return 'Project Manager: '.$this->projectManager->full_name;
+        }
+
+        return null;
     }
 }

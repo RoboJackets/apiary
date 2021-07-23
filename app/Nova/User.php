@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreateOAuth2Client;
 use App\Nova\Actions\CreatePersonalAccessToken;
@@ -15,6 +16,8 @@ use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
+use Carbon\Carbon;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -31,9 +34,13 @@ use Laravel\Nova\Panel;
  * A Nova resource for users.
  *
  * @property ?\Carbon\Carbon $resume_date
- * @property string $uid this user's username
+ * @property string $uid
+ * @property int $id
  *
  * @method bool hasSignedLatestAgreement()
+ * @method \Illuminate\Database\Eloquent\Relations\HasMany manages()
+ * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany majors()
+ * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany classStanding()
  */
 class User extends Resource
 {
@@ -516,5 +523,76 @@ class User extends Resource
                     return $request->user()->can('read-users');
                 }),
         ];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): ?string
+    {
+        $managed_team_names = $this->manages()->pluck('name');
+
+        if (count($managed_team_names) > 0) {
+            $team_name = $managed_team_names[0];
+
+            if ('Core' === $team_name) {
+                return 'President';
+            }
+
+            if ('Alumni Leadership' === $team_name) {
+                return 'Corporation President';
+            }
+
+            if (
+                str_contains($team_name, 'Training') ||
+                str_contains($team_name, 'Core') ||
+                str_contains($team_name, 'Outreach')
+            ) {
+                return $team_name.' Chair';
+            }
+
+            return $team_name.' Project Manager';
+        }
+
+        // This query is adapted from the dashboard controller
+        $paidTransactions = AppModelsDuesTransaction::select(
+            'dues_transactions.id',
+            'dues_transactions.dues_package_id',
+            'dues_packages.effective_start',
+            'dues_packages.effective_end',
+        )
+        ->leftJoin('payments', static function (JoinClause $join): void {
+            $join->on('dues_transactions.id', '=', 'payable_id')
+                 ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
+                 ->where('payments.amount', '>', 0);
+        })
+        ->leftJoin('dues_packages', 'dues_transactions.dues_package_id', '=', 'dues_packages.id')
+        ->where('user_id', $this->id)
+        ->whereNotNull('payments.id')
+        ->orderBy('dues_packages.effective_start')
+        ->orderBy('dues_packages.effective_end')
+        ->get();
+
+        $firstPaidTransact = $paidTransactions->first();
+        $lastPaidTransact = $paidTransactions->last();
+
+        if (null !== $firstPaidTransact && null !== $lastPaidTransact) {
+            // @phpstan-ignore-next-line
+            $firstYear = (new Carbon($firstPaidTransact->effective_start, 'America/New_York'))->year;
+            // @phpstan-ignore-next-line
+            $lastYear = (new Carbon($lastPaidTransact->effective_end, 'America/New_York'))->year;
+
+            return $firstYear === $lastYear ? 'Member '.$firstYear : 'Member '.$firstYear.'-'.$lastYear;
+        }
+
+        $major_names = $this->majors()->pluck('display_name')->toArray();
+
+        $class_standing_names = $this->classStanding()->pluck('name')->toArray();
+
+        if (count($major_names) > 0 && null !== $major_names[0] && count($class_standing_names) > 0) {
+            return $major_names[0].' | '.ucfirst($class_standing_names[0]);
+        }
+
+        return null;
     }
 }

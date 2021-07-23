@@ -19,7 +19,9 @@ use Laravel\Nova\Fields\Text;
 /**
  * A Nova resource for events.
  *
- * @property int $id The database ID for this event
+ * @property int $id
+ * @property ?\Carbon\Carbon $start_time
+ * @property ?\Carbon\Carbon $end_time
  */
 class Event extends Resource
 {
@@ -52,6 +54,13 @@ class Event extends Resource
     public static $search = [
         'name',
     ];
+
+    /**
+     * The number of results to display in the global search.
+     *
+     * @var int
+     */
+    public static $globalSearchResults = 2;
 
     /**
      * Get the fields displayed by the resource.
@@ -153,5 +162,21 @@ class Event extends Resource
                 ->confirmButtonText('Create Link')
                 ->cancelButtonText('Cancel'),
         ];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): ?string
+    {
+        if (null === $this->start_time && null !== $this->end_time) {
+            return $this->end_time->format('F jS, Y');
+        }
+
+        if (null !== $this->start_time) {
+            return $this->start_time->format('F jS, Y');
+        }
+
+        return null;
     }
 }

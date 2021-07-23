@@ -42,6 +42,13 @@ class ClassStanding extends Resource
     ];
 
     /**
+     * Indicates if the resource should be globally searchable.
+     *
+     * @var bool
+     */
+    public static $globallySearchable = false;
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array

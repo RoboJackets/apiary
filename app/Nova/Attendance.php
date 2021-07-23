@@ -22,7 +22,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 /**
  * A Nova resource for attendance.
  *
- * @property ?\App\Models\User $attendee The user associated with the attendance record, if available
+ * @property ?\App\Models\User $attendee
  */
 class Attendance extends Resource
 {
@@ -76,7 +76,11 @@ class Attendance extends Resource
      *
      * @var array<string>
      */
-    public static $with = ['recorded', 'attendee'];
+    public static $with = [
+        'recorded',
+        'attendee',
+        'attendable',
+    ];
 
     /**
      * Indicates if the resource should be globally searchable.

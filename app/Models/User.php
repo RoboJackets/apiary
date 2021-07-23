@@ -15,11 +15,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
+use Laravel\Scout\Searchable;
+use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -175,9 +178,11 @@ class User extends Authenticatable
     use HasFactory;
     use HasRelationshipObservables;
     use HasRoles;
+    use HasPermissions;
     use Notifiable;
     use SoftDeletes;
     use HasApiTokens;
+    use Searchable;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
@@ -230,7 +235,11 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    protected $hidden = ['gender', 'ethnicity', 'dues'];
+    protected $hidden = [
+        'gender',
+        'ethnicity',
+        'dues',
+    ];
 
     /**
      * The attributes that should be cast to native types.
@@ -247,6 +256,40 @@ class User extends Authenticatable
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
         'buzzcard_access_opt_out' => 'boolean',
+    ];
+
+    /**
+     * The attributes that should be searchable in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $searchable_attributes = [
+        'first_name',
+        'preferred_name',
+        'last_name',
+        'uid',
+        'gt_email',
+        'personal_email',
+        'gmail_address',
+        'clickup_email',
+        'autodesk_email',
+        'github_username',
+        'gtid',
+        'phone',
+        'gtDirGUID',
+    ];
+
+    /**
+     * The rules to use for ranking results in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $ranking_rules = [
+        'desc(revenue_total)',
+        'desc(attendance_count)',
+        'desc(signatures_count)',
+        'desc(recruiting_visits_count)',
+        'desc(gtid)',
     ];
 
     /**
@@ -710,5 +753,65 @@ class User extends Authenticatable
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
+    }
+
+    /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     */
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->withCount('attendance')->withCount('signatures')->withCount('recruitingVisits');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $array['revenue_total'] = intval(Payment::selectRaw(  // @phpstan-ignore-line
+            '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'
+        )->leftJoin('dues_transactions', static function (JoinClause $join): void {
+            $join->on('dues_transactions.id', '=', 'payable_id')
+                 ->where('payments.amount', '>', 0)
+                 ->where('payments.method', '!=', 'waiver')
+                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                 ->whereNull('payments.deleted_at');
+        })->leftJoin('travel_assignments', static function (JoinClause $join): void {
+            $join->on('travel_assignments.id', '=', 'payable_id')
+                 ->where('payments.amount', '>', 0)
+                 ->where('payments.method', '!=', 'waiver')
+                 ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                 ->whereNull('payments.deleted_at');
+        })->where('travel_assignments.user_id', '=', $this->id)
+        ->orWhere('dues_transactions.user_id', '=', $this->id)
+        ->get()[0]['revenue']);
+
+        if (! array_key_exists('attendance_count', $array)) {
+            $array['attendance_count'] = $this->attendance()->count();
+        }
+
+        if (! array_key_exists('signatures_count', $array)) {
+            $array['signatures_count'] = $this->signatures()->count();
+        }
+
+        if (! array_key_exists('recruiting_visits_count', $array)) {
+            $array['recruiting_visits_count'] = $this->recruitingVisits()->count();
+        }
+
+        $array['class-standings_id'] = $this->classStanding->modelKeys();
+
+        $array['majors_id'] = $this->majors->modelKeys();
+
+        $array['teams_id'] = $this->teams->modelKeys();
+
+        $array['permissions_id'] = $this->permissions->modelKeys();
+
+        $array['roles_id'] = $this->roles->modelKeys();
+
+        return $array;
     }
 }

@@ -12,6 +12,12 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 
+/**
+ * A Nova resource for travel.
+ *
+ * @property \Carbon\Carbon $departure_date
+ * @property string $destination
+ */
 class Travel extends Resource
 {
     /**
@@ -114,5 +120,13 @@ class Travel extends Resource
 
             self::metadataPanel(),
         ];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): ?string
+    {
+        return $this->destination.' | '.$this->departure_date->format('F Y');
     }
 }
