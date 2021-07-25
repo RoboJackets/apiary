@@ -69,7 +69,6 @@ class RoleController extends Controller
 
         if ($request->filled('name')) {
             $role->name = $request->input('name');
-            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             $role->save();
         }
 
