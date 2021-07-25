@@ -174,7 +174,8 @@ class DuesPackage extends Resource
                 DateTime::make('Access End Date', 'access_end')
                     ->help(
                         'This is the date when someone who paid for this package will lose access to RoboJackets '
-                        .'systems, unless they pay for a different package or get an override.'
+                        .'systems, unless they pay for a different package or get an override. This is typically around'
+                        .' 1 to 2 months later than the "End Date", and should align with the following dues deadline.'
                     )
                     ->onlyOnForms()
                     ->rules('required'),
