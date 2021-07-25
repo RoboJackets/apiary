@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\Event as EventResource;
 use App\Models\Event;
 use App\Traits\AuthorizeInclude;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

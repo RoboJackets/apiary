@@ -12,7 +12,6 @@ use App\Http\Resources\User as UserResource;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

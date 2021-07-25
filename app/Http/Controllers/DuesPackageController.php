@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 use App\Models\DuesPackage;
 use App\Traits\AuthorizeInclude;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

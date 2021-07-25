@@ -14,7 +14,6 @@ use App\Models\RecruitingVisit;
 use App\Notifications\GeneralInterestNotification;
 use App\Traits\AuthorizeInclude;
 use Carbon\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;

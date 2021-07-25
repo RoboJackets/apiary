@@ -15,7 +15,6 @@ use App\Models\Team;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;

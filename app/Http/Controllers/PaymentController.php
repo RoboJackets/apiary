@@ -9,7 +9,6 @@ use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Models\Payment;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 
 class PaymentController extends Controller
