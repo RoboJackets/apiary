@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Nova\Traits\DuesPackageCards;
 use Illuminate\Database\Query\JoinClause;
@@ -107,15 +109,21 @@ class DuesPackage extends Resource
             })->onlyOnIndex(),
 
             Boolean::make('Active', 'is_active')
-                ->sortable()
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
             DateTime::make('Start Date', 'effective_start')
+                ->help(
+                    'This is the date when someone who paid for this package will be considered a member.'
+                )
                 ->hideFromIndex()
                 ->rules('required'),
 
             DateTime::make('End Date', 'effective_end')
+                ->help(
+                    'This is the date when someone who paid for this package will no longer be considered a member.'
+                    .' They will be prompted to pay dues again if a new package is available to purchase at that time.'
+                )
                 ->hideFromIndex()
                 ->rules('required'),
 
@@ -156,10 +164,19 @@ class DuesPackage extends Resource
                     ->onlyOnDetail(),
 
                 DateTime::make('Access Start Date', 'access_start')
+                    ->help(
+                        'This is the date when someone who paid for this package will have access to RoboJackets '
+                        .'systems.'
+                    )
                     ->onlyOnForms()
                     ->rules('required'),
 
                 DateTime::make('Access End Date', 'access_end')
+                    ->help(
+                        'This is the date when someone who paid for this package will lose access to RoboJackets '
+                        .'systems, unless they pay for a different package or get an override. This is typically around'
+                        .' 1 to 2 months later than the "End Date", and should align with the following dues deadline.'
+                    )
                     ->onlyOnForms()
                     ->rules('required'),
             ]),
