@@ -35,6 +35,7 @@ return [
         'PhanPossiblyFalseTypeArgumentInternal',
         'PhanPossiblyNonClassMethodCall',
         'PhanPossiblyNullTypeArgument',
+        'PhanPossiblyUndeclaredMethod',
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',
         'PhanUndeclaredFunctionInCallable',
