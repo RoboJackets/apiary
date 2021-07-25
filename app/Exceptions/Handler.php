@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
+
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -34,7 +37,7 @@ class Handler extends ExceptionHandler
 
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (Throwable $e): void {
             if ($this->shouldReport($e) && app()->bound('sentry')) {
                 app('sentry')->captureException($e);
             }
