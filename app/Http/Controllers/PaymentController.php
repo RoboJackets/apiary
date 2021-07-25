@@ -9,7 +9,6 @@ use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Models\Payment;
 use App\Notifications\Payment\ConfirmationNotification as Confirm;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 
@@ -49,14 +48,7 @@ class PaymentController extends Controller
             );
         }
 
-        try {
-            $payment = Payment::create($request->all());
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $payment = Payment::create($request->all());
 
         $dbPayment = Payment::findOrFail($payment->id);
         $dbPayment->payable->user->notify(new Confirm($dbPayment));

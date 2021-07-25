@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePermissionRequest;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -41,18 +40,7 @@ class PermissionController extends Controller
         $roles = $request->input('roles');
         if (is_array($roles)) {
             foreach ($roles as $role) {
-                try {
-                    $dbRole = Role::findByName($role);
-                } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
-                    Bugsnag::notifyException($e);
-
-                    return response()->json(['status' => 'error', 'message' => 'Role '.$role.' not found.'], 404);
-                } catch (\Throwable $e) {
-                    Bugsnag::notifyException($e);
-
-                    return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-                }
-                // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
+                $dbRole = Role::findByName($role);
                 $dbRole->givePermissionTo($permission->name);
             }
         }
@@ -67,19 +55,7 @@ class PermissionController extends Controller
      */
     public function show(string $name): JsonResponse
     {
-        try {
-            $permission = Permission::findByName($name)->with('roles')->first();
-        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error',
-                'message' => 'Permission '.$name.' not found.',
-            ], 404);
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-        }
+        $permission = Permission::findByName($name)->with('roles')->first();
 
         return response()->json(['status' => 'success', 'permission' => $permission]);
     }
@@ -89,21 +65,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $name): JsonResponse
     {
-        try {
-            $permission = Permission::findByName($name);
-            $permission->name = $request->input('name');
-            $permission->save();
-        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error',
-                'message' => 'Permission '.$name.' not found.',
-            ], 404);
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-        }
+        $permission = Permission::findByName($name);
+        $permission->name = $request->input('name');
+        $permission->save();
 
         $dbPermission = Permission::find($permission->id);
 
@@ -115,20 +79,8 @@ class PermissionController extends Controller
      */
     public function destroy(string $name): JsonResponse
     {
-        try {
-            $permission = Permission::findByName($name);
-            $permission->delete();
-        } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error',
-                'message' => 'Permission '.$name.' not found.',
-            ], 404);
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-        }
+        $permission = Permission::findByName($name);
+        $permission->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Permission deleted.'], 200);
     }

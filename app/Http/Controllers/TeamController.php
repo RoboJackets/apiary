@@ -12,7 +12,6 @@ use App\Http\Resources\User as UserResource;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -65,14 +64,7 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request): JsonResponse
     {
-        try {
-            $team = Team::create($request->all());
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $team = Team::create($request->all());
 
         if (null !== $team->id) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
@@ -130,14 +122,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        try {
-            $team->update($request->all());
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $team->update($request->all());
 
         return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
     }
@@ -168,21 +153,14 @@ class TeamController extends Controller
             ], 403);
         }
 
-        try {
-            $user = User::find($request->input('user_id'));
-            if (null === $user || ! is_a($user, User::class)) {
-                return response()->json(['status' => 'user_not_found'], 400);
-            }
-            if ('join' === $request->input('action')) {
-                $team->members()->syncWithoutDetaching($user);
-            } else {
-                $team->members()->detach($user);
-            }
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
+        $user = User::find($request->input('user_id'));
+        if (null === $user || ! is_a($user, User::class)) {
+            return response()->json(['status' => 'user_not_found'], 400);
+        }
+        if ('join' === $request->input('action')) {
+            $team->members()->syncWithoutDetaching($user);
+        } else {
+            $team->members()->detach($user);
         }
 
         $team = new TeamResource(Team::where('id', $id)->orWhere('slug', $id)->first());

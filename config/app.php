@@ -181,7 +181,6 @@ return [
          * Package Service Providers...
          */
         Subfission\Cas\CasServiceProvider::class,
-        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
@@ -245,7 +244,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
-        'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
     ],
 ];

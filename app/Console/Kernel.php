@@ -9,7 +9,6 @@ use App\Jobs\NoAttendanceJediPush;
 use App\Jobs\SendExpiringPersonalAccessTokenNotifications;
 use App\Jobs\WeeklyAttendanceEmail;
 use App\Jobs\WeeklyAttendanceSlack;
-use Bugsnag\BugsnagLaravel\Commands\DeployCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
@@ -21,9 +20,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array<string>
      */
-    protected $commands = [
-        DeployCommand::class,
-    ];
+    protected $commands = [];
 
     /**
      * Define the application's command schedule.

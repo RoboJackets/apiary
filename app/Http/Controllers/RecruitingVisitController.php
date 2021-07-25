@@ -10,7 +10,6 @@ use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use App\Models\RecruitingResponse;
 use App\Models\RecruitingVisit;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,30 +31,22 @@ class RecruitingVisitController extends Controller
 
     public function store(StoreRecruitingVisitRequest $request): JsonResponse
     {
-        try {
-            DB::beginTransaction();
-            $personInfo = $request->only(['recruiting_email', 'recruiting_name']);
-            Log::debug(self::class.': New Visit Data (Pre-Store)', $personInfo);
-            $visit = RecruitingVisit::create($personInfo);
+        DB::beginTransaction();
+        $personInfo = $request->only(['recruiting_email', 'recruiting_name']);
+        Log::debug(self::class.': New Visit Data (Pre-Store)', $personInfo);
+        $visit = RecruitingVisit::create($personInfo);
 
-            $recruitingResponses = $request->only('recruiting_responses')['recruiting_responses'];
-            Log::debug(self::class.': New Visit Response Data (Pre-Store)', $recruitingResponses);
+        $recruitingResponses = $request->only('recruiting_responses')['recruiting_responses'];
+        Log::debug(self::class.': New Visit Response Data (Pre-Store)', $recruitingResponses);
 
-            foreach ($recruitingResponses as $response) {
-                $visit->recruitingResponses()->create(['response' => $response]);
-            }
-
-            DB::commit();
-            Log::info(self::class.'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
-
-            return response()->json(['status' => 'success']);
-        } catch (Throwable $e) {
-            Bugsnag::notifyException($e);
-            DB::rollBack();
-            Log::error('New Recruiting visit save failed', ['error' => $e->getMessage()]);
-
-            return response()->json(['status' => 'error'])->setStatusCode(500);
+        foreach ($recruitingResponses as $response) {
+            $visit->recruitingResponses()->create(['response' => $response]);
         }
+
+        DB::commit();
+        Log::info(self::class.'New Recruiting Visit Logged:', ['email' => $visit->recruiting_email]);
+
+        return response()->json(['status' => 'success']);
     }
 
     /**

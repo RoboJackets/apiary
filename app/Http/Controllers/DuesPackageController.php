@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 use App\Models\DuesPackage;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -89,14 +88,7 @@ class DuesPackageController extends Controller
      */
     public function store(StoreDuesPackageRequest $request): JsonResponse
     {
-        try {
-            $package = DuesPackage::create($request->all());
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $package = DuesPackage::create($request->all());
 
         $dbp = DuesPackage::findOrFail($package->id);
 
