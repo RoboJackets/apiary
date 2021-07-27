@@ -9,8 +9,6 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\Event as EventResource;
 use App\Models\Event;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -43,14 +41,7 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
-        try {
-            $event = Event::create($request->all());
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $event = Event::create($request->all());
 
         return response()->json(['status' => 'success', 'event' => $event], 201);
     }
@@ -89,14 +80,7 @@ class EventController extends Controller
             ], 403);
         }
 
-        try {
-            $event->update($request->all());
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $event->update($request->all());
 
         $event = Event::find($id);
         if (null !== $event) {

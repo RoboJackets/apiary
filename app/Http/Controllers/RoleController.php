@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRoleRequest;
 use App\Models\User;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -39,19 +38,7 @@ class RoleController extends Controller
         $role->save();
 
         if ($request->filled('permissions')) {
-            try {
-                $role->givePermissionTo($request->input('permissions'));
-            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
-                Bugsnag::notifyException($e);
-
-                return response()->json(['status' => 'error',
-                    'message' => $e->getMessage(),
-                ], 422);
-            } catch (\Throwable $e) {
-                Bugsnag::notifyException($e);
-
-                return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-            }
+            $role->givePermissionTo($request->input('permissions'));
         }
 
         $dbRole = Role::where('id', $role->id)->with('permissions')->first();
@@ -64,18 +51,7 @@ class RoleController extends Controller
      */
     public function show(string $name): JsonResponse
     {
-        try {
-            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
-            $role = Role::findByName($name)->with('permissions')->first();
-        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-        }
+        $role = Role::findByName($name)->with('permissions')->first();
 
         return response()->json(['status' => 'success', 'role' => $role]);
     }
@@ -85,17 +61,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $name): JsonResponse
     {
-        try {
-            $role = Role::findByName($name);
-        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 404);
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-        }
+        $role = Role::findByName($name);
 
         $this->validate($request, [
             'name' => Rule::unique('roles')->ignore($role->id),
@@ -103,23 +69,11 @@ class RoleController extends Controller
 
         if ($request->filled('name')) {
             $role->name = $request->input('name');
-            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             $role->save();
         }
 
         if ($request->filled('permissions')) {
-            try {
-                // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
-                $role->syncPermissions($request->input('permissions'));
-            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
-                Bugsnag::notifyException($e);
-
-                return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
-            } catch (\Throwable $e) {
-                Bugsnag::notifyException($e);
-
-                return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-            }
+            $role->syncPermissions($request->input('permissions'));
         }
 
         $dbRole = Role::where('id', $role->id)->with('permissions')->first();
@@ -132,19 +86,8 @@ class RoleController extends Controller
      */
     public function destroy(string $name): JsonResponse
     {
-        try {
-            $role = Role::findByName($name);
-        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
-            Bugsnag::notifyException($e);
+        $role = Role::findByName($name);
 
-            return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-        }
-
-        // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
         $role->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Role deleted.'], 200);
@@ -155,17 +98,7 @@ class RoleController extends Controller
      */
     public function assign(string $name, Request $request): JsonResponse
     {
-        try {
-            $role = Role::findByName($name);
-        } catch (\Spatie\Permission\Exceptions\RoleDoesNotExist $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'Role not found.'], 404);
-        } catch (\Throwable $e) {
-            Bugsnag::notifyException($e);
-
-            return response()->json(['status' => 'error', 'message' => 'An internal error occurred.'], 500);
-        }
+        $role = Role::findByName($name);
 
         if (! $request->filled('users')) {
             return response()->json(['status' => 'error',

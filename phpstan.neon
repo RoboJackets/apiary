@@ -66,7 +66,6 @@ parameters:
     - '#Parameter \#1 \$value of method Illuminate\\Testing\\TestResponse::assertSee\(\) expects array\|string, string\|false given\.#'
     - '#Parameter \#1 \$year of static method Carbon\\Carbon::create\(\) expects int\|null, float\|int given\.#'
     - '#Parameter \#2 \$content of method Illuminate\\Http\\Testing\\FileFactory::createWithContent\(\) expects string, string\|false given\.#'
-    - '#Parameter \#2 \$str of function explode expects string, array\|string given\.#'
     - '#Parameter \#2 \$timestamp of function date expects int, int\|false given\.#'
     - '#Parameter \#3 \$default of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>::when\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>, mixed\): Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>\|null\)\|null, Closure\(Illuminate\\Database\\Eloquent\\Builder\): void given\.#'
     - '#Parameter \#3 \$userAgent of static method App\\Models\\Signature::hash\(\) expects string, string\|null given\.#'

@@ -13,9 +13,7 @@ use App\Models\RecruitingCampaignRecipient;
 use App\Models\RecruitingVisit;
 use App\Notifications\GeneralInterestNotification;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Carbon\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -51,14 +49,7 @@ class RecruitingCampaignController extends Controller
         $rc->created_by = $request->user()->id;
         $rc->status = 'new';
 
-        try {
-            $rc->save();
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $rc->save();
 
         // Import recipients from visits
         $start = $request->input('start_date');

@@ -38,15 +38,12 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         Horizon::auth(static function (): bool {
-            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             if (auth()->guard('web')->user() instanceof User
-                // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
                 && auth()->guard('web')->user()->can('access-horizon')
             ) {
                 return true;
             }
 
-            // @phan-suppress-next-line PhanPossiblyUndeclaredMethod
             if (null === auth()->guard('web')->user()) {
                 // Theoretically, this should never happen since we're calling the CAS middleware before this.
                 abort(401, 'Authentication Required');
@@ -77,7 +74,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->alias('bugsnag.multi', \Psr\Log\LoggerInterface::class);
         Passport::ignoreMigrations();
     }
 }

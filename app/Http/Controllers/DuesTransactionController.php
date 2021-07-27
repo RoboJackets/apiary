@@ -13,8 +13,6 @@ use App\Models\Merchandise;
 use App\Models\User;
 use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -175,14 +173,7 @@ class DuesTransactionController extends Controller
             }
         }
 
-        try {
-            $transact = DuesTransaction::create($request->all());
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $transact = DuesTransaction::create($request->all());
 
         $dbTransact = DuesTransaction::findOrFail($transact->id);
 

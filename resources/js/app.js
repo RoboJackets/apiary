@@ -5,8 +5,6 @@
  */
 
 import Vue from 'vue'
-import Bugsnag from '@bugsnag/js'
-import BugsnagPluginVue from '@bugsnag/plugin-vue'
 //Import SweetAlert2 for nice alert dialogs
 import Swal from 'sweetalert2';
 // Import the Vuelidate validation plugin
@@ -21,13 +19,25 @@ import VueMoment from 'vue-moment';
 import moment from 'moment';
 import Toast from "./mixins/Toast";
 import FileUploader from "./mixins/FileUploader";
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 
-var bugsnagKey = document.head.querySelector('meta[name="bugsnag-api-key"]').content;
-if (bugsnagKey) {
-    Bugsnag.start({
-        apiKey: bugsnagKey,
-        plugins: [new BugsnagPluginVue()]
-    })
+if (process.env.MIX_SENTRY_DSN !== undefined) {
+    Sentry.init({
+        Vue: Vue,
+        dsn: process.env.MIX_SENTRY_DSN,
+        environment: process.env.MIX_APP_ENV,
+        attachProps: true,
+        logErrors: true,
+        integrations: [new Integrations.BrowserTracing()],
+        tracesSampleRate: 1.0,
+        tracingOptions: {
+            trackComponents: true,
+        },
+    });
+    window.Sentry = Sentry;
+} else {
+    console.log('Sentry not loaded - DSN not present')
 }
 
 require('./bootstrap');
@@ -50,10 +60,6 @@ const SwalToast = Swal.mixin({
     }
 });
 window.SwalToast = SwalToast;
-
-if (bugsnagKey) {
-    Bugsnag.getPlugin('vue').installVueErrorHandler(Vue)
-}
 
 Vue.use(Vuelidate);
 

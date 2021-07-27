@@ -9,8 +9,6 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -80,14 +78,7 @@ class UserController extends Controller
             $user->$key = $request->input($key);
         }
 
-        try {
-            $user->save();
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-        }
+        $user->save();
 
         if ($request->filled('roles')) {
             foreach ($request->input('roles') as $role) {

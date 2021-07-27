@@ -14,9 +14,7 @@ use App\Models\Attendance;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -61,28 +59,21 @@ class AttendanceController extends Controller
         $gtid = $request->input('gtid');
         $user = User::where('gtid', '=', $gtid)->first();
 
-        try {
-            $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
-                ->whereDate('created_at', $date);
-            $attExistingCount = $attExistingQ->count();
-            if ($attExistingCount > 0) {
-                Log::debug(self::class.': Found a swipe on '.$date.' for '.$gtid.' - ignoring.');
-                $att = $attExistingQ->first();
-                $code = 200;
+        $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
+            ->whereDate('created_at', $date);
+        $attExistingCount = $attExistingQ->count();
+        if ($attExistingCount > 0) {
+            Log::debug(self::class.': Found a swipe on '.$date.' for '.$gtid.' - ignoring.');
+            $att = $attExistingQ->first();
+            $code = 200;
 
-                if (null !== $user) {
-                    PushToJedi::dispatch($user, self::class, -1, 'duplicate-attendance');
-                }
-            } else {
-                Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
-                $att = Attendance::create($request->all());
-                $code = 201;
+            if (null !== $user) {
+                PushToJedi::dispatch($user, self::class, -1, 'duplicate-attendance');
             }
-        } catch (QueryException $e) {
-            Bugsnag::notifyException($e);
-            $errorMessage = $e->errorInfo[2];
-
-            return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
+        } else {
+            Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
+            $att = Attendance::create($request->all());
+            $code = 201;
         }
 
         // Yes this is kinda gross but it's the best that I could come up with
@@ -129,14 +120,7 @@ class AttendanceController extends Controller
     {
         $att = Attendance::find($id);
         if (null !== $att) {
-            try {
-                $att->update($request->all());
-            } catch (QueryException $e) {
-                Bugsnag::notifyException($e);
-                $errorMessage = $e->errorInfo[2];
-
-                return response()->json(['status' => 'error', 'message' => $errorMessage], 500);
-            }
+            $att->update($request->all());
 
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
