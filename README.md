@@ -64,7 +64,7 @@ $ sudo apt install exiftool ghostscript
 Due to the nature of the data stored in certain tables in Apiary, some tables require encryption. This is implemented with MySQL's [Keyring](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
 For migrations to run successfully, you must also have a proper keyring set up in your development and production environments.
 
-To enable the Keyring functionality, edit your `my.cnf` as follows, then restart MySQL:
+To enable the Keyring functionality, edit your `my.cnf` to add the following, then restart MySQL:
 
     [mysqld]
     early-plugin-load=keyring_file.so
