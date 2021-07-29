@@ -16,7 +16,7 @@
         "ext-intl": "^7.4",
         "ext-mbstring": "^7.4",
         "apereo/phpcas": "1.4.0",
-        "arcanedev/laravel-markdown": "5.0.1",
+        "arcanedev/laravel-markdown": "5.1.0",
         "barryvdh/laravel-dompdf": "0.9.0",
         "chelout/laravel-relationship-events": "1.4.0",
         "doctrine/dbal": "2.13.2",
