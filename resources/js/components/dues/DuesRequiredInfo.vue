@@ -151,6 +151,8 @@ export default {
       ],
       duesPackages: null,
       duesPackageChoice: '',
+      graduationSemesterChoice:'',
+      graduationYearChoice:'',
       merchGroups: {},
       merchGroupNames: [],
     };
@@ -285,6 +287,14 @@ export default {
     duesPackageChoice: {
       required,
       numeric,
+    },
+    graduationSemesterChoice: {
+      required,
+    },
+    graduationYearChoice: {
+      required,
+      numeric,
+      maxLength: maxLength(4),
     },
     merchGroups: {
       $each: {
