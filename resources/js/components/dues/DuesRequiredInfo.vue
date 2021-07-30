@@ -67,8 +67,8 @@
               :class="{ 'is-invalid': $v.localUser.graduation_year.$error }"
               @input="$v.localUser.graduation_year.$touch()">
           </div>
-          <div class="invalid-feedback" v-if="!$v.localUser.graduaion_year.year">
-            Please enter the 4 digit year.
+          <div class="invalid-feedback">
+            Please enter a 4 digit year.
           </div>
         </div>
         
@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import { required, numeric } from 'vuelidate/lib/validators';
+import { required, numeric, maxLength } from 'vuelidate/lib/validators';
 
 export default {
   props: ['user'],
