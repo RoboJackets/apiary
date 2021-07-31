@@ -141,7 +141,7 @@ export default {
   },
   mounted() {
     var dataUrl = '/api/v1/dues/packages/purchase?include=merchandise';
-    console.log(localUser);
+    console.log(this.localUser);
     axios
       .get(dataUrl)
       .then(response => {
