@@ -139,7 +139,6 @@ export default {
   },
   mounted() {
     var dataUrl = '/api/v1/dues/packages/purchase?include=merchandise';
-    console.log(this.user);
     axios
       .get(dataUrl)
       .then(response => {
@@ -264,6 +263,9 @@ export default {
       polo_size: {
         required,
       },
+      graduation_semester: {
+        required,
+      }
     },
     duesPackageChoice: {
       required,

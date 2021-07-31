@@ -6,7 +6,7 @@
       <option value="02">Spring</option>
       <option value="05">Summer</option>
     </select>
-    <input v-model="year" class="form-control" size="4" type="text" min="2000" max="3000" placeholder="Year">
+    <input v-model="year" class="form-control" maxlength="4" type="text" min="2000" max="3000" placeholder="Year">
   </div>
 </template>
 
