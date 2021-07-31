@@ -54,6 +54,9 @@
                 :is-error="$v.localUser.graduation_semester.$error"
                 @input="$v.localUser.graduation_semester.$touch()">
             </term-input>
+            <div class="invalid-feedback">
+              Select a valid graduation date.
+            </div>
           </div>
         </div>        
 
@@ -119,7 +122,7 @@
 </template>
 
 <script>
-import { required, numeric } from 'vuelidate/lib/validators';
+import { required, numeric, minLength, maxLength } from 'vuelidate/lib/validators';
 import TermInput from '../fields/TermInput.vue';
 
 export default {
@@ -269,6 +272,8 @@ export default {
       },
       graduation_semester: {
         required,
+        minLength: minLength(6),
+        maxLength: maxLength(6),
       }
     },
     duesPackageChoice: {

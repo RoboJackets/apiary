@@ -6,7 +6,7 @@
       <option value="02">Spring</option>
       <option value="05">Summer</option>
     </select>
-    <input v-model="year" class="form-control" :class="{ 'is-invalid': isError }" maxlength="4" size="4" type="text" min="2000" max="3000" placeholder="Year">
+    <input v-model="year" class="form-control" :class="{ 'is-invalid': isError }" maxlength="4" size="4" type="number" min="2000" max="3000" placeholder="Year">
   </div>
 </template>
 
@@ -42,7 +42,9 @@ export default {
       },
       set: function(newSemester) {
         var term = this.year + '' + newSemester;
-        this.$emit('input', term);
+        if (term.length === 6) {
+          this.$emit('input', term);
+        }
       },
     },
     year: {
@@ -55,7 +57,9 @@ export default {
       },
       set: function(newYear) {
         var term = newYear + '' + this.semester;
-        this.$emit('input', term);
+        if (term.length === 6) {
+          this.$emit('input', term);
+        }
       },
     },
   },
