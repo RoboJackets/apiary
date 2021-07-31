@@ -44,6 +44,7 @@ export default {
         var term = this.year + '' + newSemester;
         if (term.length === 6) {
           this.$emit('input', term);
+          console.log("Semester: ", term)
         }
       },
     },
@@ -59,6 +60,7 @@ export default {
         var term = newYear + '' + this.semester;
         if (term.length === 6) {
           this.$emit('input', term);
+          console.log("Year: ", term)
         }
       },
     },
