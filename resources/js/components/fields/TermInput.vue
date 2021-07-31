@@ -1,5 +1,5 @@
 <template>
-  <div class="form-inline">
+  <div class="form-inline" :class="{ 'is-invalid': isError }">
     <select v-model="semester" class="custom-select" :class="{ 'is-invalid': isError }">
       <option value="" style="display:none;">Semester</option>
       <option value="08">Fall</option>
