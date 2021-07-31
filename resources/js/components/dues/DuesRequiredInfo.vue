@@ -46,7 +46,7 @@
         <h4>Gradution Information</h4>
         <div class="form-group row">
           <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
-          <term-input></term-input>
+          <term-input v-on:input="$v.localUser.graduation_semester.$touch()"></term-input>
         </div>        
 
         <h4>Information for Merchandise</h4>
