@@ -388,6 +388,21 @@ class User extends Authenticatable
         return implode(' ', array_filter([$this->first_name, $this->middle_name, $this->last_name]));
     }
 
+    /**
+     * Get the graduation semester associated with the User.
+     */
+    public function getgraduationSemesterAttribute(): string
+    {
+        return $this->graduation_semester;
+    }
+
+    /**
+     * Set the graduation semester associated with the User given a semester and year.
+     */
+    public function setgraduationSemesterAttribute(?string $graduation): void
+    {
+        $this->attributes['graduation_semester'] = $graduation;
+
     /*
      * Get the DuesTransactions belonging to the User
      */

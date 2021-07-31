@@ -44,34 +44,7 @@
         </div>
 
         <h4>Gradution Information</h4>
-
-        <div class="form-group row">
-          <label for="graduationDate" class="col-sm-2 col-form-label">Graduation Date</label>
-          <div class="col-sm-10 col-lg-4">
-            <select id="graduationSemester" v-model="graduationSemesterChoice" class="custom-select" :class="{ 'is-invalid': $v.graduationSemesterChoice.$error }" @input="$v.graduationSemesterChoice.$touch()">
-              <option value="" style="display:none">Spring</option>
-              <option value="" style="display:none">Summer</option>
-              <option value="" style="display:none">Fall</option>
-            </select>
-            <div class="invalid-feedback">
-              Select a semester.
-            </div>
-          </div>
-          
-          <div class="col-sm-10 col-lg-4">
-            <input
-              v-model="localUser.graduation_year"
-              type="text"
-              class="form-control"
-              id="user-graduationyear"
-              :class="{ 'is-invalid': $v.localUser.graduation_year.$error }"
-              @input="$v.localUser.graduation_year.$touch()">
-          </div>
-          <div class="invalid-feedback">
-            Please enter a 4 digit year.
-          </div>
-        </div>
-        
+        <term-input></term-input>        
 
         <h4>Information for Merchandise</h4>
 
@@ -136,8 +109,10 @@
 
 <script>
 import { required, numeric, maxLength } from 'vuelidate/lib/validators';
+import TermInput from '../fields/TermInput.vue';
 
 export default {
+  components: { TermInput },
   props: ['user'],
   data() {
     return {
@@ -151,8 +126,6 @@ export default {
       ],
       duesPackages: null,
       duesPackageChoice: '',
-      graduationSemesterChoice:'',
-      graduationYearChoice:'',
       merchGroups: {},
       merchGroupNames: [],
     };
@@ -287,14 +260,6 @@ export default {
     duesPackageChoice: {
       required,
       numeric,
-    },
-    graduationSemesterChoice: {
-      required,
-    },
-    graduationYearChoice: {
-      required,
-      numeric,
-      maxLength: maxLength(4),
     },
     merchGroups: {
       $each: {

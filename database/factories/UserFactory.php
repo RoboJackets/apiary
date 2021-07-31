@@ -41,7 +41,6 @@ class UserFactory extends Factory
             'emergency_contact_phone' => null,
             'join_semester' => null,
             'graduation_semester' => null,
-            'graduation_year' => null,
             'shirt_size' => $this->faker->randomElement(['s', 'm', 'l', 'xl']),
             'polo_size' => $this->faker->randomElement(['s', 'm', 'l', 'xl']),
             'gender' => $this->faker->randomElement(['male', 'female', 'nonbinary', 'none']),
