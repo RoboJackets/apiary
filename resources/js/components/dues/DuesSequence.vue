@@ -78,6 +78,7 @@ export default {
       .get(this.dataUrl)
       .then(response => {
         this.user = response.data.user;
+        console.log(this.user);
       })
       .catch(response => {
         console.log(response);

@@ -49,9 +49,7 @@
           <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
           <term-input
               v-model="localUser.graduation_semester"
-              id="user-graduationsemester"
-              :is-error="$v.localUser.graduation_semester.$error"
-              @input="$v.localUser.graduation_semester.$touch()">
+              id="user-graduationsemester">
           </term-input>
         </div>        
 
@@ -141,7 +139,7 @@ export default {
   },
   mounted() {
     var dataUrl = '/api/v1/dues/packages/purchase?include=merchandise';
-    console.log(this.user.value);
+    console.log(this.user);
     axios
       .get(dataUrl)
       .then(response => {
