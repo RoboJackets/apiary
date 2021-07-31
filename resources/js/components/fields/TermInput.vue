@@ -1,18 +1,19 @@
 <template>
   <div class="form-inline">
-    <select v-model="semester" class="custom-select">
+    <select v-model="semester" class="custom-select" :class="{ 'is-invalid': isError }">
       <option value="" style="display:none;">Semester</option>
       <option value="08">Fall</option>
       <option value="02">Spring</option>
       <option value="05">Summer</option>
     </select>
-    <input v-model="year" class="form-control" maxlength="4" type="text" min="2000" max="3000" placeholder="Year">
+    <input v-model="year" class="form-control" :class="{ 'is-invalid': isError }" maxlength="4" size="4" type="text" min="2000" max="3000" placeholder="Year">
   </div>
 </template>
 
 <script>
 /*
  * @prop term - 6-digit Banner term format (YYYYMM)
+ * @prop isError: Boolean, defines whether error styles should be displayed
  * @emits input - 6-digit Banner term format (YYYYMM) on update
  */
 export default {
@@ -24,6 +25,10 @@ export default {
     term: {
       type: String,
       default: '',
+    },
+    isError: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

@@ -47,10 +47,14 @@
 
         <div class="form-group row">
           <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
-          <term-input
-              v-model="localUser.graduation_semester"
-              id="user-graduationsemester">
-          </term-input>
+          <div class="col-sm-10 col-lg-4">
+            <term-input
+                v-model="localUser.graduation_semester"
+                id="user-graduationsemester"
+                :is-error="$v.localUser.graduation_semester.$error"
+                @input="$v.localUser.graduation_semester.$touch()">
+            </term-input>
+          </div>
         </div>        
 
         <h4>Information for Merchandise</h4>
