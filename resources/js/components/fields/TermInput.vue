@@ -12,16 +12,16 @@
 
 <script>
 /*
- * @prop term - 6-digit Banner term format (YYYYMM)
+ * @prop value - 6-digit Banner term format (YYYYMM)
  * @emits input - 6-digit Banner term format (YYYYMM) on update
  */
 export default {
   model: {
-    prop: 'term',
+    prop: 'value',
     event: 'input',
   },
   props: {
-    term: {
+    value: {
       type: String,
       default: '',
     },
@@ -29,28 +29,28 @@ export default {
   computed: {
     semester: {
       get: function() {
-        if (this.term) {
-          return this.term.slice(-2);
+        if (this.value) {
+          return this.value.slice(-2);
         } else {
           return '';
         }
       },
       set: function(newSemester) {
-        var term = this.year + '' + newSemester;
-        this.$emit('input', term);
+        var value = this.year + '' + newSemester;
+        this.$emit('input', value);
       },
     },
     year: {
       get: function() {
-        if (this.term) {
-          return this.term.slice(0, -2);
+        if (this.value) {
+          return this.value.slice(0, -2);
         } else {
           return '';
         }
       },
       set: function(newYear) {
-        var term = newYear + '' + this.semester;
-        this.$emit('input', term);
+        var value = newYear + '' + this.semester;
+        this.$emit('input', value);
       },
     },
   },
