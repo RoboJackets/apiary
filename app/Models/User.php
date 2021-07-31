@@ -391,9 +391,9 @@ class User extends Authenticatable
     /**
      * Get the graduation semester associated with the User.
      */
-    public function getgraduationSemesterAttribute(): string
+    public function getgraduationSemester(): string
     {
-        return $this->graduation_semester;
+        return 'graduation_semester';
     }
 
     /**
