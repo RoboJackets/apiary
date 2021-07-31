@@ -1,12 +1,13 @@
 <template>
   <div class="form-inline" :class="{ 'is-invalid': isError }">
-    <select v-model="semester" class="custom-select" :class="{ 'is-invalid': isError }">
+    <select v-model="semester" class="custom-select" :class="{ 'is-invalid': isError && semester.length !== 2 }">
       <option value="" style="display:none;">Semester</option>
       <option value="08">Fall</option>
       <option value="02">Spring</option>
       <option value="05">Summer</option>
     </select>
-    <input v-model="year" class="form-control" :class="{ 'is-invalid': isError }" maxlength="4" size="4" type="number" min="2000" max="3000" placeholder="Year">
+    <input v-if="semester.length === 2"
+      v-model="year" class="form-control" :class="{ 'is-invalid': isError }" maxlength="4" size="6" type="number" min="2000" max="3000" placeholder="Year">
   </div>
 </template>
 
@@ -42,9 +43,10 @@ export default {
       },
       set: function(newSemester) {
         var term = this.year + '' + newSemester;
-        if (term.length === 6) {
-          this.$emit('input', term);
-          console.log("Semester: ", term)
+
+        this.$emit('input', term);
+        if (this.term.length === 6) {
+          this.$emit('touch', term)
         }
       },
     },
@@ -57,10 +59,13 @@ export default {
         }
       },
       set: function(newYear) {
-        var term = newYear + '' + this.semester;
-        if (term.length === 6) {
+        if (this.semester.length === 2) {
+          var term = newYear + '' + this.semester;
           this.$emit('input', term);
-          console.log("Year: ", term)
+        }
+
+        if (this.term.length === 6) {
+          this.$emit('touch', term)
         }
       },
     },

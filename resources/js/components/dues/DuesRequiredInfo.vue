@@ -43,7 +43,7 @@
           </div>
         </div>
 
-        <h4>Gradution Information</h4>
+        <h4>Graduation Information</h4>
 
         <div class="form-group row">
           <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
@@ -52,13 +52,14 @@
                 v-model="localUser.graduation_semester"
                 id="user-graduationsemester"
                 :is-error="$v.localUser.graduation_semester.$error"
-                @input="$v.localUser.graduation_semester.$touch()">
+                @touch="$v.localUser.graduation_semester.$touch()"
+            >
             </term-input>
             <div class="invalid-feedback">
               Select a valid graduation date.
             </div>
           </div>
-        </div>        
+        </div>
 
         <h4>Information for Merchandise</h4>
 
@@ -122,7 +123,7 @@
 </template>
 
 <script>
-import { required, numeric, minLength, maxLength } from 'vuelidate/lib/validators';
+import {maxLength, minLength, numeric, required} from 'vuelidate/lib/validators';
 import TermInput from '../fields/TermInput.vue';
 
 export default {
