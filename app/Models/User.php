@@ -402,6 +402,7 @@ class User extends Authenticatable
     public function setgraduationSemesterAttribute(?string $graduation): void
     {
         $this->attributes['graduation_semester'] = $graduation;
+    }
 
     /*
      * Get the DuesTransactions belonging to the User
