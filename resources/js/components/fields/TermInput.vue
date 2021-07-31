@@ -45,7 +45,7 @@ export default {
         var term = this.year + '' + newSemester;
 
         this.$emit('input', term);
-        if (this.term.length === 6) {
+        if (this.term && this.term.length === 6) {
           this.$emit('touch', term)
         }
       },
@@ -64,7 +64,7 @@ export default {
           this.$emit('input', term);
         }
 
-        if (this.term.length === 6) {
+        if (this.term && this.term.length === 6) {
           this.$emit('touch', term)
         }
       },

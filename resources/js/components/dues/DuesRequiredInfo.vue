@@ -31,11 +31,16 @@
         <div class="form-group row">
           <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
-            <select id="duesPackage" v-model="duesPackageChoice" class="custom-select" :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
+            <select id="duesPackage" v-model="duesPackageChoice" class="custom-select"
+                    :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
               <option value="" style="display:none" v-if="!duesPackages">Loading...</option>
-              <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages Available</option>
+              <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages
+                Available
+              </option>
               <option value="" style="display:none" v-if="duesPackages && duesPackages.length > 0">Select One</option>
-              <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{duesPackage.name}} - ${{duesPackage.cost}}</option>
+              <option v-for="duesPackage in duesPackages" :value="duesPackage.id">{{ duesPackage.name }} -
+                ${{ duesPackage.cost }}
+              </option>
             </select>
             <div class="invalid-feedback">
               Select a dues package.
@@ -43,20 +48,21 @@
           </div>
         </div>
 
-        <h4>Graduation Information</h4>
+        <div v-if="graduationInfoRequired">
+          <h4>Graduation Information</h4>
 
-        <div class="form-group row">
-          <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
-          <div class="col-sm-10 col-lg-4">
-            <term-input
+          <div class="form-group row">
+            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
+            <div class="col-sm-10 col-lg-4">
+              <term-input
                 v-model="localUser.graduation_semester"
                 id="user-graduationsemester"
                 :is-error="$v.localUser.graduation_semester.$error"
-                @touch="$v.localUser.graduation_semester.$touch()"
-            >
-            </term-input>
-            <div class="invalid-feedback">
-              Select a valid graduation date.
+                @touch="$v.localUser.graduation_semester.$touch()">
+              </term-input>
+              <div class="invalid-feedback">
+                Select a valid graduation date.
+              </div>
             </div>
           </div>
         </div>
@@ -96,14 +102,17 @@
         </div>
 
         <h4>Merchandise Selection</h4>
-        <p v-if="!selectedPackage || (merchGroupNames.length > 0)">One item of RoboJackets merch from each group below is included with your dues payment. {{merchDependencyText}}</p>
+        <p v-if="!selectedPackage || (merchGroupNames.length > 0)">One item of RoboJackets merch from each group below
+          is included with your dues payment. {{ merchDependencyText }}</p>
         <p v-else>Only students are eligible for RoboJackets merch.</p>
         <div v-for="(merchlist, group) in merchGroups" class="form-group row">
-          <label :for="'merch-'+group" class="col-sm-2 col-form-label">{{group}}</label>
+          <label :for="'merch-'+group" class="col-sm-2 col-form-label">{{ group }}</label>
           <div class="col-sm-10 col-lg-4">
-            <select :id="'merch-'+group" class="custom-select" v-model="merchlist.selection" :class="{ 'is-invalid': $v.merchGroups.$each[group].$error }" @input="$v.merchGroups.$each[group].$touch()">
+            <select :id="'merch-'+group" class="custom-select" v-model="merchlist.selection"
+                    :class="{ 'is-invalid': $v.merchGroups.$each[group].$error }"
+                    @input="$v.merchGroups.$each[group].$touch()">
               <option value="" style="display:none">Select One</option>
-              <option v-for="merch in merchlist.list" :value="merch.id">{{merch.name}}</option>
+              <option v-for="merch in merchlist.list" :value="merch.id">{{ merch.name }}</option>
             </select>
             <div class="invalid-feedback">
               You must choose an item.
@@ -127,17 +136,17 @@ import {maxLength, minLength, numeric, required} from 'vuelidate/lib/validators'
 import TermInput from '../fields/TermInput.vue';
 
 export default {
-  components: { TermInput },
+  components: {TermInput},
   props: ['user'],
   data() {
     return {
       shirtSizeOptions: [
-        { value: 's', text: 'S' },
-        { value: 'm', text: 'M' },
-        { value: 'l', text: 'L' },
-        { value: 'xl', text: 'XL' },
-        { value: 'xxl', text: 'XXL' },
-        { value: 'xxxl', text: 'XXXL' },
+        {value: 's', text: 'S'},
+        {value: 'm', text: 'M'},
+        {value: 'l', text: 'L'},
+        {value: 'xl', text: 'XL'},
+        {value: 'xxl', text: 'XXL'},
+        {value: 'xxxl', text: 'XXXL'},
       ],
       duesPackages: null,
       duesPackageChoice: '',
@@ -190,7 +199,7 @@ export default {
           }
         });
     },
-    saveUserUpdates: function(user) {
+    saveUserUpdates: function (user) {
       var baseUserUrl = '/api/v1/users/';
       var dataUserUrl = baseUserUrl + user.id;
 
@@ -198,9 +207,9 @@ export default {
 
       return axios.put(dataUserUrl, this.localUser);
     },
-    createDuesRequest: function(userId, duesPackageId, merchGroups) {
+    createDuesRequest: function (userId, duesPackageId, merchGroups) {
       var merch = [];
-      this.merchGroupNames.forEach(function(group) {
+      this.merchGroupNames.forEach(function (group) {
         merch.push(merchGroups[group].selection);
       });
       var duesRequest = {
@@ -214,16 +223,16 @@ export default {
     },
   },
   computed: {
-    localUser: function() {
+    localUser: function () {
       return this.user;
     },
-    selectedPackage: function() {
+    selectedPackage: function () {
       if (null === this.duesPackages) {
         return null;
       }
       return this.duesPackages.find(duespackage => duespackage.id == this.duesPackageChoice);
     },
-    merchDependencyText: function() {
+    merchDependencyText: function () {
       var base = 'The options depend on your dues term selection above';
       if (!this.selectedPackage) {
         return base + ', so please select that first.';
@@ -231,9 +240,16 @@ export default {
         return base + '.';
       }
     },
+    graduationInfoRequired: function () {
+      if (!this.selectedPackage) {
+        return false;
+      }
+
+      return this.selectedPackage.restricted_to_students;
+    }
   },
   watch: {
-    duesPackageChoice: function(packageid, old) {
+    duesPackageChoice: function (packageid, old) {
       if (null === this.selectedPackage) return;
       var dataUrl = '/api/v1/dues/packages/' + packageid + '?include=merchandise';
       this.merchGroups = {};
