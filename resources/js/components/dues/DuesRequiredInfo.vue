@@ -44,7 +44,7 @@
         </div>
 
         <h4>Gradution Information</h4>
-        
+
         <div class="form-group row">
           <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
           <term-input
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { required, numeric, maxLength } from 'vuelidate/lib/validators';
+import { required, numeric } from 'vuelidate/lib/validators';
 import TermInput from '../fields/TermInput.vue';
 
 export default {
@@ -141,6 +141,7 @@ export default {
   },
   mounted() {
     var dataUrl = '/api/v1/dues/packages/purchase?include=merchandise';
+    console.log(localUser);
     axios
       .get(dataUrl)
       .then(response => {
