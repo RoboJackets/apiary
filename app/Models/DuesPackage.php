@@ -176,7 +176,7 @@ class DuesPackage extends Model
             ->where('dues_packages.effective_end', '>=', date('Y-m-d'))
             ->where('restricted_to_students', 'student' === $user->primary_affiliation);
 
-        if (config('database.default') === 'mysql') {
+        if ('mysql' === config('database.default')) {
             $newQuery->havingRaw('payments.id is null');
         }
 
