@@ -1,18 +1,20 @@
 <template>
-  <div class="form-inline">
-    <select v-model="semester" class="custom-select">
-      <option value="" style="display:none;"></option>
+  <div class="form-inline" :class="{ 'is-invalid': isError }">
+    <select v-model="semester" class="custom-select" :class="{ 'is-invalid': isError && semester.length !== 2 }">
+      <option value="" style="display:none;">Semester</option>
       <option value="08">Fall</option>
       <option value="02">Spring</option>
       <option value="05">Summer</option>
     </select>
-    <input v-model="year" class="form-control" size="4" type="text" min="2000" max="3000">
+    <input v-if="semester.length === 2"
+      v-model="year" class="form-control" :class="{ 'is-invalid': isError }" maxlength="4" size="6" type="number" min="2000" max="3000" placeholder="Year">
   </div>
 </template>
 
 <script>
 /*
  * @prop term - 6-digit Banner term format (YYYYMM)
+ * @prop isError: Boolean, defines whether error styles should be displayed
  * @emits input - 6-digit Banner term format (YYYYMM) on update
  */
 export default {
@@ -24,6 +26,10 @@ export default {
     term: {
       type: String,
       default: '',
+    },
+    isError: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -37,7 +43,11 @@ export default {
       },
       set: function(newSemester) {
         var term = this.year + '' + newSemester;
+
         this.$emit('input', term);
+        if (this.term && this.term.length === 6) {
+          this.$emit('touch', term)
+        }
       },
     },
     year: {
@@ -49,8 +59,14 @@ export default {
         }
       },
       set: function(newYear) {
-        var term = newYear + '' + this.semester;
-        this.$emit('input', term);
+        if (this.semester.length === 2) {
+          var term = newYear + '' + this.semester;
+          this.$emit('input', term);
+        }
+
+        if (this.term && this.term.length === 6) {
+          this.$emit('touch', term)
+        }
       },
     },
   },

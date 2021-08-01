@@ -24,6 +24,7 @@ class DuesPackage extends JsonResource
             'cost' => $this->cost,
             'is_active' => $this->is_active,
             'available_for_purchase' => $this->available_for_purchase,
+            'restricted_to_students' => $this->restricted_to_students,
             'effective_start' => $this->effective_start,
             'effective_end' => $this->effective_end,
 

@@ -115,8 +115,7 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     // Hidden to non-admins because it's confusing and not useful
                     return $request->user()->hasRole('admin');
-                })
-                ->onlyOnDetail(),
+                }),
 
             Text::make('Georgia Tech Email', 'gt_email')
                 ->rules('required', 'email')
