@@ -33,6 +33,7 @@
                 <li>Your phone number</li>
                 <li>Your emergency contact information, including their name and phone number</li>
                 <li>Your shirt and polo sizes</li>
+                <li>Your expected graduation date</li>
                 <li>Your resume</li>
                 <li>Identifiers, such as username or email, of your linked Github, Google, and ClickUp accounts</li>
                 <li>Transaction identifiers for credit/debit card transactions completed by RoboJackets' payments processor, Square; RoboJackets does not process or store billing data, including credit/debit card numbers.</li>
