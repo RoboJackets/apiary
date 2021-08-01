@@ -78,21 +78,6 @@
           </div>
 
           <div class="form-group row">
-            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
-            <div class="col-sm-10 col-lg-4">
-              <term-input
-                v-model="user.graduation_semester"
-                id="user-graduationsemester"
-                :is-error="$v.user.graduation_semester.$error"
-                @touch="$v.user.graduation_semester.$touch()">
-              </term-input>
-              <div class="invalid-feedback">
-                Select a valid graduation date.
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group row">
             <label for="user-shirtsize" class="col-sm-2 col-form-label">Shirt Size</label>
             <div class="col-sm-10 col-lg-4">
               <custom-radio-buttons
@@ -113,6 +98,23 @@
                   id="user-polosize"
                   @input="$v.user.polo_size.$touch()">
               </custom-radio-buttons>
+            </div>
+          </div>
+
+          <h3>Graduation Information</h3>
+
+          <div class="form-group row">
+            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
+            <div class="col-sm-10 col-lg-4">
+              <term-input
+                v-model="luser.graduation_semester"
+                id="user-graduationsemester"
+                :is-error="$v.user.graduation_semester.$error"
+                @touch="$v.user.graduation_semester.$touch()">
+              </term-input>
+              <div class="invalid-feedback">
+                Select a valid graduation date.
+              </div>
             </div>
           </div>
 
