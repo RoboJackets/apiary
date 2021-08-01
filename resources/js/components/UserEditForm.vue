@@ -107,7 +107,7 @@
             <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
             <div class="col-sm-10 col-lg-4">
               <term-input
-                v-model="luser.graduation_semester"
+                v-model="user.graduation_semester"
                 id="user-graduationsemester"
                 :is-error="$v.user.graduation_semester.$error"
                 @touch="$v.user.graduation_semester.$touch()">
