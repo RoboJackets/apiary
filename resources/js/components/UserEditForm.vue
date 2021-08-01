@@ -378,7 +378,7 @@ export default {
   },
   computed: {
     graduationInfoRequired: function() {
-      return this.user.primary_affiliation === "student";
+      return this.user.primary_affiliation === "Student";
     }
   },
   validations: {
