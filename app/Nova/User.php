@@ -109,9 +109,10 @@ class User extends Resource
                 ->rules('required', 'max:127'),
 
             Text::make('GTED Primary Affiliation', 'primary_affiliation')
-                ->resolveUsing(static function (?string $affiliation): ?string {
+                ->displayUsing(static function (?string $affiliation): ?string {
                     return null === $affiliation || 'member' === $affiliation ? null : ucfirst($affiliation);
                 })
+                ->rules('required')
                 ->canSee(static function (Request $request): bool {
                     // Hidden to non-admins because it's confusing and not useful
                     return $request->user()->hasRole('admin');
