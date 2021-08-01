@@ -381,7 +381,7 @@ export default {
       preferred_first_name: { alpha },
       shirt_size: {},
       polo_size: {},
-      graduation_date: {maxLength: maxLength(6), minLength: minLength(6)},
+      graduation_semester: {maxLength: maxLength(6), minLength: minLength(6)},
       emergency_contact_name: { required },
       emergency_contact_phone: { required, maxLength: maxLength(15) },
     },
