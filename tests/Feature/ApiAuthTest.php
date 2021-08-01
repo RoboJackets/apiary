@@ -7,6 +7,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Database\Seeders\UsersSeeder;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ApiAuthTest extends TestCase
@@ -20,16 +21,44 @@ class ApiAuthTest extends TestCase
         $this->seed(UsersSeeder::class);
         $alternateUser = User::where('id', '!=', $testId)->first();
         $alternateId = $alternateUser->id;
+        $alternateUser->syncRoles(['member']);
+
+        $memberPerms = Role::findByName('member')->permissions->pluck('name');
+        $adminPerms = Role::findByName('admin')->permissions->pluck('name');
+        $this->assertCount(count($memberPerms), User::find($testId)->getAllPermissions());
 
         // Same user, read-users-own
         $response = $this->actingAs($this->getTestUser(['member']), 'api')
-                         ->get('/api/v1/users/'.$testId.'?include=roles');
+                         ->get('/api/v1/users/'.$testId.'?include=roles,permissions');
         $response->assertStatus(200);
         $response->assertJson(static function (AssertableJson $json) use ($testId): void {
             $json->where('status', 'success')
                  ->has('user', static function (AssertableJson $json) use ($testId): void {
                      $json->where('id', $testId)
-                          ->missing('roles') // Missing roles since they can only see this because it's themself.
+                          ->missing('allPermissions')
+                          ->missing('roles')
+                          ->missing('permissions')
+                          ->etc();
+                 })
+                 ->etc();
+        });
+
+        // Same user, read-users-own, base route
+        $response = $this->actingAs($this->getTestUser(['member']), 'api')
+                         ->get('/api/v1/user');
+        $response->assertStatus(200);
+        $response->assertJson(static function (AssertableJson $json) use ($testId, $memberPerms): void {
+            $json->where('status', 'success')
+                 ->has('user', static function (AssertableJson $json) use ($testId, $memberPerms): void {
+                     $json->where('id', $testId)
+                          ->where('allPermissions', $memberPerms)
+                          ->has('roles')
+                          ->has('permissions')
+                          ->missing('teams')
+                          ->missing('events')
+                          ->missing('attendance')
+                          ->missing('dues')
+                          ->missing('recruitingEvents')
                           ->etc();
                  })
                  ->etc();
@@ -37,12 +66,14 @@ class ApiAuthTest extends TestCase
 
         // Same user, with admin
         $response = $this->actingAs($this->getTestUser(['member', 'admin']), 'api')
-                         ->get('/api/v1/users/'.$testId.'?include=roles');
-        $response->assertJson(static function (AssertableJson $json) use ($testId): void {
+                         ->get('/api/v1/users/'.$testId.'?include=roles,permissions');
+        $response->assertJson(static function (AssertableJson $json) use ($testId, $adminPerms): void {
             $json->where('status', 'success')
-                 ->has('user', static function (AssertableJson $json) use ($testId): void {
+                 ->has('user', static function (AssertableJson $json) use ($testId, $adminPerms): void {
                      $json->where('id', $testId)
-                          ->has('roles') // Has roles
+                          ->where('allPermissions', $adminPerms)
+                          ->has('roles')
+                          ->has('permissions')
                           ->etc();
                  })
                  ->etc();
@@ -56,13 +87,15 @@ class ApiAuthTest extends TestCase
 
         // Different user, with permissions
         $response = $this->actingAs($this->getTestUser(['member', 'admin']), 'api')
-                         ->get('/api/v1/users/'.$alternateId.'?include=roles');
+                         ->get('/api/v1/users/'.$alternateId.'?include=roles,permissions');
         $response->assertStatus(200);
-        $response->assertJson(static function (AssertableJson $json) use ($alternateId): void {
+        $response->assertJson(static function (AssertableJson $json) use ($alternateId, $memberPerms): void {
             $json->where('status', 'success')
-                 ->has('user', static function (AssertableJson $json) use ($alternateId): void {
+                 ->has('user', static function (AssertableJson $json) use ($alternateId, $memberPerms): void {
                      $json->where('id', $alternateId)
-                          ->has('roles') // Has roles
+                          ->where('allPermissions', $memberPerms)
+                          ->has('roles')
+                          ->has('permissions')
                           ->etc();
                  })
                  ->etc();

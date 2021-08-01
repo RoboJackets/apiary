@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\JsonResponse;
+
+class InfoController extends Controller
+{
+    public function show(): JsonResponse
+    {
+        return response()->json([
+            'status' => 'success',
+            'info' => [
+                'appName' => config('app.name'),
+                'appEnv' => config('app.env'),
+            ],
+        ]);
+    }
+}

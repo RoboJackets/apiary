@@ -70,9 +70,6 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): JsonResponse
     {
         $user = new User();
-        if (true === $request->input('generateToken')) {
-            $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
-        }
 
         foreach (array_keys($request->rules()) as $key) {
             $user->$key = $request->input($key);
@@ -87,7 +84,7 @@ class UserController extends Controller
             }
         }
 
-        $dbUser = User::findOrFail($user->id)->makeVisible('api_token');
+        $dbUser = User::findOrFail($user->id);
 
         return response()->json(['status' => 'success', 'user' => $dbUser], 201);
     }
@@ -108,15 +105,30 @@ class UserController extends Controller
                 ], 403);
             }
 
-            //Show API tokens only to admins and the users themselves
-            if ($requestingUser->id === $user->id || $requestingUser->hasRole('admin')) {
-                $user = $user->makeVisible('api_token');
-            }
-
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         }
 
         return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
+    }
+
+    /**
+     * Display the resource for one's self.
+     */
+    public function showSelf(Request $request): JsonResponse
+    {
+        $include = $request->input('include');
+        $id = $request->user()->id;
+        $allowedIncludes = $this->authorizeInclude(User::class, $include);
+        $allowedIncludes[] = 'permissions';
+        $allowedIncludes[] = 'roles';
+        $user = User::findByIdentifier($id)->with($allowedIncludes)->first();
+
+        if (null === $user) {
+            // This shouldn't be possible.
+            return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
+        }
+
+        return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
     }
 
     /**
@@ -139,18 +151,6 @@ class UserController extends Controller
 
         //Update only included fields
         $validatedFields = $request->validated();
-
-        //Generate an API token for the user if requested *AND* the requesting user is self or admin
-        //This is deliberately doing a separate update/save of the user model because `api_token` MUST
-        //be prevented from mass assignment, otherwise weird things will happen when you `PUT` a User
-        //while authenticating with an API token.
-        if (null !== $request->input('generateToken')
-            && ($requestingUser->hasRole('admin') || $requestingUser->id === $user->id)
-        ) {
-            $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
-            $user->save();
-        }
-        unset($request['generateToken']);
 
         if ($request->filled('clickup_email')) {
             // Check that this is one of their verified emails
@@ -192,11 +192,6 @@ class UserController extends Controller
         }
 
         $user = User::find($user->id);
-
-        //Show API tokens only to admins and the users themselves
-        if ($requestingUser->id === $user->id || $requestingUser->hasRole('admin')) {
-            $user = $user->makeVisible('api_token');
-        }
 
         if (null !== $user) {
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
