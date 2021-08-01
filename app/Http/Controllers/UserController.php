@@ -84,6 +84,8 @@ class UserController extends Controller
             }
         }
 
+        $dbUser = User::findOrFail($user->id);
+
         return response()->json(['status' => 'success', 'user' => $dbUser], 201);
     }
 

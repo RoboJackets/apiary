@@ -40,7 +40,7 @@ class SimpleRequestsTest extends TestCase
     {
         $response = $this->get('/api/v1/info');
         $response->assertStatus(200);
-        $response->assertJson(static function (AssertableJson $json) {
+        $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'success')
                  ->has('info', static function (AssertableJson $json): void {
                      $json->where('appName', 'TESTING Apiary')

@@ -83,7 +83,8 @@ class User extends JsonResource
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'teams' => TeamResource::collection($this->whenLoaded('teams')),
             $this->mergeWhen(
-                $this->resource->relationLoaded('permissions') && $this->resource->relationLoaded('roles'), [
+                $this->resource->relationLoaded('permissions') && $this->resource->relationLoaded('roles'),
+                [
                     'allPermissions' => $this->getAllPermissions()->pluck('name'),
                 ]
             ),

@@ -20,6 +20,7 @@ parameters:
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Permission::\$name\.#'
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Role::\$id\.#'
     - '#Access to an undefined property Spatie\\Permission\\Contracts\\Role::\$name\.#'
+    - '#Access to an undefined property Spatie\\Permission\\Contracts\\Role::\$permissions\.#'
     - '#Access to an undefined property Spatie\\Permission\\Models\\Permission::\$name\.#'
     - '#Access to an undefined property Spatie\\Permission\\Models\\Role::\$name\.#'
     - '#Access to an undefined property Spatie\\WebhookClient\\Models\\WebhookCall::\$payload\.#'
