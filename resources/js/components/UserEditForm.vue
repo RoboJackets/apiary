@@ -101,19 +101,21 @@
             </div>
           </div>
 
-          <h3>Graduation Information</h3>
+          <div v-if="graduationInfoRequired">
+            <h3>Graduation Information</h3>
 
-          <div class="form-group row">
-            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
-            <div class="col-sm-10 col-lg-4">
-              <term-input
-                v-model="user.graduation_semester"
-                id="user-graduationsemester"
-                :is-error="$v.user.graduation_semester.$error"
-                @touch="$v.user.graduation_semester.$touch()">
-              </term-input>
-              <div class="invalid-feedback">
-                Select a valid graduation date.
+            <div class="form-group row">
+              <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
+              <div class="col-sm-10 col-lg-4">
+                <term-input
+                  v-model="user.graduation_semester"
+                  id="user-graduationsemester"
+                  :is-error="$v.user.graduation_semester.$error"
+                  @touch="$v.user.graduation_semester.$touch()">
+                </term-input>
+                <div class="invalid-feedback">
+                  Select a valid graduation date.
+                </div>
               </div>
             </div>
           </div>
@@ -373,6 +375,15 @@ export default {
           );
         });
     },
+  },
+  computed: {
+    graduationInfoRequired: function() {
+      if (this.user.primary_affiliation == "Student") {
+        return false;
+      } else {
+        return true;
+      }
+    }
   },
   validations: {
     user: {
