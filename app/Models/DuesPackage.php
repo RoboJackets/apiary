@@ -161,7 +161,7 @@ class DuesPackage extends Model
     public function scopeUserCanPurchase(Builder $query, User $user): Builder
     {
         return $query
-            ->select('dues_packages.*')
+            ->selectRaw('dues_packages.*, payments.id as payments_id')
             ->leftJoin('dues_transactions', static function (JoinClause $join) use ($user): void {
                 $join->on('dues_packages.conflicts_with_package_id', '=', 'dues_transactions.dues_package_id')
                      ->where('dues_transactions.user_id', $user->id);
@@ -175,7 +175,7 @@ class DuesPackage extends Model
             ->where('available_for_purchase', true)
             ->where('dues_packages.effective_end', '>=', date('Y-m-d'))
             ->where('restricted_to_students', 'student' === $user->primary_affiliation)
-            ->where('payments.id', null);
+            ->having('payments.id', null);
     }
 
     /**
