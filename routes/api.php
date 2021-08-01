@@ -9,6 +9,7 @@ use App\Http\Controllers\AttendanceReportController;
 use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationTemplateController;
 use App\Http\Controllers\NovaExportController;
@@ -101,3 +102,5 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
 );
 
 Route::webhooks('/v1/square', 'square');
+
+Route::get('/v1/info', [InfoController::class, 'show']);

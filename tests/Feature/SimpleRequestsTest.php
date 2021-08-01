@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class SimpleRequestsTest extends TestCase
@@ -30,5 +31,21 @@ class SimpleRequestsTest extends TestCase
 
         $response = $this->actingAs($this->getTestUser(['non-member']), 'web')->get('/');
         $this->assertEquals(200, $response->status(), 'Response content: '.$response->getContent());
+    }
+
+    /**
+     * Test the info endpoint.
+     */
+    public function testInfo(): void
+    {
+        $response = $this->get('/api/v1/info');
+        $response->assertStatus(200);
+        $response->assertJson(static function (AssertableJson $json) {
+            $json->where('status', 'success')
+                 ->has('info', static function (AssertableJson $json): void {
+                     $json->where('appName', 'TESTING Apiary')
+                          ->where('appEnv', 'testing');
+                 });
+        });
     }
 }
