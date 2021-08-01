@@ -82,6 +82,11 @@ class User extends JsonResource
             'recruitingVisits' => RecruitingVisitResource::collection($this->whenLoaded('recruitingVisits')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'teams' => TeamResource::collection($this->whenLoaded('teams')),
+            $this->mergeWhen(
+                $this->resource->relationLoaded('permissions') && $this->resource->relationLoaded('roles'), [
+                    'allPermissions' => $this->getAllPermissions()->pluck('name'),
+                ]
+            ),
         ];
     }
 

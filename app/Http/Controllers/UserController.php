@@ -110,6 +110,26 @@ class UserController extends Controller
     }
 
     /**
+     * Display the resource for one's self.
+     */
+    public function showSelf(Request $request): JsonResponse
+    {
+        $include = $request->input('include');
+        $id = $request->user()->id;
+        $allowedIncludes = $this->authorizeInclude(User::class, $include);
+        $allowedIncludes[] = 'permissions';
+        $allowedIncludes[] = 'roles';
+        $user = User::findByIdentifier($id)->with($allowedIncludes)->first();
+
+        if (null === $user) {
+            // This shouldn't be possible.
+            return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
+        }
+
+        return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(string $id, UpdateUserRequest $request): JsonResponse

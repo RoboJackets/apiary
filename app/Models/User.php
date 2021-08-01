@@ -32,7 +32,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property      int $id
  * @property      string $uid
  * @property      int $gtid
- * @property      string|null $api_token
  * @property      string|null $slack_id
  * @property      string|null $github_username
  * @property      string|null $gmail_address
