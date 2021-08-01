@@ -17,6 +17,6 @@ class InfoController extends Controller
                 'appName' => config('app.name'),
                 'appEnv' => config('app.env'),
             ],
-        );
+        ]);
     }
 }
