@@ -78,6 +78,21 @@
           </div>
 
           <div class="form-group row">
+            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
+            <div class="col-sm-10 col-lg-4">
+              <term-input
+                v-model="user.graduation_semester"
+                id="user-graduationsemester"
+                :is-error="$v.user.graduation_semester.$error"
+                @touch="$v.user.graduation_semester.$touch()">
+              </term-input>
+              <div class="invalid-feedback">
+                Select a valid graduation date.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
             <label for="user-shirtsize" class="col-sm-2 col-form-label">Shirt Size</label>
             <div class="col-sm-10 col-lg-4">
               <custom-radio-buttons
@@ -247,7 +262,7 @@
 </template>
 
 <script>
-import {alpha, email, maxLength, required} from 'vuelidate/lib/validators';
+import {alpha, email, maxLength, minLength, required} from 'vuelidate/lib/validators';
 import notGTEmail from '../customValidators/notGTEmail';
 
 export default {
@@ -364,6 +379,7 @@ export default {
       preferred_first_name: { alpha },
       shirt_size: {},
       polo_size: {},
+      graduation_date: {maxLength: maxLength(6), minLength: minLength(6)},
       emergency_contact_name: { required },
       emergency_contact_phone: { required, maxLength: maxLength(15) },
     },
