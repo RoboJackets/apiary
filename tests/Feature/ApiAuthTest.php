@@ -31,9 +31,9 @@ class ApiAuthTest extends TestCase
         $response = $this->actingAs($this->getTestUser(['member']), 'api')
                          ->get('/api/v1/users/'.$testId.'?include=roles,permissions');
         $response->assertStatus(200);
-        $response->assertJson(static function (AssertableJson $json) use ($testId, $memberPerms): void {
+        $response->assertJson(static function (AssertableJson $json) use ($testId): void {
             $json->where('status', 'success')
-                 ->has('user', static function (AssertableJson $json) use ($testId, $memberPerms): void {
+                 ->has('user', static function (AssertableJson $json) use ($testId): void {
                      $json->where('id', $testId)
                           ->missing('allPermissions')
                           ->missing('roles')
