@@ -66,17 +66,19 @@
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Semester</label>
-          <div class="col-sm-10 col-lg-4">
-            <term-input
-              v-model="localUser.graduation_semester"
-              id="user-graduationsemester"
-              :is-error="$v.localUser.graduation_semester.$error"
-              @touch="$v.localUser.graduation_semester.$touch()">
-            </term-input>
-            <div class="invalid-feedback">
-              Select a valid graduation date.
+        <div v-if="graduationInfoRequired">
+          <div class="form-group row">
+            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Semester</label>
+            <div class="col-sm-10 col-lg-4">
+              <term-input
+                v-model="localUser.graduation_semester"
+                id="user-graduationsemester"
+                :is-error="$v.localUser.graduation_semester.$error"
+                @touch="$v.localUser.graduation_semester.$touch()">
+              </term-input>
+              <div class="invalid-feedback">
+                Select a valid graduation date.
+              </div>
             </div>
           </div>
         </div>
