@@ -33,41 +33,61 @@ export default {
       default: false,
     },
   },
-  watch: {
-    semester: function(newSemester) {
-      var term = this.year + '' + newSemester;
-      this.$emit('input', term);
-      
-      if (this.term && this.term.length === 6) {
-        this.$emit('touch', term)
-      }
-    },
-    year: function(newYear) {
-      if (this.semester.length === 2) {
-        var term = newYear + '' + this.semester;
+  computed: {
+    semester: {
+      get: function() {
+        if (this.term) {
+          return this.term.slice(-2);
+        } else {
+          return '';
+        }
+      },
+      set: function(newSemester) {
+        var term = this.year + '' + newSemester;
         this.$emit('input', term);
-      }
+        
+        if (this.term && this.term.length === 6) {
+          this.$emit('touch', term)
+        }
+      },
+    },
+    year: {
+      get: function() {
+        if (this.term) {
+          return this.term.slice(0, -2);
+        } else {
+          return '';
+        }
+      },
+      set: function(newYear) {
+        if (this.semester.length === 2) {
+          var term = newYear + '' + this.semester;
+          this.$emit('input', term);
+        }
 
-      if (this.term && this.term.length === 6) {
-        this.$emit('touch', term)
-      }
+        if (this.term && this.term.length === 6) {
+          this.$emit('touch', term)
+        }
+      },
     },
   },
   methods: {
     change: function() {
       var d = new Date();
-      var month = d.getMonth();
-      var year = d.getFullYear();
-      if (month <= 5) {
+      var monthValue = d.getMonth();
+      var yearValue = d.getFullYear();
+      if (monthValue <= 5) {
         document.getElementById('semesterSelect').value = '02';
-        Vue.set(semester, semester.value, '02');
-      } else if (month <= 9) {
+        this.semester.value = '02';
+      } else if (monthValue <= 9) {
         document.getElementById('semesterSelect').value = '05';
-      } else if (month <= 12) {
+        this.semester.value = '05';
+      } else if (monthValue <= 12) {
         document.getElementById('semesterSelect').value = '08';
+        this.semester.value = '08'
       }
-      document.getElementById('yearSelect').value = year;
-      
+      document.getElementById('yearSelect').value = yearValue;
+      this.year.value = yearValue;
     },
   },
 };
