@@ -83,8 +83,8 @@ export default {
       } else if (monthValue <= 12) {
         this.term = yearValue + '' + '08';
       }
-      this.$emit('input', term);
-      this.$emit('touch', term);
+      this.$emit('input', this.term);
+      this.$emit('touch', this.term);
     },
   },
 };
