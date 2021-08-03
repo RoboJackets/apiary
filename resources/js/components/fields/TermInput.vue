@@ -35,8 +35,8 @@ export default {
   },
   data() {
     return {
-      semester: null,
-      year: null,
+      semester: '',
+      year: '',
     }
   },
   /*
