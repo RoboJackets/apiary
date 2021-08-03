@@ -39,6 +39,7 @@ export default {
       year: null,
     }
   },
+  /*
   computed: {
     semester: {
       get: function() {
@@ -77,12 +78,27 @@ export default {
       },
     },
   },
+  */
   watch: {
-    semester: function(val) {
-      this.semester = val;
+    semester: function(newSemester) {
+    if (this.semester.length === 2) {
+        var term = newYear + '' + this.semester;
+        this.$emit('input', term);
+      }
+
+      if (this.term && this.term.length === 6) {
+        this.$emit('touch', term)
+      }
     },
-    year: function(val) {
-      this.year = val;
+    year: function(newYear) {
+      if (this.semester.length === 2) {
+        var term = newYear + '' + this.semester;
+        this.$emit('input', term);
+      }
+
+      if (this.term && this.term.length === 6) {
+        this.$emit('touch', term)
+      }
     },
   },
   methods: {
@@ -92,16 +108,12 @@ export default {
       var yearValue = d.getFullYear();
       if (monthValue <= 5) {
         document.getElementById('semesterSelect').value = '02';
-        this.semester = '02';
       } else if (monthValue <= 9) {
         document.getElementById('semesterSelect').value = '05';
-        this.semester = '05';
       } else if (monthValue <= 12) {
         document.getElementById('semesterSelect').value = '08';
-        this.semester = '08';
       }
       document.getElementById('yearSelect').value = yearValue;
-      this.year = yearValue;
     },
   },
 };
