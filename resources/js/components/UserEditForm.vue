@@ -101,9 +101,24 @@
             </div>
           </div>
 
-          <div v-if="graduationInfoRequired">
-            <h3>Graduation Information</h3>
+          <h3>Class Standing Information</h3>
 
+          <div class="form-group row">
+            <label for="joinInformation" class="col-sm-2 col-form-label">First Semester at GT</label>
+            <div class="col-sm-10 col-lg-4">
+              <term-input
+                v-model="user.join_semester"
+                id="user-joinsemester"
+                :is-error="$v.user.join_semester.$error"
+                @touch="$v.user.join_semester.$touch()">
+              </term-input>
+              <div class="invalid-feedback">
+                Select a valid date.
+              </div>
+            </div>
+          </div>
+
+          <div v-if="graduationInfoRequired">
             <div class="form-group row">
               <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
               <div class="col-sm-10 col-lg-4">
@@ -379,7 +394,7 @@ export default {
   computed: {
     graduationInfoRequired: function() {
       return this.user.primary_affiliation === "student";
-    }
+    },
   },
   validations: {
     user: {
@@ -388,6 +403,7 @@ export default {
       preferred_first_name: { alpha },
       shirt_size: {},
       polo_size: {},
+      join_semester: {maxLength: maxLength(6), minLength: minLength(6)},
       graduation_semester: {maxLength: maxLength(6), minLength: minLength(6)},
       emergency_contact_name: { required },
       emergency_contact_phone: { required, maxLength: maxLength(15) },
