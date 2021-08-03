@@ -48,21 +48,35 @@
           </div>
         </div>
 
-        <div v-if="graduationInfoRequired">
-          <h4>Graduation Information</h4>
 
-          <div class="form-group row">
-            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
-            <div class="col-sm-10 col-lg-4">
-              <term-input
-                v-model="localUser.graduation_semester"
-                id="user-graduationsemester"
-                :is-error="$v.localUser.graduation_semester.$error"
-                @touch="$v.localUser.graduation_semester.$touch()">
-              </term-input>
-              <div class="invalid-feedback">
-                Select a valid graduation date.
-              </div>
+        <h4>Class Standing Information</h4>
+
+        <div class="form-group row">
+          <label for="joinInformation" class="col-sm-2 col-form-label">First Semester</label>
+          <div class="col-sm-10 col-lg-4">
+            <term-input
+              v-model="user.join_semester"
+              id="user-joinsemester"
+              :is-error="$v.user.join_semester.$error"
+              @touch="$v.user.join_semester.$touch()">
+            </term-input>
+            <div class="invalid-feedback">
+              Select a valid date.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Semester</label>
+          <div class="col-sm-10 col-lg-4">
+            <term-input
+              v-model="localUser.graduation_semester"
+              id="user-graduationsemester"
+              :is-error="$v.localUser.graduation_semester.$error"
+              @touch="$v.localUser.graduation_semester.$touch()">
+            </term-input>
+            <div class="invalid-feedback">
+              Select a valid graduation date.
             </div>
           </div>
         </div>
@@ -291,7 +305,12 @@ export default {
         required,
         minLength: minLength(6),
         maxLength: maxLength(6),
-      }
+      },
+      join_semester: {
+        required,
+        minLength: minLength(6),
+        maxLength: maxLength(6),
+      },
     },
     duesPackageChoice: {
       required,
