@@ -33,9 +33,11 @@ export default {
       default: false,
     },
   },
-  data: {
-    semester: '',
-    year: '',
+  data() {
+    return {
+      semester: null,
+      year: null,
+    }
   },
   computed: {
     semester: {
