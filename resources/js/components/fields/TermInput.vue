@@ -8,6 +8,7 @@
     </select>
     <input v-if="semester.length === 2"
       v-model="year" class="form-control" :class="{ 'is-invalid': isError }" maxlength="4" size="6" type="number" min="2000" max="3000" placeholder="Year">
+    <button type="form-control" class="btn btn-primary float-right">Current Semester</button>
   </div>
 </template>
 
