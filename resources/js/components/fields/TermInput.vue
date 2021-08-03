@@ -76,19 +76,14 @@ export default {
       var d = new Date();
       var month = d.getMonth();
       var year = d.getFullYear();
-      console.log("change was called");
       if (month <= 5) {
-        document.getElementById('semesterSelect').value = '02'
-        this.semester.set("02");
+        document.getElementById('semesterSelect').value = '02';
       } else if (month <= 9) {
-        document.getElementById('semesterSelect').value = '05'
-        this.semester.set("05");
+        document.getElementById('semesterSelect').value = '05';
       } else if (month <= 12) {
-        document.getElementById('semesterSelect').value = '08'
-        this.semester.set("08");
+        document.getElementById('semesterSelect').value = '08';
       }
-      document.getElementById('yearSelect').value = year.toString();
-      this.year.set(year.toString());
+      document.getElementById('yearSelect').value = year;
     },
   },
 };
