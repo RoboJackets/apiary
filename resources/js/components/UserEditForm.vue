@@ -104,7 +104,7 @@
           <h3>Class Standing Information</h3>
 
           <div class="form-group row">
-            <label for="joinInformation" class="col-sm-2 col-form-label">First Semester at GT</label>
+            <label for="joinInformation" class="col-sm-2 col-form-label">First Semester</label>
             <div class="col-sm-10 col-lg-4">
               <term-input
                 v-model="user.join_semester"
@@ -120,7 +120,7 @@
 
           <div v-if="graduationInfoRequired">
             <div class="form-group row">
-              <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
+              <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Semester</label>
               <div class="col-sm-10 col-lg-4">
                 <term-input
                   v-model="user.graduation_semester"
