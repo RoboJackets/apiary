@@ -105,7 +105,7 @@
 
           <div class="form-group row">
             <label for="joinInformation" class="col-sm-2 col-form-label">First Semester</label>
-            <div class="col-sm-10 col-lg-4">
+            <div class="col-sm-10">
               <term-input
                 v-model="user.join_semester"
                 id="user-joinsemester"
