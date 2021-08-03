@@ -55,10 +55,10 @@
           <label for="joinInformation" class="col-sm-2 col-form-label">First Semester</label>
           <div class="col-sm-10 col-lg-4">
             <term-input
-              v-model="user.join_semester"
+              v-model="localUser.join_semester"
               id="user-joinsemester"
-              :is-error="$v.user.join_semester.$error"
-              @touch="$v.user.join_semester.$touch()">
+              :is-error="$v.localUser.join_semester.$error"
+              @touch="$v.localUser.join_semester.$touch()">
             </term-input>
             <div class="invalid-feedback">
               Select a valid date.
