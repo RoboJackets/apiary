@@ -33,6 +33,10 @@ export default {
       default: false,
     },
   },
+  data: {
+    semester: '',
+    year: '',
+  },
   computed: {
     semester: {
       get: function() {
@@ -69,6 +73,14 @@ export default {
           this.$emit('touch', term)
         }
       },
+    },
+  },
+  watch: {
+    semester: function(val) {
+      this.semester = val;
+    },
+    year: function(val) {
+      this.year = val;
     },
   },
   methods: {
