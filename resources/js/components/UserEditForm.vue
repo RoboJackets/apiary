@@ -106,12 +106,15 @@
           <div class="form-group row">
             <label for="joinInformation" class="col-sm-2 col-form-label">First Semester</label>
             <div class="col-sm-10 col-lg-4">
-              <term-input
-                v-model="user.join_semester"
-                id="user-joinsemester"
-                :is-error="$v.user.join_semester.$error"
-                @touch="$v.user.join_semester.$touch()">
-              </term-input>
+              <div class="form-inline">
+                <term-input
+                  v-model="user.join_semester"
+                  id="user-joinsemester"
+                  :is-error="$v.user.join_semester.$error"
+                  @touch="$v.user.join_semester.$touch()">
+                </term-input>
+                <button type="submit" class="btn btn-primary float-right">Current Semester</button>
+              </div>
               <div class="invalid-feedback">
                 Select a valid date.
               </div>
@@ -122,12 +125,15 @@
             <div class="form-group row">
               <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Semester</label>
               <div class="col-sm-10 col-lg-4">
-                <term-input
-                  v-model="user.graduation_semester"
-                  id="user-graduationsemester"
-                  :is-error="$v.user.graduation_semester.$error"
-                  @touch="$v.user.graduation_semester.$touch()">
-                </term-input>
+                <div class="form-inline">
+                  <term-input
+                    v-model="user.graduation_semester"
+                    id="user-graduationsemester"
+                    :is-error="$v.user.graduation_semester.$error"
+                    @touch="$v.user.graduation_semester.$touch()">
+                  </term-input>
+                  <button type="submit" class="btn btn-primary float-right">Current Semester</button>
+                </div>
                 <div class="invalid-feedback">
                   Select a valid graduation date.
                 </div>
