@@ -33,13 +33,6 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      semester: '',
-      year: '',
-    }
-  },
-  /*
   computed: {
     semester: {
       get: function() {
@@ -76,29 +69,6 @@ export default {
           this.$emit('touch', term)
         }
       },
-    },
-  },
-  */
-  watch: {
-    semester: function(newSemester) {
-    if (this.semester.length === 2) {
-        var term = newYear + '' + this.semester;
-        this.$emit('input', term);
-      }
-
-      if (this.term && this.term.length === 6) {
-        this.$emit('touch', term)
-      }
-    },
-    year: function(newYear) {
-      if (this.semester.length === 2) {
-        var term = newYear + '' + this.semester;
-        this.$emit('input', term);
-      }
-
-      if (this.term && this.term.length === 6) {
-        this.$emit('touch', term)
-      }
     },
   },
   methods: {
