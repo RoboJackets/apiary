@@ -33,42 +33,24 @@ export default {
       default: false,
     },
   },
-  computed: {
-    semester: {
-      get: function() {
-        if (this.term) {
-          return this.term.slice(-2);
-        } else {
-          return '';
-        }
-      },
-      set: function(newSemester) {
-        var term = this.year + '' + newSemester;
-        this.$emit('input', term);
-        
-        if (this.term && this.term.length === 6) {
-          this.$emit('touch', term)
-        }
-      },
+  watch: {
+    semester: function(newSemester) {
+      var term = this.year + '' + newSemester;
+      this.$emit('input', term);
+      
+      if (this.term && this.term.length === 6) {
+        this.$emit('touch', term)
+      }
     },
-    year: {
-      get: function() {
-        if (this.term) {
-          return this.term.slice(0, -2);
-        } else {
-          return '';
-        }
-      },
-      set: function(newYear) {
-        if (this.semester.length === 2) {
-          var term = newYear + '' + this.semester;
-          this.$emit('input', term);
-        }
+    year: function(newYear) {
+      if (this.semester.length === 2) {
+        var term = newYear + '' + this.semester;
+        this.$emit('input', term);
+      }
 
-        if (this.term && this.term.length === 6) {
-          this.$emit('touch', term)
-        }
-      },
+      if (this.term && this.term.length === 6) {
+        this.$emit('touch', term)
+      }
     },
   },
   methods: {
@@ -78,12 +60,14 @@ export default {
       var year = d.getFullYear();
       if (month <= 5) {
         document.getElementById('semesterSelect').value = '02';
+        Vue.set(semester, semester.value, '02');
       } else if (month <= 9) {
         document.getElementById('semesterSelect').value = '05';
       } else if (month <= 12) {
         document.getElementById('semesterSelect').value = '08';
       }
       document.getElementById('yearSelect').value = year;
+      
     },
   },
 };
