@@ -77,16 +77,14 @@ export default {
       var monthValue = d.getMonth();
       var yearValue = d.getFullYear();
       if (monthValue <= 5) {
-        document.getElementById('semesterSelect').value = '02';
         this.term = yearValue + '' + '02';
       } else if (monthValue <= 9) {
-        document.getElementById('semesterSelect').value = '05';
         this.term = yearValue + '' + '05';
       } else if (monthValue <= 12) {
-        document.getElementById('semesterSelect').value = '08';
         this.term = yearValue + '' + '08';
       }
-      document.getElementById('yearSelect').value = yearValue;
+      this.$emit('input', term);
+      this.$emit('touch', term);
     },
   },
 };
