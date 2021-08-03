@@ -121,7 +121,7 @@
           <div v-if="graduationInfoRequired">
             <div class="form-group row">
               <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Semester</label>
-              <div class="col-sm-10 col-lg-4">
+              <div class="col-sm-10">
                 <term-input
                   v-model="user.graduation_semester"
                   id="user-graduationsemester"
