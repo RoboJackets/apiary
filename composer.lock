@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f37236d84f14bc6ebce3b73bcd2df80",
+    "content-hash": "ca8843c880b1c728651cf41171733de8",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2377,17 +2377,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.27.0",
+            "version": "3.28.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "aa40706e45ec58f6885c443733057c03aff19f99"
+                "reference": "5d353d051ebe2d2ea86c78239f61c54eea0c7962"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-aa40706e45ec58f6885c443733057c03aff19f99-zip-4bd4cf.zip",
-                "reference": "aa40706e45ec58f6885c443733057c03aff19f99",
-                "shasum": "9ad4572f28afb00ea0677e7d586c6f32c26e6de5"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-5d353d051ebe2d2ea86c78239f61c54eea0c7962-zip-1ab4ea.zip",
+                "reference": "5d353d051ebe2d2ea86c78239f61c54eea0c7962",
+                "shasum": "08729abe7b4ce4f9ec953a2963c0529f3d074f8f"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2466,9 +2466,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v3.27.0"
+                "source": "https://github.com/laravel/nova/tree/v3.28.0"
             },
-            "time": "2021-06-29T17:36:02+00:00"
+            "time": "2021-08-04T16:12:19+00:00"
         },
         {
             "name": "laravel/passport",
