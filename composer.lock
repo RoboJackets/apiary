@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c198b0247f70f01e85f52818a5654058",
+    "content-hash": "1b18fe5964285ece7891c6c4f124f0ac",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5175,16 +5175,16 @@
         },
         {
             "name": "php-http/message",
-            "version": "1.11.1",
+            "version": "1.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/message.git",
-                "reference": "887734d9c515ad9a564f6581a682fff87a6253cc"
+                "reference": "295c82867d07261f2fa4b3a26677519fc6f7f5f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message/zipball/887734d9c515ad9a564f6581a682fff87a6253cc",
-                "reference": "887734d9c515ad9a564f6581a682fff87a6253cc",
+                "url": "https://api.github.com/repos/php-http/message/zipball/295c82867d07261f2fa4b3a26677519fc6f7f5f6",
+                "reference": "295c82867d07261f2fa4b3a26677519fc6f7f5f6",
                 "shasum": ""
             },
             "require": {
@@ -5243,9 +5243,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/message/issues",
-                "source": "https://github.com/php-http/message/tree/1.11.1"
+                "source": "https://github.com/php-http/message/tree/1.11.2"
             },
-            "time": "2021-05-24T18:11:08+00:00"
+            "time": "2021-08-03T11:52:11+00:00"
         },
         {
             "name": "php-http/message-factory",
@@ -6831,16 +6831,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "2.7.0",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "91d6644fee3ba447769dc73eda2487a93218c04e"
+                "reference": "21dd07bdd2956e182ffde32d22872ce1a4b3eca9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/91d6644fee3ba447769dc73eda2487a93218c04e",
-                "reference": "91d6644fee3ba447769dc73eda2487a93218c04e",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/21dd07bdd2956e182ffde32d22872ce1a4b3eca9",
+                "reference": "21dd07bdd2956e182ffde32d22872ce1a4b3eca9",
                 "shasum": ""
             },
             "require": {
@@ -6906,7 +6906,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/2.7.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/2.8.0"
             },
             "funding": [
                 {
@@ -6918,7 +6918,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-06-16T09:26:40+00:00"
+            "time": "2021-08-08T09:03:08+00:00"
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
