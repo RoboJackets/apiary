@@ -101,4 +101,5 @@ Route::webhooks('/v1/square', 'square');
 
 Route::get('/v1/info', [InfoController::class, 'show']);
 
-Route::get('/v1/nova/export/{file}', [NovaExportController::class, 'export'])->name('nova.export')->middleware(['signed']);
+Route::get('/v1/nova/export/{file}', [NovaExportController::class, 'export'])->name('nova.export')
+    ->middleware(['signed']);
