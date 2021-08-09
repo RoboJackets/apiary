@@ -94,13 +94,11 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         Route::get('teams/{id}/members', [TeamController::class, 'showMembers'])->name('teams.show.members');
         Route::post('teams/{id}/members', [TeamController::class, 'updateMembers'])->name('teams.update.members');
         Route::resource('teams', TeamController::class)->except('create', 'edit');
-
-        // Nova Extra Stuff
-        Route::get('nova/export/{file}', [NovaExportController::class, 'export'])->name('nova.export')
-            ->middleware(['signed', 'can:access-nova']);
     }
 );
 
 Route::webhooks('/v1/square', 'square');
 
 Route::get('/v1/info', [InfoController::class, 'show']);
+
+Route::get('/v1/nova/export/{file}', [NovaExportController::class, 'export'])->name('nova.export')->middleware(['signed']);
