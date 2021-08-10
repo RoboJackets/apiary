@@ -60,7 +60,7 @@
         "mxl/laravel-job": "1.2.0",
         "nunomaduro/collision": "5.6.0",
         "nunomaduro/larastan": "0.7.12",
-        "phan/phan": "4.0.7",
+        "phan/phan": "4.1.0",
         "phpstan/extension-installer": "1.1.0",
         "psalm/plugin-laravel": "1.4.6",
         "robojackets/static-analysis": "1.4",
