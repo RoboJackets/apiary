@@ -97,6 +97,7 @@ class Payment extends Resource
 
             BelongsTo::make('Recorded By', 'user', User::class)
                 ->help('The user that recorded the payment')
+                ->searchable()
                 ->sortable(),
 
             Text::make('Notes')

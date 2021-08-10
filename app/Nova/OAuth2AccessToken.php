@@ -77,7 +77,8 @@ class OAuth2AccessToken extends Resource
             ID::make('ID', 'id')
                 ->sortable(),
 
-            BelongsTo::make('User'),
+            BelongsTo::make('User')
+                ->searchable(),
 
             BelongsTo::make('Client', 'client', OAuth2Client::class),
 

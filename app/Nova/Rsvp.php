@@ -68,7 +68,8 @@ class Rsvp extends Resource
     public function fields(Request $request): array
     {
         return [
-            BelongsTo::make('User'),
+            BelongsTo::make('User')
+                ->searchable(),
 
             BelongsTo::make('Event'),
 

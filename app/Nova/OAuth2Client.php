@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -82,6 +84,11 @@ class OAuth2Client extends Resource
                 ->rules('required'),
 
             BelongsTo::make('User')
+                ->searchable()
+                ->help(
+                    'This should be null for the personal access client, and otherwise populated with the user '
+                    .'responsible for this client.'
+                )
                 ->nullable(),
 
             Boolean::make('Revoked', 'revoked')

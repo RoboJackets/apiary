@@ -105,7 +105,8 @@ class Attendance extends Resource
                     return null !== $this->attendee ? '—' : $gtid;
                 }),
 
-            BelongsTo::make('User', 'attendee'),
+            BelongsTo::make('User', 'attendee')
+                ->searchable(),
 
             MorphTo::make('Attended', 'attendable')
                 ->types([
@@ -114,7 +115,8 @@ class Attendance extends Resource
                 ]),
 
             BelongsTo::make('Recorded By', 'recorded', User::class)
-                ->help('The user that recorded the swipe'),
+                ->help('The user that recorded the swipe')
+                ->searchable(),
 
             DateTime::make('Time', 'created_at')
                 ->sortable(),

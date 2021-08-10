@@ -87,6 +87,7 @@ class AttendanceExport extends Resource
 
             BelongsTo::make('Downloaded By', 'downloadUser', User::class)
                 ->hideWhenCreating()
+                ->searchable()
                 ->nullable(),
 
             DateTime::make('Downloaded At')
