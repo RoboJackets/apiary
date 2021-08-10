@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <form id="DuesRequiredInfoForm" v-on:submit.prevent="submit">
+      <form v-on:submit.prevent="submit">
         <h4>GT Directory Info</h4>
         <p>Information obtained via GT Single Sign-On. Update at <a href="https://passport.gatech.edu">Passport</a>.</p>
 
@@ -29,9 +29,9 @@
         <h4>Membership Information</h4>
 
         <div class="form-group row">
-          <label for="duesPackage" class="col-sm-2 col-form-label">Dues Term</label>
+          <label class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
-            <select id="duesPackage" v-model="duesPackageChoice" class="custom-select"
+            <select v-model="duesPackageChoice" class="custom-select"
                     :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
               <option value="" style="display:none" v-if="!duesPackages">Loading...</option>
               <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages
@@ -52,16 +52,15 @@
           <h4>Graduation Information</h4>
 
           <div class="form-group row">
-            <label for="graduationInformation" class="col-sm-2 col-form-label">Graduation Date</label>
+            <label class="col-sm-2 col-form-label">Graduation Date</label>
             <div class="col-sm-10 col-lg-4">
               <term-input
                 v-model="localUser.graduation_semester"
-                id="user-graduationsemester"
                 :is-error="$v.localUser.graduation_semester.$error"
                 @touch="$v.localUser.graduation_semester.$touch()">
               </term-input>
               <div class="invalid-feedback">
-                Select a valid graduation date.
+                Enter a valid graduation date.
               </div>
             </div>
           </div>
@@ -70,12 +69,11 @@
         <h4>Information for Merchandise</h4>
 
         <div class="form-group row">
-          <label for="user-shirtsize" class="col-sm-2 col-form-label">T-Shirt Size</label>
+          <label class="col-sm-2 col-form-label">T-Shirt Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
               v-model="localUser.shirt_size"
               :options="shirtSizeOptions"
-              id="user-shirtsize"
               :is-error="$v.localUser.shirt_size.$error"
               @input="$v.localUser.shirt_size.$touch()">
             </custom-radio-buttons>
@@ -86,12 +84,11 @@
         </div>
 
         <div class="form-group row">
-          <label for="user-polosize" class="col-sm-2 col-form-label">Polo Size</label>
+          <label class="col-sm-2 col-form-label">Polo Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
               v-model="localUser.polo_size"
               :options="shirtSizeOptions"
-              id="user-polosize"
               :is-error="$v.localUser.polo_size.$error"
               @input="$v.localUser.polo_size.$touch()">
             </custom-radio-buttons>
@@ -122,7 +119,8 @@
 
         <div class="row">
           <div class="col-lg-6 col-12">
-            <button type="submit" class="btn btn-primary float-right">Continue</button>
+            <button v-if="submitInProgress" disabled class="btn btn-primary float-right">Please wait...</button>
+            <button v-else type="submit" class="btn btn-primary float-right">Continue</button>
           </div>
         </div>
 
@@ -141,21 +139,22 @@ export default {
   data() {
     return {
       shirtSizeOptions: [
-        { value: 's', text: 'S' },
-        { value: 'm', text: 'M' },
-        { value: 'l', text: 'L' },
-        { value: 'xl', text: 'XL' },
-        { value: 'xxl', text: 'XXL' },
-        { value: 'xxxl', text: 'XXXL' },
+        {value: 's', text: 'S'},
+        {value: 'm', text: 'M'},
+        {value: 'l', text: 'L'},
+        {value: 'xl', text: 'XL'},
+        {value: 'xxl', text: 'XXL'},
+        {value: 'xxxl', text: 'XXXL'},
       ],
       duesPackages: null,
       duesPackageChoice: '',
       merchGroups: {},
       merchGroupNames: [],
+      submitInProgress: false,
     };
   },
   mounted() {
-    var dataUrl = '/api/v1/dues/packages/purchase?include=merchandise';
+    const dataUrl = '/api/v1/dues/packages/purchase?include=merchandise';
     axios
       .get(dataUrl)
       .then(response => {
@@ -172,11 +171,14 @@ export default {
   },
   methods: {
     submit() {
-      //Perform form Validation
+      //Perform form validation
       if (this.$v.$invalid) {
+        console.log("Ignoring form submit because form data is invalid");
         this.$v.$touch();
         return;
       }
+
+      this.submitInProgress = true;
 
       Promise.all([
         this.saveUserUpdates(this.localUser),
@@ -186,61 +188,64 @@ export default {
           this.$emit('next');
         })
         .catch(error => {
-          console.log(error.response.status);
-          if (error.response.status == 400) {
+          if (error && error.response && error.response.status === 400) {
             this.$emit('next');
           } else {
             console.log(error);
-            Swal.fire(
-              'Connection Error',
-              'Unable to save data. Check your internet connection or try refreshing the page.',
-              'error'
+            Swal.fire({
+                title: 'Connection Error',
+                html: 'Unable to save data. Check your internet connection or try refreshing the page.',
+                icon: 'error',
+              }
             );
           }
+        })
+        .finally(() => {
+          this.submitInProgress = false;
         });
     },
-    saveUserUpdates: function(user) {
-      var baseUserUrl = '/api/v1/users/';
-      var dataUserUrl = baseUserUrl + user.id;
+    saveUserUpdates: function (user) {
+      const baseUserUrl = '/api/v1/users/';
+      const dataUserUrl = baseUserUrl + user.id;
 
       delete this.localUser.dues;
 
       return axios.put(dataUserUrl, this.localUser);
     },
-    createDuesRequest: function(userId, duesPackageId, merchGroups) {
-      var merch = [];
-      this.merchGroupNames.forEach(function(group) {
+    createDuesRequest: function (userId, duesPackageId, merchGroups) {
+      const merch = [];
+      this.merchGroupNames.forEach(function (group) {
         merch.push(merchGroups[group].selection);
       });
-      var duesRequest = {
+      const duesRequest = {
         user_id: userId,
         dues_package_id: duesPackageId,
         merchandise: merch,
       };
-      var duesTransactionsUrl = '/api/v1/dues/transactions';
+      const duesTransactionsUrl = '/api/v1/dues/transactions';
 
       return axios.post(duesTransactionsUrl, duesRequest);
     },
   },
   computed: {
-    localUser: function() {
+    localUser: function () {
       return this.user;
     },
-    selectedPackage: function() {
+    selectedPackage: function () {
       if (null === this.duesPackages) {
         return null;
       }
       return this.duesPackages.find(duespackage => duespackage.id == this.duesPackageChoice);
     },
-    merchDependencyText: function() {
-      var base = 'The options depend on your dues term selection above';
+    merchDependencyText: function () {
+      const base = 'The options depend on your dues term selection above';
       if (!this.selectedPackage) {
-        return base + ', so please select that first.';
+        return `${base}, so please select that first.`;
       } else {
-        return base + '.';
+        return `${base}.`;
       }
     },
-    graduationInfoRequired: function() {
+    graduationInfoRequired: function () {
       if (!this.selectedPackage) {
         return false;
       }
@@ -249,13 +254,13 @@ export default {
     }
   },
   watch: {
-    duesPackageChoice: function(packageid, old) {
+    duesPackageChoice: function (packageid, old) {
       if (null === this.selectedPackage) return;
-      var dataUrl = '/api/v1/dues/packages/' + packageid + '?include=merchandise';
+      const dataUrl = `/api/v1/dues/packages/${packageid}?include=merchandise`;
       this.merchGroups = {};
-      var tempthis = this;
-      var groupNames = [];
-      this.selectedPackage.merchandise.forEach(function(merch) {
+      const tempthis = this;
+      const groupNames = [];
+      this.selectedPackage.merchandise.forEach(function (merch) {
         if (merch.group in tempthis.merchGroups) {
           tempthis.merchGroups[merch.group].list.push(merch);
         } else {
@@ -270,8 +275,8 @@ export default {
       this.merchGroupNames = groupNames;
       // If the user has never ordered a polo, only give them the polo option if there is a polo option in a group.
       if (!this.user.has_ordered_polo) {
-        groupNames.forEach(function(group) {
-          var polo = tempthis.merchGroups[group].list.find(merch => merch.name.startsWith('Polo '));
+        groupNames.forEach(function (group) {
+          const polo = tempthis.merchGroups[group].list.find(merch => merch.name.startsWith('Polo '));
           if (polo) {
             tempthis.merchGroups[group].list = [polo];
           }
@@ -279,32 +284,34 @@ export default {
       }
     }
   },
-  validations: {
-    localUser: {
-      shirt_size: {
-        required,
-      },
-      polo_size: {
-        required,
-      },
-      graduation_semester: {
-        required,
-        minLength: minLength(6),
-        maxLength: maxLength(6),
-      }
-    },
-    duesPackageChoice: {
-      required,
-      numeric,
-    },
-    merchGroups: {
-      $each: {
-        selection: {
+  validations() {
+    return {
+      localUser: {
+        shirt_size: {
           required,
-          numeric,
         },
+        polo_size: {
+          required,
+        },
+        graduation_semester: this.graduationInfoRequired ? {
+          required: required,
+          minLength: minLength(6),
+          maxLength: maxLength(6),
+        } : {}
       },
-    },
+      duesPackageChoice: {
+        required,
+        numeric,
+      },
+      merchGroups: {
+        $each: {
+          selection: {
+            required,
+            numeric,
+          },
+        },
+      }
+    }
   },
 };
 </script>
