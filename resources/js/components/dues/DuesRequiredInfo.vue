@@ -139,12 +139,12 @@ export default {
   data() {
     return {
       shirtSizeOptions: [
-        { value: 's', text: 'S' },
-        { value: 'm', text: 'M' },
-        { value: 'l', text: 'L' },
-        { value: 'xl', text: 'XL' },
-        { value: 'xxl', text: 'XXL' },
-        { value: 'xxxl', text: 'XXXL' },
+        {value: 's', text: 'S'},
+        {value: 'm', text: 'M'},
+        {value: 'l', text: 'L'},
+        {value: 'xl', text: 'XL'},
+        {value: 'xxl', text: 'XXL'},
+        {value: 'xxxl', text: 'XXXL'},
       ],
       duesPackages: null,
       duesPackageChoice: '',
@@ -171,8 +171,9 @@ export default {
   },
   methods: {
     submit() {
-      //Perform form Validation
+      //Perform form validation
       if (this.$v.$invalid) {
+        console.log("Ignoring form submit because form data is invalid");
         this.$v.$touch();
         return;
       }
@@ -203,7 +204,7 @@ export default {
           this.submitInProgress = false;
         });
     },
-    saveUserUpdates: function(user) {
+    saveUserUpdates: function (user) {
       const baseUserUrl = '/api/v1/users/';
       const dataUserUrl = baseUserUrl + user.id;
 
@@ -211,9 +212,9 @@ export default {
 
       return axios.put(dataUserUrl, this.localUser);
     },
-    createDuesRequest: function(userId, duesPackageId, merchGroups) {
+    createDuesRequest: function (userId, duesPackageId, merchGroups) {
       const merch = [];
-      this.merchGroupNames.forEach(function(group) {
+      this.merchGroupNames.forEach(function (group) {
         merch.push(merchGroups[group].selection);
       });
       const duesRequest = {
@@ -227,16 +228,16 @@ export default {
     },
   },
   computed: {
-    localUser: function() {
+    localUser: function () {
       return this.user;
     },
-    selectedPackage: function() {
+    selectedPackage: function () {
       if (null === this.duesPackages) {
         return null;
       }
       return this.duesPackages.find(duespackage => duespackage.id == this.duesPackageChoice);
     },
-    merchDependencyText: function() {
+    merchDependencyText: function () {
       const base = 'The options depend on your dues term selection above';
       if (!this.selectedPackage) {
         return `${base}, so please select that first.`;
@@ -244,7 +245,7 @@ export default {
         return `${base}.`;
       }
     },
-    graduationInfoRequired: function() {
+    graduationInfoRequired: function () {
       if (!this.selectedPackage) {
         return false;
       }
@@ -253,13 +254,13 @@ export default {
     }
   },
   watch: {
-    duesPackageChoice: function(packageid, old) {
+    duesPackageChoice: function (packageid, old) {
       if (null === this.selectedPackage) return;
       const dataUrl = `/api/v1/dues/packages/${packageid}?include=merchandise`;
       this.merchGroups = {};
       const tempthis = this;
       const groupNames = [];
-      this.selectedPackage.merchandise.forEach(function(merch) {
+      this.selectedPackage.merchandise.forEach(function (merch) {
         if (merch.group in tempthis.merchGroups) {
           tempthis.merchGroups[merch.group].list.push(merch);
         } else {
@@ -274,7 +275,7 @@ export default {
       this.merchGroupNames = groupNames;
       // If the user has never ordered a polo, only give them the polo option if there is a polo option in a group.
       if (!this.user.has_ordered_polo) {
-        groupNames.forEach(function(group) {
+        groupNames.forEach(function (group) {
           const polo = tempthis.merchGroups[group].list.find(merch => merch.name.startsWith('Polo '));
           if (polo) {
             tempthis.merchGroups[group].list = [polo];
@@ -283,32 +284,34 @@ export default {
       }
     }
   },
-  validations: {
-    localUser: {
-      shirt_size: {
-        required,
-      },
-      polo_size: {
-        required,
-      },
-      graduation_semester: {
-        required,
-        minLength: minLength(6),
-        maxLength: maxLength(6),
-      }
-    },
-    duesPackageChoice: {
-      required,
-      numeric,
-    },
-    merchGroups: {
-      $each: {
-        selection: {
+  validations() {
+    return {
+      localUser: {
+        shirt_size: {
           required,
-          numeric,
         },
+        polo_size: {
+          required,
+        },
+        graduation_semester: this.graduationInfoRequired ? {
+          required: required,
+          minLength: minLength(6),
+          maxLength: maxLength(6),
+        } : {}
       },
-    },
+      duesPackageChoice: {
+        required,
+        numeric,
+      },
+      merchGroups: {
+        $each: {
+          selection: {
+            required,
+            numeric,
+          },
+        },
+      }
+    }
   },
 };
 </script>
