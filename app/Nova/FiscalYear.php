@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\FiscalYear as AppModelsFiscalYear;
-use App\Nova\Traits\DuesPackageCards;
+use App\Nova\Metrics\MembersForOneFiscalYear;
+use App\Nova\Metrics\MerchandiseSelections;
+use App\Nova\Metrics\PaymentMethodBreakdown;
+use App\Nova\Metrics\TotalCollections;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 
 class FiscalYear extends Resource
 {
-    use DuesPackageCards;
-
     /**
      * The model the resource corresponds to.
      *
@@ -78,6 +79,37 @@ class FiscalYear extends Resource
                 ->canRun(static function (Request $request, AppModelsFiscalYear $fiscalYear): bool {
                     return $request->user()->can('create-dues-packages');
                 })->confirmButtonText('Create Packages'),
+        ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @return array<\Laravel\Nova\Card>
+     */
+    public function cards(Request $request): array
+    {
+        return [
+            (new MembersForOneFiscalYear())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new TotalCollections())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new PaymentMethodBreakdown())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new MerchandiseSelections())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
         ];
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
 
-class MembersForOneObject extends Value
+class MembersForOneFiscalYear extends Value
 {
     /**
      * The displayable name of the metric.
