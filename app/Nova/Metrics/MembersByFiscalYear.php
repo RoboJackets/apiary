@@ -40,6 +40,7 @@ class MembersByFiscalYear extends Trend
                 '=',
                 'fiscal_years.id'
             )
+            ->whereNotNull('payments.id')
             ->groupBy('ending_year')
             ->orderBy('ending_year')
             ->get()
