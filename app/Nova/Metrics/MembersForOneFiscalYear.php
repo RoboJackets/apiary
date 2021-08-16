@@ -7,70 +7,46 @@ namespace App\Nova\Metrics;
 use App\Models\DuesTransaction;
 use App\Models\FiscalYear;
 use App\Models\Payment;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
 
-class TotalCollections extends Value
+class MembersForOneFiscalYear extends Value
 {
+    /**
+     * The displayable name of the metric.
+     *
+     * @var string
+     */
+    public $name = 'Total Members';
+
     /**
      * Calculate the value of the metric.
      */
     public function calculate(Request $request): ValueResult
     {
-        $query = self::query($request->resource, intval($request->resourceId));
+        $result = $this->result(self::query($request->resource, intval($request->resourceId)))->allowZeroResult();
 
-        if ($request->range > 0) {
-            $query = $query->whereBetween(
-                'created_at',
-                [
-                    now()->subDays($request->range)->startOfDay(),
-                    now(),
-                ]
-            );
-        }
-
-        $revenue = $query->first()->revenue;
-
-        $result = $this->result($revenue)->dollars()->allowZeroResult();
-
-        if ($request->range > 0 && $revenue > 0) {
-            $result->previous(
-                self::query(
-                    $request->resource,
-                    intval($request->resourceId)
-                )->whereBetween(
-                    'created_at',
-                    [
-                        now()->subDays(intval($request->range) * 2)->startOfDay(),
-                        now()->subDays(intval($request->range))->startOfDay(),
-                    ]
-                )->first()->revenue
-            );
-        } elseif ($revenue > 0 && 'fiscal-years' === $request->resource) {
+        if ('fiscal-years' === $request->resource) {
             $previousFiscalYear = FiscalYear::where(
                 'ending_year',
                 intval(FiscalYear::where('id', $request->resourceId)->sole()->ending_year) - 1
             )->first();
 
             if (null !== $previousFiscalYear) {
-                $result->previous(self::query($request->resource, $previousFiscalYear->id)->first()->revenue);
+                $result->previous(self::query($request->resource, $previousFiscalYear->id));
             }
         }
 
         return $result;
     }
 
-    private static function query(string $resource, int $resourceId): EloquentBuilder
+    private static function query(string $resource, int $resourceId): int
     {
-        return Payment::selectRaw(
-            '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'
-        )
+        return Payment::selectRaw('count(distinct user_id) as distinct_users')
             ->where('payable_type', DuesTransaction::getMorphClassStatic())
-            ->where('method', '!=', 'waiver')
-            ->whereNull('deleted_at')
+            ->whereNull('payments.deleted_at')
             ->whereIn('payable_id', static function (Builder $q) use ($resource, $resourceId): void {
                 $q->select('id')
                     ->from('dues_transactions')
@@ -92,23 +68,14 @@ class TotalCollections extends Value
                         }
                     )
                     ->whereNull('deleted_at');
-            });
-    }
-
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array<int,string>
-     */
-    public function ranges(): array
-    {
-        return [
-            -1 => 'All',
-            7 => '7 Days',
-            14 => '14 Days',
-            30 => '30 Days',
-            60 => '60 Days',
-        ];
+            })->leftJoin(
+                'dues_transactions',
+                'payments.payable_id',
+                '=',
+                'dues_transactions.id'
+            )->whereNotNull('dues_transactions.id')
+            ->where('payments.amount', '>', 0)
+            ->whereNull('dues_transactions.deleted_at')->first()->distinct_users;
     }
 
     /**
@@ -116,6 +83,6 @@ class TotalCollections extends Value
      */
     public function uriKey(): string
     {
-        return 'total-collections';
+        return 'members-for-one-object';
     }
 }

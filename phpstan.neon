@@ -7,7 +7,7 @@ parameters:
     - storage/*
     - vendor/*
   ignoreErrors:
-    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel|BuzzCardAccessEligible)\(\)\.#'
+    - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel|BuzzCardAccessEligible|from)\(\)\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$(aggregate|day|rsvpsource|count|ending_year|member_count|active|revenue|is_paid)\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$pivot\.#'
     - '#Access to an undefined property App\\Nova\\OAuth2Client::\$secret\.#'
@@ -66,7 +66,7 @@ parameters:
     - '#Parameter \#1 \$year of static method Carbon\\Carbon::create\(\) expects int\|null, float\|int given\.#'
     - '#Parameter \#2 \$content of method Illuminate\\Http\\Testing\\FileFactory::createWithContent\(\) expects string, string\|false given\.#'
     - '#Parameter \#2 \$timestamp of function date expects int, int\|false given\.#'
-    - '#Parameter \#3 \$default of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>::when\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>, mixed\): Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>\|null\)\|null, Closure\(Illuminate\\Database\\Eloquent\\Builder\): void given\.#'
+    - '#Parameter \#3 \$default of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[A-Za-z]+>::when\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[A-Za-z]+>, mixed\): Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[A-Za-z]+>\|null\)\|null, Closure\(Illuminate\\Database\\Eloquent\\Builder\): void given\.#'
     - '#Parameter \#3 \$userAgent of static method App\\Models\\Signature::hash\(\) expects string, string\|null given\.#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'

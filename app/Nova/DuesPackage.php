@@ -7,7 +7,9 @@ namespace App\Nova;
 // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
-use App\Nova\Traits\DuesPackageCards;
+use App\Nova\Metrics\MerchandiseSelections;
+use App\Nova\Metrics\PaymentMethodBreakdown;
+use App\Nova\Metrics\TotalCollections;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -28,8 +30,6 @@ use Lynndigital\SelectOrCustom\SelectOrCustom;
  */
 class DuesPackage extends Resource
 {
-    use DuesPackageCards;
-
     /**
      * The model the resource corresponds to.
      *
@@ -187,6 +187,32 @@ class DuesPackage extends Resource
                 }),
 
             self::metadataPanel(),
+        ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @return array<\Laravel\Nova\Card>
+     */
+    public function cards(Request $request): array
+    {
+        return [
+            (new TotalCollections())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new PaymentMethodBreakdown())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new MerchandiseSelections())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
         ];
     }
 }
