@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66f75f2bc87d3a9438d33e095511e57c",
+    "content-hash": "5238c3261d82d8974ab109627d5ae73c",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2553,16 +2553,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.2.5",
+            "version": "v9.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "86c406cc1211237cff29e349851b21121c29d776"
+                "reference": "35db193a88f150e64951ebd29b4a294a91d87dbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/86c406cc1211237cff29e349851b21121c29d776",
-                "reference": "86c406cc1211237cff29e349851b21121c29d776",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/35db193a88f150e64951ebd29b4a294a91d87dbd",
+                "reference": "35db193a88f150e64951ebd29b4a294a91d87dbd",
                 "shasum": ""
             },
             "require": {
@@ -2621,7 +2621,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2021-08-10T17:36:33+00:00"
+            "time": "2021-08-17T16:06:22+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
