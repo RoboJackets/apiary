@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5238c3261d82d8974ab109627d5ae73c",
+    "content-hash": "ac03a5ea602cb1cd191ccbce3ffa0c0c",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2381,17 +2381,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.28.0",
+            "version": "3.29.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "5d353d051ebe2d2ea86c78239f61c54eea0c7962"
+                "reference": "bd32015c9dce9060fe327f09e96abbe729900648"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-5d353d051ebe2d2ea86c78239f61c54eea0c7962-zip-1ab4ea.zip",
-                "reference": "5d353d051ebe2d2ea86c78239f61c54eea0c7962",
-                "shasum": "08729abe7b4ce4f9ec953a2963c0529f3d074f8f"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-bd32015c9dce9060fe327f09e96abbe729900648-zip-243691.zip",
+                "reference": "bd32015c9dce9060fe327f09e96abbe729900648",
+                "shasum": "e63517436e61edef25b8311e97b31a9dfd384b97"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2470,9 +2470,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v3.28.0"
+                "source": "https://github.com/laravel/nova/tree/v3.29.0"
             },
-            "time": "2021-08-04T16:12:19+00:00"
+            "time": "2021-08-17T18:57:47+00:00"
         },
         {
             "name": "laravel/passport",
@@ -5600,16 +5600,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.9",
+            "version": "3.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "a127a5133804ff2f47ae629dd529b129da616ad7"
+                "reference": "62fcc5a94ac83b1506f52d7558d828617fac9187"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/a127a5133804ff2f47ae629dd529b129da616ad7",
-                "reference": "a127a5133804ff2f47ae629dd529b129da616ad7",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/62fcc5a94ac83b1506f52d7558d828617fac9187",
+                "reference": "62fcc5a94ac83b1506f52d7558d828617fac9187",
                 "shasum": ""
             },
             "require": {
@@ -5691,7 +5691,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.9"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.10"
             },
             "funding": [
                 {
@@ -5707,7 +5707,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-14T06:54:45+00:00"
+            "time": "2021-08-16T04:24:45+00:00"
         },
         {
             "name": "predis/predis",
