@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac03a5ea602cb1cd191ccbce3ffa0c0c",
+    "content-hash": "1880832ca1ab308b8f21604b9df0f88d",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -3413,16 +3413,16 @@
         },
         {
             "name": "league/oauth1-client",
-            "version": "1.9.2",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth1-client.git",
-                "reference": "6247ffbf6b74fcc7f21313315b79e9b2560e68b0"
+                "reference": "88dd16b0cff68eb9167bfc849707d2c40ad91ddc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/6247ffbf6b74fcc7f21313315b79e9b2560e68b0",
-                "reference": "6247ffbf6b74fcc7f21313315b79e9b2560e68b0",
+                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/88dd16b0cff68eb9167bfc849707d2c40ad91ddc",
+                "reference": "88dd16b0cff68eb9167bfc849707d2c40ad91ddc",
                 "shasum": ""
             },
             "require": {
@@ -3483,9 +3483,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth1-client/issues",
-                "source": "https://github.com/thephpleague/oauth1-client/tree/1.9.2"
+                "source": "https://github.com/thephpleague/oauth1-client/tree/v1.10.0"
             },
-            "time": "2021-08-03T23:29:01+00:00"
+            "time": "2021-08-15T23:05:49+00:00"
         },
         {
             "name": "league/oauth2-server",
@@ -7216,16 +7216,16 @@
         },
         {
             "name": "square/square",
-            "version": "13.0.0.20210721",
+            "version": "13.1.0.20210818",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "03d90445854cd3b500f75061a9c63956799b8ecf"
+                "reference": "d9ad3e28cf823ca158969914c66efa8ae4df7e02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/03d90445854cd3b500f75061a9c63956799b8ecf",
-                "reference": "03d90445854cd3b500f75061a9c63956799b8ecf",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/d9ad3e28cf823ca158969914c66efa8ae4df7e02",
+                "reference": "d9ad3e28cf823ca158969914c66efa8ae4df7e02",
                 "shasum": ""
             },
             "require": {
@@ -7267,9 +7267,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/13.0.0.20210721"
+                "source": "https://github.com/square/square-php-sdk/tree/13.1.0.20210818"
             },
-            "time": "2021-07-21T06:43:15+00:00"
+            "time": "2021-08-18T16:47:35+00:00"
         },
         {
             "name": "subfission/cas",
@@ -15625,5 +15625,5 @@
     "platform-overrides": {
         "php": "7.4.13"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

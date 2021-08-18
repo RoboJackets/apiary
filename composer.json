@@ -44,7 +44,7 @@
         "spatie/laravel-permission": "3.18.0",
         "spatie/laravel-webhook-client": "2.7.5",
         "spatie/once": "2.2.1",
-        "square/square": "13.0.0.20210721",
+        "square/square": "13.1.0.20210818",
         "subfission/cas": "4.1.0",
         "ukfast/laravel-health-check": "1.13.0",
         "uxweb/sweet-alert": "2.0.5",
