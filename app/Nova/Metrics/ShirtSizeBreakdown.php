@@ -91,7 +91,7 @@ class ShirtSizeBreakdown extends Partition
                         return -1;
                     }
 
-                    // @phpstan-ignore-next-line
+                    // @phpstan-ignore-next-line @phan-suppress-next-line
                     return array_search(
                         array_search(
                             $shirt_size,
