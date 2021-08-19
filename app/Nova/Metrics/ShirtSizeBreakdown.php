@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+// @phan-file-suppress PhanPossiblyFalseTypeReturn
+
 use App\Models\DuesTransaction;
 use App\Models\User;
 use Illuminate\Database\Query\Builder;
@@ -91,7 +93,7 @@ class ShirtSizeBreakdown extends Partition
                         return -1;
                     }
 
-                    // @phpstan-ignore-next-line @phan-suppress-next-line
+                    // @phpstan-ignore-next-line
                     return array_search(
                         array_search(
                             $shirt_size,
