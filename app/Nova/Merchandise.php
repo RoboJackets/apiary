@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Merchandise as AppModelsMerchandise;
+use App\Nova\Metrics\ShirtSizeBreakdown;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
@@ -13,6 +15,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
+/**
+ * A Nova resource for merchandise (shirts, polos, and whatever else the PR chair comes up with.)
+ *
+ * @property string $name
+ */
 class Merchandise extends Resource
 {
     /**
@@ -137,5 +144,37 @@ class Merchandise extends Resource
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
         return $request->user()->can('update-merchandise');
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @return array<\Laravel\Nova\Card>
+     */
+    public function cards(Request $request): array
+    {
+        if (null === $request->resourceId) {
+            return [];
+        }
+
+        $name = Str::lower(AppModelsMerchandise::where('id', $request->resourceId)->sole()->name);
+
+        if (Str::contains($name, 'waive')) {
+            return [];
+        }
+
+        if (Str::contains($name, 'shirt')) {
+            return [
+                (new ShirtSizeBreakdown('shirt'))->onlyOnDetail(),
+            ];
+        }
+
+        if (Str::contains($name, 'polo')) {
+            return [
+                (new ShirtSizeBreakdown('polo'))->onlyOnDetail(),
+            ];
+        }
+
+        return [];
     }
 }
