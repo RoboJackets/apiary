@@ -16,7 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 /**
- * A Nova resource for merchandise (shirts, polos, and whatever else the PR chair comes up with.)
+ * A Nova resource for merchandise (shirts, polos, and whatever else the PR chair comes up with).
  *
  * @property string $name
  */

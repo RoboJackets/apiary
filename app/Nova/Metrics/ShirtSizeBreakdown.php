@@ -17,7 +17,7 @@ use Laravel\Nova\Metrics\PartitionResult;
 class ShirtSizeBreakdown extends Partition
 {
     /**
-     * Whether this is for a shirt or a polo
+     * Whether this is for a shirt or a polo.
      *
      * @var string
      */
@@ -33,13 +33,13 @@ class ShirtSizeBreakdown extends Partition
     }
 
     /**
-     * Get the displayable name of the metric
+     * Get the displayable name of the metric.
      *
      * @return string
      */
     public function name()
     {
-        return Str::ucfirst($this->type) . ' Size Breakdown';
+        return Str::ucfirst($this->type).' Size Breakdown';
     }
 
     /**
@@ -47,7 +47,7 @@ class ShirtSizeBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $column_name = $this->type . '_size';
+        $column_name = $this->type.'_size';
         $resourceId = $request->resourceId;
 
         return $this->result(
