@@ -21,7 +21,7 @@ class MerchandiseSelections extends Partition
     {
         return $this->result(
             DuesTransaction::select('merchandise.name as merchandise_name')
-                ->selectRaw('count(distinct dues_transactions.id) as count')
+                ->selectRaw('count(distinct dues_transactions.user_id) as count')
                 ->leftJoin('payments', static function (JoinClause $join): void {
                     $join->on('dues_transactions.id', '=', 'payable_id')
                          ->where('payments.amount', '>', 0)
