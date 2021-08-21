@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Merchandise as AppModelsMerchandise;
+use App\Nova\Metrics\MerchandisePickupRate;
 use App\Nova\Metrics\ShirtSizeBreakdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -153,6 +154,10 @@ class Merchandise extends Resource
      */
     public function cards(Request $request): array
     {
+        $defaults = [
+            (new MerchandisePickupRate())->onlyOnDetail(),
+        ];
+
         if (null === $request->resourceId) {
             return [];
         }
@@ -166,15 +171,17 @@ class Merchandise extends Resource
         if (Str::contains($name, 'shirt')) {
             return [
                 (new ShirtSizeBreakdown('shirt'))->onlyOnDetail(),
+                ...$defaults,
             ];
         }
 
         if (Str::contains($name, 'polo')) {
             return [
                 (new ShirtSizeBreakdown('polo'))->onlyOnDetail(),
+                ...$defaults,
             ];
         }
 
-        return [];
+        return $defaults;
     }
 }
