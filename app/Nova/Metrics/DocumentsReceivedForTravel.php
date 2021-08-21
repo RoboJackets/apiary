@@ -25,6 +25,7 @@ class DocumentsReceivedForTravel extends Partition
      * Labels for the document_recieved field, conveniently indexed by the numeric value.
      *
      * @phan-read-only
+     *
      * @var array<string>
      */
     private static $partition_labels = [
