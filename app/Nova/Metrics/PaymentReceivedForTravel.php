@@ -16,7 +16,7 @@ use Laravel\Nova\Metrics\PartitionResult;
 class PaymentReceivedForTravel extends Partition
 {
     /**
-     * The travel model this is displaying (if not on a travel detail page)
+     * The travel model this is displaying (if not on a travel detail page).
      *
      * @var int
      */

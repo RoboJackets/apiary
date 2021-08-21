@@ -15,14 +15,14 @@ use Laravel\Nova\Metrics\PartitionResult;
 class DocumentsReceivedForTravel extends Partition
 {
     /**
-     * The travel model this is displaying (if not on a travel detail page)
+     * The travel model this is displaying (if not on a travel detail page).
      *
      * @var int
      */
     protected $resourceId;
 
     /**
-     * Labels for the document_recieved field, conveniently indexed by the numeric value
+     * Labels for the document_recieved field, conveniently indexed by the numeric value.
      *
      * @var array<string>
      */

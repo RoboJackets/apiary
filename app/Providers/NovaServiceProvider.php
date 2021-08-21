@@ -118,7 +118,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 $should_include = true;
             }
 
-            if (!$should_include) {
+            if (! $should_include) {
                 continue;
             }
 
