@@ -108,6 +108,8 @@ class DuesPackage extends Resource
                              ->where('payments.amount', '>', 0);
                     })
                     ->whereNotNull('payments.id')
+                    ->whereNull('payments.deleted_at')
+                    ->whereNull('dues_transactions.deleted_at')
                     ->where('dues_package_id', $this->id)->get()[0]->count;
             })->onlyOnIndex(),
 

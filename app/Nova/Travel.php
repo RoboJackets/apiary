@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\Travel as AppModelsTravel;
+use App\Nova\Metrics\DocumentsReceivedForTravel;
+use App\Nova\Metrics\PaymentReceivedForTravel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -120,6 +123,30 @@ class Travel extends Resource
 
             self::metadataPanel(),
         ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @return array<\Laravel\Nova\Card>
+     */
+    public function cards(Request $request): array
+    {
+        $cards = [
+            (new PaymentReceivedForTravel())->onlyOnDetail(),
+        ];
+
+        if (null === $request->resourceId) {
+            return [];
+        }
+
+        $requires_documents = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->documents_required;
+
+        if ($requires_documents) {
+            $cards[] = (new DocumentsReceivedForTravel())->onlyOnDetail();
+        }
+
+        return $cards;
     }
 
     /**
