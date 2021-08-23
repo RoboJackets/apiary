@@ -116,13 +116,18 @@ export default {
         return;
       }
 
-      var baseUrl = '/api/v1/users/';
-      var dataUrl = baseUrl + this.localUser.uid;
+      const baseUrl = '/api/v1/users/';
+      const dataUrl = baseUrl + this.localUser.uid;
 
-      delete this.localUser.dues;
-
+      const userRequest = {
+        personal_email: this.localUser.personal_email,
+        phone: this.localUser.phone,
+        preferred_first_name: this.localUser.preferred_first_name,
+        emergency_contact_name: this.localUser.emergency_contact_name,
+        emergency_contact_phone: this.localUser.emergency_contact_phone,
+      }
       axios
-        .put(dataUrl, this.localUser)
+        .put(dataUrl, userRequest)
         .then(response => {
           this.$emit('next');
         })

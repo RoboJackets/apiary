@@ -62,16 +62,15 @@ export default {
   },
   methods: {
     submit() {
-      var baseUrl = '/api/v1/users/';
-      var dataUrl = baseUrl + this.user.uid;
+      const baseUrl = '/api/v1/users/';
+      const dataUrl = baseUrl + this.user.uid;
 
-      delete this.user.dues;
-
-      this.user.ethnicity = this.ethnicity.toString();
-      this.user.gender = this.gender;
-
+      const userRequest = {
+        ethnicity: this.ethnicity.toString(),
+        gender: this.gender
+      }
       axios
-        .put(dataUrl, this.user)
+        .put(dataUrl, userRequest)
         .then(response => {
           this.$emit('next');
         })

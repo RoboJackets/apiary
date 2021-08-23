@@ -227,10 +227,13 @@ export default {
     saveUserUpdates: function (user) {
       const baseUserUrl = '/api/v1/users/';
       const dataUserUrl = baseUserUrl + user.id;
+      const userRequest = {
+        polo_size: this.localUser.polo_size,
+        shirt_size: this.localUser.shirt_size,
+        graduation_semester: this.localUser.graduation_semester
+      };
 
-      delete this.localUser.dues;
-
-      return axios.put(dataUserUrl, this.localUser);
+      return axios.put(dataUserUrl, userRequest);
     },
     createDuesRequest: function (userId, duesPackageId, merchGroups) {
       const merch = [];
