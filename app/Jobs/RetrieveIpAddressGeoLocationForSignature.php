@@ -75,7 +75,7 @@ class RetrieveIpAddressGeoLocationForSignature implements ShouldQueue
             $this->signature->save();
         } catch (ClientException $e) {
             Log::error('Exception while querying provider for IP geolocation', [$e->getMessage()]);
-            $this->fail();
+            $this->fail($e);
         }
     }
 }
