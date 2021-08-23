@@ -32,7 +32,7 @@
           <label class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
             <select v-model="duesPackageChoice" class="custom-select"
-                    :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
+                    :class="{ 'is-invalid': $v.duesPackageChoice.$error }">
               <option value="" style="display:none" v-if="!duesPackages">Loading...</option>
               <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages
                 Available
