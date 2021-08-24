@@ -12,6 +12,7 @@ use App\Nova\Metrics\PaymentMethodBreakdown;
 use App\Nova\Metrics\TotalCollections;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
@@ -99,13 +100,17 @@ class DuesPackage extends Resource
                 ->sortable(),
 
             Number::make('Paid Transactions', function (): int {
-                return AppModelsDuesTransaction::leftJoin('payments', static function (JoinClause $join): void {
-                    $join->on('dues_transactions.id', '=', 'payable_id')
-                         ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
-                         ->where('payments.amount', '>', 0);
-                })
-                ->whereNotNull('payments.id')
-                ->where('dues_package_id', $this->id)->count();
+                return DB::table('dues_transactions')
+                    ->selectRaw('count(distinct dues_transactions.id) as count')
+                    ->leftJoin('payments', static function (JoinClause $join): void {
+                        $join->on('dues_transactions.id', '=', 'payable_id')
+                             ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
+                             ->where('payments.amount', '>', 0);
+                    })
+                    ->whereNotNull('payments.id')
+                    ->whereNull('payments.deleted_at')
+                    ->whereNull('dues_transactions.deleted_at')
+                    ->where('dues_package_id', $this->id)->get()[0]->count;
             })->onlyOnIndex(),
 
             Boolean::make('Active', 'is_active')
