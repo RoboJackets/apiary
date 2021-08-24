@@ -202,11 +202,11 @@ export default {
           ) {
             const message = error.response.data.message;
             const errors = error.response.data.errors;
-            let validation_messages = []
+            const validation_messages = []
             Object.entries(errors).forEach(([prop, val]) => validation_messages.push(val));
             Swal.fire({
                 title: 'Validation Error',
-                html: '<b>' + message + '</b><br/>' + validation_messages.join('<br/>'),
+                html: `<b>${message}</b><br/>${validation_messages.join('<br/>')}`,
                 icon: 'warning',
               }
             );
