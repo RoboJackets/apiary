@@ -83,6 +83,6 @@ class MembersForOneFiscalYear extends Value
      */
     public function uriKey(): string
     {
-        return 'members-for-one-object';
+        return 'members';
     }
 }

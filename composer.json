@@ -135,7 +135,7 @@
     "config": {
         "classmap-authoritative": true,
         "preferred-install": "dist",
-        "process-timeout": 10,
+        "process-timeout": 20,
         "platform": {
             "php": "7.4.13"
         },

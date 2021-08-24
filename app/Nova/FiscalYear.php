@@ -9,6 +9,7 @@ use App\Nova\Metrics\MembersForOneFiscalYear;
 use App\Nova\Metrics\MerchandiseSelections;
 use App\Nova\Metrics\PaymentMethodBreakdown;
 use App\Nova\Metrics\TotalCollections;
+use App\Nova\Metrics\TransactionsByDuesPackage;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
@@ -106,6 +107,11 @@ class FiscalYear extends Resource
                     return $request->user()->can('read-payments');
                 }),
             (new MerchandiseSelections())
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('read-payments');
+                }),
+            (new TransactionsByDuesPackage())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-payments');
