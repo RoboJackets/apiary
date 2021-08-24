@@ -6,11 +6,13 @@ namespace App\Jobs;
 
 use App\Models\Signature;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class RetrieveIpAddressGeoLocationForSignature implements ShouldQueue
 {
@@ -58,17 +60,22 @@ class RetrieveIpAddressGeoLocationForSignature implements ShouldQueue
             ]
         );
 
-        $response = $client->get(
-            $this->signature->ip_address,
-            [
-                'query' => [
-                    'access_key' => config('ipstack.api_key'),
-                    'output' => 'json',
-                ],
-            ]
-        );
+        try {
+            $response = $client->get(
+                $this->signature->ip_address,
+                [
+                    'query' => [
+                        'access_key' => config('ipstack.api_key'),
+                        'output' => 'json',
+                    ],
+                ]
+            );
 
-        $this->signature->ip_address_location_estimate = json_decode($response->getBody()->getContents());
-        $this->signature->save();
+            $this->signature->ip_address_location_estimate = json_decode($response->getBody()->getContents());
+            $this->signature->save();
+        } catch (ClientException $e) {
+            Log::error('Exception while querying provider for IP geolocation', [$e->getMessage()]);
+            $this->fail($e);
+        }
     }
 }

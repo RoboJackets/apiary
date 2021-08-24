@@ -32,7 +32,7 @@
           <label class="col-sm-2 col-form-label">Dues Term</label>
           <div class="col-sm-10 col-lg-4">
             <select v-model="duesPackageChoice" class="custom-select"
-                    :class="{ 'is-invalid': $v.duesPackageChoice.$error }" @input="$v.duesPackageChoice.$touch()">
+                    :class="{ 'is-invalid': $v.duesPackageChoice.$error }">
               <option value="" style="display:none" v-if="!duesPackages">Loading...</option>
               <option value="" style="display:none" v-if="duesPackages && duesPackages.length === 0">No Dues Packages
                 Available
@@ -190,6 +190,26 @@ export default {
         .catch(error => {
           if (error && error.response && error.response.status === 400) {
             this.$emit('next');
+          } else if (
+            error &&
+            error.response &&
+            error.response.status === 422 &&
+            error.response.data &&
+            error.response.data.errors &&
+            typeof error.response.data.errors === 'object' && Object.keys(error.response.data.errors).length > 0 &&
+            typeof error.response.data.errors[Object.keys(error.response.data.errors)[0]] === 'object' &&
+            error.response.data.errors[Object.keys(error.response.data.errors)[0]].length > 0
+          ) {
+            const message = error.response.data.message;
+            const errors = error.response.data.errors;
+            const validation_messages = []
+            Object.entries(errors).forEach(([prop, val]) => validation_messages.push(val));
+            Swal.fire({
+                title: 'Validation Error',
+                html: `<b>${message}</b><br/>${validation_messages.join('<br/>')}`,
+                icon: 'warning',
+              }
+            );
           } else {
             console.log(error);
             Swal.fire({
@@ -207,10 +227,13 @@ export default {
     saveUserUpdates: function (user) {
       const baseUserUrl = '/api/v1/users/';
       const dataUserUrl = baseUserUrl + user.id;
+      const userRequest = {
+        polo_size: this.localUser.polo_size,
+        shirt_size: this.localUser.shirt_size,
+        graduation_semester: this.localUser.graduation_semester
+      };
 
-      delete this.localUser.dues;
-
-      return axios.put(dataUserUrl, this.localUser);
+      return axios.put(dataUserUrl, userRequest);
     },
     createDuesRequest: function (userId, duesPackageId, merchGroups) {
       const merch = [];

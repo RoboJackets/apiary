@@ -116,13 +116,18 @@ export default {
         return;
       }
 
-      var baseUrl = '/api/v1/users/';
-      var dataUrl = baseUrl + this.localUser.uid;
+      const baseUrl = '/api/v1/users/';
+      const dataUrl = baseUrl + this.localUser.uid;
 
-      delete this.localUser.dues;
-
+      const userRequest = {
+        personal_email: this.localUser.personal_email,
+        phone: this.localUser.phone,
+        preferred_first_name: this.localUser.preferred_first_name,
+        emergency_contact_name: this.localUser.emergency_contact_name,
+        emergency_contact_phone: this.localUser.emergency_contact_phone,
+      }
       axios
-        .put(dataUrl, this.localUser)
+        .put(dataUrl, userRequest)
         .then(response => {
           this.$emit('next');
         })
@@ -133,14 +138,20 @@ export default {
             error.response.status === 422 &&
             error.response.data &&
             error.response.data.errors &&
-            typeof error.response.data.errors === 'object' &&
-            error.response.data.errors !== null &&
-            Object.keys(error.response.data.errors).length > 0 &&
+            typeof error.response.data.errors === 'object' && Object.keys(error.response.data.errors).length > 0 &&
             typeof error.response.data.errors[Object.keys(error.response.data.errors)[0]] === 'object' &&
             error.response.data.errors[Object.keys(error.response.data.errors)[0]].length > 0
           ) {
-            let errors = error.response.data.errors;
-            Swal.fire('Invalid Data', errors[Object.keys(errors)[0]][0], 'error');
+            const message = error.response.data.message;
+            const errors = error.response.data.errors;
+            const validation_messages = []
+            Object.entries(errors).forEach(([prop, val]) => validation_messages.push(val));
+            Swal.fire({
+                title: 'Validation Error',
+                html: `<b>${message}</b><br/>${validation_messages.join('<br/>')}`,
+                icon: 'warning',
+              }
+            );
             return;
           }
           console.log(error);
