@@ -8,7 +8,9 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Team;
+use App\Models\TravelAssignment;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -90,19 +92,50 @@ class DashboardController extends Controller
             && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')
             && ($signedLatestAgreement || true !== $sumsRequiresAgreement);
 
-        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
+        // TA selection logic here should match SquareCheckoutController or UX won't make sense
+        $travelAssignmentWithNoPayment = TravelAssignment::doesntHave('payment')
+            ->where('user_id', $user->id)
+            ->oldest('updated_at')
+            ->first();
+
+        $travelAssignmentWithIncompletePayment = TravelAssignment::where('user_id', $user->id)
+            ->whereHas('payment', static function (Builder $q): void {
+                $q->where('amount', 0.00);
+                $q->where('method', 'square');
+            })
+            ->oldest('updated_at')
+            ->first();
+
+        $travelAssignmentWithNoDocuments = TravelAssignment::where('user_id', $user->id)
+            ->whereHas('travel', static function (Builder $q): void {
+                $q->whereNotNull('documents_required');
+            })
+            ->where('documents_received', '=', false)
+            ->oldest('updated_at')
+            ->first();
 
         $needTravelDocuments = false;
         $needTravelPayment = false;
         $travelName = '';
 
-        if (null !== $assignment) {
-            $needTravelDocuments = ! $assignment->documents_received &&
-                null !== $assignment->travel->documents_required;
+        if (null !== $travelAssignmentWithNoPayment) {
+            $needTravelDocuments = ! $travelAssignmentWithNoPayment->documents_received &&
+                null !== $travelAssignmentWithNoPayment->travel->documents_required;
 
-            $needTravelPayment = ! $assignment->is_paid;
+            $needTravelPayment = true;
 
-            $travelName = $assignment->travel->name;
+            $travelName = $travelAssignmentWithNoPayment->travel->name;
+        } elseif (null !== $travelAssignmentWithIncompletePayment) {
+            $needTravelDocuments = ! $travelAssignmentWithIncompletePayment->documents_received &&
+                null !== $travelAssignmentWithIncompletePayment->travel->documents_required;
+
+            $needTravelPayment = true;
+
+            $travelName = $travelAssignmentWithIncompletePayment->travel->name;
+        } elseif (null !== $travelAssignmentWithNoDocuments) {
+            $needTravelDocuments = true;
+
+            $travelName = $travelAssignmentWithNoDocuments->travel->name;
         }
 
         return view(

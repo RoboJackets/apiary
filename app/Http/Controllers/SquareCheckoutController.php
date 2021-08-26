@@ -83,6 +83,7 @@ class SquareCheckoutController extends Controller
     {
         $user = $request->user();
 
+        // this is still a little wonky but rolling with it for right now
         $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
 
         if (! $user->is_active) {
@@ -107,14 +108,16 @@ class SquareCheckoutController extends Controller
 
         $transactionWithNoPayment = TravelAssignment::doesntHave('payment')
             ->where('user_id', $user->id)
-            ->latest('updated_at')
+            ->oldest('updated_at')
             ->first();
 
         $transactionWithIncompletePayment = TravelAssignment::where('user_id', $user->id)
             ->whereHas('payment', static function (Builder $q): void {
                 $q->where('amount', 0.00);
                 $q->where('method', 'square');
-            })->first();
+            })
+            ->oldest('updated_at')
+            ->first();
 
         if (null !== $transactionWithIncompletePayment) {
             $transaction = $transactionWithIncompletePayment;

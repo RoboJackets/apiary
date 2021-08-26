@@ -29,7 +29,7 @@
             @endif
 
             @if (auth()->user() && auth()->user()->assignments()->count() > 0)
-            <li class="nav-item {{ $request->is('travel*') ? 'active' : '' }}">
+            <li class="nav-item {{ $request->is('travel*') || $request->is('pay/travel*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('travel.index') }}">Travel<sub><small>&nbspbeta</small></sub></a>
             </li>
             @endif
