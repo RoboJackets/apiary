@@ -141,8 +141,8 @@ return [
     | will override this configuration.
     |--------------------------------------------------------------------------
     */
-    'cas_version'         => env('CAS_VERSION', "2.0"),
-    
+    'cas_version'         => env('CAS_VERSION', '2.0'),
+
     /*
     |--------------------------------------------------------------------------
     | Enable PHPCas Debug Mode
