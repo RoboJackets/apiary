@@ -254,11 +254,7 @@ class Attendance extends Model
             $array['event_id'] = $this->attendable_id;
         }
 
-        if (null !== $this->attendee) {
-            $array['user_id'] = $this->attendee->id;
-        } else {
-            $array['user_id'] = null;
-        }
+        $array['user_id'] = null !== $this->attendee ? $this->attendee->id : null;
 
         unset($array['attendable']['organizer']);
         unset($array['attendable']['organizer_name']);
