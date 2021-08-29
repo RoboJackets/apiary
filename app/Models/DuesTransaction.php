@@ -115,6 +115,16 @@ class DuesTransaction extends Model
     ];
 
     /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+        'dues_package_id',
+        'user_id',
+    ];
+
+    /**
      * Get the Payment associated with the DuesTransaction model.
      */
     public function payment(): MorphMany
@@ -292,9 +302,9 @@ class DuesTransaction extends Model
 
         $array['payable_type'] = $this->getMorphClass();
 
-        $array['dues-packages_id'] = $this->package->id;
+        $array['dues_package_id'] = $this->package->id;
 
-        $array['users_id'] = $this->user->id;
+        $array['user_id'] = $this->user->id;
 
         $array['updated_at_unix'] = $this->updated_at->getTimestamp();
 

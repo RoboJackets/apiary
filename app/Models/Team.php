@@ -124,6 +124,15 @@ class Team extends Model
     ];
 
     /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+        'user_id',
+    ];
+
+    /**
      *  Get the Users that are members of this Team.
      */
     public function members(): BelongsToMany
@@ -222,7 +231,7 @@ class Team extends Model
             $array['attendance_count'] = $this->attendance()->count();
         }
 
-        $array['users_id'] = $this->members->modelKeys();
+        $array['user_id'] = $this->members->modelKeys();
 
         return $array;
     }

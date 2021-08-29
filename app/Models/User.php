@@ -294,6 +294,19 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+        'class_standing_id',
+        'major_id',
+        'team_id',
+        'permission_id',
+        'role_id',
+    ];
+
+    /**
      * List of valid shirt sizes and display names for them.
      *
      * @var array<string,string>
@@ -803,15 +816,15 @@ class User extends Authenticatable
             $array['recruiting_visits_count'] = $this->recruitingVisits()->count();
         }
 
-        $array['class-standings_id'] = $this->classStanding->modelKeys();
+        $array['class_standing_id'] = $this->classStanding->modelKeys();
 
-        $array['majors_id'] = $this->majors->modelKeys();
+        $array['major_id'] = $this->majors->modelKeys();
 
-        $array['teams_id'] = $this->teams->modelKeys();
+        $array['team_id'] = $this->teams->modelKeys();
 
-        $array['permissions_id'] = $this->permissions->modelKeys();
+        $array['permission_id'] = $this->permissions->modelKeys();
 
-        $array['roles_id'] = $this->roles->modelKeys();
+        $array['role_id'] = $this->roles->modelKeys();
 
         return $array;
     }

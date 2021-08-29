@@ -111,6 +111,15 @@ class TravelAssignment extends Model
         'desc(updated_at_unix)',
     ];
 
+    /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+        'user_id',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -166,7 +175,7 @@ class TravelAssignment extends Model
 
         $array['payable_type'] = $this->getMorphClass();
 
-        $array['users_id'] = $this->user->id;
+        $array['user_id'] = $this->user->id;
 
         $array['updated_at_unix'] = $this->updated_at->getTimestamp();
 

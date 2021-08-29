@@ -87,6 +87,17 @@ class Attendance extends Model
     ];
 
     /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+        'team_id',
+        'event_id',
+        'user_id',
+    ];
+
+    /**
      * Get all of the owning attendable models.
      */
     public function attendable(): MorphTo
@@ -236,13 +247,13 @@ class Attendance extends Model
         }
 
         if ($this->attendable_type === Team::getMorphClassStatic()) {
-            $array['teams_id'] = $this->attendable_id;
+            $array['team_id'] = $this->attendable_id;
         } elseif ($this->attendable_type === Event::getMorphClassStatic()) {
-            $array['events_id'] = $this->attendable_id;
+            $array['event_id'] = $this->attendable_id;
         }
 
         if (null !== $this->attendee) {
-            $array['users_id'] = $this->attendee->id;
+            $array['user_id'] = $this->attendee->id;
         }
 
         unset($array['attendable']['organizer']);
