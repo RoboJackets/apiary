@@ -176,6 +176,9 @@ class Merchandise extends Resource
         return $defaults;
     }
 
+    /**
+     * Nova has trouble with the pivot fields in search results, so, disable the search box I guess?
+     */
     public static function searchable(): bool
     {
         return false;
