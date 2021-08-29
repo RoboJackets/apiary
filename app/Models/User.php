@@ -307,6 +307,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that Nova might think can be used for filtering, but actually can't.
+     *
+     * @var array<string>
+     */
+    public $do_not_filter_on = [
+        'dues_package_id',
+        'travel_id',
+    ];
+
+    /**
      * List of valid shirt sizes and display names for them.
      *
      * @var array<string,string>

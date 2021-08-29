@@ -26,12 +26,12 @@ abstract class Resource extends NovaResource
     public static function scoutQuery(NovaRequest $request, $query): Builder
     {
         if (null !== $request->viaResource) {
-            $filter_on_attribute = Str::snake(Str::singular($request->viaResource)).'_id';
+            $filter_on_attribute = Str::replace('-', '_', Str::singular($request->viaResource)).'_id';
 
             if (! property_exists($query->model, 'filterable_attributes')) {
                 throw new \Exception(
-                    'Nova attempted to query a Scout index with a filter, but the model does not have $filterable'.
-                    '_attributes'
+                    'Attempted to query Scout with filter '.$filter_on_attribute.', but model does not have '
+                    .'$filterable_attributes'
                 );
             }
 
@@ -40,12 +40,12 @@ abstract class Resource extends NovaResource
                     if (in_array($filter_on_attribute, $query->model->do_not_filter_on, true)) {
                         return $query;
                     }
+                } else {
+                    throw new \Exception(
+                        'Attempted to query Scout with filter '.$filter_on_attribute.', but filter not in '
+                        .'$filterable_attributes and model does not have $do_not_filter_on'
+                    );
                 }
-
-                throw new \Exception(
-                    'Nova attempted to query a Scout index with a filter, but the filter was not in '.
-                    '$filterable_attributes and the model does not have $do_not_filter_on'
-                );
             }
 
             return $query->where($filter_on_attribute, $request->viaResourceId);
