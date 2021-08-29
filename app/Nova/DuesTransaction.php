@@ -106,13 +106,7 @@ class DuesTransaction extends Resource
                 ->onlyOnDetail(),
 
             BelongsToMany::make('Merchandise', 'merchandise')
-                ->fields(static function (): array {
-                    return [
-                        DateTime::make('Provided At')->onlyOnIndex(),
-
-                        BelongsTo::make('Provided By', 'providedBy', User::class),
-                    ];
-                }),
+                ->fields(new MerchandisePivotFields),
 
             MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
