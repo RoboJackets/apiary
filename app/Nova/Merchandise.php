@@ -175,4 +175,9 @@ class Merchandise extends Resource
 
         return $defaults;
     }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }

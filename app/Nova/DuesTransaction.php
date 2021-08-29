@@ -179,4 +179,9 @@ class DuesTransaction extends Resource
     {
         return $this->user->full_name.' | '.$this->package->name.' | '.ucfirst($this->status);
     }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }
