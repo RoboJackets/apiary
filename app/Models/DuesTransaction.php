@@ -310,4 +310,12 @@ class DuesTransaction extends Model
 
         return $array;
     }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function providedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'provided_by');
+    }
 }

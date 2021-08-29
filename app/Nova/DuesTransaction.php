@@ -110,9 +110,7 @@ class DuesTransaction extends Resource
                     return [
                         DateTime::make('Provided At')->onlyOnIndex(),
 
-                        // I tried a BelongsTo but it appeared to be looking for the relationship on the model itself,
-                        // not the pivot model. This is a temporary fallback.
-                        Text::make('Provided By', 'provided_by_name')->onlyOnIndex(),
+                        BelongsTo::make('Provided By', 'providedBy', User::class),
                     ];
                 }),
 

@@ -54,11 +54,8 @@ class DuesTransactionMerchandise extends Pivot
         return $this->belongsTo(User::class, 'provided_by');
     }
 
-    /**
-     * Returns the name field of the User in providedBy. This exists because Nova was not cooperating.
-     */
-    public function getProvidedByNameAttribute(): ?string
+    public function ComputedField(): BelongsTo
     {
-        return optional($this->providedBy)->name;
+        return $this->providedBy();
     }
 }

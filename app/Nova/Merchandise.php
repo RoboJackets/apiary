@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
@@ -106,9 +107,7 @@ class Merchandise extends Resource
                     return [
                         DateTime::make('Provided At'),
 
-                        // I tried a BelongsTo but it appeared to be looking for the relationship on the model itself,
-                        // not the pivot model. This is a temporary fallback.
-                        Text::make('Provided By', 'provided_by_name'),
+                        BelongsTo::make('Provided By', 'providedBy', User::class),
                     ];
                 }),
         ];
