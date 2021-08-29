@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "def5eb76cd787680cbc1bcf868aac74b",
+    "content-hash": "ddf100ecc7b2b04c3e7ff31a8ce259c5",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -4645,9 +4645,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630184849/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
+                "url": "https://composer.robojackets.org/1630259515/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
                 "reference": "7caf590d32760a304772419303a109261406763a",
-                "shasum": "cff704bbd44ec41ca7ad99410205338d520b111a"
+                "shasum": "8f70945d88c3c8bd24904acd7348ea9fc976fe47"
             },
             "require": {
                 "ext-json": "*",
@@ -6434,9 +6434,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630184849/robojackets/auth-stickler/robojackets-auth-stickler-014d2261078db6c985dae8628907c49488773a46-zip-fc802a.zip",
+                "url": "https://composer.robojackets.org/1630259515/robojackets/auth-stickler/robojackets-auth-stickler-014d2261078db6c985dae8628907c49488773a46-zip-fc802a.zip",
                 "reference": "014d2261078db6c985dae8628907c49488773a46",
-                "shasum": "8826b503d61eca0ae6b43f0dd2546a6e2444ee8b"
+                "shasum": "ad8a5ed880843991cce07c773c56a57deb0bcffb"
             },
             "require": {
                 "apereo/phpcas": "^1.3",
@@ -6482,9 +6482,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630184849/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
+                "url": "https://composer.robojackets.org/1630259515/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
                 "reference": "ce83cc96d3f3ba637b76480a71d6d7adba1fa134",
-                "shasum": "63a097a28ebe5a94592b9aa9a9534bac5961e282"
+                "shasum": "03ceddd41a54d1e59dbc55ded20a02c569455bf7"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -6519,17 +6519,17 @@
         },
         {
             "name": "robojackets/meilisearch-index-settings-helper",
-            "version": "v0.3.0",
+            "version": "v0.3.1",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/meilisearch-index-settings-helper.git",
-                "reference": "f48ef6e26d692e404b1af7986f28ef306d9aeef8"
+                "reference": "f6dec89ccd9826b75bd325465802cefd8d2cc943"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630184849/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-f48ef6e26d692e404b1af7986f28ef306d9aeef8-zip-d7e7e2.zip",
-                "reference": "f48ef6e26d692e404b1af7986f28ef306d9aeef8",
-                "shasum": "f9b257a0672d853ca708d7d0bd0657751f9346ac"
+                "url": "https://composer.robojackets.org/1630259515/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-f6dec89ccd9826b75bd325465802cefd8d2cc943-zip-7ab4bc.zip",
+                "reference": "f6dec89ccd9826b75bd325465802cefd8d2cc943",
+                "shasum": "bd63572ee183161dff63eee2d7c311d09bba1338"
             },
             "require": {
                 "haydenpierce/class-finder": "^0.4.3",
@@ -6581,9 +6581,9 @@
             "description": "Manage Meilisearch indexing settings in Eloquent models",
             "homepage": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.3.0"
+                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.3.1"
             },
-            "time": "2021-08-28T21:03:38+00:00"
+            "time": "2021-08-29T17:47:23+00:00"
         },
         {
             "name": "robojackets/network-check",
@@ -6595,9 +6595,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630184849/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
+                "url": "https://composer.robojackets.org/1630259515/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
                 "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7",
-                "shasum": "747a893c0985edde13cf7825c728adc05df94e91"
+                "shasum": "d805da0ef08cb3475bc7f5eef368af8328c71ada"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
@@ -13435,9 +13435,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630184849/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
+                "url": "https://composer.robojackets.org/1630259515/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
                 "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7",
-                "shasum": "851f9f4774c03e1f82c3100f883242b2c2689611"
+                "shasum": "7e867e960c45f6e7c6d37369d74e8bfb97de9e66"
             },
             "require": {
                 "phan/phan": "*",
@@ -15621,5 +15621,5 @@
     "platform-overrides": {
         "php": "7.4.13"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
