@@ -40,12 +40,17 @@ abstract class Resource extends NovaResource
                     if (in_array($filter_on_attribute, $query->model->do_not_filter_on, true)) {
                         return $query;
                     }
-                } else {
+
                     throw new \Exception(
                         'Attempted to query Scout with filter '.$filter_on_attribute.', but filter not in '
-                        .'$filterable_attributes and model does not have $do_not_filter_on'
+                        .'$filterable_attributes nor $do_not_filter_on'
                     );
                 }
+
+                throw new \Exception(
+                    'Attempted to query Scout with filter '.$filter_on_attribute.', but filter not in '
+                    .'$filterable_attributes and model does not have $do_not_filter_on'
+                );
             }
 
             return $query->where($filter_on_attribute, $request->viaResourceId);
