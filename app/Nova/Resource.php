@@ -30,8 +30,8 @@ abstract class Resource extends NovaResource
 
             if (! property_exists($query->model, 'filterable_attributes')) {
                 throw new \Exception(
-                    'Attempted to query Scout with filter '.$filter_on_attribute.', but model does not have '
-                    .'$filterable_attributes'
+                    'Attempted to query Scout model '.get_class($query->model).' with filter '.$filter_on_attribute
+                    .', but model does not have $filterable_attributes'
                 );
             }
 
@@ -42,14 +42,14 @@ abstract class Resource extends NovaResource
                     }
 
                     throw new \Exception(
-                        'Attempted to query Scout with filter '.$filter_on_attribute.', but filter not in '
-                        .'$filterable_attributes nor $do_not_filter_on'
+                        'Attempted to query Scout model '.get_class($query->model).' with filter '.$filter_on_attribute
+                        .', but filter not in $filterable_attributes nor $do_not_filter_on'
                     );
                 }
 
                 throw new \Exception(
-                    'Attempted to query Scout with filter '.$filter_on_attribute.', but filter not in '
-                    .'$filterable_attributes and model does not have $do_not_filter_on'
+                    'Attempted to query Scout model '.get_class($query->model).' with filter '.$filter_on_attribute
+                    .', but filter not in $filterable_attributes and model does not have $do_not_filter_on'
                 );
             }
 

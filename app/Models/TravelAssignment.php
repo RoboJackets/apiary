@@ -118,6 +118,7 @@ class TravelAssignment extends Model
      */
     public $filterable_attributes = [
         'user_id',
+        'travel_id',
     ];
 
     public function user(): BelongsTo
@@ -174,8 +175,6 @@ class TravelAssignment extends Model
         }
 
         $array['payable_type'] = $this->getMorphClass();
-
-        $array['user_id'] = $this->user->id;
 
         $array['updated_at_unix'] = $this->updated_at->getTimestamp();
 
