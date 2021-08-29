@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
@@ -102,7 +101,7 @@ class Merchandise extends Resource
                 }),
 
             BelongsToMany::make('Dues Transactions', 'transactions')
-                ->fields(new MerchandisePivotFields),
+                ->fields(new MerchandisePivotFields()),
         ];
     }
 

@@ -52,6 +52,7 @@ parameters:
     - '#Method App\\Notifications\\[a-zA-Z]+::toMail\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Notifications\\[a-zA-Z]+::via\(\) has parameter \$notifiable with no typehint specified\.#'
     - '#Method App\\Notifications\\ExpiringPersonalAccessTokenNotification::toArray\(\) return type has no value type specified in iterable type array\.#'
+    - '#Method App\\Nova\\[a-zA-Z0-9]+::__invoke\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<int,Illuminate\\Database\\Eloquent\\Model>::each\(\) expects callable\(Illuminate\\Database\\Eloquent\\Model, int\): bool\|void, Closure\(App\\Models\\[A-Za-z]+\): void given\.#'
     - '#Parameter \#1 \$channel of method Illuminate\\Notifications\\Messages\\SlackMessage::to\(\) expects string, string\|null given\.#'
