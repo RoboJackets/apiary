@@ -57,7 +57,6 @@ class TravelAssignmentController extends Controller
                 'travel' => $assignment->travel,
                 'documents_received' => $assignment->documents_received,
                 'paid' => $assignment->is_paid,
-                'url' => $request->fullUrl(),
             ]
         );
     }
