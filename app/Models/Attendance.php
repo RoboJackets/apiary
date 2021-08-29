@@ -248,7 +248,9 @@ class Attendance extends Model
 
         if ($this->attendable_type === Team::getMorphClassStatic()) {
             $array['team_id'] = $this->attendable_id;
+            $array['event_id'] = null;
         } elseif ($this->attendable_type === Event::getMorphClassStatic()) {
+            $array['team_id'] = null;
             $array['event_id'] = $this->attendable_id;
         }
 
