@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -23,7 +26,29 @@ abstract class Resource extends NovaResource
     public static function scoutQuery(NovaRequest $request, $query): Builder
     {
         if (null !== $request->viaResource) {
-            return $query->where($request->viaResource.'_id', $request->viaResourceId);
+            $filter_on_attribute = Str::snake(Str::singular($request->viaResource)).'_id';
+
+            if (! property_exists($query->model, 'filterable_attributes')) {
+                throw new \Exception(
+                    'Nova attempted to query a Scout index with a filter, but the model does not have $filterable'.
+                    '_attributes'
+                );
+            }
+
+            if (! in_array($filter_on_attribute, $query->model->filterable_attributes, true)) {
+                if (property_exists($query->model, 'do_not_filter_on')) {
+                    if (in_array($filter_on_attribute, $query->model->do_not_filter_on, true)) {
+                        return $query;
+                    }
+                }
+
+                throw new \Exception(
+                    'Nova attempted to query a Scout index with a filter, but the filter was not in '.
+                    '$filterable_attributes and the model does not have $do_not_filter_on'
+                );
+            }
+
+            return $query->where($filter_on_attribute, $request->viaResourceId);
         }
 
         return $query;
