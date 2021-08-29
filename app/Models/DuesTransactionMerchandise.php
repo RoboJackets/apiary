@@ -53,9 +53,4 @@ class DuesTransactionMerchandise extends Pivot
     {
         return $this->belongsTo(User::class, 'provided_by');
     }
-
-    public function ComputedField(): BelongsTo
-    {
-        return $this->providedBy();
-    }
 }
