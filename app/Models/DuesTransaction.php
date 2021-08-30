@@ -325,7 +325,7 @@ class DuesTransaction extends Model
     /**
      * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
      */
-    public function getPivotAttribute(): ?DuesTransactionMerchandise
+    public function getPivotAttribute(): DuesTransactionMerchandise
     {
         $viaResource = request()->viaResource;
         $viaResourceId = request()->viaResourceId;
@@ -336,6 +336,6 @@ class DuesTransaction extends Model
                 ->sole();
         }
 
-        return null;
+        return new DuesTransactionMerchandise();
     }
 }

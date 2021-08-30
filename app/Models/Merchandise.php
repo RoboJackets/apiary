@@ -105,12 +105,12 @@ class Merchandise extends Model
         $viaResource = request()->viaResource;
         $viaResourceId = request()->viaResourceId;
 
-        if ('dues-transaction' === $viaResource && null !== $viaResourceId) {
+        if ('dues-transactions' === $viaResource && null !== $viaResourceId) {
             return DuesTransactionMerchandise::where('dues_transaction_id', $viaResourceId)
                 ->where('merchandise_id', $this->id)
                 ->sole();
         }
 
-        return null;
+        return new DuesTransactionMerchandise();
     }
 }
