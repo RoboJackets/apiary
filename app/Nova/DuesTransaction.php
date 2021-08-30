@@ -169,7 +169,7 @@ class DuesTransaction extends Resource
     // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
-        return $request->user()->can('update-dues-transactions');
+        return $request->user()->can('update-dues-transactions') && 'merchandise' !== $request->viaResource;
     }
 
     /**
@@ -178,13 +178,5 @@ class DuesTransaction extends Resource
     public function subtitle(): ?string
     {
         return $this->user->full_name.' | '.$this->package->name.' | '.ucfirst($this->status);
-    }
-
-    /**
-     * Nova has trouble with the pivot fields in search results, so, disable the search box I guess?
-     */
-    public static function searchable(): bool
-    {
-        return false;
     }
 }

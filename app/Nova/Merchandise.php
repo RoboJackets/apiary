@@ -135,7 +135,7 @@ class Merchandise extends Resource
     // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
-        return $request->user()->can('update-merchandise');
+        return $request->user()->can('update-merchandise') && 'dues-transactions' !== $request->viaResource;
     }
 
     /**
@@ -177,7 +177,7 @@ class Merchandise extends Resource
     }
 
     /**
-     * Nova has trouble with the pivot fields in search results, so, disable the search box I guess?
+     * Not really useful on detail pages.
      */
     public static function searchable(): bool
     {

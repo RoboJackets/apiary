@@ -314,6 +314,7 @@ class User extends Authenticatable
     public $do_not_filter_on = [
         'dues_package_id',
         'travel_id',
+        'merchandise_id',
     ];
 
     /**

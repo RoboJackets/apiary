@@ -321,4 +321,14 @@ class DuesTransaction extends Model
     {
         return $this->belongsTo(User::class, 'provided_by');
     }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function getPivotAttribute(): DuesTransactionMerchandise
+    {
+        return DuesTransactionMerchandise::where('dues_transaction_id', $this->id)
+            ->where('merchandise_id', request()->viaResourceId)
+            ->sole();
+    }
 }
