@@ -165,6 +165,11 @@ class DuesTransaction extends Model
             ->using(DuesTransactionMerchandise::class);
     }
 
+    public function jankForNova(): BelongsToMany
+    {
+        return $this->merchandise()->as('jankForNova');
+    }
+
     /**
      * Get the status flag for the Transaction.
      */
@@ -325,7 +330,7 @@ class DuesTransaction extends Model
     /**
      * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
      */
-    public function getPivotAttribute(): DuesTransactionMerchandise
+    public function getJankForNovaAttribute(): DuesTransactionMerchandise
     {
         $viaResource = request()->viaResource;
         $viaResourceId = request()->viaResourceId;

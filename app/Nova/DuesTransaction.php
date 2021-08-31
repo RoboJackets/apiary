@@ -104,7 +104,7 @@ class DuesTransaction extends Resource
             })
                 ->onlyOnDetail(),
 
-            BelongsToMany::make('Merchandise', 'merchandise')
+            BelongsToMany::make('Merchandise', 'jankForNova')
                 ->fields(new MerchandisePivotFields()),
 
             MorphMany::make('Payments', 'payment', Payment::class)

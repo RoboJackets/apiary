@@ -100,7 +100,7 @@ class Merchandise extends Resource
                     ];
                 }),
 
-            BelongsToMany::make('Dues Transactions', 'transactions')
+            BelongsToMany::make('Dues Transactions', 'jankForNova')
                 ->fields(new MerchandisePivotFields()),
         ];
     }

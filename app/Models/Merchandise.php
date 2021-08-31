@@ -76,6 +76,11 @@ class Merchandise extends Model
             ->using(DuesTransactionMerchandise::class);
     }
 
+    public function jankForNova(): BelongsToMany
+    {
+        return $this->transactions()->as('jankForNova');
+    }
+
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
@@ -100,7 +105,7 @@ class Merchandise extends Model
     /**
      * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
      */
-    public function getPivotAttribute(): DuesTransactionMerchandise
+    public function getJankForNovaAttribute(): DuesTransactionMerchandise
     {
         $viaResource = request()->viaResource;
         $viaResourceId = request()->viaResourceId;
