@@ -35,7 +35,21 @@
                 teams: [],
                 stickToTeam: false,
                 submitting: false,
-                cardType: null
+                cardType: null,
+                sounds: {
+                  in: '/sounds/kiosk_in_short.mp3',
+                  notice: '/sounds/kiosk_notice.mp3',
+                  notice2: '/sounds/kiosk_notice2.mp3',
+                  error: '/sounds/kiosk_error_xp.mp3',
+                  dohs: [
+                    '/sounds/kiosk_doh1.mp3',
+                    '/sounds/kiosk_doh2.mp3',
+                    '/sounds/kiosk_doh3.mp3',
+                    '/sounds/kiosk_doh4.mp3',
+                    '/sounds/kiosk_doh5.mp3',
+                    '/sounds/kiosk_doh6.mp3',
+                  ]
+                }
             };
         },
         mounted() {
@@ -59,6 +73,9 @@
                             }).sort(function (a, b) {
                                 return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
                             });
+                            if (this.teams.length < 1) {
+                              Swal.fire('Bueller...Bueller...', 'All teams hidden from kiosk.', 'warning');
+                            }
                             this.teams.forEach(function (team) {
                                 // If the team name starts with Robo and the next letter is a capital letter, insert
                                 // 0xAD (an invisible hyphen) to allow the browser to break the word up if necessary.
@@ -78,7 +95,7 @@
                             Swal.fire({
                                 title: 'Whoops!',
                                 text: "You don't have permission to perform that action.",
-                                type: 'error',
+                                icon: 'error',
                             });
                         } else if (error.response.status === 401) {
                             this.tokenPrompt();
@@ -139,7 +156,11 @@
                 document.activeElement.blur();
                 // When a team button is clicked, show a prompt to swipe BuzzCard
                 this.attendance.attendable_id = event.target.id;
-                Swal.fire(this.getTeamSwalConfig(event.target.innerText));
+                Swal.fire(this.getTeamSwalConfig(event.target.innerText)).then(() => {
+                    // Clear fields in case of any modal dismissal
+                    // This *does not* fire in normal card processing flow
+                    this.clearFields();
+                })
             },
             getTeamSwalConfig: function (teamName) {
                 // This method pulls from state (attendance.attendable_id) when teamName is not passed (or undefined)
@@ -150,33 +171,33 @@
                     }
                 }
                 return {
-                    title: 'Tap or Swipe your BuzzCard now',
+                    title: 'Tap your BuzzCard now',
                     html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
                     showCancelButton: true,
                     allowOutsideClick: () => !Swal.isLoading(),
+                    backdrop: true,
                     showConfirmButton: false,
-                    imageUrl: '/img/contactless-24px.svg',
-                    imageWidth: 200,
-                    customClass: {
-                      'image': 'contactless-symbol-kiosk',
-                    },
                     input: 'checkbox',
                     inputValue: this.stickToTeam,
                     inputPlaceholder: 'Stick to this team',
-                    onOpen: () => {
+                    didOpen: () => {
                         // Remove focus from checkbox
                         document.activeElement.blur();
-                        Swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
+                        document.getElementById('swal2-checkbox')
+                          .addEventListener("change", checkboxEventListener.bind(this));
+                        // Add animated contactless card symbol
                         var cardImg = document.createElement('img');
-                        cardImg.src = '/img/contactless-card-24px.svg';
+                        cardImg.src = '/img/Universal_Contactless_Card_Symbol.svg';
                         var cardDiv = document.createElement('div');
                         cardDiv.className = 'animated-contactless-card';
                         cardDiv.appendChild(cardImg);
-                        Swal.getHeader().insertBefore(cardDiv, Swal.getTitle());
+                        Swal.getTitle().parentNode.insertBefore(cardDiv, Swal.getTitle());
                     },
-                    onClose: () => {
-                        Swal.getInput().removeEventListener("change", checkboxEventListener);
-                        this.clearFields();
+                    didDestroy: () => {
+                      let checkbox = document.getElementById('swal2-checkbox')
+                      if (checkbox) {
+                        checkbox.removeEventListener("change", checkboxEventListener);
+                      }
                     }
                 }
             },
@@ -215,6 +236,7 @@
                     this.submit();
                 } else if (pattError.test(cardData)) {
                     // Error message sent from card reader
+                    new Audio(this.sounds.error).play()
                     console.log('error cardData: ' + pattError.exec(cardData));
                     cardData = null;
                     Swal.fire({
@@ -222,26 +244,31 @@
                         text: 'There was an error reading your card. Please swipe again.',
                         showCancelButton: true,
                         showConfirmButton: false,
-                        type: 'warning',
-                        onClose: () => {
+                        icon: 'warning',
+                        didDestroy: () => {
                             self.clearFields();
                         }
                     })
                 } else {
                     Swal.close();
+                    new Audio(this.sounds.error).play()
                     console.log('unknown cardData: ' + cardData);
                     cardData = null;
                     Swal.fire({
                         title: 'Hmm...',
                         html: 'Card format not recognized.<br/>Contact #it-helpdesk for assistance.',
                         showConfirmButton: true,
-                        type: 'error',
+                        icon: 'error',
                         timer: 3000,
-                        onClose: () => {
+                        didDestroy: () => {
                             self.clearFields();
                         }
                     })
                 }
+            },
+            randomIntFromInterval: function(min, max) { // min and max included
+              // from a kind StackOverflower: https://stackoverflow.com/a/7228322
+              return Math.floor(Math.random() * (max - min + 1) + min);
             },
             submit() {
                 // Check for lack of team selection
@@ -257,6 +284,7 @@
                         .then(response => {
                             if (response.data.users.length == 1 && typeof response.data.users[0].roles === "undefined") {
                                 // Unable to read roles? That's an error.
+                                new Audio(this.sounds.error).play()
                                 console.log('Error checking permissions via API');
                                 Swal.fire(
                                     'Error',
@@ -267,6 +295,7 @@
                             } else if (response.data.users.length == 1 && response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
+                                new Audio(this.sounds.notice).play()
                                 Swal.fire({
                                     title: "Administrator Options",
                                     input: 'select',
@@ -294,10 +323,11 @@
                             } else {
                                 // Roles retried and the user is not an admin
                                 console.log('User is not an admin');
+                                new Audio(this.sounds.dohs[this.randomIntFromInterval(0, this.sounds.dohs.length - 1)]).play()
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: 'Please select a team before swiping or tapping your BuzzCard',
-                                    type: 'warning',
+                                    icon: 'warning',
                                     timer: 2000,
                                 });
                                 this.clearFields();
@@ -308,12 +338,13 @@
                             this.hasError = true;
                             this.feedback = '';
                             this.clearFields();
+                            new Audio(this.sounds.error).play()
                             if (error.response.status === 404) {
                                 // User not known, but API call succeeded
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: 'Please select a team before swiping or tapping your BuzzCard',
-                                    type: 'warning',
+                                    icon: 'warning',
                                     timer: 2000,
                                 });
                             } else {
@@ -327,39 +358,46 @@
                 } else {
                     // Submit attendance data
                     this.submitting = true;
+                    let self = this;
                     Swal.showLoading();
                     axios
                         .post(this.attendanceBaseUrl, this.attendance)
                         .then(response => {
                             this.hasError = false;
                             let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
+                            new Audio(this.sounds.in).play()
                             Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
                                 showConfirmButton: false,
-                                type: 'success',
+                                icon: 'success',
                             }).then(() => {
-                                if (this.stickToTeam) {
-                                    Swal.fire(this.getTeamSwalConfig());
+                                if (self.stickToTeam) {
+                                  Swal.fire(this.getTeamSwalConfig()).then(() => {
+                                    // Clear fields in case of any modal dismissal
+                                    // This *does not* fire in normal card processing flow
+                                    this.clearFields();
+                                  });
                                 }
                             });
-                            if (!this.stickToTeam) {
+                            if (!self.stickToTeam) {
                                 this.clearFields();
                             } else {
                                 this.clearGTID();
                             }
                         })
                         .catch(error => {
+                            new Audio(this.sounds.error).play()
                             console.log(error);
                             this.hasError = true;
                             this.feedback = '';
                             this.clearFields();
-                            if (error.response.status == 403) {
+                            if (error.hasOwnProperty('response') && error.response.status == 403) {
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: "You don't have permission to perform that action.",
-                                    type: 'error',
+                                    icon: 'error',
                                 });
                             } else {
                                 Swal.fire(
@@ -431,16 +469,5 @@
 
     .swal2-loading button {
         margin-bottom: 2em !important;
-    }
-
-    .nfc-logo {
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        background-color: red;
-        -webkit-mask: url(/img/nfc-logo.svg) no-repeat center;
-        mask: url(/img/nfc-logo.svg) no-repeat center;
     }
 </style>
