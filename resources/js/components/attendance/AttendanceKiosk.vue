@@ -95,7 +95,7 @@
                             Swal.fire({
                                 title: 'Whoops!',
                                 text: "You don't have permission to perform that action.",
-                                type: 'error',
+                                icon: 'error',
                             });
                         } else if (error.response.status === 401) {
                             this.tokenPrompt();
@@ -156,7 +156,11 @@
                 document.activeElement.blur();
                 // When a team button is clicked, show a prompt to swipe BuzzCard
                 this.attendance.attendable_id = event.target.id;
-                Swal.fire(this.getTeamSwalConfig(event.target.innerText));
+                Swal.fire(this.getTeamSwalConfig(event.target.innerText)).then(() => {
+                    // Clear fields in case of any modal dismissal
+                    // This *does not* fire in normal card processing flow
+                    this.clearFields();
+                })
             },
             getTeamSwalConfig: function (teamName) {
                 // This method pulls from state (attendance.attendable_id) when teamName is not passed (or undefined)
@@ -167,33 +171,33 @@
                     }
                 }
                 return {
-                    title: 'Tap or Swipe your BuzzCard now',
+                    title: 'Tap your BuzzCard now',
                     html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
                     showCancelButton: true,
                     allowOutsideClick: () => !Swal.isLoading(),
+                    backdrop: true,
                     showConfirmButton: false,
-                    imageUrl: '/img/contactless-24px.svg',
-                    imageWidth: 200,
-                    customClass: {
-                      'image': 'contactless-symbol-kiosk',
-                    },
                     input: 'checkbox',
                     inputValue: this.stickToTeam,
                     inputPlaceholder: 'Stick to this team',
-                    onOpen: () => {
+                    didOpen: () => {
                         // Remove focus from checkbox
                         document.activeElement.blur();
-                        Swal.getInput().addEventListener("change", checkboxEventListener.bind(this));
+                        document.getElementById('swal2-checkbox')
+                          .addEventListener("change", checkboxEventListener.bind(this));
+                        // Add animated contactless card symbol
                         var cardImg = document.createElement('img');
-                        cardImg.src = '/img/contactless-card-24px.svg';
+                        cardImg.src = '/img/Universal_Contactless_Card_Symbol.svg';
                         var cardDiv = document.createElement('div');
                         cardDiv.className = 'animated-contactless-card';
                         cardDiv.appendChild(cardImg);
-                        Swal.getHeader().insertBefore(cardDiv, Swal.getTitle());
+                        Swal.getTitle().parentNode.insertBefore(cardDiv, Swal.getTitle());
                     },
-                    onClose: () => {
-                        Swal.getInput().removeEventListener("change", checkboxEventListener);
-                        this.clearFields();
+                    didDestroy: () => {
+                      let checkbox = document.getElementById('swal2-checkbox')
+                      if (checkbox) {
+                        checkbox.removeEventListener("change", checkboxEventListener);
+                      }
                     }
                 }
             },
@@ -240,8 +244,8 @@
                         text: 'There was an error reading your card. Please swipe again.',
                         showCancelButton: true,
                         showConfirmButton: false,
-                        type: 'warning',
-                        onClose: () => {
+                        icon: 'warning',
+                        didDestroy: () => {
                             self.clearFields();
                         }
                     })
@@ -254,9 +258,9 @@
                         title: 'Hmm...',
                         html: 'Card format not recognized.<br/>Contact #it-helpdesk for assistance.',
                         showConfirmButton: true,
-                        type: 'error',
+                        icon: 'error',
                         timer: 3000,
-                        onClose: () => {
+                        didDestroy: () => {
                             self.clearFields();
                         }
                     })
@@ -323,7 +327,7 @@
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: 'Please select a team before swiping or tapping your BuzzCard',
-                                    type: 'warning',
+                                    icon: 'warning',
                                     timer: 2000,
                                 });
                                 this.clearFields();
@@ -340,7 +344,7 @@
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: 'Please select a team before swiping or tapping your BuzzCard',
-                                    type: 'warning',
+                                    icon: 'warning',
                                     timer: 2000,
                                 });
                             } else {
@@ -354,6 +358,7 @@
                 } else {
                     // Submit attendance data
                     this.submitting = true;
+                    let self = this;
                     Swal.showLoading();
                     axios
                         .post(this.attendanceBaseUrl, this.attendance)
@@ -366,13 +371,17 @@
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
                                 showConfirmButton: false,
-                                type: 'success',
+                                icon: 'success',
                             }).then(() => {
-                                if (this.stickToTeam) {
-                                    Swal.fire(this.getTeamSwalConfig());
+                                if (self.stickToTeam) {
+                                  Swal.fire(this.getTeamSwalConfig()).then(() => {
+                                    // Clear fields in case of any modal dismissal
+                                    // This *does not* fire in normal card processing flow
+                                    this.clearFields();
+                                  });
                                 }
                             });
-                            if (!this.stickToTeam) {
+                            if (!self.stickToTeam) {
                                 this.clearFields();
                             } else {
                                 this.clearGTID();
@@ -388,7 +397,7 @@
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: "You don't have permission to perform that action.",
-                                    type: 'error',
+                                    icon: 'error',
                                 });
                             } else {
                                 Swal.fire(
@@ -460,16 +469,5 @@
 
     .swal2-loading button {
         margin-bottom: 2em !important;
-    }
-
-    .nfc-logo {
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        background-color: red;
-        -webkit-mask: url(/img/nfc-logo.svg) no-repeat center;
-        mask: url(/img/nfc-logo.svg) no-repeat center;
     }
 </style>
