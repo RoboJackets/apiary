@@ -73,6 +73,9 @@
                             }).sort(function (a, b) {
                                 return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
                             });
+                            if (this.teams.length < 1) {
+                              Swal.fire('Bueller...Bueller...', 'All teams hidden from kiosk.', 'warning');
+                            }
                             this.teams.forEach(function (team) {
                                 // If the team name starts with Robo and the next letter is a capital letter, insert
                                 // 0xAD (an invisible hyphen) to allow the browser to break the word up if necessary.
@@ -381,7 +384,7 @@
                             this.hasError = true;
                             this.feedback = '';
                             this.clearFields();
-                            if (error.response.status == 403) {
+                            if (error.hasOwnProperty('response') && error.response.status == 403) {
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: "You don't have permission to perform that action.",
