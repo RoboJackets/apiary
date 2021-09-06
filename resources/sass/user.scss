@@ -71,30 +71,41 @@ input.form-control.is-invalid ~ .invalid-feedback {
   display: block;
 }
 
-.contactless-symbol-kiosk.swal2-image {
-  margin-top: -10px;
-}
-
 .animated-contactless-card {
-  height: 150px;
-  margin-top: -40px;
-  line-height: 150px;
+    height: 150px;
+    margin-top: -40px;
+    line-height: 150px;
+    text-align: center;
 }
 
 .animated-contactless-card img {
-  animation-duration: 1s;
-  animation-name: contactless-tap;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: ease-in-out;
-  vertical-align: bottom;
+    -webkit-animation-duration: 0.75s;
+    animation-duration: 0.75s;
+    -webkit-animation-name: contactless-tap;
+    animation-name: contactless-tap;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    vertical-align: bottom;
+}
+
+@-webkit-keyframes contactless-tap {
+    from {
+        width: 130px;
+    }
+    to {
+        width: 150px;
+    }
 }
 
 @keyframes contactless-tap {
-  from {
-    width: 100px;
-  }
-  to {
-    width: 150px;
-  }
+    from {
+        width: 130px;
+    }
+    to {
+        width: 150px;
+    }
 }
