@@ -54,7 +54,7 @@
         "barryvdh/laravel-ide-helper": "2.10.0",
         "beyondcode/laravel-dump-server": "1.7.0",
         "facade/ignition": "2.12.0",
-        "fakerphp/faker": "1.15.0",
+        "fakerphp/faker": "1.16.0",
         "filp/whoops": "2.14.1",
         "mockery/mockery": "1.4.3",
         "mxl/laravel-job": "1.2.0",
