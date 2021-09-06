@@ -35,7 +35,21 @@
                 teams: [],
                 stickToTeam: false,
                 submitting: false,
-                cardType: null
+                cardType: null,
+                sounds: {
+                  in: '/sounds/kiosk_in_short.mp3',
+                  notice: '/sounds/kiosk_notice.mp3',
+                  notice2: '/sounds/kiosk_notice2.mp3',
+                  error: '/sounds/kiosk_error_xp.mp3',
+                  dohs: [
+                    '/sounds/kiosk_doh1.mp3',
+                    '/sounds/kiosk_doh2.mp3',
+                    '/sounds/kiosk_doh3.mp3',
+                    '/sounds/kiosk_doh4.mp3',
+                    '/sounds/kiosk_doh5.mp3',
+                    '/sounds/kiosk_doh6.mp3',
+                  ]
+                }
             };
         },
         mounted() {
@@ -215,6 +229,7 @@
                     this.submit();
                 } else if (pattError.test(cardData)) {
                     // Error message sent from card reader
+                    new Audio(this.sounds.error).play()
                     console.log('error cardData: ' + pattError.exec(cardData));
                     cardData = null;
                     Swal.fire({
@@ -229,6 +244,7 @@
                     })
                 } else {
                     Swal.close();
+                    new Audio(this.sounds.error).play()
                     console.log('unknown cardData: ' + cardData);
                     cardData = null;
                     Swal.fire({
@@ -242,6 +258,10 @@
                         }
                     })
                 }
+            },
+            randomIntFromInterval: function(min, max) { // min and max included
+              // from a kind StackOverflower: https://stackoverflow.com/a/7228322
+              return Math.floor(Math.random() * (max - min + 1) + min);
             },
             submit() {
                 // Check for lack of team selection
@@ -257,6 +277,7 @@
                         .then(response => {
                             if (response.data.users.length == 1 && typeof response.data.users[0].roles === "undefined") {
                                 // Unable to read roles? That's an error.
+                                new Audio(this.sounds.error).play()
                                 console.log('Error checking permissions via API');
                                 Swal.fire(
                                     'Error',
@@ -267,6 +288,7 @@
                             } else if (response.data.users.length == 1 && response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
+                                new Audio(this.sounds.notice).play()
                                 Swal.fire({
                                     title: "Administrator Options",
                                     input: 'select',
@@ -294,6 +316,7 @@
                             } else {
                                 // Roles retried and the user is not an admin
                                 console.log('User is not an admin');
+                                new Audio(this.sounds.dohs[this.randomIntFromInterval(0, this.sounds.dohs.length - 1)]).play()
                                 Swal.fire({
                                     title: 'Whoops!',
                                     text: 'Please select a team before swiping or tapping your BuzzCard',
@@ -308,6 +331,7 @@
                             this.hasError = true;
                             this.feedback = '';
                             this.clearFields();
+                            new Audio(this.sounds.error).play()
                             if (error.response.status === 404) {
                                 // User not known, but API call succeeded
                                 Swal.fire({
@@ -333,6 +357,7 @@
                         .then(response => {
                             this.hasError = false;
                             let attendeeName = (response.data.attendance.attendee ? response.data.attendance.attendee.name : "Non-Member");
+                            new Audio(this.sounds.in).play()
                             Swal.fire({
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
@@ -351,6 +376,7 @@
                             }
                         })
                         .catch(error => {
+                            new Audio(this.sounds.error).play()
                             console.log(error);
                             this.hasError = true;
                             this.feedback = '';
