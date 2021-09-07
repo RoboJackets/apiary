@@ -199,9 +199,9 @@
                         checkbox.addEventListener("change", checkboxEventListener.bind(this));
 
                         // Add animated contactless card symbol
-                        var cardImg = document.createElement('img');
+                        let cardImg = document.createElement('img');
                         cardImg.src = '/img/Universal_Contactless_Card_Symbol.svg';
-                        var cardDiv = document.createElement('div');
+                        let cardDiv = document.createElement('div');
                         cardDiv.className = 'animated-contactless-card';
                         cardDiv.appendChild(cardImg);
                         Swal.getTitle().parentNode.insertBefore(cardDiv, Swal.getTitle());
