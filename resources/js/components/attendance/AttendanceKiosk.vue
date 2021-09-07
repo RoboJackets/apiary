@@ -507,4 +507,18 @@
     .swal2-loading button {
         margin-bottom: 2em !important;
     }
+
+    .swal2-cancel, .swal2-confirm {
+      width: 70%;
+    }
+
+    .stick-checkbox {
+      width: 25px;
+      height: 25px;
+      vertical-align: text-bottom;
+    }
+
+    .form-check-input {
+      position: relative !important;
+    }
 </style>
