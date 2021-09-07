@@ -156,13 +156,13 @@
                 document.activeElement.blur();
                 // When a team button is clicked, show a prompt to swipe BuzzCard
                 this.attendance.attendable_id = event.target.id;
-                Swal.fire(this.getTeamSwalConfig(event.target.innerText)).then(() => {
+                Swal.fire(this.getTeamSwalConfig(event.target.innerText, false)).then(() => {
                     // Clear fields in case of any modal dismissal
                     // This *does not* fire in normal card processing flow
                     this.clearFields();
                 })
             },
-            getTeamSwalConfig: function (teamName) {
+            getTeamSwalConfig: function (teamName, sticky) {
                 // This method pulls from state (attendance.attendable_id) when teamName is not passed (or undefined)
                 if (teamName === undefined) {
                     const targetTeams = this.teams.filter(team => team.id.toString() === this.attendance.attendable_id);
@@ -172,19 +172,32 @@
                 }
                 return {
                     title: 'Tap your BuzzCard now',
-                    html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
+                    html: `<div>
+                            Recording attendance for<br/>
+                            <b style='font-size: 2em'>${teamName}</b><br/><br/>
+                            <span onClick="document.getElementById('stick-checkbox').click()">
+                            <em>Multiple people attending the same team?</em>
+                            </span>
+                            <div class="form-check">
+                              <input class="form-check-input stick-checkbox" type="checkbox" id="stick-checkbox">
+                              <label class="form-check-label" for="stick-checkbox">
+                                Stick to this team
+                              </label>
+                            </div>
+                            </div>`,
                     showCancelButton: true,
                     allowOutsideClick: () => !Swal.isLoading(),
                     backdrop: true,
                     showConfirmButton: false,
-                    input: 'checkbox',
-                    inputValue: this.stickToTeam,
-                    inputPlaceholder: 'Stick to this team',
+                    timer: (sticky) ? 600000 : 30000,
+                    timerProgressBar: true,
                     didOpen: () => {
                         // Remove focus from checkbox
                         document.activeElement.blur();
-                        document.getElementById('swal2-checkbox')
-                          .addEventListener("change", checkboxEventListener.bind(this));
+                        let checkbox = document.getElementById('stick-checkbox');
+                        checkbox.checked = this.stickToTeam;
+                        checkbox.addEventListener("change", checkboxEventListener.bind(this));
+
                         // Add animated contactless card symbol
                         var cardImg = document.createElement('img');
                         cardImg.src = '/img/Universal_Contactless_Card_Symbol.svg';
@@ -194,7 +207,7 @@
                         Swal.getTitle().parentNode.insertBefore(cardDiv, Swal.getTitle());
                     },
                     didDestroy: () => {
-                      let checkbox = document.getElementById('swal2-checkbox')
+                      let checkbox = document.getElementById('stick-checkbox')
                       if (checkbox) {
                         checkbox.removeEventListener("change", checkboxEventListener);
                       }
@@ -374,7 +387,7 @@
                                 icon: 'success',
                             }).then(() => {
                                 if (self.stickToTeam) {
-                                  Swal.fire(this.getTeamSwalConfig()).then(() => {
+                                  Swal.fire(this.getTeamSwalConfig(undefined, true)).then(() => {
                                     // Clear fields in case of any modal dismissal
                                     // This *does not* fire in normal card processing flow
                                     this.clearFields();
