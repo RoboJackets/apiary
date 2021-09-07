@@ -4,7 +4,7 @@
             <template v-for="team in teams">
                 <div :class="rowclass(team)" style="padding-top:50px">
                     <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
-                    <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
+                    <div class="btn btn-kiosk btn-primary" :id="team.id" v-on:click="clicked">
                         {{ team.name }}
                     </div>
                 </div>
@@ -448,7 +448,8 @@
         width: 100%;
         padding: 0.5rem 1rem;
         line-height: 1.5;
-        border-radius: 0;
+        border-radius: 20px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         /* Vertically Center Text */
         display: flex;
         justify-content: center;
