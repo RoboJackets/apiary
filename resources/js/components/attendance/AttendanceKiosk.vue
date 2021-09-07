@@ -310,6 +310,7 @@
                             } else if (response.data.users.length == 1 && response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
                                 console.log('User is an admin!');
+                                let self = this;
                                 new Audio(this.sounds.notice).play()
                                 Swal.fire({
                                     title: "Administrator Options",
@@ -317,6 +318,7 @@
                                     inputOptions: {
                                         'reload': 'Reload page',
                                         'exit': 'Exit kiosk mode',
+                                        'sounds': 'Test all sounds'
                                     },
                                     inputPlaceholder: 'Select an option',
                                     showCancelButton: true,
@@ -327,6 +329,20 @@
                                                 resolve()
                                             } else if (value === 'exit') {
                                                 window.location.href = 'http://exitkiosk';
+                                                resolve()
+                                            } else if (value === 'sounds') {
+                                                Object.entries(self.sounds).forEach((entry) => {
+                                                  const [key, value] = entry;
+                                                  if (typeof value == 'string') {
+                                                    new Audio(value).play()
+                                                  } else if (Array.isArray(value)) {
+                                                    value.forEach(arrayElement => {
+                                                      new Audio(arrayElement).play()
+                                                    })
+                                                  } else {
+                                                    console.log('Unknown sound type in object')
+                                                  }
+                                                })
                                                 resolve()
                                             } else {
                                                 resolve("That's not a valid option.")
