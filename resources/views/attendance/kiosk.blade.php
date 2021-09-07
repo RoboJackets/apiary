@@ -21,10 +21,11 @@
 
 <body>
 @inject('request', 'Illuminate\Http\Request')
-<div class="container" id="app" style="margin-top: -5%">
+<div class="container" id="app">
     <div class="row">
         <div class="col-12" style="text-align:center">
             <h1 style="font-size: 4rem">Welcome to the Shop!</h1>
+            <h2><em>Tap a team to record attendance</em></h2>
         </div>
     </div>
     <attendance-kiosk></attendance-kiosk>
