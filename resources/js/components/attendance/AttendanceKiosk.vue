@@ -254,10 +254,11 @@
                     cardData = null;
                     Swal.fire({
                         title: 'Hmm...',
-                        text: 'There was an error reading your card. Please swipe again.',
-                        showCancelButton: true,
+                        text: 'There was an error reading your card. Please try again.',
                         showConfirmButton: false,
                         icon: 'warning',
+                        timer: 3000,
+                        timerProgressBar: true,
                         didDestroy: () => {
                             self.clearFields();
                         }
@@ -270,9 +271,10 @@
                     Swal.fire({
                         title: 'Hmm...',
                         html: 'Card format not recognized.<br/>Contact #it-helpdesk for assistance.',
-                        showConfirmButton: true,
+                        showConfirmButton: false,
                         icon: 'error',
                         timer: 3000,
+                        timerProgressBar: true,
                         didDestroy: () => {
                             self.clearFields();
                         }
@@ -338,10 +340,12 @@
                                 console.log('User is not an admin');
                                 new Audio(this.sounds.dohs[this.randomIntFromInterval(0, this.sounds.dohs.length - 1)]).play()
                                 Swal.fire({
-                                    title: 'Whoops!',
-                                    text: 'Please select a team before swiping or tapping your BuzzCard',
+                                    title: "D'oh!",
+                                    text: 'Please select a team before tapping your BuzzCard',
                                     icon: 'warning',
-                                    timer: 2000,
+                                    timer: 2500,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false
                                 });
                                 this.clearFields();
                                 return false;
@@ -356,9 +360,11 @@
                                 // User not known, but API call succeeded
                                 Swal.fire({
                                     title: 'Whoops!',
-                                    text: 'Please select a team before swiping or tapping your BuzzCard',
+                                    text: 'Please select a team before tapping your BuzzCard',
                                     icon: 'warning',
-                                    timer: 2000,
+                                    timer: 2500,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false
                                 });
                             } else {
                                 Swal.fire(
@@ -383,6 +389,7 @@
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
+                                timerProgressBar: true,
                                 showConfirmButton: false,
                                 icon: 'success',
                             }).then(() => {
