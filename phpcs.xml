@@ -44,7 +44,10 @@
 
     <rule ref="Generic.CodeAnalysis"/>
 
-    <rule ref="Generic.Commenting"/>
+    <rule ref="Generic.Commenting">
+        <!-- StyleCI has its own opinions, not sure if I can build those in here -->
+        <exclude name="Generic.Commenting.DocComment.TagValueIndent"/>
+    </rule>
 
     <rule ref="Generic.ControlStructures">
         <exclude name="Generic.ControlStructures.DisallowYodaConditions"/>

@@ -25,7 +25,7 @@ class CreateDuesPackages extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\Models\FiscalYear>  $models
+     * @param  \Illuminate\Support\Collection<\App\Models\FiscalYear>  $models
      *
      * @return array<string,string>
      */

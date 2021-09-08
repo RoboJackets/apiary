@@ -65,7 +65,7 @@ class ResumeController extends Controller
     /**
      * Get the MIME type of a file using the system `file` command.
      *
-     * @param string $filePath
+     * @param  string  $filePath
      */
     private function getFileCommandMimeType(string $filePath): ?string
     {
