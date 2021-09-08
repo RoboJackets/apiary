@@ -14,68 +14,68 @@ use Laravel\Nova\Actions\Actionable;
 /**
  * Represents a payment made from a member to RoboJackets against a Payable.
  *
- * @property      int $id
- * @property      int $payable_id
- * @property      string $payable_type
- * @property      string $amount
- * @property      string|null $processing_fee
- * @property      string $method
- * @property      int|null $recorded_by
- * @property      string|null $checkout_id
- * @property      string|null $client_txn_id
- * @property      string|null $server_txn_id
- * @property      string|null $unique_id
- * @property      string|null $order_id
- * @property      string|null $notes
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
- * @property      string|null $card_brand
- * @property      string|null $card_type
- * @property      string|null $last_4
- * @property      string|null $prepaid_type
- * @property      string|null $entry_method
- * @property      string|null $statement_description
- * @property      string|null $receipt_number
- * @property      string|null $receipt_url
- * @property      string|null $square_cash_transaction_id
+ * @property int $id
+ * @property int $payable_id
+ * @property string $payable_type
+ * @property string $amount
+ * @property string|null $processing_fee
+ * @property string $method
+ * @property int|null $recorded_by
+ * @property string|null $checkout_id
+ * @property string|null $client_txn_id
+ * @property string|null $server_txn_id
+ * @property string|null $unique_id
+ * @property string|null $order_id
+ * @property string|null $notes
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $card_brand
+ * @property string|null $card_type
+ * @property string|null $last_4
+ * @property string|null $prepaid_type
+ * @property string|null $entry_method
+ * @property string|null $statement_description
+ * @property string|null $receipt_number
+ * @property string|null $receipt_url
+ * @property string|null $square_cash_transaction_id
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read string $method_presentation
  * @property-read Model|\Barryvdh\LaravelIdeHelper\Eloquent $payable
  * @property-read \App\Models\User|null $user
- * @method        static \Database\Factories\PaymentFactory factory(...$parameters)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
- * @method        static \Illuminate\Database\Query\Builder|Payment onlyTrashed()
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment query()
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereAmount($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereCardBrand($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereCardType($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereCheckoutId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereClientTxnId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereDeletedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereEntryMethod($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereLast4($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereMethod($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereNotes($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereOrderId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment wherePayableId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment wherePayableType($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment wherePrepaidType($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereProcessingFee($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptNumber($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptUrl($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereRecordedBy($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereServerTxnId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereSquareCashTransactionId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereStatementDescription($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereUniqueId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|Payment withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
+ * @method static \Database\Factories\PaymentFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Payment onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCardBrand($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCardType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCheckoutId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereClientTxnId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereEntryMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereLast4($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePayableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePayableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePrepaidType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereProcessingFee($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereRecordedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereServerTxnId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereSquareCashTransactionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereStatementDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUniqueId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Payment withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Payment extends Model

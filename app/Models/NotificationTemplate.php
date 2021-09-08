@@ -12,33 +12,33 @@ use Laravel\Nova\Actions\Actionable;
 /**
  * Represents a template for a notififaction that is stored in the database.
  *
- * @property      int $id
- * @property      string $name
- * @property      string $from
- * @property      string $subject
- * @property      string|null $body_markdown
- * @property      int $created_by
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $id
+ * @property string $name
+ * @property string $from
+ * @property string $subject
+ * @property string|null $body_markdown
+ * @property int $created_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read \App\Models\User $creator
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newQuery()
- * @method        static \Illuminate\Database\Query\Builder|NotificationTemplate onlyTrashed()
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate query()
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereBodyMarkdown($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereCreatedBy($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereDeletedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereFrom($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereName($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereSubject($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|NotificationTemplate withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|NotificationTemplate withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newQuery()
+ * @method static \Illuminate\Database\Query\Builder|NotificationTemplate onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate query()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereBodyMarkdown($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereFrom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereSubject($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|NotificationTemplate withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|NotificationTemplate withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class NotificationTemplate extends Model

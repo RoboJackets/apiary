@@ -17,17 +17,17 @@ use Laravel\Scout\Searchable;
 /**
  * Represents a one-off gathering where an RSVP may be requested or attendance may be taken.
  *
- * @property      int $id
- * @property      string $name
- * @property      float $cost
- * @property      bool $allow_anonymous_rsvp
- * @property      int $organizer_id user_id of the organizer
- * @property      string|null $location
- * @property      \Illuminate\Support\Carbon|null $start_time
- * @property      \Illuminate\Support\Carbon|null $end_time
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $id
+ * @property string $name
+ * @property float $cost
+ * @property bool $allow_anonymous_rsvp
+ * @property int $organizer_id user_id of the organizer
+ * @property string|null $location
+ * @property \Illuminate\Support\Carbon|null $start_time
+ * @property \Illuminate\Support\Carbon|null $end_time
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
@@ -36,23 +36,23 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $remote_attendance_links_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
  * @property-read int|null $rsvps_count
- * @method        static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|Event newQuery()
- * @method        static \Illuminate\Database\Query\Builder|Event onlyTrashed()
- * @method        static \Illuminate\Database\Eloquent\Builder|Event query()
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereAllowAnonymousRsvp($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereCost($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereDeletedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereEndTime($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereLocation($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereName($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereOrganizerId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereStartTime($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|Event withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Event withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Event onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Event query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereAllowAnonymousRsvp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereEndTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereOrganizerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereStartTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Event withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Event withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Event extends Model

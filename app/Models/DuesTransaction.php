@@ -18,12 +18,12 @@ use Laravel\Scout\Searchable;
 /**
  * Represents a completed or in progress dues payment.
  *
- * @property      int $id
- * @property      int $dues_package_id
- * @property      int $user_id
- * @property      \Illuminate\Support\Carbon $created_at
- * @property      \Illuminate\Support\Carbon $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $id
+ * @property int $dues_package_id
+ * @property int $user_id
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\DuesPackage $for
  * @property-read bool $is_paid
  * @property-read string $status
@@ -33,24 +33,24 @@ use Laravel\Scout\Searchable;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
  * @property-read \App\Models\User $user
- * @method        static Builder|DuesTransaction accessCurrent()
- * @method        static Builder|DuesTransaction current()
- * @method        static \Database\Factories\DuesTransactionFactory factory(...$parameters)
- * @method        static Builder|DuesTransaction newModelQuery()
- * @method        static Builder|DuesTransaction newQuery()
- * @method        static \Illuminate\Database\Query\Builder|DuesTransaction onlyTrashed()
- * @method        static Builder|DuesTransaction paid()
- * @method        static Builder|DuesTransaction pending()
- * @method        static Builder|DuesTransaction query()
- * @method        static Builder|DuesTransaction unpaid()
- * @method        static Builder|DuesTransaction whereCreatedAt($value)
- * @method        static Builder|DuesTransaction whereDeletedAt($value)
- * @method        static Builder|DuesTransaction whereDuesPackageId($value)
- * @method        static Builder|DuesTransaction whereId($value)
- * @method        static Builder|DuesTransaction whereUpdatedAt($value)
- * @method        static Builder|DuesTransaction whereUserId($value)
- * @method        static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
+ * @method static Builder|DuesTransaction accessCurrent()
+ * @method static Builder|DuesTransaction current()
+ * @method static \Database\Factories\DuesTransactionFactory factory(...$parameters)
+ * @method static Builder|DuesTransaction newModelQuery()
+ * @method static Builder|DuesTransaction newQuery()
+ * @method static \Illuminate\Database\Query\Builder|DuesTransaction onlyTrashed()
+ * @method static Builder|DuesTransaction paid()
+ * @method static Builder|DuesTransaction pending()
+ * @method static Builder|DuesTransaction query()
+ * @method static Builder|DuesTransaction unpaid()
+ * @method static Builder|DuesTransaction whereCreatedAt($value)
+ * @method static Builder|DuesTransaction whereDeletedAt($value)
+ * @method static Builder|DuesTransaction whereDuesPackageId($value)
+ * @method static Builder|DuesTransaction whereId($value)
+ * @method static Builder|DuesTransaction whereUpdatedAt($value)
+ * @method static Builder|DuesTransaction whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesTransaction extends Model

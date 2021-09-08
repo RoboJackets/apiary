@@ -12,29 +12,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Represents one option of merch/swag related to a fiscal year and its dues packages.
  *
- * @property      int $id
- * @property      string $name
- * @property      int $fiscal_year_id
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $id
+ * @property string $name
+ * @property int $fiscal_year_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\FiscalYear $fiscalYear
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
  * @property-read int|null $packages_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
- * @method        static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise query()
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereDeletedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereFiscalYearId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereName($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|Merchandise withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Merchandise withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereFiscalYearId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Merchandise withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Merchandise withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Merchandise extends Model

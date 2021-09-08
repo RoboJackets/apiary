@@ -17,35 +17,35 @@ use Laravel\Scout\Searchable;
 /**
  * Represents a single attendance entry.
  *
- * @method        static \Illuminate\Database\Query\Builder|Attendance onlyTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Attendance withoutTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Attendance withTrashed()
- * @method        static Builder|Attendance end($date)
- * @method        static Builder|Attendance newModelQuery()
- * @method        \Illuminate\Database\Eloquent\Builder newQuery()
- * @method        static Builder|Attendance query()
- * @method        static Builder|Attendance start($date)
- * @method        static Builder|Attendance whereAttendableId($value)
- * @method        static Builder|Attendance whereAttendableType($value)
- * @method        static Builder|Attendance whereCreatedAt($value)
- * @method        static Builder|Attendance whereDeletedAt($value)
- * @method        static Builder|Attendance whereGtid($value)
- * @method        static Builder|Attendance whereId($value)
- * @method        static Builder|Attendance whereRecordedBy($value)
- * @method        static Builder|Attendance whereSource($value)
- * @method        static Builder|Attendance whereUpdatedAt($value)
- * @method        static Builder|Attendance whereRemoteAttendanceLinkId($value)
+ * @method static \Illuminate\Database\Query\Builder|Attendance onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Attendance withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Attendance withTrashed()
+ * @method static Builder|Attendance end($date)
+ * @method static Builder|Attendance newModelQuery()
+ * @method \Illuminate\Database\Eloquent\Builder newQuery()
+ * @method static Builder|Attendance query()
+ * @method static Builder|Attendance start($date)
+ * @method static Builder|Attendance whereAttendableId($value)
+ * @method static Builder|Attendance whereAttendableType($value)
+ * @method static Builder|Attendance whereCreatedAt($value)
+ * @method static Builder|Attendance whereDeletedAt($value)
+ * @method static Builder|Attendance whereGtid($value)
+ * @method static Builder|Attendance whereId($value)
+ * @method static Builder|Attendance whereRecordedBy($value)
+ * @method static Builder|Attendance whereSource($value)
+ * @method static Builder|Attendance whereUpdatedAt($value)
+ * @method static Builder|Attendance whereRemoteAttendanceLinkId($value)
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
- * @property      \Carbon\Carbon $created_at when the model was created
- * @property      \Carbon\Carbon $updated_at when the model was updated
- * @property      \Illuminate\Support\Carbon|null $deleted_at
- * @property      int $attendable_id
- * @property      int $gtid the GTID associated with this entry
- * @property      int $id The database identifier for this entry
- * @property      int|null $recorded_by
- * @property      string $attendable_type
- * @property      string|null $source
- * @property      int|null $remote_attendance_link_id
+ * @property \Carbon\Carbon $created_at when the model was created
+ * @property \Carbon\Carbon $updated_at when the model was updated
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $attendable_id
+ * @property int $gtid the GTID associated with this entry
+ * @property int $id The database identifier for this entry
+ * @property int|null $recorded_by
+ * @property string $attendable_type
+ * @property string|null $source
+ * @property int|null $remote_attendance_link_id
  * @property-read \App\Models\Team|\App\Models\Event $attendable
  * @property-read ?\App\Models\User $attendee
  * @property-read \App\Models\User $recorded
@@ -161,7 +161,7 @@ class Attendance extends Model
     /**
      * Transform an array of Attendance objects into a CSV file.
      *
-     * @param iterable<\App\Models\Attendance> $attendance
+     * @param  iterable<\App\Models\Attendance>  $attendance
      */
     public static function formatAsCsv(iterable $attendance): string
     {

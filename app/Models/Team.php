@@ -24,23 +24,23 @@ use Laravel\Scout\Searchable;
 /**
  * Represents a group of Users.
  *
- * @property      int $id
- * @property      string $name
- * @property      bool $self_serviceable
- * @property      bool $visible
- * @property      int $visible_on_kiosk
- * @property      bool $attendable
- * @property      string|null $slug
- * @property      string|null $description
- * @property      string|null $mailing_list_name
- * @property      string|null $slack_channel_id
- * @property      string|null $slack_channel_name
- * @property      string|null $slack_private_channel_id
- * @property      string|null $google_group
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
- * @property      int|null $project_manager_id user_id of the project manager
+ * @property int $id
+ * @property string $name
+ * @property bool $self_serviceable
+ * @property bool $visible
+ * @property int $visible_on_kiosk
+ * @property bool $attendable
+ * @property string|null $slug
+ * @property string|null $description
+ * @property string|null $mailing_list_name
+ * @property string|null $slack_channel_id
+ * @property string|null $slack_channel_name
+ * @property string|null $slack_private_channel_id
+ * @property string|null $google_group
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $project_manager_id user_id of the project manager
  * @property \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
  * @property-read \App\Models\User|null $projectManager
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
@@ -52,32 +52,32 @@ use Laravel\Scout\Searchable;
  * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read int|null $remote_attendance_links_count
- * @method        static Builder|Team attendable()
- * @method        static Builder|Team newModelQuery()
- * @method        static Builder|Team newQuery()
- * @method        static \Illuminate\Database\Query\Builder|Team onlyTrashed()
- * @method        static Builder|Team query()
- * @method        static Builder|Team selfServiceable()
- * @method        static Builder|Team visible()
- * @method        static Builder|Team whereAttendable($value)
- * @method        static Builder|Team whereCreatedAt($value)
- * @method        static Builder|Team whereDeletedAt($value)
- * @method        static Builder|Team whereDescription($value)
- * @method        static Builder|Team whereGoogleGroup($value)
- * @method        static Builder|Team whereId($value)
- * @method        static Builder|Team whereMailingListName($value)
- * @method        static Builder|Team whereName($value)
- * @method        static Builder|Team whereProjectManagerId($value)
- * @method        static Builder|Team whereSelfServiceable($value)
- * @method        static Builder|Team whereSlackChannelId($value)
- * @method        static Builder|Team whereSlackChannelName($value)
- * @method        static Builder|Team whereSlackPrivateChannelId($value)
- * @method        static Builder|Team whereSlug($value)
- * @method        static Builder|Team whereUpdatedAt($value)
- * @method        static Builder|Team whereVisible($value)
- * @method        static Builder|Team whereVisibleOnKiosk($value)
- * @method        static \Illuminate\Database\Query\Builder|Team withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Team withoutTrashed()
+ * @method static Builder|Team attendable()
+ * @method static Builder|Team newModelQuery()
+ * @method static Builder|Team newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Team onlyTrashed()
+ * @method static Builder|Team query()
+ * @method static Builder|Team selfServiceable()
+ * @method static Builder|Team visible()
+ * @method static Builder|Team whereAttendable($value)
+ * @method static Builder|Team whereCreatedAt($value)
+ * @method static Builder|Team whereDeletedAt($value)
+ * @method static Builder|Team whereDescription($value)
+ * @method static Builder|Team whereGoogleGroup($value)
+ * @method static Builder|Team whereId($value)
+ * @method static Builder|Team whereMailingListName($value)
+ * @method static Builder|Team whereName($value)
+ * @method static Builder|Team whereProjectManagerId($value)
+ * @method static Builder|Team whereSelfServiceable($value)
+ * @method static Builder|Team whereSlackChannelId($value)
+ * @method static Builder|Team whereSlackChannelName($value)
+ * @method static Builder|Team whereSlackPrivateChannelId($value)
+ * @method static Builder|Team whereSlug($value)
+ * @method static Builder|Team whereUpdatedAt($value)
+ * @method static Builder|Team whereVisible($value)
+ * @method static Builder|Team whereVisibleOnKiosk($value)
+ * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Team extends Model

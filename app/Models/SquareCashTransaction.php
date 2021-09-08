@@ -18,17 +18,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name_of_sender
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction newModelQuery()
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction newQuery()
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction query()
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereAmount($value)
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereCreatedAt($value)
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereId($value)
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereNameOfSender($value)
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereNote($value)
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereTransactionId($value)
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereTransactionTimestamp($value)
- * @method   static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction query()
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereNameOfSender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereNote($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereTransactionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereTransactionTimestamp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SquareCashTransaction whereUpdatedAt($value)
  * @mixin    \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class SquareCashTransaction extends Model

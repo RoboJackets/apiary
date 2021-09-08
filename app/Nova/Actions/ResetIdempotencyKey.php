@@ -22,7 +22,7 @@ class ResetIdempotencyKey extends DestructiveAction
     /**
      * Perform the action on the given models.
      *
-     * @param \Illuminate\Support\Collection<\App\Models\Payment>  $models
+     * @param  \Illuminate\Support\Collection<\App\Models\Payment>  $models
      *
      * @return array<string,string>
      */

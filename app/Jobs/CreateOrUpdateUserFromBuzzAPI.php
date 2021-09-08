@@ -74,7 +74,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param string|int|\App\Models\User $value
+     * @param  string|int|\App\Models\User  $value
      */
     public function __construct(string $identifier, $value, string $reason)
     {

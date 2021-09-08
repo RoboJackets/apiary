@@ -134,7 +134,7 @@ class AttendanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id Resource ID
+     * @param  int  $id  Resource ID
      */
     public function destroy(Request $request, int $id): JsonResponse
     {
