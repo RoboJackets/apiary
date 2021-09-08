@@ -76,6 +76,11 @@ class Merchandise extends Model
             ->using(DuesTransactionMerchandise::class);
     }
 
+    public function jankForNova(): BelongsToMany
+    {
+        return $this->transactions()->as('jankForNova');
+    }
+
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
@@ -87,5 +92,30 @@ class Merchandise extends Model
             'packages' => 'dues-packages',
             'transactions' => 'dues-transactions',
         ];
+    }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function providedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'provided_by');
+    }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function getJankForNovaAttribute(): DuesTransactionMerchandise
+    {
+        $viaResource = request()->viaResource;
+        $viaResourceId = request()->viaResourceId;
+
+        if ('dues-transactions' === $viaResource && null !== $viaResourceId) {
+            return DuesTransactionMerchandise::where('dues_transaction_id', $viaResourceId)
+                ->where('merchandise_id', $this->id)
+                ->sole();
+        }
+
+        return new DuesTransactionMerchandise();
     }
 }

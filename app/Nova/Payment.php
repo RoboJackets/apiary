@@ -244,4 +244,12 @@ class Payment extends Resource
 
         return $user->can('delete-payments');
     }
+
+    /**
+     * Not really useful on detail pages.
+     */
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }

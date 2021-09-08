@@ -122,6 +122,7 @@ class DuesTransaction extends Model
     public $filterable_attributes = [
         'dues_package_id',
         'user_id',
+        'merchandise_id',
     ];
 
     /**
@@ -162,6 +163,11 @@ class DuesTransaction extends Model
             ->withPivot(['provided_at', 'provided_by'])
             ->withTimestamps()
             ->using(DuesTransactionMerchandise::class);
+    }
+
+    public function jankForNova(): BelongsToMany
+    {
+        return $this->merchandise()->as('jankForNova');
     }
 
     /**
@@ -308,6 +314,33 @@ class DuesTransaction extends Model
 
         $array['updated_at_unix'] = $this->updated_at->getTimestamp();
 
+        $array['merchandise_id'] = $this->merchandise->modelKeys();
+
         return $array;
+    }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function providedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'provided_by');
+    }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function getJankForNovaAttribute(): DuesTransactionMerchandise
+    {
+        $viaResource = request()->viaResource;
+        $viaResourceId = request()->viaResourceId;
+
+        if ('merchandise' === $viaResource && null !== $viaResourceId) {
+            return DuesTransactionMerchandise::where('dues_transaction_id', $this->id)
+                ->where('merchandise_id', $viaResourceId)
+                ->sole();
+        }
+
+        return new DuesTransactionMerchandise();
     }
 }
