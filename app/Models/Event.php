@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
 
 /**
  * Represents a one-off gathering where an RSVP may be requested or attendance may be taken.
@@ -59,7 +58,6 @@ class Event extends Model
 {
     use GetMorphClassStatic;
     use SoftDeletes;
-    use Searchable;
 
     /**
      * The attributes that are not mass assignable.

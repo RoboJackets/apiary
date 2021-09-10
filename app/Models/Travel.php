@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
 
 /**
  * Represents a single trip.
@@ -57,7 +56,6 @@ use Laravel\Scout\Searchable;
 class Travel extends Model
 {
     use SoftDeletes;
-    use Searchable;
 
     /**
      * The attributes that are not mass assignable.

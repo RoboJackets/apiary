@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Laravel\Scout\Searchable;
 
 /**
  * Represents a single attendance entry.
@@ -54,7 +53,6 @@ use Laravel\Scout\Searchable;
 class Attendance extends Model
 {
     use SoftDeletes;
-    use Searchable;
 
     /**
      * The name of the database table for this model.
