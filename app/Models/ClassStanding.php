@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $rank_order
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read int|null $members_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding query()

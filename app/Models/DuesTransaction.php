@@ -32,6 +32,7 @@ use Illuminate\Database\Query\JoinClause;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
  * @property-read \App\Models\User $user
+ *
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction current()
  * @method static \Database\Factories\DuesTransactionFactory factory(...$parameters)

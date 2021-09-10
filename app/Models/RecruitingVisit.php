@@ -30,6 +30,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingResponse> $recruitingResponses
  * @property-read int|null $recruiting_responses_count
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Database\Factories\RecruitingVisitFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit newQuery()
@@ -74,7 +75,6 @@ class RecruitingVisit extends Model
      * Save the model to the database.
      *
      * @param  array  $options
-     *
      * @return bool Whether the save succeeded
      */
     public function save(array $options = []): bool

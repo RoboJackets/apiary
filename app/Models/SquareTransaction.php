@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $customer_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SquareTransaction query()

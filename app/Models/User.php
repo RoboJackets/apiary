@@ -111,6 +111,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
+ *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
  * @method static Builder|User active()
@@ -367,7 +368,6 @@ class User extends Authenticatable
      * Check membership status for a given team.
      *
      * @param  \App\Models\Team  $team  Team ID
-     *
      * @return bool Whether or not user is a member of the given team
      */
     public function memberOfTeam(Team $team): bool

@@ -22,7 +22,6 @@ use Illuminate\Database\Query\JoinClause;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- *
  * @property-read bool $is_paid
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
