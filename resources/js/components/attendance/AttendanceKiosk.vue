@@ -199,9 +199,9 @@
                         checkbox.addEventListener("change", checkboxEventListener.bind(this));
 
                         // Add animated contactless card symbol
-                        let cardImg = document.createElement('img');
+                        const cardImg = document.createElement('img');
                         cardImg.src = '/img/Universal_Contactless_Card_Symbol.svg';
-                        let cardDiv = document.createElement('div');
+                        const cardDiv = document.createElement('div');
                         cardDiv.className = 'animated-contactless-card';
                         cardDiv.appendChild(cardImg);
                         Swal.getTitle().parentNode.insertBefore(cardDiv, Swal.getTitle());
@@ -309,7 +309,6 @@
                                 return false;
                             } else if (response.data.users.length == 1 && response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
-                                console.log('User is an admin!');
                                 let self = this;
                                 new Audio(this.sounds.notice).play()
                                 Swal.fire({
