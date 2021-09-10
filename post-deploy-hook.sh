@@ -30,7 +30,7 @@ fi
 
 php artisan up
 php artisan horizon:terminate
-php artisan meilisearch:update-index-settings --only-return-id
+#php artisan meilisearch:update-index-settings --only-return-id
 
 ./resume-monitoring.sh
 
