@@ -12,29 +12,30 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Represents one option of merch/swag related to a fiscal year and its dues packages.
  *
- * @property      int $id
- * @property      string $name
- * @property      int $fiscal_year_id
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $id
+ * @property string $name
+ * @property int $fiscal_year_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\FiscalYear $fiscalYear
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
  * @property-read int|null $packages_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
- * @method        static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise query()
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereDeletedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereFiscalYearId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereName($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|Merchandise whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|Merchandise withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|Merchandise withoutTrashed()
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereFiscalYearId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Merchandise withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Merchandise withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Merchandise extends Model
@@ -76,6 +77,11 @@ class Merchandise extends Model
             ->using(DuesTransactionMerchandise::class);
     }
 
+    public function jankForNova(): BelongsToMany
+    {
+        return $this->transactions()->as('jankForNova');
+    }
+
     /**
      * Map of relationships to permissions for dynamic inclusion.
      *
@@ -87,5 +93,30 @@ class Merchandise extends Model
             'packages' => 'dues-packages',
             'transactions' => 'dues-transactions',
         ];
+    }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function providedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'provided_by');
+    }
+
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     */
+    public function getJankForNovaAttribute(): DuesTransactionMerchandise
+    {
+        $viaResource = request()->viaResource;
+        $viaResourceId = request()->viaResourceId;
+
+        if ('dues-transactions' === $viaResource && null !== $viaResourceId) {
+            return DuesTransactionMerchandise::where('dues_transaction_id', $viaResourceId)
+                ->where('merchandise_id', $this->id)
+                ->sole();
+        }
+
+        return new DuesTransactionMerchandise();
     }
 }

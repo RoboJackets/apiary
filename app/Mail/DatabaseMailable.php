@@ -40,8 +40,8 @@ class DatabaseMailable extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param int $template_id the ID of the template to use
-     * @param array<string,string> $metadata any metadata to pass to the template
+     * @param  int  $template_id  the ID of the template to use
+     * @param  array<string,string>  $metadata  any metadata to pass to the template
      */
     public function __construct(int $template_id, array $metadata)
     {

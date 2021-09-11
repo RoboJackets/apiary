@@ -14,37 +14,38 @@ use Illuminate\Notifications\Notifiable;
 /**
  * Represents a non-member who will receive an email invitation for General Interest.
  *
- * @property      int $id
- * @property      string $email_address
- * @property      string $source
- * @property      int $recruiting_campaign_id
- * @property      int|null $recruiting_visit_id
- * @property      int|null $user_id
- * @property      string|null $notified_at
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $id
+ * @property string $email_address
+ * @property string $source
+ * @property int $recruiting_campaign_id
+ * @property int|null $recruiting_visit_id
+ * @property int|null $user_id
+ * @property string|null $notified_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \App\Models\RecruitingCampaign $recruitingCampaign
  * @property-read \App\Models\RecruitingVisit|null $recruitingVisit
  * @property-read \App\Models\User|null $user
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newQuery()
- * @method        static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient onlyTrashed()
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient query()
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereDeletedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereEmailAddress($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereNotifiedAt($value)
- * @method    static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingCampaignId($value)
- * @method       static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingVisitId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereSource($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUserId($value)
- * @method        static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withoutTrashed()
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newQuery()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereEmailAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereNotifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingCampaignId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereRecruitingVisitId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingCampaignRecipient extends Model

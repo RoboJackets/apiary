@@ -11,23 +11,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Represents a response to a recruiting survey.
  *
- * @property      string|null $response
- * @property      int $recruiting_visit_id
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $response
+ * @property int $recruiting_visit_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\RecruitingVisit $recruitingVisit
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newQuery()
- * @method        static \Illuminate\Database\Query\Builder|RecruitingResponse onlyTrashed()
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse query()
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereDeletedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereRecruitingVisitId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereResponse($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|RecruitingResponse withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|RecruitingResponse withoutTrashed()
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newQuery()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingResponse onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereRecruitingVisitId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereResponse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|RecruitingResponse withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|RecruitingResponse withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingResponse extends Model

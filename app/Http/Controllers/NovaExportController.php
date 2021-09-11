@@ -11,7 +11,7 @@ class NovaExportController extends Controller
     /**
      * Trigger a download of the specified file.
      *
-     * @param string $file
+     * @param  string  $file
      */
     public function export(string $file)
     {

@@ -12,7 +12,5 @@ class PaymentObserver
     public function saved(Payment $payment): void
     {
         PushToJedi::dispatch($payment->payable->user, Payment::class, $payment->id, 'saved');
-
-        $payment->payable->user->searchable();
     }
 }

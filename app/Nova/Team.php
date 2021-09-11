@@ -254,7 +254,7 @@ class Team extends Resource
     /**
      * Build an "index" query for the team resource to hide hidden teams.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public static function indexQuery(NovaRequest $request, $query): Builder
     {
@@ -266,7 +266,7 @@ class Team extends Resource
      *
      * This query determines which instances of the model may be attached to other resources.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {

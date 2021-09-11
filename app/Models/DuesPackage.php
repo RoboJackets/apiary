@@ -18,20 +18,20 @@ use Laravel\Nova\Actions\Actionable;
 /**
  * Represents a possible dues payment and what privileges are associated with it.
  *
- * @property      int $id
- * @property      string $name
- * @property      \Illuminate\Support\Carbon $effective_start
- * @property      \Illuminate\Support\Carbon $effective_end
- * @property      \Illuminate\Support\Carbon|null $access_start
- * @property      \Illuminate\Support\Carbon|null $access_end
- * @property      float $cost
- * @property      bool $available_for_purchase
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
- * @property      \Illuminate\Support\Carbon|null $deleted_at
- * @property      int|null $fiscal_year_id
- * @property      int|null $conflicts_with_package_id
- * @property      bool|null $restricted_to_students
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon $effective_start
+ * @property \Illuminate\Support\Carbon $effective_end
+ * @property \Illuminate\Support\Carbon|null $access_start
+ * @property \Illuminate\Support\Carbon|null $access_end
+ * @property float $cost
+ * @property bool $available_for_purchase
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $fiscal_year_id
+ * @property int|null $conflicts_with_package_id
+ * @property bool|null $restricted_to_students
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read DuesPackage|null $conflictsWith
@@ -46,31 +46,32 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read int|null $merchandise_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
- * @method        static Builder|DuesPackage accessActive()
- * @method        static Builder|DuesPackage active()
- * @method        static Builder|DuesPackage availableForPurchase()
- * @method        static \Database\Factories\DuesPackageFactory factory(...$parameters)
- * @method        static Builder|DuesPackage newModelQuery()
- * @method        static Builder|DuesPackage newQuery()
- * @method        static \Illuminate\Database\Query\Builder|DuesPackage onlyTrashed()
- * @method        static Builder|DuesPackage query()
- * @method        static Builder|DuesPackage userCanPurchase(\App\Models\User $user)
- * @method        static Builder|DuesPackage whereAccessEnd($value)
- * @method        static Builder|DuesPackage whereAccessStart($value)
- * @method        static Builder|DuesPackage whereAvailableForPurchase($value)
- * @method        static Builder|DuesPackage whereConflictsWithPackageId($value)
- * @method        static Builder|DuesPackage whereCost($value)
- * @method        static Builder|DuesPackage whereCreatedAt($value)
- * @method        static Builder|DuesPackage whereDeletedAt($value)
- * @method        static Builder|DuesPackage whereEffectiveEnd($value)
- * @method        static Builder|DuesPackage whereEffectiveStart($value)
- * @method        static Builder|DuesPackage whereFiscalYearId($value)
- * @method        static Builder|DuesPackage whereId($value)
- * @method        static Builder|DuesPackage whereName($value)
- * @method        static Builder|DuesPackage whereRestrictedToStudents($value)
- * @method        static Builder|DuesPackage whereUpdatedAt($value)
- * @method        static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
- * @method        static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
+ *
+ * @method static Builder|DuesPackage accessActive()
+ * @method static Builder|DuesPackage active()
+ * @method static Builder|DuesPackage availableForPurchase()
+ * @method static \Database\Factories\DuesPackageFactory factory(...$parameters)
+ * @method static Builder|DuesPackage newModelQuery()
+ * @method static Builder|DuesPackage newQuery()
+ * @method static \Illuminate\Database\Query\Builder|DuesPackage onlyTrashed()
+ * @method static Builder|DuesPackage query()
+ * @method static Builder|DuesPackage userCanPurchase(\App\Models\User $user)
+ * @method static Builder|DuesPackage whereAccessEnd($value)
+ * @method static Builder|DuesPackage whereAccessStart($value)
+ * @method static Builder|DuesPackage whereAvailableForPurchase($value)
+ * @method static Builder|DuesPackage whereConflictsWithPackageId($value)
+ * @method static Builder|DuesPackage whereCost($value)
+ * @method static Builder|DuesPackage whereCreatedAt($value)
+ * @method static Builder|DuesPackage whereDeletedAt($value)
+ * @method static Builder|DuesPackage whereEffectiveEnd($value)
+ * @method static Builder|DuesPackage whereEffectiveStart($value)
+ * @method static Builder|DuesPackage whereFiscalYearId($value)
+ * @method static Builder|DuesPackage whereId($value)
+ * @method static Builder|DuesPackage whereName($value)
+ * @method static Builder|DuesPackage whereRestrictedToStudents($value)
+ * @method static Builder|DuesPackage whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesPackage extends Model

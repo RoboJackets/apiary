@@ -10,25 +10,26 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 /**
  * App\Models\DuesTransactionMerchandise.
  *
- * @property      int $id
- * @property      int $dues_transaction_id
- * @property      int $merchandise_id
- * @property      \Illuminate\Support\Carbon|null $provided_at
- * @property      int|null $provided_by
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
+ * @property int $id
+ * @property int $dues_transaction_id
+ * @property int $merchandise_id
+ * @property \Illuminate\Support\Carbon|null $provided_at
+ * @property int|null $provided_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string|null $provided_by_name
  * @property-read \App\Models\User|null $providedBy
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise query()
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereDuesTransactionId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereMerchandiseId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedBy($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereUpdatedAt($value)
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereDuesTransactionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereMerchandiseId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereUpdatedAt($value)
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesTransactionMerchandise extends Pivot
@@ -52,13 +53,5 @@ class DuesTransactionMerchandise extends Pivot
     public function providedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'provided_by');
-    }
-
-    /**
-     * Returns the name field of the User in providedBy. This exists because Nova was not cooperating.
-     */
-    public function getProvidedByNameAttribute(): ?string
-    {
-        return optional($this->providedBy)->name;
     }
 }

@@ -19,9 +19,8 @@ class DuesTransactionPaymentStatus extends BooleanFilter
     /**
      * Apply the filter to the given query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array<string,bool>  $value
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  array<string,bool>  $value
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function apply(Request $request, $query, $value)

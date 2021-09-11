@@ -21,7 +21,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
-use Laravel\Scout\Searchable;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
@@ -29,47 +28,47 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Represents a user, possibly a member and possibly not.
  *
- * @property      int $id
- * @property      string $uid
- * @property      int $gtid
- * @property      string|null $slack_id
- * @property      string|null $github_username
- * @property      string|null $gmail_address
- * @property      string|null $clickup_email
- * @property      int|null $clickup_id
- * @property      bool $clickup_invite_pending
- * @property      string|null $autodesk_email
- * @property      bool $autodesk_invite_pending
- * @property      string $gt_email
- * @property      string|null $personal_email
- * @property      string $first_name
- * @property      string|null $middle_name
- * @property      string $last_name
- * @property      string|null $preferred_name
- * @property      string|null $phone
- * @property      string|null $emergency_contact_name
- * @property      string|null $emergency_contact_phone
- * @property      string|null $join_semester
- * @property      string|null $graduation_semester
- * @property      string|null $shirt_size
- * @property      string|null $polo_size
- * @property      string|null $gender
- * @property      string|null $ethnicity
- * @property      Carbon|null $deleted_at
- * @property      Carbon|null $created_at
- * @property      Carbon|null $updated_at
- * @property      Carbon|null $access_override_until
- * @property      int|null $access_override_by_id user_id of the user who entered access override
- * @property      Carbon|null $resume_date
- * @property      bool $github_invite_pending
- * @property      bool $exists_in_sums
- * @property      string $create_reason
- * @property      bool $has_ever_logged_in
- * @property      bool $is_service_account
- * @property      string|null $primary_affiliation
- * @property      string|null $gtDirGUID
- * @property      bool $buzzcard_access_opt_out
- * @property      string|null $preferred_first_name
+ * @property int $id
+ * @property string $uid
+ * @property int $gtid
+ * @property string|null $slack_id
+ * @property string|null $github_username
+ * @property string|null $gmail_address
+ * @property string|null $clickup_email
+ * @property int|null $clickup_id
+ * @property bool $clickup_invite_pending
+ * @property string|null $autodesk_email
+ * @property bool $autodesk_invite_pending
+ * @property string $gt_email
+ * @property string|null $personal_email
+ * @property string $first_name
+ * @property string|null $middle_name
+ * @property string $last_name
+ * @property string|null $preferred_name
+ * @property string|null $phone
+ * @property string|null $emergency_contact_name
+ * @property string|null $emergency_contact_phone
+ * @property string|null $join_semester
+ * @property string|null $graduation_semester
+ * @property string|null $shirt_size
+ * @property string|null $polo_size
+ * @property string|null $gender
+ * @property string|null $ethnicity
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $access_override_until
+ * @property int|null $access_override_by_id user_id of the user who entered access override
+ * @property Carbon|null $resume_date
+ * @property bool $github_invite_pending
+ * @property bool $exists_in_sums
+ * @property string $create_reason
+ * @property bool $has_ever_logged_in
+ * @property bool $is_service_account
+ * @property string|null $primary_affiliation
+ * @property string|null $gtDirGUID
+ * @property bool $buzzcard_access_opt_out
+ * @property string|null $preferred_first_name
  * @property-read User|null $accessOverrideBy
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
@@ -112,63 +111,64 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
- * @method        static Builder|User accessActive()
- * @method        static Builder|User accessInactive()
- * @method        static Builder|User active()
- * @method        static Builder|User buzzCardAccessEligible()
- * @method        static \Database\Factories\UserFactory factory(...$parameters)
- * @method        static Builder|User findByIdentifier(string $id)
- * @method        static Builder|User hasOverride()
- * @method        static Builder|User inactive()
- * @method        static Builder|User newModelQuery()
- * @method        static Builder|User newQuery()
- * @method        static QueryBuilder|User onlyTrashed()
- * @method        static Builder|User permission($permissions)
- * @method        static Builder|User query()
- * @method        static Builder|User role($roles, $guard = null)
- * @method        static Builder|User whereAccessOverrideById($value)
- * @method        static Builder|User whereAccessOverrideUntil($value)
- * @method        static Builder|User whereApiToken($value)
- * @method        static Builder|User whereAutodeskEmail($value)
- * @method        static Builder|User whereAutodeskInvitePending($value)
- * @method        static Builder|User whereBuzzcardAccessOptOut($value)
- * @method        static Builder|User whereClickupEmail($value)
- * @method        static Builder|User whereClickupId($value)
- * @method        static Builder|User whereClickupInvitePending($value)
- * @method        static Builder|User whereCreateReason($value)
- * @method        static Builder|User whereCreatedAt($value)
- * @method        static Builder|User whereDeletedAt($value)
- * @method        static Builder|User whereEmergencyContactName($value)
- * @method        static Builder|User whereEmergencyContactPhone($value)
- * @method        static Builder|User whereEthnicity($value)
- * @method        static Builder|User whereExistsInSums($value)
- * @method        static Builder|User whereFirstName($value)
- * @method        static Builder|User whereGender($value)
- * @method        static Builder|User whereGithubInvitePending($value)
- * @method        static Builder|User whereGithubUsername($value)
- * @method        static Builder|User whereGmailAddress($value)
- * @method        static Builder|User whereGraduationSemester($value)
- * @method        static Builder|User whereGtDirGUID($value)
- * @method        static Builder|User whereGtEmail($value)
- * @method        static Builder|User whereGtid($value)
- * @method        static Builder|User whereHasEverLoggedIn($value)
- * @method        static Builder|User whereId($value)
- * @method        static Builder|User whereIsServiceAccount($value)
- * @method        static Builder|User whereJoinSemester($value)
- * @method        static Builder|User whereLastName($value)
- * @method        static Builder|User whereMiddleName($value)
- * @method        static Builder|User wherePersonalEmail($value)
- * @method        static Builder|User wherePhone($value)
- * @method        static Builder|User wherePoloSize($value)
- * @method        static Builder|User wherePreferredName($value)
- * @method        static Builder|User wherePrimaryAffiliation($value)
- * @method        static Builder|User whereResumeDate($value)
- * @method        static Builder|User whereShirtSize($value)
- * @method        static Builder|User whereSlackId($value)
- * @method        static Builder|User whereUid($value)
- * @method        static Builder|User whereUpdatedAt($value)
- * @method        static QueryBuilder|User withTrashed()
- * @method        static QueryBuilder|User withoutTrashed()
+ *
+ * @method static Builder|User accessActive()
+ * @method static Builder|User accessInactive()
+ * @method static Builder|User active()
+ * @method static Builder|User buzzCardAccessEligible()
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static Builder|User findByIdentifier(string $id)
+ * @method static Builder|User hasOverride()
+ * @method static Builder|User inactive()
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static QueryBuilder|User onlyTrashed()
+ * @method static Builder|User permission($permissions)
+ * @method static Builder|User query()
+ * @method static Builder|User role($roles, $guard = null)
+ * @method static Builder|User whereAccessOverrideById($value)
+ * @method static Builder|User whereAccessOverrideUntil($value)
+ * @method static Builder|User whereApiToken($value)
+ * @method static Builder|User whereAutodeskEmail($value)
+ * @method static Builder|User whereAutodeskInvitePending($value)
+ * @method static Builder|User whereBuzzcardAccessOptOut($value)
+ * @method static Builder|User whereClickupEmail($value)
+ * @method static Builder|User whereClickupId($value)
+ * @method static Builder|User whereClickupInvitePending($value)
+ * @method static Builder|User whereCreateReason($value)
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereDeletedAt($value)
+ * @method static Builder|User whereEmergencyContactName($value)
+ * @method static Builder|User whereEmergencyContactPhone($value)
+ * @method static Builder|User whereEthnicity($value)
+ * @method static Builder|User whereExistsInSums($value)
+ * @method static Builder|User whereFirstName($value)
+ * @method static Builder|User whereGender($value)
+ * @method static Builder|User whereGithubInvitePending($value)
+ * @method static Builder|User whereGithubUsername($value)
+ * @method static Builder|User whereGmailAddress($value)
+ * @method static Builder|User whereGraduationSemester($value)
+ * @method static Builder|User whereGtDirGUID($value)
+ * @method static Builder|User whereGtEmail($value)
+ * @method static Builder|User whereGtid($value)
+ * @method static Builder|User whereHasEverLoggedIn($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereIsServiceAccount($value)
+ * @method static Builder|User whereJoinSemester($value)
+ * @method static Builder|User whereLastName($value)
+ * @method static Builder|User whereMiddleName($value)
+ * @method static Builder|User wherePersonalEmail($value)
+ * @method static Builder|User wherePhone($value)
+ * @method static Builder|User wherePoloSize($value)
+ * @method static Builder|User wherePreferredName($value)
+ * @method static Builder|User wherePrimaryAffiliation($value)
+ * @method static Builder|User whereResumeDate($value)
+ * @method static Builder|User whereShirtSize($value)
+ * @method static Builder|User whereSlackId($value)
+ * @method static Builder|User whereUid($value)
+ * @method static Builder|User whereUpdatedAt($value)
+ * @method static QueryBuilder|User withTrashed()
+ * @method static QueryBuilder|User withoutTrashed()
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class User extends Authenticatable
@@ -182,7 +182,6 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
     use HasApiTokens;
-    use Searchable;
     use FirstNameSynonyms;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
@@ -314,6 +313,7 @@ class User extends Authenticatable
     public $do_not_filter_on = [
         'dues_package_id',
         'travel_id',
+        'merchandise_id',
     ];
 
     /**
@@ -367,8 +367,7 @@ class User extends Authenticatable
     /**
      * Check membership status for a given team.
      *
-     * @param \App\Models\Team $team Team ID
-     *
+     * @param  \App\Models\Team  $team  Team ID
      * @return bool Whether or not user is a member of the given team
      */
     public function memberOfTeam(Team $team): bool
@@ -663,7 +662,7 @@ class User extends Authenticatable
     /**
      * Synchronizes major relationship with a given list of gtAccountEntitlements.
      *
-     * @param array<string>  $accountEntitlements
+     * @param  array<string>  $accountEntitlements
      */
     public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
     {
@@ -705,7 +704,7 @@ class User extends Authenticatable
     /**
      * Synchronizes major relationship with a given list of gtAccountEntitlements.
      *
-     * @param array<string>  $accountEntitlements
+     * @param  array<string>  $accountEntitlements
      */
     public function syncClassStandingFromAccountEntitlements(array $accountEntitlements): int
     {

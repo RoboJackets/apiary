@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Get the testing user.
      *
-     * @param array<string> $roles
+     * @param  array<string>  $roles
      */
     protected function getTestUser(array $roles): User
     {
