@@ -47,6 +47,7 @@
     <rule ref="Generic.Commenting">
         <!-- StyleCI has its own opinions, not sure if I can build those in here -->
         <exclude name="Generic.Commenting.DocComment.TagValueIndent"/>
+        <exclude name="Generic.Commenting.DocComment.NonParamGroup"/>
     </rule>
 
     <rule ref="Generic.ControlStructures">

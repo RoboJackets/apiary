@@ -25,7 +25,5 @@ class AttendanceObserver
         }
 
         PushToJedi::dispatch($attendance->attendee, Attendance::class, $attendance->id, 'saved');
-
-        $attendance->attendee->searchable();
     }
 }

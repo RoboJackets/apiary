@@ -21,7 +21,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
-use Laravel\Scout\Searchable;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
@@ -112,6 +111,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
+ *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
  * @method static Builder|User active()
@@ -182,7 +182,6 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
     use HasApiTokens;
-    use Searchable;
     use FirstNameSynonyms;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
@@ -369,7 +368,6 @@ class User extends Authenticatable
      * Check membership status for a given team.
      *
      * @param  \App\Models\Team  $team  Team ID
-     *
      * @return bool Whether or not user is a member of the given team
      */
     public function memberOfTeam(Team $team): bool

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
-use Laravel\Scout\Searchable;
 
 /**
  * Represents a completed or in progress dues payment.
@@ -33,6 +32,7 @@ use Laravel\Scout\Searchable;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
  * @property-read \App\Models\User $user
+ *
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction current()
  * @method static \Database\Factories\DuesTransactionFactory factory(...$parameters)
@@ -58,7 +58,6 @@ class DuesTransaction extends Model
     use GetMorphClassStatic;
     use HasFactory;
     use SoftDeletes;
-    use Searchable;
 
     /**
      * The accessors to append to the model's array form.

@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Laravel\Scout\Searchable;
 
 /**
  * Represents a single attendance entry.
@@ -36,6 +35,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Attendance whereUpdatedAt($value)
  * @method static Builder|Attendance whereRemoteAttendanceLinkId($value)
  * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -54,7 +54,6 @@ use Laravel\Scout\Searchable;
 class Attendance extends Model
 {
     use SoftDeletes;
-    use Searchable;
 
     /**
      * The name of the database table for this model.

@@ -41,7 +41,6 @@ class DistributeMerchandise extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<\App\Models\Merchandise>  $models
-     *
      * @return array<string,string>
      */
     public function handle(ActionFields $fields, Collection $models): array

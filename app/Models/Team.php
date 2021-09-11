@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Laravel\Nova\Actions\Actionable;
-use Laravel\Scout\Searchable;
 
 /**
  * Represents a group of Users.
@@ -52,6 +51,7 @@ use Laravel\Scout\Searchable;
  * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read int|null $remote_attendance_links_count
+ *
  * @method static Builder|Team attendable()
  * @method static Builder|Team newModelQuery()
  * @method static Builder|Team newQuery()
@@ -89,7 +89,6 @@ class Team extends Model
     use HasRelationshipObservables;
     use Notifiable;
     use SoftDeletes;
-    use Searchable;
 
     /**
      * The attributes that are not mass assignable.

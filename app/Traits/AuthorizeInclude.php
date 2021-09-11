@@ -69,7 +69,6 @@ trait AuthorizeInclude
      * Ex. duesTransactions -> dues-transactions.
      *
      * @param  string  $string  string to convert
-     *
      * @return string result
      */
     private function camelToDashed(string $string): string

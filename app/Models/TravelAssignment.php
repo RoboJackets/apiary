@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
-use Laravel\Scout\Searchable;
 
 /**
  * Maps together a Travel + User + Payment.
@@ -23,7 +22,6 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- *
  * @property-read bool $is_paid
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
@@ -51,7 +49,6 @@ class TravelAssignment extends Model
 {
     use SoftDeletes;
     use GetMorphClassStatic;
-    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
