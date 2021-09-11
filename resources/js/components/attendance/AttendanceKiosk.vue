@@ -4,7 +4,7 @@
             <template v-for="team in teams">
                 <div :class="rowclass(team)" style="padding-top:50px">
                     <!-- Yes, this is _supposed_ to be a div. Don't make it a button. -->
-                    <div class="btn btn-kiosk btn-secondary" :id="team.id" v-on:click="clicked">
+                    <div class="btn btn-kiosk btn-primary" :id="team.id" v-on:click="clicked">
                         {{ team.name }}
                     </div>
                 </div>
@@ -156,13 +156,13 @@
                 document.activeElement.blur();
                 // When a team button is clicked, show a prompt to swipe BuzzCard
                 this.attendance.attendable_id = event.target.id;
-                Swal.fire(this.getTeamSwalConfig(event.target.innerText)).then(() => {
+                Swal.fire(this.getTeamSwalConfig(event.target.innerText, false)).then(() => {
                     // Clear fields in case of any modal dismissal
                     // This *does not* fire in normal card processing flow
                     this.clearFields();
                 })
             },
-            getTeamSwalConfig: function (teamName) {
+            getTeamSwalConfig: function (teamName, sticky) {
                 // This method pulls from state (attendance.attendable_id) when teamName is not passed (or undefined)
                 if (teamName === undefined) {
                     const targetTeams = this.teams.filter(team => team.id.toString() === this.attendance.attendable_id);
@@ -172,29 +172,42 @@
                 }
                 return {
                     title: 'Tap your BuzzCard now',
-                    html: '<p style="font-size: 1.25em">' + teamName + '</p>', // displays team name
+                    html: `<div>
+                            Recording attendance for<br/>
+                            <b style='font-size: 2em'>${teamName}</b><br/><br/>
+                            <span onClick="document.getElementById('stick-checkbox').click()">
+                            <em>Multiple people attending the same team?</em>
+                            </span>
+                            <div class="form-check">
+                              <input class="form-check-input stick-checkbox" type="checkbox" id="stick-checkbox">
+                              <label class="form-check-label" for="stick-checkbox">
+                                Stick to this team
+                              </label>
+                            </div>
+                            </div>`,
                     showCancelButton: true,
                     allowOutsideClick: () => !Swal.isLoading(),
                     backdrop: true,
                     showConfirmButton: false,
-                    input: 'checkbox',
-                    inputValue: this.stickToTeam,
-                    inputPlaceholder: 'Stick to this team',
+                    timer: (sticky) ? 600000 : 30000,
+                    timerProgressBar: true,
                     didOpen: () => {
                         // Remove focus from checkbox
                         document.activeElement.blur();
-                        document.getElementById('swal2-checkbox')
-                          .addEventListener("change", checkboxEventListener.bind(this));
+                        let checkbox = document.getElementById('stick-checkbox');
+                        checkbox.checked = this.stickToTeam;
+                        checkbox.addEventListener("change", checkboxEventListener.bind(this));
+
                         // Add animated contactless card symbol
-                        var cardImg = document.createElement('img');
+                        const cardImg = document.createElement('img');
                         cardImg.src = '/img/Universal_Contactless_Card_Symbol.svg';
-                        var cardDiv = document.createElement('div');
+                        const cardDiv = document.createElement('div');
                         cardDiv.className = 'animated-contactless-card';
                         cardDiv.appendChild(cardImg);
                         Swal.getTitle().parentNode.insertBefore(cardDiv, Swal.getTitle());
                     },
                     didDestroy: () => {
-                      let checkbox = document.getElementById('swal2-checkbox')
+                      let checkbox = document.getElementById('stick-checkbox')
                       if (checkbox) {
                         checkbox.removeEventListener("change", checkboxEventListener);
                       }
@@ -241,10 +254,11 @@
                     cardData = null;
                     Swal.fire({
                         title: 'Hmm...',
-                        text: 'There was an error reading your card. Please swipe again.',
-                        showCancelButton: true,
+                        text: 'There was an error reading your card. Please try again.',
                         showConfirmButton: false,
                         icon: 'warning',
+                        timer: 3000,
+                        timerProgressBar: true,
                         didDestroy: () => {
                             self.clearFields();
                         }
@@ -257,9 +271,10 @@
                     Swal.fire({
                         title: 'Hmm...',
                         html: 'Card format not recognized.<br/>Contact #it-helpdesk for assistance.',
-                        showConfirmButton: true,
+                        showConfirmButton: false,
                         icon: 'error',
                         timer: 3000,
+                        timerProgressBar: true,
                         didDestroy: () => {
                             self.clearFields();
                         }
@@ -294,7 +309,7 @@
                                 return false;
                             } else if (response.data.users.length == 1 && response.data.users[0].roles.filter(role => role.name.toString() === "admin").length === 1) {
                                 // Roles retrieved and the user is an admin
-                                console.log('User is an admin!');
+                                let self = this;
                                 new Audio(this.sounds.notice).play()
                                 Swal.fire({
                                     title: "Administrator Options",
@@ -302,6 +317,7 @@
                                     inputOptions: {
                                         'reload': 'Reload page',
                                         'exit': 'Exit kiosk mode',
+                                        'sounds': 'Test all sounds'
                                     },
                                     inputPlaceholder: 'Select an option',
                                     showCancelButton: true,
@@ -312,6 +328,20 @@
                                                 resolve()
                                             } else if (value === 'exit') {
                                                 window.location.href = 'http://exitkiosk';
+                                                resolve()
+                                            } else if (value === 'sounds') {
+                                                Object.entries(self.sounds).forEach((entry) => {
+                                                  const [key, value] = entry;
+                                                  if (typeof value == 'string') {
+                                                    new Audio(value).play()
+                                                  } else if (Array.isArray(value)) {
+                                                    value.forEach(arrayElement => {
+                                                      new Audio(arrayElement).play()
+                                                    })
+                                                  } else {
+                                                    console.log('Unknown sound type in object')
+                                                  }
+                                                })
                                                 resolve()
                                             } else {
                                                 resolve("That's not a valid option.")
@@ -325,10 +355,12 @@
                                 console.log('User is not an admin');
                                 new Audio(this.sounds.dohs[this.randomIntFromInterval(0, this.sounds.dohs.length - 1)]).play()
                                 Swal.fire({
-                                    title: 'Whoops!',
-                                    text: 'Please select a team before swiping or tapping your BuzzCard',
+                                    title: "D'oh!",
+                                    text: 'Please select a team before tapping your BuzzCard',
                                     icon: 'warning',
-                                    timer: 2000,
+                                    timer: 2500,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false
                                 });
                                 this.clearFields();
                                 return false;
@@ -343,9 +375,11 @@
                                 // User not known, but API call succeeded
                                 Swal.fire({
                                     title: 'Whoops!',
-                                    text: 'Please select a team before swiping or tapping your BuzzCard',
+                                    text: 'Please select a team before tapping your BuzzCard',
                                     icon: 'warning',
-                                    timer: 2000,
+                                    timer: 2500,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false
                                 });
                             } else {
                                 Swal.fire(
@@ -370,11 +404,12 @@
                                 title: "You're in!",
                                 text: 'Nice to see you, ' + attendeeName + '.',
                                 timer: 1000,
+                                timerProgressBar: true,
                                 showConfirmButton: false,
                                 icon: 'success',
                             }).then(() => {
                                 if (self.stickToTeam) {
-                                  Swal.fire(this.getTeamSwalConfig()).then(() => {
+                                  Swal.fire(this.getTeamSwalConfig(undefined, true)).then(() => {
                                     // Clear fields in case of any modal dismissal
                                     // This *does not* fire in normal card processing flow
                                     this.clearFields();
@@ -448,7 +483,8 @@
         width: 100%;
         padding: 0.5rem 1rem;
         line-height: 1.5;
-        border-radius: 0;
+        border-radius: 20px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         /* Vertically Center Text */
         display: flex;
         justify-content: center;
@@ -469,5 +505,19 @@
 
     .swal2-loading button {
         margin-bottom: 2em !important;
+    }
+
+    .swal2-cancel, .swal2-confirm {
+      width: 70%;
+    }
+
+    .stick-checkbox {
+      width: 25px;
+      height: 25px;
+      vertical-align: text-bottom;
+    }
+
+    .form-check-input {
+      position: relative !important;
     }
 </style>
