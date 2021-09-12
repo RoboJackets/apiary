@@ -19,7 +19,7 @@
         "arcanedev/laravel-markdown": "5.1.0",
         "barryvdh/laravel-dompdf": "0.9.0",
         "chelout/laravel-relationship-events": "1.4.0",
-        "doctrine/dbal": "2.13.2",
+        "doctrine/dbal": "2.13.3",
         "guzzlehttp/guzzle": "7.3.0",
         "http-interop/http-factory-guzzle": "1.2.0",
         "laravel/framework": "8.60.0",
