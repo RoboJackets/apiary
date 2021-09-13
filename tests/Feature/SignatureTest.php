@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Mail\MembershipAgreementSigned as Mailable;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
 use App\Notifications\MembershipAgreementSigned;
@@ -26,7 +25,7 @@ class SignatureTest extends TestCase
         $user = $this->getTestUser(['member']);
         $admin = $this->getTestUser(['admin'], 'admin3');
 
-        $signature = new Signature;
+        $signature = new Signature();
         $signature->electronic = false;
         $signature->user_id = $user->id;
         $signature->uploaded_by = $admin->id;
@@ -39,9 +38,10 @@ class SignatureTest extends TestCase
         // Force an update
         $signature->save();
 
-        Notification::assertSentTo([$user],
-            static function (MembershipAgreementSigned $notif, $channels) use ($user, $admin): bool {
-                $mailable =  $notif->toMail($user);
+        Notification::assertSentTo(
+            [$user],
+            static function (MembershipAgreementSigned $notif) use ($user, $admin): bool {
+                $mailable = $notif->toMail($user);
 
                 $mailable->assertSeeInText('signed membership agreement');
                 $mailable->assertSeeInText('was uploaded');
