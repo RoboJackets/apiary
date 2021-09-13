@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Blade;
@@ -39,6 +40,7 @@ use Throwable;
  */
 class MembershipAgreementTemplate extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     public function signatures(): HasMany
