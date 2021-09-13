@@ -45,6 +45,9 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
      */
     public function toMail(User $notifiable): Mailable
     {
+        // Force the relation to load, because it doesn't in the mail view for some reason.
+        $this->signature->load('uploadedBy');
+
         return (new Mailable($this->signature))
             ->to($notifiable->gt_email)
             ->cc(config('services.membership_agreement_archive_email'));
