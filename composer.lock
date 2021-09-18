@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfe1da7928d5f94f8e8d448b798f09b2",
+    "content-hash": "ad624d32c4f8f686652af38910f80934",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -5050,16 +5050,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.14.0",
+            "version": "1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "778f722e29250c1fac0bbdef2c122fa5d038c9eb"
+                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/778f722e29250c1fac0bbdef2c122fa5d038c9eb",
-                "reference": "778f722e29250c1fac0bbdef2c122fa5d038c9eb",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/de90ab2b41d7d61609f504e031339776bc8c7223",
+                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223",
                 "shasum": ""
             },
             "require": {
@@ -5112,9 +5112,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.14.0"
+                "source": "https://github.com/php-http/discovery/tree/1.14.1"
             },
-            "time": "2021-06-01T14:30:21+00:00"
+            "time": "2021-09-18T07:57:46+00:00"
         },
         {
             "name": "php-http/httplug",
@@ -7216,16 +7216,16 @@
         },
         {
             "name": "square/square",
-            "version": "14.0.0.20210915",
+            "version": "14.1.0.20210915",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "96b175f8bab9f1fa52c2faabe19863ab405746d6"
+                "reference": "1610dc1896575cbfc95ef8e5b4a8cb9a5ec0d6a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/96b175f8bab9f1fa52c2faabe19863ab405746d6",
-                "reference": "96b175f8bab9f1fa52c2faabe19863ab405746d6",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/1610dc1896575cbfc95ef8e5b4a8cb9a5ec0d6a0",
+                "reference": "1610dc1896575cbfc95ef8e5b4a8cb9a5ec0d6a0",
                 "shasum": ""
             },
             "require": {
@@ -7267,9 +7267,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/14.0.0.20210915"
+                "source": "https://github.com/square/square-php-sdk/tree/14.1.0.20210915"
             },
-            "time": "2021-09-15T20:01:56+00:00"
+            "time": "2021-09-16T18:33:30+00:00"
         },
         {
             "name": "subfission/cas",
@@ -9409,16 +9409,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.14.6",
+            "version": "v2.14.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "27e5cf2b05e3744accf39d4c68a3235d9966d260"
+                "reference": "8e202327ee1ed863629de9b18a5ec70ac614d88f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/27e5cf2b05e3744accf39d4c68a3235d9966d260",
-                "reference": "27e5cf2b05e3744accf39d4c68a3235d9966d260",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/8e202327ee1ed863629de9b18a5ec70ac614d88f",
+                "reference": "8e202327ee1ed863629de9b18a5ec70ac614d88f",
                 "shasum": ""
             },
             "require": {
@@ -9428,7 +9428,7 @@
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/phpunit-bridge": "^4.4.9|^5.0.9"
+                "symfony/phpunit-bridge": "^4.4.9|^5.0.9|^6.0"
             },
             "type": "library",
             "extra": {
@@ -9472,7 +9472,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v2.14.6"
+                "source": "https://github.com/twigphp/Twig/tree/v2.14.7"
             },
             "funding": [
                 {
@@ -9484,7 +9484,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-16T12:12:47+00:00"
+            "time": "2021-09-17T08:39:54+00:00"
         },
         {
             "name": "ukfast/laravel-health-check",
@@ -12068,22 +12068,22 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v6.21.0",
+            "version": "v6.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "9082c6e2b8abd5e8aacb7c2895f24c1b1b3f59f1"
+                "reference": "f61383c001a97f0a116b0c58f74385424aa9de33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/9082c6e2b8abd5e8aacb7c2895f24c1b1b3f59f1",
-                "reference": "9082c6e2b8abd5e8aacb7c2895f24c1b1b3f59f1",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/f61383c001a97f0a116b0c58f74385424aa9de33",
+                "reference": "f61383c001a97f0a116b0c58f74385424aa9de33",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^8.54",
                 "mockery/mockery": "^1.4.2",
-                "orchestra/testbench-core": "^6.25",
+                "orchestra/testbench-core": "^6.25.2",
                 "php": "^7.3 || ^8.0",
                 "phpunit/phpunit": "^8.4 || ^9.3.3",
                 "spatie/laravel-ray": "^1.18"
@@ -12117,7 +12117,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v6.21.0"
+                "source": "https://github.com/orchestral/testbench/tree/v6.21.1"
             },
             "funding": [
                 {
@@ -12129,20 +12129,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2021-09-08T08:33:50+00:00"
+            "time": "2021-09-18T09:37:03+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v6.25.1",
+            "version": "v6.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "99fb87c96cc7876176217470f81b447e4deb41e8"
+                "reference": "03d8cce6e500a9c64da4cbaa776236c91b2572a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/99fb87c96cc7876176217470f81b447e4deb41e8",
-                "reference": "99fb87c96cc7876176217470f81b447e4deb41e8",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/03d8cce6e500a9c64da4cbaa776236c91b2572a1",
+                "reference": "03d8cce6e500a9c64da4cbaa776236c91b2572a1",
                 "shasum": ""
             },
             "require": {
@@ -12219,7 +12219,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2021-09-10T17:36:06+00:00"
+            "time": "2021-09-18T01:47:58+00:00"
         },
         {
             "name": "phan/phan",
@@ -12520,16 +12520,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0"
+                "reference": "30f38bffc6f24293dadd1823936372dfa9e86e2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/30f38bffc6f24293dadd1823936372dfa9e86e2f",
+                "reference": "30f38bffc6f24293dadd1823936372dfa9e86e2f",
                 "shasum": ""
             },
             "require": {
@@ -12537,7 +12537,8 @@
                 "phpdocumentor/reflection-common": "^2.0"
             },
             "require-dev": {
-                "ext-tokenizer": "*"
+                "ext-tokenizer": "*",
+                "psalm/phar": "^4.8"
             },
             "type": "library",
             "extra": {
@@ -12563,9 +12564,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.5.0"
             },
-            "time": "2020-09-17T18:55:26+00:00"
+            "time": "2021-09-17T15:28:14+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -12899,23 +12900,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.6",
+            "version": "9.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "f6293e1b30a2354e8428e004689671b83871edde"
+                "reference": "d4c798ed8d51506800b441f7a13ecb0f76f12218"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f6293e1b30a2354e8428e004689671b83871edde",
-                "reference": "f6293e1b30a2354e8428e004689671b83871edde",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d4c798ed8d51506800b441f7a13ecb0f76f12218",
+                "reference": "d4c798ed8d51506800b441f7a13ecb0f76f12218",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^4.10.2",
+                "nikic/php-parser": "^4.12.0",
                 "php": ">=7.3",
                 "phpunit/php-file-iterator": "^3.0.3",
                 "phpunit/php-text-template": "^2.0.2",
@@ -12964,7 +12965,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.6"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.7"
             },
             "funding": [
                 {
@@ -12972,7 +12973,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-28T07:26:59+00:00"
+            "time": "2021-09-17T05:39:03+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -14451,7 +14452,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
