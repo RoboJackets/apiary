@@ -87,7 +87,7 @@ trait CreateOrUpdateCASUser
             $account_entitlements = [];
         }
         if (!is_array($account_entitlements)) {
-            $account_entitlements = [$account_entitlements]
+            $account_entitlements = [$account_entitlements];
         }
         $user->syncMajorsFromAccountEntitlements($account_entitlements);
         $standing_count = $user->syncClassStandingFromAccountEntitlements(
