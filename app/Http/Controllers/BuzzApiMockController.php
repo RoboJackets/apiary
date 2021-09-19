@@ -24,10 +24,10 @@ class BuzzApiMockController extends Controller
                 'gtAccountEntitlement' => [],
                 'gtGTID' => strval($gtid),
                 'gtPersonDirectoryId' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ012345',
-                'gtPrimaryGTAccountUsername' => 'gburdell'.substr(strval($gtid),-6),
-                'mail' => 'gburdell'.substr(strval($gtid),-6).'@gatech.edu',
+                'gtPrimaryGTAccountUsername' => 'gburdell'.substr(strval($gtid), -6),
+                'mail' => 'gburdell'.substr(strval($gtid), -6).'@gatech.edu',
                 'sn' => 'Burdell',
-                'uid' => 'gburdell'.substr(strval($gtid),-6),
+                'uid' => 'gburdell'.substr(strval($gtid), -6),
             ];
         }
 
