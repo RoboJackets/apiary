@@ -32,9 +32,7 @@ class BuzzApiMockController extends Controller
         }
 
         return response()->json([
-            'api_result_data' => [
-                $results,
-            ],
+            'api_result_data' => $results,
             'api_buzzapi_logs' => [
                 'This response was generated from a mock endpoint for demonstration purposes',
             ],
