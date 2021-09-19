@@ -17,17 +17,17 @@ class BuzzApiMockController extends Controller
         $gtid = $request->input('gtid');
         $results = [];
 
-        if ('903000000' === $gtid) {
+        if (null !== $gtid) {
             $results[] = [
                 'eduPersonPrimaryAffiliation' => 'student',
                 'givenName' => 'George',
                 'gtAccountEntitlement' => [],
-                'gtGTID' => '903000000',
+                'gtGTID' => strval($gtid),
                 'gtPersonDirectoryId' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ012345',
-                'gtPrimaryGTAccountUsername' => 'gburdell3',
-                'mail' => 'gburdell3@gatech.edu',
+                'gtPrimaryGTAccountUsername' => 'gburdell'.substr(strval($gtid),-6),
+                'mail' => 'gburdell'.substr(strval($gtid),-6).'@gatech.edu',
                 'sn' => 'Burdell',
-                'uid' => 'gburdell3',
+                'uid' => 'gburdell'.substr(strval($gtid),-6),
             ];
         }
 
