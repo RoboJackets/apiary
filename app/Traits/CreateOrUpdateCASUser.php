@@ -54,7 +54,7 @@ trait CreateOrUpdateCASUser
             $this->cas->setAttributes($masq_attrs);
         }
 
-        if (null !== config('features.demo-mode')) {
+        if (null === config('features.demo-mode')) {
             foreach ($attrs as $attr) {
                 if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
                     throw new Exception('Missing attribute '.$attr.' from CAS');
