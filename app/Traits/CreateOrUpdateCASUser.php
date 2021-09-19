@@ -54,9 +54,11 @@ trait CreateOrUpdateCASUser
             $this->cas->setAttributes($masq_attrs);
         }
 
-        foreach ($attrs as $attr) {
-            if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
-                throw new Exception('Missing attribute '.$attr.' from CAS');
+        if (null === config('features.demo-mode')) {
+            foreach ($attrs as $attr) {
+                if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
+                    throw new Exception('Missing attribute '.$attr.' from CAS');
+                }
             }
         }
 
@@ -73,17 +75,22 @@ trait CreateOrUpdateCASUser
             exit;
         }
         $user->uid = $this->cas->user();
-        $user->gtid = $this->cas->getAttribute('gtGTID');
+        $user->gtid = null === config('features.demo-mode') ? $this->cas->getAttribute('gtGTID') : 999999999;
         $user->gt_email = $this->cas->getAttribute('email_primary');
         $user->first_name = $this->cas->getAttribute('givenName');
         $user->last_name = $this->cas->getAttribute('sn');
         $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
         $user->has_ever_logged_in = true;
         $user->save();
-        $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement'));
-        $standing_count = $user->syncClassStandingFromAccountEntitlements(
-            $this->cas->getAttribute('gtAccountEntitlement')
-        );
+        $account_entitlements = $this->cas->getAttribute('gtAccountEntitlement');
+        if (null === $account_entitlements) {
+            $account_entitlements = [];
+        }
+        if (! is_array($account_entitlements)) {
+            $account_entitlements = [$account_entitlements];
+        }
+        $user->syncMajorsFromAccountEntitlements($account_entitlements);
+        $standing_count = $user->syncClassStandingFromAccountEntitlements($account_entitlements);
 
         if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
             Log::warning(

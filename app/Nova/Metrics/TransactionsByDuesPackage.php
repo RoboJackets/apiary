@@ -21,8 +21,8 @@ class TransactionsByDuesPackage extends Partition
      */
     public function calculate(NovaRequest $request): PartitionResult
     {
-        $fiscalYearId = $request->resourceId
-            ?? FiscalYear::orderByDesc('ending_year')->whereHas('packages.transactions.payment')->first()->id;
+        $latestWithPayment = FiscalYear::orderByDesc('ending_year')->whereHas('packages.transactions.payment')->first();
+        $fiscalYearId = $request->resourceId ?? (null === $latestWithPayment ? null : $latestWithPayment->id);
 
         return $this->result(
             DB::table('dues_transactions')

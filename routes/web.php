@@ -7,6 +7,7 @@ declare(strict_types=1);
 use App\Http\Controllers\AttendanceExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutodeskLibraryController;
+use App\Http\Controllers\BuzzApiMockController;
 use App\Http\Controllers\ClickUpController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DuesTransactionController;
@@ -110,3 +111,5 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::view('privacy', 'privacy');
 
 Route::get('agreement/complete', [SignatureController::class, 'complete'])->name('agreement.complete');
+
+Route::post('apiv3/{resource}/{action}', [BuzzApiMockController::class, 'anything']);
