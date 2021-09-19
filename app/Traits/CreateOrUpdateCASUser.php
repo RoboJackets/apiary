@@ -90,9 +90,7 @@ trait CreateOrUpdateCASUser
             $account_entitlements = [$account_entitlements];
         }
         $user->syncMajorsFromAccountEntitlements($account_entitlements);
-        $standing_count = $user->syncClassStandingFromAccountEntitlements(
-            $this->cas->getAttribute('gtAccountEntitlement') ?? []
-        );
+        $standing_count = $user->syncClassStandingFromAccountEntitlements($account_entitlements);
 
         if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
             Log::warning(
