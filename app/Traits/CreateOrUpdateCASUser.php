@@ -54,9 +54,11 @@ trait CreateOrUpdateCASUser
             $this->cas->setAttributes($masq_attrs);
         }
 
-        foreach ($attrs as $attr) {
-            if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
-                throw new Exception('Missing attribute '.$attr.' from CAS');
+        if (null !== config('features.demo-mode')) {
+            foreach ($attrs as $attr) {
+                if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
+                    throw new Exception('Missing attribute '.$attr.' from CAS');
+                }
             }
         }
 
@@ -73,7 +75,7 @@ trait CreateOrUpdateCASUser
             exit;
         }
         $user->uid = $this->cas->user();
-        $user->gtid = $this->cas->getAttribute('gtGTID');
+        $user->gtid = null === config('features.demo-mode') ? $this->cas->getAttribute('gtGTID') : 999999999;
         $user->gt_email = $this->cas->getAttribute('email_primary');
         $user->first_name = $this->cas->getAttribute('givenName');
         $user->last_name = $this->cas->getAttribute('sn');
