@@ -82,9 +82,9 @@ trait CreateOrUpdateCASUser
         $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
         $user->has_ever_logged_in = true;
         $user->save();
-        $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement'));
+        $user->syncMajorsFromAccountEntitlements($this->cas->getAttribute('gtAccountEntitlement') ?? []);
         $standing_count = $user->syncClassStandingFromAccountEntitlements(
-            $this->cas->getAttribute('gtAccountEntitlement')
+            $this->cas->getAttribute('gtAccountEntitlement') ?? []
         );
 
         if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
