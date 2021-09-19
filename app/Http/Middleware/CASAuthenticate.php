@@ -95,6 +95,7 @@ class CASAuthenticate
                 } else {
                     if ($this->cas->user() !== config('features.demo-mode')) {
                         Unauthorized::render(0);
+                        exit;
                     }
                 }
 
