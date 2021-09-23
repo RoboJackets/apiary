@@ -4,7 +4,7 @@
         <div class="card">
             <div class="relative">
                 <div class="flex px-6 py-8">
-                    <form id="collectAttendanceForm" v-on:submit.prevent="submit">
+                    <form id="collectAttendanceForm" @submit.prevent>
                         <div class="row">
                             <div class="col-12">
                                 Swipe a BuzzCard or enter a GTID number
