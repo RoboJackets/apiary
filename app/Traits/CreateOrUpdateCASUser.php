@@ -36,20 +36,10 @@ trait CreateOrUpdateCASUser
             'sn',
             'eduPersonPrimaryAffiliation',
         ];
-        // Attributes that will be split by commas when masquerading
-        $arrayAttrs = [
-            'gtAccountEntitlement',
-        ];
-        // Merge them together so we verify all attributes are present, even the array ones
-        $attrs = array_merge($attrs, $arrayAttrs);
         if ($this->cas->isMasquerading()) {
             $masq_attrs = [];
             foreach ($attrs as $attr) {
                 $masq_attrs[$attr] = config('cas.cas_masquerade_'.$attr);
-            }
-            // Split the attributes that we need to split
-            foreach ($arrayAttrs as $attr) {
-                $masq_attrs[$attr] = explode(',', $masq_attrs[$attr]);
             }
             $this->cas->setAttributes($masq_attrs);
         }
@@ -82,22 +72,6 @@ trait CreateOrUpdateCASUser
         $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
         $user->has_ever_logged_in = true;
         $user->save();
-        $account_entitlements = $this->cas->getAttribute('gtAccountEntitlement');
-        if (null === $account_entitlements) {
-            $account_entitlements = [];
-        }
-        if (! is_array($account_entitlements)) {
-            $account_entitlements = [$account_entitlements];
-        }
-        $user->syncMajorsFromAccountEntitlements($account_entitlements);
-        $standing_count = $user->syncClassStandingFromAccountEntitlements($account_entitlements);
-
-        if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
-            Log::warning(
-                self::class.': User '.$user->uid
-                .' has primary affiliation of student but '.$standing_count.' class standings. Check data integrity.'
-            );
-        }
 
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {
