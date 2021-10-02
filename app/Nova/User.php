@@ -12,6 +12,7 @@ use App\Nova\Actions\CreateOAuth2Client;
 use App\Nova\Actions\CreatePersonalAccessToken;
 use App\Nova\Actions\RevokeOAuth2Tokens;
 use App\Nova\Fields\Hidden;
+use App\Nova\Metrics\CreateReasonBreakdown;
 use App\Nova\Metrics\MemberSince;
 use App\Nova\Metrics\PrimaryTeam;
 use App\Nova\Metrics\ResumesSubmitted;
@@ -424,6 +425,7 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-resume');
                 }),
+            (new CreateReasonBreakdown()),
         ];
     }
 
