@@ -55,7 +55,7 @@
         "beyondcode/laravel-dump-server": "1.7.0",
         "facade/ignition": "2.14.0",
         "fakerphp/faker": "1.16.0",
-        "filp/whoops": "2.14.3",
+        "filp/whoops": "2.14.4",
         "mockery/mockery": "1.4.4",
         "mxl/laravel-job": "1.2.0",
         "nunomaduro/collision": "5.10.0",
