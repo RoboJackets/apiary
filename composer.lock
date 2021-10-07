@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7eaf99e6fbe4d847451e5f85deeb5135",
+    "content-hash": "2d61c549ea014ac7246e61257e77da63",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -1835,16 +1835,16 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "8e7d04f1f6450fef59366c399cfad4b9383aa30d"
+                "reference": "136a635e2b4a49b9d79e9c8fee267ffb257fdba0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/8e7d04f1f6450fef59366c399cfad4b9383aa30d",
-                "reference": "8e7d04f1f6450fef59366c399cfad4b9383aa30d",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/136a635e2b4a49b9d79e9c8fee267ffb257fdba0",
+                "reference": "136a635e2b4a49b9d79e9c8fee267ffb257fdba0",
                 "shasum": ""
             },
             "require": {
@@ -1856,7 +1856,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -1873,9 +1873,24 @@
             ],
             "authors": [
                 {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
                     "name": "Michael Dowling",
                     "email": "mtdowling@gmail.com",
                     "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com",
+                    "homepage": "https://github.com/Nyholm"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "email": "webmaster@tubo-world.de",
+                    "homepage": "https://github.com/Tobion"
                 }
             ],
             "description": "Guzzle promises library",
@@ -1884,9 +1899,23 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.4.1"
+                "source": "https://github.com/guzzle/promises/tree/1.5.0"
             },
-            "time": "2021-03-07T09:25:29+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/promises",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-10-07T13:05:22+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2659,16 +2688,16 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "679e24d36ff8b9be0e36f5222244ec8602e18867"
+                "reference": "6cfc678735f22ccedad761b8cae2bab14c3d8e5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/679e24d36ff8b9be0e36f5222244ec8602e18867",
-                "reference": "679e24d36ff8b9be0e36f5222244ec8602e18867",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/6cfc678735f22ccedad761b8cae2bab14c3d8e5b",
+                "reference": "6cfc678735f22ccedad761b8cae2bab14c3d8e5b",
                 "shasum": ""
             },
             "require": {
@@ -2714,7 +2743,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2021-09-29T13:25:52+00:00"
+            "time": "2021-10-07T14:00:57+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -4746,9 +4775,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630682003/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
+                "url": "https://composer.robojackets.org/1633046243/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
                 "reference": "7caf590d32760a304772419303a109261406763a",
-                "shasum": "7ba96c5617eb94ca2ad618cae966b791821e6de6"
+                "shasum": "a37909d0c4f1357caaf15ae21afeed250d0e2266"
             },
             "require": {
                 "ext-json": "*",
@@ -6629,9 +6658,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630682003/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-f6dec89ccd9826b75bd325465802cefd8d2cc943-zip-7ab4bc.zip",
+                "url": "https://composer.robojackets.org/1633046243/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-f6dec89ccd9826b75bd325465802cefd8d2cc943-zip-7ab4bc.zip",
                 "reference": "f6dec89ccd9826b75bd325465802cefd8d2cc943",
-                "shasum": "cd7fa4da5c102e967c46bd66ff48c7ec1813fe08"
+                "shasum": "59698be7e55dd33da316ecf5c468cc83ce118dc7"
             },
             "require": {
                 "haydenpierce/class-finder": "^0.4.3",
@@ -10372,16 +10401,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.2.10",
+            "version": "1.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "9fdb22c2e97a614657716178093cd1da90a64aa8"
+                "reference": "0b072d51c5a9c6f3412f7ea3ab043d6603cb2582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/9fdb22c2e97a614657716178093cd1da90a64aa8",
-                "reference": "9fdb22c2e97a614657716178093cd1da90a64aa8",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/0b072d51c5a9c6f3412f7ea3ab043d6603cb2582",
+                "reference": "0b072d51c5a9c6f3412f7ea3ab043d6603cb2582",
                 "shasum": ""
             },
             "require": {
@@ -10393,7 +10422,7 @@
                 "phpstan/phpstan": "^0.12.55",
                 "psr/log": "^1.0",
                 "symfony/phpunit-bridge": "^4.2 || ^5",
-                "symfony/process": "^2.5 || ^3.0 || ^4.0 || ^5.0"
+                "symfony/process": "^2.5 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
             },
             "type": "library",
             "extra": {
@@ -10428,7 +10457,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.2.10"
+                "source": "https://github.com/composer/ca-bundle/tree/1.2.11"
             },
             "funding": [
                 {
@@ -10444,20 +10473,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-07T13:58:28+00:00"
+            "time": "2021-09-25T20:32:43+00:00"
         },
         {
             "name": "composer/composer",
-            "version": "2.1.8",
+            "version": "2.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "24d38e9686092de05214cafa187dc282a5d89497"
+                "reference": "e558c88f28d102d497adec4852802c0dc14c7077"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/24d38e9686092de05214cafa187dc282a5d89497",
-                "reference": "24d38e9686092de05214cafa187dc282a5d89497",
+                "url": "https://api.github.com/repos/composer/composer/zipball/e558c88f28d102d497adec4852802c0dc14c7077",
+                "reference": "e558c88f28d102d497adec4852802c0dc14c7077",
                 "shasum": ""
             },
             "require": {
@@ -10526,7 +10555,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.1.8"
+                "source": "https://github.com/composer/composer/tree/2.1.9"
             },
             "funding": [
                 {
@@ -10542,7 +10571,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-15T11:55:15+00:00"
+            "time": "2021-10-05T07:47:38+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -13591,9 +13620,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1630682003/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
+                "url": "https://composer.robojackets.org/1633046243/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
                 "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7",
-                "shasum": "a5ef2fa4f1e98984dd367324f215b286054baf10"
+                "shasum": "c54e1388e61fa819e0bc9a3d1f509295961413e9"
             },
             "require": {
                 "phan/phan": "*",
@@ -14893,16 +14922,16 @@
         },
         {
             "name": "spatie/laravel-ray",
-            "version": "1.26.0",
+            "version": "1.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ray.git",
-                "reference": "09e8629d8d97526d34d237409862ac8ab02cbd85"
+                "reference": "5ecc2ebbdad8ae3ec31274596d922495cff69184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/09e8629d8d97526d34d237409862ac8ab02cbd85",
-                "reference": "09e8629d8d97526d34d237409862ac8ab02cbd85",
+                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/5ecc2ebbdad8ae3ec31274596d922495cff69184",
+                "reference": "5ecc2ebbdad8ae3ec31274596d922495cff69184",
                 "shasum": ""
             },
             "require": {
@@ -14959,7 +14988,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-ray/issues",
-                "source": "https://github.com/spatie/laravel-ray/tree/1.26.0"
+                "source": "https://github.com/spatie/laravel-ray/tree/1.26.1"
             },
             "funding": [
                 {
@@ -14971,7 +15000,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-09-27T09:59:08+00:00"
+            "time": "2021-10-01T13:08:05+00:00"
         },
         {
             "name": "spatie/macroable",
@@ -15025,16 +15054,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.30.2",
+            "version": "1.30.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "f6344f8abf3ede60c963d9d3f7f35fb526b6138c"
+                "reference": "5ec8449def9735d58b66d8024776becb3b020288"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/f6344f8abf3ede60c963d9d3f7f35fb526b6138c",
-                "reference": "f6344f8abf3ede60c963d9d3f7f35fb526b6138c",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/5ec8449def9735d58b66d8024776becb3b020288",
+                "reference": "5ec8449def9735d58b66d8024776becb3b020288",
                 "shasum": ""
             },
             "require": {
@@ -15084,7 +15113,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.30.2"
+                "source": "https://github.com/spatie/ray/tree/1.30.3"
             },
             "funding": [
                 {
@@ -15096,7 +15125,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-09-10T07:22:57+00:00"
+            "time": "2021-10-07T22:07:04+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -15779,5 +15808,5 @@
     "platform-overrides": {
         "php": "7.4.13"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
