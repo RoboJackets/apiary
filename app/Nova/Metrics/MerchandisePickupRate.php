@@ -27,7 +27,7 @@ class MerchandisePickupRate extends Partition
     {
         return $this->result(
             DB::table('dues_transactions')
-                ->selectRaw('IF(ISNULL(provided_at), \'Picked Up\', \'Not Picked Up\') as provided')
+                ->selectRaw('IF(ISNULL(provided_at), \'Not Picked Up\', \'Picked Up\') as provided')
                 ->selectRaw('count(distinct dues_transactions.user_id) as count')
                 ->leftJoin('payments', static function (JoinClause $join): void {
                     $join->on('dues_transactions.id', '=', 'payable_id')
