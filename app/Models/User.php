@@ -412,9 +412,9 @@ class User extends Authenticatable
     /**
      * Get whether this user is a current student.
      */
-    public function getIsStudentAttribute(): boolean
+    public function getIsStudentAttribute(): bool
     {
-        return 'student' === $user->primary_affiliation
+        return 'student' === $this->primary_affiliation
             && $this->duesPackages()->paid()->where('restricted_to_students', false)->doesntExist();
     }
 
