@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Nova\Lenses;
 
 use App\Models\Team as AppModelsTeam;
+use App\Nova\Cards\RecentInactiveHelp;
 use App\Nova\Event;
 use App\Nova\Filters\Attendable;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Team;
 use App\Nova\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -67,6 +69,21 @@ class RecentInactiveUsers extends Lens
                     Event::class,
                     Team::class,
                 ]),
+        ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @return array<\Laravel\Nova\Card>
+     */
+    public function cards(Request $request): array
+    {
+        return [
+            (new RecentInactiveHelp()),
+            (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users') && $request->user()->can('read-attendance');
+            }),
         ];
     }
 
