@@ -22,7 +22,7 @@
             <li class="nav-item {{ $request->is('teams*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('teams.index') }}">Teams</a>
             </li>
-            @if (config('features.resumes') && auth()->user()->is_student)
+            @if (config('features.resumes') && auth()->user() && auth()->user()->is_student)
             <li class="nav-item {{ $request->is('resume*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('resume.index') }}">Resume</a>
             </li>
