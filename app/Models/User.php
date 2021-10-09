@@ -415,7 +415,9 @@ class User extends Authenticatable
     public function getIsStudentAttribute(): bool
     {
         return 'student' === $this->primary_affiliation
-            && $this->duesPackages()->paid()->where('restricted_to_students', false)->doesntExist();
+            && $this->duesTransactions()->paid()->whereHas('package', static function (Builder $query): void {
+                $query->where('restricted_to_students', false);
+            })->doesntExist();
     }
 
     /*
