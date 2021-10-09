@@ -5,8 +5,7 @@ namespace Tests\Unit;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
-use App\Models\User;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
