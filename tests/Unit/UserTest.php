@@ -30,7 +30,7 @@ class UserTest extends TestCase
         $this->assertFalse($user->is_student);
 
         $user->primary_affiliation = 'student';
-        $this->assert($user->is_student);
+        $this->assertTrue($user->is_student);
 
         // Create dues package / transaction / payment
         $package = DuesPackage::factory()->make();
@@ -51,7 +51,7 @@ class UserTest extends TestCase
         $payment->save();
 
         // They paid a student package
-        $this->assert($user->is_student);
+        $this->assertTrue($user->is_student);
 
         $package->restricted_to_students = false;
         $package->save();
