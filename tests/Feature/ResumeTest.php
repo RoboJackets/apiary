@@ -79,7 +79,7 @@ class ResumeTest extends TestCase
         $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $pdfOnePage,
         ]);
-        $response->assertStatus(400);
+        $response->assertStatus(403);
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'error')
@@ -168,7 +168,7 @@ class ResumeTest extends TestCase
         $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
             'resume' => $pdfOnePage,
         ]);
-        $response->assertStatus(400);
+        $response->assertStatus(403);
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'error')
                 ->where('message', 'ineligible');

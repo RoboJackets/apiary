@@ -114,7 +114,7 @@ class ResumeController extends Controller
                         'status' => 'error',
                         'message' => 'inactive',
                     ],
-                    400
+                    403
                 );
             }
 
@@ -124,7 +124,7 @@ class ResumeController extends Controller
                         'status' => 'error',
                         'message' => 'ineligible',
                     ],
-                    400
+                    403
                 );
             }
 
