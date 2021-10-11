@@ -89,6 +89,7 @@ class ResumeTest extends TestCase
         // Create dues package / transaction / payment
         $package = DuesPackage::factory()->make();
         $package->effective_end = now()->addMonths(10);
+        $package->restricted_to_students = true;
         $package->save();
         $transaction = new DuesTransaction();
         $transaction->user_id = $user->id;
@@ -159,6 +160,23 @@ class ResumeTest extends TestCase
                 ->where('message', 'too_big');
         });
         Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
+
+        $package->restricted_to_students = false;
+        $package->save();
+
+        // Check student status is checked
+        $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
+            'resume' => $pdfOnePage,
+        ]);
+        $response->assertStatus(400);
+        $response->assertJson(static function (AssertableJson $json): void {
+            $json->where('status', 'error')
+                ->where('message', 'ineligible');
+        });
+        Storage::disk('local')->assertMissing('resumes/'.$user->uid.'.pdf');
+
+        $package->restricted_to_students = true;
+        $package->save();
 
         // Check an upload of a single page PDF passes
         $response = $this->actingAs($user, 'api')->post('/api/v1/users/'.$user->id.'/resume', [
