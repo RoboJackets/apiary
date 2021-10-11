@@ -7,6 +7,7 @@ namespace App\Nova\Lenses;
 use App\Models\Team as AppModelsTeam;
 use App\Nova\Event;
 use App\Nova\Filters\Attendable;
+use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Team;
 use App\Nova\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -71,6 +72,20 @@ class RecentInactiveUsers extends Lens
     }
 
     /**
+     * Get the cards available for the request.
+     *
+     * @return array<\Laravel\Nova\Card>
+     */
+    public function cards(Request $request): array
+    {
+        return [
+            (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
+                return $request->user()->can('read-users') && $request->user()->can('read-attendance');
+            }),
+        ];
+    }
+
+    /**
      * Get the filters available for the lens.
      *
      * @return array<\Laravel\Nova\Filters\Filter>
@@ -81,6 +96,13 @@ class RecentInactiveUsers extends Lens
             new Attendable(false),
         ];
     }
+
+    /**
+     * The displayable name of the lens.
+     *
+     * @var string
+     */
+    public $name = 'Recent Inactive Attendees, Last Two Weeks';
 
     /**
      * Get the URI key for the lens.
