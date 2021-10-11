@@ -122,6 +122,7 @@ export default {
           'resume_not_one_page': 'Your resume must be one page long.',
           'resume_not_pdf': 'Your resume must be a PDF.',
           'inactive': 'You must be an active member to upload your resume.',
+          'ineligible': 'You must be a student to upload your resume.',
           'resume_required': 'You must attach a resume to upload.',
           'too_big': 'Uploaded files must be smaller than 1MB.',
         };

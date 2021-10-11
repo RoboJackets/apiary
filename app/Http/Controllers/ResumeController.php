@@ -118,6 +118,16 @@ class ResumeController extends Controller
                 );
             }
 
+            if (true !== $user->is_student) {
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'ineligible',
+                    ],
+                    400
+                );
+            }
+
             // Make sure there's exactly one file
             $file = $request->file('resume');
             if (null === $file || is_array($file)) {
