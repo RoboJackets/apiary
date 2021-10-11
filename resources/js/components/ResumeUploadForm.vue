@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-12" v-if="loaded && user.is_active">
+    <div class="col-12" v-if="loaded && user.is_active && user.is_student">
       <div class="alert alert-danger" role="alert" v-if="message" v-html="messageText"></div>
       <p v-if="hasResume && viewUrl">You last uploaded your resume on {{ resumeDate }}. You can view it <a
         :href="viewUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
@@ -25,10 +25,16 @@
         <button class="btn btn-primary" :disabled="uploading || !selectedFile" v-on:click="onSubmit">{{ uploading ? "Uploading file..." : "Upload" }}</button>
       </div>
     </div>
-    <div class="col-12" v-else-if="loaded">
+    <div class="col-12" v-else-if="loaded && user.is_student">
       <strong>Resume upload unavailable</strong>
       <p>A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors.
         Once you pay dues, you will be able to upload your resume here.</p>
+    </div>
+    <div class="col-12" v-else-if="loaded">
+      <strong>Resume upload unavailable</strong>
+      <p>Only students are eligible for the RoboJackets resume book. If you believe you are seeing this message in
+        error, please ask in #it-helpdesk.
+      </p>
     </div>
     <loading-spinner :active="!loaded" />
   </div>
