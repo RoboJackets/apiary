@@ -47,6 +47,7 @@ class User extends JsonResource
             'join_semester' => $this->join_semester,
             'graduation_semester' => $this->graduation_semester,
             'primary_affiliation' => $this->primary_affiliation,
+            'is_student' => $this->is_student,
             'shirt_size' => $this->shirt_size,
             'polo_size' => $this->polo_size,
             $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-users-demographics'), [

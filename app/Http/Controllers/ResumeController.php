@@ -114,7 +114,17 @@ class ResumeController extends Controller
                         'status' => 'error',
                         'message' => 'inactive',
                     ],
-                    400
+                    403
+                );
+            }
+
+            if (true !== $user->is_student) {
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'ineligible',
+                    ],
+                    403
                 );
             }
 

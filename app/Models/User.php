@@ -409,6 +409,17 @@ class User extends Authenticatable
         return implode(' ', array_filter([$this->first_name, $this->middle_name, $this->last_name]));
     }
 
+    /**
+     * Get whether this user is a current student.
+     */
+    public function getIsStudentAttribute(): bool
+    {
+        return 'student' === $this->primary_affiliation
+            && $this->duesTransactions()->paid()->whereHas('package', static function (Builder $query): void {
+                $query->where('restricted_to_students', false);
+            })->doesntExist();
+    }
+
     /*
      * Get the DuesTransactions belonging to the User
      */
