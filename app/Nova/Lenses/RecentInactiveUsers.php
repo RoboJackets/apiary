@@ -98,6 +98,13 @@ class RecentInactiveUsers extends Lens
     }
 
     /**
+     * The displayable name of the lens.
+     *
+     * @var string
+     */
+    public $name = 'Recent Inactive Attendees, Last Two Weeks';
+
+    /**
      * Get the URI key for the lens.
      */
     public function uriKey(): string
