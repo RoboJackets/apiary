@@ -13,9 +13,11 @@ class RemoveUniqueConstraintFromReceiptNumber extends Migration
      */
     public function up(): void
     {
-        Schema::table('payments', static function (Blueprint $table): void {
-            $table->dropUnique('payments_receipt_number_unique');
-        });
+        if ('mysql' === config('database.default')) {
+            Schema::table('payments', static function (Blueprint $table): void {
+                $table->dropUnique('payments_receipt_number_unique');
+            });
+        }
     }
 
     /**
@@ -23,8 +25,10 @@ class RemoveUniqueConstraintFromReceiptNumber extends Migration
      */
     public function down(): void
     {
-        Schema::table('payments', static function (Blueprint $table): void {
-            $table->unique('receipt_number');
-        });
+        if ('mysql' === config('database.default')) {
+            Schema::table('payments', static function (Blueprint $table): void {
+                $table->unique('receipt_number');
+            });
+        }
     }
 }
