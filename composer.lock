@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8731c898ccdbd6fc080bc527f7624d0d",
+    "content-hash": "7c97be861a4444fdfdad5b0648c888cb",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2137,16 +2137,16 @@
         },
         {
             "name": "jean85/pretty-package-versions",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jean85/pretty-package-versions.git",
-                "reference": "694492c653c518456af2805f04eec445b997ed1f"
+                "reference": "ae547e455a3d8babd07b96966b17d7fd21d9c6af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/694492c653c518456af2805f04eec445b997ed1f",
-                "reference": "694492c653c518456af2805f04eec445b997ed1f",
+                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/ae547e455a3d8babd07b96966b17d7fd21d9c6af",
+                "reference": "ae547e455a3d8babd07b96966b17d7fd21d9c6af",
                 "shasum": ""
             },
             "require": {
@@ -2190,9 +2190,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Jean85/pretty-package-versions/issues",
-                "source": "https://github.com/Jean85/pretty-package-versions/tree/2.0.4"
+                "source": "https://github.com/Jean85/pretty-package-versions/tree/2.0.5"
             },
-            "time": "2021-05-26T08:46:42+00:00"
+            "time": "2021-10-08T21:21:46+00:00"
         },
         {
             "name": "laravel/framework",
@@ -12042,16 +12042,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.7.12",
+            "version": "v0.7.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "b2da312efe88d501aeeb867ba857e8c4198d43c0"
+                "reference": "60f19f8ffaaf1cbabcc127d94fc8d41e7bf7ecb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/b2da312efe88d501aeeb867ba857e8c4198d43c0",
-                "reference": "b2da312efe88d501aeeb867ba857e8c4198d43c0",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/60f19f8ffaaf1cbabcc127d94fc8d41e7bf7ecb2",
+                "reference": "60f19f8ffaaf1cbabcc127d94fc8d41e7bf7ecb2",
                 "shasum": ""
             },
             "require": {
@@ -12070,6 +12070,7 @@
                 "symfony/process": "^4.3 || ^5.0 || ^6.0"
             },
             "require-dev": {
+                "nikic/php-parser": "4.12.0",
                 "orchestra/testbench": "^4.0 || ^5.0 || ^6.0 || ^7.0",
                 "phpunit/phpunit": "^7.3 || ^8.2 || ^9.3"
             },
@@ -12079,7 +12080,7 @@
             "type": "phpstan-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.7-dev"
                 },
                 "phpstan": {
                     "includes": [
@@ -12115,7 +12116,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v0.7.12"
+                "source": "https://github.com/nunomaduro/larastan/tree/v0.7.13"
             },
             "funding": [
                 {
@@ -12135,7 +12136,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-07-26T12:12:39+00:00"
+            "time": "2021-10-14T07:30:49+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
