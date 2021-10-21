@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new WeeklyAttendanceEmail())->weekly()->sundays()->at('1:00');
         $schedule->job(new WeeklyAttendanceSlack())->weekly()->sundays()->at('11:00');
         $schedule->job(new SendExpiringPersonalAccessTokenNotifications())->weekly()->mondays()->at('08:00');
-        $schedule->job(new DailyDuesSummary())->daily()->at('11:00');
+        $schedule->job(new DailyDuesSummary())->daily()->at('00:00');
         $schedule->job(new NoAttendanceJediPush())->daily()->at('10:00');
     }
 
