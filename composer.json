@@ -22,7 +22,7 @@
         "doctrine/dbal": "2.13.4",
         "guzzlehttp/guzzle": "7.4.0",
         "http-interop/http-factory-guzzle": "1.2.0",
-        "laravel/framework": "8.67.0",
+        "laravel/framework": "8.68.0",
         "laravel/horizon": "5.7.14",
         "laravel/nova": "3.30.0",
         "laravel/passport": "10.1.4",
