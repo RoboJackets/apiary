@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6decba7cbe63f905892a21b8b0403f72",
+    "content-hash": "4ef370c46ed4ffb86aba51d33d167f9f",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -12064,16 +12064,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.7.14",
+            "version": "v0.7.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "af14aa59e1ef791df12329de09a4ff99eceb9af2"
+                "reference": "fffd371277aeca7951a841818d21f1015a0a2662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/af14aa59e1ef791df12329de09a4ff99eceb9af2",
-                "reference": "af14aa59e1ef791df12329de09a4ff99eceb9af2",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/fffd371277aeca7951a841818d21f1015a0a2662",
+                "reference": "fffd371277aeca7951a841818d21f1015a0a2662",
                 "shasum": ""
             },
             "require": {
@@ -12138,7 +12138,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v0.7.14"
+                "source": "https://github.com/nunomaduro/larastan/tree/v0.7.15"
             },
             "funding": [
                 {
@@ -12158,7 +12158,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-10-25T15:56:03+00:00"
+            "time": "2021-10-26T11:07:56+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
