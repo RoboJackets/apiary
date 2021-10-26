@@ -23,7 +23,7 @@
         "guzzlehttp/guzzle": "7.4.0",
         "http-interop/http-factory-guzzle": "1.2.0",
         "laravel/framework": "8.68.0",
-        "laravel/horizon": "5.7.14",
+        "laravel/horizon": "5.7.15",
         "laravel/nova": "3.30.0",
         "laravel/passport": "10.1.4",
         "laravel/scout": "9.3.1",
