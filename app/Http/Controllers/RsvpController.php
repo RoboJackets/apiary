@@ -93,22 +93,27 @@ class RsvpController extends Controller
             }
         }
 
-        $rsvp = new Rsvp();
+        if (
+            null === $user ||
+            Rsvp::where('user_id', '=', $user->id)->where('event_id', '=', $event->id)->doesntExist()
+        ) {
+            $rsvp = new Rsvp();
 
-        if (null !== $user) {
-            $rsvp->user_id = $user->id;
+            if (null !== $user) {
+                $rsvp->user_id = $user->id;
+            }
+
+            $rsvp->ip_address = $request->ip();
+            $rsvp->user_agent = null;
+            if (null !== $request->userAgent()) {
+                $rsvp->user_agent = Str::limit($request->userAgent(), 1023, '');
+            }
+            $rsvp->event_id = $event->id;
+            $rsvp->source = $source ?? $request->input('source');
+            $rsvp->response = 'yes';
+
+            $rsvp->saveOrFail();
         }
-
-        $rsvp->ip_address = $request->ip();
-        $rsvp->user_agent = null;
-        if (null !== $request->userAgent()) {
-            $rsvp->user_agent = Str::limit($request->userAgent(), 1023, '');
-        }
-        $rsvp->event_id = $event->id;
-        $rsvp->source = $source ?? $request->input('source');
-        $rsvp->response = 'yes';
-
-        $rsvp->saveOrFail();
 
         return view('rsvp.confirmation')->with(['event' => new EventResource($event)]);
     }
