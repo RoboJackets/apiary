@@ -154,42 +154,6 @@ class Payment extends Model
         ];
     }
 
-    public function updateFromSquareCashTransaction(SquareCashTransaction $transaction): void
-    {
-        // @phan-suppress-next-line PhanTypeMismatchProperty
-        $this->amount = $transaction->amount;
-        $this->processing_fee = null;
-        $this->method = 'squarecash';
-        $this->square_cash_transaction_id = $transaction->transaction_id;
-        $this->created_at = $transaction->transaction_timestamp;
-        $this->updated_at = $transaction->transaction_timestamp;
-        $this->save();
-    }
-
-    public function updateFromSquareTransaction(SquareTransaction $transaction): void
-    {
-        $squareSourceToPaymentMethod = [
-            'Point of Sale' => 'swipe',
-            'Online Store' => 'square',
-            'MyRoboJackets' => 'square',
-            'eCommerce Integrations' => 'square',
-        ];
-
-        $this->method = $squareSourceToPaymentMethod[$transaction->source];
-        // @phan-suppress-next-line PhanTypeMismatchProperty
-        $this->amount = $transaction->amount;
-        // @phan-suppress-next-line PhanTypeMismatchProperty
-        $this->processing_fee = $transaction->processing_fee;
-        $this->created_at = $transaction->transaction_timestamp;
-        $this->updated_at = $transaction->transaction_timestamp;
-        $this->server_txn_id = $transaction->transaction_id;
-        $this->recorded_by = $transaction->guessRecordedBy() ?? $this->recorded_by;
-        $this->card_brand = $transaction->card_brand;
-        $this->last_4 = $transaction->last_4;
-        $this->entry_method = $transaction->entry_method;
-        $this->save();
-    }
-
     public static function generateUniqueId(): string
     {
         return bin2hex(openssl_random_pseudo_bytes(32));
