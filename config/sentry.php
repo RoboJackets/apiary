@@ -56,15 +56,5 @@ return [
 
     'controllers_base_namespace' => env('SENTRY_CONTROLLERS_BASE_NAMESPACE', 'App\\Http\\Controllers'),
 
-    'before_send' => static function (\Sentry\Event $event): \Sentry\Event {
-        $request = $event->getRequest();
-
-        if (array_key_exists('data', $request) && array_key_exists('refresh_token', $request['data'])) {
-            $request['data']['refresh_token'] = '[redacted]';
-        }
-
-        $event->setRequest($request);
-
-        return $event;
-    },
+    'before_send' => [\App\Sentry\Helpers::class, 'beforeSend'],
 ];
