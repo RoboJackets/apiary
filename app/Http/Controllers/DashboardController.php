@@ -32,7 +32,13 @@ class DashboardController extends Controller
         $signedAnyAgreement = $user->signatures()->where('complete', true)->exists();
 
         //User is "new" if they don't have any transactions, or they have never paid dues
-        $paidTxn = count(DuesTransaction::paid()->where('user_id', $user->id)->get());
+        $paidTxnColl = DuesTransaction::paid()->where('user_id', $user->id)->get();
+
+        $paidPackageIds = $paidTxnColl->map(static function (DuesTransaction $transaction): int {
+            return $transaction->dues_package_id;
+        })->uniqueStrict()->toArray();
+
+        $paidTxn = count($paidTxnColl);
         $isNew = (0 === $user->dues->count() || ($user->dues->count() >= 1 && 0 === $paidTxn));
 
         //User needs a transaction if they don't have one for an active dues package
@@ -41,7 +47,12 @@ class DashboardController extends Controller
 
         //User needs a payment if they don't have enough payments to cover their pending dues transaction
         //Don't change this to use ->count(). It won't work - trust me.
-        $needsPayment = (count(DuesTransaction::pending()->where('user_id', $user->id)->get()) > 0);
+        $needsPayment = (count(
+            DuesTransaction::pending()
+                ->where('user_id', $user->id)
+                ->whereNotIn('dues_package_id', $paidPackageIds)
+                ->get()
+        ) > 0);
 
         if (! $isNew) {
             $paidTransactions = DuesTransaction::select(
