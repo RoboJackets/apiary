@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Access\AuthorizationException;
@@ -17,7 +19,6 @@ class Authenticate extends AuthenticateMiddleware
      *
      * @throws AuthorizationException
      */
-    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
