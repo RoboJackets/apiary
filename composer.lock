@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28fb4050550048dec46d1bc6e48d8c20",
+    "content-hash": "9f33a7171085cdc4e2f6b49896f9a114",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2213,16 +2213,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.70.0",
+            "version": "v8.70.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0940624dc77e19212d17f584e42b7843bf5e9d7e"
+                "reference": "f4b69fac9292df1a8afd5eb93e77990444ad5077"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0940624dc77e19212d17f584e42b7843bf5e9d7e",
-                "reference": "0940624dc77e19212d17f584e42b7843bf5e9d7e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f4b69fac9292df1a8afd5eb93e77990444ad5077",
+                "reference": "f4b69fac9292df1a8afd5eb93e77990444ad5077",
                 "shasum": ""
             },
             "require": {
@@ -2381,7 +2381,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-11-09T15:36:14+00:00"
+            "time": "2021-11-09T16:50:33+00:00"
         },
         {
             "name": "laravel/horizon",
