@@ -15,7 +15,7 @@ When completing the form, you chose the **{{$duesPackage->name}}** dues package.
 1. Credit/Debit Card - Pay [online]({{ route('pay.dues') }}) now. *Additional processing fees apply for all credit or debit card transactions.*
 @endif
 1. Cash - Pay an officer or project manager at the shop.
-2. Check - Make a check out to RoboJackets and give it to an officer or your PM. Don't forget to sign it!
+2. Check - Make a check out to Georgia Tech with RoboJackets on the memo line, and give it to an officer or your PM. Don't forget to sign it!
 
 -RoboJackets Treasurer
 
