@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77c42bacdcba7686f0777f2cd51a06a1",
+    "content-hash": "ad8a3427e5f789b3c4747bb6c09496a5",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2634,16 +2634,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.3.1",
+            "version": "v9.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "31dc6fadb1648d3a7d60e56662bed80848264279"
+                "reference": "0137c70efb164eeeb8115a9ebb1517263b6a64ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/31dc6fadb1648d3a7d60e56662bed80848264279",
-                "reference": "31dc6fadb1648d3a7d60e56662bed80848264279",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/0137c70efb164eeeb8115a9ebb1517263b6a64ac",
+                "reference": "0137c70efb164eeeb8115a9ebb1517263b6a64ac",
                 "shasum": ""
             },
             "require": {
@@ -2702,7 +2702,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2021-10-12T15:53:08+00:00"
+            "time": "2021-11-16T16:59:12+00:00"
         },
         {
             "name": "laravel/serializable-closure",
