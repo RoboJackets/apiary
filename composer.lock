@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad8a3427e5f789b3c4747bb6c09496a5",
+    "content-hash": "d4180253f72e2cea1630fc877ac6b9eb",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -6927,16 +6927,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "2.10.1",
+            "version": "2.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "96643ed6c59db61dc9a629766ccc8b5293416ae0"
+                "reference": "82cf98c830d73f80dc67cf21381da4ede4c3989e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/96643ed6c59db61dc9a629766ccc8b5293416ae0",
-                "reference": "96643ed6c59db61dc9a629766ccc8b5293416ae0",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/82cf98c830d73f80dc67cf21381da4ede4c3989e",
+                "reference": "82cf98c830d73f80dc67cf21381da4ede4c3989e",
                 "shasum": ""
             },
             "require": {
@@ -7002,7 +7002,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/2.10.1"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/2.10.2"
             },
             "funding": [
                 {
@@ -7014,7 +7014,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-11-11T20:08:08+00:00"
+            "time": "2021-11-16T19:20:42+00:00"
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
