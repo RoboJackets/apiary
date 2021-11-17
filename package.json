@@ -24,7 +24,7 @@
     "@sentry/tracing": "6.15.0",
     "@sentry/vue": "6.15.0",
     "axios": "0.24.0",
-    "caniuse-lite": "1.0.30001280",
+    "caniuse-lite": "1.0.30001282",
     "chartist": "0.11.4",
     "chartist-plugin-legend": "0.6.2",
     "chartist-plugin-pointlabels": "0.0.6",
