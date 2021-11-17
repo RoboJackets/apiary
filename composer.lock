@@ -124,16 +124,16 @@
         },
         {
             "name": "apimatic/unirest-php",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/unirest-php.git",
-                "reference": "b4e399a8970c3a5c611f734282f306381f9d1eee"
+                "reference": "e07351d5f70b445664e2dc4042bbc237ec7d4c93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/b4e399a8970c3a5c611f734282f306381f9d1eee",
-                "reference": "b4e399a8970c3a5c611f734282f306381f9d1eee",
+                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/e07351d5f70b445664e2dc4042bbc237ec7d4c93",
+                "reference": "e07351d5f70b445664e2dc4042bbc237ec7d4c93",
                 "shasum": ""
             },
             "require": {
@@ -141,7 +141,7 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5 || ^6 || ^7"
+                "phpunit/phpunit": "^5 || ^6 || ^7 || ^8 || ^9"
             },
             "suggest": {
                 "ext-json": "Allows using JSON Bodies for sending and parsing requests"
@@ -182,9 +182,9 @@
             "support": {
                 "email": "opensource@apimatic.io",
                 "issues": "https://github.com/apimatic/unirest-php/issues",
-                "source": "https://github.com/apimatic/unirest-php/tree/2.0.0"
+                "source": "https://github.com/apimatic/unirest-php/tree/2.1.0"
             },
-            "time": "2020-04-07T17:16:29+00:00"
+            "time": "2021-11-12T05:20:21+00:00"
         },
         {
             "name": "arcanedev/laravel-markdown",
@@ -1355,16 +1355,16 @@
         },
         {
             "name": "dompdf/dompdf",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/dompdf.git",
-                "reference": "8768448244967a46d6e67b891d30878e0e15d25c"
+                "reference": "aa594c1cdbcdab04977fdd0fff669a017fb50ef4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/8768448244967a46d6e67b891d30878e0e15d25c",
-                "reference": "8768448244967a46d6e67b891d30878e0e15d25c",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/aa594c1cdbcdab04977fdd0fff669a017fb50ef4",
+                "reference": "aa594c1cdbcdab04977fdd0fff669a017fb50ef4",
                 "shasum": ""
             },
             "require": {
@@ -1386,11 +1386,6 @@
                 "ext-zlib": "Needed for pdf stream compression"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.7-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Dompdf\\": "src/"
@@ -1421,9 +1416,9 @@
             "homepage": "https://github.com/dompdf/dompdf",
             "support": {
                 "issues": "https://github.com/dompdf/dompdf/issues",
-                "source": "https://github.com/dompdf/dompdf/tree/v1.0.2"
+                "source": "https://github.com/dompdf/dompdf/tree/v1.1.0"
             },
-            "time": "2021-01-08T14:18:52+00:00"
+            "time": "2021-11-16T18:39:01+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -2706,16 +2701,16 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "6cfc678735f22ccedad761b8cae2bab14c3d8e5b"
+                "reference": "8148e72e6c2c3af7f05640ada1b26c3bca970f8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/6cfc678735f22ccedad761b8cae2bab14c3d8e5b",
-                "reference": "6cfc678735f22ccedad761b8cae2bab14c3d8e5b",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/8148e72e6c2c3af7f05640ada1b26c3bca970f8d",
+                "reference": "8148e72e6c2c3af7f05640ada1b26c3bca970f8d",
                 "shasum": ""
             },
             "require": {
@@ -2761,7 +2756,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2021-10-07T14:00:57+00:00"
+            "time": "2021-11-16T17:01:57+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -12216,16 +12211,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v6.27.0",
+            "version": "v6.27.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "5e2c6211090d49e24c292edd2eb4138b7409160e"
+                "reference": "d0e98c101bc57e8bb0121603bb84aff7c800a44e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/5e2c6211090d49e24c292edd2eb4138b7409160e",
-                "reference": "5e2c6211090d49e24c292edd2eb4138b7409160e",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/d0e98c101bc57e8bb0121603bb84aff7c800a44e",
+                "reference": "d0e98c101bc57e8bb0121603bb84aff7c800a44e",
                 "shasum": ""
             },
             "require": {
@@ -12302,7 +12297,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2021-11-09T22:53:16+00:00"
+            "time": "2021-11-17T02:37:48+00:00"
         },
         {
             "name": "phan/phan",
@@ -14883,16 +14878,16 @@
         },
         {
             "name": "spatie/laravel-ray",
-            "version": "1.26.1",
+            "version": "1.26.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ray.git",
-                "reference": "5ecc2ebbdad8ae3ec31274596d922495cff69184"
+                "reference": "11d0042f3d3007d6a54d0fb55e4f0d17b4181000"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/5ecc2ebbdad8ae3ec31274596d922495cff69184",
-                "reference": "5ecc2ebbdad8ae3ec31274596d922495cff69184",
+                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/11d0042f3d3007d6a54d0fb55e4f0d17b4181000",
+                "reference": "11d0042f3d3007d6a54d0fb55e4f0d17b4181000",
                 "shasum": ""
             },
             "require": {
@@ -14949,7 +14944,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-ray/issues",
-                "source": "https://github.com/spatie/laravel-ray/tree/1.26.1"
+                "source": "https://github.com/spatie/laravel-ray/tree/1.26.2"
             },
             "funding": [
                 {
@@ -14961,24 +14956,24 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-10-01T13:08:05+00:00"
+            "time": "2021-11-15T08:21:15+00:00"
         },
         {
             "name": "spatie/macroable",
-            "version": "2.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/macroable.git",
-                "reference": "ec2c320f932e730607aff8052c44183cf3ecb072"
+                "reference": "7a99549fc001c925714b329220dea680c04bfa48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/macroable/zipball/ec2c320f932e730607aff8052c44183cf3ecb072",
-                "reference": "ec2c320f932e730607aff8052c44183cf3ecb072",
+                "url": "https://api.github.com/repos/spatie/macroable/zipball/7a99549fc001c925714b329220dea680c04bfa48",
+                "reference": "7a99549fc001c925714b329220dea680c04bfa48",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.0|^9.3"
@@ -15009,9 +15004,9 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/macroable/issues",
-                "source": "https://github.com/spatie/macroable/tree/2.0.0"
+                "source": "https://github.com/spatie/macroable/tree/1.0.1"
             },
-            "time": "2021-03-26T22:39:02+00:00"
+            "time": "2020-11-03T10:15:05+00:00"
         },
         {
             "name": "spatie/ray",
@@ -15770,5 +15765,5 @@
     "platform-overrides": {
         "php": "7.4.13"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
