@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b6a38810c02e04b2a2ecf6d984df68cf",
+    "content-hash": "8727a5393a0da1f6244dfa8921130744",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -4063,16 +4063,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.19.3",
+            "version": "v0.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "60ba4ce218cb27e9c76beeac7fded1449029e33d"
+                "reference": "0b592c1d2b3e642d618254a7ff5716874b72fabf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/60ba4ce218cb27e9c76beeac7fded1449029e33d",
-                "reference": "60ba4ce218cb27e9c76beeac7fded1449029e33d",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/0b592c1d2b3e642d618254a7ff5716874b72fabf",
+                "reference": "0b592c1d2b3e642d618254a7ff5716874b72fabf",
                 "shasum": ""
             },
             "require": {
@@ -4124,9 +4124,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.19.3"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.20.0"
             },
-            "time": "2021-11-16T20:01:33+00:00"
+            "time": "2021-11-17T20:46:29+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4727,9 +4727,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1633046243/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
+                "url": "https://composer.robojackets.org/1637284535/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
                 "reference": "7caf590d32760a304772419303a109261406763a",
-                "shasum": "a37909d0c4f1357caaf15ae21afeed250d0e2266"
+                "shasum": "7d5e69d662fcaebf9e3a54e27e834f0c44a45c1b"
             },
             "require": {
                 "ext-json": "*",
@@ -6518,9 +6518,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1633046243/robojackets/auth-stickler/robojackets-auth-stickler-88beab79843c3bc48d2ec33018d8c3dcf1becf05-zip-cb995e.zip",
+                "url": "https://composer.robojackets.org/1637284535/robojackets/auth-stickler/robojackets-auth-stickler-88beab79843c3bc48d2ec33018d8c3dcf1becf05-zip-cb995e.zip",
                 "reference": "88beab79843c3bc48d2ec33018d8c3dcf1becf05",
-                "shasum": "992b920ba347a3c4cc3b378ea46e6b79349474ae"
+                "shasum": "3fa851790ca4b4b93d5b912a75600e077e71b1b5"
             },
             "require": {
                 "apereo/phpcas": "^1.3",
@@ -6566,9 +6566,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1633046243/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
+                "url": "https://composer.robojackets.org/1637284535/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
                 "reference": "ce83cc96d3f3ba637b76480a71d6d7adba1fa134",
-                "shasum": "7d12fe57bdf0129de410bc851ef89a74635fcdf4"
+                "shasum": "16d143a9e869861bc8c028c6a3cc4a7e350c8384"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -6603,23 +6603,23 @@
         },
         {
             "name": "robojackets/meilisearch-index-settings-helper",
-            "version": "v0.3.1",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/meilisearch-index-settings-helper.git",
-                "reference": "f6dec89ccd9826b75bd325465802cefd8d2cc943"
+                "reference": "4bb926f10fd156fbfc87f13f8721314fc9f44bc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1633046243/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-f6dec89ccd9826b75bd325465802cefd8d2cc943-zip-7ab4bc.zip",
-                "reference": "f6dec89ccd9826b75bd325465802cefd8d2cc943",
-                "shasum": "59698be7e55dd33da316ecf5c468cc83ce118dc7"
+                "url": "https://composer.robojackets.org/1637284535/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-4bb926f10fd156fbfc87f13f8721314fc9f44bc9-zip-2ce89a.zip",
+                "reference": "4bb926f10fd156fbfc87f13f8721314fc9f44bc9",
+                "shasum": "4a2a01d3a4433e69bad20be7fffc2275edfbb033"
             },
             "require": {
                 "haydenpierce/class-finder": "^0.4.3",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "laravel/scout": "^9.2",
-                "meilisearch/meilisearch-php": "^0.19.0"
+                "meilisearch/meilisearch-php": "^0.20.0"
             },
             "require-dev": {
                 "laravel/framework": "*",
@@ -6665,9 +6665,9 @@
             "description": "Manage Meilisearch indexing settings in Eloquent models",
             "homepage": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.3.1"
+                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.4.0"
             },
-            "time": "2021-08-29T17:47:23+00:00"
+            "time": "2021-11-19T01:11:51+00:00"
         },
         {
             "name": "robojackets/network-check",
@@ -6679,9 +6679,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1633046243/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
+                "url": "https://composer.robojackets.org/1637284535/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
                 "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7",
-                "shasum": "71882c8ed7666c27a925438bfc4c70a6b24c23e7"
+                "shasum": "e1dbc546fc6f4498aad1dd5b17de2c04ce465b33"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
@@ -10751,23 +10751,24 @@
         },
         {
             "name": "composer/spdx-licenses",
-            "version": "1.5.5",
+            "version": "1.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/spdx-licenses.git",
-                "reference": "de30328a7af8680efdc03e396aad24befd513200"
+                "reference": "a30d487169d799745ca7280bc90fdfa693536901"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/de30328a7af8680efdc03e396aad24befd513200",
-                "reference": "de30328a7af8680efdc03e396aad24befd513200",
+                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/a30d487169d799745ca7280bc90fdfa693536901",
+                "reference": "a30d487169d799745ca7280bc90fdfa693536901",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || 6.5 - 7"
+                "phpstan/phpstan": "^0.12.55",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
             },
             "type": "library",
             "extra": {
@@ -10810,7 +10811,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/spdx-licenses/issues",
-                "source": "https://github.com/composer/spdx-licenses/tree/1.5.5"
+                "source": "https://github.com/composer/spdx-licenses/tree/1.5.6"
             },
             "funding": [
                 {
@@ -10826,7 +10827,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-03T16:04:16+00:00"
+            "time": "2021-11-18T10:14:14+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -13576,9 +13577,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1633046243/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
+                "url": "https://composer.robojackets.org/1637284535/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
                 "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7",
-                "shasum": "c54e1388e61fa819e0bc9a3d1f509295961413e9"
+                "shasum": "d54bb4ec4f096add2aabfa5700105490d0dfdadd"
             },
             "require": {
                 "phan/phan": "*",
@@ -15765,5 +15766,5 @@
     "platform-overrides": {
         "php": "7.4.13"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
