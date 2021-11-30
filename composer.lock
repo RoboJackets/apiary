@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d57ac8a8f48c5a15981d437680ad30a",
+    "content-hash": "524302ce391d68afb0223c4439eb3649",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -9352,16 +9352,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.3.11",
+            "version": "v5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "a029b3a11b757f9cc8693040339153b4745a913f"
+                "reference": "89ab66eaef230c9cd1992de2e9a1b26652b127b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/a029b3a11b757f9cc8693040339153b4745a913f",
-                "reference": "a029b3a11b757f9cc8693040339153b4745a913f",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/89ab66eaef230c9cd1992de2e9a1b26652b127b9",
+                "reference": "89ab66eaef230c9cd1992de2e9a1b26652b127b9",
                 "shasum": ""
             },
             "require": {
@@ -9375,8 +9375,9 @@
             },
             "require-dev": {
                 "ext-iconv": "*",
-                "symfony/console": "^4.4|^5.0",
-                "symfony/process": "^4.4|^5.0",
+                "symfony/console": "^4.4|^5.0|^6.0",
+                "symfony/process": "^4.4|^5.0|^6.0",
+                "symfony/uid": "^5.1|^6.0",
                 "twig/twig": "^2.13|^3.0.4"
             },
             "suggest": {
@@ -9420,7 +9421,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.3.11"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.4.0"
             },
             "funding": [
                 {
@@ -9436,7 +9437,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-12T11:38:27+00:00"
+            "time": "2021-11-29T15:30:56+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -14967,20 +14968,20 @@
         },
         {
             "name": "spatie/macroable",
-            "version": "1.0.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/macroable.git",
-                "reference": "7a99549fc001c925714b329220dea680c04bfa48"
+                "reference": "ec2c320f932e730607aff8052c44183cf3ecb072"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/macroable/zipball/7a99549fc001c925714b329220dea680c04bfa48",
-                "reference": "7a99549fc001c925714b329220dea680c04bfa48",
+                "url": "https://api.github.com/repos/spatie/macroable/zipball/ec2c320f932e730607aff8052c44183cf3ecb072",
+                "reference": "ec2c320f932e730607aff8052c44183cf3ecb072",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.0|^9.3"
@@ -15011,22 +15012,22 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/macroable/issues",
-                "source": "https://github.com/spatie/macroable/tree/1.0.1"
+                "source": "https://github.com/spatie/macroable/tree/2.0.0"
             },
-            "time": "2020-11-03T10:15:05+00:00"
+            "time": "2021-03-26T22:39:02+00:00"
         },
         {
             "name": "spatie/ray",
-            "version": "1.32.0",
+            "version": "1.32.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "e144fa04fdd737c54fc98c32c4b897df1b622d3b"
+                "reference": "73baa5d216865480f0c67cac5cb4dedd1a00f4f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/e144fa04fdd737c54fc98c32c4b897df1b622d3b",
-                "reference": "e144fa04fdd737c54fc98c32c4b897df1b622d3b",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/73baa5d216865480f0c67cac5cb4dedd1a00f4f1",
+                "reference": "73baa5d216865480f0c67cac5cb4dedd1a00f4f1",
                 "shasum": ""
             },
             "require": {
@@ -15076,7 +15077,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.32.0"
+                "source": "https://github.com/spatie/ray/tree/1.32.1"
             },
             "funding": [
                 {
@@ -15088,7 +15089,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-11-24T15:02:10+00:00"
+            "time": "2021-11-30T15:52:12+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -15211,21 +15212,21 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v5.3.4",
+            "version": "v5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "b24c6a92c6db316fee69e38c80591e080e41536c"
+                "reference": "208ef96122bfed82a8f3a61458a07113a08bdcfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/b24c6a92c6db316fee69e38c80591e080e41536c",
-                "reference": "b24c6a92c6db316fee69e38c80591e080e41536c",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/208ef96122bfed82a8f3a61458a07113a08bdcfe",
+                "reference": "208ef96122bfed82a8f3a61458a07113a08bdcfe",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
-                "symfony/service-contracts": "^1.0|^2"
+                "symfony/service-contracts": "^1|^2|^3"
             },
             "type": "library",
             "autoload": {
@@ -15253,7 +15254,7 @@
             "description": "Provides a way to profile code",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/stopwatch/tree/v5.3.4"
+                "source": "https://github.com/symfony/stopwatch/tree/v5.4.0"
             },
             "funding": [
                 {
@@ -15269,7 +15270,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-10T08:58:57+00:00"
+            "time": "2021-11-23T10:19:22+00:00"
         },
         {
             "name": "symfony/yaml",
