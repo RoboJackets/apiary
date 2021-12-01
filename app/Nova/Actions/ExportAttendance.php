@@ -9,6 +9,7 @@ namespace App\Nova\Actions;
 use App\Models\Attendance;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
@@ -52,14 +53,14 @@ class ExportAttendance extends Action
     {
         $hash = hash('sha256', random_bytes(64));
 
-        $file = 'attendance-reports/'.$hash.'.csv';
+        $file = 'nova-exports/'.$hash.'.csv';
 
         // Redundant collect() to make Phan happy
         Storage::append($file, Attendance::formatAsCsv(collect($models)));
 
-        return Action::download(
-            route('api.v1.attendancereport.show', ['hash' => $hash]),
-            'RoboJacketsAttendance.csv'
-        );
+        // Generate signed URL to pass to backend to facilitate file download
+        $url = URL::signedRoute('api.v1.nova.export', ['file' => $hash.'.csv'], now()->addMinutes(5));
+
+        return Action::download($url, 'RoboJacketsAttendance.csv');
     }
 }
