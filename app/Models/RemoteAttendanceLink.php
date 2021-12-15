@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
  * Represents a remote attendance link.
@@ -96,6 +97,24 @@ class RemoteAttendanceLink extends Model
     public static string $redirectRegex = '/^(https?:\/\/)?((gatech\.)?bluejeans\.com\/[0-9]+(\/[0-9]+)?|primetime\.'
         .'bluejeans\.com\/a2m\/live-event\/[a-z]+|meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
         .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+)(\?[^@]*)?$/';
+
+    /**
+     * Given a user-submitted URL matching $redirectRegex, return a normalized URL that can be used for redirects.
+     */
+    public static function normalizeRedirectUrl(string $url): string
+    {
+        $url = Str::lower($url);
+
+        if (Str::startsWith($url, 'https://')) {
+            return $url;
+        }
+
+        if (Str::startsWith($url, 'http://')) {
+            return Str::replaceFirst($url, 'http://', 'https://');
+        }
+
+        return 'https://'.$url;
+    }
 
     /**
      * Get all of the owning attendable models.

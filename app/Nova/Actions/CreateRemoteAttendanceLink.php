@@ -46,7 +46,7 @@ class CreateRemoteAttendanceLink extends Action
         $link->attendable_id = $attendable->id;
         $link->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $link->expires_at = $expiration;
-        $link->redirect_url = $fields->redirect_url;
+        $link->redirect_url = RemoteAttendanceLink::normalizeRedirectUrl($redirect_url);
         $link->note = $fields->purpose;
         $link->save();
         $link->refresh(); // Update id field

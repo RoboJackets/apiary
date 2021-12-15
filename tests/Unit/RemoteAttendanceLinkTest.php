@@ -91,10 +91,22 @@ class RemoteAttendanceLinkTest extends TestCase
             $this->assertMatchesRegularExpression(RemoteAttendanceLink::$redirectRegex, $url);
             $this->assertMatchesRegularExpression(RemoteAttendanceLink::$redirectRegex, 'http://'.$url);
             $this->assertMatchesRegularExpression(RemoteAttendanceLink::$redirectRegex, 'https://'.$url);
+            $this->assertDoesNotMatchRegularExpression(RemoteAttendanceLink::$redirectRegex, 'ftp://'.$url);
+
+            $normalized = RemoteAttendanceLink::normalizeRedirectUrl($url);
+            $this->assertStringStartsWith('https://', $normalized);
+            $this->assertThat(
+                $normalized,
+                $this->logicalNot($this->stringContains('http://'))
+            );
         } else {
             $this->assertDoesNotMatchRegularExpression(RemoteAttendanceLink::$redirectRegex, $url);
             $this->assertDoesNotMatchRegularExpression(RemoteAttendanceLink::$redirectRegex, 'http://'.$url);
             $this->assertDoesNotMatchRegularExpression(RemoteAttendanceLink::$redirectRegex, 'https://'.$url);
+
+            // Ensure it doesn't somehow get fixed by the normalize function.
+            $normalized = RemoteAttendanceLink::normalizeRedirectUrl($url);
+            $this->assertDoesNotMatchRegularExpression(RemoteAttendanceLink::$redirectRegex, $url);
         }
     }
 }
