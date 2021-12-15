@@ -81,7 +81,7 @@ class RemoteAttendanceLink extends Model
 
     /**
      * A regular expression for acceptable redirect URLs for normal users to enter.
-     * The regex will match any of the following:
+     * The regex will match any of the following, with the https, http, or no schema:
      * https://bluejeans.com/<digits, optional query string>
      * https://bluejeans.com/<digits>/<digits, optional query string>
      * https://gatech.bluejeans.com/<digits, optional query string>
@@ -93,7 +93,7 @@ class RemoteAttendanceLink extends Model
      *
      * @phan-suppress PhanReadOnlyPublicProperty
      */
-    public static string $redirectRegex = '/^https:\/\/((gatech\.)?bluejeans\.com\/[0-9]+(\/[0-9]+)?|primetime\.'
+    public static string $redirectRegex = '/^(https?:\/\/)?((gatech\.)?bluejeans\.com\/[0-9]+(\/[0-9]+)?|primetime\.'
         .'bluejeans\.com\/a2m\/live-event\/[a-z]+|meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
         .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+)(\?[^@]*)?$/';
 
