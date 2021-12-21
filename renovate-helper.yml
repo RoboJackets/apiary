@@ -94,7 +94,6 @@ jobs:
 
   - get: pull-request
     passed: [reconfigure]
-    trigger: true
 
   - task: composer-update
     config:
