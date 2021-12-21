@@ -74,7 +74,6 @@ jobs:
       inputs: []
 
     - get: pull-request
-      trigger: true
 
   - load_var: pr-branch-two
     file: pull-request/.git/resource/head_name
