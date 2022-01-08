@@ -51,7 +51,7 @@
         "vyuldashev/nova-permission": "2.11.1"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "2.10.0",
+        "barryvdh/laravel-ide-helper": "2.11.0",
         "beyondcode/laravel-dump-server": "1.7.0",
         "facade/ignition": "2.17.4",
         "fakerphp/faker": "1.17.0",
