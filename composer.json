@@ -58,7 +58,7 @@
         "filp/whoops": "2.14.5",
         "mockery/mockery": "1.4.4",
         "mxl/laravel-job": "1.2.0",
-        "nunomaduro/collision": "5.10.0",
+        "nunomaduro/collision": "5.11.0",
         "nunomaduro/larastan": "0.7.15",
         "phan/phan": "4.1.0",
         "phpstan/extension-installer": "1.1.0",
