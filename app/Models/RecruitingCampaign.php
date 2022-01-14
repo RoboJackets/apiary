@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaign withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaign withTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at

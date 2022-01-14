@@ -116,6 +116,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read bool $is_student
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
  * @method static Builder|User active()

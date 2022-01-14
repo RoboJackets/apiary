@@ -28,6 +28,7 @@ use Illuminate\Database\Query\JoinClause;
  * @property-read int|null $payment_count
  * @property-read \App\Models\Travel $travel
  * @property-read \App\Models\User $user
+ *
  * @method static Builder|TravelAssignment newModelQuery()
  * @method static Builder|TravelAssignment newQuery()
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment onlyTrashed()

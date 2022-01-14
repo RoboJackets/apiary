@@ -7,7 +7,7 @@ namespace App\Models;
 use Laravel\Passport\Token;
 
 /**
- * App\Models\OAuth2AccessToken
+ * Represents a token that can be used to access the API.
  *
  * @property string $id
  * @property int|null $user_id
@@ -20,6 +20,7 @@ use Laravel\Passport\Token;
  * @property \Illuminate\Support\Carbon|null $expires_at
  * @property-read \App\Models\OAuth2Client|null $client
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken query()

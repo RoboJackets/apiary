@@ -29,6 +29,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read \App\Models\RecruitingCampaign $recruitingCampaign
  * @property-read \App\Models\RecruitingVisit|null $recruitingVisit
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient newQuery()
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient onlyTrashed()

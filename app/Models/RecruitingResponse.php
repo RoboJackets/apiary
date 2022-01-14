@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\RecruitingVisit $recruitingVisit
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingResponse newQuery()
  * @method static \Illuminate\Database\Query\Builder|RecruitingResponse onlyTrashed()

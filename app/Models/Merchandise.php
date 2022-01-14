@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $jankForNova
  * @property-read int|null $jank_for_nova_count
  * @property-read \App\Models\User $providedBy
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
  * @method static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()

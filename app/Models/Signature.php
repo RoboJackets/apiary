@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $upload_timestamp
  * @property-read \App\Models\User|null $uploadedBy
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Signature query()

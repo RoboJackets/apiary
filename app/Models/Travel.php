@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
  * @property-read \App\Models\User $primaryContact
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Travel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Travel newQuery()
  * @method static \Illuminate\Database\Query\Builder|Travel onlyTrashed()

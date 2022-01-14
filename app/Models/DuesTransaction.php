@@ -36,6 +36,7 @@ use Illuminate\Database\Query\JoinClause;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $jankForNova
  * @property-read int|null $jank_for_nova_count
  * @property-read \App\Models\User|null $providedBy
+ *
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction current()
  * @method static \Database\Factories\DuesTransactionFactory factory(...$parameters)

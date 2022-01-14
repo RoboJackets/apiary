@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Rsvp withoutTrashed()
  * @method static \Illuminate\Database\Query\Builder|Rsvp withTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
  * @property ?int $user_id the user that RSVPed to this event, if available
  * @property ?string $ip_address the IP that was used to submit the RSVP
  * @property ?string $response yes or no

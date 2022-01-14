@@ -24,6 +24,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read \App\Models\User $creator
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|NotificationTemplate newQuery()
  * @method static \Illuminate\Database\Query\Builder|NotificationTemplate onlyTrashed()
