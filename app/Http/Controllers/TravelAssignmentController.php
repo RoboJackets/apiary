@@ -72,23 +72,33 @@ class TravelAssignmentController extends Controller
             [
                 config(
                     'docusign.travel_authority_request.fields.state_contract_airline'
-                ) => $assignment->travel->tar_transportation_mode['state_contract_airline'] ? 'x' : 0,
+                ) => ($assignment->travel->tar_transportation_mode ?? [
+                    'state_contract_airline' => false,
+                ])['state_contract_airline'] ? 'x' : 0,
 
                 config(
                     'docusign.travel_authority_request.fields.non_contract_airline'
-                ) => $assignment->travel->tar_transportation_mode['non_contract_airline'] ? 'x' : 0,
+                ) => ($assignment->travel->tar_transportation_mode ?? [
+                    'non_contract_airline' => false,
+                ])['non_contract_airline'] ? 'x' : 0,
 
                 config(
                     'docusign.travel_authority_request.fields.personal_automobile'
-                ) => $assignment->travel->tar_transportation_mode['personal_automobile'] ? 'x' : 0,
+                ) => ($assignment->travel->tar_transportation_mode ?? [
+                    'personal_automobile' => false,
+                ])['personal_automobile'] ? 'x' : 0,
 
                 config(
                     'docusign.travel_authority_request.fields.rental_vehicle'
-                ) => $assignment->travel->tar_transportation_mode['rental_vehicle'] ? 'x' : 0,
+                ) => ($assignment->travel->tar_transportation_mode ?? [
+                    'rental_vehicle' => false,
+                ])['rental_vehicle'] ? 'x' : 0,
 
                 config(
                     'docusign.travel_authority_request.fields.other'
-                ) => $assignment->travel->tar_transportation_mode['other'] ? 'x' : 0,
+                ) => ($assignment->travel->tar_transportation_mode ?? [
+                    'other' => false,
+                ])['other'] ? 'x' : 0,
 
                 config('docusign.travel_authority_request.fields.itinerary') => $assignment->travel->tar_itinerary,
                 config('docusign.travel_authority_request.fields.purpose') => $assignment->travel->tar_purpose,
@@ -102,11 +112,11 @@ class TravelAssignmentController extends Controller
                 ) => $assignment->travel->tar_registration,
 
                 config('docusign.travel_authority_request.fields.total_cost') => (
-                    $assignment->travel->tar_airfare +
-                    $assignment->travel->tar_other_trans +
-                    $assignment->travel->tar_mileage +
-                    $assignment->travel->tar_lodging +
-                    $assignment->travel->tar_registration
+                    ($assignment->travel->tar_airfare ?? 0) +
+                    ($assignment->travel->tar_other_trans ?? 0) +
+                    ($assignment->travel->tar_mileage ?? 0) +
+                    ($assignment->travel->tar_lodging ?? 0) +
+                    ($assignment->travel->tar_registration ?? 0)
                 ),
 
                 config(
