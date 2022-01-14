@@ -72,7 +72,12 @@ class TravelAssignment extends Resource
                 ->searchable(),
 
             Boolean::make('Documents Received')
-                ->sortable(),
+                ->sortable()
+                ->hideWhenCreating(),
+
+            Boolean::make('Travel Authority Request Received', 'tar_received')
+                ->sortable()
+                ->hideWhenCreating(),
 
             Currency::make('Payment Due', function (): ?int {
                 if ($this->is_paid) {

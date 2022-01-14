@@ -36,7 +36,7 @@ This is a pretty conventional Laravel project, so we recommend following [the of
 
 You can install most of the required php extensions with:
 ```
-$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath php-curl php-gd php-zip php-ldap
+$ sudo apt install php php-common php-cli php-mysql php-mbstring php-json php-opcache php-xml php-bcmath php-curl php-gd php-zip php-ldap php-uuid
 ```
 
 On certain Linux flavors, you may need to manually install the PHP `sodium` extension, which is used by Laravel Passport's

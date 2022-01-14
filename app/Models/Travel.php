@@ -76,6 +76,7 @@ class Travel extends Model
     protected $casts = [
         'departure_date' => 'date',
         'return_date' => 'date',
+        'tar_transportation_mode' => 'array',
     ];
 
     /**
