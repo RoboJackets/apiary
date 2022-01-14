@@ -14,15 +14,15 @@ class AddTravelAuthorityRequestFieldsToTravel extends Migration
     public function up(): void
     {
         Schema::table('travel', static function (Blueprint $table): void {
-            $table->boolean('tar_required');
-            $table->json('tar_transportation_mode');
-            $table->string('tar_itinerary');
-            $table->string('tar_purpose');
-            $table->unsignedInteger('tar_airfare');
-            $table->unsignedInteger('tar_other_trans');
-            $table->unsignedInteger('tar_lodging');
-            $table->unsignedInteger('tar_mileage');
-            $table->unsignedInteger('tar_registration');
+            $table->boolean('tar_required')->nullable();
+            $table->json('tar_transportation_mode')->nullable();
+            $table->string('tar_itinerary')->nullable();
+            $table->string('tar_purpose')->nullable();
+            $table->unsignedInteger('tar_airfare')->nullable();
+            $table->unsignedInteger('tar_other_trans')->nullable();
+            $table->unsignedInteger('tar_lodging')->nullable();
+            $table->unsignedInteger('tar_mileage')->nullable();
+            $table->unsignedInteger('tar_registration')->nullable();
         });
     }
 
