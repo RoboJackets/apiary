@@ -28,7 +28,6 @@ use Illuminate\Support\Str;
  * @property-read Model|\Barryvdh\LaravelIdeHelper\Eloquent $attendable
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newQuery()
  * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink onlyTrashed()
@@ -45,7 +44,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withTrashed()
  * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RemoteAttendanceLink extends Model
 {

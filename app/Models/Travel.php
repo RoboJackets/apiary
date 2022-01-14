@@ -26,10 +26,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $tar_required
+ * @property array $tar_transportation_mode
+ * @property string $tar_itinerary
+ * @property string $tar_purpose
+ * @property int $tar_airfare
+ * @property int $tar_other_trans
+ * @property int $tar_lodging
+ * @property int $tar_mileage
+ * @property int $tar_registration
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
  * @property-read \App\Models\User $primaryContact
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Travel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Travel newQuery()
  * @method static \Illuminate\Database\Query\Builder|Travel onlyTrashed()
@@ -49,7 +57,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
- *
+ * @method static Builder|Travel whereTarAirfare($value)
+ * @method static Builder|Travel whereTarItinerary($value)
+ * @method static Builder|Travel whereTarLodging($value)
+ * @method static Builder|Travel whereTarMileage($value)
+ * @method static Builder|Travel whereTarOtherTrans($value)
+ * @method static Builder|Travel whereTarPurpose($value)
+ * @method static Builder|Travel whereTarRegistration($value)
+ * @method static Builder|Travel whereTarRequired($value)
+ * @method static Builder|Travel whereTarTransportationMode($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Travel extends Model

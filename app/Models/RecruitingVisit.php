@@ -30,7 +30,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingResponse> $recruitingResponses
  * @property-read int|null $recruiting_responses_count
  * @property-read \App\Models\User|null $user
- *
  * @method static \Database\Factories\RecruitingVisitFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit newQuery()
@@ -46,7 +45,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit whereVisitToken($value)
  * @method static \Illuminate\Database\Query\Builder|RecruitingVisit withTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingVisit withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingVisit extends Model
 {

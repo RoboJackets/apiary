@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $rank_order
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read int|null $members_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding query()
@@ -26,7 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereRankOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereUpdatedAt($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ClassStanding extends Model
 {

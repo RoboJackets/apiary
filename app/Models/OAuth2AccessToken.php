@@ -6,6 +6,34 @@ namespace App\Models;
 
 use Laravel\Passport\Token;
 
+/**
+ * App\Models\OAuth2AccessToken
+ *
+ * @property string $id
+ * @property int|null $user_id
+ * @property string $client_id
+ * @property string|null $name
+ * @property array|null $scopes
+ * @property bool $revoked
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $expires_at
+ * @property-read \App\Models\OAuth2Client|null $client
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken query()
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereRevoked($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereScopes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereUserId($value)
+ * @mixin \Eloquent
+ */
 class OAuth2AccessToken extends Token
 {
     /**

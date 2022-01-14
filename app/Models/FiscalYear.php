@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $merchandise_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
  * @property-read int|null $packages_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear query()
@@ -26,7 +25,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereEndingYear($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereUpdatedAt($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class FiscalYear extends Model
 {

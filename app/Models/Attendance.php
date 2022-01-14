@@ -34,8 +34,7 @@ use Illuminate\Support\Collection;
  * @method static Builder|Attendance whereSource($value)
  * @method static Builder|Attendance whereUpdatedAt($value)
  * @method static Builder|Attendance whereRemoteAttendanceLinkId($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
- *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  * @property \Carbon\Carbon $created_at when the model was created
  * @property \Carbon\Carbon $updated_at when the model was updated
  * @property \Illuminate\Support\Carbon|null $deleted_at

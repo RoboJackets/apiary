@@ -35,7 +35,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $remote_attendance_links_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
  * @property-read int|null $rsvps_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
  * @method static \Illuminate\Database\Query\Builder|Event onlyTrashed()
@@ -53,7 +52,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Event withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Event withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Event extends Model
 {

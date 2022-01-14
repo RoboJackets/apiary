@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string|null $provided_by_name
  * @property-read \App\Models\User|null $providedBy
- *
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise query()
@@ -30,7 +29,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereUpdatedAt($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesTransactionMerchandise extends Pivot
 {

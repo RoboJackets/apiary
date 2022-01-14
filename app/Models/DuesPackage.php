@@ -46,7 +46,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read int|null $merchandise_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
- *
  * @method static Builder|DuesPackage accessActive()
  * @method static Builder|DuesPackage active()
  * @method static Builder|DuesPackage availableForPurchase()
@@ -72,7 +71,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|DuesPackage whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesPackage extends Model
 {

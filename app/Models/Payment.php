@@ -44,7 +44,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read string $method_presentation
  * @property-read Model|\Barryvdh\LaravelIdeHelper\Eloquent $payable
  * @property-read \App\Models\User|null $user
- *
  * @method static \Database\Factories\PaymentFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
@@ -77,7 +76,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Payment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Payment extends Model
 {

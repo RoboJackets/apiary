@@ -22,12 +22,12 @@ use Illuminate\Database\Query\JoinClause;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $tar_received
  * @property-read bool $is_paid
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
  * @property-read \App\Models\Travel $travel
  * @property-read \App\Models\User $user
- *
  * @method static Builder|TravelAssignment newModelQuery()
  * @method static Builder|TravelAssignment newQuery()
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment onlyTrashed()
@@ -42,7 +42,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|TravelAssignment whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment withoutTrashed()
- *
+ * @method static Builder|TravelAssignment whereTarReceived($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class TravelAssignment extends Model

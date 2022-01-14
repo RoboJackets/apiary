@@ -51,7 +51,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read int|null $remote_attendance_links_count
- *
  * @method static Builder|Team attendable()
  * @method static Builder|Team newModelQuery()
  * @method static Builder|Team newQuery()
@@ -78,7 +77,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|Team whereVisibleOnKiosk($value)
  * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Team extends Model
 {

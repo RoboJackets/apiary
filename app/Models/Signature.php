@@ -33,7 +33,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $upload_timestamp
  * @property-read \App\Models\User|null $uploadedBy
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Signature query()
@@ -56,7 +55,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUploadTimestamp($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Signature extends Model
 {

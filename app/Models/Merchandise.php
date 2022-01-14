@@ -23,7 +23,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $packages_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
- *
+ * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $jankForNova
+ * @property-read int|null $jank_for_nova_count
+ * @property-read \App\Models\User $providedBy
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
  * @method static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()
@@ -36,7 +39,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Merchandise withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Merchandise withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Merchandise extends Model
 {
