@@ -33,7 +33,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $tar_airfare
  * @property int $tar_other_trans
  * @property int $tar_lodging
- * @property int $tar_mileage
  * @property int $tar_registration
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
@@ -61,7 +60,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder|Travel whereTarAirfare($value)
  * @method static Builder|Travel whereTarItinerary($value)
  * @method static Builder|Travel whereTarLodging($value)
- * @method static Builder|Travel whereTarMileage($value)
  * @method static Builder|Travel whereTarOtherTrans($value)
  * @method static Builder|Travel whereTarPurpose($value)
  * @method static Builder|Travel whereTarRegistration($value)

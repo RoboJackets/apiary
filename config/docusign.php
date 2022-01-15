@@ -19,7 +19,6 @@ return [
             'purpose' => 'Text 981c407e-cf08-4eb9-bd8f-50404eeda087',
             'airfare_cost' => 'Text 5c589e88-c52e-4951-8c5d-9dd361c6d160',
             'other_cost' => 'Text 178e7427-ee2c-4dc4-95da-0e8bf816584c',
-            'mileage_cost' => 'Text d7bce37c-8f8f-481c-8997-3e9509a206ce',
             'lodging_cost' => 'Text 5125ab17-bc84-47af-82d8-3e220e8d7e85',
             'registration_cost' => 'Text 0e4ce0f9-df5b-44ce-b7f3-4e78d9e124e8',
             'total_cost' => 'Text 3398924e-41bd-4bd9-bbca-27d8146629bd',

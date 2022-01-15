@@ -186,17 +186,6 @@ class Travel extends Resource
                         )
                         ->hideFromIndex(),
 
-                    Currency::make('Mileage Cost', 'tar_mileage')
-                        ->required()
-                        ->rules('required', 'integer')
-                        ->min(1)
-                        ->max(1000)
-                        ->help(
-                            'Enter the estimated rental vehicle or mileage cost per person in this field.'
-                            .' If you are not driving, enter 0.'
-                        )
-                        ->hideFromIndex(),
-
                     Currency::make('Other Transportation Cost', 'tar_other_trans')
                         ->required()
                         ->rules('required', 'integer')
