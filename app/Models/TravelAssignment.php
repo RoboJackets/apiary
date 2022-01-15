@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
+
 namespace App\Models;
 
 use App\Traits\GetMorphClassStatic;
@@ -177,5 +179,83 @@ class TravelAssignment extends Model
         $array['updated_at_unix'] = $this->updated_at->getTimestamp();
 
         return $array;
+    }
+
+    public function getTravelAuthorityRequestUrlAttribute(): string
+    {
+        return config('docusign.travel_authority_request.powerform_url').'&'.http_build_query(
+            [
+                config(
+                    'docusign.travel_authority_request.fields.state_contract_airline'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'state_contract_airline' => false,
+                ])['state_contract_airline'] ? 'x' : 0,
+
+                config(
+                    'docusign.travel_authority_request.fields.non_contract_airline'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'non_contract_airline' => false,
+                ])['non_contract_airline'] ? 'x' : 0,
+
+                config(
+                    'docusign.travel_authority_request.fields.personal_automobile'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'personal_automobile' => false,
+                ])['personal_automobile'] ? 'x' : 0,
+
+                config(
+                    'docusign.travel_authority_request.fields.rental_vehicle'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'rental_vehicle' => false,
+                ])['rental_vehicle'] ? 'x' : 0,
+
+                config(
+                    'docusign.travel_authority_request.fields.other'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'other' => false,
+                ])['other'] ? 'x' : 0,
+
+                config('docusign.travel_authority_request.fields.itinerary') => $this->travel->tar_itinerary,
+                config('docusign.travel_authority_request.fields.purpose') => $this->travel->tar_purpose,
+                config('docusign.travel_authority_request.fields.airfare_cost') => $this->travel->tar_airfare,
+                config('docusign.travel_authority_request.fields.other_cost') => $this->travel->tar_other_trans,
+                config('docusign.travel_authority_request.fields.lodging_cost') => $this->travel->tar_lodging,
+
+                config(
+                    'docusign.travel_authority_request.fields.registration_cost'
+                ) => $this->travel->tar_registration,
+
+                config('docusign.travel_authority_request.fields.total_cost') => (
+                    ($this->travel->tar_airfare ?? 0) +
+                    ($this->travel->tar_other_trans ?? 0) +
+                    ($this->travel->tar_lodging ?? 0) +
+                    ($this->travel->tar_registration ?? 0)
+                ),
+
+                config(
+                    'docusign.travel_authority_request.fields.departure_date'
+                ) => $this->travel->departure_date->toDateString(),
+
+                config(
+                    'docusign.travel_authority_request.fields.return_date'
+                ) => $this->travel->return_date->toDateString(),
+
+                config(
+                    'docusign.travel_authority_request.traveler_name'
+                ).'_UserName' => $this->user->name,
+
+                config(
+                    'docusign.travel_authority_request.traveler_name'
+                ).'_Email' => $this->user->uid.'@gatech.edu',
+
+                config(
+                    'docusign.travel_authority_request.treasurer_name'
+                ).'_UserName' => config('docusign.treasurer_name'),
+
+                config(
+                    'docusign.travel_authority_request.treasurer_name'
+                ).'_Email' => config('docusign.treasurer_account'),
+            ]
+        );
     }
 }
