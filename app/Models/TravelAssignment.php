@@ -189,31 +189,31 @@ class TravelAssignment extends Model
                     'docusign.travel_authority_request.fields.state_contract_airline'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'state_contract_airline' => false,
-                ])['state_contract_airline'] ? 'x' : 0,
+                ])['state_contract_airline'] ? 'x' : '',
 
                 config(
                     'docusign.travel_authority_request.fields.non_contract_airline'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'non_contract_airline' => false,
-                ])['non_contract_airline'] ? 'x' : 0,
+                ])['non_contract_airline'] ? 'x' : '',
 
                 config(
                     'docusign.travel_authority_request.fields.personal_automobile'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'personal_automobile' => false,
-                ])['personal_automobile'] ? 'x' : 0,
+                ])['personal_automobile'] ? 'x' : '',
 
                 config(
                     'docusign.travel_authority_request.fields.rental_vehicle'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'rental_vehicle' => false,
-                ])['rental_vehicle'] ? 'x' : 0,
+                ])['rental_vehicle'] ? 'x' : '',
 
                 config(
                     'docusign.travel_authority_request.fields.other'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'other' => false,
-                ])['other'] ? 'x' : 0,
+                ])['other'] ? 'x' : '',
 
                 config('docusign.travel_authority_request.fields.itinerary') => $this->travel->tar_itinerary,
                 config('docusign.travel_authority_request.fields.purpose') => $this->travel->tar_purpose,
