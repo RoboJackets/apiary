@@ -167,7 +167,7 @@ class Travel extends Resource
                     Currency::make('Airfare Cost', 'tar_airfare')
                         ->required()
                         ->rules('required', 'integer')
-                        ->min(1)
+                        ->min(0)
                         ->max(1000)
                         ->help(
                             'Enter the estimated airfare cost per person in this field.'
@@ -178,7 +178,7 @@ class Travel extends Resource
                     Currency::make('Lodging Cost', 'tar_lodging')
                         ->required()
                         ->rules('required', 'integer')
-                        ->min(1)
+                        ->min(0)
                         ->max(1000)
                         ->help(
                             'Enter the estimated lodging cost per person in this field.'
@@ -189,7 +189,7 @@ class Travel extends Resource
                     Currency::make('Other Transportation Cost', 'tar_other_trans')
                         ->required()
                         ->rules('required', 'integer')
-                        ->min(1)
+                        ->min(0)
                         ->max(1000)
                         ->help(
                             'Enter the estimated cost for other transportation per person in this field.'.
@@ -200,7 +200,7 @@ class Travel extends Resource
                     Currency::make('Registration Cost', 'tar_registration')
                         ->required()
                         ->rules('required', 'integer')
-                        ->min(1)
+                        ->min(0)
                         ->max(1000)
                         ->help(
                             'Enter the estimated cost for registration per person in this field.'.
