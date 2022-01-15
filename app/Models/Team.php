@@ -78,7 +78,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|Team whereVisibleOnKiosk($value)
  * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Team extends Model
 {

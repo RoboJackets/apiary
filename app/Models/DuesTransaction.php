@@ -32,6 +32,10 @@ use Illuminate\Database\Query\JoinClause;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
  * @property-read \App\Models\User $user
+ * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $jankForNova
+ * @property-read int|null $jank_for_nova_count
+ * @property-read \App\Models\User|null $providedBy
  *
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction current()
@@ -51,7 +55,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|DuesTransaction whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesTransaction extends Model
 {

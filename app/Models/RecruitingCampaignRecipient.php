@@ -46,7 +46,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingCampaignRecipient whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingCampaignRecipient withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingCampaignRecipient extends Model
 {

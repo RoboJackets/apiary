@@ -9,11 +9,14 @@ use App\Nova\Metrics\DocumentsReceivedForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Panel;
 
 /**
  * A Nova resource for travel.
@@ -115,9 +118,97 @@ class Travel extends Resource
 
             Markdown::make('Documents Required')
                 ->help(
-                    'Describe what documents will be required to travel. This may include a Travel Authorization '
-                    .'Request form or documentation required by the event.'
+                    'Describe what documents will be required to travel. This may include documentation required'
+                    .' by the event. Populating this field will require each traveler\'s documentation status to be'
+                    .' marked on their travel assignment.'
                 ),
+
+            new Panel(
+                'Travel Authority Request',
+                [
+                    Boolean::make('TAR Required', 'tar_required')
+                        ->help(
+                            'Check this box if Travel Authority Requests need to be submitted to the Institute.'
+                            .' Each traveler will need to submit one individually, and the treasurer will update'
+                            .' the status on each travel assignment as they are submitted.'
+                        )
+                        ->hideFromIndex(),
+
+                    BooleanGroup::make('Transportation Mode', 'tar_transportation_mode')
+                        ->options(
+                            [
+                                'state_contract_airline' => 'State Contract Airline',
+                                'non_contract_airline' => 'Non-Contract Airline',
+                                'personal_automobile' => 'Personal Automobile',
+                                'rental_vehicle' => 'Rental Vehicle',
+                                'other' => 'Other',
+                            ]
+                        )->help(
+                            'Select all transportation modes that will be used. This will be populated on TAR forms.'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Itinerary', 'tar_itinerary')
+                        ->required()
+                        ->rules('required', 'max:255')
+                        ->help(
+                            'This will be populated on TAR forms.'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Purpose', 'tar_purpose')
+                        ->required()
+                        ->rules('required', 'max:255')
+                        ->help(
+                            'This will be populated on TAR forms.'
+                        )
+                        ->hideFromIndex(),
+
+                    Currency::make('Airfare Cost', 'tar_airfare')
+                        ->required()
+                        ->rules('required', 'integer')
+                        ->min(0)
+                        ->max(1000)
+                        ->help(
+                            'Enter the estimated airfare cost per person in this field.'
+                            .' If you are not traveling by air, enter 0.'
+                        )
+                        ->hideFromIndex(),
+
+                    Currency::make('Lodging Cost', 'tar_lodging')
+                        ->required()
+                        ->rules('required', 'integer')
+                        ->min(0)
+                        ->max(1000)
+                        ->help(
+                            'Enter the estimated lodging cost per person in this field.'
+                            .' If you are not staying overnight, enter 0.'
+                        )
+                        ->hideFromIndex(),
+
+                    Currency::make('Other Transportation Cost', 'tar_other_trans')
+                        ->required()
+                        ->rules('required', 'integer')
+                        ->min(0)
+                        ->max(1000)
+                        ->help(
+                            'Enter the estimated cost for other transportation per person in this field.'.
+                            ' If this is not applicable, enter 0.'
+                        )
+                        ->hideFromIndex(),
+
+                    Currency::make('Registration Cost', 'tar_registration')
+                        ->required()
+                        ->rules('required', 'integer')
+                        ->min(0)
+                        ->max(1000)
+                        ->help(
+                            'Enter the estimated cost for registration per person in this field.'.
+                            ' If this is not applicable, enter 0.'
+                        )
+                        ->hideFromIndex(),
+                ]
+            ),
 
             HasMany::make('Assignments', 'assignments', TravelAssignment::class),
 

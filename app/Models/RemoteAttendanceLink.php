@@ -45,7 +45,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withTrashed()
  * @method static \Illuminate\Database\Query\Builder|RemoteAttendanceLink withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RemoteAttendanceLink extends Model
 {

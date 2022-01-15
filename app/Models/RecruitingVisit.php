@@ -46,7 +46,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Eloquent\Builder|RecruitingVisit whereVisitToken($value)
  * @method static \Illuminate\Database\Query\Builder|RecruitingVisit withTrashed()
  * @method static \Illuminate\Database\Query\Builder|RecruitingVisit withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class RecruitingVisit extends Model
 {

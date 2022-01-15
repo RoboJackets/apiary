@@ -56,7 +56,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUploadTimestamp($value)
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Signature extends Model
 {

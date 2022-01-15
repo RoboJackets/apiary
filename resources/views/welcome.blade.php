@@ -197,6 +197,21 @@
                 </div>
             </div>
         @endif
+        @if($needTravelAuthorityRequest)
+            <div class="col-sm-6 com-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Travel Authority Request Required
+                        </h4>
+                        <p class="card-text">
+                            You need to submit a Travel Authority Request for {{ $travelName }}.
+                        </p>
+                        <a href="{{ $travelAuthorityRequestUrl }}">Submit Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
+                    </div>
+                </div>
+            </div>
+        @endif
         @endif
     </div>
 

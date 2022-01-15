@@ -111,6 +111,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2Client> $clients
+ * @property-read int|null $clients_count
+ * @property-read bool $is_student
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
+ * @property-read int|null $tokens_count
  *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
@@ -169,7 +174,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereUpdatedAt($value)
  * @method static QueryBuilder|User withTrashed()
  * @method static QueryBuilder|User withoutTrashed()
- * @mixin         \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class User extends Authenticatable
 {
