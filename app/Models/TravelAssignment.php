@@ -250,11 +250,11 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.travel_authority_request.treasurer_name'
-                ).'_UserName' => config('docusign.treasurer_name'),
+                ).'_UserName' => $this->travel->primaryContact->name,
 
                 config(
                     'docusign.travel_authority_request.treasurer_name'
-                ).'_Email' => config('docusign.treasurer_account'),
+                ).'_Email' => $this->travel->primaryContact->uid.'@gatech.edu',
             ]
         );
     }

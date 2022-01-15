@@ -8,7 +8,7 @@ return [
     'travel_authority_request' => [
         'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c36ffa0c-05d8-44fa-882f-c7ed0ad8f12c&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',
         'traveler_name' => 'Traveler',
-        'treasurer_name' => 'Treasurer',
+        'treasurer_name' => 'Primary Contact',
         'fields' => [
             'state_contract_airline' => 'Checkbox 3ec2b0f3-144c-42ac-87a1-d32a8a3af4b2',
             'non_contract_airline' => 'Checkbox 7c086f5c-4ca2-4143-95dd-d79891cc0271',
