@@ -50,8 +50,8 @@ Travel | {{ config('app.name') }}
                 </tr>
                 @endif
               </tbody>
-            </table
->        <h2>Action Items</h2>
+            </table>
+            <h2>Action Items</h2>
         @if($travel->documents_required && !$documents_received)
             <p>Please provide the following documents to {{ $travel->primaryContact->full_name }}:</p>
             <td>@markdown($travel->documents_required)</td>
