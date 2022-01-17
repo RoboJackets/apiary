@@ -65,7 +65,7 @@
         "psalm/plugin-laravel": "1.4.6",
         "robojackets/static-analysis": "1.4",
         "slevomat/coding-standard": "6.4.1",
-        "spatie/ray": "1.33.0"
+        "spatie/ray": "1.33.1"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
