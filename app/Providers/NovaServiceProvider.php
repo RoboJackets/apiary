@@ -20,6 +20,7 @@ use App\Nova\Metrics\MembersByFiscalYear;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\PaymentsPerDay;
 use App\Nova\Metrics\TransactionsByDuesPackage;
+use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Nova\Tools\AttendanceReport;
 use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
@@ -108,6 +109,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }
 
             if (
+                null !== $travel->tar_required
+                && $travel->assignments()->where('tar_received', false)->exists()
+            ) {
+                $should_include = true;
+            }
+
+            if (
                 $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
                     $join->on('travel_assignments.id', '=', 'payable_id')
                          ->where('payments.amount', '>', 0)
@@ -124,6 +132,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             if (null !== $travel->documents_required) {
                 $cards[] = new DocumentsReceivedForTravel($travel->id);
+            }
+
+            if (null !== $travel->tar_required) {
+                $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
             }
 
             $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(static function (Request $request): bool {

@@ -7,6 +7,7 @@ namespace App\Nova;
 use App\Models\Travel as AppModelsTravel;
 use App\Nova\Metrics\DocumentsReceivedForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
+use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -235,6 +236,12 @@ class Travel extends Resource
 
         if ($requires_documents) {
             $cards[] = (new DocumentsReceivedForTravel())->onlyOnDetail();
+        }
+
+        $requires_tar = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;
+
+        if ($requires_tar) {
+            $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();
         }
 
         return $cards;

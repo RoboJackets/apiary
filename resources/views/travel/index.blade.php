@@ -60,7 +60,7 @@ Travel | {{ config('app.name') }}
         @if($travel->documents_required && !$documents_received)
         <hr>
         @endif
-            <p>Please <a href="{{ $tar_url }}">click here</a> to submit a Travel Authority Request. Your completed form will be submitted to the treasurer for review, and this item will be cleared manually once approved.</p>
+            <p>Please <a href="{{ $tar_url }}">click here</a> to submit a Travel Authority Request. Your completed form will be submitted to {{ $travel->primaryContact->full_name }} for review, and this item will be cleared manually once approved.</p>
         @endif
         @if(!$paid)
 

@@ -242,7 +242,7 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.travel_authority_request.traveler_name'
-                ).'_UserName' => $this->user->name,
+                ).'_UserName' => $this->user->full_name,
 
                 config(
                     'docusign.travel_authority_request.traveler_name'
@@ -250,7 +250,7 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.travel_authority_request.treasurer_name'
-                ).'_UserName' => $this->travel->primaryContact->name,
+                ).'_UserName' => $this->travel->primaryContact->full_name,
 
                 config(
                     'docusign.travel_authority_request.treasurer_name'
