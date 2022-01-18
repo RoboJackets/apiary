@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -22,7 +23,7 @@ class UserController extends Controller
         $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
         $this->middleware('permission:create-users', ['only' => ['store']]);
         $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
-        $this->middleware('permission:update-users|update-users-own', ['only' => ['update']]);
+        $this->middleware('permission:update-users|update-users-own', ['only' => ['update', 'applySelfOverride']]);
         $this->middleware('permission:delete-users', ['only' => ['destroy']]);
     }
 
@@ -231,5 +232,35 @@ class UserController extends Controller
     public function showProfile(Request $request)
     {
         return view('users/userprofile', ['id' => $request->user()->id]);
+    }
+
+    public function applySelfOverride(Request $request): JsonResponse
+    {
+        $requestingUser = $request->user();
+
+        $overrideEligibility = $requestingUser->self_service_override_eligibility;
+        $overrideEndDate = $overrideEligibility->override_until;
+
+        if ($overrideEligibility->eligible) {
+            Log::info("Applying self-service access override for $requestingUser->uid until $overrideEndDate");
+            $requestingUser->access_override_until = $overrideEndDate;
+            $requestingUser->access_override_by_id = $request->user()->id;
+            $requestingUser->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully applied access override',
+                'eligible' => true,
+                'until' => $overrideEndDate,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Ineligible for self-service access override',
+            'eligible' => false,
+            'user_rectifiable' => $overrideEligibility->user_rectifiable,
+            'reason' => $overrideEligibility->ineligible_reason,
+        ]);
     }
 }

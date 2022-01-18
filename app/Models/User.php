@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use BadMethodCallException;
+use Carbon\CarbonImmutable;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
@@ -116,7 +117,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read bool $is_student
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
- *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
  * @method static Builder|User active()
@@ -175,6 +175,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static QueryBuilder|User withTrashed()
  * @method static QueryBuilder|User withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ * @property-read \App\Models\SelfServiceAccessOverrideEligibility $self_service_override_eligibility
  */
 class User extends Authenticatable
 {
@@ -852,5 +853,61 @@ class User extends Authenticatable
         $array['role_id'] = $this->roles->modelKeys();
 
         return $array;
+    }
+
+    public function getSelfServiceOverrideEligibilityAttribute(): SelfServiceAccessOverrideEligibility
+    {
+        $ineligibleReason = 'Unable to provide a self-service override at this time';
+
+        $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are ' .
+            'no dues packages with future access end dates';
+        $INELIGIBLE_NO_ATTENDANCE = 'You have not attended a RoboJackets team meeting yet';
+        $INELIGIBLE_PAID_DUES = 'You have previously paid dues';
+        $INELIGIBLE_PREV_OVERRIDE = 'You have previously received an access override';
+        $INELIGIBLE_ACCESS_ACTIVE = 'Your account already has access to RoboJackets services enabled';
+        $INELIGIBLE_MEMBERSHIP_AGREEMENT = 'You need to sign the latest membership agreement';
+
+        $now = CarbonImmutable::now();
+        $nextAccessEndDuesPkg = DuesPackage::where("access_end", ">", $now)->get()->sortBy("access_end")->first();
+
+        $overrideEndDate = $nextAccessEndDuesPkg->access_end;
+        $OVERRIDE_MIN_LENGTH_DAYS = 7;
+        $OVERRIDE_MAX_LENGTH_DAYS = 60;
+        $overrideLengthDays = $now->diffInDays($nextAccessEndDuesPkg->access_end, false);
+
+        if ($overrideLengthDays > $OVERRIDE_MAX_LENGTH_DAYS) {
+            $overrideEndDate = $now->addDays($OVERRIDE_MAX_LENGTH_DAYS)->endOfDay();
+        } else if ($overrideLengthDays < $OVERRIDE_MIN_LENGTH_DAYS) {
+            $overrideEndDate = $now->addDays($OVERRIDE_MIN_LENGTH_DAYS)->endOfDay();
+        }
+
+        $eligible = false;
+        $userRectifiable = false; // Simple things the user can do (e.g., attend a team meeting, sign the membership
+            // agreement to become eligible for a self-service access override. As opposed to things the user can't
+            // change such as having paid dues in the past
+
+        if ($this->is_access_active) {
+            $ineligibleReason = $INELIGIBLE_ACCESS_ACTIVE;
+        } else if (! is_null($this->access_override_until)) {
+            $ineligibleReason = $INELIGIBLE_PREV_OVERRIDE;
+        } else if ($this->paidDues()->count() > 0) {
+            $ineligibleReason = $INELIGIBLE_PAID_DUES;
+        } else if (is_null($nextAccessEndDuesPkg)) {
+            $ineligibleReason = $INELIGIBLE_NO_FUTURE_DUES_PKG;
+        } else if (0 === $this->attendance()->whereAttendableType('team')->count()) {
+            $ineligibleReason = $INELIGIBLE_NO_ATTENDANCE;
+            $userRectifiable = true;
+        } else if (! $this->hasSignedLatestAgreement()) {
+            $ineligibleReason = $INELIGIBLE_MEMBERSHIP_AGREEMENT;
+            $userRectifiable = true;
+        } else {
+            $eligible = true;
+        }
+
+        return (new SelfServiceAccessOverrideEligibility())
+            ->setEligibility($eligible)
+            ->setUserRectifiable($userRectifiable)
+            ->setIneligibleReason($eligible ? '' : $ineligibleReason)
+            ->setOverrideUntil($overrideEndDate);
     }
 }
