@@ -66,7 +66,7 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
                 ->orderByDesc('tar_received')
                 ->get()
                 ->mapWithKeys(static function (object $row): array {
-                    return [self::$partition_labels[$row->documents_received] => $row->count];
+                    return [self::$partition_labels[$row->tar_received] => $row->count];
                 })
                 ->toArray()
         )->colors(  // nova default pie chart colors but mapped to specific series
