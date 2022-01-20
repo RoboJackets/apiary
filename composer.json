@@ -56,7 +56,7 @@
         "facade/ignition": "2.17.4",
         "fakerphp/faker": "1.17.0",
         "filp/whoops": "2.14.5",
-        "mockery/mockery": "1.4.4",
+        "mockery/mockery": "1.5.0",
         "mxl/laravel-job": "1.2.0",
         "nunomaduro/collision": "5.11.0",
         "nunomaduro/larastan": "0.7.15",
