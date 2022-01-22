@@ -56,7 +56,7 @@ class RefundPayment extends DestructiveAction
             return Action::danger('Error retrieving order information from Square');
         }
 
-        $paymentId = $retrieveOrderResponse->getOrder()->getTenders()[0]->getPaymentId();
+        $paymentId = $retrieveOrderResponse->getResult()->getOrder()->getTenders()[0]->getPaymentId();
 
         $money = new Money();
         $money->setAmount($payment->amount); // this includes the processing fee
@@ -76,7 +76,7 @@ class RefundPayment extends DestructiveAction
             return Action::danger('Error refunding payment');
         }
 
-        $status = $refundPaymentResponse->getRefund()->getStatus();
+        $status = $refundPaymentResponse->getResult()->getRefund()->getStatus();
 
         if (! in_array($status, ['PENDING', 'COMPLETED'], true)) {
             Log::error(self::class.' Error refunding payment - refund status is '.$status);
