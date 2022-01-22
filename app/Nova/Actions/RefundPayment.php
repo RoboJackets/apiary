@@ -10,7 +10,6 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Text;
-use Outhebox\NovaHiddenField\HiddenField as Hidden;
 use Square\Models\Money;
 use Square\Models\RefundPaymentRequest;
 use Square\SquareClient;
