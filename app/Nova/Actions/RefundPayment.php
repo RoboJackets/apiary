@@ -62,9 +62,7 @@ class RefundPayment extends DestructiveAction
         $money->setAmount($payment->amount); // this includes the processing fee
         $money->setCurrency('USD');
 
-        $refundPaymentRequest = new RefundPaymentRequest();
-        $refundPaymentRequest->setIdempotencyKey($payment->unique_id);
-        $refundPaymentRequest->setAmountMoney($money);
+        $refundPaymentRequest = new RefundPaymentRequest($payment->unique_id, $money);
         $refundPaymentRequest->setPaymentId($paymentId);
         $refundPaymentRequest->setReason($fields->refund_reason);
 
