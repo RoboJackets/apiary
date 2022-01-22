@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Actions\Action;
@@ -38,8 +37,6 @@ class RefundPayment extends DestructiveAction
             return Action::danger('This action can only be run on one payment at a time.');
         }
 
-        $refundedBy = User::where('id', $fields->refunded_by)->sole();
-
         $payment = $models->first();
 
         $square = new SquareClient([
@@ -56,7 +53,7 @@ class RefundPayment extends DestructiveAction
             return Action::danger('Error retrieving order information from Square');
         }
 
-        $paymentId = $retrieveOrderResponse->getResult()->getOrder()->getTenders()[0]->getPaymentId();
+        $paymentId = $retrieveOrderResponse->getResult()->getOrder()->getTenders()[0]->getId();
 
         $money = new Money();
         $money->setAmount(intval($payment->amount * 100)); // this includes the processing fee
@@ -85,7 +82,8 @@ class RefundPayment extends DestructiveAction
         }
 
         $payment->amount = 0;
-        $payment->notes = 'Payment was refunded by '.$refundedBy->full_name.' because '.$fields->refund_reason;
+        $payment->processing_fee = 0;
+        $payment->notes = $fields->refund_reason;
         $payment->save();
 
         return Action::message('The refund is '.strtolower($status));
@@ -103,9 +101,6 @@ class RefundPayment extends DestructiveAction
             Text::make('Refund Reason')
                 ->required()
                 ->rules('required', 'max:192'),
-
-            Hidden::make('Refunded By')
-                ->current_user_id(),
         ];
     }
 }
