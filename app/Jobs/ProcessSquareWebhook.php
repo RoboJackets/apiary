@@ -101,7 +101,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             }
         }
 
-        if (!$refunded) {
+        if (! $refunded) {
             $payment->notes = 'Checkout flow completed';
         }
 
