@@ -14,7 +14,7 @@ class AddRefundPaymentPermission extends Migration
     {
         app()['cache']->forget('spatie.permission.cache');
 
-        $manage_travel = Permission::firstOrCreate(['name' => 'refund-payments']);
+        Permission::firstOrCreate(['name' => 'refund-payments']);
     }
 
     /**

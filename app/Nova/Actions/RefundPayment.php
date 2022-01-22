@@ -82,7 +82,7 @@ class RefundPayment extends DestructiveAction
 
         $payment->amount = 0;
         $payment->processing_fee = 0;
-        $payment->notes = $fields->refund_reason;
+        $payment->notes .= '; refunded with reason "'.$fields->refund_reason.'"';
         $payment->save();
 
         return Action::message('The refund is '.strtolower($status));
