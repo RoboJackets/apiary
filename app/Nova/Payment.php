@@ -218,9 +218,7 @@ class Payment extends Resource
                 return $request->user()->can('refund-payments');
             })->canRun(static function (Request $request, AppModelsPayment $payment): bool {
                 return self::canRefundPayment($request->user(), $payment);
-            })->confirmText(
-                'Confirm text todo'
-            )->confirmButtonText(
+            })->confirmButtonText(
                 'Refund Payment'
             ),
         ];
