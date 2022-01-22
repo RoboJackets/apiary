@@ -262,7 +262,7 @@ class Payment extends Resource
 
     private static function canRefundPayment(AppModelsUser $user, AppModelsPayment $payment): bool
     {
-        if (0 === $payment->amount) {
+        if (0 === intval($payment->amount)) {
             return false;
         }
 
