@@ -59,7 +59,7 @@ class RefundPayment extends DestructiveAction
         $paymentId = $retrieveOrderResponse->getResult()->getOrder()->getTenders()[0]->getPaymentId();
 
         $money = new Money();
-        $money->setAmount($payment->amount); // this includes the processing fee
+        $money->setAmount(intval($payment->amount * 100)); // this includes the processing fee
         $money->setCurrency('USD');
 
         $refundPaymentRequest = new RefundPaymentRequest($payment->unique_id, $money);
