@@ -130,7 +130,7 @@ class Travel extends Resource
                     Boolean::make('TAR Required', 'tar_required')
                         ->help(
                             'Check this box if Travel Authority Requests need to be submitted to the Institute.'
-                            .' Each traveler will need to submit one individually, and the treasurer will update'
+                            .' Each traveler will need to submit one individually, and you will need to update'
                             .' the status on each travel assignment as they are submitted.'
                         )
                         ->hideFromIndex(),
