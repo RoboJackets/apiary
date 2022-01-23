@@ -103,7 +103,7 @@ class Payment extends Resource
             Text::make('Notes')
                 ->onlyOnDetail(),
 
-            ...(in_array($this->method, ['square', 'squarecash', 'swiped'], true) ? [
+            ...(in_array($this->method, ['square', 'squarecash', 'swipe'], true) ? [
                 new Panel('Square Metadata', $this->squareFields()),
             ] : []),
 
@@ -208,6 +208,19 @@ class Payment extends Resource
             )->confirmButtonText(
                 'Reset Idempotency Key'
             ),
+            (new Actions\RefundPayment())->canSee(static function (Request $request): bool {
+                $payment = AppModelsPayment::find($request->resourceId);
+
+                if (null !== $payment && is_a($payment, AppModelsPayment::class)) {
+                    return self::canRefundPayment($request->user(), $payment);
+                }
+
+                return $request->user()->can('refund-payments');
+            })->canRun(static function (Request $request, AppModelsPayment $payment): bool {
+                return self::canRefundPayment($request->user(), $payment);
+            })->confirmButtonText(
+                'Refund Payment'
+            ),
         ];
     }
 
@@ -243,6 +256,40 @@ class Payment extends Resource
         }
 
         return $user->can('delete-payments');
+    }
+
+    private static function canRefundPayment(AppModelsUser $user, AppModelsPayment $payment): bool
+    {
+        if (0 === intval($payment->amount)) {
+            return false;
+        }
+
+        if (null === $payment->unique_id) {
+            return false;
+        }
+
+        $order_id = $payment->order_id;
+
+        if (null === $order_id) {
+            return false;
+        }
+
+        if (
+            OrderState::COMPLETED !== (new SquareClient(
+                [
+                    'accessToken' => config('square.access_token'),
+                    'environment' => config('square.environment'),
+                ]
+            ))->getOrdersApi()
+            ->retrieveOrder($order_id)
+            ->getResult()
+            ->getOrder()
+            ->getState()
+        ) {
+            return false;
+        }
+
+        return $user->can('refund-payments');
     }
 
     /**

@@ -26,7 +26,7 @@ class PermissionsAndRolesTest extends TestCase
     public function testAdminRoleHasAllPermissions(): void
     {
         $permissions = Role::where('name', 'admin')->first()->permissions;
-        $allPermissions = Permission::all();
+        $allPermissions = Permission::where('name', '!=', 'refund-payments')->get();
         $this->assertCount(0, $permissions->diff($allPermissions));
         $this->assertCount(0, $allPermissions->diff($permissions));
     }

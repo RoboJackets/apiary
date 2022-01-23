@@ -34,6 +34,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
     {
         $type = $this->webhookCall->payload['type'];
         $details = $this->webhookCall->payload['data']['object']['payment'];
+        $refunded = array_key_exists('refunded_money', $details);
 
         if (! array_key_exists('status', $details)) {
             throw new Exception('data.object.payment.status field not present');
@@ -53,10 +54,19 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             return;
         }
 
-        $payment->amount = $details['amount_money']['amount'] / 100;
+        if ($refunded) {
+            if ($details['amount_money']['amount'] < $details['refunded_money']['amount']) {
+                Log::warning('Payment for Order ID '.$details['order_id'].' was partially refunded');
+            }
 
-        if (array_key_exists('processing_fee', $details)) {
-            $payment->processing_fee = $details['processing_fee'][0]['amount_money']['amount'] / 100;
+            $payment->amount = ($details['amount_money']['amount'] - $details['refunded_money']['amount']) / 100;
+            $payment->processing_fee = 0;
+        } else {
+            $payment->amount = $details['amount_money']['amount'] / 100;
+
+            if (array_key_exists('processing_fee', $details)) {
+                $payment->processing_fee = $details['processing_fee'][0]['amount_money']['amount'] / 100;
+            }
         }
 
         if (array_key_exists('receipt_number', $details)) {
@@ -91,10 +101,13 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             }
         }
 
-        $payment->notes = 'Checkout flow completed';
+        if (! $refunded) {
+            $payment->notes = 'Checkout flow completed';
+        }
+
         $payment->save();
 
-        if ('payment.created' !== $type) {
+        if ('payment.created' !== $type || $refunded) {
             return;
         }
 
