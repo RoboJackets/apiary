@@ -99,7 +99,8 @@ class RefundPayment extends DestructiveAction
             // not actually required in square but i think it is good practice
             Text::make('Refund Reason')
                 ->required()
-                ->rules('required', 'max:192'),
+                ->rules('required', 'max:192')
+                ->help('This will be shown on the Square receipt.'),
         ];
     }
 }
