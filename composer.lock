@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7df9bad11dfb338634dab25c4624c96b",
+    "content-hash": "181eb06d0a1b3f7f3a0e00ccc0b876bd",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -2547,16 +2547,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v10.3.0",
+            "version": "v10.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "b4a829e52f57e871f6c40717b9c9770cac5ad795"
+                "reference": "779e34f0152f42fb76b258d814956313fa38857c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/b4a829e52f57e871f6c40717b9c9770cac5ad795",
-                "reference": "b4a829e52f57e871f6c40717b9c9770cac5ad795",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/779e34f0152f42fb76b258d814956313fa38857c",
+                "reference": "779e34f0152f42fb76b258d814956313fa38857c",
                 "shasum": ""
             },
             "require": {
@@ -2620,7 +2620,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2022-01-12T18:12:12+00:00"
+            "time": "2022-01-25T20:06:06+00:00"
         },
         {
             "name": "laravel/scout",
@@ -4892,16 +4892,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "f34c2b11eb9d2c9318e13540a1dbc2a3afbd939c"
+                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/f34c2b11eb9d2c9318e13540a1dbc2a3afbd939c",
-                "reference": "f34c2b11eb9d2c9318e13540a1dbc2a3afbd939c",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/9229e15f2e6ba772f0c55dd6986c563b937170a8",
+                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8",
                 "shasum": ""
             },
             "require": {
@@ -4955,7 +4955,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2020-12-06T15:14:20+00:00"
+            "time": "2022-01-17T05:32:27+00:00"
         },
         {
             "name": "phenx/php-font-lib",
