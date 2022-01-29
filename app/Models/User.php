@@ -804,11 +804,12 @@ class User extends Authenticatable
             $result = Adldap::search()
                 ->where('uid', '=', $uid)
                 ->where('employeeType', '=', 'employee')
-                ->select('uid', 'ou')
+                ->select('ou')
                 ->get()
                 ->pluck('ou')
                 ->toArray();
 
+            // @phan-ignore-next-line PhanTypeArraySuspiciousNull,PhanTypeInvalidDimOffset
             return [] === $result ? null : $result[0][0];
         });
     }

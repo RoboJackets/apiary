@@ -38,6 +38,7 @@ return [
         'PhanPossiblyUndeclaredMethod',
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',
+        'PhanStaticCallToNonStatic',
         'PhanUndeclaredFunctionInCallable',
         'PhanUndeclaredMethod',
         'PhanUnreferencedClosure',
