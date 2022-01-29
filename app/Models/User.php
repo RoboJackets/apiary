@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Adldap\Laravel\Facades\Adldap;
 use BadMethodCallException;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
@@ -19,6 +20,7 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
@@ -792,6 +794,23 @@ class User extends Authenticatable
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
+    }
+
+    public function getHomeDepartmentAttribute(): ?string
+    {
+        $uid = $this->uid;
+
+        return Cache::remember('home_directory_'.$uid, now(), static function () use ($uid): ?string {
+            $result = Adldap::search()
+                ->where('uid', '=', $uid)
+                ->where('employeeType', '=', 'employee')
+                ->select('uid', 'ou')
+                ->get()
+                ->pluck('ou')
+                ->toArray();
+
+            return [] === $result ? null : $result[0][0];
+        });
     }
 
     /**
