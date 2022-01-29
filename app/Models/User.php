@@ -809,7 +809,7 @@ class User extends Authenticatable
                 ->pluck('ou')
                 ->toArray();
 
-            // @phan-ignore-next-line PhanTypeArraySuspiciousNull,PhanTypeInvalidDimOffset
+            // @phan-suppress-next-line PhanTypeArraySuspiciousNull,PhanTypeInvalidDimOffset
             return [] === $result ? null : $result[0][0];
         });
     }

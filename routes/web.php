@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// @phan-file-suppress PhanStaticCallToNonStatic
-
 use App\Http\Controllers\AttendanceExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutodeskLibraryController;
