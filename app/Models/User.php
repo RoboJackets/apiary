@@ -800,7 +800,7 @@ class User extends Authenticatable
     {
         $uid = $this->uid;
 
-        return Cache::remember('home_directory_'.$uid, now(), static function () use ($uid): ?string {
+        return Cache::remember('home_department_'.$uid, now(), static function () use ($uid): ?string {
             $result = Adldap::search()
                 ->where('uid', '=', $uid)
                 ->where('employeeType', '=', 'employee')
