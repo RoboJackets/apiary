@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// @phan-file-suppress PhanStaticCallToNonStatic
-
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceReportController;
 use App\Http\Controllers\DuesPackageController;

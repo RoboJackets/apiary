@@ -23,6 +23,7 @@ parameters:
     - '#Access to an undefined property Spatie\\Permission\\Models\\Permission::\$name\.#'
     - '#Access to an undefined property Spatie\\Permission\\Models\\Role::\$name\.#'
     - '#Access to an undefined property Spatie\\WebhookClient\\Models\\WebhookCall::\$payload\.#'
+    - '#annot call method pluck\(\) on Adldap\\Query\\Collection\|array\.#'
     - '#Call to an undefined method Illuminate\\Http\\Request::model\(\)\.#'
     - '#Call to an undefined method Illuminate\\Support\\HigherOrderTapProxy<mixed>::send\(\)\.#'
     - '#Call to an undefined method Spatie\\Permission\\Contracts\\Permission::(?:delete|save|with)\(\)\.#'
