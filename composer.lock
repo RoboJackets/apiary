@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74a6d280140952f714e8461f3952528b",
+    "content-hash": "d969b845af161e436297bbb412a3a3cf",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -15284,16 +15284,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.33.1",
+            "version": "1.33.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "88719d6b48d36947fd3b3b0ffec5cc55d62cdb64"
+                "reference": "28f6bd88e2db0fada88a7999c8ee0aad69f56192"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/88719d6b48d36947fd3b3b0ffec5cc55d62cdb64",
-                "reference": "88719d6b48d36947fd3b3b0ffec5cc55d62cdb64",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/28f6bd88e2db0fada88a7999c8ee0aad69f56192",
+                "reference": "28f6bd88e2db0fada88a7999c8ee0aad69f56192",
                 "shasum": ""
             },
             "require": {
@@ -15316,12 +15316,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Spatie\\Ray\\": "src"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "Spatie\\Ray\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -15343,7 +15343,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.33.1"
+                "source": "https://github.com/spatie/ray/tree/1.33.2"
             },
             "funding": [
                 {
@@ -15355,7 +15355,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-01-17T09:26:20+00:00"
+            "time": "2022-02-02T15:16:13+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
