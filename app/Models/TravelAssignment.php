@@ -254,6 +254,14 @@ class TravelAssignment extends Model
                 ),
 
                 config(
+                    'docusign.domestic_travel_authority_request.fields.peoplesoft_project_number'
+                ) => $this->travel->tar_project_number,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.peoplesoft_account_code'
+                ) => $this->travel->tar_account_code,
+
+                config(
                     'docusign.domestic_travel_authority_request.fields.departure_date'
                 ) => $this->travel->departure_date->toDateString(),
 

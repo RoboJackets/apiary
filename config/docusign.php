@@ -25,6 +25,7 @@ return [
             'departure_date' => 'Text f7fd4fa3-ed52-4724-a6fb-8d20ea349d60',
             'return_date' => 'Text 90a3327d-bea3-464b-a48a-4fa1998038c0',
             'peoplesoft_project_number' => 'Text 4d891474-a261-49a4-96a7-c2dcf3f4122b',
+            'peoplesoft_account_code' => 'Text 13513f85-0589-4ce8-bd28-bccb967363f3',
             'accounting_total_cost' => 'Text 63e8a56e-7740-4784-848c-c35973aede12',
             'covid_destination' => 'Text f8a52e89-4ad8-4d22-b907-1b07b3f64dd7',
             'covid_dates' => 'Text 5bc7773d-a2da-4872-be4b-2bec828b9874',

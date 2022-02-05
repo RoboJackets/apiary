@@ -208,6 +208,22 @@ class Travel extends Resource
                             ' If this is not applicable, enter 0.'
                         )
                         ->hideFromIndex(),
+
+                    Text::make('Workday Project Number', 'tar_project_number')
+                        ->required()
+                        ->rules('required', 'max:255', 'in:CE0339,DE00007513,GTF250000211') # agency, SGA, ME GTF
+                        ->help(
+                            'Ask the treasurer for the correct value for this field.'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Account Code', 'tar_account_code')
+                        ->required()
+                        ->rules('required', 'digits:6')
+                        ->help(
+                            'Ask the treasurer for the correct value for this field.'
+                        )
+                        ->hideFromIndex(),
                 ]
             ),
 
