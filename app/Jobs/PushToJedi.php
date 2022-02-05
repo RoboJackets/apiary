@@ -143,7 +143,7 @@ class PushToJedi implements ShouldQueue
 
         $response = $client->request('POST', config('jedi.host').'/api/v1/apiary', ['json' => $send]);
 
-        if (200 !== $response->getStatusCode()) {
+        if (202 !== $response->getStatusCode()) {
             throw new Exception(
                 'Sending data to JEDI failed with HTTP response code '.$response->getStatusCode()
             );
