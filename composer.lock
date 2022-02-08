@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7db5207660c0b4a66f57f6f1fca1c8ab",
+    "content-hash": "2dae34d2dd072ade4ae2d6517592f285",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2751,16 +2751,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.4.2",
+            "version": "v9.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "ef196f08c326e92f1793cc4deaaaf5a14f94d926"
+                "reference": "d3905336dd086203eafd8ab8a12ddf3ccfd1d97a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/ef196f08c326e92f1793cc4deaaaf5a14f94d926",
-                "reference": "ef196f08c326e92f1793cc4deaaaf5a14f94d926",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/d3905336dd086203eafd8ab8a12ddf3ccfd1d97a",
+                "reference": "d3905336dd086203eafd8ab8a12ddf3ccfd1d97a",
                 "shasum": ""
             },
             "require": {
@@ -2769,7 +2769,7 @@
                 "illuminate/database": "^8.0|^9.0",
                 "illuminate/http": "^8.0|^9.0",
                 "illuminate/pagination": "^8.0|^9.0",
-                "illuminate/queue": "^8.|^9.0",
+                "illuminate/queue": "^8.0|^9.0",
                 "illuminate/support": "^8.0|^9.0",
                 "php": "^7.3|^8.0"
             },
@@ -2819,7 +2819,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2022-01-18T18:10:20+00:00"
+            "time": "2022-02-08T19:30:30+00:00"
         },
         {
             "name": "laravel/serializable-closure",
