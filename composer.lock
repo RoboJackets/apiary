@@ -4,29 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2583731ccac58bb8c113f7983fbae785",
+    "content-hash": "58eecb7ee3d403009c1d82a5d5a163b7",
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v10.4.0",
+            "version": "v10.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "b91df8c0f0f614f3b96c0c11996c3124030d395e"
+                "reference": "81aeb283f56e216ae925a9cc4241de56b1fd4453"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/b91df8c0f0f614f3b96c0c11996c3124030d395e",
-                "reference": "b91df8c0f0f614f3b96c0c11996c3124030d395e",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/81aeb283f56e216ae925a9cc4241de56b1fd4453",
+                "reference": "81aeb283f56e216ae925a9cc4241de56b1fd4453",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-ldap": "*",
-                "illuminate/contracts": "~5.0|~6.0|~7.0|~8.0",
+                "illuminate/contracts": "~5.0|~6.0|~7.0|~8.0|~9.0",
                 "php": ">=7.0",
-                "psr/log": "~1.0",
-                "psr/simple-cache": "~1.0",
+                "psr/log": "~1.0|~2.0|~3.0",
+                "psr/simple-cache": "~1.0|~2.0",
                 "tightenco/collect": "~5.0|~6.0|~7.0|~8.0"
             },
             "require-dev": {
@@ -69,25 +69,25 @@
                 "issues": "https://github.com/Adldap2/Adldap2/issues",
                 "source": "https://github.com/Adldap2/Adldap2"
             },
-            "time": "2021-12-09T14:12:47+00:00"
+            "time": "2022-02-09T13:54:20+00:00"
         },
         {
             "name": "adldap2/adldap2-laravel",
-            "version": "v6.1.5",
+            "version": "v6.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2-Laravel.git",
-                "reference": "082e863d15923cf9b4bff69fa81c8ebd23e4a7c7"
+                "reference": "e67f845db08389acdf7326fd596fda10b3560d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/082e863d15923cf9b4bff69fa81c8ebd23e4a7c7",
-                "reference": "082e863d15923cf9b4bff69fa81c8ebd23e4a7c7",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/e67f845db08389acdf7326fd596fda10b3560d25",
+                "reference": "e67f845db08389acdf7326fd596fda10b3560d25",
                 "shasum": ""
             },
             "require": {
                 "adldap2/adldap2": "^10.1",
-                "illuminate/support": "~5.5|~6.0|~7.0|~8.0",
+                "illuminate/support": "~5.5|~6.0|~7.0|~8.0|~9.0",
                 "php": ">=7.1"
             },
             "require-dev": {
@@ -125,9 +125,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Adldap2/Adldap2-Laravel/issues",
-                "source": "https://github.com/Adldap2/Adldap2-Laravel/tree/v6.1.5"
+                "source": "https://github.com/Adldap2/Adldap2-Laravel/tree/v6.1.6"
             },
-            "time": "2021-02-12T19:09:23+00:00"
+            "time": "2022-02-09T13:04:53+00:00"
         },
         {
             "name": "apereo/phpcas",
