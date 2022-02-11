@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58eecb7ee3d403009c1d82a5d5a163b7",
+    "content-hash": "e077c791606766bcba6b87acf4fd4a1d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -693,27 +693,27 @@
         },
         {
             "name": "chelout/laravel-relationship-events",
-            "version": "1.4.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chelout/laravel-relationship-events.git",
-                "reference": "2d454338bbcf28a07151098fac621fe672855902"
+                "reference": "fa47732c7e584655a4ae1331f378dcf5245da746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/2d454338bbcf28a07151098fac621fe672855902",
-                "reference": "2d454338bbcf28a07151098fac621fe672855902",
+                "url": "https://api.github.com/repos/chelout/laravel-relationship-events/zipball/fa47732c7e584655a4ae1331f378dcf5245da746",
+                "reference": "fa47732c7e584655a4ae1331f378dcf5245da746",
                 "shasum": ""
             },
             "require": {
-                "illuminate/container": "^6.0|^7.0|^8.0",
-                "illuminate/database": "^6.0|^7.0|^8.0",
-                "illuminate/events": "^6.0|^7.0|^8.0",
-                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/container": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/events": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
                 "php": "^7.2|^8.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0|dev-remove-nice-to-have-deps",
                 "phpunit/phpunit": "^8.3|^9.0|^9.3"
             },
             "type": "library",
@@ -749,9 +749,9 @@
             ],
             "support": {
                 "issues": "https://github.com/chelout/laravel-relationship-events/issues",
-                "source": "https://github.com/chelout/laravel-relationship-events/tree/1.4.0"
+                "source": "https://github.com/chelout/laravel-relationship-events/tree/v1.5.0"
             },
-            "time": "2020-12-09T13:28:52+00:00"
+            "time": "2022-02-11T17:35:13+00:00"
         },
         {
             "name": "clue/stream-filter",
