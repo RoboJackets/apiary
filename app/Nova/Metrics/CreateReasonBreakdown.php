@@ -37,6 +37,9 @@ class CreateReasonBreakdown extends Partition
                     return 'Attendance';
                 case 'historical_dues_import':
                     return 'Historical dues import';
+                // This isn't created by code, but a lot of records in prod have this.
+                case 'buzzapi_job':
+                    return 'BuzzAPI job';
                 case null:
                     return 'Unknown';
                 default:
