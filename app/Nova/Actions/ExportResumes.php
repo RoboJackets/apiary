@@ -247,7 +247,7 @@ class ExportResumes extends Action
             // empty output. "-1 day" is 24 hours ago.
             Date::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date. This should generally be the start date of the'.
-                    'fall semester.')
+                    ' fall semester.')
                 ->default($defaultDate)
                 ->required()
                 ->rules('required', 'before:-1 day'),
