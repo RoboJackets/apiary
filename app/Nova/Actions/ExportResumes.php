@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
 namespace App\Nova\Actions;
 
 use App\Models\ClassStanding;
@@ -241,11 +243,14 @@ class ExportResumes extends Action
                 ->help('Only include resumes for these class standings')
                 ->required(),
 
+            // "before:-1 day" stops users from putting in a date that doesn't make sense that will generate an
+            // empty output. "-1 day" is 24 hours ago.
             Date::make('Resume Date Cutoff')
-                ->help('Only include resumes uploaded after this date')
+                ->help('Only include resumes uploaded after this date. This should generally be the start date of the'.
+                    ' fall semester.')
                 ->default($defaultDate)
                 ->required()
-                ->rules('required'),
+                ->rules('required', 'before:-1 day'),
         ];
     }
 }
