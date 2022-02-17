@@ -243,14 +243,14 @@ class ExportResumes extends Action
                 ->help('Only include resumes for these class standings')
                 ->required(),
 
-            // "before:-1 day" stops users from putting in a date that doesn't make sense that will generate an
-            // empty output. "-1 day" is 24 hours ago.
+            // "before:yesterday" stops users from putting in a date that doesn't make sense that will generate an
+            // empty output. "yesterday" is either 7PM or 8PM yesterdady, depending on timezones (EST vs EDT).
             Date::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date. This should generally be the start date of the'.
                     ' fall semester.')
                 ->default($defaultDate)
                 ->required()
-                ->rules('required', 'before:-1 day'),
+                ->rules('required', 'before:yesterday'),
         ];
     }
 }
