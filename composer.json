@@ -47,7 +47,7 @@
         "spatie/once": "2.2.1",
         "square/square": "17.2.0.20220216",
         "subfission/cas": "4.1.0",
-        "ukfast/laravel-health-check": "1.13.2",
+        "ukfast/laravel-health-check": "1.13.3",
         "uxweb/sweet-alert": "2.0.5",
         "vyuldashev/nova-permission": "2.11.1"
     },
