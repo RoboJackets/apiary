@@ -23,7 +23,6 @@ FROM debian:bullseye-slim as backend
 LABEL maintainer="developers@robojackets.org"
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    COMPOSER_ALLOW_SUPERUSER=1 \
     COMPOSER_NO_INTERACTION=1
 
 RUN set -e && \
@@ -34,7 +33,8 @@ RUN set -e && \
         php7.4-fpm php7.4-mysql php7.4-gd php7.4-xml php7.4-mbstring php7.4-zip php7.4-curl php7.4-intl \
         php7.4-opcache php7.4-bcmath php7.4-ldap php7.4-uuid php7.4-sqlite sqlite3 exiftool ghostscript unzip && \
     apt-get autoremove -qq --assume-yes && \
-    mkdir /app
+    mkdir /app && \
+    chown www-data:www-data /app
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
@@ -52,10 +52,12 @@ COPY --from=frontend --chown=www-data:www-data /app/public/ /app/public/
 
 WORKDIR /app/
 
-RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json \
+USER www-data
+
+RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33 \
     set -e && \
     set -x && \
-    composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative && \
+    composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \
     php artisan horizon:publish
 
