@@ -27,7 +27,7 @@ Install Docker and Docker Compose.
 
 Clone the repository, then run
 
-```shell
+```sh
 docker build --secret id=composer_auth,src=auth.json . --tag robojackets/apiary
 docker compose up
 ```
