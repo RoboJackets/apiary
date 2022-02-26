@@ -13,7 +13,7 @@ services:
       APP_URL: http://127.0.0.1:8000
       LOG_CHANNEL: stderr
       DB_CONNECTION: sqlite
-      DB_SQLITE_LOCATION: /app/storage/db-with-atesting3-admin.sqlite
+      DB_SQLITE_LOCATION: /app/storage/quickstart.sqlite
       BROADCAST_DRIVER: log
       CACHE_DRIVER: array
       SESSION_DRIVER: array
@@ -29,6 +29,8 @@ services:
       CAS_MASQUERADE_eduPersonPrimaryAffiliation: student
       JEDI_HOST: null
       JEDI_TOKEN: null
+      PASSPORT_PERSONAL_ACCESS_CLIENT_ID: 95b2031a-5593-4d67-909a-ef32ae06a86a
+      PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET: cu95hXvaJTe5hsotCHMYDMyycHu83PJIBYffVGHL
     command: >-
       /bin/sh -euxc "php artisan passport:keys --no-interaction &&
       php artisan migrate --no-interaction &&
