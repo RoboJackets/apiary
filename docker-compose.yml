@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  apiary:
+    image: robojackets/apiary
+    network_mode: host
+    environment:
+      APP_NAME: Apiary Local
+      APP_ENV: local
+      APP_KEY: base64:JVvxt2ojHHrHVIHhTeCGkjWan3dhQQZwTKnEuUhxF0g=
+      APP_DEBUG: true
+      APP_LOG_LEVEL: debug
+      APP_URL: http://127.0.0.1:8000
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: sqlite
+      DB_SQLITE_LOCATION: /app/storage/db-with-atesting3-admin.sqlite
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: array
+      SESSION_DRIVER: array
+      QUEUE_DRIVER: sync
+      CAS_MASQUERADE: atesting3
+      CAS_MASQUERADE_gtGTID: 901234567
+      CAS_MASQUERADE_email_primary: developers@robojackets.org
+      CAS_MASQUERADE_givenName: Apiary
+      CAS_MASQUERADE_sn: Testing
+      CAS_MASQUERADE_gtAccountEntitlement: /gt/central/services/iam/two-factor/duo-user
+      CAS_MASQUERADE_authn_method: duo-two-factor
+      CAS_MASQUERADE_authnContextClass: mfa-duo
+      CAS_MASQUERADE_eduPersonPrimaryAffiliation: student
+      JEDI_HOST: null
+      JEDI_TOKEN: null

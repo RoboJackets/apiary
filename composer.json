@@ -137,9 +137,6 @@
         "classmap-authoritative": true,
         "preferred-install": "dist",
         "process-timeout": 20,
-        "platform": {
-            "php": "7.4.13"
-        },
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,

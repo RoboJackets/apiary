@@ -15,7 +15,26 @@ This project has been tailored to support the specific workflow of RoboJackets a
 - For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) on Slack
 - For production support of MyRoboJackets, ask in [#it-helpdesk](https://robojackets.slack.com/app_redirect?channel=it-helpdesk) on Slack
 
-## Getting Started with Local Development
+## Getting Started with Local Development - Docker
+
+---
+
+While this repository itself is open-source, we use several **confidential and proprietary** components which are packed into Docker images produced by this process. Images should **never** be pushed to a public registry.
+
+---
+
+Install Docker and Docker Compose.
+
+Clone the repository, then run
+
+```shell
+docker build --secret id=composer_auth,src=auth.json . --tag robojackets/apiary
+docker compose up
+```
+
+You will need to provide an `auth.json` file that has credentials for downloading Laravel Nova. Ask in Slack and we can provide this file to you.
+
+## Getting Started with Local Development - Hard Way
 
 If you've never worked with [Laravel](https://laravel.com) before, we recommend watching [the Laravel from Scratch webcast series](https://laracasts.com/series/laravel-from-scratch-2017) to get you up to speed quickly.
 

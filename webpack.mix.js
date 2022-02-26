@@ -16,6 +16,8 @@ mix.js(['resources/js/app.js'], 'public/js/app.js').vue()
   .js(['resources/js/nova.js'], 'public/js/nova.js').vue()
   .sass('resources/sass/nova/global.scss', 'public/css/nova.css');
 
+mix.disableNotifications();
+
 if (mix.inProduction()) {
     mix.version();
 }
