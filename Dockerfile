@@ -60,9 +60,3 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33 \
     composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \
     php artisan horizon:publish
-
-CMD set -e && \
-    set -x && \
-    php artisan passport:keys --no-interaction && \
-    php artisan migrate --no-interaction && \
-    php artisan serve

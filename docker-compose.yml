@@ -29,3 +29,7 @@ services:
       CAS_MASQUERADE_eduPersonPrimaryAffiliation: student
       JEDI_HOST: null
       JEDI_TOKEN: null
+    command: >-
+      /bin/sh -euxc "php artisan passport:keys --no-interaction &&
+      php artisan migrate --no-interaction &&
+      php artisan serve"
