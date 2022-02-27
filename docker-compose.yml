@@ -16,7 +16,7 @@ services:
       DB_SQLITE_LOCATION: /app/storage/quickstart.sqlite
       BROADCAST_DRIVER: log
       CACHE_DRIVER: array
-      SESSION_DRIVER: array
+      SESSION_DRIVER: file
       QUEUE_DRIVER: sync
       CAS_MASQUERADE: atesting3
       CAS_MASQUERADE_gtGTID: 901234567
