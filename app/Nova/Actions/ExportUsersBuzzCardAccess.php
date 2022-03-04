@@ -40,7 +40,7 @@ class ExportUsersBuzzCardAccess extends Action
     public function handle(ActionFields $fields, Collection $models): array
     {
         $population = $fields->population;
-        $users = User::select('gtid')->BuzzCardAccessEligible()
+        $users = User::select('gtid', 'first_name', 'last_name')->buzzCardAccessEligible()
             ->when(
                 'core' === $population,
                 static function (Builder $q): void {
@@ -60,8 +60,8 @@ class ExportUsersBuzzCardAccess extends Action
             return Action::danger('No users match the provided criteria!');
         }
 
-        $output = $users->pluck('gtid')->reduce(static function (?string $carry, int $item): string {
-            return ($carry ?? '').$item."\n";
+        $output = $users->reduce(static function (?string $carry, User $user): string {
+            return ($carry ?? '').$user->gtid.",".$user->first_name.",".$user->last_name."\n";
         });
 
         $phrasing = 'core' === $population ? 'with' : 'without';
