@@ -61,7 +61,7 @@ class ExportUsersBuzzCardAccess extends Action
         }
 
         $output = $users->reduce(static function (?string $carry, User $user): string {
-            return ($carry ?? '').$user->gtid.",".$user->first_name.",".$user->last_name."\n";
+            return ($carry ?? '').$user->gtid.','.$user->first_name.','.$user->last_name."\n";
         });
 
         $phrasing = 'core' === $population ? 'with' : 'without';
