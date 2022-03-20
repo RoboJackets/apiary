@@ -21,7 +21,7 @@
         "barryvdh/laravel-dompdf": "0.9.0",
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "2.13.8",
-        "guzzlehttp/guzzle": "7.4.1",
+        "guzzlehttp/guzzle": "7.4.2",
         "http-interop/http-factory-guzzle": "1.2.0",
         "laravel/framework": "8.83.5",
         "laravel/horizon": "5.9.3",
