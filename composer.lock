@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12d64ce3423443468d61408ccc89beff",
+    "content-hash": "017e69ed1a51600f709f541b0c15b7c3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -197,20 +197,23 @@
         },
         {
             "name": "apimatic/jsonmapper",
-            "version": "v2.0.3",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/jsonmapper.git",
-                "reference": "f7588f1ab692c402a9118e65cb9fd42b74e5e0db"
+                "reference": "9a2ceb1a94cfa6d3b81a89139da8258c205d4670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/f7588f1ab692c402a9118e65cb9fd42b74e5e0db",
-                "reference": "f7588f1ab692c402a9118e65cb9fd42b74e5e0db",
+                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/9a2ceb1a94cfa6d3b81a89139da8258c205d4670",
+                "reference": "9a2ceb1a94cfa6d3b81a89139da8258c205d4670",
                 "shasum": ""
             },
+            "require": {
+                "ext-json": "*"
+            },
             "require-dev": {
-                "phpunit/phpunit": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+                "phpunit/phpunit": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
                 "squizlabs/php_codesniffer": "^3.0.0"
             },
             "type": "library",
@@ -241,22 +244,22 @@
             "support": {
                 "email": "mehdi.jaffery@apimatic.io",
                 "issues": "https://github.com/apimatic/jsonmapper/issues",
-                "source": "https://github.com/apimatic/jsonmapper/tree/v2.0.3"
+                "source": "https://github.com/apimatic/jsonmapper/tree/v3.0.0"
             },
-            "time": "2021-07-16T09:02:23+00:00"
+            "time": "2022-02-16T07:35:08+00:00"
         },
         {
             "name": "apimatic/unirest-php",
-            "version": "2.1.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/unirest-php.git",
-                "reference": "e07351d5f70b445664e2dc4042bbc237ec7d4c93"
+                "reference": "847149c56d850081c07d5677e9647fa0c15e595f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/e07351d5f70b445664e2dc4042bbc237ec7d4c93",
-                "reference": "e07351d5f70b445664e2dc4042bbc237ec7d4c93",
+                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/847149c56d850081c07d5677e9647fa0c15e595f",
+                "reference": "847149c56d850081c07d5677e9647fa0c15e595f",
                 "shasum": ""
             },
             "require": {
@@ -305,9 +308,9 @@
             "support": {
                 "email": "opensource@apimatic.io",
                 "issues": "https://github.com/apimatic/unirest-php/issues",
-                "source": "https://github.com/apimatic/unirest-php/tree/2.1.0"
+                "source": "https://github.com/apimatic/unirest-php/tree/2.2.1"
             },
-            "time": "2021-11-12T05:20:21+00:00"
+            "time": "2022-03-12T08:37:06+00:00"
         },
         {
             "name": "arcanedev/laravel-markdown",
@@ -7312,25 +7315,25 @@
         },
         {
             "name": "square/square",
-            "version": "17.2.0.20220216",
+            "version": "17.3.0.20220316",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "5b8ae82cd6f760a7ec5d4b241f00e1a454ab5d69"
+                "reference": "c6a6740e4ecbc71568b1bb5f553d8a69b4a575d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/5b8ae82cd6f760a7ec5d4b241f00e1a454ab5d69",
-                "reference": "5b8ae82cd6f760a7ec5d4b241f00e1a454ab5d69",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/c6a6740e4ecbc71568b1bb5f553d8a69b4a575d7",
+                "reference": "c6a6740e4ecbc71568b1bb5f553d8a69b4a575d7",
                 "shasum": ""
             },
             "require": {
-                "apimatic/jsonmapper": "^2.0.2",
-                "apimatic/unirest-php": "^2.1",
+                "apimatic/jsonmapper": "^3.0.0",
+                "apimatic/unirest-php": "^2.2.1",
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": ">=7.2 <8.1"
+                "php": ">=7.2 <8.2"
             },
             "require-dev": {
                 "phan/phan": "5.3.1",
@@ -7363,9 +7366,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/17.2.0.20220216"
+                "source": "https://github.com/square/square-php-sdk/tree/17.3.0.20220316"
             },
-            "time": "2022-02-15T22:24:46+00:00"
+            "time": "2022-03-15T22:06:00+00:00"
         },
         {
             "name": "subfission/cas",
