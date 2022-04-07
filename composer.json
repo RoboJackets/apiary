@@ -43,7 +43,7 @@
         "sentry/sentry-laravel": "2.12.0",
         "spatie/laravel-failed-job-monitor": "3.4.0",
         "spatie/laravel-permission": "3.18.0",
-        "spatie/laravel-webhook-client": "2.7.5",
+        "spatie/laravel-webhook-client": "2.8.0",
         "spatie/once": "2.2.1",
         "square/square": "17.3.0.20220316",
         "subfission/cas": "4.2.0",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9e5c62512f6950279602dcfd5c2eee9",
+    "content-hash": "df66c7c2b3f6e41ce4af40946b2dd54e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -7182,26 +7182,26 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "2.7.5",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "aa6864027c9ca5c184f8a9d974c68dbe8b66b337"
+                "reference": "ff52ee0ca6edbb1acd62c083877bceba35f40f93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/aa6864027c9ca5c184f8a9d974c68dbe8b66b337",
-                "reference": "aa6864027c9ca5c184f8a9d974c68dbe8b66b337",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/ff52ee0ca6edbb1acd62c083877bceba35f40f93",
+                "reference": "ff52ee0ca6edbb1acd62c083877bceba35f40f93",
                 "shasum": ""
             },
             "require": {
-                "illuminate/bus": "^7.0|^8.0",
-                "illuminate/database": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
+                "illuminate/bus": "^8.0",
+                "illuminate/database": "^8.0",
+                "illuminate/support": "^8.0",
                 "php": "^8.0|^7.4"
             },
             "require-dev": {
-                "orchestra/testbench": "^5.0|^6.0",
+                "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "^9.3.8"
             },
             "type": "library",
@@ -7237,7 +7237,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/2.7.5"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/2.8.0"
             },
             "funding": [
                 {
@@ -7245,7 +7245,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-01-08T09:22:21+00:00"
+            "time": "2022-04-07T22:55:11+00:00"
         },
         {
             "name": "spatie/once",
