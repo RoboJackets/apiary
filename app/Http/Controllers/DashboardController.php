@@ -81,7 +81,7 @@ class DashboardController extends Controller
             $firstPayment = null;
         }
 
-        $hasOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until > now();
+        $hasOverride = $user->has_active_override;
         $hasExpiredOverride = ! $user->is_active && $user->access_override_until && $user->access_override_until < now()
             && $user->access_override_until > now()->startOfDay()->subDays(14);
         $overrideDate = $user->access_override_until ? $user->access_override_until->format('F j, Y') : 'n/a';
@@ -181,6 +181,9 @@ class DashboardController extends Controller
             $travelAuthorityRequestUrl = $travelAssignmentWithNoTravelAuthorityRequest->travel_authority_request_url;
         }
 
+        $isEligibleForSelfServiceOverride = $user->self_service_override_eligibility->eligible;
+        $teamAttendanceExists = $user->attendance()->whereAttendableType('team')->exists();
+
         return view(
             'welcome',
             [
@@ -205,6 +208,8 @@ class DashboardController extends Controller
                 'needTravelAuthorityRequest' => $needTravelAuthorityRequest,
                 'travelAuthorityRequestUrl' => $travelAuthorityRequestUrl,
                 'travelName' => $travelName,
+                'isEligibleForSelfServiceOverride' => $isEligibleForSelfServiceOverride,
+                'teamAttendanceExists' => $teamAttendanceExists,
             ]
         );
     }
