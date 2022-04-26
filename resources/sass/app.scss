@@ -11,6 +11,11 @@
   @include button-variant($rj-gold, $rj-gold);
 }
 
+.spinner-border {
+    border-color: $rj-gold;
+    border-right-color: transparent;
+}
+
 @import "vue-select/src/scss/vue-select.scss";
 
 // Custom Stylesheets

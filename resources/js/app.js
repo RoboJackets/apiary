@@ -20,7 +20,7 @@ import moment from 'moment';
 import Toast from "./mixins/Toast";
 import FileUploader from "./mixins/FileUploader";
 import * as Sentry from "@sentry/vue";
-import { Integrations } from "@sentry/tracing";
+import {Integrations} from "@sentry/tracing";
 
 if (process.env.MIX_SENTRY_DSN !== undefined) {
     Sentry.init({
@@ -41,7 +41,7 @@ if (process.env.MIX_SENTRY_DSN !== undefined) {
 }
 
 require('./bootstrap');
-var axios = require('axios');
+const axios = require('axios');
 
 window.Swal = Swal.mixin({
     confirmButtonColor: "#3085d6", // Swal's real default color is #7367f0 (purple), even though that's not what the docs say
@@ -95,6 +95,7 @@ Vue.component('dues-sequence', require('./components/dues/DuesSequence.vue').def
 Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.vue').default);
 Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue').default);
 Vue.component('demographics', require('./components/dues/Demographics.vue').default);
+Vue.component('self-service-access-override', require('./components/dues/SelfServiceAccessOverride.vue').default);
 
 // Teams
 Vue.component('team-card', require('./components/teams/TeamCard.vue').default);

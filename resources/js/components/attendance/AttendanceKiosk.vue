@@ -492,7 +492,7 @@
         hyphens: manual;
     }
 </style>
-<style>
+<style scoped>
     /* Global styles */
     .swal2-checkbox {
         font-size: 110%;

@@ -167,53 +167,52 @@
             </div>
         @endif
         @if($signedLatestAgreement && !$needsTransaction && !$needsPayment)
-        @if($needTravelDocuments)
-            <div class="col-sm-6 com-md-3 col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            Travel Documents Required
-                        </h4>
-                        <p class="card-text">
-                            You need to submit documents to RoboJackets for {{ $travelName }}.
-                        </p>
-                        <a href="{{ route('travel.index') }}">Review Action Items</a>
+            @if($needTravelDocuments)
+                <div class="col-sm-6 com-md-3 col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                Travel Documents Required
+                            </h4>
+                            <p class="card-text">
+                                You need to submit documents to RoboJackets for {{ $travelName }}.
+                            </p>
+                            <a href="{{ route('travel.index') }}">Review Action Items</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endif
-        @if($needTravelPayment)
-            <div class="col-sm-6 com-md-3 col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            Travel Payment Required
-                        </h4>
-                        <p class="card-text">
-                            You need to make a payment for {{ $travelName }}.
-                        </p>
-                        <a href="{{ route('pay.travel') }}">Pay Online Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
+            @endif
+            @if($needTravelPayment)
+                <div class="col-sm-6 com-md-3 col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                Travel Payment Required
+                            </h4>
+                            <p class="card-text">
+                                You need to make a payment for {{ $travelName }}.
+                            </p>
+                            <a href="{{ route('pay.travel') }}">Pay Online Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endif
-        @if($needTravelAuthorityRequest)
-            <div class="col-sm-6 com-md-3 col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            Travel Authority Request Required
-                        </h4>
-                        <p class="card-text">
-                            You need to submit a Travel Authority Request for {{ $travelName }}.
-                        </p>
-                        <a href="{{ $travelAuthorityRequestUrl }}">Submit Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
+            @endif
+            @if($needTravelAuthorityRequest)
+                <div class="col-sm-6 com-md-3 col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                Travel Authority Request Required
+                            </h4>
+                            <p class="card-text">
+                                You need to submit a Travel Authority Request for {{ $travelName }}.
+                            </p>
+                            <a href="{{ $travelAuthorityRequestUrl }}">Submit Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         @endif
-        @endif
+        <self-service-access-override />
     </div>
-
-
 @endsection
