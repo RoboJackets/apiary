@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
@@ -234,33 +235,29 @@ class UserController extends Controller
         return view('users/userprofile', ['id' => $request->user()->id]);
     }
 
-    public function applySelfOverride(Request $request): JsonResponse
+    public function applySelfOverride(SelfServiceAccessOverrideRequest $request): JsonResponse
     {
         $requestingUser = $request->user();
 
         $overrideEligibility = $requestingUser->self_service_override_eligibility;
         $overrideEndDate = $overrideEligibility->override_until;
 
-        if ($overrideEligibility->eligible) {
+        if ($overrideEligibility->eligible && ! $request->boolean("preview")) {
             Log::info("Applying self-service access override for $requestingUser->uid until $overrideEndDate");
             $requestingUser->access_override_until = $overrideEndDate;
             $requestingUser->access_override_by_id = $request->user()->id;
             $requestingUser->save();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Successfully applied access override',
-                'eligible' => true,
-                'until' => $overrideEndDate,
-            ]);
         }
 
         return response()->json([
-            'status' => 'error',
-            'message' => 'Ineligible for self-service access override',
-            'eligible' => false,
-            'user_rectifiable' => $overrideEligibility->user_rectifiable,
+            'status' => 'success',
+            'preview' => $request->boolean('preview'),
+            'eligible' => $overrideEligibility->eligible,
             'reason' => $overrideEligibility->ineligible_reason,
+            'user_rectifiable' => $overrideEligibility->user_rectifiable,
+            'conditions' => $overrideEligibility->required_conditions,
+            'tasks' => $overrideEligibility->required_tasks,
+            'override_until' => $overrideEndDate,
         ]);
     }
 }

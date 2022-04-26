@@ -855,59 +855,80 @@ class User extends Authenticatable
         return $array;
     }
 
+    public function getHasActiveOverrideAttribute(): bool
+    {
+        return ! $this->is_active && $this->access_override_until && $this->access_override_until > now();
+    }
+
     public function getSelfServiceOverrideEligibilityAttribute(): SelfServiceAccessOverrideEligibility
     {
         $ineligibleReason = 'Unable to provide a self-service override at this time';
 
+        $INELIGIBLE_ACTIVE_SELF_SERVICE_OVERRIDE = 'You already have an active self-service override';
         $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are ' .
             'no dues packages with future access end dates';
-        $INELIGIBLE_NO_ATTENDANCE = 'You have not attended a RoboJackets team meeting yet';
-        $INELIGIBLE_PAID_DUES = 'You have previously paid dues';
-        $INELIGIBLE_PREV_OVERRIDE = 'You have previously received an access override';
-        $INELIGIBLE_ACCESS_ACTIVE = 'Your account already has access to RoboJackets services enabled';
-        $INELIGIBLE_MEMBERSHIP_AGREEMENT = 'You need to sign the latest membership agreement';
+        $INELIGIBLE_REQ_CONDS = 'Account and system conditions for self-service override not met';
+        $INELIGIBLE_REQ_TASKS = 'You have outstanding required tasks that must be completed before receiving your ' .
+            'self-service override';
 
         $now = CarbonImmutable::now();
         $nextAccessEndDuesPkg = DuesPackage::where("access_end", ">", $now)->get()->sortBy("access_end")->first();
 
-        $overrideEndDate = $nextAccessEndDuesPkg->access_end;
-        $OVERRIDE_MIN_LENGTH_DAYS = 7;
-        $OVERRIDE_MAX_LENGTH_DAYS = 60;
-        $overrideLengthDays = $now->diffInDays($nextAccessEndDuesPkg->access_end, false);
-
-        if ($overrideLengthDays > $OVERRIDE_MAX_LENGTH_DAYS) {
-            $overrideEndDate = $now->addDays($OVERRIDE_MAX_LENGTH_DAYS)->endOfDay();
-        } else if ($overrideLengthDays < $OVERRIDE_MIN_LENGTH_DAYS) {
-            $overrideEndDate = $now->addDays($OVERRIDE_MIN_LENGTH_DAYS)->endOfDay();
-        }
-
         $eligible = false;
         $userRectifiable = false; // Simple things the user can do (e.g., attend a team meeting, sign the membership
-            // agreement to become eligible for a self-service access override. As opposed to things the user can't
-            // change such as having paid dues in the past
+        // agreement) to become eligible for a self-service access override. As opposed to things the user can't
+        // change such as having paid dues in the past
+        $overrideEndDate = null;
 
-        if ($this->is_access_active) {
-            $ineligibleReason = $INELIGIBLE_ACCESS_ACTIVE;
-        } else if (! is_null($this->access_override_until)) {
-            $ineligibleReason = $INELIGIBLE_PREV_OVERRIDE;
-        } else if ($this->paidDues()->count() > 0) {
-            $ineligibleReason = $INELIGIBLE_PAID_DUES;
-        } else if (is_null($nextAccessEndDuesPkg)) {
-            $ineligibleReason = $INELIGIBLE_NO_FUTURE_DUES_PKG;
-        } else if (0 === $this->attendance()->whereAttendableType('team')->count()) {
-            $ineligibleReason = $INELIGIBLE_NO_ATTENDANCE;
-            $userRectifiable = true;
-        } else if (! $this->hasSignedLatestAgreement()) {
-            $ineligibleReason = $INELIGIBLE_MEMBERSHIP_AGREEMENT;
-            $userRectifiable = true;
+        // conditions
+        $accessNotActive = ! $this->is_access_active;
+        $noExistingOverride = is_null($this->access_override_until);
+        $hasNotPaidDues = ! $this->paidDues()->exists();
+        $eligibleDuesPkgExists = ! is_null($nextAccessEndDuesPkg);
+
+        // tasks
+        $attendedTeamMeeting = $this->attendance()->whereAttendableType('team')->exists();
+        $signedLatestAgreement = $this->hasSignedLatestAgreement();
+
+        if ($eligibleDuesPkgExists) {
+            $overrideEndDate = new CarbonImmutable($nextAccessEndDuesPkg->access_end);
+            $OVERRIDE_MIN_LENGTH_DAYS = 7;
+            $OVERRIDE_MAX_LENGTH_DAYS = 60;
+            $overrideLengthDays = $now->diffInDays($nextAccessEndDuesPkg->access_end, false);
+
+            if ($overrideLengthDays > $OVERRIDE_MAX_LENGTH_DAYS) {
+                $overrideEndDate = $now->addDays($OVERRIDE_MAX_LENGTH_DAYS)->endOfDay();
+            } else if ($overrideLengthDays < $OVERRIDE_MIN_LENGTH_DAYS) {
+                $overrideEndDate = $now->addDays($OVERRIDE_MIN_LENGTH_DAYS)->endOfDay();
+            }
+
+
+            if (! $accessNotActive || ! $noExistingOverride || ! $hasNotPaidDues) {
+                $ineligibleReason = $INELIGIBLE_REQ_CONDS;
+            } else if (! $attendedTeamMeeting || ! $signedLatestAgreement) {
+                $userRectifiable = true;
+                $ineligibleReason = $INELIGIBLE_REQ_TASKS;
+            } else {
+                $eligible = true;
+            }
         } else {
-            $eligible = true;
+            $ineligibleReason = $INELIGIBLE_NO_FUTURE_DUES_PKG;
         }
 
         return (new SelfServiceAccessOverrideEligibility())
             ->setEligibility($eligible)
             ->setUserRectifiable($userRectifiable)
             ->setIneligibleReason($eligible ? '' : $ineligibleReason)
+            ->setRequiredConditions([
+                'Access must not be active' => $accessNotActive,
+                'Must have no prior dues payments' => $hasNotPaidDues,
+                'Must have no previous access override' => $noExistingOverride,
+                'Future dues package must exist' => $eligibleDuesPkgExists,
+            ])
+            ->setRequiredTasks([
+                'Sign the membership agreement' => $signedLatestAgreement,
+                'Attend a team meeting' => $attendedTeamMeeting,
+            ])
             ->setOverrideUntil($overrideEndDate);
     }
 }
