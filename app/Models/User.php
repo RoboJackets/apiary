@@ -117,6 +117,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read bool $is_student
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
  * @method static Builder|User active()
@@ -175,6 +176,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static QueryBuilder|User withTrashed()
  * @method static QueryBuilder|User withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
  * @property-read \App\Models\SelfServiceAccessOverrideEligibility $self_service_override_eligibility
  */
 class User extends Authenticatable
@@ -865,14 +867,14 @@ class User extends Authenticatable
         $ineligibleReason = 'Unable to provide a self-service override at this time';
 
         $INELIGIBLE_ACTIVE_SELF_SERVICE_OVERRIDE = 'You already have an active self-service override';
-        $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are ' .
+        $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are '.
             'no dues packages with future access end dates';
         $INELIGIBLE_REQ_CONDS = 'Account and system conditions for self-service override not met';
-        $INELIGIBLE_REQ_TASKS = 'You have outstanding required tasks that must be completed before receiving your ' .
+        $INELIGIBLE_REQ_TASKS = 'You have outstanding required tasks that must be completed before receiving your '.
             'self-service override';
 
         $now = CarbonImmutable::now();
-        $nextAccessEndDuesPkg = DuesPackage::where("access_end", ">", $now)->get()->sortBy("access_end")->first();
+        $nextAccessEndDuesPkg = DuesPackage::where('access_end', '>', $now)->get()->sortBy('access_end')->first();
 
         $eligible = false;
         $userRectifiable = false; // Simple things the user can do (e.g., attend a team meeting, sign the membership
@@ -898,14 +900,13 @@ class User extends Authenticatable
 
             if ($overrideLengthDays > $OVERRIDE_MAX_LENGTH_DAYS) {
                 $overrideEndDate = $now->addDays($OVERRIDE_MAX_LENGTH_DAYS)->endOfDay();
-            } else if ($overrideLengthDays < $OVERRIDE_MIN_LENGTH_DAYS) {
+            } elseif ($overrideLengthDays < $OVERRIDE_MIN_LENGTH_DAYS) {
                 $overrideEndDate = $now->addDays($OVERRIDE_MIN_LENGTH_DAYS)->endOfDay();
             }
 
-
             if (! $accessNotActive || ! $noExistingOverride || ! $hasNotPaidDues) {
                 $ineligibleReason = $INELIGIBLE_REQ_CONDS;
-            } else if (! $attendedTeamMeeting || ! $signedLatestAgreement) {
+            } elseif (! $attendedTeamMeeting || ! $signedLatestAgreement) {
                 $userRectifiable = true;
                 $ineligibleReason = $INELIGIBLE_REQ_TASKS;
             } else {

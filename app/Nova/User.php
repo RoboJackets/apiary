@@ -174,7 +174,7 @@ class User extends Resource
 
                     Text::make('Self-Service Override', function ($user) {
                         if ($user->has_active_override && $user->access_override_by_id == $user->id) {
-                            return 'Active, expires ' . $user->access_override_until->format('F j, Y') . '.';
+                            return 'Active, expires '.$user->access_override_until->format('F j, Y').'.';
                         }
 
                         return (string) $user->self_service_override_eligibility;

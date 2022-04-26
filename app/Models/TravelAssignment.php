@@ -47,6 +47,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment withoutTrashed()
  * @method static Builder|TravelAssignment whereTarReceived($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
  * @property-read string $travel_authority_request_url
  */
 class TravelAssignment extends Model
