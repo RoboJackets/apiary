@@ -22,11 +22,13 @@ import FileUploader from "./mixins/FileUploader";
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
 
-if (process.env.MIX_SENTRY_DSN !== undefined) {
+var sentryDsn = document.head.querySelector('meta[name="sentry-dsn"]').content;
+var sentryAppEnv = document.head.querySelector('meta[name="sentry-app-env"]').content;
+if (sentryDsn !== undefined) {
     Sentry.init({
         Vue: Vue,
-        dsn: process.env.MIX_SENTRY_DSN,
-        environment: process.env.MIX_APP_ENV,
+        dsn: sentryDsn,
+        environment: sentryAppEnv,
         attachProps: true,
         logErrors: true,
         integrations: [new Integrations.BrowserTracing()],
