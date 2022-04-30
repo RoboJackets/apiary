@@ -58,4 +58,5 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33 \
     set -eux && \
     composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \
-    php artisan horizon:publish
+    php artisan horizon:publish && \
+    sed -i '/HTTPS_ONLY_COOKIES/c\true,' /app/vendor/subfission/cas/src/Subfission/Cas/CasManager.php
