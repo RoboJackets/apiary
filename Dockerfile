@@ -34,7 +34,8 @@ RUN set -e && \
         php7.4-opcache php7.4-bcmath php7.4-ldap php7.4-uuid php7.4-sqlite sqlite3 exiftool ghostscript unzip && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
-    chown www-data:www-data /app
+    chown www-data:www-data /app && \
+    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/7.4/fpm/php-fpm.conf
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
