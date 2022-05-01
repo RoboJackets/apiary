@@ -76,7 +76,7 @@ return [
         'production' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'default'],
                 'balance' => 'simple',
                 'processes' => 5,
                 'tries' => 1,
@@ -87,7 +87,7 @@ return [
         'test' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'default'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
@@ -98,7 +98,7 @@ return [
         'local' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack'],
+                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'default'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
@@ -111,4 +111,6 @@ return [
         'web',
         'auth.cas.force',
     ],
+
+    'master_supervisor_name' => env('NOMAD_ALLOC_ID'),
 ];
