@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
+use Laravel\Horizon\MasterSupervisor;
 use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
@@ -53,6 +54,12 @@ class AppServiceProvider extends ServiceProvider
 
             // No return as this is unreachable.
         });
+
+        if (null !== config('horizon.master_supervisor_name')) {
+            MasterSupervisor::determineNameUsing(static function (): string {
+                return config('horizon.master_supervisor_name');
+            });
+        }
 
         Attendance::observe(AttendanceObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
