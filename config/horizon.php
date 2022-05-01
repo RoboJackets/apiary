@@ -80,7 +80,7 @@ return [
             'processes' => 1,
             'tries' => 1,
             'block_for' => null,
-        ]
+        ],
     ],
 
     'environments' => [],
