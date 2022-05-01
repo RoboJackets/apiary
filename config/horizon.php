@@ -72,40 +72,18 @@ return [
     |
     */
 
-    'environments' => [
-        'production' => [
-            'supervisor' => [
-                'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'default'],
-                'balance' => 'simple',
-                'processes' => 5,
-                'tries' => 1,
-                'block_for' => null,
-            ],
-        ],
-
-        'test' => [
-            'supervisor' => [
-                'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'default'],
-                'balance' => 'simple',
-                'processes' => 1,
-                'tries' => 1,
-                'block_for' => null,
-            ],
-        ],
-
-        'local' => [
-            'supervisor' => [
-                'connection' => 'redis',
-                'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'default'],
-                'balance' => 'simple',
-                'processes' => 1,
-                'tries' => 1,
-                'block_for' => null,
-            ],
-        ],
+    'defaults' => [
+        'supervisor' => [
+            'connection' => 'redis',
+            'queue' => ['email', 'slack', 'jedi', 'buzzapi', 'square', 'ipstack', 'default'],
+            'balance' => 'simple',
+            'processes' => 1,
+            'tries' => 1,
+            'block_for' => null,
+        ]
     ],
+
+    'environments' => [],
 
     'middleware' => [
         'web',
