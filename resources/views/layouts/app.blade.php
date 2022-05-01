@@ -75,7 +75,7 @@
 
     @include('layouts/footer')
   </body>
-  <script src="{{ mix('/js/app.js') }}"></script>
+  <script src="{{ mix('/js/app.js') }}" crossorigin="anonymous"></script>
   @if (Session::has('sweet_alert.alert'))
     <script>
         Swal.fire({!! Session::pull('sweet_alert.alert') !!});

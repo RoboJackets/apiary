@@ -24,11 +24,27 @@ import { Integrations } from "@sentry/tracing";
 
 var sentryDsn = document.head.querySelector('meta[name="sentry-dsn"]').content;
 var sentryAppEnv = document.head.querySelector('meta[name="sentry-app-env"]').content;
+var sentryRelease = document.head.querySelector('meta[name="sentry-release"]').content;
+var sentryUserId = document.head.querySelector('meta[name="sentry-user-id"]');
+var sentryUsername = document.head.querySelector('meta[name="sentry-username"]');
 if (sentryDsn !== undefined) {
+    if (sentryUserId !== undefined) {
+        var initialScope = {
+            user: {
+                id: sentryUserId.content,
+                username: sentryUsername.content,
+            }
+
+        }
+    } else {
+        var initialScope = {}
+    }
     Sentry.init({
         Vue: Vue,
         dsn: sentryDsn,
         environment: sentryAppEnv,
+        release: sentryRelease,
+        initialScope: initialScope
         attachProps: true,
         logErrors: true,
         integrations: [new Integrations.BrowserTracing()],
