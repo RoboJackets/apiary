@@ -44,7 +44,7 @@ if (sentryDsn !== undefined) {
         dsn: sentryDsn,
         environment: sentryAppEnv,
         release: sentryRelease,
-        initialScope: initialScope
+        initialScope: initialScope,
         attachProps: true,
         logErrors: true,
         integrations: [new Integrations.BrowserTracing()],
