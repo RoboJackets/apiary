@@ -8,7 +8,7 @@
 <meta name="sentry-user-id" content="{{ auth()->user()->id }}">
 <meta name="sentry-username" content="{{ auth()->user()->uid }}">
 @endif
-<link href="{{ mix('/css/app.css') }}" rel="stylesheet" crossorigin="anonymous">
+<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css">
 
 

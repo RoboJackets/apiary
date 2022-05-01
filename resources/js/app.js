@@ -27,14 +27,13 @@ var sentryAppEnv = document.head.querySelector('meta[name="sentry-app-env"]').co
 var sentryRelease = document.head.querySelector('meta[name="sentry-release"]').content;
 var sentryUserId = document.head.querySelector('meta[name="sentry-user-id"]');
 var sentryUsername = document.head.querySelector('meta[name="sentry-username"]');
-if (sentryDsn !== undefined) {
-    if (sentryUserId !== undefined) {
+if (sentryDsn !== null) {
+    if (sentryUserId !== null) {
         var initialScope = {
             user: {
                 id: sentryUserId.content,
                 username: sentryUsername.content,
             }
-
         }
     } else {
         var initialScope = {}
