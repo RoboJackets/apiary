@@ -13,16 +13,19 @@ return [
      * of the service.
      */
     'checks' => [
-        OITNetworkServices\BuzzAPI\HealthChecks\CredentialsAreValid::class,
-        OITNetworkServices\BuzzAPI\HealthChecks\ServiceIsAvailable::class,
         UKFast\HealthCheck\Checks\CacheHealthCheck::class,
         UKFast\HealthCheck\Checks\DatabaseHealthCheck::class,
         UKFast\HealthCheck\Checks\HttpHealthCheck::class,
         UKFast\HealthCheck\Checks\LogHealthCheck::class,
         UKFast\HealthCheck\Checks\MigrationUpToDateHealthCheck::class,
-        UKFast\HealthCheck\Checks\RedisHealthCheck::class,
-        UKFast\HealthCheck\Checks\SchedulerHealthCheck::class,
         UKFast\HealthCheck\Checks\StorageHealthCheck::class,
+        ...(env('APP_ENV') === 'google-play-review' ? [
+            OITNetworkServices\BuzzAPI\HealthChecks\CredentialsAreValid::class,
+            OITNetworkServices\BuzzAPI\HealthChecks\ServiceIsAvailable::class,
+        ] : [
+            UKFast\HealthCheck\Checks\RedisHealthCheck::class,
+            UKFast\HealthCheck\Checks\SchedulerHealthCheck::class,
+        ]),
     ],
 
     /**
@@ -68,7 +71,6 @@ return [
     'addresses' => [
         env('APP_URL').'/privacy' => 200,
         env('APP_URL').'/attendance/kiosk' => 200,
-        env('APP_URL') => 200,
     ],
 
     /**
