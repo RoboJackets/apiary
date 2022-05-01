@@ -30,7 +30,7 @@ RUN set -eux && \
     apt-get upgrade -qq --assume-yes && \
     apt-get install -qq --assume-yes \
         php7.4-fpm php7.4-mysql php7.4-gd php7.4-xml php7.4-mbstring php7.4-zip php7.4-curl php7.4-intl \
-        php7.4-opcache php7.4-bcmath php7.4-ldap php7.4-uuid php7.4-sqlite sqlite3 exiftool ghostscript unzip libfcgi-bin && \
+        php7.4-opcache php7.4-bcmath php7.4-ldap php7.4-uuid php7.4-sqlite sqlite3 exiftool ghostscript unzip libfcgi-bin mysql-client && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
