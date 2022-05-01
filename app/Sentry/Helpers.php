@@ -14,9 +14,9 @@ class Helpers
 
         if (array_key_exists('data', $request) && array_key_exists('refresh_token', $request['data'])) {
             $request['data']['refresh_token'] = '[redacted]';
-        }
 
-        $event->setRequest($request);
+            $event->setRequest($request);
+        }
 
         return $event;
     }
