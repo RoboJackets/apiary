@@ -23,8 +23,6 @@ services:
       CAS_MASQUERADE_email_primary: developers@robojackets.org
       CAS_MASQUERADE_givenName: Apiary
       CAS_MASQUERADE_sn: Testing
-      CAS_MASQUERADE_gtAccountEntitlement: /gt/central/services/iam/two-factor/duo-user
-      CAS_MASQUERADE_authn_method: duo-two-factor
       CAS_MASQUERADE_authnContextClass: mfa-duo
       CAS_MASQUERADE_eduPersonPrimaryAffiliation: student
       JEDI_HOST: null
