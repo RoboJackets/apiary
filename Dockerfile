@@ -1,4 +1,4 @@
-# syntax = docker/dockerfile:1.3
+# syntax = docker/dockerfile:1.4
 
 FROM node:17 as frontend
 
@@ -54,7 +54,7 @@ WORKDIR /app/
 
 USER www-data
 
-RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33 \
+RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,required=true \
     set -eux && \
     composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \
