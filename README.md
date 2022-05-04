@@ -79,29 +79,6 @@ For the resume book functionality, you'll also need to install `exiftool` and Gh
 $ sudo apt install exiftool ghostscript
 ```
 
-#### Database Encryption
-
-Due to the nature of the data stored in certain tables in Apiary, some tables require encryption. This is implemented with MySQL's [Keyring](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
-For migrations to run successfully, you must also have a proper keyring set up in your development and production environments.
-
-To enable the Keyring functionality, edit your `my.cnf` to add the following, then restart MySQL:
-
-    [mysqld]
-    early-plugin-load=keyring_file.so
-
-To check if the Keyring plugin was enabled successfully, run the following command from a MySQL command line.
-
-    mysql> SELECT PLUGIN_NAME, PLUGIN_STATUS
-           FROM INFORMATION_SCHEMA.PLUGINS
-           WHERE PLUGIN_NAME LIKE 'keyring%';
-    +--------------+---------------+
-    | PLUGIN_NAME  | PLUGIN_STATUS |
-    +--------------+---------------+
-    | keyring_file | ACTIVE        |
-    +--------------+---------------+
-
-Further documentation about MySQL Keyring can be found in [the MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
-
 ### Install Redis
 
 Apiary uses Redis for queueing jobs, with Laravel Horizon used to manage them. You should be able to just install Redis and the corresponding PHP extension. Once you get Apiary configured below, you can run `php artisan horizon` to process jobs.
