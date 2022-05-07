@@ -324,15 +324,11 @@ EOF
     }
   }
 
-  # update {
-  #   healthy_deadline = "5m"
-  #   progress_deadline = "10m"
-  #   auto_revert = true
-  #   auto_promote = true
-  #   canary = 1
-  # }
-
   update {
-    max_parallel = 0
+    healthy_deadline = "5m"
+    progress_deadline = "10m"
+    auto_revert = true
+    auto_promote = true
+    canary = 1
   }
 }
