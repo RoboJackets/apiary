@@ -19,7 +19,7 @@ RUN set -eux && \
     npm ci --no-progress && \
     npm run production --no-progress
 
-FROM debian:bullseye-slim as backend
+FROM ${base_image} as backend
 
 LABEL maintainer="developers@robojackets.org"
 
