@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  apiary:
+    image: robojackets/apiary
+    network_mode: host
+    environment:
+      APP_NAME: Apiary Local
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_LOG_LEVEL: debug
+      APP_URL: http://127.0.0.1:8000
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: sqlite
+      DB_SQLITE_LOCATION: /app/storage/quickstart.sqlite
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: array
+      SESSION_DRIVER: file
+      QUEUE_DRIVER: sync
+      CAS_MASQUERADE: atesting3
+      CAS_MASQUERADE_gtGTID: 901234567
+      CAS_MASQUERADE_email_primary: developers@robojackets.org
+      CAS_MASQUERADE_givenName: Apiary
+      CAS_MASQUERADE_sn: Testing
+      CAS_MASQUERADE_authnContextClass: mfa-duo
+      CAS_MASQUERADE_eduPersonPrimaryAffiliation: student
+      JEDI_HOST: null
+      JEDI_TOKEN: null
+      PASSPORT_PERSONAL_ACCESS_CLIENT_ID: 95b2031a-5593-4d67-909a-ef32ae06a86a
+      PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET: cu95hXvaJTe5hsotCHMYDMyycHu83PJIBYffVGHL
+    command: >-
+      /bin/sh -euxc "export APP_KEY=$$(php artisan key:generate --show --verbose) &&
+      php artisan passport:keys --no-interaction &&
+      php artisan migrate --no-interaction &&
+      php artisan serve"
