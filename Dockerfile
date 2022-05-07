@@ -1,5 +1,7 @@
 # syntax = docker/dockerfile:1.4
 
+ARG base_image="debian:bullseye-slim"
+
 FROM node:17 as frontend
 
 RUN npm install -g npm@latest
