@@ -40,5 +40,6 @@ resume-monitoring.sh
 /storage/*.sqlite
 !/storage/db-clean.sqlite
 !/storage/quickstart.sqlite
+*.map
 
 .envault.json

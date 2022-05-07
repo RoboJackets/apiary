@@ -14,9 +14,9 @@ const mix = require('laravel-mix');
 mix.js(['resources/js/app.js'], 'public/js/app.js').vue()
   .sass('resources/sass/app.scss', 'public/css/app.css')
   .js(['resources/js/nova.js'], 'public/js/nova.js').vue()
-  .sass('resources/sass/nova/global.scss', 'public/css/nova.css');
-
-mix.disableNotifications();
+  .sass('resources/sass/nova/global.scss', 'public/css/nova.css')
+  .sourceMaps()
+  .disableNotifications();
 
 if (mix.inProduction()) {
     mix.version();
