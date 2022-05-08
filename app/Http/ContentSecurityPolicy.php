@@ -18,7 +18,7 @@ class ContentSecurityPolicy extends Policy
         if ('' !== config('csp.report_uri') && null !== config('csp.report_uri')) {
             $this->reportTo(
                 config('csp.report_uri')
-                .'&sentry_environment='.config('sentry.environment')
+                .'&sentry_environment='.config('app.env')
                 .'&sentry_release='.config('sentry.release')
             );
         }
