@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
             \App\Http\Middleware\AddUserToSentryEvents::class,
+            \Spatie\Csp\AddCspHeaders::class,
         ],
 
         'api' => [
