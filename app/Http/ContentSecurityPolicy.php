@@ -33,11 +33,14 @@ class ContentSecurityPolicy extends Policy
             Keyword::REPORT_SAMPLE,
         ]);
         $this->addDirective(Directive::STYLE, [
+            Keyword::SELF,
             Keyword::UNSAFE_INLINE,
+            'https://fonts.googleapis.com',
             Keyword::REPORT_SAMPLE,
         ]);
         $this->addDirective(Directive::FONT, 'https://fonts.gstatic.com');
         $this->addDirective(Directive::SCRIPT, [
+            Keyword::SELF,
             Keyword::UNSAFE_EVAL,
             Keyword::REPORT_SAMPLE,
         ]);
