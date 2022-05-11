@@ -13,6 +13,11 @@ variable "run_background_containers" {
   description = "Whether to start containers for horizon and scheduled tasks, or only the web task"
 }
 
+variable "precompressed_assets" {
+  type = bool
+  description = "Whether assets in the image are pre-compressed"
+}
+
 job "apiary-production" {
   region = "campus"
 
@@ -222,7 +227,7 @@ EOF
         }
 
         meta {
-          nginx-config = trimspace(trimsuffix(trimspace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(trimspace(file("conf/nginx.conf")),"server\\s{\\s",""),"server_name\\s\\S+;",""),"root\\s\\S+;",""),"listen\\s.+;",""),"#.+\\n",""),";\\s+",";"),"{\\s+","{"),"\\s+"," ")),"}"))
+          nginx-config = var.precompressed_assets ? trimspace(trimsuffix(trimspace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(trimspace(file("conf/nginx.conf")),"server\\s{\\s",""),"server_name\\s\\S+;",""),"root\\s\\S+;",""),"listen\\s.+;",""),"#.+\\n",""),";\\s+",";"),"{\\s+","{"),"\\s+"," ")),"}")) : trimspace(trimsuffix(trimspace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(regex_replace(trimspace(file("conf/nginx.conf")),"server\\s{\\s",""),"gzip_static\\s\\S+;",""),"server_name\\s\\S+;",""),"root\\s\\S+;",""),"listen\\s.+;",""),"#.+\\n",""),";\\s+",";"),"{\\s+","{"),"\\s+"," ")),"}"))
           socket = "/var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock"
           firewall-rules = jsonencode(["internet"])
         }

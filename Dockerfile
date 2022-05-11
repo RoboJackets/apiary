@@ -34,7 +34,7 @@ COPY --link storage/ /app/storage/
 COPY --link artisan composer.json composer.lock server.php /app/
 COPY --link --from=frontend /app/public/ /app/public/
 
-FROM ${base_image} as backend
+FROM ${base_image} as backend-uncompressed
 
 LABEL maintainer="developers@robojackets.org"
 
@@ -67,7 +67,13 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,requir
     composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \
     php artisan horizon:publish && \
-    sed -i '/HTTPS_ONLY_COOKIES/c\true,' /app/vendor/subfission/cas/src/Subfission/Cas/CasManager.php && \
+    sed -i '/HTTPS_ONLY_COOKIES/c\true,' /app/vendor/subfission/cas/src/Subfission/Cas/CasManager.php;
+
+# This target is the default, but skipped during pull request builds and in our recommended local build invocation
+# precompressed_assets var on the Nomad job must match whether this stage ran or not
+FROM backend-uncompressed as backend-compressed
+
+RUN set -eux && \
     cd /app/public/ && \
     find . -type f -size +0 | while read file; do \
         filename=$(basename -- "$file"); \
