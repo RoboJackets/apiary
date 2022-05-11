@@ -67,7 +67,7 @@ locals {
   compressed_nginx_configuration_without_gzip_static = regex_replace(local.compressed_nginx_configuration,"gzip_static\\s\\S+;","")
 }
 
-job "apiary-production" {
+job "apiary" {
   region = "campus"
 
   datacenters = ["bcdc"]
