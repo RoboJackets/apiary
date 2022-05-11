@@ -42,6 +42,7 @@ class ContentSecurityPolicy extends Policy
         $this->addDirective(Directive::SCRIPT, [
             Keyword::SELF,
             Keyword::UNSAFE_EVAL,
+            Keyword::UNSAFE_INLINE,
             Keyword::REPORT_SAMPLE,
         ]);
         $this->addDirective(Directive::SCRIPT_ELEM, [

@@ -29,7 +29,7 @@ Clone the repository, then run
 
 ```sh
 export DOCKER_BUILDKIT=1
-docker build --target backend-uncompressed --network host --secret id=composer_auth,src=auth.json . --tag robojackets/apiary
+docker build --pull --target backend-uncompressed --network host --secret id=composer_auth,src=auth.json . --tag robojackets/apiary
 docker compose up
 ```
 
