@@ -368,7 +368,7 @@ EOF
           "-o",
           "pipefail",
           "-c",
-          join("; ", concat([for task in var.run_background_containers ? ["web", "scheduler", "worker"] : ["web"] : "docker update --restart=always ${task}-${NOMAD_ALLOC_ID}"], ["sleep 60"])),
+          join("; ", [for task in var.run_background_containers ? ["web", "scheduler", "worker"] : ["web"] : "docker update --restart=always ${task}-${NOMAD_ALLOC_ID}"])),
         ]
       }
 
