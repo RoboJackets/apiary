@@ -821,6 +821,7 @@ class User extends Authenticatable
                 ->toArray();
 
             if (null !== $parentSpan) {
+                // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
                 $span->finish();
                 SentrySdk::getCurrentHub()->setSpan($parentSpan);
             }
