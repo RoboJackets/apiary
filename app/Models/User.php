@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
+use Sentry\SentrySdk;
+use Sentry\Tracing\SpanContext;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -801,6 +803,15 @@ class User extends Authenticatable
         $uid = $this->uid;
 
         return Cache::remember('home_department_'.$uid, now(), static function () use ($uid): ?string {
+            $parentSpan = SentrySdk::getCurrentHub()->getSpan();
+
+            if (null !== $parentSpan) {
+                $context = new SpanContext();
+                $context->setOp('ldap.get_home_department');
+                $span = $parentSpan->startChild($context);
+                SentrySdk::getCurrentHub()->setSpan($span);
+            }
+
             $result = Adldap::search()
                 ->where('uid', '=', $uid)
                 ->where('employeeType', '=', 'employee')
@@ -808,6 +819,11 @@ class User extends Authenticatable
                 ->get()
                 ->pluck('ou')
                 ->toArray();
+
+            if (null !== $parentSpan) {
+                $span->finish();
+                SentrySdk::getCurrentHub()->setSpan($parentSpan);
+            }
 
             // @phan-suppress-next-line PhanTypeArraySuspiciousNull,PhanTypeInvalidDimOffset
             return [] === $result ? null : $result[0][0];
