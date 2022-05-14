@@ -3,5 +3,6 @@
     <span class="px-1">&middot;</span>
     <a class="text-primary dim no-underline" class="text-muted" href="/privacy">Privacy Policy</a>
     <span class="px-1">&middot;</span>
-    <makeawish-link />
+    <makeawish-link></makeawish-link>
+    <trace-id></trace-id>
 </p>
