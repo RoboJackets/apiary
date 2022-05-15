@@ -22,6 +22,7 @@
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "2.13.9",
         "guzzlehttp/guzzle": "7.4.2",
+        "htmlmin/htmlmin": "^9.0",
         "http-interop/http-factory-guzzle": "1.2.0",
         "laravel/framework": "8.83.12",
         "laravel/horizon": "5.9.7",
