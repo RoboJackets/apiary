@@ -73,8 +73,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards(): array
     {
-        if ('/nova-api/dashboards/main' !== $_SERVER['REQUEST_URI'] &&
-            ! Str::startsWith($_SERVER['REQUEST_URI'], '/nova-api/metrics/')) {
+        if (! request()->is('nova-api/dashboards/main') &&
+            ! request()->is('nova-api/metrics/*')) {
             return [];
         }
 
