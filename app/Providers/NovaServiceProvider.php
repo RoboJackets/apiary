@@ -26,6 +26,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -72,6 +73,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards(): array
     {
+        if ("/nova-api/dashboards/main" !== $_SERVER['REQUEST_URI'] && !Str::startsWith($_SERVER['REQUEST_URI'], '/nova-api/metrics/')) {
+            return [];
+        }
+
         $cards = [
             (new PaymentsPerDay())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-payments');
