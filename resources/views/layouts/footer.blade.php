@@ -11,7 +11,7 @@
 @if(auth()->user() && auth()->user()->hasRole('admin'))
 • <a class="text-muted" href="https://sentry.io/organizations/robojackets/performance/trace/{{ \Sentry\Laravel\Integration::currentTracingSpan()->getTraceId() }}">Trace ID: {{ \Sentry\Laravel\Integration::currentTracingSpan()->getTraceId() }}</a>
 @else
-• <a class="text-muted" href="#">Trace ID: {{ \Sentry\Laravel\Integration::currentTracingSpan()->getTraceId() }}</a>
+• <p class="text-muted">Trace ID: {{ \Sentry\Laravel\Integration::currentTracingSpan()->getTraceId() }}</p>
 @endif
 @endif
 </p>
