@@ -62,7 +62,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewNova', static function (User $user): bool {
-            return Cache::remember('can_access_nova_'.$uid, now()->addDay(), static function () use ($user): ?string {
+            return Cache::remember('can_access_nova_'.$user->uid, now()->addDay(), static function () use ($user): bool {
                 return $user->can('access-nova');
             });
         });
