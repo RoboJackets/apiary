@@ -188,10 +188,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools(): array
     {
-        if (! request()->is('nova/*')) {
-            return [];
-        }
-
         return [
             (new NovaPermissionTool())->canSee(static function (Request $request): bool {
                 return $request->user()->hasRole('admin');
@@ -209,7 +205,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards(): array
     {
-        if (! request()->is('nova/*')) {
+        if (! request()->is('nova/*') && ! request()->is('nova-api/dashboards/*')) {
             return [];
         }
 
