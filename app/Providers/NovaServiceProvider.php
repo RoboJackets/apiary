@@ -25,6 +25,7 @@ use App\Nova\Tools\AttendanceReport;
 use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Laravel\Nova\Events\ServingNova;
@@ -62,9 +63,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewNova', static function (User $user): bool {
-            return Cache::remember('can_access_nova_'.$user->uid, now()->addDay(), static function () use ($user): bool {
-                return $user->can('access-nova');
-            });
+            return Cache::remember(
+                'can_access_nova_'.$user->uid,
+                now()->addDay(),
+                static function () use ($user): bool {
+                    return $user->can('access-nova');
+                }
+            );
         });
     }
 
