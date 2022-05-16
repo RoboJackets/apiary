@@ -181,6 +181,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools(): array
     {
+        if (! request()->is('nova/*')) {
+            return [];
+        }
+
         return [
             (new NovaPermissionTool())->canSee(static function (Request $request): bool {
                 return $request->user()->hasRole('admin');
@@ -198,6 +202,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards(): array
     {
+        if (! request()->is('nova/*')) {
+            return [];
+        }
+
         return [
             (new JEDI())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
