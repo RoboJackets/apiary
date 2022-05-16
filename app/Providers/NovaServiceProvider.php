@@ -205,10 +205,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards(): array
     {
-        if (! request()->is('nova/*') && ! request()->is('nova-api/dashboards/*')) {
-            return [];
-        }
-
         return [
             (new JEDI())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
