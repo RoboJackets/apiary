@@ -140,32 +140,38 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
-                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                });
+                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
+                    static function (Request $request): bool {
+                        return $request->user()->can('read-payments');
+                    }
+                );
             }
 
             $cards[] = new MakeAWish();
 
             return $cards;
-        } elseif (request()->is('nova-api/metrics/*-received-*')) {
+        }
+
+        if (request()->is('nova-api/metrics/*-received-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $type = $parts->first();
             $id = intval($parts->last());
 
-            switch($type) {
+            switch ($type) {
                 case 'tar':
                     return [new TravelAuthorityRequestReceivedForTravel($id)];
                 case 'documents':
                     return [new DocumentsReceivedForTravel($id)];
                 case 'payment':
-                    return [(new PaymentReceivedForTravel($id))->canSee(static function (Request $request): bool {
-                        return $request->user()->can('read-payments');
-                    })];
+                    return [
+                        (new PaymentReceivedForTravel($id))->canSee(static function (Request $request): bool {
+                            return $request->user()->can('read-payments');
+                        }),
+                    ];
             }
-        } else {
-            return $cards;
         }
+
+        return $cards;
     }
 
     /**
