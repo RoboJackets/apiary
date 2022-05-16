@@ -72,6 +72,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards(): array
     {
+        if (! request()->is('nova-api/dashboards/main') &&
+            ! request()->is('nova-api/metrics/*')) {
+            return [];
+        }
+
         $cards = [
             (new PaymentsPerDay())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-payments');

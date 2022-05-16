@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
             \App\Http\Middleware\AddUserToSentryEvents::class,
             \Spatie\Csp\AddCspHeaders::class,
+            \HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware::class,
         ],
 
         'api' => [

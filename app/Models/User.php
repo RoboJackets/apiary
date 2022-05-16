@@ -802,7 +802,7 @@ class User extends Authenticatable
     {
         $uid = $this->uid;
 
-        return Cache::remember('home_department_'.$uid, now(), static function () use ($uid): ?string {
+        return Cache::remember('home_department_'.$uid, now()->addDay(), static function () use ($uid): ?string {
             $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
             if (null !== $parentSpan) {
