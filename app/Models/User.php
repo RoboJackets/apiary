@@ -325,6 +325,7 @@ class User extends Authenticatable
         'dues_package_id',
         'travel_id',
         'merchandise_id',
+        'user_id',
     ];
 
     /**

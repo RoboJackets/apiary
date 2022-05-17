@@ -106,6 +106,23 @@ class Travel extends Model
         'return_date_unix:desc',
     ];
 
+    /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+    ];
+
+    /**
+     * The attributes that Nova might think can be used for filtering, but actually can't.
+     *
+     * @var array<string>
+     */
+    public $do_not_filter_on = [
+        'user_id',
+    ];
+
     public function primaryContact(): BelongsTo
     {
         return $this->belongsTo(User::class, 'primary_contact_user_id');
