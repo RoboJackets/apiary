@@ -10,3 +10,4 @@ if [ ${PERSIST_RESUMES} = "false" ] && [ ${DB_CONNECTION} = "mysql" ]
 then
     mysql --execute="update users set resume_date=null"
 fi
+php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true

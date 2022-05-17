@@ -16,6 +16,9 @@ REDIS_SCHEME="unix"
 REDIS_PATH="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
+{{- range service "meilisearch-v0-27" }}
+MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
+{{ end }}
 MAILGUN_DOMAIN="my.robojackets.org"
 MAILGUN_SECRET="{{- key "mailgun/secret" | trimSpace -}}"
 SESSION_SECURE_COOKIE="true"

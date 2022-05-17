@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a group of Users.
@@ -89,6 +90,7 @@ class Team extends Model
     use HasRelationshipObservables;
     use Notifiable;
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
+use Laravel\Scout\Searchable;
 
 /**
  * Maps together a Travel + User + Payment.
@@ -52,6 +53,7 @@ class TravelAssignment extends Model
 {
     use SoftDeletes;
     use GetMorphClassStatic;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.

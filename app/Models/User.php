@@ -23,6 +23,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
+use Laravel\Scout\Searchable;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
@@ -192,6 +193,7 @@ class User extends Authenticatable
     use SoftDeletes;
     use HasApiTokens;
     use FirstNameSynonyms;
+    use Searchable;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
