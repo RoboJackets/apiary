@@ -101,8 +101,8 @@ class Event extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(start_time_unix)',
-        'desc(end_time_unix)',
+        'start_time_unix:desc',
+        'end_time_unix:desc',
     ];
 
     public function organizer(): BelongsTo

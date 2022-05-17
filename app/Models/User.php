@@ -296,11 +296,11 @@ class User extends Authenticatable
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(revenue_total)',
-        'desc(attendance_count)',
-        'desc(signatures_count)',
-        'desc(recruiting_visits_count)',
-        'desc(gtid)',
+        'revenue_total:desc',
+        'attendance_count:desc',
+        'signatures_count:desc',
+        'recruiting_visits_count:desc',
+        'gtid:desc',
     ];
 
     /**

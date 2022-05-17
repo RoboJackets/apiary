@@ -105,12 +105,12 @@ class TravelAssignment extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(user_revenue_total)',
-        'desc(user_attendance_count)',
-        'desc(user_signatures_count)',
-        'desc(user_recruiting_visits_count)',
-        'desc(user_gtid)',
-        'desc(updated_at_unix)',
+        'user_revenue_total:desc',
+        'user_attendance_count:desc',
+        'user_signatures_count:desc',
+        'user_recruiting_visits_count:desc',
+        'user_gtid:desc',
+        'updated_at_unix:desc',
     ];
 
     /**

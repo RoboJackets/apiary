@@ -84,7 +84,7 @@ class Attendance extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(updated_at_unix)',
+        'updated_at_unix:desc',
     ];
 
     /**

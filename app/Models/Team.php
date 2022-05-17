@@ -121,7 +121,7 @@ class Team extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(attendance_count)',
+        'attendance_count:desc',
     ];
 
     /**

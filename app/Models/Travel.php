@@ -102,8 +102,8 @@ class Travel extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(departure_date_unix)',
-        'desc(return_date_unix)',
+        'departure_date_unix:desc',
+        'return_date_unix:desc',
     ];
 
     public function primaryContact(): BelongsTo
