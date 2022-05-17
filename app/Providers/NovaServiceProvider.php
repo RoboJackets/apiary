@@ -25,7 +25,9 @@ use App\Nova\Tools\AttendanceReport;
 use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -61,7 +63,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewNova', static function (User $user): bool {
-            return $user->can('access-nova');
+            return Cache::remember(
+                'can_access_nova_'.$user->uid,
+                now()->addDay(),
+                static function () use ($user): bool {
+                    return $user->can('access-nova');
+                }
+            );
         });
     }
 
@@ -72,11 +80,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards(): array
     {
-        if (! request()->is('nova-api/dashboards/main') &&
-            ! request()->is('nova-api/metrics/*')) {
-            return [];
-        }
-
         $cards = [
             (new PaymentsPerDay())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-payments');
@@ -99,56 +102,81 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 }),
         ];
 
-        foreach (Travel::all() as $travel) {
-            $should_include = false;
+        if (request()->is('nova-api/dashboards/main')) {
+            foreach (Travel::all() as $travel) {
+                $should_include = false;
 
-            if ($travel->return_date > Carbon::now()) {
-                $should_include = true;
+                if ($travel->return_date > Carbon::now()) {
+                    $should_include = true;
+                }
+
+                if (
+                    null !== $travel->documents_required
+                    && $travel->assignments()->where('documents_received', false)->exists()
+                ) {
+                    $should_include = true;
+                }
+
+                if (
+                    null !== $travel->tar_required
+                    && $travel->assignments()->where('tar_received', false)->exists()
+                ) {
+                    $should_include = true;
+                }
+
+                if (
+                    $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
+                        $join->on('travel_assignments.id', '=', 'payable_id')
+                             ->where('payments.amount', '>', 0)
+                             ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                             ->whereNull('payments.deleted_at');
+                    })->whereNull('payments.id')->exists()
+                ) {
+                    $should_include = true;
+                }
+
+                if (! $should_include) {
+                    continue;
+                }
+
+                if (null !== $travel->documents_required) {
+                    $cards[] = new DocumentsReceivedForTravel($travel->id);
+                }
+
+                if (null !== $travel->tar_required) {
+                    $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
+                }
+
+                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
+                    static function (Request $request): bool {
+                        return $request->user()->can('read-payments');
+                    }
+                );
             }
 
-            if (
-                null !== $travel->documents_required
-                && $travel->assignments()->where('documents_received', false)->exists()
-            ) {
-                $should_include = true;
-            }
+            $cards[] = new MakeAWish();
 
-            if (
-                null !== $travel->tar_required
-                && $travel->assignments()->where('tar_received', false)->exists()
-            ) {
-                $should_include = true;
-            }
-
-            if (
-                $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
-                    $join->on('travel_assignments.id', '=', 'payable_id')
-                         ->where('payments.amount', '>', 0)
-                         ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                         ->whereNull('payments.deleted_at');
-                })->whereNull('payments.id')->exists()
-            ) {
-                $should_include = true;
-            }
-
-            if (! $should_include) {
-                continue;
-            }
-
-            if (null !== $travel->documents_required) {
-                $cards[] = new DocumentsReceivedForTravel($travel->id);
-            }
-
-            if (null !== $travel->tar_required) {
-                $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
-            }
-
-            $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-payments');
-            });
+            return $cards;
         }
 
-        $cards[] = new MakeAWish();
+        if (request()->is('nova-api/metrics/*-received-*')) {
+            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
+            $type = $parts->first();
+            $id = intval($parts->last());
+
+            switch ($type) {
+                case 'tar':
+                    return [new TravelAuthorityRequestReceivedForTravel($id)];
+                case 'documents':
+                    return [new DocumentsReceivedForTravel($id)];
+                case 'payment':
+                    return [
+                        (new PaymentReceivedForTravel($id))->canSee(static function (Request $request): bool {
+                            return $request->user()->can('read-payments');
+                        }),
+                    ];
+            }
+        }
 
         return $cards;
     }
