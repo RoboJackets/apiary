@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a single attendance entry.
@@ -54,6 +55,7 @@ use Illuminate\Support\Collection;
 class Attendance extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The name of the database table for this model.
@@ -82,7 +84,7 @@ class Attendance extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(updated_at_unix)',
+        'updated_at_unix:desc',
     ];
 
     /**

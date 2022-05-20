@@ -23,6 +23,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
+use Laravel\Scout\Searchable;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
@@ -192,6 +193,7 @@ class User extends Authenticatable
     use SoftDeletes;
     use HasApiTokens;
     use FirstNameSynonyms;
+    use Searchable;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
@@ -294,11 +296,11 @@ class User extends Authenticatable
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(revenue_total)',
-        'desc(attendance_count)',
-        'desc(signatures_count)',
-        'desc(recruiting_visits_count)',
-        'desc(gtid)',
+        'revenue_total:desc',
+        'attendance_count:desc',
+        'signatures_count:desc',
+        'recruiting_visits_count:desc',
+        'gtid:desc',
     ];
 
     /**
@@ -323,6 +325,7 @@ class User extends Authenticatable
         'dues_package_id',
         'travel_id',
         'merchandise_id',
+        'user_id',
     ];
 
     /**

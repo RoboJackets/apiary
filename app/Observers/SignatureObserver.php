@@ -16,5 +16,7 @@ class SignatureObserver
         }
 
         $signature->user->notify(new MembershipAgreementSigned($signature));
+
+        $signature->user->searchable();
     }
 }

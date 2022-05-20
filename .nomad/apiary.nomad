@@ -252,6 +252,10 @@ EOF
       service {
         name = "${NOMAD_JOB_NAME}"
 
+        tags = [
+          "fastcgi"
+        ]
+
         check {
           name = "GET /ping"
 

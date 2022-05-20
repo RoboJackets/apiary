@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a single trip.
@@ -70,6 +71,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Travel extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -100,8 +102,25 @@ class Travel extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(departure_date_unix)',
-        'desc(return_date_unix)',
+        'departure_date_unix:desc',
+        'return_date_unix:desc',
+    ];
+
+    /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+    ];
+
+    /**
+     * The attributes that Nova might think can be used for filtering, but actually can't.
+     *
+     * @var array<string>
+     */
+    public $do_not_filter_on = [
+        'user_id',
     ];
 
     public function primaryContact(): BelongsTo

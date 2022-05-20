@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c9292a8f9b90d98c3c6ac9f8242c75be",
+    "content-hash": "7a6febb2054eab5ad60a43e52860a37d",
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v10.4.1",
+            "version": "v10.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "81aeb283f56e216ae925a9cc4241de56b1fd4453"
+                "reference": "97cc80ded68a3b7762b028729290fe375945b028"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/81aeb283f56e216ae925a9cc4241de56b1fd4453",
-                "reference": "81aeb283f56e216ae925a9cc4241de56b1fd4453",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/97cc80ded68a3b7762b028729290fe375945b028",
+                "reference": "97cc80ded68a3b7762b028729290fe375945b028",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "issues": "https://github.com/Adldap2/Adldap2/issues",
                 "source": "https://github.com/Adldap2/Adldap2"
             },
-            "time": "2022-02-09T13:54:20+00:00"
+            "time": "2022-04-29T19:02:50+00:00"
         },
         {
             "name": "adldap2/adldap2-laravel",
@@ -1479,16 +1479,16 @@
         },
         {
             "name": "dompdf/dompdf",
-            "version": "v1.2.1",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/dompdf.git",
-                "reference": "c6dfd9bb8b0040609f04754f729d4cb3016e0575"
+                "reference": "5031045d9640b38cfc14aac9667470df09c9e090"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/c6dfd9bb8b0040609f04754f729d4cb3016e0575",
-                "reference": "c6dfd9bb8b0040609f04754f729d4cb3016e0575",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/5031045d9640b38cfc14aac9667470df09c9e090",
+                "reference": "5031045d9640b38cfc14aac9667470df09c9e090",
                 "shasum": ""
             },
             "require": {
@@ -1499,6 +1499,8 @@
                 "php": "^7.1 || ^8.0"
             },
             "require-dev": {
+                "ext-json": "*",
+                "ext-zip": "*",
                 "mockery/mockery": "^1.3",
                 "phpunit/phpunit": "^7.5 || ^8 || ^9",
                 "squizlabs/php_codesniffer": "^3.5"
@@ -1540,9 +1542,9 @@
             "homepage": "https://github.com/dompdf/dompdf",
             "support": {
                 "issues": "https://github.com/dompdf/dompdf/issues",
-                "source": "https://github.com/dompdf/dompdf/tree/v1.2.1"
+                "source": "https://github.com/dompdf/dompdf/tree/v1.2.2"
             },
-            "time": "2022-03-24T12:57:42+00:00"
+            "time": "2022-04-27T13:50:54+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -1726,23 +1728,28 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v6.1.2",
+            "version": "v6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "c297139da7c6873dbd67cbd1093f09ec0bbd0c50"
+                "reference": "d28e6df83830252650da4623c78aaaf98fb385f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/c297139da7c6873dbd67cbd1093f09ec0bbd0c50",
-                "reference": "c297139da7c6873dbd67cbd1093f09ec0bbd0c50",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/d28e6df83830252650da4623c78aaaf98fb385f3",
+                "reference": "d28e6df83830252650da4623c78aaaf98fb385f3",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1||^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.5||9.5"
+                "guzzlehttp/guzzle": "^6.5||^7.4",
+                "phpspec/prophecy-phpunit": "^1.1",
+                "phpunit/phpunit": "^7.5||^9.5",
+                "psr/cache": "^1.0||^2.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0"
             },
             "suggest": {
                 "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
@@ -1777,9 +1784,9 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.1.2"
+                "source": "https://github.com/firebase/php-jwt/tree/v6.2.0"
             },
-            "time": "2022-04-21T14:37:18+00:00"
+            "time": "2022-05-13T20:54:50+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -3888,16 +3895,16 @@
         },
         {
             "name": "league/oauth2-server",
-            "version": "8.3.4",
+            "version": "8.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-server.git",
-                "reference": "0c2f32cd766861f3add4b95c49c5fcef3427e133"
+                "reference": "7aeb7c42b463b1a6fe4d084d3145e2fa22436876"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/0c2f32cd766861f3add4b95c49c5fcef3427e133",
-                "reference": "0c2f32cd766861f3add4b95c49c5fcef3427e133",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/7aeb7c42b463b1a6fe4d084d3145e2fa22436876",
+                "reference": "7aeb7c42b463b1a6fe4d084d3145e2fa22436876",
                 "shasum": ""
             },
             "require": {
@@ -3964,7 +3971,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-server/issues",
-                "source": "https://github.com/thephpleague/oauth2-server/tree/8.3.4"
+                "source": "https://github.com/thephpleague/oauth2-server/tree/8.3.5"
             },
             "funding": [
                 {
@@ -3972,7 +3979,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-07T21:33:04+00:00"
+            "time": "2022-05-03T21:21:28+00:00"
         },
         {
             "name": "league/uri",
@@ -4551,21 +4558,21 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.20.0",
+            "version": "v0.23.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "0b592c1d2b3e642d618254a7ff5716874b72fabf"
+                "reference": "e6048db909634f86fa8d346915819e83806aed86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/0b592c1d2b3e642d618254a7ff5716874b72fabf",
-                "reference": "0b592c1d2b3e642d618254a7ff5716874b72fabf",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/e6048db909634f86fa8d346915819e83806aed86",
+                "reference": "e6048db909634f86fa8d346915819e83806aed86",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.3 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "php-http/client-common": "^2.0",
                 "php-http/discovery": "^1.7",
                 "php-http/httplug": "^2.1"
@@ -4575,10 +4582,10 @@
                 "guzzlehttp/guzzle": "^7.1",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^0.12.87",
-                "phpstan/phpstan-deprecation-rules": "^0.12.6",
-                "phpstan/phpstan-phpunit": "^0.12.19",
-                "phpstan/phpstan-strict-rules": "^0.12.9",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.1",
                 "phpunit/phpunit": "^9.5"
             },
             "suggest": {
@@ -4601,7 +4608,7 @@
                     "email": "clementine@meilisearch.com"
                 }
             ],
-            "description": "PHP wrapper for the MeiliSearch API",
+            "description": "PHP wrapper for the Meilisearch API",
             "keywords": [
                 "api",
                 "client",
@@ -4612,9 +4619,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.20.0"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.23.2"
             },
-            "time": "2021-11-17T20:46:29+00:00"
+            "time": "2022-05-09T11:31:15+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5346,9 +5353,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1640278908/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
+                "url": "https://composer.robojackets.org/1652813922/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
                 "reference": "7caf590d32760a304772419303a109261406763a",
-                "shasum": "c2b98563297360b12d39a21bfb354f76f7b5704f"
+                "shasum": "91502080edc47c91f95d2ff3ca620cebd204208f"
             },
             "require": {
                 "ext-json": "*",
@@ -6828,16 +6835,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.2",
+            "version": "v0.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "7f7da640d68b9c9fec819caae7c744a213df6514"
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/7f7da640d68b9c9fec819caae7c744a213df6514",
-                "reference": "7f7da640d68b9c9fec819caae7c744a213df6514",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/05c544b339b112226ad14803e1e5b09a61957454",
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454",
                 "shasum": ""
             },
             "require": {
@@ -6852,15 +6859,13 @@
                 "symfony/console": "4.4.37 || 5.3.14 || 5.3.15 || 5.4.3 || 5.4.4 || 6.0.3 || 6.0.4"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.2",
-                "hoa/console": "3.17.05.02"
+                "bamarni/composer-bin-plugin": "^1.2"
             },
             "suggest": {
                 "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
                 "ext-pdo-sqlite": "The doc command requires SQLite to work.",
                 "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
-                "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history.",
-                "hoa/console": "A pure PHP readline implementation. You'll want this if your PHP install doesn't already support readline or libedit."
+                "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history."
             },
             "bin": [
                 "bin/psysh"
@@ -6900,9 +6905,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.2"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.4"
             },
-            "time": "2022-02-28T15:28:54+00:00"
+            "time": "2022-05-06T12:49:14+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -7135,9 +7140,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1640278908/robojackets/auth-stickler/robojackets-auth-stickler-88beab79843c3bc48d2ec33018d8c3dcf1becf05-zip-cb995e.zip",
+                "url": "https://composer.robojackets.org/1652813922/robojackets/auth-stickler/robojackets-auth-stickler-88beab79843c3bc48d2ec33018d8c3dcf1becf05-zip-cb995e.zip",
                 "reference": "88beab79843c3bc48d2ec33018d8c3dcf1becf05",
-                "shasum": "01b5e6f24033e57910d0ab8eb949b21e8a0b13e6"
+                "shasum": "02633c83c004dc70b60a55b2ae2e83f4cc99e9cd"
             },
             "require": {
                 "apereo/phpcas": "^1.3",
@@ -7183,9 +7188,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1640278908/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
+                "url": "https://composer.robojackets.org/1652813922/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
                 "reference": "ce83cc96d3f3ba637b76480a71d6d7adba1fa134",
-                "shasum": "8341a1210ccba4ab97e4f76df87b18c5970861e2"
+                "shasum": "e1115aa444c60576ae70d18b1371ecc9e21b6af7"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -7220,23 +7225,23 @@
         },
         {
             "name": "robojackets/meilisearch-index-settings-helper",
-            "version": "v0.5.0",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/meilisearch-index-settings-helper.git",
-                "reference": "04e98ef79ea70005eaafc9541c795955a377b731"
+                "reference": "9bee3687b80deb27fcef2454cbe514bced4266c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1640278908/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-04e98ef79ea70005eaafc9541c795955a377b731-zip-7e5f7b.zip",
-                "reference": "04e98ef79ea70005eaafc9541c795955a377b731",
-                "shasum": "5594c77623be670b304de1447dde00e084892182"
+                "url": "https://composer.robojackets.org/1652813922/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-9bee3687b80deb27fcef2454cbe514bced4266c2-zip-08a2f9.zip",
+                "reference": "9bee3687b80deb27fcef2454cbe514bced4266c2",
+                "shasum": "e654928f3e0d2999b7eb24c9e467c53956b078f2"
             },
             "require": {
                 "haydenpierce/class-finder": "^0.4.3",
                 "http-interop/http-factory-guzzle": "^1.0",
-                "laravel/scout": "^9.3",
-                "meilisearch/meilisearch-php": "^0.20.0"
+                "laravel/scout": "^9.4",
+                "meilisearch/meilisearch-php": "^0.23.2"
             },
             "require-dev": {
                 "laravel/framework": "*",
@@ -7282,10 +7287,10 @@
             "description": "Manage Meilisearch indexing settings in Eloquent models",
             "homepage": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.5.0",
+                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.6.1",
                 "issues": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/issues"
             },
-            "time": "2021-12-23T16:56:56+00:00"
+            "time": "2022-05-17T18:54:47+00:00"
         },
         {
             "name": "robojackets/network-check",
@@ -7297,9 +7302,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1640278908/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
+                "url": "https://composer.robojackets.org/1652813922/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
                 "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7",
-                "shasum": "28ef47ed4716296a12a5f062e5e75e742a387aed"
+                "shasum": "a19e026326d0b89e4eef3897dcbce7cfaf1b6e6f"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
@@ -8732,16 +8737,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v5.4.7",
+            "version": "v5.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "88b6909f74fd1f2147e068411f71870a3b27ac56"
+                "reference": "0dabec4e3898d3e00451dd47b5ef839168f9bbf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/88b6909f74fd1f2147e068411f71870a3b27ac56",
-                "reference": "88b6909f74fd1f2147e068411f71870a3b27ac56",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/0dabec4e3898d3e00451dd47b5ef839168f9bbf5",
+                "reference": "0dabec4e3898d3e00451dd47b5ef839168f9bbf5",
                 "shasum": ""
             },
             "require": {
@@ -8799,7 +8804,7 @@
             "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v5.4.7"
+                "source": "https://github.com/symfony/http-client/tree/v5.4.8"
             },
             "funding": [
                 {
@@ -8815,7 +8820,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-01T12:27:37+00:00"
+            "time": "2022-04-12T16:02:29+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -9082,16 +9087,16 @@
         },
         {
             "name": "symfony/intl",
-            "version": "v5.4.5",
+            "version": "v5.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/intl.git",
-                "reference": "47a1413da15ff840d7c419fa704d32caba3276ac"
+                "reference": "b9e17d7ab867ce99f89950ebced0fa91076ba12b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/intl/zipball/47a1413da15ff840d7c419fa704d32caba3276ac",
-                "reference": "47a1413da15ff840d7c419fa704d32caba3276ac",
+                "url": "https://api.github.com/repos/symfony/intl/zipball/b9e17d7ab867ce99f89950ebced0fa91076ba12b",
+                "reference": "b9e17d7ab867ce99f89950ebced0fa91076ba12b",
                 "shasum": ""
             },
             "require": {
@@ -9150,7 +9155,7 @@
                 "localization"
             ],
             "support": {
-                "source": "https://github.com/symfony/intl/tree/v5.4.5"
+                "source": "https://github.com/symfony/intl/tree/v5.4.8"
             },
             "funding": [
                 {
@@ -9166,7 +9171,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-25T13:55:17+00:00"
+            "time": "2022-04-07T09:39:59+00:00"
         },
         {
             "name": "symfony/mime",
@@ -10321,16 +10326,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.14.13",
+            "version": "v2.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "66856cd0459df3dc97d32077a98454dc2a0ee75a"
+                "reference": "3b7cedb2f736899a7dbd0ba3d6da335a015f5cc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/66856cd0459df3dc97d32077a98454dc2a0ee75a",
-                "reference": "66856cd0459df3dc97d32077a98454dc2a0ee75a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3b7cedb2f736899a7dbd0ba3d6da335a015f5cc4",
+                "reference": "3b7cedb2f736899a7dbd0ba3d6da335a015f5cc4",
                 "shasum": ""
             },
             "require": {
@@ -10346,7 +10351,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.14-dev"
+                    "dev-master": "2.15-dev"
                 }
             },
             "autoload": {
@@ -10385,7 +10390,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v2.14.13"
+                "source": "https://github.com/twigphp/Twig/tree/v2.15.1"
             },
             "funding": [
                 {
@@ -10397,7 +10402,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-06T06:45:17+00:00"
+            "time": "2022-05-17T05:46:24+00:00"
         },
         {
             "name": "ukfast/laravel-health-check",
@@ -14483,9 +14488,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1640278908/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
+                "url": "https://composer.robojackets.org/1652813922/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
                 "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7",
-                "shasum": "0bd6159dcdf92c8fd1971b23f2d74f5318b86a76"
+                "shasum": "e1c6f24b7eb3dc03419220905ea5338c077092b9"
             },
             "require": {
                 "phan/phan": "*",
@@ -16675,5 +16680,5 @@
         "ext-mbstring": "^7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
