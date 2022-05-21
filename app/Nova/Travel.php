@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Travel as AppModelsTravel;
-use App\Nova\Metrics\DocumentsReceivedForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use Illuminate\Http\Request;
@@ -58,7 +57,6 @@ class Travel extends Resource
         'destination',
         'included_with_fee',
         'not_included_with_fee',
-        'documents_required',
     ];
 
     /**
@@ -115,13 +113,6 @@ class Travel extends Resource
                     .'includes any meals not provided by the event, entertainment or leisure activities, lodging in '
                     .'excess of the minimum for the event, visa or passport fees, personal luggage fees, and any item'
                     .' that violates United States or local laws.'
-                ),
-
-            Markdown::make('Documents Required')
-                ->help(
-                    'Describe what documents will be required to travel. This may include documentation required'
-                    .' by the event. Populating this field will require each traveler\'s documentation status to be'
-                    .' marked on their travel assignment.'
                 ),
 
             new Panel(
@@ -246,12 +237,6 @@ class Travel extends Resource
 
         if (null === $request->resourceId) {
             return [];
-        }
-
-        $requires_documents = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->documents_required;
-
-        if ($requires_documents) {
-            $cards[] = (new DocumentsReceivedForTravel())->onlyOnDetail();
         }
 
         $requires_tar = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;

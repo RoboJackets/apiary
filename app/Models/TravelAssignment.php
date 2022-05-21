@@ -21,7 +21,6 @@ use Laravel\Scout\Searchable;
  * @property int $id
  * @property int $user_id
  * @property int $travel_id
- * @property bool $documents_received
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -39,7 +38,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|TravelAssignment query()
  * @method static Builder|TravelAssignment whereCreatedAt($value)
  * @method static Builder|TravelAssignment whereDeletedAt($value)
- * @method static Builder|TravelAssignment whereDocumentsReceived($value)
  * @method static Builder|TravelAssignment whereId($value)
  * @method static Builder|TravelAssignment whereTravelId($value)
  * @method static Builder|TravelAssignment whereUpdatedAt($value)
@@ -65,15 +63,6 @@ class TravelAssignment extends Model
         'deleted_at',
         'id',
         'updated_at',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'documents_received' => 'boolean',
     ];
 
     /**

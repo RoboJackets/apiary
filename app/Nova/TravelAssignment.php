@@ -71,10 +71,6 @@ class TravelAssignment extends Resource
                 ->withoutTrashed()
                 ->searchable(),
 
-            Boolean::make('Documents Received')
-                ->sortable()
-                ->hideWhenCreating(),
-
             Boolean::make('Travel Authority Request Received', 'tar_received')
                 ->sortable()
                 ->hideWhenCreating(),

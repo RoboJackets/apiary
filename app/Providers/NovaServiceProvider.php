@@ -14,7 +14,6 @@ use App\Nova\Dashboards\Demographics;
 use App\Nova\Dashboards\JEDI;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\AttendancePerWeek;
-use App\Nova\Metrics\DocumentsReceivedForTravel;
 use App\Nova\Metrics\DuesRevenueByFiscalYear;
 use App\Nova\Metrics\MembersByFiscalYear;
 use App\Nova\Metrics\PaymentReceivedForTravel;
@@ -111,13 +110,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 }
 
                 if (
-                    null !== $travel->documents_required
-                    && $travel->assignments()->where('documents_received', false)->exists()
-                ) {
-                    $should_include = true;
-                }
-
-                if (
                     null !== $travel->tar_required
                     && $travel->assignments()->where('tar_received', false)->exists()
                 ) {
@@ -137,10 +129,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 if (! $should_include) {
                     continue;
-                }
-
-                if (null !== $travel->documents_required) {
-                    $cards[] = new DocumentsReceivedForTravel($travel->id);
                 }
 
                 if (null !== $travel->tar_required) {
@@ -167,8 +155,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             switch ($type) {
                 case 'tar':
                     return [new TravelAuthorityRequestReceivedForTravel($id)];
-                case 'documents':
-                    return [new DocumentsReceivedForTravel($id)];
                 case 'payment':
                     return [
                         (new PaymentReceivedForTravel($id))->canSee(static function (Request $request): bool {
