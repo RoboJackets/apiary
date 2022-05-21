@@ -19,7 +19,6 @@ use Laravel\Scout\Searchable;
  *
  * @property int $id
  * @property string $name
- * @property float $cost
  * @property bool $allow_anonymous_rsvp
  * @property int $organizer_id user_id of the organizer
  * @property string|null $location
@@ -42,7 +41,6 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Event onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Event query()
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereAllowAnonymousRsvp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereCost($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereEndTime($value)
@@ -129,14 +127,6 @@ class Event extends Model
     public function remoteAttendanceLinks(): MorphMany
     {
         return $this->morphMany(RemoteAttendanceLink::class, 'attendable');
-    }
-
-    /**
-     * Get the Payable amount.
-     */
-    public function getPayableAmount(): float
-    {
-        return $this->cost;
     }
 
     /**
