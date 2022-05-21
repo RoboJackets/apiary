@@ -52,24 +52,17 @@ Travel | {{ config('app.name') }}
               </tbody>
             </table>
             <h2>Action Items</h2>
-        @if($travel->documents_required && !$documents_received)
-            <p>Please provide the following documents to {{ $travel->primaryContact->full_name }}:</p>
-            <td>@markdown($travel->documents_required)</td>
-        @endif
         @if($travel->tar_required && !$tar_received)
-        @if($travel->documents_required && !$documents_received)
-        <hr>
-        @endif
             <p>Please <a href="{{ $tar_url }}">click here</a> to submit a Travel Authority Request. Your completed form will be submitted to {{ $travel->primaryContact->full_name }} for review, and this item will be cleared manually once approved.</p>
         @endif
         @if(!$paid)
 
-        @if(($travel->documents_required && !$documents_received) || ($travel->tar_required && !$tar_received))
+        @if($travel->tar_required && !$tar_received)
         <hr>
         @endif
             <p>Please pay the travel fee. You can <a href="{{ route('pay.travel') }}">click here</a> to pay with a credit or debit card online, or make arrangements with {{ $travel->primaryContact->full_name }} to pay with cash or check in person. Please make checks out to Georgia Tech, and put RoboJackets on the memo line.</p>
         @endif
-        @if($paid && (!$travel->documents_required || $documents_received) && (!$travel->tar_required || $tar_received))
+        @if($paid && (!$travel->tar_required || $tar_received))
         <p>You're all set! Contact {{ $travel->primaryContact->full_name }} if you have any questions.</p>
         @endif
         </div>

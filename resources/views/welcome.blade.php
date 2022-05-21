@@ -167,21 +167,6 @@
             </div>
         @endif
         @if($signedLatestAgreement && !$needsTransaction && !$needsPayment)
-        @if($needTravelDocuments)
-            <div class="col-sm-6 com-md-3 col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            Travel Documents Required
-                        </h4>
-                        <p class="card-text">
-                            You need to submit documents to RoboJackets for {{ $travelName }}.
-                        </p>
-                        <a href="{{ route('travel.index') }}">Review Action Items</a>
-                    </div>
-                </div>
-            </div>
-        @endif
         @if($needTravelPayment)
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">

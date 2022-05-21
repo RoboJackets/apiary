@@ -23,7 +23,6 @@ use Laravel\Scout\Searchable;
  * @property int $fee_amount
  * @property string $included_with_fee
  * @property string|null $not_included_with_fee
- * @property string|null $documents_required
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -47,7 +46,6 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDepartureDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDestination($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDocumentsRequired($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereFeeAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereIncludedWithFee($value)
