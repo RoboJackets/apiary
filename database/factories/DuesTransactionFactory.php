@@ -12,13 +12,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class DuesTransactionFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = DuesTransaction::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array<string,\DateTime|int|null>
