@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-ARG base_image="debian:bullseye-slim"
+ARG base_image="debian:bookworm-slim"
 
 FROM scratch as frontend-source
 
@@ -46,13 +46,13 @@ RUN set -eux && \
     apt-get update && \
     apt-get upgrade -qq --assume-yes && \
     apt-get install -qq --assume-yes \
-        php7.4-fpm php7.4-mysql php7.4-gd php7.4-xml php7.4-mbstring php7.4-zip php7.4-curl php7.4-intl \
-        php7.4-opcache php7.4-bcmath php7.4-ldap php7.4-uuid php7.4-sqlite sqlite3 exiftool ghostscript \
-        unzip libfcgi-bin default-mysql-client zopfli php7.4-redis && \
+        php8.1-fpm php8.1-mysql php8.1-gd php8.1-xml php8.1-mbstring php8.1-zip php8.1-curl php8.1-intl \
+        php8.1-opcache php8.1-bcmath php8.1-ldap php8.1-uuid php8.1-sqlite sqlite3 exiftool ghostscript \
+        unzip libfcgi-bin default-mysql-client zopfli php8.1-redis && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
-    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/7.4/fpm/php-fpm.conf
+    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.1/fpm/php-fpm.conf
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 
