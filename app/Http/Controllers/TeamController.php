@@ -41,7 +41,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Displays the teams page for users
+     * Displays the teams page for users.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
