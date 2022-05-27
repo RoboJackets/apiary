@@ -46,7 +46,7 @@ class GeneralInterestInvite extends Mailable
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
+            ->withSymfonyMessage(static function (SimpleMimeEntity $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <hello@robojackets.org>');
             })->subject('RoboJackets General Interest Event - RSVP Requested')
             ->markdown('mail.generalinterest.invite');

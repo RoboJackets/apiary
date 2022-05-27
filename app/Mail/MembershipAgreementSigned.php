@@ -9,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Swift_Message;
+use Symfony\Component\Mime\Email;
 
 class MembershipAgreementSigned extends Mailable implements ShouldQueue
 {
@@ -40,7 +40,7 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(static function (Swift_Message $message): void {
+            ->withSymfonyMessage(static function (Email $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <hello@robojackets.org>');
             })->subject('[RoboJackets] Membership Agreement Signed')
             ->markdown(
