@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fec9e32210c97e75210b87a681ed4532",
+    "content-hash": "37645426343e6b23cd55a468f9aafc95",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -7629,27 +7629,28 @@
         },
         {
             "name": "spatie/laravel-csp",
-            "version": "2.6.4",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-csp.git",
-                "reference": "a9c15ea6dc5266083132999f104fa8a363ab07e3"
+                "reference": "66b34e95c6feb507f50fb4d4876d4722a857b229"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/a9c15ea6dc5266083132999f104fa8a363ab07e3",
-                "reference": "a9c15ea6dc5266083132999f104fa8a363ab07e3",
+                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/66b34e95c6feb507f50fb4d4876d4722a857b229",
+                "reference": "66b34e95c6feb507f50fb4d4876d4722a857b229",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "~5.8.0|^6.0|^7.0|^8.0",
-                "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0",
-                "php": "^7.2|^8.0"
+                "illuminate/http": "^8.0|^9.0",
+                "illuminate/support": "^8.0|^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.11"
             },
             "require-dev": {
-                "mockery/mockery": "^1.0|^1.3.1",
-                "orchestra/testbench": "~3.8.0|^4.0|^5.0|^6.0",
-                "phpunit/phpunit": "^8.0|^9.3",
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench": "^6.0|^7.0",
+                "phpunit/phpunit": "^9.4",
                 "roave/security-advisories": "dev-master"
             },
             "type": "library",
@@ -7699,7 +7700,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-csp/issues",
-                "source": "https://github.com/spatie/laravel-csp/tree/2.6.4"
+                "source": "https://github.com/spatie/laravel-csp/tree/2.7.0"
             },
             "funding": [
                 {
@@ -7707,7 +7708,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-12-01T20:35:30+00:00"
+            "time": "2022-01-13T07:27:12+00:00"
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
@@ -7783,6 +7784,65 @@
                 }
             ],
             "time": "2020-12-02T15:40:34+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.11.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "baeb3df0ebb3a541394fdaf8cbe6115bf4034a59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/baeb3df0ebb3a541394fdaf8cbe6115bf4034a59",
+                "reference": "baeb3df0ebb3a541394fdaf8cbe6115bf4034a59",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.0|^8.0|^9.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.23|^7.0",
+                "phpunit/phpunit": "^9.4",
+                "spatie/test-time": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.11.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-03-15T20:01:36+00:00"
         },
         {
             "name": "spatie/laravel-permission",
