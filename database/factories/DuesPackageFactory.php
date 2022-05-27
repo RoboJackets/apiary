@@ -24,7 +24,7 @@ class DuesPackageFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
+            'name' => $this->faker->word(),
             'effective_start' => $this->faker->dateTimeBetween('-5 years', '-1 year'),
             'effective_end' => $this->faker->dateTimeBetween('-11 months', 'now'),
             'cost' => (string) $this->faker->randomFloat(2, 0, 1000),

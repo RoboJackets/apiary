@@ -24,8 +24,8 @@ class RecruitingVisitFactory extends Factory
     public function definition(): array
     {
         return [
-            'recruiting_name' => $this->faker->name,
-            'recruiting_email' => $this->faker->safeEmail,
+            'recruiting_name' => $this->faker->name(),
+            'recruiting_email' => $this->faker->safeEmail(),
             'visit_token' => $this->faker->asciify('********************'),
         ];
     }
