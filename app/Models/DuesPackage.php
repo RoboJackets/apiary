@@ -114,6 +114,8 @@ class DuesPackage extends Model
 
     /**
      * Get the DuesTransactions associated with the DuesPackage model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
     public function duesTransactions(): HasMany
     {
@@ -122,6 +124,8 @@ class DuesPackage extends Model
 
     /**
      * Get the DuesTransactions associated with the DuesPackage model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
     public function transactions(): HasMany
     {
@@ -130,22 +134,39 @@ class DuesPackage extends Model
 
     /**
      * Get the FiscalYear associated with the DuesPackage model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FiscalYear, \App\Models\DuesPackage>
      */
     public function fiscalYear(): BelongsTo
     {
         return $this->belongsTo(FiscalYear::class);
     }
 
+    /**
+     * Get the conflicts for this dues package
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\DuesPackage, \App\Models\DuesPackage>
+     */
     public function conflictsWith(): BelongsTo
     {
         return $this->belongsTo(self::class, 'conflicts_with_package_id');
     }
 
+    /**
+     * Get the conflicts for this dues package
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesPackage>
+     */
     public function hasConflictWith(): HasMany
     {
         return $this->hasMany(self::class, 'conflicts_with_package_id');
     }
 
+    /**
+     * Get the available merchandise for this dues package
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
+     */
     public function merchandise(): BelongsToMany
     {
         return $this->belongsToMany(Merchandise::class)->withPivot('group')->withTimestamps();
@@ -153,12 +174,24 @@ class DuesPackage extends Model
 
     /**
      * Scope a query to only include DuesPackages available for purchase.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
     public function scopeAvailableForPurchase(Builder $query): Builder
     {
         return $query->where('available_for_purchase', true);
     }
 
+    /**
+     * Scope a query to only include DuesPackages that a specific user can purchase. Excludes conflicts and
+     * restricted packages.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
+     */
     public function scopeUserCanPurchase(Builder $query, User $user): Builder
     {
         $newQuery = $query
@@ -186,6 +219,10 @@ class DuesPackage extends Model
 
     /**
      * Scope a query to only include active DuesPackages.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
     public function scopeActive(Builder $query): Builder
     {
@@ -195,6 +232,10 @@ class DuesPackage extends Model
 
     /**
      * Scope a query to only include access active DuesPackages.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
     public function scopeAccessActive(Builder $query): Builder
     {

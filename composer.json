@@ -148,7 +148,7 @@
     "config": {
         "classmap-authoritative": true,
         "preferred-install": "dist",
-        "process-timeout": 20,
+        "process-timeout": 60,
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,

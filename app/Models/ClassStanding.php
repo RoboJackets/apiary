@@ -42,7 +42,9 @@ class ClassStanding extends Model
     ];
 
     /**
-     *  Get the Users that are members of this ClassStanding.
+     * Get the Users that are members of this ClassStanding.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User>
      */
     public function members(): BelongsToMany
     {

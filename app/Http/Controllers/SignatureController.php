@@ -9,7 +9,7 @@ use App\Http\Requests\MembershipAgreementRedirectRequest;
 use App\Jobs\RetrieveIpAddressGeoLocationForSignature;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use DOMDocument;
 use GuzzleHttp\Client;
@@ -42,7 +42,7 @@ class SignatureController extends Controller
         $signature->render_timestamp = Carbon::now();
         $signature->save();
 
-        return PDF::loadView(
+        return Pdf::loadView(
             'agreement.print',
             [
                 'text' => $template->renderForUser($user, $signature->electronic),

@@ -17,7 +17,7 @@ class PermissionMiddleware
      *
      * @phan-suppress PhanPluginInconsistentReturnMethod
      */
-    public function handle(Request $request, Closure $next, $permissions_to_check)
+    public function handle(Request $request, Closure $next, array|string $permissions_to_check)
     {
         if (Auth::guest() && $request->ajax()) {
             return response()->json(['status' => 'error',

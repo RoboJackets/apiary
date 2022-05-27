@@ -119,6 +119,8 @@ class Payment extends Model
 
     /**
      * Get all of the owning payable models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\DuesTransaction|\App\Models\TravelAssignment,\App\Models\Payment>
      */
     public function payable(): MorphTo
     {
@@ -127,6 +129,8 @@ class Payment extends Model
 
     /**
      * Get the User associated with the Payment model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Payment>
      */
     public function user(): BelongsTo
     {

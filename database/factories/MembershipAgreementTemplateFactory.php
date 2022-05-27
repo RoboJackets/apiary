@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\MembershipAgreementTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * A factory for MembershipAgreementTemplates.
+ *
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MembershipAgreementTemplate>
+ */
 class MembershipAgreementTemplateFactory extends Factory
 {
     /**

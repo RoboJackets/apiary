@@ -42,13 +42,20 @@ class FiscalYear extends Model
     ];
 
     /**
-     *  Get the DuesPackages that are in this FiscalYear.
+     * Get the DuesPackages that are in this FiscalYear.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesPackage>
      */
     public function packages(): HasMany
     {
         return $this->hasMany(DuesPackage::class);
     }
 
+    /**
+     * Get the Merchandise for this FiscalYear
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Merchandise>
+     */
     public function merchandise(): HasMany
     {
         return $this->hasMany(Merchandise::class);

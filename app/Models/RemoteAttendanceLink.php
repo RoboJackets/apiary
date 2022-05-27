@@ -118,12 +118,19 @@ class RemoteAttendanceLink extends Model
 
     /**
      * Get all of the owning attendable models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\Event|\App\Models\Team,\App\Models\RemoteAttendanceLink>
      */
     public function attendable(): MorphTo
     {
         return $this->morphTo();
     }
 
+    /**
+     * Get the associated attendance records
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance>
+     */
     public function attendance(): HasMany
     {
         return $this->hasMany(Attendance::class);

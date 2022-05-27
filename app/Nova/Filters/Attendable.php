@@ -37,8 +37,10 @@ class Attendable extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $value
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string  $value
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
     public function apply(Request $request, $query, $value): Builder
     {

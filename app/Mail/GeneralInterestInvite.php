@@ -7,7 +7,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
+use Symfony\Component\Mime\Email;
 
 class GeneralInterestInvite extends Mailable
 {
@@ -46,7 +46,7 @@ class GeneralInterestInvite extends Mailable
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSymfonyMessage(static function (SimpleMimeEntity $message): void {
+            ->withSymfonyMessage(static function (Email $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <hello@robojackets.org>');
             })->subject('RoboJackets General Interest Event - RSVP Requested')
             ->markdown('mail.generalinterest.invite');

@@ -17,8 +17,10 @@ class OverrideAccess extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\User>  $users
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $users
      * @return array<string,string>
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $users): array
     {

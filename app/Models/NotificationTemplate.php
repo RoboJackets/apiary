@@ -56,6 +56,8 @@ class NotificationTemplate extends Model
 
     /**
      * Get the user that owns the template.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\NotificationTemplate>
      */
     public function creator(): BelongsTo
     {

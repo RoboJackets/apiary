@@ -14,7 +14,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array<string>
+     * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
         \Illuminate\Auth\AuthenticationException::class,
@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $dontFlash = [
         'password',

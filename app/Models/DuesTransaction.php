@@ -132,6 +132,8 @@ class DuesTransaction extends Model
 
     /**
      * Get the Payment associated with the DuesTransaction model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>
      */
     public function payment(): MorphMany
     {
@@ -140,6 +142,8 @@ class DuesTransaction extends Model
 
     /**
      * Get the DuesPackage associated with the DuesTransaction model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\DuesPackage, \App\Models\DuesTransaction>
      */
     public function package(): BelongsTo
     {
@@ -148,6 +152,8 @@ class DuesTransaction extends Model
 
     /**
      * Get the User associated with the DuesTransaction model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\DuesTransaction>
      */
     public function user(): BelongsTo
     {
@@ -156,12 +162,19 @@ class DuesTransaction extends Model
 
     /**
      * Alias the generalize form of the Transaction for Polymorphic Reasons.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\DuesPackage, \App\Models\DuesTransaction>
      */
     public function for(): BelongsTo
     {
         return $this->package();
     }
 
+    /**
+     * Get the merchandise for this transaction
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
+     */
     public function merchandise(): BelongsToMany
     {
         return $this->belongsToMany(Merchandise::class)
@@ -170,6 +183,11 @@ class DuesTransaction extends Model
             ->using(DuesTransactionMerchandise::class);
     }
 
+    /**
+     * Get the merchandise for this transaction
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
+     */
     public function jankForNova(): BelongsToMany
     {
         return $this->merchandise()->as('jankForNova');
@@ -213,6 +231,10 @@ class DuesTransaction extends Model
      * Scope a query to only include pending transactions.
      * Pending defined as no payments, or payments that do not sum to payable amount
      * for a currently active DuesPackage.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopePending(Builder $query): Builder
     {
@@ -222,6 +244,10 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include paid transactions
      * Paid defined as one or more payments whose total is equal to the payable amount.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopePaid(Builder $query): Builder
     {
@@ -247,6 +273,10 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include unpaid transactions
      * Unpaid defined as zero or more payments that are less than the payable amount.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopeUnpaid(Builder $query): Builder
     {
@@ -264,6 +294,10 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include current transactions.
      * Current defined as belonging to an active DuesPackage.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopeCurrent(Builder $query): Builder
     {
@@ -275,6 +309,10 @@ class DuesTransaction extends Model
     /**
      * Scope a query to only include current transactions.
      * Current defined as belonging to an active DuesPackage.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopeAccessCurrent(Builder $query): Builder
     {
@@ -326,6 +364,8 @@ class DuesTransaction extends Model
 
     /**
      * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\DuesTransaction>
      */
     public function providedBy(): BelongsTo
     {

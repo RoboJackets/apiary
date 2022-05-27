@@ -57,6 +57,8 @@ class RecruitingVisit extends Model
 
     /**
      *  Get the Recruiting Responses associated with this Recruiting Visit.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RecruitingResponse>
      */
     public function recruitingResponses(): HasMany
     {
@@ -65,6 +67,8 @@ class RecruitingVisit extends Model
 
     /**
      *  Get the organization member who visited at the recruiting event, assuming the record could be linked.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\RecruitingVisit>
      */
     public function user(): BelongsTo
     {

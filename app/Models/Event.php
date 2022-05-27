@@ -103,11 +103,21 @@ class Event extends Model
         'end_time_unix:desc',
     ];
 
+    /**
+     * Get the organizer for this event
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Event>
+     */
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'organizer_id');
     }
 
+    /**
+     * Get the Rsvps for this event
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp>
+     */
     public function rsvps(): HasMany
     {
         return $this->hasMany(Rsvp::class);
@@ -115,6 +125,8 @@ class Event extends Model
 
     /**
      * Get all of the event's attendance.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attendance>
      */
     public function attendance(): MorphMany
     {
@@ -123,6 +135,8 @@ class Event extends Model
 
     /**
      * Get all of the event's remote attendance links.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\RemoteAttendanceLink>
      */
     public function remoteAttendanceLinks(): MorphMany
     {

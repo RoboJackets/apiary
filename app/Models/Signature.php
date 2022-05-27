@@ -85,16 +85,31 @@ class Signature extends Model
         'complete' => 'boolean',
     ];
 
+    /**
+     * Get the template for this signature
+     *
+     * @return BelongsTo<MembershipAgreementTemplate, Signature>
+     */
     public function membershipAgreementTemplate(): BelongsTo
     {
         return $this->belongsTo(MembershipAgreementTemplate::class);
     }
 
+    /**
+     * Get the user for this signature
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Signature>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the user that uploaded this signature (for paper signatures)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Signature>
+     */
     public function uploadedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'uploaded_by');

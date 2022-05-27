@@ -67,6 +67,8 @@ class RecruitingCampaignRecipient extends Model
 
     /**
      * Get the user that owns the phone.
+     *
+     * @return BelongsTo<RecruitingCampaign, RecruitingCampaignRecipient>
      */
     public function recruitingCampaign(): BelongsTo
     {
@@ -75,6 +77,8 @@ class RecruitingCampaignRecipient extends Model
 
     /**
      * Get the user that owns the phone.
+     *
+     * @return BelongsTo<RecruitingVisit, RecruitingCampaignRecipient>
      */
     public function recruitingVisit(): BelongsTo
     {
@@ -83,6 +87,8 @@ class RecruitingCampaignRecipient extends Model
 
     /**
      * Get the user that is related to the model.
+     *
+     * @return BelongsTo<User, RecruitingCampaignRecipient>
      */
     public function user(): BelongsTo
     {

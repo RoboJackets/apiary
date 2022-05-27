@@ -208,7 +208,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
         'Redis' => Illuminate\Support\Facades\Redis::class,
     ])->toArray(),

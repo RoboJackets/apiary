@@ -121,11 +121,21 @@ class Travel extends Model
         'user_id',
     ];
 
+    /**
+     * Get the primary contact for this travel
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Travel>
+     */
     public function primaryContact(): BelongsTo
     {
         return $this->belongsTo(User::class, 'primary_contact_user_id');
     }
 
+    /**
+     * Get the assignments for this travel
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment>
+     */
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
@@ -133,6 +143,10 @@ class Travel extends Model
 
     /**
      * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Travel> $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {

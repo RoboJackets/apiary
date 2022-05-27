@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\DuesPackage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * A factory for DuesPackages.
+ *
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DuesPackage>
+ */
 class DuesPackageFactory extends Factory
 {
     /**

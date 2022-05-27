@@ -27,7 +27,6 @@ use Laravel\Passport\Client;
  * @property-read int|null $tokens_count
  * @property-read \App\Models\User|null $user
  *
- * @method static \Laravel\Passport\Database\Factories\ClientFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2Client newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2Client newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2Client query()

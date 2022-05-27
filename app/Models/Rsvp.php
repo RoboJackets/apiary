@@ -57,11 +57,21 @@ class Rsvp extends Model
         'id', 'created_at', 'updated_at',
     ];
 
+    /**
+     * Get the user that RSVPed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Rsvp>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the event they RSVPed to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Event, \App\Models\Rsvp>
+     */
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

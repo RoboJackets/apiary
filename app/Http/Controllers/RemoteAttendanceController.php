@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RemoteAttendanceController extends Controller
 {
-    private function handleRequest(Request $request, string $secret, bool $redirect)
+    private static function handleRequest(Request $request, string $secret, bool $redirect)
     {
         $link = RemoteAttendanceLink::where('secret', $secret)->first();
 
@@ -105,11 +105,11 @@ class RemoteAttendanceController extends Controller
 
     public function index(Request $request, string $secret)
     {
-        return $this::handleRequest($request, $secret, false);
+        return self::handleRequest($request, $secret, false);
     }
 
     public function redirect(Request $request, string $secret)
     {
-        return $this::handleRequest($request, $secret, true);
+        return self::handleRequest($request, $secret, true);
     }
 }

@@ -9,7 +9,7 @@ namespace App\Nova\Actions;
 use App\Models\ClassStanding;
 use App\Models\Major;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -29,7 +29,7 @@ class ExportResumes extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\User>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      * @return array<string,string>
      */
     public function handle(ActionFields $fields, Collection $models): array
@@ -111,7 +111,7 @@ class ExportResumes extends Action
         $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
         $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
 
-        PDF::loadView(
+        Pdf::loadView(
             'resumecover',
             [
                 'majors' => $majors,

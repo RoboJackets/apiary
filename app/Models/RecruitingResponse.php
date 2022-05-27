@@ -37,6 +37,8 @@ class RecruitingResponse extends Model
 
     /**
      *  Get the recruiting visit associated with this recruiting response.
+     *
+     * @return BelongsTo<RecruitingVisit, RecruitingResponse>
      */
     public function recruitingVisit(): BelongsTo
     {

@@ -9,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Laravel\Passport\Token;
-use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
+use Symfony\Component\Mime\Email;
 
 class ExpiringPersonalAccessToken extends Mailable
 {
@@ -46,7 +46,7 @@ class ExpiringPersonalAccessToken extends Mailable
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSymfonyMessage(static function (SimpleMimeEntity $message): void {
+            ->withSymfonyMessage(static function (Email $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <support@robojackets.org>');
             })->subject('Your MyRoboJackets Personal Access Token '
                 .($this->already_expired ? 'Recently Expired' : 'Will Expire Soon'))
