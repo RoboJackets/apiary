@@ -16,13 +16,6 @@ use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
 class Kernel extends ConsoleKernel
 {
     /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array<string>
-     */
-    protected $commands = [];
-
-    /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
