@@ -30,6 +30,8 @@ class TeamAttendanceNotification extends Notification
 
     /**
      * Get the Slack representation of the notification.
+     *
+     * @phan-suppress PhanTypeExpectedObjectPropAccess
      */
     public function toSlack(Team $team): SlackMessage
     {

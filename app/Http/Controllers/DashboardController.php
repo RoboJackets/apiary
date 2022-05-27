@@ -13,14 +13,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     /**
      * Returns view with data for the user dashboard.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         //User needs a transaction if they don't have one for an active dues package
         $user = $request->user();

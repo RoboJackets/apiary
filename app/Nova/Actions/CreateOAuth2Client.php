@@ -59,6 +59,7 @@ class CreateOAuth2Client extends Action
         $confidential = self::PUBLIC_CLIENT !== $clientType; // Confidential means the client has a secret
 
         $client = $this->clientRepository->create(
+            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
             $user->id,
             $fields->client_name,
             $fields->redirect_urls,

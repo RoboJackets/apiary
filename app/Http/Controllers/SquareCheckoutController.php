@@ -11,6 +11,7 @@ use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -282,6 +283,8 @@ class SquareCheckoutController extends Controller
                 );
             case OrderState::OPEN:
                 return view('square.processing');
+            default:
+                throw new Exception('Unexpected order state');
         }
     }
 

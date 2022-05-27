@@ -14,7 +14,7 @@ class AttendanceExportController extends Controller
     /**
      * Generate and download an attendance report.
      *
-     * @return \Illuminate\View\View|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function show(Request $request, string $secret)
     {
