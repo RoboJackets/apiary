@@ -64,7 +64,7 @@ class Merchandise extends Model
     ];
 
     /**
-     * Get the fiscal year for this merchandise
+     * Get the fiscal year for this merchandise.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FiscalYear, \App\Models\Merchandise>
      */
@@ -74,7 +74,7 @@ class Merchandise extends Model
     }
 
     /**
-     * Get the associated packages for this merchandise
+     * Get the associated packages for this merchandise.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesPackage>
      */
@@ -84,7 +84,7 @@ class Merchandise extends Model
     }
 
     /**
-     * Get the associated transactions for this merchandise
+     * Get the associated transactions for this merchandise.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction>
      */
@@ -97,7 +97,7 @@ class Merchandise extends Model
     }
 
     /**
-     * Get the associated transactions for this merchandise
+     * Get the associated transactions for this merchandise.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction>
      */

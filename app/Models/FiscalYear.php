@@ -52,7 +52,7 @@ class FiscalYear extends Model
     }
 
     /**
-     * Get the Merchandise for this FiscalYear
+     * Get the Merchandise for this FiscalYear.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Merchandise>
      */

@@ -104,7 +104,7 @@ class Event extends Model
     ];
 
     /**
-     * Get the organizer for this event
+     * Get the organizer for this event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Event>
      */
@@ -114,7 +114,7 @@ class Event extends Model
     }
 
     /**
-     * Get the Rsvps for this event
+     * Get the Rsvps for this event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp>
      */

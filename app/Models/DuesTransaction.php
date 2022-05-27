@@ -171,7 +171,7 @@ class DuesTransaction extends Model
     }
 
     /**
-     * Get the merchandise for this transaction
+     * Get the merchandise for this transaction.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
      */
@@ -184,7 +184,7 @@ class DuesTransaction extends Model
     }
 
     /**
-     * Get the merchandise for this transaction
+     * Get the merchandise for this transaction.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
      */
@@ -232,8 +232,7 @@ class DuesTransaction extends Model
      * Pending defined as no payments, or payments that do not sum to payable amount
      * for a currently active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopePending(Builder $query): Builder
@@ -245,8 +244,7 @@ class DuesTransaction extends Model
      * Scope a query to only include paid transactions
      * Paid defined as one or more payments whose total is equal to the payable amount.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopePaid(Builder $query): Builder
@@ -274,8 +272,7 @@ class DuesTransaction extends Model
      * Scope a query to only include unpaid transactions
      * Unpaid defined as zero or more payments that are less than the payable amount.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopeUnpaid(Builder $query): Builder
@@ -295,8 +292,7 @@ class DuesTransaction extends Model
      * Scope a query to only include current transactions.
      * Current defined as belonging to an active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopeCurrent(Builder $query): Builder
@@ -310,8 +306,7 @@ class DuesTransaction extends Model
      * Scope a query to only include current transactions.
      * Current defined as belonging to an active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
     public function scopeAccessCurrent(Builder $query): Builder

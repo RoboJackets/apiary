@@ -143,7 +143,7 @@ class DuesPackage extends Model
     }
 
     /**
-     * Get the conflicts for this dues package
+     * Get the conflicts for this dues package.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\DuesPackage, \App\Models\DuesPackage>
      */
@@ -153,7 +153,7 @@ class DuesPackage extends Model
     }
 
     /**
-     * Get the conflicts for this dues package
+     * Get the conflicts for this dues package.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesPackage>
      */
@@ -163,7 +163,7 @@ class DuesPackage extends Model
     }
 
     /**
-     * Get the available merchandise for this dues package
+     * Get the available merchandise for this dues package.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Merchandise>
      */
@@ -175,8 +175,7 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include DuesPackages available for purchase.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
     public function scopeAvailableForPurchase(Builder $query): Builder
@@ -188,8 +187,7 @@ class DuesPackage extends Model
      * Scope a query to only include DuesPackages that a specific user can purchase. Excludes conflicts and
      * restricted packages.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
     public function scopeUserCanPurchase(Builder $query, User $user): Builder
@@ -220,8 +218,7 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include active DuesPackages.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
     public function scopeActive(Builder $query): Builder
@@ -233,8 +230,7 @@ class DuesPackage extends Model
     /**
      * Scope a query to only include access active DuesPackages.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
     public function scopeAccessActive(Builder $query): Builder

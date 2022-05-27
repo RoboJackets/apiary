@@ -73,7 +73,7 @@ class AttendanceExport extends Model
     ];
 
     /**
-     * Get the user that downloaded this export
+     * Get the user that downloaded this export.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AttendanceExport>
      */

@@ -86,7 +86,7 @@ class Signature extends Model
     ];
 
     /**
-     * Get the template for this signature
+     * Get the template for this signature.
      *
      * @return BelongsTo<MembershipAgreementTemplate, Signature>
      */
@@ -96,7 +96,7 @@ class Signature extends Model
     }
 
     /**
-     * Get the user for this signature
+     * Get the user for this signature.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Signature>
      */
@@ -106,7 +106,7 @@ class Signature extends Model
     }
 
     /**
-     * Get the user that uploaded this signature (for paper signatures)
+     * Get the user that uploaded this signature (for paper signatures).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Signature>
      */

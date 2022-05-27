@@ -44,9 +44,8 @@ class ExportUsernames extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param \Laravel\Nova\Fields\ActionFields  $fields
-     * @param \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     *
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      * @return array<string,string>
      *
      * @phan-suppress PhanTypeMismatchArgument

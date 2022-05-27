@@ -127,7 +127,7 @@ class RemoteAttendanceLink extends Model
     }
 
     /**
-     * Get the associated attendance records
+     * Get the associated attendance records.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance>
      */

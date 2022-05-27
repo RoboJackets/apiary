@@ -7,6 +7,7 @@ namespace Spatie\Permission\Contracts;
 /**
  * @property int $id
  * @property string $name
+ *
  * @method void save()
  * @method void delete()
  * @method void givePermissionTo(string $permission)

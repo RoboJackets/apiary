@@ -141,8 +141,7 @@ class Attendance extends Model
     /**
      * Scope query to start at given date.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
     public function scopeStart(Builder $query, string $date): Builder
@@ -153,8 +152,7 @@ class Attendance extends Model
     /**
      * Scope query to end at given date.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
     public function scopeEnd(Builder $query, string $date): Builder
@@ -239,8 +237,7 @@ class Attendance extends Model
     /**
      * Modify the query used to retrieve models when making all of the models searchable.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance> $query
      */
     protected function makeAllSearchableUsing(Builder $query): Builder

@@ -45,7 +45,7 @@ class MembershipAgreementTemplate extends Model
     use SoftDeletes;
 
     /**
-     * Get Signatures for this template
+     * Get Signatures for this template.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature>
      */

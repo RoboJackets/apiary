@@ -58,7 +58,7 @@ class Rsvp extends Model
     ];
 
     /**
-     * Get the user that RSVPed
+     * Get the user that RSVPed.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Rsvp>
      */
@@ -68,7 +68,7 @@ class Rsvp extends Model
     }
 
     /**
-     * Get the event they RSVPed to
+     * Get the event they RSVPed to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Event, \App\Models\Rsvp>
      */

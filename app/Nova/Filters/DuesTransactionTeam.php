@@ -28,9 +28,8 @@ class DuesTransactionTeam extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param int  $value
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  int  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>|\Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
     public function apply(Request $request, $query, $value)

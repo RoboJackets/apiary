@@ -113,7 +113,7 @@ class TravelAssignment extends Model
     ];
 
     /**
-     * Get the User assigned to Travel
+     * Get the User assigned to Travel.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\TravelAssignment>
      */
@@ -123,7 +123,7 @@ class TravelAssignment extends Model
     }
 
     /**
-     * Get the Travel assigned to User
+     * Get the Travel assigned to User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Travel, \App\Models\TravelAssignment>
      */
@@ -133,7 +133,7 @@ class TravelAssignment extends Model
     }
 
     /**
-     * Get the Payment for this assignment
+     * Get the Payment for this assignment.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>
      */
@@ -148,10 +148,9 @@ class TravelAssignment extends Model
     }
 
     /**
-     * Scope only paid assignments
+     * Scope only paid assignments.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>
      */
     public function scopePaid(Builder $query): Builder

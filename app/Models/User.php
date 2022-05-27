@@ -441,7 +441,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the DuesTransactions belonging to the User
+     * Get the DuesTransactions belonging to the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
@@ -451,7 +451,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the DuesTransactions belonging to the User
+     * Get the DuesTransactions belonging to the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
@@ -461,7 +461,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the DuesTransactions belonging to the User
+     * Get the DuesTransactions belonging to the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
@@ -471,7 +471,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the DuesPackages belonging to the User through DuesTransactions
+     * Get the DuesPackages belonging to the User through DuesTransactions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\DuesPackage>
      */
@@ -508,7 +508,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the majors for this user
+     * Get the majors for this user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Major>
      */
@@ -518,7 +518,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the class standings for this user
+     * Get the class standings for this user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\ClassStanding>
      */
@@ -623,8 +623,7 @@ class User extends Authenticatable
     /**
      * Scope a query to automatically determine user identifier.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeFindByIdentifier(Builder $query, string $id): Builder
@@ -645,8 +644,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeActive(Builder $query): Builder
@@ -661,8 +659,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeInactive(Builder $query): Builder
@@ -677,8 +674,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeAccessActive(Builder $query): Builder
@@ -693,8 +689,7 @@ class User extends Authenticatable
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeAccessInactive(Builder $query): Builder
@@ -709,8 +704,7 @@ class User extends Authenticatable
     /**
      * Scope a query to automatically include only those eligible to be granted BuzzCard access.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeBuzzCardAccessEligible(Builder $query): Builder
@@ -726,8 +720,7 @@ class User extends Authenticatable
     /**
      * Scope a query to automatically include only members with access overrides.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeHasOverride(Builder $query): Builder
@@ -736,7 +729,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user that applied an access override
+     * Get the user that applied an access override.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\User>
      */
@@ -837,7 +830,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the Signatures for this user
+     * Get the Signatures for this user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature>
      */
@@ -864,7 +857,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the TravelAssignments for this user
+     * Get the TravelAssignments for this user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment>
      */
@@ -908,8 +901,7 @@ class User extends Authenticatable
     /**
      * Modify the query used to retrieve models when making all of the models searchable.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\User> $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     protected function makeAllSearchableUsing(Builder $query): Builder

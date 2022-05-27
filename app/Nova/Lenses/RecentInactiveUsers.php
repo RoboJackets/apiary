@@ -28,8 +28,7 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
     public static function query(LensRequest $request, $query): Builder
