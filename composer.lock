@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87914c4480adf422826c135c1a369466",
+    "content-hash": "a0c2ae819ee6df0e1dea6108d107f649",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5345,22 +5345,22 @@
         },
         {
             "name": "oitnetworkservices/buzzapiclient",
-            "version": "v0.1.3",
+            "version": "0.1.4",
             "source": {
                 "type": "git",
-                "url": "https://github.gatech.edu/OIT-NetworkServices/BuzzAPIClient.git",
-                "reference": "7caf590d32760a304772419303a109261406763a"
+                "url": "git@it.github.gatech.edu:OIT-NetworkServices/BuzzAPIClient.git",
+                "reference": "39a27f3b91ed0c8638ba3557d50dd91858920a90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1652813922/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-7caf590d32760a304772419303a109261406763a-zip-03ac5e.zip",
-                "reference": "7caf590d32760a304772419303a109261406763a",
-                "shasum": "91502080edc47c91f95d2ff3ca620cebd204208f"
+                "url": "https://composer.robojackets.org/1653607834/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-39a27f3b91ed0c8638ba3557d50dd91858920a90-zip-527320.zip",
+                "reference": "39a27f3b91ed0c8638ba3557d50dd91858920a90",
+                "shasum": "fc6ee0d4d57d2c957e2b099e63785a788c385591"
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.3|^7.2",
-                "php": "^7.1"
+                "php": "^7.1|^8.1"
             },
             "require-dev": {
                 "laravel/framework": "@stable",
@@ -5398,11 +5398,7 @@
                 }
             ],
             "description": "BuzzAPI Client Library",
-            "support": {
-                "source": "https://github.gatech.edu/OIT-NetworkServices/BuzzAPIClient/tree/v0.1.3",
-                "issues": "https://github.gatech.edu/OIT-NetworkServices/BuzzAPIClient/issues"
-            },
-            "time": "2020-12-04T15:30:19+00:00"
+            "time": "2022-05-26T23:22:51+00:00"
         },
         {
             "name": "opis/closure",
