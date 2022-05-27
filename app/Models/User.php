@@ -829,7 +829,6 @@ class User extends Authenticatable
                 SentrySdk::getCurrentHub()->setSpan($parentSpan);
             }
 
-            // @phan-suppress-next-line PhanTypeArraySuspiciousNull,PhanTypeInvalidDimOffset
             return [] === $result ? null : $result[0][0];
         });
     }

@@ -19,6 +19,8 @@ class AttendanceReport extends Tool
 
     /**
      * Build the view that renders the navigation links for the tool.
+     *
+     * @phan-suppress PhanTypeMismatchReturn
      */
     public function renderNavigation(): View
     {

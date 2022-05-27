@@ -100,8 +100,7 @@ class AddPayment extends Action
         $payment = new Payment();
         $payment->recorded_by = Auth::user()->id;
         $payment->method = $fields->method;
-        // @phan-suppress-next-line PhanTypeMismatchProperty
-        $payment->amount = $entered_amount;
+        $payment->amount = strval($entered_amount);
         $payment->payable_id = $model->id;
         $payment->payable_type = $model->getMorphClass();
         $payment->notes = 'Added in Nova';

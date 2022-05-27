@@ -10,7 +10,7 @@ COPY --link package.json package-lock.json webpack.mix.js artisan /app/
 COPY --link resources/ /app/resources/
 COPY --link public/ /app/public/
 
-FROM node:17 as frontend
+FROM node:18 as frontend
 
 RUN npm install -g npm@latest
 

@@ -60,7 +60,7 @@ class RsvpController extends Controller
     /**
      * Stores a user-submitted RSVP resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      *
      * @throws \Throwable
      */

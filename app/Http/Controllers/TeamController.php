@@ -14,7 +14,6 @@ use App\Models\User;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class TeamController extends Controller
 {
@@ -41,7 +40,12 @@ class TeamController extends Controller
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
     }
 
-    public function indexWeb(Request $request): View
+    /**
+     * Displays the teams page for users
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function indexWeb(Request $request)
     {
         $teams = Team::visible()->orderBy('visible_on_kiosk', 'desc')->orderBy('name')->get();
 

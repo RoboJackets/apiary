@@ -100,6 +100,7 @@ class DuesPackage extends Resource
                 ->sortable(),
 
             Number::make('Paid Transactions', function (): int {
+                // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
                 return DB::table('dues_transactions')
                     ->selectRaw('count(distinct dues_transactions.id) as count')
                     ->leftJoin('payments', static function (JoinClause $join): void {
