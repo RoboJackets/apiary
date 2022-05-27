@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Facade;
-
 declare(strict_types=1);
+
+use Illuminate\Support\Facades\Facade;
 
 return [
 
@@ -183,7 +183,7 @@ return [
          * Package Service Providers...
          */
         Subfission\Cas\CasServiceProvider::class,
-        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
          * Application Service Providers...

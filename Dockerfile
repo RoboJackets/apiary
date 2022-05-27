@@ -31,7 +31,7 @@ COPY --link database/ /app/database/
 COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
 COPY --link storage/ /app/storage/
-COPY --link artisan composer.json composer.lock server.php /app/
+COPY --link artisan composer.json composer.lock /app/
 COPY --link --from=frontend /app/public/ /app/public/
 
 FROM ${base_image} as backend-uncompressed
