@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
 
     /*
@@ -20,6 +18,7 @@ return [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'scheme' => 'https',
     ],
 
     'postmark' => [
@@ -59,12 +58,17 @@ return [
     ],
 
     'team_slack_webhook_url' => env('TEAM_SLACK_WEBHOOK_URL'),
+
     'treasurer_slack_webhook_url' => env('TREASURER_SLACK_WEBHOOK_URL'),
+
     'treasurer_email' => env('TREASURER_EMAIL'),
+
     'core_slack_webhook_url' => env('CORE_SLACK_WEBHOOK_URL'),
+
     'core_officers_slack_webhook_url' => env('CORE_OFFICERS_SLACK_WEBHOOK_URL'),
 
     'attendance_email' => env('ATTENDANCE_EMAIL'),
 
     'membership_agreement_archive_email' => env('MEMBERSHIP_AGREEMENT_ARCHIVE_EMAIL'),
+
 ];
