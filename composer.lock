@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbc06925c14a2eebf8dfc666bdc0ce01",
+    "content-hash": "25fdf0db77351e584de7e6f2bdeb727b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -7226,20 +7226,20 @@
         },
         {
             "name": "realrashid/sweet-alert",
-            "version": "v5.0.0",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "5cf4a41631cf74efecb5e44d05eca02a2aa8d7e1"
+                "reference": "fb837beaa52568fb3106d311ff3c7a7b8e543608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/5cf4a41631cf74efecb5e44d05eca02a2aa8d7e1",
-                "reference": "5cf4a41631cf74efecb5e44d05eca02a2aa8d7e1",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/fb837beaa52568fb3106d311ff3c7a7b8e543608",
+                "reference": "fb837beaa52568fb3106d311ff3c7a7b8e543608",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0",
+                "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0|^9.11|9.14.*",
                 "php": "^7.2|^8.0"
             },
             "require-dev": {
@@ -7312,7 +7312,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-04T09:38:53+00:00"
+            "time": "2022-05-28T13:28:03+00:00"
         },
         {
             "name": "robojackets/auth-stickler",
