@@ -15,6 +15,13 @@ use Laravel\Nova\Metrics\ValueResult;
 class TotalAttendance extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'identification';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(NovaRequest $request): ValueResult
