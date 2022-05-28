@@ -146,21 +146,6 @@ class Signature extends Resource
                 ),
             ]),
 
-            Boolean::make('Complete')
-                ->default(true)
-                ->rules('required')
-                ->required()
-                ->readonly()
-                ->onlyOnForms(),
-
-            Select::make('Uploaded By', 'uploaded_by')
-                ->options([strval($request->user()->id) => $request->user()->name])
-                ->default(strval($request->user()->id))
-                ->required()
-                ->rules('required')
-                ->readonly()
-                ->onlyOnForms(),
-
             self::metadataPanel(),
         ];
     }
