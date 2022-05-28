@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'target_php_version' => '7.4',
+    'target_php_version' => '8.1',
 
     'directory_list' => [
         '.',
@@ -22,6 +22,8 @@ return [
     'exclude_file_list' => [
         '.phpstorm.meta.php',
         '_ide_helper.php',
+        'stubs/Permission.php',
+        'stubs/Role.php',
     ],
 
     'suppress_issue_types' => [

@@ -9,7 +9,7 @@ use App\Models\Payment;
 use App\Notifications\Payment\ConfirmationNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Spatie\WebhookClient\ProcessWebhookJob;
+use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessSquareWebhook extends ProcessWebhookJob
 {
@@ -29,6 +29,8 @@ class ProcessSquareWebhook extends ProcessWebhookJob
 
     /**
      * Execute the job.
+     *
+     * @phan-suppress PhanTypeArraySuspiciousNullable
      */
     public function handle(): void
     {

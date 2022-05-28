@@ -30,7 +30,6 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use Vyuldashev\NovaPermission\NovaPermissionTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -148,6 +147,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         }
 
         if (request()->is('nova-api/metrics/*-received-*')) {
+            // @phan-suppress-next-line PhanTypeMismatchArgument
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $type = $parts->first();
             $id = intval($parts->last());
@@ -175,9 +175,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools(): array
     {
         return [
-            (new NovaPermissionTool())->canSee(static function (Request $request): bool {
-                return $request->user()->hasRole('admin');
-            }),
             (new AttendanceReport())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-attendance');
             }),

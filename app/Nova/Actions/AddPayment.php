@@ -21,8 +21,13 @@ class AddPayment extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\DuesTransaction>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\DuesTransaction>  $models
      * @return array<string,string>
+     *
+     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
+     * @phan-suppress PhanTypeMismatchArgumentInternal
+     * @phan-suppress PhanTypeMismatchProperty
+     * @phan-suppress PhanTypeSuspiciousStringExpression
      */
     public function handle(ActionFields $fields, Collection $models): array
     {

@@ -27,8 +27,11 @@ class RefundPayment extends DestructiveAction
      * Perform the action on the given models.
      *
      * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection<\App\Models\Payment>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
      * @return array<string,string>
+     *
+     * @phan-suppress PhanTypeMismatchPropertyProbablyReal
+     * @phan-suppress PhanTypeSuspiciousStringExpression
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
@@ -55,7 +58,7 @@ class RefundPayment extends DestructiveAction
         $paymentId = $retrieveOrderResponse->getResult()->getOrder()->getTenders()[0]->getId();
 
         $money = new Money();
-        $money->setAmount(intval($payment->amount * 100)); // this includes the processing fee
+        $money->setAmount(intval(floatval($payment->amount) * 100)); // this includes the processing fee
         $money->setCurrency('USD');
 
         $refundPaymentRequest = new RefundPaymentRequest($payment->unique_id, $money);

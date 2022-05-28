@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\RecruitingVisit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * A factory for RecruitingVisits.
+ *
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RecruitingVisit>
+ */
 class RecruitingVisitFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = RecruitingVisit::class;
-
     /**
      * Define the model's default state.
      *
@@ -24,8 +21,8 @@ class RecruitingVisitFactory extends Factory
     public function definition(): array
     {
         return [
-            'recruiting_name' => $this->faker->name,
-            'recruiting_email' => $this->faker->safeEmail,
+            'recruiting_name' => $this->faker->name(),
+            'recruiting_email' => $this->faker->safeEmail(),
             'visit_token' => $this->faker->asciify('********************'),
         ];
     }

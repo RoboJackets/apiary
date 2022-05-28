@@ -63,16 +63,31 @@ class Merchandise extends Model
         'fiscal_year_id',
     ];
 
+    /**
+     * Get the fiscal year for this merchandise.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FiscalYear, \App\Models\Merchandise>
+     */
     public function fiscalYear(): BelongsTo
     {
         return $this->belongsTo(FiscalYear::class);
     }
 
+    /**
+     * Get the associated packages for this merchandise.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesPackage>
+     */
     public function packages(): BelongsToMany
     {
         return $this->belongsToMany(DuesPackage::class)->withPivot('group')->withTimestamps();
     }
 
+    /**
+     * Get the associated transactions for this merchandise.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction>
+     */
     public function transactions(): BelongsToMany
     {
         return $this->belongsToMany(DuesTransaction::class)
@@ -81,6 +96,11 @@ class Merchandise extends Model
             ->using(DuesTransactionMerchandise::class);
     }
 
+    /**
+     * Get the associated transactions for this merchandise.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DuesTransaction>
+     */
     public function jankForNova(): BelongsToMany
     {
         return $this->transactions()->as('jankForNova');
@@ -101,6 +121,8 @@ class Merchandise extends Model
 
     /**
      * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Merchandise>
      */
     public function providedBy(): BelongsTo
     {

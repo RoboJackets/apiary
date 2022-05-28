@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * A factory for Users.
+ *
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ */
 class UserFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = User::class;
-
     /**
      * Define the model's default state.
      *
@@ -23,7 +20,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $lastName = $this->faker->lastName;
+        $lastName = $this->faker->lastName();
         $uid = $this->faker->bothify('?'.lcfirst($lastName).'##');
 
         return [
@@ -31,11 +28,11 @@ class UserFactory extends Factory
             'gtid' => $this->faker->numerify('#########'),
             'slack_id' => null,
             'gt_email' => $uid.'@gatech.edu',
-            'personal_email' => $this->faker->safeEmail,
-            'first_name' => $this->faker->firstName,
-            'middle_name' => $this->faker->optional()->lastName,
+            'personal_email' => $this->faker->safeEmail(),
+            'first_name' => $this->faker->firstName(),
+            'middle_name' => $this->faker->optional()->lastName(),
             'last_name' => $lastName,
-            'preferred_name' => $this->faker->optional()->firstName,
+            'preferred_name' => $this->faker->optional()->firstName(),
             'phone' => $this->faker->numerify('##########'),
             'emergency_contact_name' => null,
             'emergency_contact_phone' => null,

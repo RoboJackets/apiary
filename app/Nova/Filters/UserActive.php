@@ -21,7 +21,7 @@ class UserActive extends Filter
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $value
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>|\Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User>
      */
     public function apply(Request $request, $query, $value)
     {

@@ -88,6 +88,7 @@ class ShirtSizeBreakdown extends Partition
                     // @phpstan-ignore-next-line
                     return [User::$shirt_sizes[$row->$column_name] => $row->count];
                 })
+                // @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
                 ->sortBy(static function (string $count, string $shirt_size): int {
                     if ('Unknown' === $shirt_size) {
                         return -1;

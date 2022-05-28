@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
+use Symfony\Component\Mime\Email;
 
 class DatabaseMailable extends Mailable
 {
@@ -63,7 +63,7 @@ class DatabaseMailable extends Mailable
         }
 
         return $this->from('noreply@my.robojackets.org', $nt->from)
-            ->withSwiftMessage(static function (SimpleMimeEntity $message) use ($nt): void {
+            ->withSymfonyMessage(static function (Email $message) use ($nt): void {
                 $message->getHeaders()
                     ->addTextHeader('Reply-To', $nt->from.' <hello@robojackets.org>');
             })

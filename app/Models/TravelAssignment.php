@@ -112,16 +112,31 @@ class TravelAssignment extends Model
         'travel_id',
     ];
 
+    /**
+     * Get the User assigned to Travel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\TravelAssignment>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the Travel assigned to User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Travel, \App\Models\TravelAssignment>
+     */
     public function travel(): BelongsTo
     {
         return $this->belongsTo(Travel::class);
     }
 
+    /**
+     * Get the Payment for this assignment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>
+     */
     public function payment(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
@@ -132,6 +147,12 @@ class TravelAssignment extends Model
         return 0 !== self::where('travel_assignments.id', $this->id)->paid()->count();
     }
 
+    /**
+     * Scope only paid assignments.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>
+     */
     public function scopePaid(Builder $query): Builder
     {
         return $query->select(

@@ -145,7 +145,7 @@ class SquareCheckoutController extends Controller
             );
         }
 
-        $amount = (int) ($transaction->travel->fee_amount * 100);
+        $amount = $transaction->travel->fee_amount * 100;
 
         return self::redirect($amount, $payment, $user, 'Travel Fee', $transaction->travel->name);
     }

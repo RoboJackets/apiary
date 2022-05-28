@@ -134,7 +134,9 @@ class Team extends Model
     ];
 
     /**
-     *  Get the Users that are members of this Team.
+     * Get the Users that are members of this Team.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User>
      */
     public function members(): BelongsToMany
     {
@@ -143,6 +145,8 @@ class Team extends Model
 
     /**
      * Get all of the team's attendance.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attendance>
      */
     public function attendance(): MorphMany
     {
@@ -151,6 +155,8 @@ class Team extends Model
 
     /**
      * Get all of the event's remote attendance links.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\RemoteAttendanceLink>
      */
     public function remoteAttendanceLinks(): MorphMany
     {
@@ -159,6 +165,9 @@ class Team extends Model
 
     /**
      * Scope a query to only include attendable teams.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
     public function scopeAttendable(Builder $query): Builder
     {
@@ -167,6 +176,9 @@ class Team extends Model
 
     /**
      * Scope a query to only include visible teams.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
     public function scopeVisible(Builder $query): Builder
     {
@@ -175,6 +187,9 @@ class Team extends Model
 
     /**
      * Scope a query to only include self-serviceable teams.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
     public function scopeSelfServiceable(Builder $query): Builder
     {
@@ -194,6 +209,11 @@ class Team extends Model
         ];
     }
 
+    /**
+     * Get the project manager for this team.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Team>
+     */
     public function projectManager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'project_manager_id');
@@ -209,6 +229,9 @@ class Team extends Model
 
     /**
      * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {

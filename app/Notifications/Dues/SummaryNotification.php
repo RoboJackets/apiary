@@ -33,7 +33,7 @@ class SummaryNotification extends Notification
     /**
      * Get the payments from yesterday.
      *
-     * @return Collection<Payment>
+     * @return \Illuminate\Support\Collection<int,\App\Models\Payment>
      */
     private function getPayments(): Collection
     {

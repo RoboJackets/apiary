@@ -62,5 +62,10 @@
                 <file name="app/Nova/Lenses/RecentInactiveUsers.php" />
             </errorLevel>
         </TooManyArguments>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <file name="app/Exceptions/Handler.php" />
+            </errorLevel>
+        </UndefinedClass>
     </issueHandlers>
 </psalm>

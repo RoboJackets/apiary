@@ -26,7 +26,6 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
@@ -385,16 +384,6 @@ class User extends Resource
 
             Text::make('gtDirGUID')
                 ->hideFromIndex(),
-
-            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                }),
-
-            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                }),
         ];
     }
 
@@ -561,7 +550,7 @@ class User extends Resource
             'dues_transactions.id',
             'dues_transactions.dues_package_id',
             'dues_packages.effective_start',
-            'dues_packages.effective_end',
+            'dues_packages.effective_end'
         )
         ->leftJoin('payments', static function (JoinClause $join): void {
             $join->on('dues_transactions.id', '=', 'payable_id')

@@ -63,7 +63,7 @@ class AttendanceExport extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array<string>
+     * @var array<string,string>
      */
     protected $casts = [
         'start_time' => 'datetime',
@@ -72,6 +72,11 @@ class AttendanceExport extends Model
         'downloaded_at' => 'datetime',
     ];
 
+    /**
+     * Get the user that downloaded this export.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\AttendanceExport>
+     */
     public function downloadUser(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -40,9 +40,14 @@
         <exclude-pattern>/app/Notifications/</exclude-pattern>
         <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Policies/</exclude-pattern>
+        <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
     <rule ref="Generic.CodeAnalysis"/>
+
+    <rule ref="Generic.Commenting.DocComment.MissingShort">
+        <exclude-pattern>/stubs/</exclude-pattern>
+    </rule>
 
     <rule ref="Generic.Commenting">
         <!-- StyleCI has its own opinions, not sure if I can build those in here -->
@@ -70,6 +75,10 @@
 
     <rule ref="Generic.Functions.CallTimePassByReference"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+
+    <rule ref="Generic.NamingConventions.InterfaceNameSuffix.Missing">
+        <exclude-pattern>/stubs/</exclude-pattern>
+    </rule>
 
     <rule ref="Generic.NamingConventions">
         <exclude name="Generic.NamingConventions.TraitNameSuffix.Missing"/>
@@ -141,6 +150,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
@@ -161,7 +171,13 @@
         </properties>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.Exceptions"/>
+    <rule ref="SlevomatCodingStandard.Exceptions">
+        <exclude name="SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch"/>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction.EmptyFunction">
+        <exclude-pattern>/stubs/</exclude-pattern>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
         <exclude-pattern>/app/Http/Resources/</exclude-pattern>
@@ -169,12 +185,15 @@
         <exclude-pattern>/app/Notifications/</exclude-pattern>
         <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Policies/</exclude-pattern>
+        <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Functions">
-        <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>
+        <exclude name="SlevomatCodingStandard.Functions.FunctionLength"/>
+        <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireSingleLineCall.RequiredSingleLineCall"/>
+        <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
@@ -226,6 +245,7 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
         <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
         <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
+        <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints">

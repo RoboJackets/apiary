@@ -37,7 +37,7 @@ class DuesTransactionMerchandise extends Pivot
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array<string>
+     * @var array<string,string>
      */
     protected $casts = [
         'provided_at' => 'datetime',
@@ -50,6 +50,11 @@ class DuesTransactionMerchandise extends Pivot
      */
     public $incrementing = true;
 
+    /**
+     * Magic for making relationships work on pivot models in Nova. Do not use for anything else.
+     *
+     * @return BelongsTo<User, DuesTransactionMerchandise>
+     */
     public function providedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'provided_by');

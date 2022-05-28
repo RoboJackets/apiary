@@ -61,6 +61,8 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the user that owns the campaign.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\RecruitingCampaign>
      */
     public function creator(): BelongsTo
     {
@@ -69,6 +71,8 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the template used in the campaign.
+     *
+     * @return BelongsTo<NotificationTemplate, RecruitingCampaign>
      */
     public function template(): BelongsTo
     {
@@ -77,6 +81,8 @@ class RecruitingCampaign extends Model
 
     /**
      * Get the recipients for this campaign.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RecruitingCampaignRecipient>
      */
     public function recipients(): HasMany
     {

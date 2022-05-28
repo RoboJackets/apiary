@@ -30,7 +30,7 @@ class DuesTransactionTeam extends Filter
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  int  $value
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>|\Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
     public function apply(Request $request, $query, $value)
     {

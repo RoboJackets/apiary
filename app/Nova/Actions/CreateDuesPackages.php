@@ -25,8 +25,10 @@ class CreateDuesPackages extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\FiscalYear>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\FiscalYear>  $models
      * @return array<string,string>
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
@@ -37,7 +39,7 @@ class CreateDuesPackages extends Action
         $fiscalYear = $models->first();
         $createdPackages = 0;
 
-        $startingYear = $fiscalYear->ending_year - 1;
+        $startingYear = intval($fiscalYear->ending_year) - 1;
         $endingYear = $fiscalYear->ending_year;
         $yearRangeStr = $startingYear.'-'.$endingYear;
 

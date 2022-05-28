@@ -344,8 +344,12 @@ class User extends Authenticatable
         'xxxl' => 'XXXL',
     ];
 
+    protected string $guard_name = 'web';
+
     /**
-     *  Get the recruiting visits associated with this user.
+     * Get the recruiting visits associated with this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RecruitingVisit>
      */
     public function recruitingVisits(): HasMany
     {
@@ -353,7 +357,9 @@ class User extends Authenticatable
     }
 
     /**
-     *  Get the attendance records associated with this user.
+     * Get the attendance records associated with this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance>
      */
     public function attendance(): HasMany
     {
@@ -361,7 +367,9 @@ class User extends Authenticatable
     }
 
     /**
-     *  Get the teams that this user manages.
+     * Get the teams that this user manages.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Team>
      */
     public function manages(): HasMany
     {
@@ -369,7 +377,9 @@ class User extends Authenticatable
     }
 
     /**
-     *  Get the Teams that this User is a member of.
+     * Get the Teams that this User is a member of.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Team>
      */
     public function teams(): BelongsToMany
     {
@@ -432,32 +442,40 @@ class User extends Authenticatable
             })->doesntExist();
     }
 
-    /*
-     * Get the DuesTransactions belonging to the User
+    /**
+     * Get the DuesTransactions belonging to the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
     public function dues(): HasMany
     {
         return $this->hasMany(DuesTransaction::class);
     }
 
-    /*
-     * Get the DuesTransactions belonging to the User
+    /**
+     * Get the DuesTransactions belonging to the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
     public function duesTransactions(): HasMany
     {
         return $this->hasMany(DuesTransaction::class);
     }
 
-    /*
-     * Get the DuesTransactions belonging to the User
+    /**
+     * Get the DuesTransactions belonging to the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
      */
     public function paidDues(): HasMany
     {
         return $this->hasMany(DuesTransaction::class)->paid();
     }
 
-    /*
-     * Get the DuesPackages belonging to the User through DuesTransactions
+    /**
+     * Get the DuesPackages belonging to the User through DuesTransactions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<\App\Models\DuesPackage>
      */
     public function duesPackages(): HasManyThrough
     {
@@ -473,6 +491,8 @@ class User extends Authenticatable
 
     /**
      * Get the events organized by the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Event>
      */
     public function events(): HasMany
     {
@@ -481,17 +501,29 @@ class User extends Authenticatable
 
     /**
      * Get the RSVPs belonging to the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp>
      */
     public function rsvps(): HasMany
     {
         return $this->hasMany(Rsvp::class);
     }
 
+    /**
+     * Get the majors for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Major>
+     */
     public function majors(): BelongsToMany
     {
         return $this->belongsToMany(Major::class)->whereNull('major_user.deleted_at')->withTimestamps();
     }
 
+    /**
+     * Get the class standings for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\ClassStanding>
+     */
     public function classStanding(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -592,6 +624,9 @@ class User extends Authenticatable
 
     /**
      * Scope a query to automatically determine user identifier.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeFindByIdentifier(Builder $query, string $id): Builder
     {
@@ -610,6 +645,9 @@ class User extends Authenticatable
      * Scope a query to automatically include only active members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeActive(Builder $query): Builder
     {
@@ -622,6 +660,9 @@ class User extends Authenticatable
      * Scope a query to automatically include only inactive members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeInactive(Builder $query): Builder
     {
@@ -634,6 +675,9 @@ class User extends Authenticatable
      * Scope a query to automatically include only access active members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeAccessActive(Builder $query): Builder
     {
@@ -646,6 +690,9 @@ class User extends Authenticatable
      * Scope a query to automatically include only inactive members
      * Active: Has paid dues for a currently ongoing term
      *         or, has a non-zero payment for an active DuesPackage.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeAccessInactive(Builder $query): Builder
     {
@@ -658,6 +705,9 @@ class User extends Authenticatable
 
     /**
      * Scope a query to automatically include only those eligible to be granted BuzzCard access.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeBuzzCardAccessEligible(Builder $query): Builder
     {
@@ -671,12 +721,20 @@ class User extends Authenticatable
 
     /**
      * Scope a query to automatically include only members with access overrides.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     public function scopeHasOverride(Builder $query): Builder
     {
         return $query->inactive()->where('access_override_until', '>', now());
     }
 
+    /**
+     * Get the user that applied an access override.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\User>
+     */
     public function accessOverrideBy(): BelongsTo
     {
         return $this->belongsTo(self::class, 'access_override_by_id');
@@ -699,7 +757,6 @@ class User extends Authenticatable
             }
 
             $new_major_ids[] = Major::findOrCreateFromGtadGroup(
-                // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
                 substr(
                     $entitlement,
                     self::MAJOR_ENTITLEMENT_PREFIX_LENGTH
@@ -774,6 +831,11 @@ class User extends Authenticatable
         return count($new_class_standings);
     }
 
+    /**
+     * Get the Signatures for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature>
+     */
     public function signatures(): HasMany
     {
         return $this->hasMany(Signature::class);
@@ -796,6 +858,11 @@ class User extends Authenticatable
             ->exists();
     }
 
+    /**
+     * Get the TravelAssignments for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment>
+     */
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
@@ -835,6 +902,9 @@ class User extends Authenticatable
 
     /**
      * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
