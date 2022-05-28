@@ -46,7 +46,7 @@
         "oitnetworkservices/buzzapiclient": "0.1.4",
         "outhebox/nova-hidden-field": "1.0.3",
         "predis/predis": "1.1.10",
-        "realrashid/sweet-alert": "5.0.0",
+        "realrashid/sweet-alert": "5.1.0",
         "robojackets/auth-stickler": "0.5",
         "robojackets/meilisearch-index-settings-helper": "0.6.1",
         "sentry/sentry-laravel": "2.12.0",
