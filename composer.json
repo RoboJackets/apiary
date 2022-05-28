@@ -40,7 +40,6 @@
         "laravel/slack-notification-channel": "2.4.0",
         "laravel/socialite": "5.5.2",
         "laravel/tinker": "2.7.2",
-        "lynndigital/select-or-custom": "dev-master",
         "maatwebsite/excel": "3.1.40",
         "madewithlove/laravel-nova-uuid-support": "1.4",
         "meilisearch/meilisearch-php": "0.23.2",

@@ -14,9 +14,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 class CreateRemoteAttendanceLink extends Action
 {
@@ -97,7 +97,7 @@ class CreateRemoteAttendanceLink extends Action
                     ' If you add a redirect URL, do not share that URL directly. Only Google Meet, BlueJeans, and '.
                     'Microsoft Teams calls are supported currently. Ask in #it-helpdesk for other redirect URLs.'),
 
-            SelectOrCustom::make('Purpose')
+            Select::make('Purpose')
                 ->required(true)
                 ->rules('required')
                 ->options($notes->toArray()),

@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 /**
  * A Nova resource for merchandise (shirts, polos, and whatever else the PR chair comes up with).
@@ -93,7 +93,7 @@ class Merchandise extends Resource
             BelongsToMany::make('Dues Packages', 'packages')
                 ->fields(static function (): array {
                     return [
-                        SelectOrCustom::make('Group')->options([
+                        Select::make('Group')->options([
                             'Fall' => 'Fall',
                             'Spring' => 'Spring',
                         ]),

@@ -20,9 +20,9 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
-use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 /**
  * A Nova resource for dues packages.
@@ -152,7 +152,7 @@ class DuesPackage extends Resource
             BelongsToMany::make('Merchandise')
                 ->fields(static function (): array {
                     return [
-                        SelectOrCustom::make('Group')->options([
+                        Select::make('Group')->options([
                             'Fall' => 'Fall',
                             'Spring' => 'Spring',
                         ]),
