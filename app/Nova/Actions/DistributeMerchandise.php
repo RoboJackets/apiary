@@ -18,7 +18,6 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Outhebox\NovaHiddenField\HiddenField as Hidden;
 
 class DistributeMerchandise extends Action
 {
@@ -94,13 +93,15 @@ class DistributeMerchandise extends Action
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
+     *
+     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {
         $resource = $this->resource;
 
         return [
-            Select::make('User', 'provided_to')
+            Select::make('Distributed To', 'provided_to')
                 ->options(static function () use ($resource): array {
                     return User::whereHas('duesTransactions', static function (Builder $query) use ($resource): void {
                         $query->whereHas('merchandise', static function (Builder $query) use ($resource): void {
@@ -126,8 +127,12 @@ class DistributeMerchandise extends Action
                 ->required()
                 ->rules('required'),
 
-            Hidden::make('Provided By', 'provided_by')
-                ->current_user_id(),
+            Select::make('Distributed By', 'provided_by')
+                ->options([strval($request->user()->id) => $request->user()->name])
+                ->default(strval($request->user()->id))
+                ->required()
+                ->rules('required')
+                ->readonly(),
         ];
     }
 }

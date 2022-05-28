@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "389c8274ed29d6b08f54c89ddb83cabe",
+    "content-hash": "16c47cf21f1509e167af3e739d55354e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5615,61 +5615,6 @@
             ],
             "description": "BuzzAPI Client Library",
             "time": "2022-05-26T23:22:51+00:00"
-        },
-        {
-            "name": "outhebox/nova-hidden-field",
-            "version": "v1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MohmmedAshraf/nova-hidden-field.git",
-                "reference": "426ada2f91e65429179b97bc926ab676cc6e1f46"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MohmmedAshraf/nova-hidden-field/zipball/426ada2f91e65429179b97bc926ab676cc6e1f46",
-                "reference": "426ada2f91e65429179b97bc926ab676cc6e1f46",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Outhebox\\NovaHiddenField\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Outhebox\\NovaHiddenField\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mohamed Ashraf",
-                    "email": "cupo.ashraf@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Laravel Nova Hidden field.",
-            "keywords": [
-                "field",
-                "laravel",
-                "nova",
-                "nova default value",
-                "nova hidden field"
-            ],
-            "support": {
-                "issues": "https://github.com/MohmmedAshraf/nova-hidden-field/issues",
-                "source": "https://github.com/MohmmedAshraf/nova-hidden-field/tree/v1.0.3"
-            },
-            "time": "2020-05-20T14:43:47+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",

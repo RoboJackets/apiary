@@ -14,9 +14,9 @@ use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
-use Outhebox\NovaHiddenField\HiddenField as Hidden;
 
 /**
  * A Nova resource for signatures.
@@ -63,6 +63,8 @@ class Signature extends Resource
 
     /**
      * Get the fields displayed by the resource.
+     *
+     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(Request $request): array
     {
@@ -144,15 +146,22 @@ class Signature extends Resource
                 ),
             ]),
 
+            Boolean::make('Complete')
+                ->default(true)
+                ->rules('required')
+                ->required()
+                ->readonly()
+                ->onlyOnForms(),
+
+            Select::make('Uploaded By', 'uploaded_by')
+                ->options([strval($request->user()->id) => $request->user()->name])
+                ->default(strval($request->user()->id))
+                ->required()
+                ->rules('required')
+                ->readonly()
+                ->onlyOnForms(),
+
             self::metadataPanel(),
-
-            Hidden::make('Complete')
-                ->defaultValue('1')
-                ->onlyOnForms(),
-
-            Hidden::make('Uploaded By', 'uploaded_by')
-                ->defaultValue(strval($request->user()->id))
-                ->onlyOnForms(),
         ];
     }
 }
