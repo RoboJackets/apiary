@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
 
 namespace App\Providers;
 
@@ -10,9 +12,7 @@ use App\Models\User;
 use App\Nova\Dashboards\Demographics;
 use App\Nova\Dashboards\JEDI;
 use App\Nova\Dashboards\Main;
-use App\Nova\Tools\AttendanceReport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
@@ -83,9 +83,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools(): array
     {
         return [
-            // (new AttendanceReport())->canSee(static function (Request $request): bool {
-            //     return $request->user()->can('read-attendance');
-            // }),
             (new NovaPermissionTool())->canSee(static function (Request $request): bool {
                 return $request->user()->hasRole('admin');
             }),

@@ -6,7 +6,6 @@ namespace App\Nova\Dashboards;
 
 use App\Models\Travel;
 use App\Models\TravelAssignment;
-use App\Nova\Cards\MakeAWish;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\DuesRevenueByFiscalYear;
@@ -92,8 +91,6 @@ class Main extends Dashboard
                     }
                 );
             }
-
-            // $cards[] = new MakeAWish();
 
             return $cards;
         }

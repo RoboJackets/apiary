@@ -16,13 +16,12 @@ use Laravel\Nova\Dashboard;
 
 class JEDI extends Dashboard
 {
-
     /**
      * The displayable name of the dashboard.
      *
      * @var string
      */
-    public $name = "JEDI";
+    public $name = 'JEDI';
 
     /**
      * Get the cards for the dashboard.
