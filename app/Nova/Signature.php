@@ -62,8 +62,6 @@ class Signature extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(Request $request): array
     {
