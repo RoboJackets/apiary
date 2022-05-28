@@ -140,6 +140,7 @@
             "vendor/bin/psalm"
         ],
         "test": [
+            "rm -f storage/*.key",
             "php artisan passport:keys --no-interaction",
             "cp storage/db-clean.sqlite storage/db-testing.sqlite",
             "php artisan test"

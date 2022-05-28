@@ -344,6 +344,8 @@ class User extends Authenticatable
         'xxxl' => 'XXXL',
     ];
 
+    protected $guard_name = 'web';
+
     /**
      * Get the recruiting visits associated with this user.
      *
