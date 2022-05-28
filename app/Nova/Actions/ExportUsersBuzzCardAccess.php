@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ExportUsersBuzzCardAccess extends Action
 {
@@ -82,7 +83,7 @@ class ExportUsersBuzzCardAccess extends Action
      *
      * @return array<int, Select>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Select::make('Population')

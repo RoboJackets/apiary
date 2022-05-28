@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 class CreateRemoteAttendanceLink extends Action
@@ -30,7 +31,7 @@ class CreateRemoteAttendanceLink extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Team|\App\Models\Event>  $models
-     * @return array<string,string>
+     * @return array<string,array<string,string>>
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
@@ -72,7 +73,7 @@ class CreateRemoteAttendanceLink extends Action
             $att->save();
         }
 
-        return Action::push('/resources/remote-attendance-links/'.$link->id);
+        return Action::visit('/resources/remote-attendance-links/'.$link->id);
     }
 
     /**
@@ -80,7 +81,7 @@ class CreateRemoteAttendanceLink extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         $notes = collect(NovaRemoteAttendanceLink::$recommendedNotes)
             ->mapWithKeys(static function (string $note): array {

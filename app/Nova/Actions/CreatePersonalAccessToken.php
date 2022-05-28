@@ -12,6 +12,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreatePersonalAccessToken extends Action
 {
@@ -55,7 +56,7 @@ class CreatePersonalAccessToken extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [
             Heading::make(

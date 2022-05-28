@@ -47,11 +47,11 @@ Nova.booting((Vue, router) => {
     Vue.component('text-metric', require('./components/nova/TextMetric.vue').default);
     Vue.component('collect-attendance', require('./components/nova/CollectAttendance.vue').default);
 
-    router.addRoutes([
-        {
-            name: 'attendance-report',
-            path: '/attendance-report',
-            component: require('./components/nova/AttendanceReport.vue').default,
-        },
-    ])
+    // router.addRoutes([
+    //     {
+    //         name: 'attendance-report',
+    //         path: '/attendance-report',
+    //         component: require('./components/nova/AttendanceReport.vue').default,
+    //     },
+    // ])
 })

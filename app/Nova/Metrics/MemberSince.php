@@ -8,15 +8,17 @@ namespace App\Nova\Metrics;
 
 use App\Models\DuesTransaction;
 use Illuminate\Database\Query\JoinClause;
-use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\ValueResult;
 
 class MemberSince extends TextMetric
 {
     /**
      * Calculate the value of the metric.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
-    public function calculate(Request $request): ValueResult
+    public function calculate(NovaRequest $request): ValueResult
     {
         // Same logic as in DashboardController
         $transaction = DuesTransaction::select(

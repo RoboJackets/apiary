@@ -9,6 +9,11 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for RSVPs.
+ *
+ * @extends \App\Nova\Resource<\App\Models\Rsvp>
+ */
 class Rsvp extends Resource
 {
     /**

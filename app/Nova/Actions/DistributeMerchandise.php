@@ -17,6 +17,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Outhebox\NovaHiddenField\HiddenField as Hidden;
 
 class DistributeMerchandise extends Action
@@ -94,7 +95,7 @@ class DistributeMerchandise extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         $resource = $this->resource;
 

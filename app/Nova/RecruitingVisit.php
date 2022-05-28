@@ -14,7 +14,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for recruiting visits.
  *
- * @property int $id
+ * @extends \App\Nova\Resource<\App\Models\RecruitingVisit>
  */
 class RecruitingVisit extends Resource
 {

@@ -10,6 +10,11 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 
+/**
+ * A Nova resource for attendance exports.
+ *
+ * @extends \App\Nova\Resource<\App\Models\AttendanceExport>
+ */
 class AttendanceExport extends Resource
 {
     /**

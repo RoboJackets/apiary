@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Passport\ClientRepository;
 
 class CreateOAuth2Client extends Action
@@ -91,7 +92,7 @@ class CreateOAuth2Client extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [
             Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client."</p>')

@@ -21,8 +21,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for travel.
  *
- * @property \Carbon\Carbon $departure_date
- * @property string $destination
+ * @extends \App\Nova\Resource<\App\Models\Travel>
  */
 class Travel extends Resource
 {

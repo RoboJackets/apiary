@@ -23,6 +23,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ExportResumes extends Action
 {
@@ -164,7 +165,7 @@ class ExportResumes extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         // This is only stored for 30 seconds because it only needs to stick for one page load
         // Nova runs this function for every record in the user view so it slows down the page otherwise

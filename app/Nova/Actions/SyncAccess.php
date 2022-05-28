@@ -33,14 +33,4 @@ class SyncAccess extends Action
             );
         }
     }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(): array
-    {
-        return [];
-    }
 }

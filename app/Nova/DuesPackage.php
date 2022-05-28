@@ -27,7 +27,7 @@ use Lynndigital\SelectOrCustom\SelectOrCustom;
 /**
  * A Nova resource for dues packages.
  *
- * @property int $id
+ * @extends \App\Nova\Resource<\App\Models\DuesPackage>
  */
 class DuesPackage extends Resource
 {

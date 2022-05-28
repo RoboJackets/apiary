@@ -7,16 +7,18 @@ namespace App\Nova\Metrics;
 use App\Models\Attendance;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\ValueResult;
 
 class PrimaryTeam extends TextMetric
 {
     /**
      * Calculate the value of the metric.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
-    public function calculate(Request $request): ValueResult
+    public function calculate(NovaRequest $request): ValueResult
     {
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         $teams = Attendance::where('gtid', $gtid)

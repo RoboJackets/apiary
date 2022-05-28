@@ -17,10 +17,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 /**
  * A Nova resource for dues transactions.
  *
- * @property bool $is_paid
- * @property ?\App\Models\DuesPackage $package
- * @property \App\Models\User $user
- * @property string $status
+ * @extends \App\Nova\Resource<\App\Models\DuesTransaction>
  */
 class DuesTransaction extends Resource
 {
@@ -71,7 +68,7 @@ class DuesTransaction extends Resource
     /**
      * Get the fields displayed by the resource.
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             ID::make(),
@@ -88,6 +85,7 @@ class DuesTransaction extends Resource
                 ->exceptOnForms(),
 
             Currency::make('Payment Due', function (): ?float {
+                // @phan-suppress-next-line PhanPluginNonBoolBranch
                 if ($this->is_paid) {
                     return null;
                 }
@@ -119,7 +117,7 @@ class DuesTransaction extends Resource
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
-    public function filters(Request $request): array
+    public function filters(NovaRequest $request): array
     {
         return $request->user()->can('read-teams-membership') ? [
             new Filters\DuesTransactionTeam(),
@@ -134,7 +132,7 @@ class DuesTransaction extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request): array
+    public function actions(NovaRequest $request): array
     {
         return [
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
@@ -159,7 +157,7 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('create-payments');
-            })->canRun(static function (Request $request, AppModelsDuesTransaction $dues_transaction): bool {
+            })->canRun(static function (NovaRequest $request, AppModelsDuesTransaction $dues_transaction): bool {
                 return $request->user()->can('create-payments')
                     && ($dues_transaction->user()->first()->id !== $request->user()->id);
             })->confirmButtonText('Add Payment'),

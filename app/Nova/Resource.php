@@ -13,6 +13,16 @@ use Laravel\Nova\Panel;
 use Laravel\Nova\Resource as NovaResource;
 use Laravel\Scout\Builder;
 
+/**
+ * Base class for Nova resources.
+ *
+ * @template TModel of \Illuminate\Database\Eloquent\Model
+ *
+ * @phan-suppress-next-line PhanInvalidMixin
+ * @mixin TModel
+ *
+ * @method string getKey()
+ */
 abstract class Resource extends NovaResource
 {
     /**

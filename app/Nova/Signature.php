@@ -21,9 +21,7 @@ use Outhebox\NovaHiddenField\HiddenField as Hidden;
 /**
  * A Nova resource for signatures.
  *
- * @property bool $electronic
- * @property ?string $scanned_agreement
- * @property \Carbon\Carbon $updated_at
+ * @extends \App\Nova\Resource<\App\Models\Signature>
  */
 class Signature extends Resource
 {
@@ -61,7 +59,7 @@ class Signature extends Resource
      *
      * @var string
      */
-    public static $group = 'Membership Agreements';
+    public static $group = 'Agreements';
 
     /**
      * Get the fields displayed by the resource.

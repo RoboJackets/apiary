@@ -18,9 +18,7 @@ use Laravel\Nova\Fields\Text;
 /**
  * A Nova resource for events.
  *
- * @property int $id
- * @property ?\Carbon\Carbon $start_time
- * @property ?\Carbon\Carbon $end_time
+ * @extends \App\Nova\Resource<\App\Models\Event>
  */
 class Event extends Resource
 {

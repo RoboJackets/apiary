@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class OverrideAccess extends Action
 {
@@ -53,7 +54,7 @@ class OverrideAccess extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Date::make('Override Expiration', 'access_override_until')->rules('required'),

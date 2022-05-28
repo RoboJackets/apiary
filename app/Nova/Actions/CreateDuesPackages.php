@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreateDuesPackages extends Action
 {
@@ -163,7 +164,7 @@ class CreateDuesPackages extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Boolean::make('Non-Student Package', 'non_student')
