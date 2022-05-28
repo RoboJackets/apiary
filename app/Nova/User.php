@@ -13,8 +13,6 @@ use App\Nova\Actions\CreatePersonalAccessToken;
 use App\Nova\Actions\RevokeOAuth2Tokens;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\CreateReasonBreakdown;
-use App\Nova\Metrics\MemberSince;
-use App\Nova\Metrics\PrimaryTeam;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
 use Carbon\Carbon;
@@ -400,17 +398,7 @@ class User extends Resource
     public function cards(NovaRequest $request): array
     {
         return [
-            (new MemberSince())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
             (new TotalAttendance())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-attendance');
-                }),
-            (new PrimaryTeam())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
