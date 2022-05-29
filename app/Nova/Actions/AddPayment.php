@@ -15,6 +15,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class AddPayment extends Action
 {
@@ -121,7 +122,7 @@ class AddPayment extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         $allowed_payment_methods = [];
 

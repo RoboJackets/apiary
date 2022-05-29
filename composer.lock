@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a390186c224d458089e73e10cb3be66",
+    "content-hash": "16c47cf21f1509e167af3e739d55354e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -527,6 +527,80 @@
             "time": "2022-05-19T15:08:38+00:00"
         },
         {
+            "name": "box/spout",
+            "version": "v3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/box/spout.git",
+                "reference": "9bdb027d312b732515b884a341c0ad70372c6295"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/box/spout/zipball/9bdb027d312b732515b884a341c0ad70372c6295",
+                "reference": "9bdb027d312b732515b884a341c0ad70372c6295",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-xmlreader": "*",
+                "ext-zip": "*",
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2",
+                "phpunit/phpunit": "^8"
+            },
+            "suggest": {
+                "ext-iconv": "To handle non UTF-8 CSV files (if \"php-intl\" is not already installed or is too limited)",
+                "ext-intl": "To handle non UTF-8 CSV files (if \"iconv\" is not already installed)"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Box\\Spout\\": "src/Spout"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Adrien Loison",
+                    "email": "adrien@box.com"
+                }
+            ],
+            "description": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way",
+            "homepage": "https://www.github.com/box/spout",
+            "keywords": [
+                "OOXML",
+                "csv",
+                "excel",
+                "memory",
+                "odf",
+                "ods",
+                "office",
+                "open",
+                "php",
+                "read",
+                "scale",
+                "spreadsheet",
+                "stream",
+                "write",
+                "xlsx"
+            ],
+            "support": {
+                "issues": "https://github.com/box/spout/issues",
+                "source": "https://github.com/box/spout/tree/v3.3.0"
+            },
+            "time": "2021-05-14T21:18:09+00:00"
+        },
+        {
             "name": "brick/math",
             "version": "0.9.3",
             "source": {
@@ -646,65 +720,6 @@
                 }
             ],
             "time": "2021-10-10T11:59:43+00:00"
-        },
-        {
-            "name": "cakephp/chronos",
-            "version": "2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cakephp/chronos.git",
-                "reference": "3ecd6e7ae191c676570cd1bed51fd561de4606dd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/3ecd6e7ae191c676570cd1bed51fd561de4606dd",
-                "reference": "3ecd6e7ae191c676570cd1bed51fd561de4606dd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "cakephp/cakephp-codesniffer": "^4.5",
-                "phpunit/phpunit": "^8.0 || ^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/carbon_compat.php"
-                ],
-                "psr-4": {
-                    "Cake\\Chronos\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brian Nesbitt",
-                    "email": "brian@nesbot.com",
-                    "homepage": "http://nesbot.com"
-                },
-                {
-                    "name": "The CakePHP Team",
-                    "homepage": "http://cakephp.org"
-                }
-            ],
-            "description": "A simple API extension for DateTime.",
-            "homepage": "http://cakephp.org",
-            "keywords": [
-                "date",
-                "datetime",
-                "time"
-            ],
-            "support": {
-                "irc": "irc://irc.freenode.org/cakephp",
-                "issues": "https://github.com/cakephp/chronos/issues",
-                "source": "https://github.com/cakephp/chronos"
-            },
-            "time": "2021-10-17T02:44:05+00:00"
         },
         {
             "name": "chelout/laravel-relationship-events",
@@ -2465,6 +2480,75 @@
             "time": "2021-07-21T13:50:14+00:00"
         },
         {
+            "name": "inertiajs/inertia-laravel",
+            "version": "v0.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inertiajs/inertia-laravel.git",
+                "reference": "75859fb1586c3d37ed8705500b5f43e87eee3cb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/75859fb1586c3d37ed8705500b5f43e87eee3cb2",
+                "reference": "75859fb1586c3d37ed8705500b5f43e87eee3cb2",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^6.0|^7.0|^8.74|^9.0",
+                "php": "^7.2|~8.0.0|~8.1.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench": "^4.0|^5.0|^6.4|^7.0",
+                "phpunit/phpunit": "^8.0|^9.5.8",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Inertia\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "./helpers.php"
+                ],
+                "psr-4": {
+                    "Inertia\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reinink",
+                    "email": "jonathan@reinink.ca",
+                    "homepage": "https://reinink.ca"
+                }
+            ],
+            "description": "The Laravel adapter for Inertia.js.",
+            "keywords": [
+                "inertia",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/inertiajs/inertia-laravel/issues",
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v0.6.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/reinink",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-05-25T02:00:06+00:00"
+        },
+        {
             "name": "intervention/httpauth",
             "version": "3.0.3",
             "source": {
@@ -2583,6 +2667,57 @@
                 "source": "https://github.com/Jean85/pretty-package-versions/tree/2.0.5"
             },
             "time": "2021-10-08T21:21:46+00:00"
+        },
+        {
+            "name": "kiritokatklian/nova-permission",
+            "version": "v4.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kiritokatklian/nova-permission.git",
+                "reference": "3cdfd6dfa3ee90eefcececa623c52ac01d902616"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/3cdfd6dfa3ee90eefcececa623c52ac01d902616",
+                "reference": "3cdfd6dfa3ee90eefcececa623c52ac01d902616",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.0",
+                "php": "^7.4|^8.0|^8.1",
+                "spatie/laravel-permission": "^3.0|^4.0|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Vyuldashev\\NovaPermission\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vyuldashev\\NovaPermission\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool for Spatie's Permission library.",
+            "keywords": [
+                "laravel",
+                "nova",
+                "spatie-permission"
+            ],
+            "support": {
+                "issues": "https://github.com/kiritokatklian/nova-permission/issues",
+                "source": "https://github.com/kiritokatklian/nova-permission/tree/v4.0.3"
+            },
+            "time": "2022-05-17T08:54:35+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2842,25 +2977,27 @@
         },
         {
             "name": "laravel/nova",
-            "version": "3.32.0",
+            "version": "4.7.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "32cec324c30f6ebc8e97c877ba5ca0ae95a18cee"
+                "reference": "a07d9b466dca14810e7db14c4438312c075c5e7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-32cec324c30f6ebc8e97c877ba5ca0ae95a18cee-zip-35edd0.zip",
-                "reference": "32cec324c30f6ebc8e97c877ba5ca0ae95a18cee",
-                "shasum": "e0406c9d5eb280fa71eaa685e822089491e44b0c"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-a07d9b466dca14810e7db14c4438312c075c5e7a-zip-9e7c08.zip",
+                "reference": "a07d9b466dca14810e7db14c4438312c075c5e7a",
+                "shasum": "244d7f8634b4160032bd8666ed402dbe2f198be5"
             },
             "require": {
                 "brick/money": "^0.5.0",
-                "cakephp/chronos": "^1.0|^2.0",
                 "doctrine/dbal": "^2.13.3|^3.1.2",
-                "illuminate/support": "^8.67|^9.0",
+                "illuminate/support": "^8.83.4|^9.3.1",
+                "inertiajs/inertia-laravel": "^0.4.5|^0.5.2|^0.6.0",
                 "laravel/ui": "^3.3",
+                "nesbot/carbon": "^2.53.1",
                 "php": "^7.3|^8.0",
+                "rap2hpoutre/fast-excel": "^3.2",
                 "spatie/once": "^1.1|^2.0|^3.0",
                 "symfony/console": "^5.4|^6.0",
                 "symfony/finder": "^5.4|^6.0",
@@ -2868,11 +3005,16 @@
                 "symfony/process": "^5.4|^6.0"
             },
             "require-dev": {
-                "laravel/nova-dusk-suite": "8.3.x-dev|9.3.x-dev",
+                "laravel/nova-dusk-suite": "8.4.x-dev|9.4.x-dev",
+                "laravel/scout": "^9.4",
                 "mockery/mockery": "^1.4.4",
-                "orchestra/testbench-dusk": "^6.23|^7.0",
+                "nunomaduro/larastan": "^1.0.1|^2.0",
+                "orchestra/testbench-dusk": "^6.24|^7.0",
                 "phpunit/phpunit": "^9.5.10",
-                "predis/predis": "^1.1"
+                "predis/predis": "^1.1.9"
+            },
+            "suggest": {
+                "ext-intl": "Required to format Currency field"
             },
             "type": "library",
             "extra": {
@@ -2906,17 +3048,21 @@
                     "./vendor/bin/testbench-dusk package:discover"
                 ],
                 "dusk:dev-assets": [
-                    "yarn install",
-                    "yarn run dev",
-                    "./vendor/bin/testbench-dusk nova:publish"
+                    "npm ci",
+                    "TAILWIND_MODE=build npm run dev",
+                    "./vendor/bin/testbench-dusk nova:publish --force"
                 ],
                 "dusk:assets": [
-                    "yarn install",
-                    "yarn run prod",
-                    "./vendor/bin/testbench-dusk nova:publish"
+                    "npm ci",
+                    "TAILWIND_MODE=build npm run prod",
+                    "./vendor/bin/testbench-dusk nova:publish --force"
                 ],
                 "dusk:test": [
+                    "./vendor/bin/testbench-dusk package:dusk-purge",
                     "./vendor/bin/phpunit -c phpunit.dusk.xml"
+                ],
+                "dusk:filter": [
+                    "./vendor/bin/testbench-dusk package:dusk-purge && ./vendor/bin/phpunit -c phpunit.dusk.xml --filter"
                 ]
             },
             "license": [
@@ -2934,9 +3080,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v3.32.0"
+                "source": "https://github.com/laravel/nova/tree/v4.7.0"
             },
-            "time": "2022-04-05T05:12:32+00:00"
+            "time": "2022-05-25T17:03:24+00:00"
         },
         {
             "name": "laravel/passport",
@@ -4094,33 +4240,35 @@
         },
         {
             "name": "league/uri",
-            "version": "6.5.0",
+            "version": "6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri.git",
-                "reference": "c68ca445abb04817d740ddd6d0b3551826ef0c5a"
+                "reference": "4147f19b9de3b5af6a258f35d7a0efbbf9963298"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri/zipball/c68ca445abb04817d740ddd6d0b3551826ef0c5a",
-                "reference": "c68ca445abb04817d740ddd6d0b3551826ef0c5a",
+                "url": "https://api.github.com/repos/thephpleague/uri/zipball/4147f19b9de3b5af6a258f35d7a0efbbf9963298",
+                "reference": "4147f19b9de3b5af6a258f35d7a0efbbf9963298",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "league/uri-interfaces": "^2.3",
-                "php": "^7.3 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "psr/http-message": "^1.0"
             },
             "conflict": {
                 "league/uri-schemes": "^1.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.19 || ^3.0",
-                "phpstan/phpstan": "^0.12.90",
-                "phpstan/phpstan-phpunit": "^0.12.22",
-                "phpstan/phpstan-strict-rules": "^0.12.11",
-                "phpunit/phpunit": "^8.0 || ^9.0",
+                "friendsofphp/php-cs-fixer": "^v3.3.2",
+                "php-http/psr7-integration-tests": "^1.1",
+                "phpstan/phpstan": "^1.2.0",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0.0",
+                "phpstan/phpstan-strict-rules": "^1.1.0",
+                "phpunit/phpunit": "^9.5.10",
                 "psr/http-factory": "^1.0"
             },
             "suggest": {
@@ -4152,7 +4300,7 @@
                 }
             ],
             "description": "URI manipulation library",
-            "homepage": "http://uri.thephpleague.com",
+            "homepage": "https://uri.thephpleague.com",
             "keywords": [
                 "data-uri",
                 "file-uri",
@@ -4178,7 +4326,7 @@
                 "docs": "https://uri.thephpleague.com",
                 "forum": "https://thephpleague.slack.com",
                 "issues": "https://github.com/thephpleague/uri/issues",
-                "source": "https://github.com/thephpleague/uri/tree/6.5.0"
+                "source": "https://github.com/thephpleague/uri/tree/6.6.0"
             },
             "funding": [
                 {
@@ -4186,7 +4334,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-27T09:54:07+00:00"
+            "time": "2022-05-28T05:44:35+00:00"
         },
         {
             "name": "league/uri-interfaces",
@@ -4258,52 +4406,6 @@
                 }
             ],
             "time": "2021-06-28T04:27:21+00:00"
-        },
-        {
-            "name": "lynndigital/select-or-custom",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/0x15f/select-or-text.git",
-                "reference": "bd074df5520588be7d3a045ca6f1852d91a25a02"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/0x15f/select-or-text/zipball/bd074df5520588be7d3a045ca6f1852d91a25a02",
-                "reference": "bd074df5520588be7d3a045ca6f1852d91a25a02",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Lynndigital\\SelectOrCustom\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Lynndigital\\SelectOrCustom\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "support": {
-                "issues": "https://github.com/0x15f/select-or-text/issues",
-                "source": "https://github.com/0x15f/select-or-text/tree/master"
-            },
-            "time": "2021-01-15T14:32:18+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -5513,61 +5615,6 @@
             ],
             "description": "BuzzAPI Client Library",
             "time": "2022-05-26T23:22:51+00:00"
-        },
-        {
-            "name": "outhebox/nova-hidden-field",
-            "version": "v1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MohmmedAshraf/nova-hidden-field.git",
-                "reference": "426ada2f91e65429179b97bc926ab676cc6e1f46"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MohmmedAshraf/nova-hidden-field/zipball/426ada2f91e65429179b97bc926ab676cc6e1f46",
-                "reference": "426ada2f91e65429179b97bc926ab676cc6e1f46",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Outhebox\\NovaHiddenField\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Outhebox\\NovaHiddenField\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mohamed Ashraf",
-                    "email": "cupo.ashraf@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Laravel Nova Hidden field.",
-            "keywords": [
-                "field",
-                "laravel",
-                "nova",
-                "nova default value",
-                "nova hidden field"
-            ],
-            "support": {
-                "issues": "https://github.com/MohmmedAshraf/nova-hidden-field/issues",
-                "source": "https://github.com/MohmmedAshraf/nova-hidden-field/tree/v1.0.3"
-            },
-            "time": "2020-05-20T14:43:47+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -7223,6 +7270,69 @@
                 }
             ],
             "time": "2022-03-27T21:42:02+00:00"
+        },
+        {
+            "name": "rap2hpoutre/fast-excel",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rap2hpoutre/fast-excel.git",
+                "reference": "28183f3a90179386bfadcd0083129c247ce49fbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rap2hpoutre/fast-excel/zipball/28183f3a90179386bfadcd0083129c247ce49fbe",
+                "reference": "28183f3a90179386bfadcd0083129c247ce49fbe",
+                "shasum": ""
+            },
+            "require": {
+                "box/spout": "^3",
+                "illuminate/support": "5.3.* || 5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0|^9.0",
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "illuminate/database": "^6.20.12 || ^7.30.4 || ^8.24.0|^9.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rap2hpoutre\\FastExcel\\Providers\\FastExcelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions/fastexcel.php"
+                ],
+                "psr-4": {
+                    "Rap2hpoutre\\FastExcel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rap2h",
+                    "email": "raphaelht@gmail.com"
+                }
+            ],
+            "description": "Fast Excel import/export for Laravel",
+            "keywords": [
+                "csv",
+                "excel",
+                "laravel",
+                "xls",
+                "xlsx"
+            ],
+            "support": {
+                "issues": "https://github.com/rap2hpoutre/fast-excel/issues",
+                "source": "https://github.com/rap2hpoutre/fast-excel/tree/v3.2.0"
+            },
+            "time": "2022-02-09T16:04:44+00:00"
         },
         {
             "name": "realrashid/sweet-alert",
@@ -16453,9 +16563,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "lynndigital/select-or-custom": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

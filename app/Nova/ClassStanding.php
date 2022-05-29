@@ -9,6 +9,11 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 
+/**
+ * A Nova resource for class standings.
+ *
+ * @extends \App\Nova\Resource<\App\Models\ClassStanding>
+ */
 class ClassStanding extends Resource
 {
     /**

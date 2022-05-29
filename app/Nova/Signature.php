@@ -16,14 +16,11 @@ use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
-use Outhebox\NovaHiddenField\HiddenField as Hidden;
 
 /**
  * A Nova resource for signatures.
  *
- * @property bool $electronic
- * @property ?string $scanned_agreement
- * @property \Carbon\Carbon $updated_at
+ * @extends \App\Nova\Resource<\App\Models\Signature>
  */
 class Signature extends Resource
 {
@@ -61,7 +58,7 @@ class Signature extends Resource
      *
      * @var string
      */
-    public static $group = 'Membership Agreements';
+    public static $group = 'Agreements';
 
     /**
      * Get the fields displayed by the resource.
@@ -147,14 +144,6 @@ class Signature extends Resource
             ]),
 
             self::metadataPanel(),
-
-            Hidden::make('Complete')
-                ->defaultValue('1')
-                ->onlyOnForms(),
-
-            Hidden::make('Uploaded By', 'uploaded_by')
-                ->defaultValue(strval($request->user()->id))
-                ->onlyOnForms(),
         ];
     }
 }

@@ -12,6 +12,11 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Markdown;
 
+/**
+ * A Nova resource for membership agreement templates.
+ *
+ * @extends \App\Nova\Resource<\App\Models\MembershipAgreementTemplate>
+ */
 class MembershipAgreementTemplate extends Resource
 {
     /**
@@ -48,7 +53,7 @@ class MembershipAgreementTemplate extends Resource
      *
      * @var string
      */
-    public static $group = 'Membership Agreements';
+    public static $group = 'Agreements';
 
     /**
      * Get the displayble label of the resource.

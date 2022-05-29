@@ -10,6 +10,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Square\Models\Money;
 use Square\Models\RefundPaymentRequest;
 use Square\SquareClient;
@@ -96,7 +97,7 @@ class RefundPayment extends DestructiveAction
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         return [
             // not actually required in square but i think it is good practice

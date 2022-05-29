@@ -12,6 +12,13 @@ use Laravel\Nova\Metrics\ValueResult;
 class MajorsMissingDisplayNames extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'eye-off';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(NovaRequest $request): ValueResult

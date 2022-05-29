@@ -22,7 +22,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 /**
  * A Nova resource for attendance.
  *
- * @property ?\App\Models\User $attendee
+ * @extends \App\Nova\Resource<\App\Models\Attendance>
  */
 class Attendance extends Resource
 {

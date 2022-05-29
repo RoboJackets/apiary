@@ -2,34 +2,23 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
 
 namespace App\Providers;
 
-use App\Models\Travel;
-use App\Models\TravelAssignment;
 use App\Models\User;
-use App\Nova\Cards\MakeAWish;
 use App\Nova\Dashboards\Demographics;
 use App\Nova\Dashboards\JEDI;
-use App\Nova\Metrics\ActiveAttendanceBreakdown;
-use App\Nova\Metrics\AttendancePerWeek;
-use App\Nova\Metrics\DuesRevenueByFiscalYear;
-use App\Nova\Metrics\MembersByFiscalYear;
-use App\Nova\Metrics\PaymentReceivedForTravel;
-use App\Nova\Metrics\PaymentsPerDay;
-use App\Nova\Metrics\TransactionsByDuesPackage;
-use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
-use App\Nova\Tools\AttendanceReport;
-use Carbon\Carbon;
-use Illuminate\Database\Query\JoinClause;
+use App\Nova\Dashboards\Main;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Vyuldashev\NovaPermission\NovaPermissionTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -41,7 +30,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
         Nova::serving(static function (ServingNova $event): void {
             Nova::script('apiary-custom', asset('js/nova.js'));
-            Nova::theme(asset('css/nova.css'));
+        });
+
+        Nova::footer(static function (Request $request): string {
+            return '
+<p class="mt-8 text-center text-xs text-80">
+    <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/apiary">Made with ♥ by RoboJackets</a>
+    <span class="px-1">&middot;</span>
+    <a class="text-primary dim no-underline" class="text-muted" href="/privacy">Privacy Policy</a>
+</p>
+';
+        });
+
+        Nova::report(static function (\Throwable $exception): void {
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($exception);
+            }
         });
     }
 
@@ -72,102 +76,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     }
 
     /**
-     * Get the cards that should be displayed on the Nova dashboard.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    protected function cards(): array
-    {
-        $cards = [
-            (new PaymentsPerDay())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-payments');
-            }),
-            (new MembersByFiscalYear())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-dues-transactions');
-            }),
-            (new DuesRevenueByFiscalYear())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-dues-transactions');
-            }),
-            (new AttendancePerWeek())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
-            }),
-            (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users') && $request->user()->can('read-attendance');
-            }),
-            (new TransactionsByDuesPackage())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-        ];
-
-        if (request()->is('nova-api/dashboards/main')) {
-            foreach (Travel::all() as $travel) {
-                $should_include = false;
-
-                if ($travel->return_date > Carbon::now()) {
-                    $should_include = true;
-                }
-
-                if (
-                    null !== $travel->tar_required
-                    && $travel->assignments()->where('tar_received', false)->exists()
-                ) {
-                    $should_include = true;
-                }
-
-                if (
-                    $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
-                        $join->on('travel_assignments.id', '=', 'payable_id')
-                             ->where('payments.amount', '>', 0)
-                             ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                             ->whereNull('payments.deleted_at');
-                    })->whereNull('payments.id')->exists()
-                ) {
-                    $should_include = true;
-                }
-
-                if (! $should_include) {
-                    continue;
-                }
-
-                if (null !== $travel->tar_required) {
-                    $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
-                }
-
-                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
-                    static function (Request $request): bool {
-                        return $request->user()->can('read-payments');
-                    }
-                );
-            }
-
-            $cards[] = new MakeAWish();
-
-            return $cards;
-        }
-
-        if (request()->is('nova-api/metrics/*-received-*')) {
-            // @phan-suppress-next-line PhanTypeMismatchArgument
-            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
-            $type = $parts->first();
-            $id = intval($parts->last());
-
-            switch ($type) {
-                case 'tar':
-                    return [new TravelAuthorityRequestReceivedForTravel($id)];
-                case 'payment':
-                    return [
-                        (new PaymentReceivedForTravel($id))->canSee(static function (Request $request): bool {
-                            return $request->user()->can('read-payments');
-                        }),
-                    ];
-            }
-        }
-
-        return $cards;
-    }
-
-    /**
      * Get the tools that should be listed in the Nova sidebar.
      *
      * @return array<\Laravel\Nova\Tool>
@@ -175,8 +83,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools(): array
     {
         return [
-            (new AttendanceReport())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
+            (new NovaPermissionTool())->canSee(static function (Request $request): bool {
+                return $request->user()->hasRole('admin');
             }),
         ];
     }
@@ -189,6 +97,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function dashboards(): array
     {
         return [
+            new Main(),
             (new JEDI())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),

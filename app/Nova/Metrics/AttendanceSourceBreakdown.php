@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\Attendance;
-use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
@@ -21,7 +21,7 @@ class AttendanceSourceBreakdown extends Partition
     /**
      * Calculate the value of the metric.
      */
-    public function calculate(Request $request): PartitionResult
+    public function calculate(NovaRequest $request): PartitionResult
     {
         return $this->count($request, Attendance::class, 'source')->label(static function (?string $value): string {
             switch ($value) {

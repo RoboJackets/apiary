@@ -9,6 +9,11 @@ use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
+/**
+ * A Nova resource for notification templates.
+ *
+ * @extends \App\Nova\Resource<\App\Models\NotificationTemplate>
+ */
 class NotificationTemplate extends Resource
 {
     /**

@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Text;
 
+/**
+ * A Nova resource for majors.
+ *
+ * @extends \App\Nova\Resource<\App\Models\Major>
+ */
 class Major extends Resource
 {
     /**

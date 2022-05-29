@@ -65,6 +65,7 @@
         <UndefinedClass>
             <errorLevel type="suppress">
                 <file name="app/Exceptions/Handler.php" />
+                <file name="app/Providers/NovaServiceProvider.php" />
             </errorLevel>
         </UndefinedClass>
     </issueHandlers>

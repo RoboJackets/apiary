@@ -27,6 +27,7 @@ return [
     ],
 
     'suppress_issue_types' => [
+        'PhanAbstractStaticMethodCall',
         'PhanAccessNonStaticToStatic',
         'PhanInvalidFQSENInCallable',
         'PhanPartialTypeMismatchArgument',
@@ -41,6 +42,8 @@ return [
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',
         'PhanStaticCallToNonStatic',
+        'PhanTypeInvalidCallableArrayKey',
+        'PhanTypeMismatchArgumentSuperType',
         'PhanUndeclaredFunctionInCallable',
         'PhanUndeclaredMethod',
         'PhanUnreferencedClosure',

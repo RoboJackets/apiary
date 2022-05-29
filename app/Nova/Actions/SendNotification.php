@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SendNotification extends Action
 {
@@ -35,7 +36,7 @@ class SendNotification extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         $query = NotificationTemplate::all();
 

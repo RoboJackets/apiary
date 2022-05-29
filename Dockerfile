@@ -31,6 +31,7 @@ COPY --link database/ /app/database/
 COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
 COPY --link storage/ /app/storage/
+COPY --link lang/ /app/lang/
 COPY --link artisan composer.json composer.lock /app/
 COPY --link --from=frontend /app/public/ /app/public/
 

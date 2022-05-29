@@ -11,6 +11,7 @@ use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\TokenRepository;
 
@@ -66,7 +67,7 @@ class RevokeOAuth2Tokens extends DestructiveAction
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [
             // phpcs:disable

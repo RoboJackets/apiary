@@ -15,6 +15,13 @@ use Laravel\Nova\Metrics\ValueResult;
 class MembersForOneFiscalYear extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'user-group';
+
+    /**
      * The displayable name of the metric.
      *
      * @var string

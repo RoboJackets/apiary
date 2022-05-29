@@ -13,6 +13,11 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 
+/**
+ * A Nova resource for OAuth clients.
+ *
+ * @extends \App\Nova\Resource<\App\Models\Oauth2Client>
+ */
 class OAuth2Client extends Resource
 {
     /**

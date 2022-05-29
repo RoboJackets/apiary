@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Square\Models\OrderState;
 use Square\SquareClient;
@@ -22,8 +23,7 @@ use Square\SquareClient;
 /**
  * A Nova resource for payments.
  *
- * @property string $method
- * @property ?string $order_id
+ * @extends \App\Nova\Resource<\App\Models\Payment>
  */
 class Payment extends Resource
 {
@@ -76,7 +76,7 @@ class Payment extends Resource
     /**
      * Get the fields displayed by the resource.
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             ID::make()
@@ -189,7 +189,7 @@ class Payment extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request): array
+    public function actions(NovaRequest $request): array
     {
         return [
             (new Actions\ResetIdempotencyKey())->canSee(static function (Request $request): bool {
@@ -200,7 +200,7 @@ class Payment extends Resource
                 }
 
                 return $request->user()->can('delete-payments');
-            })->canRun(static function (Request $request, AppModelsPayment $payment): bool {
+            })->canRun(static function (NovaRequest $request, AppModelsPayment $payment): bool {
                 return self::canResetKey($request->user(), $payment);
             })->confirmText(
                 'Are you sure you want to reset the idempotency key for this payment? This can result in duplicate'
@@ -216,7 +216,7 @@ class Payment extends Resource
                 }
 
                 return $request->user()->can('refund-payments');
-            })->canRun(static function (Request $request, AppModelsPayment $payment): bool {
+            })->canRun(static function (NovaRequest $request, AppModelsPayment $payment): bool {
                 return self::canRefundPayment($request->user(), $payment);
             })->confirmButtonText(
                 'Refund Payment'

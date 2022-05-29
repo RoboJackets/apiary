@@ -12,6 +12,13 @@ use Laravel\Nova\Metrics\ValueResult;
 class AccessActiveMembers extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'key';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(Request $request): ValueResult

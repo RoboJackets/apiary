@@ -12,6 +12,13 @@ use Laravel\Nova\Metrics\ValueResult;
 class ActiveStudentsInMajor extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'user-group';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(NovaRequest $request): ValueResult

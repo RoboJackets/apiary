@@ -10,13 +10,12 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * A Nova resource for travel assignments.
  *
- * @property bool $is_paid
- * @property ?\App\Models\Travel $travel
- * @property \App\Models\User $user
+ * @extends \App\Nova\Resource<\App\Models\TravelAssignment>
  */
 class TravelAssignment extends Resource
 {
@@ -60,7 +59,7 @@ class TravelAssignment extends Resource
     /**
      * Get the fields displayed by the resource.
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             BelongsTo::make('Member', 'user', User::class)
@@ -76,6 +75,7 @@ class TravelAssignment extends Resource
                 ->hideWhenCreating(),
 
             Currency::make('Payment Due', function (): ?int {
+                // @phan-suppress-next-line PhanPluginNonBoolBranch
                 if ($this->is_paid) {
                     return null;
                 }
@@ -103,7 +103,7 @@ class TravelAssignment extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request): array
+    public function actions(NovaRequest $request): array
     {
         return [
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
@@ -124,7 +124,7 @@ class TravelAssignment extends Resource
                 }
 
                 return $request->user()->can('create-payments');
-            })->canRun(static function (Request $request, AppModelsTravelAssignment $assignment): bool {
+            })->canRun(static function (NovaRequest $request, AppModelsTravelAssignment $assignment): bool {
                 return $request->user()->can('create-payments')
                     && ($assignment->user()->first()->id !== $request->user()->id);
             })->confirmButtonText('Add Payment'),
