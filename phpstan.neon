@@ -87,6 +87,7 @@ parameters:
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<int,mixed>::reduce\(\) expects callable\(string\|null, mixed, int\): string, Closure\(string\|null, string\): non-empty-string given\.#'
     - '#Parameter \#1 \$callback of method Laravel\\Nova\\Actions\\Action::canRun\(\) expects Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, mixed\): bool, Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, App\\Models\\[a-zA-Z]+\): bool given\.#'
     - '#Parameter \#1 \$channel of method Illuminate\\Notifications\\Messages\\SlackMessage::to\(\) expects string, string\|null given\.#'
+    - '#Parameter \#1 \$cookie of static method Laravel\\Passport\\Passport::cookie\(\) expects string\|null, mixed given\.#'
     - '#Parameter \#1 \$date of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::[a-z]+\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(string\|null\): string\|null given\.#'
     - '#Parameter \#1 \$haystack of function str_contains expects string, mixed given\.#'
