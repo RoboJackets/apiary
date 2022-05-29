@@ -94,6 +94,6 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(now()->addDay());
         Passport::refreshTokensExpireIn(now()->addMonth());
         Passport::personalAccessTokensExpireIn(now()->addYear());
-        Passport::cookie('__Host-apiary_token');
+        Passport::cookie(config('passport.cookie_name'));
     }
 }

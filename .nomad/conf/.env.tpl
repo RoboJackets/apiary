@@ -4,6 +4,7 @@
 CAS_HOSTNAME="sso.gatech.edu"
 CAS_REAL_HOSTS="sso.gatech.edu"
 CAS_SESSION_NAME="__Host-cas_session"
+PASSPORT_COOKIE_NAME="__Host-apiary_token"
 CAS_LOGOUT_URL="https://sso.gatech.edu/cas/logout"
 CAS_VERSION="3.0"
 CAS_ENABLE_SAML="false"
