@@ -285,15 +285,6 @@ class User extends Resource
                     return ! $request->user()->hasRole('admin');
                 }),
 
-            HasMany::make('Recruiting Visits', 'recruitingVisits')
-                ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId === $request->user()->id) {
-                        return $request->user()->can('read-recruiting-visits-own');
-                    }
-
-                    return $request->user()->can('read-recruiting-visits');
-                }),
-
             HasMany::make('OAuth2 Clients', 'clients')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
@@ -469,13 +460,6 @@ class User extends Resource
                 ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 })->confirmButtonText('Revoke Tokens'),
-            (new Actions\SendNotification())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('send-notifications');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->can('send-notifications');
-                }),
             (new Actions\ExportResumes())
                 ->standalone()
                 ->onlyOnIndex()

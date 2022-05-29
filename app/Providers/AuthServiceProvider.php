@@ -5,36 +5,30 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Attendance;
-use App\Models\AttendanceExport;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
 use App\Models\Major;
 use App\Models\Merchandise;
-use App\Models\NotificationTemplate;
 use App\Models\OAuth2AccessToken;
 use App\Models\OAuth2Client;
 use App\Models\Payment;
-use App\Models\RecruitingVisit;
 use App\Models\RemoteAttendanceLink;
 use App\Models\Rsvp;
 use App\Models\Team;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
-use App\Policies\AttendanceExportPolicy;
 use App\Policies\AttendancePolicy;
 use App\Policies\DuesPackagePolicy;
 use App\Policies\DuesTransactionPolicy;
 use App\Policies\EventPolicy;
 use App\Policies\MajorPolicy;
 use App\Policies\MerchandisePolicy;
-use App\Policies\NotificationTemplatePolicy;
 use App\Policies\OAuth2AccessTokenPolicy;
 use App\Policies\OAuth2ClientPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
-use App\Policies\RecruitingVisitPolicy;
 use App\Policies\RemoteAttendanceLinkPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\RsvpPolicy;
@@ -60,10 +54,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Event::class => EventPolicy::class,
         Attendance::class => AttendancePolicy::class,
-        AttendanceExport::class => AttendanceExportPolicy::class,
         DuesPackage::class => DuesPackagePolicy::class,
-        NotificationTemplate::class => NotificationTemplatePolicy::class,
-        RecruitingVisit::class => RecruitingVisitPolicy::class,
         Payment::class => PaymentPolicy::class,
         DuesTransaction::class => DuesTransactionPolicy::class,
         Role::class => RolePolicy::class,

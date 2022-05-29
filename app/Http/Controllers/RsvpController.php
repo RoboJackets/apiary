@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Rsvp as RsvpResource;
 use App\Models\Event;
-use App\Models\RecruitingVisit;
 use App\Models\Rsvp;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
@@ -73,24 +72,10 @@ class RsvpController extends Controller
             cas()->authenticate();
         }
 
-        $source = null;
-
         $now = new DateTime();
         $end = isset($event->end_time) ? new DateTime($event->end_time->toDateTimeString()) : null;
         if (null !== $end && $end <= $now) {
             return view('rsvp.ended')->with(['event' => $event]);
-        }
-
-        // Link to recruiting visit if the user is logged in
-        if ($request->filled('token')) {
-            $source = 'email';
-            $token = $request->input('token');
-            $recruitingVisit = RecruitingVisit::where('visit_token', $token)->first();
-
-            if (null !== $recruitingVisit && null !== $user) {
-                $recruitingVisit->user_id = $user->id;
-                $recruitingVisit->save();
-            }
         }
 
         if (
@@ -109,7 +94,7 @@ class RsvpController extends Controller
                 $rsvp->user_agent = Str::limit($request->userAgent(), 1023, '');
             }
             $rsvp->event_id = $event->id;
-            $rsvp->source = $source ?? $request->input('source');
+            $rsvp->source = $request->input('source');
             $rsvp->response = 'yes';
 
             $rsvp->saveOrFail();

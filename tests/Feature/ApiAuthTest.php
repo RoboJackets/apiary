@@ -58,7 +58,6 @@ class ApiAuthTest extends TestCase
                           ->missing('events')
                           ->missing('attendance')
                           ->missing('dues')
-                          ->missing('recruitingEvents')
                           ->etc();
                  })
                  ->etc();

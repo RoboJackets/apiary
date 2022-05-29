@@ -97,7 +97,6 @@ class TravelAssignment extends Model
         'user_revenue_total:desc',
         'user_attendance_count:desc',
         'user_signatures_count:desc',
-        'user_recruiting_visits_count:desc',
         'user_gtid:desc',
         'updated_at_unix:desc',
     ];
