@@ -47,8 +47,6 @@ class DuesAreLive extends NovaNotification implements ShouldQueue, ShouldBeUniqu
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     public function __construct(User $user)
     {
@@ -58,8 +56,6 @@ class DuesAreLive extends NovaNotification implements ShouldQueue, ShouldBeUniqu
 
     /**
      * The unique ID of the job.
-     *
-     * @return string
      */
     public function uniqueId(): string
     {

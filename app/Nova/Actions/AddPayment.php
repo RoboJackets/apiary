@@ -76,7 +76,7 @@ class AddPayment extends Action
         $entered_amount = is_a(
             $model,
             DuesTransaction::class
-        ) ? round(floatval($fields->amount), 2) : intval(floatval($fields->amount));
+        ) ? round(floatval($fields->amount), 2) : intval($fields->amount);
 
         if ('square' === $fields->method || 'swipe' === $fields->method) {
             if ($entered_amount !== round($package_amount + 3, 2)) {

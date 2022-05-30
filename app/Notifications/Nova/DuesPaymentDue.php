@@ -47,8 +47,6 @@ class DuesPaymentDue extends NovaNotification implements ShouldQueue, ShouldBeUn
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
     public function __construct(User $user)
     {
@@ -58,8 +56,6 @@ class DuesPaymentDue extends NovaNotification implements ShouldQueue, ShouldBeUn
 
     /**
      * The unique ID of the job.
-     *
-     * @return string
      */
     public function uniqueId(): string
     {
