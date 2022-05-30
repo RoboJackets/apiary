@@ -8,7 +8,6 @@ use App\Http\Resources\Attendance as AttendanceResource;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Permission as PermissionResource;
-use App\Http\Resources\RecruitingVisit as RecruitingVisitResource;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use Illuminate\Http\Request;
@@ -79,7 +78,6 @@ class User extends JsonResource
             'dues' => DuesTransactionResource::collection($this->whenLoaded('dues')),
             'events' => EventResource::collection($this->whenLoaded('events')),
             'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
-            'recruitingVisits' => RecruitingVisitResource::collection($this->whenLoaded('recruitingVisits')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'teams' => TeamResource::collection($this->whenLoaded('teams')),
             $this->mergeWhen(

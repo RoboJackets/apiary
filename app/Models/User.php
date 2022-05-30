@@ -104,8 +104,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $paid_dues_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\RecruitingVisit> $recruitingVisits
- * @property-read int|null $recruiting_visits_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
@@ -299,7 +297,6 @@ class User extends Authenticatable
         'revenue_total:desc',
         'attendance_count:desc',
         'signatures_count:desc',
-        'recruiting_visits_count:desc',
         'gtid:desc',
     ];
 
@@ -345,16 +342,6 @@ class User extends Authenticatable
     ];
 
     protected string $guard_name = 'web';
-
-    /**
-     * Get the recruiting visits associated with this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\RecruitingVisit>
-     */
-    public function recruitingVisits(): HasMany
-    {
-        return $this->hasMany(RecruitingVisit::class);
-    }
 
     /**
      * Get the attendance records associated with this user.
@@ -586,7 +573,6 @@ class User extends Authenticatable
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'recruitingVisits' => 'recruiting-visits',
             'teams' => 'teams-membership',
             'dues' => 'dues-transactions',
             'events' => 'events',
@@ -908,7 +894,7 @@ class User extends Authenticatable
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
-        return $query->withCount('attendance')->withCount('signatures')->withCount('recruitingVisits');
+        return $query->withCount('attendance')->withCount('signatures');
     }
 
     /**
@@ -944,10 +930,6 @@ class User extends Authenticatable
 
         if (! array_key_exists('signatures_count', $array)) {
             $array['signatures_count'] = $this->signatures()->count();
-        }
-
-        if (! array_key_exists('recruiting_visits_count', $array)) {
-            $array['recruiting_visits_count'] = $this->recruitingVisits()->count();
         }
 
         $array['class_standing_id'] = $this->classStanding->modelKeys();
