@@ -13,14 +13,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     /**
      * Returns view with data for the user dashboard.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         //User needs a transaction if they don't have one for an active dues package
         $user = $request->user();
@@ -118,14 +119,6 @@ class DashboardController extends Controller
             ->oldest('updated_at')
             ->first();
 
-        $travelAssignmentWithNoDocuments = TravelAssignment::where('user_id', $user->id)
-            ->whereHas('travel', static function (Builder $q): void {
-                $q->whereNotNull('documents_required');
-            })
-            ->where('documents_received', '=', false)
-            ->oldest('updated_at')
-            ->first();
-
         $travelAssignmentWithNoTravelAuthorityRequest = TravelAssignment::where('user_id', $user->id)
             ->whereHas('travel', static function (Builder $q): void {
                 $q->whereNotNull('tar_required');
@@ -134,16 +127,12 @@ class DashboardController extends Controller
             ->oldest('updated_at')
             ->first();
 
-        $needTravelDocuments = false;
         $needTravelPayment = false;
         $needTravelAuthorityRequest = false;
         $travelAuthorityRequestUrl = '';
         $travelName = '';
 
         if (null !== $travelAssignmentWithNoPayment) {
-            $needTravelDocuments = ! $travelAssignmentWithNoPayment->documents_received &&
-                null !== $travelAssignmentWithNoPayment->travel->documents_required;
-
             $needTravelAuthorityRequest = ! $travelAssignmentWithNoPayment->tar_received &&
                 $travelAssignmentWithNoPayment->travel->tar_required;
 
@@ -153,9 +142,6 @@ class DashboardController extends Controller
 
             $travelName = $travelAssignmentWithNoPayment->travel->name;
         } elseif (null !== $travelAssignmentWithIncompletePayment) {
-            $needTravelDocuments = ! $travelAssignmentWithIncompletePayment->documents_received &&
-                null !== $travelAssignmentWithIncompletePayment->travel->documents_required;
-
             $needTravelAuthorityRequest = ! $travelAssignmentWithIncompletePayment->tar_received &&
                 $travelAssignmentWithIncompletePayment->travel->tar_required;
 
@@ -164,15 +150,6 @@ class DashboardController extends Controller
             $needTravelPayment = true;
 
             $travelName = $travelAssignmentWithIncompletePayment->travel->name;
-        } elseif (null !== $travelAssignmentWithNoDocuments) {
-            $needTravelDocuments = true;
-
-            $needTravelAuthorityRequest = ! $travelAssignmentWithNoDocuments->tar_received &&
-                $travelAssignmentWithNoDocuments->travel->tar_required;
-
-            $travelAuthorityRequestUrl = $travelAssignmentWithNoDocuments->travel_authority_request_url;
-
-            $travelName = $travelAssignmentWithNoDocuments->travel->name;
         } elseif (null !== $travelAssignmentWithNoTravelAuthorityRequest) {
             $needTravelAuthorityRequest = true;
 
@@ -203,7 +180,6 @@ class DashboardController extends Controller
                 'signedLatestAgreement' => $signedLatestAgreement,
                 'signedAnyAgreement' => $signedAnyAgreement,
                 'agreementExists' => $agreementExists,
-                'needTravelDocuments' => $needTravelDocuments,
                 'needTravelPayment' => $needTravelPayment,
                 'needTravelAuthorityRequest' => $needTravelAuthorityRequest,
                 'travelAuthorityRequestUrl' => $travelAuthorityRequestUrl,

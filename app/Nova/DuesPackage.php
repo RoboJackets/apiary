@@ -20,14 +20,14 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
-use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 /**
  * A Nova resource for dues packages.
  *
- * @property int $id
+ * @extends \App\Nova\Resource<\App\Models\DuesPackage>
  */
 class DuesPackage extends Resource
 {
@@ -100,6 +100,7 @@ class DuesPackage extends Resource
                 ->sortable(),
 
             Number::make('Paid Transactions', function (): int {
+                // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
                 return DB::table('dues_transactions')
                     ->selectRaw('count(distinct dues_transactions.id) as count')
                     ->leftJoin('payments', static function (JoinClause $join): void {
@@ -151,7 +152,7 @@ class DuesPackage extends Resource
             BelongsToMany::make('Merchandise')
                 ->fields(static function (): array {
                     return [
-                        SelectOrCustom::make('Group')->options([
+                        Select::make('Group')->options([
                             'Fall' => 'Fall',
                             'Spring' => 'Spring',
                         ]),

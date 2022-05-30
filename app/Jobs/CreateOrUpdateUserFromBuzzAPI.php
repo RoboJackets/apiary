@@ -73,10 +73,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @param  string|int|\App\Models\User  $value
      */
-    public function __construct(string $identifier, $value, string $reason)
+    public function __construct(string $identifier, string|int|\App\Models\User $value, string $reason)
     {
         $this->identifier = $identifier;
         $this->value = $value;
@@ -86,6 +84,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
     /**
      * Execute the job.
+     *
+     * @phan-suppress PhanTypeExpectedObjectPropAccessButGotNull,PhanTypeMismatchArgumentInternal
      */
     public function handle(): void
     {

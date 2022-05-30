@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause;
+use Laravel\Scout\Searchable;
 
 /**
  * Maps together a Travel + User + Payment.
@@ -20,7 +21,6 @@ use Illuminate\Database\Query\JoinClause;
  * @property int $id
  * @property int $user_id
  * @property int $travel_id
- * @property bool $documents_received
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -38,7 +38,6 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|TravelAssignment query()
  * @method static Builder|TravelAssignment whereCreatedAt($value)
  * @method static Builder|TravelAssignment whereDeletedAt($value)
- * @method static Builder|TravelAssignment whereDocumentsReceived($value)
  * @method static Builder|TravelAssignment whereId($value)
  * @method static Builder|TravelAssignment whereTravelId($value)
  * @method static Builder|TravelAssignment whereUpdatedAt($value)
@@ -54,6 +53,7 @@ class TravelAssignment extends Model
 {
     use SoftDeletes;
     use GetMorphClassStatic;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -65,15 +65,6 @@ class TravelAssignment extends Model
         'deleted_at',
         'id',
         'updated_at',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'documents_received' => 'boolean',
     ];
 
     /**
@@ -105,12 +96,11 @@ class TravelAssignment extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(user_revenue_total)',
-        'desc(user_attendance_count)',
-        'desc(user_signatures_count)',
-        'desc(user_recruiting_visits_count)',
-        'desc(user_gtid)',
-        'desc(updated_at_unix)',
+        'user_revenue_total:desc',
+        'user_attendance_count:desc',
+        'user_signatures_count:desc',
+        'user_gtid:desc',
+        'updated_at_unix:desc',
     ];
 
     /**
@@ -123,16 +113,31 @@ class TravelAssignment extends Model
         'travel_id',
     ];
 
+    /**
+     * Get the User assigned to Travel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\TravelAssignment>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the Travel assigned to User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Travel, \App\Models\TravelAssignment>
+     */
     public function travel(): BelongsTo
     {
         return $this->belongsTo(Travel::class);
     }
 
+    /**
+     * Get the Payment for this assignment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>
+     */
     public function payment(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
@@ -143,6 +148,12 @@ class TravelAssignment extends Model
         return 0 !== self::where('travel_assignments.id', $this->id)->paid()->count();
     }
 
+    /**
+     * Scope only paid assignments.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>
+     */
     public function scopePaid(Builder $query): Builder
     {
         return $query->select(
@@ -185,49 +196,70 @@ class TravelAssignment extends Model
 
     public function getTravelAuthorityRequestUrlAttribute(): string
     {
-        return config('docusign.travel_authority_request.powerform_url').'&'.http_build_query(
+        return config('docusign.domestic_travel_authority_request.powerform_url').'&'.http_build_query(
             [
                 config(
-                    'docusign.travel_authority_request.fields.state_contract_airline'
+                    'docusign.domestic_travel_authority_request.fields.state_contract_airline'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'state_contract_airline' => false,
                 ])['state_contract_airline'] ? 'x' : '',
 
                 config(
-                    'docusign.travel_authority_request.fields.non_contract_airline'
+                    'docusign.domestic_travel_authority_request.fields.non_contract_airline'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'non_contract_airline' => false,
                 ])['non_contract_airline'] ? 'x' : '',
 
                 config(
-                    'docusign.travel_authority_request.fields.personal_automobile'
+                    'docusign.domestic_travel_authority_request.fields.personal_automobile'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'personal_automobile' => false,
                 ])['personal_automobile'] ? 'x' : '',
 
                 config(
-                    'docusign.travel_authority_request.fields.rental_vehicle'
+                    'docusign.domestic_travel_authority_request.fields.rental_vehicle'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'rental_vehicle' => false,
                 ])['rental_vehicle'] ? 'x' : '',
 
                 config(
-                    'docusign.travel_authority_request.fields.other'
+                    'docusign.domestic_travel_authority_request.fields.other'
                 ) => ($this->travel->tar_transportation_mode ?? [
                     'other' => false,
                 ])['other'] ? 'x' : '',
 
-                config('docusign.travel_authority_request.fields.itinerary') => $this->travel->tar_itinerary,
-                config('docusign.travel_authority_request.fields.purpose') => $this->travel->tar_purpose,
-                config('docusign.travel_authority_request.fields.airfare_cost') => $this->travel->tar_airfare,
-                config('docusign.travel_authority_request.fields.other_cost') => $this->travel->tar_other_trans,
-                config('docusign.travel_authority_request.fields.lodging_cost') => $this->travel->tar_lodging,
+                config(
+                    'docusign.domestic_travel_authority_request.fields.itinerary'
+                ) => $this->travel->tar_itinerary,
 
                 config(
-                    'docusign.travel_authority_request.fields.registration_cost'
+                    'docusign.domestic_travel_authority_request.fields.purpose'
+                ) => $this->travel->tar_purpose,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.airfare_cost'
+                ) => $this->travel->tar_airfare,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.other_cost'
+                ) => $this->travel->tar_other_trans,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.lodging_cost'
+                ) => $this->travel->tar_lodging,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.registration_cost'
                 ) => $this->travel->tar_registration,
 
-                config('docusign.travel_authority_request.fields.total_cost') => (
+                config('docusign.domestic_travel_authority_request.fields.tar_total_cost') => (
+                    ($this->travel->tar_airfare ?? 0) +
+                    ($this->travel->tar_other_trans ?? 0) +
+                    ($this->travel->tar_lodging ?? 0) +
+                    ($this->travel->tar_registration ?? 0)
+                ),
+
+                config('docusign.domestic_travel_authority_request.fields.accounting_total_cost') => (
                     ($this->travel->tar_airfare ?? 0) +
                     ($this->travel->tar_other_trans ?? 0) +
                     ($this->travel->tar_lodging ?? 0) +
@@ -235,27 +267,48 @@ class TravelAssignment extends Model
                 ),
 
                 config(
-                    'docusign.travel_authority_request.fields.departure_date'
+                    'docusign.domestic_travel_authority_request.fields.peoplesoft_project_number'
+                ) => $this->travel->tar_project_number,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.peoplesoft_account_code'
+                ) => $this->travel->tar_account_code,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.departure_date'
                 ) => $this->travel->departure_date->toDateString(),
 
                 config(
-                    'docusign.travel_authority_request.fields.return_date'
+                    'docusign.domestic_travel_authority_request.fields.return_date'
                 ) => $this->travel->return_date->toDateString(),
 
                 config(
-                    'docusign.travel_authority_request.traveler_name'
-                ).'_UserName' => $this->user->name,
+                    'docusign.domestic_travel_authority_request.fields.covid_dates'
+                ) => $this->travel->departure_date->toDateString().' - '
+                    .$this->travel->return_date->toDateString(),
 
                 config(
-                    'docusign.travel_authority_request.traveler_name'
+                    'docusign.domestic_travel_authority_request.fields.covid_destination'
+                ) => $this->travel->destination,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.home_department'
+                ) => $this->user->home_department,
+
+                config(
+                    'docusign.domestic_travel_authority_request.traveler_name'
+                ).'_UserName' => $this->user->full_name,
+
+                config(
+                    'docusign.domestic_travel_authority_request.traveler_name'
                 ).'_Email' => $this->user->uid.'@gatech.edu',
 
                 config(
-                    'docusign.travel_authority_request.treasurer_name'
-                ).'_UserName' => $this->travel->primaryContact->name,
+                    'docusign.domestic_travel_authority_request.primary_contact_name'
+                ).'_UserName' => $this->travel->primaryContact->full_name,
 
                 config(
-                    'docusign.travel_authority_request.treasurer_name'
+                    'docusign.domestic_travel_authority_request.primary_contact_name'
                 ).'_Email' => $this->travel->primaryContact->uid.'@gatech.edu',
             ]
         );

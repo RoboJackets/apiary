@@ -2,28 +2,18 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
 
 namespace App\Providers;
 
-use App\Models\Travel;
-use App\Models\TravelAssignment;
 use App\Models\User;
-use App\Nova\Cards\MakeAWish;
 use App\Nova\Dashboards\Demographics;
 use App\Nova\Dashboards\JEDI;
-use App\Nova\Metrics\ActiveAttendanceBreakdown;
-use App\Nova\Metrics\AttendancePerWeek;
-use App\Nova\Metrics\DocumentsReceivedForTravel;
-use App\Nova\Metrics\DuesRevenueByFiscalYear;
-use App\Nova\Metrics\MembersByFiscalYear;
-use App\Nova\Metrics\PaymentReceivedForTravel;
-use App\Nova\Metrics\PaymentsPerDay;
-use App\Nova\Metrics\TransactionsByDuesPackage;
-use App\Nova\Tools\AttendanceReport;
-use Carbon\Carbon;
-use Illuminate\Database\Query\JoinClause;
+use App\Nova\Dashboards\Main;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
@@ -40,7 +30,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
         Nova::serving(static function (ServingNova $event): void {
             Nova::script('apiary-custom', asset('js/nova.js'));
-            Nova::theme(asset('css/nova.css'));
+        });
+
+        Nova::footer(static function (Request $request): string {
+            return '
+<p class="mt-8 text-center text-xs text-80">
+    <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/apiary">Made with ♥ by RoboJackets</a>
+    <span class="px-1">&middot;</span>
+    <a class="text-primary dim no-underline" class="text-muted" href="/privacy">Privacy Policy</a>
+</p>
+';
+        });
+
+        Nova::report(static function (\Throwable $exception): void {
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($exception);
+            }
         });
     }
 
@@ -49,7 +54,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function routes(): void
     {
-        Nova::routes()->withAuthenticationRoutes()->withPasswordResetRoutes()->register();
+        Nova::routes()->register();
     }
 
     /**
@@ -60,80 +65,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewNova', static function (User $user): bool {
-            return $user->can('access-nova');
+            return Cache::remember(
+                'can_access_nova_'.$user->uid,
+                now()->addDay(),
+                static function () use ($user): bool {
+                    return $user->can('access-nova');
+                }
+            );
         });
-    }
-
-    /**
-     * Get the cards that should be displayed on the Nova dashboard.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    protected function cards(): array
-    {
-        $cards = [
-            (new PaymentsPerDay())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-payments');
-            }),
-            (new MembersByFiscalYear())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-dues-transactions');
-            }),
-            (new DuesRevenueByFiscalYear())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-dues-transactions');
-            }),
-            (new AttendancePerWeek())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
-            }),
-            (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users') && $request->user()->can('read-attendance');
-            }),
-            (new TransactionsByDuesPackage())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
-        ];
-
-        foreach (Travel::all() as $travel) {
-            $should_include = false;
-
-            if ($travel->return_date > Carbon::now()) {
-                $should_include = true;
-            }
-
-            if (
-                null !== $travel->documents_required
-                && $travel->assignments()->where('documents_received', false)->exists()
-            ) {
-                $should_include = true;
-            }
-
-            if (
-                $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
-                    $join->on('travel_assignments.id', '=', 'payable_id')
-                         ->where('payments.amount', '>', 0)
-                         ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                         ->whereNull('payments.deleted_at');
-                })->whereNull('payments.id')->exists()
-            ) {
-                $should_include = true;
-            }
-
-            if (! $should_include) {
-                continue;
-            }
-
-            if (null !== $travel->documents_required) {
-                $cards[] = new DocumentsReceivedForTravel($travel->id);
-            }
-
-            $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-payments');
-            });
-        }
-
-        $cards[] = new MakeAWish();
-
-        return $cards;
     }
 
     /**
@@ -147,9 +86,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new NovaPermissionTool())->canSee(static function (Request $request): bool {
                 return $request->user()->hasRole('admin');
             }),
-            (new AttendanceReport())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
-            }),
         ];
     }
 
@@ -161,6 +97,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function dashboards(): array
     {
         return [
+            new Main(),
             (new JEDI())->canSee(static function (Request $request): bool {
                 return $request->user()->can('read-users');
             }),

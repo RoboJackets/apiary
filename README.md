@@ -15,7 +15,27 @@ This project has been tailored to support the specific workflow of RoboJackets a
 - For development of Apiary, [open a Github issue](https://github.com/RoboJackets/apiary/issues/new) or ask in [#apiary](https://robojackets.slack.com/app_redirect?channel=apiary) on Slack
 - For production support of MyRoboJackets, ask in [#it-helpdesk](https://robojackets.slack.com/app_redirect?channel=it-helpdesk) on Slack
 
-## Getting Started with Local Development
+## Getting Started with Local Development - Docker
+
+---
+
+While this repository itself is open-source, we use several **confidential and proprietary** components which are packed into Docker images produced by this process. Images should **never** be pushed to a public registry.
+
+---
+
+Install Docker and Docker Compose.
+
+Clone the repository, then run
+
+```sh
+export DOCKER_BUILDKIT=1
+docker build --pull --target backend-uncompressed --network host --secret id=composer_auth,src=auth.json . --tag robojackets/apiary
+docker compose up
+```
+
+You will need to provide an `auth.json` file that has credentials for downloading Laravel Nova. Ask in Slack and we can provide this file to you.
+
+## Getting Started with Local Development - Hard Way
 
 If you've never worked with [Laravel](https://laravel.com) before, we recommend watching [the Laravel from Scratch webcast series](https://laracasts.com/series/laravel-from-scratch-2017) to get you up to speed quickly.
 
@@ -58,29 +78,6 @@ For the resume book functionality, you'll also need to install `exiftool` and Gh
 ```
 $ sudo apt install exiftool ghostscript
 ```
-
-#### Database Encryption
-
-Due to the nature of the data stored in certain tables in Apiary, some tables require encryption. This is implemented with MySQL's [Keyring](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
-For migrations to run successfully, you must also have a proper keyring set up in your development and production environments.
-
-To enable the Keyring functionality, edit your `my.cnf` to add the following, then restart MySQL:
-
-    [mysqld]
-    early-plugin-load=keyring_file.so
-
-To check if the Keyring plugin was enabled successfully, run the following command from a MySQL command line.
-
-    mysql> SELECT PLUGIN_NAME, PLUGIN_STATUS
-           FROM INFORMATION_SCHEMA.PLUGINS
-           WHERE PLUGIN_NAME LIKE 'keyring%';
-    +--------------+---------------+
-    | PLUGIN_NAME  | PLUGIN_STATUS |
-    +--------------+---------------+
-    | keyring_file | ACTIVE        |
-    +--------------+---------------+
-
-Further documentation about MySQL Keyring can be found in [the MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/keyring-installation.html).
 
 ### Install Redis
 

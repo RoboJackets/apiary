@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Square\Models\OrderState;
 use Square\SquareClient;
@@ -22,8 +23,7 @@ use Square\SquareClient;
 /**
  * A Nova resource for payments.
  *
- * @property string $method
- * @property ?string $order_id
+ * @extends \App\Nova\Resource<\App\Models\Payment>
  */
 class Payment extends Resource
 {
@@ -76,7 +76,7 @@ class Payment extends Resource
     /**
      * Get the fields displayed by the resource.
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             ID::make()
@@ -103,7 +103,7 @@ class Payment extends Resource
             Text::make('Notes')
                 ->onlyOnDetail(),
 
-            ...(in_array($this->method, ['square', 'squarecash', 'swiped'], true) ? [
+            ...(in_array($this->method, ['square', 'squarecash', 'swipe'], true) ? [
                 new Panel('Square Metadata', $this->squareFields()),
             ] : []),
 
@@ -189,7 +189,7 @@ class Payment extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request): array
+    public function actions(NovaRequest $request): array
     {
         return [
             (new Actions\ResetIdempotencyKey())->canSee(static function (Request $request): bool {
@@ -200,13 +200,26 @@ class Payment extends Resource
                 }
 
                 return $request->user()->can('delete-payments');
-            })->canRun(static function (Request $request, AppModelsPayment $payment): bool {
+            })->canRun(static function (NovaRequest $request, AppModelsPayment $payment): bool {
                 return self::canResetKey($request->user(), $payment);
             })->confirmText(
                 'Are you sure you want to reset the idempotency key for this payment? This can result in duplicate'
                 .'payments and should only be used if you are sure that the associated Square order is canceled.'
             )->confirmButtonText(
                 'Reset Idempotency Key'
+            ),
+            (new Actions\RefundPayment())->canSee(static function (Request $request): bool {
+                $payment = AppModelsPayment::find($request->resourceId);
+
+                if (null !== $payment && is_a($payment, AppModelsPayment::class)) {
+                    return self::canRefundPayment($request->user(), $payment);
+                }
+
+                return $request->user()->can('refund-payments');
+            })->canRun(static function (NovaRequest $request, AppModelsPayment $payment): bool {
+                return self::canRefundPayment($request->user(), $payment);
+            })->confirmButtonText(
+                'Refund Payment'
             ),
         ];
     }
@@ -243,6 +256,40 @@ class Payment extends Resource
         }
 
         return $user->can('delete-payments');
+    }
+
+    private static function canRefundPayment(AppModelsUser $user, AppModelsPayment $payment): bool
+    {
+        if (0 === intval($payment->amount)) {
+            return false;
+        }
+
+        if (null === $payment->unique_id) {
+            return false;
+        }
+
+        $order_id = $payment->order_id;
+
+        if (null === $order_id) {
+            return false;
+        }
+
+        if (
+            OrderState::COMPLETED !== (new SquareClient(
+                [
+                    'accessToken' => config('square.access_token'),
+                    'environment' => config('square.environment'),
+                ]
+            ))->getOrdersApi()
+            ->retrieveOrder($order_id)
+            ->getResult()
+            ->getOrder()
+            ->getState()
+        ) {
+            return false;
+        }
+
+        return $user->can('refund-payments');
     }
 
     /**

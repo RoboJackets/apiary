@@ -21,6 +21,7 @@ npm-debug.log
 /resources/views/vendor/nova/partials/*
 !/resources/views/vendor/nova/partials/user.blade.php
 !/resources/views/vendor/nova/partials/footer.blade.php
+!/resources/views/vendor/nova/partials/meta.blade.php
 /public/vendor/nova/
 /public/nova-assets
 /public/vendor/horizon/
@@ -39,5 +40,7 @@ resume-monitoring.sh
 /.phpunit.result.cache
 /storage/*.sqlite
 !/storage/db-clean.sqlite
+!/storage/quickstart.sqlite
+*.map
 
 .envault.json

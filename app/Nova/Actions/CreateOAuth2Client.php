@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Passport\ClientRepository;
 
 class CreateOAuth2Client extends Action
@@ -42,7 +43,11 @@ class CreateOAuth2Client extends Action
     /**
      * Perform the action on the given models.
      *
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      * @return array<string, string>
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -59,6 +64,7 @@ class CreateOAuth2Client extends Action
         $confidential = self::PUBLIC_CLIENT !== $clientType; // Confidential means the client has a secret
 
         $client = $this->clientRepository->create(
+            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
             $user->id,
             $fields->client_name,
             $fields->redirect_urls,
@@ -86,7 +92,7 @@ class CreateOAuth2Client extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [
             Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client."</p>')

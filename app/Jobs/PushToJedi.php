@@ -97,8 +97,8 @@ class PushToJedi implements ShouldQueue
             'model_class' => $this->model_class,
             'model_id' => $this->model_id,
             'model_event' => $this->model_event,
-            'last_attendance_time' => null !== $lastAttendance ? $lastAttendance->created_at : null,
-            'last_attendance_id' => null !== $lastAttendance ? $lastAttendance->id : null,
+            'last_attendance_time' => $lastAttendance?->created_at,
+            'last_attendance_id' => $lastAttendance?->id,
             'teams' => [],
             'project_manager_of_teams' => [],
             'exists_in_sums' => $this->user->exists_in_sums,
@@ -143,7 +143,7 @@ class PushToJedi implements ShouldQueue
 
         $response = $client->request('POST', config('jedi.host').'/api/v1/apiary', ['json' => $send]);
 
-        if (200 !== $response->getStatusCode()) {
+        if (202 !== $response->getStatusCode()) {
             throw new Exception(
                 'Sending data to JEDI failed with HTTP response code '.$response->getStatusCode()
             );

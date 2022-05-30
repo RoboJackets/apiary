@@ -24,7 +24,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for teams.
  *
- * @property ?\App\Models\User $projectManager
+ * @extends \App\Nova\Resource<\App\Models\Team>
  */
 class Team extends Resource
 {
@@ -254,7 +254,8 @@ class Team extends Resource
     /**
      * Build an "index" query for the team resource to hide hidden teams.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
     public static function indexQuery(NovaRequest $request, $query): Builder
     {
@@ -266,7 +267,8 @@ class Team extends Resource
      *
      * This query determines which instances of the model may be attached to other resources.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Team>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Team>
      */
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {

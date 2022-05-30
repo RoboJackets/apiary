@@ -28,9 +28,6 @@ class StoreEventRequest extends FormRequest
                 'required',
                 'max:255',
             ],
-            'cost' => [
-                'numeric',
-            ],
             'allow_anonymous_rsvp' => [
                 'required',
                 'boolean',

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
@@ -21,7 +21,7 @@ class CreateReasonBreakdown extends Partition
     /**
      * Calculate the value of the metric.
      */
-    public function calculate(Request $request): PartitionResult
+    public function calculate(NovaRequest $request): PartitionResult
     {
         return $this->count($request, User::class, 'create_reason')->label(static function (?string $value): string {
             switch ($value) {
@@ -37,6 +37,9 @@ class CreateReasonBreakdown extends Partition
                     return 'Attendance';
                 case 'historical_dues_import':
                     return 'Historical dues import';
+                // This isn't created by code, but a lot of records in prod have this.
+                case 'buzzapi_job':
+                    return 'BuzzAPI job';
                 case null:
                     return 'Unknown';
                 default:

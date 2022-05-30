@@ -21,7 +21,6 @@ class Event extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'cost' => $this->cost,
             'allow_anonymous_rsvp' => (bool) $this->allow_anonymous_rsvp,
             'location' => $this->location,
             'organizer_name' => $this->organizer_name,

@@ -12,9 +12,14 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Lynndigital\SelectOrCustom\SelectOrCustom;
 
+/**
+ * A Nova resource for remote attendance links.
+ *
+ * @extends \App\Nova\Resource<\App\Models\RemoteAttendanceLink>
+ */
 class RemoteAttendanceLink extends Resource
 {
     /**
@@ -147,7 +152,7 @@ class RemoteAttendanceLink extends Resource
             Text::make('Note')
                 ->onlyOnDetail(),
 
-            SelectOrCustom::make('Note')
+            Select::make('Note')
                 ->help('This can be used to keep track of what this link was used for more specifically.')
                 ->required(false)
                 ->onlyOnForms()

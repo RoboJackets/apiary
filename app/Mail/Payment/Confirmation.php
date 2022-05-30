@@ -8,7 +8,7 @@ use App\Models\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Swift_Mime_SimpleMimeEntity as SimpleMimeEntity;
+use Symfony\Component\Mime\Email;
 
 class Confirmation extends Mailable
 {
@@ -39,7 +39,7 @@ class Confirmation extends Mailable
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
-            ->withSwiftMessage(static function (SimpleMimeEntity $message): void {
+            ->withSymfonyMessage(static function (Email $message): void {
                 $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
             })->subject('[RoboJackets] Payment Processed')
             ->markdown('mail.payment.confirmation');

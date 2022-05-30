@@ -16,6 +16,13 @@ use Laravel\Nova\Metrics\ValueResult;
 class TotalCollections extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'currency-dollar';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(Request $request): ValueResult

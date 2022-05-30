@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Travel as AppModelsTravel;
-use App\Nova\Metrics\DocumentsReceivedForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
+use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -21,8 +21,7 @@ use Laravel\Nova\Panel;
 /**
  * A Nova resource for travel.
  *
- * @property \Carbon\Carbon $departure_date
- * @property string $destination
+ * @extends \App\Nova\Resource<\App\Models\Travel>
  */
 class Travel extends Resource
 {
@@ -57,7 +56,6 @@ class Travel extends Resource
         'destination',
         'included_with_fee',
         'not_included_with_fee',
-        'documents_required',
     ];
 
     /**
@@ -116,20 +114,13 @@ class Travel extends Resource
                     .' that violates United States or local laws.'
                 ),
 
-            Markdown::make('Documents Required')
-                ->help(
-                    'Describe what documents will be required to travel. This may include documentation required'
-                    .' by the event. Populating this field will require each traveler\'s documentation status to be'
-                    .' marked on their travel assignment.'
-                ),
-
             new Panel(
                 'Travel Authority Request',
                 [
                     Boolean::make('TAR Required', 'tar_required')
                         ->help(
                             'Check this box if Travel Authority Requests need to be submitted to the Institute.'
-                            .' Each traveler will need to submit one individually, and the treasurer will update'
+                            .' Each traveler will need to submit one individually, and you will need to update'
                             .' the status on each travel assignment as they are submitted.'
                         )
                         ->hideFromIndex(),
@@ -207,6 +198,22 @@ class Travel extends Resource
                             ' If this is not applicable, enter 0.'
                         )
                         ->hideFromIndex(),
+
+                    Text::make('Workday Project Number', 'tar_project_number')
+                        ->required()
+                        ->rules('required', 'max:255', 'in:CE0339,DE00007513,GTF250000211') // agency, SGA, ME GTF
+                        ->help(
+                            'Ask the treasurer for the correct value for this field.'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Account Code', 'tar_account_code')
+                        ->required()
+                        ->rules('required', 'digits:6')
+                        ->help(
+                            'Ask the treasurer for the correct value for this field.'
+                        )
+                        ->hideFromIndex(),
                 ]
             ),
 
@@ -231,10 +238,10 @@ class Travel extends Resource
             return [];
         }
 
-        $requires_documents = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->documents_required;
+        $requires_tar = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;
 
-        if ($requires_documents) {
-            $cards[] = (new DocumentsReceivedForTravel())->onlyOnDetail();
+        if ($requires_tar) {
+            $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();
         }
 
         return $cards;

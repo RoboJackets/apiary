@@ -17,6 +17,13 @@ use Laravel\Nova\Dashboard;
 class JEDI extends Dashboard
 {
     /**
+     * The displayable name of the dashboard.
+     *
+     * @var string
+     */
+    public $name = 'JEDI';
+
+    /**
      * Get the cards for the dashboard.
      *
      * @return array<\Laravel\Nova\Card>
@@ -51,7 +58,7 @@ class JEDI extends Dashboard
     /**
      * Get the URI key for the dashboard.
      */
-    public static function uriKey(): string
+    public function uriKey(): string
     {
         return 'jedi';
     }

@@ -46,7 +46,7 @@ class ExportAttendance extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\Attendance>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
      * @return array<string,string>
      */
     public function handle(ActionFields $fields, Collection $models): array

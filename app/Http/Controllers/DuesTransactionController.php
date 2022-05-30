@@ -141,6 +141,7 @@ class DuesTransactionController extends Controller
                     });
 
                     if (null !== $polo) {
+                        // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
                         return $selectedMerch->contains($polo->id);
                     }
 

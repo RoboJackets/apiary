@@ -11,14 +11,17 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class OverrideAccess extends Action
 {
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\User>  $users
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $users
      * @return array<string,string>
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $users): array
     {
@@ -51,7 +54,7 @@ class OverrideAccess extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Date::make('Override Expiration', 'access_override_until')->rules('required'),

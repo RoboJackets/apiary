@@ -28,10 +28,6 @@ class UpdateEventRequest extends FormRequest
                 'required',
                 'max:255',
             ],
-            'price' => [
-                'numeric',
-                'nullable',
-            ],
             'allow_anonymous_rsvp' => [
                 'required',
                 'boolean',

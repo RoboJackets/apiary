@@ -85,6 +85,11 @@ class CASAuthenticate
                 }
 
                 $user = $this->createOrUpdateCASUser();
+
+                if ($this->cas->user() === config('features.demo-mode')) {
+                    $user->syncRoles(['admin']);
+                }
+
                 Auth::login($user);
             }
 

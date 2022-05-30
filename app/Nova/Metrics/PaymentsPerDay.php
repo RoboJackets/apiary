@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\Payment;
-use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Trend;
 use Laravel\Nova\Metrics\TrendResult;
 
@@ -14,7 +14,7 @@ class PaymentsPerDay extends Trend
     /**
      * Calculate the value of the metric.
      */
-    public function calculate(Request $request): TrendResult
+    public function calculate(NovaRequest $request): TrendResult
     {
         return $this->countByDays(
             $request,

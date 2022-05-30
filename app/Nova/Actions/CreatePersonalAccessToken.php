@@ -12,6 +12,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreatePersonalAccessToken extends Action
 {
@@ -22,8 +23,10 @@ class CreatePersonalAccessToken extends Action
      * Perform the action on the given models.
      *
      * @param  \Laravel\Nova\Fields\ActionFields  $fields
-     * @param  \Illuminate\Support\Collection  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      * @return array<string, string>
+     *
+     * @phan-suppress PhanNonClassMethodCall,PhanTypeExpectedObjectPropAccess
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
@@ -53,7 +56,7 @@ class CreatePersonalAccessToken extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [
             Heading::make(

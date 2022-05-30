@@ -25,7 +25,7 @@ class Merchandise extends JsonResource
 
             // Instead of defining a resource for the pivot model, this will contain the group from the pivot, or null
             // if there is not the correct pivot or no pivot at all.
-            'group' => optional($this->pivot)->group,
+            'group' => $this->pivot?->group,
 
             // Relationships
             'dues_transactions' => DuesTransaction::collection($this->whenLoaded('transactions')),

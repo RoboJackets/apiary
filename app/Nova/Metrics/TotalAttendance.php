@@ -8,16 +8,23 @@ namespace App\Nova\Metrics;
 
 use App\Models\Attendance;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
 
 class TotalAttendance extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'identification';
+
+    /**
      * Calculate the value of the metric.
      */
-    public function calculate(Request $request): ValueResult
+    public function calculate(NovaRequest $request): ValueResult
     {
         // This is slightly hacky, but it works. Otherwise, responses with a created date of midnight (as created by
         // some forms) were pushed back to the previous day in the metric. This acts like we're in GMT while

@@ -2,22 +2,15 @@
 
 declare(strict_types=1);
 
-// @phan-file-suppress PhanStaticCallToNonStatic
-
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceReportController;
 use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InfoController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\NotificationTemplateController;
 use App\Http\Controllers\NovaExportController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RecruitingCampaignController;
-use App\Http\Controllers\RecruitingCampaignRecipientController;
-use App\Http\Controllers\RecruitingVisitController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RsvpController;
@@ -38,28 +31,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
     static function (): void {
-        // Recruiting (Formerly known as FASET)
-        Route::prefix('recruiting')->name('recruiting.')->group(static function (): void {
-            Route::post('/', [RecruitingVisitController::class, 'store'])->name('store');
-            Route::get('/', [RecruitingVisitController::class, 'index'])->name('index');
-            Route::resource(
-                'campaigns/{campaign}/recipients',
-                RecruitingCampaignRecipientController::class
-            )->except('create', 'edit');
-            Route::get('campaigns/{id}/queue', [RecruitingCampaignController::class, 'queue'])->name('campaigns.queue');
-            Route::resource('campaigns', RecruitingCampaignController::class)->except('create', 'edit');
-            Route::get('dedup', [RecruitingVisitController::class, 'dedup'])->name('dedup');
-            Route::get('{id}', [RecruitingVisitController::class, 'show'])->name('show');
-            Route::put('{id}', [RecruitingVisitController::class, 'update'])->name('update');
-        });
-
-        // Notifications
-        Route::prefix('notification')->name('notification.')->group(static function (): void {
-            Route::get('send', [NotificationController::class, 'sendNotification'])->name('send');
-            Route::post('manual', [NotificationController::class, 'sendNotificationManual'])->name('manual');
-            Route::resource('templates', NotificationTemplateController::class)->except('create', 'edit');
-        });
-
         // Misc Resources
         Route::post('attendance/search', [AttendanceController::class, 'search'])->name('attendance.search');
         Route::get('attendance/statistics', [AttendanceController::class, 'statistics'])->name('attendance.statistics');

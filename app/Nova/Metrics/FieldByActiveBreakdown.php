@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Metrics\Partition;
@@ -42,7 +41,7 @@ abstract class FieldByActiveBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $result = $this->getQuery()
+        $result = User::whereNotNull($this->field_name)
             ->get()
             ->groupBy($this->use_access_active ? 'is_access_active' : 'is_active')
             ->mapWithKeys(function (Collection $coll, int $key): array {
@@ -55,10 +54,5 @@ abstract class FieldByActiveBreakdown extends Partition
             })->sortKeys()->toArray();
 
         return $this->result($result);
-    }
-
-    protected function getQuery(): Builder
-    {
-        return User::whereNotNull($this->field_name);
     }
 }

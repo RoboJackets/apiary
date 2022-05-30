@@ -65,4 +65,5 @@ return [
         ],
     ],
 
+    'cookie_name' => env('PASSPORT_COOKIE_NAME', 'apiary_token'),
 ];

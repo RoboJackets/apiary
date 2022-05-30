@@ -31,9 +31,6 @@
                 @isset($event['start_time'])
                     <b>Date: </b> {{ date("l, F jS, Y \a\\t h:i A" ,strtotime($event->start_time)) }}<br/>
                 @endisset
-                @if($event['cost'] != 0)
-                    <b>Cost: </b> ${{ $event->cost }}
-                @endif
             </p>
         </div>
     </div>

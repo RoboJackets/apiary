@@ -11,14 +11,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Lynndigital\SelectOrCustom\SelectOrCustom;
 
 /**
  * A Nova resource for merchandise (shirts, polos, and whatever else the PR chair comes up with).
  *
- * @property string $name
+ * @extends \App\Nova\Resource<\App\Models\Merchandise>
  */
 class Merchandise extends Resource
 {
@@ -80,7 +80,7 @@ class Merchandise extends Resource
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Text::make('Name')
@@ -93,7 +93,7 @@ class Merchandise extends Resource
             BelongsToMany::make('Dues Packages', 'packages')
                 ->fields(static function (): array {
                     return [
-                        SelectOrCustom::make('Group')->options([
+                        Select::make('Group')->options([
                             'Fall' => 'Fall',
                             'Spring' => 'Spring',
                         ]),
@@ -117,7 +117,7 @@ class Merchandise extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('distribute-swag');
                 })
-                ->canRun(static function (Request $request, AppModelsMerchandise $merchandise): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsMerchandise $merchandise): bool {
                     return $request->user()->can('distribute-swag');
                 })->confirmButtonText('Mark as Picked Up')
                 ->onlyOnDetail(),
@@ -143,7 +143,7 @@ class Merchandise extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request): array
+    public function cards(NovaRequest $request): array
     {
         $defaults = [
             (new MerchandisePickupRate())->onlyOnDetail(),

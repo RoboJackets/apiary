@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a single attendance entry.
@@ -54,6 +55,7 @@ use Illuminate\Support\Collection;
 class Attendance extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The name of the database table for this model.
@@ -82,7 +84,7 @@ class Attendance extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(updated_at_unix)',
+        'updated_at_unix:desc',
     ];
 
     /**
@@ -98,6 +100,8 @@ class Attendance extends Model
 
     /**
      * Get all of the owning attendable models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\Team|\App\Models\Event,\App\Models\Attendance>
      */
     public function attendable(): MorphTo
     {
@@ -106,6 +110,8 @@ class Attendance extends Model
 
     /**
      * Get the User associated with the Attendance model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Attendance>
      */
     public function attendee(): BelongsTo
     {
@@ -114,6 +120,8 @@ class Attendance extends Model
 
     /**
      * Get the User who recorded the Attendance model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Attendance>
      */
     public function recorded(): BelongsTo
     {
@@ -122,6 +130,8 @@ class Attendance extends Model
 
     /**
      * Get the RemoteAttendanceLink that created the Attendance model.
+     *
+     * @return BelongsTo<RemoteAttendanceLink, Attendance>
      */
     public function remoteAttendanceLink(): BelongsTo
     {
@@ -130,6 +140,9 @@ class Attendance extends Model
 
     /**
      * Scope query to start at given date.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
     public function scopeStart(Builder $query, string $date): Builder
     {
@@ -138,6 +151,9 @@ class Attendance extends Model
 
     /**
      * Scope query to end at given date.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
     public function scopeEnd(Builder $query, string $date): Builder
     {
@@ -220,6 +236,9 @@ class Attendance extends Model
 
     /**
      * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance> $query
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
@@ -253,7 +272,7 @@ class Attendance extends Model
             $array['event_id'] = $this->attendable_id;
         }
 
-        $array['user_id'] = null !== $this->attendee ? $this->attendee->id : null;
+        $array['user_id'] = $this->attendee?->id;
 
         unset($array['attendable']['organizer']);
         unset($array['attendable']['organizer_name']);

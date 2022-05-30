@@ -15,14 +15,20 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class AddPayment extends Action
 {
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\DuesTransaction>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\DuesTransaction>  $models
      * @return array<string,string>
+     *
+     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
+     * @phan-suppress PhanTypeMismatchArgumentInternal
+     * @phan-suppress PhanTypeMismatchProperty
+     * @phan-suppress PhanTypeSuspiciousStringExpression
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
@@ -100,8 +106,7 @@ class AddPayment extends Action
         $payment = new Payment();
         $payment->recorded_by = Auth::user()->id;
         $payment->method = $fields->method;
-        // @phan-suppress-next-line PhanTypeMismatchProperty
-        $payment->amount = $entered_amount;
+        $payment->amount = strval($entered_amount);
         $payment->payable_id = $model->id;
         $payment->payable_type = $model->getMorphClass();
         $payment->notes = 'Added in Nova';
@@ -117,7 +122,7 @@ class AddPayment extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         $allowed_payment_methods = [];
 

@@ -23,8 +23,6 @@ class ResumeController extends Controller
      * Show the user's resume.
      *
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
-     *
-     * @suppress PhanUnusedVariableCaughtException
      */
     public function show(string $id, Request $request)
     {
@@ -42,7 +40,7 @@ class ResumeController extends Controller
 
             try {
                 return response()->file(Storage::disk('local')->path('resumes/'.$user->uid.'.pdf'));
-            } catch (FileNotFoundException $e) {
+            } catch (FileNotFoundException) {
                 return response()->json(
                     [
                         'status' => 'error',

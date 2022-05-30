@@ -8,6 +8,7 @@ use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RefreshFromGTED extends Action
 {
@@ -21,7 +22,7 @@ class RefreshFromGTED extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\User>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      */
     public function handle(ActionFields $fields, Collection $models): void
     {
@@ -44,7 +45,7 @@ class RefreshFromGTED extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         return [];
     }

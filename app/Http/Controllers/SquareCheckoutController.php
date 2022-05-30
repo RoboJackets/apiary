@@ -11,6 +11,7 @@ use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -144,7 +145,7 @@ class SquareCheckoutController extends Controller
             );
         }
 
-        $amount = (int) ($transaction->travel->fee_amount * 100);
+        $amount = $transaction->travel->fee_amount * 100;
 
         return self::redirect($amount, $payment, $user, 'Travel Fee', $transaction->travel->name);
     }
@@ -282,6 +283,8 @@ class SquareCheckoutController extends Controller
                 );
             case OrderState::OPEN:
                 return view('square.processing');
+            default:
+                throw new Exception('Unexpected order state');
         }
     }
 

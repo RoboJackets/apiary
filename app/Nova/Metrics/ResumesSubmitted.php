@@ -12,6 +12,13 @@ use Laravel\Nova\Metrics\ValueResult;
 class ResumesSubmitted extends Value
 {
     /**
+     * The element's icon.
+     *
+     * @var string
+     */
+    public $icon = 'upload';
+
+    /**
      * Calculate the value of the metric.
      */
     public function calculate(Request $request): ValueResult

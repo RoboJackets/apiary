@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a single trip.
@@ -22,7 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $fee_amount
  * @property string $included_with_fee
  * @property string|null $not_included_with_fee
- * @property string|null $documents_required
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -46,7 +46,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDepartureDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDestination($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDocumentsRequired($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereFeeAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Travel whereIncludedWithFee($value)
@@ -70,6 +69,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Travel extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -100,15 +100,42 @@ class Travel extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(departure_date_unix)',
-        'desc(return_date_unix)',
+        'departure_date_unix:desc',
+        'return_date_unix:desc',
     ];
 
+    /**
+     * The attributes that can be used for filtering in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public $filterable_attributes = [
+    ];
+
+    /**
+     * The attributes that Nova might think can be used for filtering, but actually can't.
+     *
+     * @var array<string>
+     */
+    public $do_not_filter_on = [
+        'user_id',
+    ];
+
+    /**
+     * Get the primary contact for this travel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Travel>
+     */
     public function primaryContact(): BelongsTo
     {
         return $this->belongsTo(User::class, 'primary_contact_user_id');
     }
 
+    /**
+     * Get the assignments for this travel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment>
+     */
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
@@ -116,6 +143,9 @@ class Travel extends Model
 
     /**
      * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {

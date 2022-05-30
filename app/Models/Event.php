@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 /**
  * Represents a one-off gathering where an RSVP may be requested or attendance may be taken.
  *
  * @property int $id
  * @property string $name
- * @property float $cost
  * @property bool $allow_anonymous_rsvp
  * @property int $organizer_id user_id of the organizer
  * @property string|null $location
@@ -41,7 +41,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Event onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Event query()
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereAllowAnonymousRsvp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereCost($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereEndTime($value)
@@ -59,6 +58,7 @@ class Event extends Model
 {
     use GetMorphClassStatic;
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that are not mass assignable.
@@ -99,15 +99,25 @@ class Event extends Model
      * @var array<string>
      */
     public $ranking_rules = [
-        'desc(start_time_unix)',
-        'desc(end_time_unix)',
+        'start_time_unix:desc',
+        'end_time_unix:desc',
     ];
 
+    /**
+     * Get the organizer for this event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Event>
+     */
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'organizer_id');
     }
 
+    /**
+     * Get the Rsvps for this event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Rsvp>
+     */
     public function rsvps(): HasMany
     {
         return $this->hasMany(Rsvp::class);
@@ -115,6 +125,8 @@ class Event extends Model
 
     /**
      * Get all of the event's attendance.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attendance>
      */
     public function attendance(): MorphMany
     {
@@ -123,18 +135,12 @@ class Event extends Model
 
     /**
      * Get all of the event's remote attendance links.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\RemoteAttendanceLink>
      */
     public function remoteAttendanceLinks(): MorphMany
     {
         return $this->morphMany(RemoteAttendanceLink::class, 'attendable');
-    }
-
-    /**
-     * Get the Payable amount.
-     */
-    public function getPayableAmount(): float
-    {
-        return $this->cost;
     }
 
     /**

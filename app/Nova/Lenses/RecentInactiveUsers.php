@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Lenses\Lens;
 
 /**
@@ -28,7 +29,8 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
     public static function query(LensRequest $request, $query): Builder
     {
@@ -48,9 +50,9 @@ class RecentInactiveUsers extends Lens
     /**
      * Get the fields available to the lens.
      *
-     * @return array<\Laravel\Nova\Fields\Field>
+     * @return array<int,\Laravel\Nova\Fields\Field>
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Text::make('GTID')
@@ -76,7 +78,7 @@ class RecentInactiveUsers extends Lens
      *
      * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request): array
+    public function cards(NovaRequest $request): array
     {
         return [
             (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
@@ -90,7 +92,7 @@ class RecentInactiveUsers extends Lens
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
-    public function filters(Request $request): array
+    public function filters(NovaRequest $request): array
     {
         return [
             new Attendable(false),

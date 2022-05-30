@@ -44,6 +44,11 @@ class MembershipAgreementTemplate extends Model
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * Get Signatures for this template.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Signature>
+     */
     public function signatures(): HasMany
     {
         return $this->hasMany(Signature::class);

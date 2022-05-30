@@ -13,8 +13,6 @@ use App\Nova\Actions\CreatePersonalAccessToken;
 use App\Nova\Actions\RevokeOAuth2Tokens;
 use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\CreateReasonBreakdown;
-use App\Nova\Metrics\MemberSince;
-use App\Nova\Metrics\PrimaryTeam;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
 use Carbon\Carbon;
@@ -29,19 +27,13 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
 /**
  * A Nova resource for users.
  *
- * @property ?\Carbon\Carbon $resume_date
- * @property string $uid
- * @property int $id
- *
- * @method bool hasSignedLatestAgreement()
- * @method \Illuminate\Database\Eloquent\Relations\HasMany manages()
- * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany majors()
- * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany classStanding()
+ * @extends \App\Nova\Resource<\App\Models\User>
  */
 class User extends Resource
 {
@@ -89,7 +81,7 @@ class User extends Resource
     /**
      * Get the fields displayed by the resource.
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Text::make('Username', 'uid')
@@ -301,15 +293,6 @@ class User extends Resource
                     return ! $request->user()->hasRole('admin');
                 }),
 
-            HasMany::make('Recruiting Visits', 'recruitingVisits')
-                ->canSee(static function (Request $request): bool {
-                    if ($request->resourceId === $request->user()->id) {
-                        return $request->user()->can('read-recruiting-visits-own');
-                    }
-
-                    return $request->user()->can('read-recruiting-visits');
-                }),
-
             HasMany::make('OAuth2 Clients', 'clients')
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
@@ -411,20 +394,10 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request): array
+    public function cards(NovaRequest $request): array
     {
         return [
-            (new MemberSince())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
             (new TotalAttendance())
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-attendance');
-                }),
-            (new PrimaryTeam())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-attendance');
@@ -442,7 +415,7 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Filters\Filter>
      */
-    public function filters(Request $request): array
+    public function filters(NovaRequest $request): array
     {
         return [
             new Filters\UserActive(),
@@ -457,51 +430,44 @@ class User extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request): array
+    public function actions(NovaRequest $request): array
     {
         return [
             (new Actions\SyncAccess())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 })->confirmButtonText('Sync Access'),
             (new Actions\OverrideAccess())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 })->confirmButtonText('Override Access'),
             resolve(CreatePersonalAccessToken::class)
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 })->confirmButtonText('Create Access Token'),
             resolve(CreateOAuth2Client::class)
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 })->confirmButtonText('Create Client'),
             resolve(RevokeOAuth2Tokens::class)
                 ->canSee(static function (Request $request): bool {
                     return true;
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
                 })->confirmButtonText('Revoke Tokens'),
-            (new Actions\SendNotification())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('send-notifications');
-                })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
-                    return $request->user()->can('send-notifications');
-                }),
             (new Actions\ExportResumes())
                 ->standalone()
                 ->onlyOnIndex()
@@ -512,7 +478,7 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin');
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->hasRole('admin');
                 })->confirmButtonText('Refresh from GTED'),
             (new Actions\ExportUsersBuzzCardAccess())
@@ -521,7 +487,7 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->can('read-users-gtid');
                 })->confirmButtonText('Export List'),
             (new Actions\ExportUsernames())
@@ -529,7 +495,7 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users');
                 })
-                ->canRun(static function (Request $request, AppModelsUser $user): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
                     return $request->user()->can('read-users');
                 }),
         ];
@@ -569,7 +535,7 @@ class User extends Resource
             'dues_transactions.id',
             'dues_transactions.dues_package_id',
             'dues_packages.effective_start',
-            'dues_packages.effective_end',
+            'dues_packages.effective_end'
         )
         ->leftJoin('payments', static function (JoinClause $join): void {
             $join->on('dues_transactions.id', '=', 'payable_id')

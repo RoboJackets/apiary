@@ -14,8 +14,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Lynndigital\SelectOrCustom\SelectOrCustom;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreateRemoteAttendanceLink extends Action
 {
@@ -29,8 +30,10 @@ class CreateRemoteAttendanceLink extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\Team|\App\Models\Event>  $models
-     * @return array<string,string>
+     * @param  \Illuminate\Support\Collection<int,\App\Models\Team|\App\Models\Event>  $models
+     * @return array<string,array<string,string>>
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
@@ -46,7 +49,9 @@ class CreateRemoteAttendanceLink extends Action
         $link->attendable_id = $attendable->id;
         $link->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $link->expires_at = $expiration;
-        $link->redirect_url = RemoteAttendanceLink::normalizeRedirectUrl($fields->redirect_url);
+        if (null !== $fields->redirect_url) {
+            $link->redirect_url = RemoteAttendanceLink::normalizeRedirectUrl($fields->redirect_url);
+        }
         $link->note = $fields->purpose;
         $link->save();
         $link->refresh(); // Update id field
@@ -68,7 +73,7 @@ class CreateRemoteAttendanceLink extends Action
             $att->save();
         }
 
-        return Action::push('/resources/remote-attendance-links/'.$link->id);
+        return Action::visit('/resources/remote-attendance-links/'.$link->id);
     }
 
     /**
@@ -76,7 +81,7 @@ class CreateRemoteAttendanceLink extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         $notes = collect(NovaRemoteAttendanceLink::$recommendedNotes)
             ->mapWithKeys(static function (string $note): array {
@@ -89,10 +94,10 @@ class CreateRemoteAttendanceLink extends Action
                 ->rules('nullable', 'url', 'regex:'.RemoteAttendanceLink::$redirectRegex, 'max:1023')
                 ->help('If you put a link to a Google Meet, BlueJeans, or Microsoft Teams meeting here, everyone who '.
                     'clicks the attendance link will be redirected to that meeting after their attendance is recorded.'.
-                    'If you add a redirect URL, do not share that URL directly. Only Google Meet, BlueJeans, and '.
+                    ' If you add a redirect URL, do not share that URL directly. Only Google Meet, BlueJeans, and '.
                     'Microsoft Teams calls are supported currently. Ask in #it-helpdesk for other redirect URLs.'),
 
-            SelectOrCustom::make('Purpose')
+            Select::make('Purpose')
                 ->required(true)
                 ->rules('required')
                 ->options($notes->toArray()),

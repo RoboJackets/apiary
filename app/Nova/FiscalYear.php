@@ -13,7 +13,13 @@ use App\Nova\Metrics\TransactionsByDuesPackage;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
+/**
+ * A Nova resource for fiscal years.
+ *
+ * @extends \App\Nova\Resource<\App\Models\FiscalYear>
+ */
 class FiscalYear extends Resource
 {
     /**
@@ -51,7 +57,7 @@ class FiscalYear extends Resource
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(Request $request): array
+    public function fields(NovaRequest $request): array
     {
         return [
             Number::make('Ending Year')
@@ -70,14 +76,14 @@ class FiscalYear extends Resource
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
-    public function actions(Request $request): array
+    public function actions(NovaRequest $request): array
     {
         return [
             (new Actions\CreateDuesPackages())
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('create-dues-packages');
                 })
-                ->canRun(static function (Request $request, AppModelsFiscalYear $fiscalYear): bool {
+                ->canRun(static function (NovaRequest $request, AppModelsFiscalYear $fiscalYear): bool {
                     return $request->user()->can('create-dues-packages');
                 })->confirmButtonText('Create Packages'),
         ];
@@ -88,7 +94,7 @@ class FiscalYear extends Resource
      *
      * @return array<\Laravel\Nova\Card>
      */
-    public function cards(Request $request): array
+    public function cards(NovaRequest $request): array
     {
         return [
             (new MembersForOneFiscalYear())

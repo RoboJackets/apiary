@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-// @phan-file-suppress PhanStaticCallToNonStatic
-
-use App\Http\Controllers\AttendanceExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutodeskLibraryController;
 use App\Http\Controllers\BuzzApiMockController;
@@ -39,8 +36,6 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::get('sums', [SUMSController::class, 'index']);
-
-    Route::view('recruiting', 'recruiting/form');
 
     Route::get('profile', [UserController::class, 'showProfile']);
 
@@ -101,10 +96,6 @@ Route::get('attendance/remote/{secret}', [RemoteAttendanceController::class, 'in
 Route::get('attendance/remote/{secret}/redirect', [RemoteAttendanceController::class, 'redirect'])
     ->middleware('auth.cas.force')
     ->name('attendance.remote.redirect');
-
-Route::get('attendance/export/{secret}', [AttendanceExportController::class, 'show'])
-    ->middleware('auth.cas.force')
-    ->name('attendance.export');
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 

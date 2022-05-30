@@ -47,7 +47,7 @@ class Demographics extends Dashboard
     /**
      * Get the URI key for the dashboard.
      */
-    public static function uriKey(): string
+    public function uriKey(): string
     {
         return 'demographics';
     }
@@ -57,7 +57,7 @@ class Demographics extends Dashboard
      *
      * @return string
      */
-    public static function label()
+    public function label()
     {
         return 'Demographics';
     }

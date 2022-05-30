@@ -14,7 +14,7 @@ class SyncAccess extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\User>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      */
     public function handle(ActionFields $fields, Collection $models): void
     {
@@ -32,15 +32,5 @@ class SyncAccess extends Action
                 1 === count($models) ? 'manual' : 'manual_batch'
             );
         }
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(): array
-    {
-        return [];
     }
 }

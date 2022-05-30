@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+
 namespace App\Nova\Actions;
 
 use App\Models\ClassStanding;
 use App\Models\Major;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -21,13 +23,14 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ExportResumes extends Action
 {
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\User>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      * @return array<string,string>
      */
     public function handle(ActionFields $fields, Collection $models): array
@@ -109,7 +112,7 @@ class ExportResumes extends Action
         $coverfilename = 'robojackets-resumes-'.$datecode.'-cover.pdf';
         $coverpath = Storage::disk('local')->path('nova-exports/'.$coverfilename);
 
-        PDF::loadView(
+        Pdf::loadView(
             'resumecover',
             [
                 'majors' => $majors,
@@ -162,7 +165,7 @@ class ExportResumes extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         // This is only stored for 30 seconds because it only needs to stick for one page load
         // Nova runs this function for every record in the user view so it slows down the page otherwise
@@ -241,11 +244,14 @@ class ExportResumes extends Action
                 ->help('Only include resumes for these class standings')
                 ->required(),
 
+            // "before:yesterday" stops users from putting in a date that doesn't make sense that will generate an
+            // empty output. "yesterday" is either 7PM or 8PM yesterdady, depending on timezones (EST vs EDT).
             Date::make('Resume Date Cutoff')
-                ->help('Only include resumes uploaded after this date')
+                ->help('Only include resumes uploaded after this date. This should generally be the start date of the'.
+                    ' fall semester.')
                 ->default($defaultDate)
                 ->required()
-                ->rules('required'),
+                ->rules('required', 'before:yesterday'),
         ];
     }
 }

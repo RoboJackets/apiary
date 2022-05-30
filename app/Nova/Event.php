@@ -10,7 +10,6 @@ use App\Nova\ResourceTools\CollectAttendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphMany;
@@ -19,9 +18,7 @@ use Laravel\Nova\Fields\Text;
 /**
  * A Nova resource for events.
  *
- * @property int $id
- * @property ?\Carbon\Carbon $start_time
- * @property ?\Carbon\Carbon $end_time
+ * @extends \App\Nova\Resource<\App\Models\Event>
  */
 class Event extends Resource
 {
@@ -86,10 +83,6 @@ class Event extends Resource
             Text::make('Location')
                 ->hideFromIndex()
                 ->rules('max:255'),
-
-            Currency::make('Cost')
-                ->hideFromIndex()
-                ->rules('required'),
 
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),

@@ -6,19 +6,16 @@ namespace Database\Factories;
 
 use App\Models\DuesTransaction;
 use App\Models\Event;
-use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * A factory for Payments.
+ *
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Payment>
+ */
 class PaymentFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Payment::class;
-
     /**
      * Define the model's default state.
      *

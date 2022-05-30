@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ResetIdempotencyKey extends DestructiveAction
 {
@@ -22,7 +23,7 @@ class ResetIdempotencyKey extends DestructiveAction
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<\App\Models\Payment>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
      * @return array<string,string>
      */
     public function handle(ActionFields $fields, Collection $models): array
@@ -43,7 +44,7 @@ class ResetIdempotencyKey extends DestructiveAction
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(): array
+    public function fields(NovaRequest $request): array
     {
         return [];
     }
