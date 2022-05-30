@@ -47,7 +47,7 @@ class ExpiringPersonalAccessToken extends Mailable
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
             ->withSymfonyMessage(static function (Email $message): void {
-                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <support@robojackets.org>');
+                $message->replyTo('RoboJackets <support@robojackets.org>');
             })->subject('Your MyRoboJackets Personal Access Token '
                 .($this->already_expired ? 'Recently Expired' : 'Will Expire Soon'))
             ->markdown(

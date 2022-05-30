@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
@@ -22,6 +23,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Scout\Searchable;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
@@ -842,6 +844,16 @@ class User extends Authenticatable
                 }
             )
             ->exists();
+    }
+
+    /**
+     * Get the Nova notifications for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\Laravel\Nova\Notifications\Notification>
+     */
+    public function novaNotifications(): MorphMany
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
     }
 
     /**

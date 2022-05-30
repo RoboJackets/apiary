@@ -18,6 +18,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use App\Observers\AttendanceObserver;
 use App\Observers\DuesPackageObserver;
+use App\Observers\DuesTransactionObserver;
 use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\SignatureObserver;
@@ -67,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
         Payment::observe(PaymentObserver::class);
         Signature::observe(SignatureObserver::class);
         User::observe(UserObserver::class);
+        DuesTransaction::observe(DuesTransactionObserver::class);
 
         Relation::morphMap([
             'event' => Event::class,
