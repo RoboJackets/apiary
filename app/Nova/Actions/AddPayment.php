@@ -8,6 +8,7 @@ namespace App\Nova\Actions;
 
 use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Models\TravelAssignment;
 use App\Notifications\Payment\ConfirmationNotification;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class AddPayment extends Action
      * @phan-suppress PhanTypeMismatchArgumentInternal
      * @phan-suppress PhanTypeMismatchProperty
      * @phan-suppress PhanTypeSuspiciousStringExpression
+     * @phan-suppress PhanTypeMismatchArgumentNullable
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
@@ -59,7 +61,7 @@ class AddPayment extends Action
 
         // shouldn't happen but might if someone is abusing the API
         if (Auth::user()->cant('create-payments-'.$fields->method)) {
-            $this->markAsFailed($models->first(), 'Not authorized to accept that payment method');
+            $this->markAsFailed($model, 'Not authorized to accept that payment method');
 
             return Action::danger(
                 'You do not have permission to accept that payment method. Please contact a developer.'
@@ -74,7 +76,7 @@ class AddPayment extends Action
         $entered_amount = is_a(
             $model,
             DuesTransaction::class
-        ) ? round($fields->amount, 2) : intval($fields->amount);
+        ) ? round(floatval($fields->amount), 2) : intval(floatval($fields->amount));
 
         if ('square' === $fields->method || 'swipe' === $fields->method) {
             if ($entered_amount !== round($package_amount + 3, 2)) {
@@ -87,7 +89,7 @@ class AddPayment extends Action
                     );
                 }
 
-                $this->markAsFailed($models->first(), 'Unexpected amount (card transaction)');
+                $this->markAsFailed($model, 'Unexpected amount (card transaction)');
 
                 return Action::danger(
                     'Unexpected amount '.$entered_amount.' entered - should be '.round($package_amount + 3, 2)
@@ -95,7 +97,7 @@ class AddPayment extends Action
             }
         } else {
             if ($entered_amount !== $package_amount) {
-                $this->markAsFailed($models->first(), 'Unexpected amount (non-card transaction)');
+                $this->markAsFailed($model, 'Unexpected amount (non-card transaction)');
 
                 return Action::danger(
                     'Unexpected amount '.$entered_amount.' entered - should be '.$package_amount
@@ -127,11 +129,31 @@ class AddPayment extends Action
         $allowed_payment_methods = [];
 
         foreach (Payment::$methods as $code => $display) {
-            if (Auth::user()->cant('create-payments-'.$code)) {
+            if ($request->user()->cant('create-payments-'.$code)) {
                 continue;
             }
 
             $allowed_payment_methods[$code] = $display;
+        }
+
+        $resourceId = $request->resourceId ?? $request->resources;
+
+        switch ($request->resource) {
+            case 'dues-transactions':
+                $payable_amount = intval(
+                    round(
+                        DuesTransaction::where('id', '=', $resourceId)->sole()->package->cost,
+                        2
+                    )
+                );
+                break;
+            case 'travel-assignments':
+                $payable_amount = intval(
+                    TravelAssignment::where('id', '=', $resourceId)->sole()->travel->fee_amount
+                );
+                break;
+            default:
+                throw new \Exception('Unexpected payable type '.$request->resource);
         }
 
         return [
@@ -142,6 +164,7 @@ class AddPayment extends Action
 
             Currency::make('Amount')
                 ->help('Record actual amount of money collected, including processing fees. Credit/debit is +$3.')
+                ->rules('in:'.$payable_amount)
                 ->creationRules('required'),
         ];
     }
