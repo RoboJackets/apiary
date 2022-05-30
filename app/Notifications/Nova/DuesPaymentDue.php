@@ -11,6 +11,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Nova\Notifications\NovaNotification;
 use Laravel\Nova\URL;
 
+/**
+ * This notification is sent when someone needs to complete a payment for an existing DuesTransaction.
+ *
+ * It is automatically deleted by \App\Jobs\PruneDuesNotificationsInNova when the user becomes active.
+ */
 class DuesPaymentDue extends NovaNotification implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;

@@ -11,6 +11,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Nova\Notifications\NovaNotification;
 use Laravel\Nova\URL;
 
+/**
+ * This notification is sent when someone needs to create a DuesTransaction.
+ *
+ * It is automatically deleted by \App\Jobs\PruneDuesNotificationsInNova when a DuesTransaction is created.
+ */
 class DuesAreLive extends NovaNotification implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;
