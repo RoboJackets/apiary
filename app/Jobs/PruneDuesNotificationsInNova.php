@@ -14,7 +14,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Laravel\Nova\Notifications\Notification;
 
 class PruneDuesNotificationsInNova implements ShouldQueue
 {
@@ -43,17 +42,15 @@ class PruneDuesNotificationsInNova implements ShouldQueue
     public function handle()
     {
         if ($this->user->dues()->pending()->count() > 0 || $this->user->is_active) {
-            Notification::where('notifiable_type', '=', User::class)
-                ->where('notifiable_id', '=', $this->user->id)
-                ->where('type', DuesAreLive::class)
-                ->delete();
+            $this->user->novaNotifications()
+                       ->where('type', DuesAreLive::class)
+                       ->delete();
         }
 
         if ($this->user->is_active) {
-            Notification::where('notifiable_type', '=', User::class)
-                ->where('notifiable_id', '=', $this->user->id)
-                ->where('type', DuesPaymentDue::class)
-                ->delete();
+            $this->user->novaNotifications()
+                       ->where('type', DuesPaymentDue::class)
+                       ->delete();
         }
     }
 }

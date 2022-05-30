@@ -14,7 +14,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Laravel\Nova\Notifications\Notification;
 
 class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUnique
 {
@@ -44,11 +43,10 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
     {
         if ($this->user->dues()->pending()->count() > 0 &&
             $this->user->hasPermissionTo('access-nova') &&
-            0 === Notification::where('notifiable_type', '=', User::class)
-                ->where('notifiable_id', '=', $this->user->id)
-                ->where('type', DuesPaymentDue::class)
-                ->where('created_at', '>', now()->subMonths(3))
-                ->count()
+            0 === $this->user->novaNotifications()
+                             ->where('type', DuesPaymentDue::class)
+                             ->where('created_at', '>', now()->subMonths(3))
+                             ->count()
         ) {
             $this->user->notify(new DuesPaymentDue($this->user));
         }
