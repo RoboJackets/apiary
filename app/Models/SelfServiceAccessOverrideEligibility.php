@@ -186,7 +186,7 @@ class SelfServiceAccessOverrideEligibility
     public function __toString()
     {
         if ($this->eligible) {
-            return 'Eligible.';
+            return 'Eligible';
         }
 
         $remaining_tasks = implode(', ', $this->getRemainingTasks());
