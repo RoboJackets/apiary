@@ -41,7 +41,7 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
             ->withSymfonyMessage(static function (Email $message): void {
-                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <hello@robojackets.org>');
+                $message->replyTo('RoboJackets <hello@robojackets.org>');
             })->subject('[RoboJackets] Membership Agreement Signed')
             ->markdown(
                 'mail.agreement.signed',
