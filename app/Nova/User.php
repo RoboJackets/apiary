@@ -11,7 +11,6 @@ use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreateOAuth2Client;
 use App\Nova\Actions\CreatePersonalAccessToken;
 use App\Nova\Actions\RevokeOAuth2Tokens;
-use App\Nova\Fields\Hidden;
 use App\Nova\Metrics\CreateReasonBreakdown;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
@@ -122,15 +121,8 @@ class User extends Resource
                 ->creationRules('unique:users,personal_email')
                 ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
-            Hidden::make('GTID')
-                ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-gtid');
-                }),
-
-            // Hidden fields can't be edited, so add this field on the forms so it can be edited for service accounts
             Text::make('GTID')
-                ->onlyOnForms()
+                ->hideFromIndex()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
                 })
@@ -366,7 +358,7 @@ class User extends Resource
                 ->hideFromIndex()
                 ->required(),
 
-            Text::make('gtDirGUID')
+            Text::make('gtDirGUID', 'gtDirGUID')
                 ->hideFromIndex(),
 
             MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
