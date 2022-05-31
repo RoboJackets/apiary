@@ -26,9 +26,7 @@ class UserFactory extends Factory
         return [
             'uid' => $uid,
             'gtid' => $this->faker->numerify('#########'),
-            'slack_id' => null,
             'gt_email' => $uid.'@gatech.edu',
-            'personal_email' => $this->faker->safeEmail(),
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->optional()->lastName(),
             'last_name' => $lastName,

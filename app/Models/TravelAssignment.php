@@ -76,7 +76,6 @@ class TravelAssignment extends Model
         'user_last_name',
         'user_uid',
         'user_gt_email',
-        'user_personal_email',
         'user_gmail_address',
         'user_clickup_email',
         'user_autodesk_email',

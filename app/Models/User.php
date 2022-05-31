@@ -38,7 +38,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $id
  * @property string $uid
  * @property int $gtid
- * @property string|null $slack_id
  * @property string|null $github_username
  * @property string|null $gmail_address
  * @property string|null $clickup_email
@@ -47,7 +46,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $autodesk_email
  * @property bool $autodesk_invite_pending
  * @property string $gt_email
- * @property string|null $personal_email
  * @property string $first_name
  * @property string|null $middle_name
  * @property string $last_name
@@ -167,14 +165,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereJoinSemester($value)
  * @method static Builder|User whereLastName($value)
  * @method static Builder|User whereMiddleName($value)
- * @method static Builder|User wherePersonalEmail($value)
  * @method static Builder|User wherePhone($value)
  * @method static Builder|User wherePoloSize($value)
  * @method static Builder|User wherePreferredName($value)
  * @method static Builder|User wherePrimaryAffiliation($value)
  * @method static Builder|User whereResumeDate($value)
  * @method static Builder|User whereShirtSize($value)
- * @method static Builder|User whereSlackId($value)
  * @method static Builder|User whereUid($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @method static QueryBuilder|User withTrashed()
@@ -280,7 +276,6 @@ class User extends Authenticatable
         'last_name',
         'uid',
         'gt_email',
-        'personal_email',
         'gmail_address',
         'clickup_email',
         'autodesk_email',
