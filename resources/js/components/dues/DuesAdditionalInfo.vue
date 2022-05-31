@@ -19,25 +19,6 @@
         </div>
 
         <div class="form-group row">
-          <label for="user-personalemail" class="col-sm-2 col-form-label">Personal Email</label>
-          <div class="col-sm-10 col-lg-4">
-            <input
-              v-model="localUser.personal_email"
-              type="email"
-              class="form-control"
-              id="user-personalemail"
-              :class="{ 'is-invalid': $v.localUser.personal_email.$error }"
-              @input="$v.localUser.personal_email.$touch()">
-          </div>
-          <div class="invalid-feedback" v-if="!$v.localUser.personal_email.notGTEmail">
-            Personal email cannot be a GT email address
-          </div>
-          <div class="invalid-feedback" v-if="!$v.localUser.personal_email.email">
-            Must be a valid email address
-          </div>
-        </div>
-
-        <div class="form-group row">
           <label for="user-uid" class="col-sm-2 col-form-label">Phone Number</label>
           <div class="col-sm-10 col-lg-4">
             <input
@@ -120,7 +101,6 @@ export default {
       const dataUrl = baseUrl + this.localUser.uid;
 
       const userRequest = {
-        personal_email: this.localUser.personal_email,
         phone: this.localUser.phone,
         preferred_first_name: this.localUser.preferred_first_name,
         emergency_contact_name: this.localUser.emergency_contact_name,
@@ -170,7 +150,6 @@ export default {
   },
   validations: {
     localUser: {
-      personal_email: { email, notGTEmail },
       phone: { maxLength: maxLength(15) },
       preferred_first_name: { alpha },
       emergency_contact_name: { required },

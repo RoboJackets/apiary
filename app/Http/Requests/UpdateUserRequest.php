@@ -25,17 +25,6 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slack_id' => [
-                'max:21',
-                'nullable',
-                'unique:users,slack_id,'.$this->user()->id,
-            ],
-            'personal_email' => [
-                'max:255',
-                'nullable',
-                'unique:users,personal_email,'.$this->user()->id,
-                'email:rfc,strict,dns,spoof',
-            ],
             'first_name' => [
                 'max:127',
             ],

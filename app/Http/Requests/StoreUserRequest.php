@@ -35,21 +35,10 @@ class StoreUserRequest extends FormRequest
                 'unique:users',
                 'max:10',
             ],
-            'slack_id' => [
-                'unique:users',
-                'max:21',
-                'nullable',
-            ],
             'gt_email' => [
                 'required',
                 'unique:users',
                 'max:255',
-                'email:rfc,strict,dns,spoof',
-            ],
-            'personal_email' => [
-                'unique:users',
-                'max:255',
-                'nullable',
                 'email:rfc,strict,dns,spoof',
             ],
             'first_name' => [

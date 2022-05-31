@@ -74,7 +74,6 @@ class User extends Resource
         'clickup_email',
         'autodesk_email',
         'gmail_address',
-        'personal_email',
     ];
 
     /**
@@ -114,12 +113,6 @@ class User extends Resource
                 ->rules('required', 'email')
                 ->creationRules('unique:users,gt_email')
                 ->updateRules('unique:users,gt_email,{{resourceId}}'),
-
-            Text::make('Personal Email')
-                ->hideFromIndex()
-                ->rules('email', 'max:255', 'nullable')
-                ->creationRules('unique:users,personal_email')
-                ->updateRules('unique:users,personal_email,{{resourceId}}'),
 
             Text::make('GTID')
                 ->hideFromIndex()
