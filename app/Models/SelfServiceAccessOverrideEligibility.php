@@ -12,12 +12,12 @@ class SelfServiceAccessOverrideEligibility
     public bool $eligible;
 
     /**
-     * @var bool If is false, this variable indicates whether the user could become eligible by themselves.
+     * @var bool If $eligible is false, this variable indicates whether the user could become eligible by themselves.
      */
     public bool $user_rectifiable;
 
     /**
-     * @var string If is false, this summarizes why the user is ineligible for a self-service override.
+     * @var string If $eligible is false, this summarizes why the user is ineligible for a self-service override.
      */
     public string $ineligible_reason;
 
