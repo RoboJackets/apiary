@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Jobs\CreateDuesAreLiveNotificationsInNova;
 use App\Jobs\DuesPackageSync;
 use App\Models\DuesPackage;
 
@@ -11,6 +12,7 @@ class DuesPackageObserver
 {
     public function saved(DuesPackage $package): void
     {
+        CreateDuesAreLiveNotificationsInNova::dispatch();
         DuesPackageSync::dispatch($package);
 
         if (null !== $package->access_start && $package->access_start > date('Y-m-d H:i:s')) {

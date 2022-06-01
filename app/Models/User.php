@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
@@ -23,6 +24,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Scout\Searchable;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
@@ -37,7 +39,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $id
  * @property string $uid
  * @property int $gtid
- * @property string|null $slack_id
  * @property string|null $github_username
  * @property string|null $gmail_address
  * @property string|null $clickup_email
@@ -46,7 +47,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $autodesk_email
  * @property bool $autodesk_invite_pending
  * @property string $gt_email
- * @property string|null $personal_email
  * @property string $first_name
  * @property string|null $middle_name
  * @property string $last_name
@@ -166,14 +166,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereJoinSemester($value)
  * @method static Builder|User whereLastName($value)
  * @method static Builder|User whereMiddleName($value)
- * @method static Builder|User wherePersonalEmail($value)
  * @method static Builder|User wherePhone($value)
  * @method static Builder|User wherePoloSize($value)
  * @method static Builder|User wherePreferredName($value)
  * @method static Builder|User wherePrimaryAffiliation($value)
  * @method static Builder|User whereResumeDate($value)
  * @method static Builder|User whereShirtSize($value)
- * @method static Builder|User whereSlackId($value)
  * @method static Builder|User whereUid($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @method static QueryBuilder|User withTrashed()
@@ -281,7 +279,6 @@ class User extends Authenticatable
         'last_name',
         'uid',
         'gt_email',
-        'personal_email',
         'gmail_address',
         'clickup_email',
         'autodesk_email',
@@ -845,6 +842,16 @@ class User extends Authenticatable
                 }
             )
             ->exists();
+    }
+
+    /**
+     * Get the Nova notifications for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\Laravel\Nova\Notifications\Notification>
+     */
+    public function novaNotifications(): MorphMany
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
     }
 
     /**

@@ -40,27 +40,6 @@
           </div>
 
           <div class="form-group row">
-            <label for="user-personalemail" class="col-sm-2 col-form-label">Personal Email</label>
-            <div class="col-sm-10 col-lg-4">
-              <input
-                  v-model="user.personal_email"
-                  type="email"
-                  class="form-control"
-                  id="user-personalemail"
-                  placeholder="None on record"
-                  :class="{ 'is-invalid': $v.user.personal_email.$error }"
-                  @input="$v.user.personal_email.$touch()">
-              <div class="invalid-feedback" v-if="!$v.user.personal_email.notGTEmail">
-                Personal email cannot be a GT email address
-              </div>
-              <div class="invalid-feedback" v-if="!$v.user.personal_email.email">
-                Must be a valid email address
-              </div>
-            </div>
-
-          </div>
-
-          <div class="form-group row">
             <label for="user-phone" class="col-sm-2 col-form-label">Phone Number</label>
             <div class="col-sm-10 col-lg-4">
               <input
@@ -383,7 +362,6 @@ export default {
   },
   validations: {
     user: {
-      personal_email: { email, notGTEmail },
       phone: { maxLength: maxLength(15) },
       preferred_first_name: { alpha },
       shirt_size: {},

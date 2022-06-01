@@ -40,7 +40,7 @@ class Confirmation extends Mailable
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
             ->withSymfonyMessage(static function (Email $message): void {
-                $message->getHeaders()->addTextHeader('Reply-To', 'RoboJackets <treasurer@robojackets.org>');
+                $message->replyTo('RoboJackets <treasurer@robojackets.org>');
             })->subject('[RoboJackets] Payment Processed')
             ->markdown('mail.payment.confirmation');
     }
