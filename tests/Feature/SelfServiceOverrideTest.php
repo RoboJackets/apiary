@@ -41,7 +41,7 @@ class SelfServiceOverrideTest extends TestCase
             'access_end' => $base_date->addMonth(),
             'cost' => $cost,
             'available_for_purchase' => true,
-            'name' => 'Test dues package - ' . bin2hex(openssl_random_pseudo_bytes(4)),
+            'name' => 'Test dues package - '.bin2hex(openssl_random_pseudo_bytes(4)),
             'restricted_to_students' => false,
         ]);
 
@@ -51,17 +51,17 @@ class SelfServiceOverrideTest extends TestCase
     public function create_dues_transaction_for_user(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
     {
         $dues_transaction = DuesTransaction::create([
-            "dues_package_id" => $dues_package->id,
-            "user_id" => $user->id,
+            'dues_package_id' => $dues_package->id,
+            'user_id' => $user->id,
         ]);
 
         if ($paid) {
             Payment::create([
-                "payable_type" => "dues-transaction",
-                "payable_id" => $dues_transaction->id,
-                "amount" => $dues_package->cost,
-                "processing_fee" => 0,
-                "method" => "cash",
+                'payable_type' => 'dues-transaction',
+                'payable_id' => $dues_transaction->id,
+                'amount' => $dues_package->cost,
+                'processing_fee' => 0,
+                'method' => 'cash',
             ]);
         }
 
@@ -168,7 +168,8 @@ class SelfServiceOverrideTest extends TestCase
             $user->self_service_override_eligibility);
     }
 
-    public function test_user_with_active_paid_dues_not_eligible() {
+    public function test_user_with_active_paid_dues_not_eligible()
+    {
         $user = $this->getTestUser(['non-member']);
         $dues_package = $this->create_dues_package(CarbonImmutable::now());
         $this->create_dues_transaction_for_user($dues_package, $user, true);
@@ -183,7 +184,8 @@ class SelfServiceOverrideTest extends TestCase
             $user->self_service_override_eligibility);
     }
 
-    public function test_no_future_dues_package() {
+    public function test_no_future_dues_package()
+    {
         $user = $this->getTestUser(['non-member']);
 
         // No dues packages at all
