@@ -7,23 +7,12 @@ namespace App\Notifications;
 use App\Mail\DuesPaymentDue as DuesPaymentDueMailable;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class DuesPaymentDue extends Notification implements ShouldQueue, ShouldBeUnique
+class DuesPaymentDue extends Notification implements ShouldQueue
 {
     use Queueable;
-
-    private int $userId;
-
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(User $user)
-    {
-        $this->userId = $user->id;
-    }
 
     /**
      * Get the notification's delivery channels.
@@ -70,13 +59,5 @@ class DuesPaymentDue extends Notification implements ShouldQueue, ShouldBeUnique
         return [
             'mail' => now()->addHours(48)->hour(10)->minute(0)->second(0),
         ];
-    }
-
-    /**
-     * The unique ID of the job.
-     */
-    public function uniqueId(): string
-    {
-        return strval($this->userId);
     }
 }
