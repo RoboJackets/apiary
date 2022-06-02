@@ -104,7 +104,7 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
-     * @param  CarbonImmutable  $override_until
+     * @param CarbonImmutable|null $override_until
      * @return SelfServiceAccessOverrideEligibility
      */
     public function setOverrideUntil(?CarbonImmutable $override_until): SelfServiceAccessOverrideEligibility
@@ -168,7 +168,7 @@ class SelfServiceAccessOverrideEligibility
     public function getRemainingTasks(): array
     {
         $remainingTasks = $this->removeFalsyAssocArrayValues($this->required_tasks);
-        if (! $remainingTasks) {
+        if (! count($remainingTasks)) {
             return ['None'];
         }
 
@@ -178,7 +178,7 @@ class SelfServiceAccessOverrideEligibility
     public function getUnmetConditions(): array
     {
         $remainingConditions = $this->removeFalsyAssocArrayValues($this->required_conditions);
-        if (! $remainingConditions) {
+        if (! count($remainingConditions)) {
             return ['None'];
         }
 
