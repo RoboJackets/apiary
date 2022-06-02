@@ -85,6 +85,9 @@ class Payment extends Model
     use HasFactory;
     use SoftDeletes;
 
+    private const PER_TRANSACTION_FEE = 30;  // cents
+    private const PERCENTAGE_FEE = 2.9;
+
     /**
      * The accessors to append to the model's array form.
      *
@@ -161,5 +164,14 @@ class Payment extends Model
     public static function generateUniqueId(): string
     {
         return bin2hex(openssl_random_pseudo_bytes(32));
+    }
+
+    public static function calculateSurcharge(int $amount): int
+    {
+        return (int) round(
+            (($amount + self::PER_TRANSACTION_FEE) / ((100 - self::PERCENTAGE_FEE) / 100)) - $amount,
+            0,
+            PHP_ROUND_HALF_UP
+        );
     }
 }

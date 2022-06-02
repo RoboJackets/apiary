@@ -11,7 +11,6 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Merchandise;
 use App\Models\User;
-use App\Notifications\Dues\RequestCompleteNotification as Confirm;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -184,8 +183,6 @@ class DuesTransactionController extends Controller
                 $dbTransact->merchandise()->attach(Merchandise::find($merch));
             });
         }
-
-        $user->notify(new Confirm($dbTransact->package));
 
         $dbTransact = new DuesTransactionResource($dbTransact);
 

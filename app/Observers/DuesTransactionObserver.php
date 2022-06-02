@@ -7,6 +7,7 @@ namespace App\Observers;
 use App\Jobs\CreateDuesPaymentDueNotificationInNova;
 use App\Jobs\PruneDuesNotificationsInNova;
 use App\Models\DuesTransaction;
+use App\Notifications\DuesPaymentDue;
 
 class DuesTransactionObserver
 {
@@ -14,5 +15,6 @@ class DuesTransactionObserver
     {
         CreateDuesPaymentDueNotificationInNova::dispatch($duesTransaction->user);
         PruneDuesNotificationsInNova::dispatch($duesTransaction->user);
+        $duesTransaction->user->notify(new DuesPaymentDue($duesTransaction->user));
     }
 }
