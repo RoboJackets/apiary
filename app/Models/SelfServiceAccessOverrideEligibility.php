@@ -104,7 +104,7 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
-     * @param CarbonImmutable|null $override_until
+     * @param  CarbonImmutable|null  $override_until
      * @return SelfServiceAccessOverrideEligibility
      */
     public function setOverrideUntil(?CarbonImmutable $override_until): SelfServiceAccessOverrideEligibility
