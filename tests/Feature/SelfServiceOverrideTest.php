@@ -24,7 +24,7 @@ class SelfServiceOverrideTest extends TestCase
     /**
      * Shortcut to create a dummy dues package.
      *
-     * @param  CarbonImmutable|null  $base_date  Base date around which the dues package's validity periods will be defined
+     * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
      * @param  float  $cost
      * @return DuesPackage
      */

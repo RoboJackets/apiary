@@ -57,7 +57,7 @@ parameters:
     - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return string\|null but returns mixed\.#'
     - '#Method App\\Models\\[a-zA-Z]+::getMorphClassStatic\(\) should return string but returns int\|string\|false\.#'
     - '#Method App\\Models\\[a-zA-Z]+::removeFalsyAssocArrayValues\(\) has parameter \$arr with no value type specified in iterable type array\.#'
-    - '#Method App\\Models\[a-zA-Z]+::removeFalsyAssocArrayValues\(\) return type has no value type specified in iterable type array\.#'
+    - '#Method App\\Models\\[a-zA-Z]+::removeFalsyAssocArrayValues\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Models\\[a-zA-Z]+::toSearchableArray\(\) should return array<string, int\|string> but returns array\.#'
     - '#Method App\\Notifiables\\[a-zA-Z]+::[a-zA-Z]+\(\) should return string\|null but returns mixed\.#'
     - '#Method App\\Notifications\\ExpiringPersonalAccessTokenNotification::toArray\(\) return type has no value type specified in iterable type array\.#'
