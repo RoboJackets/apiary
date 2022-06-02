@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\User;
-use App\Notifications\DuesPaymentDue;
+use App\Notifications\DuesPaymentReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendDuesPaymentDueNotification implements ShouldQueue, ShouldBeUnique
+class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -38,7 +38,7 @@ class SendDuesPaymentDueNotification implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        $this->user->notify(new DuesPaymentDue());
+        $this->user->notify(new DuesPaymentReminder());
     }
 
     /**

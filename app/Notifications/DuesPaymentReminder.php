@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
-use App\Mail\DuesPaymentDue as DuesPaymentDueMailable;
+use App\Mail\DuesPaymentReminder as DuesPaymentReminderMailable;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class DuesPaymentDue extends Notification implements ShouldQueue
+class DuesPaymentReminder extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -29,11 +29,11 @@ class DuesPaymentDue extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  User  $user
-     * @return \App\Mail\DuesPaymentDue
+     * @return \App\Mail\DuesPaymentReminder
      */
-    public function toMail(User $user): DuesPaymentDueMailable
+    public function toMail(User $user): DuesPaymentReminderMailable
     {
-        return new DuesPaymentDueMailable($user->dues()->orderByDesc('updated_at')->first());
+        return new DuesPaymentReminderMailable($user->dues()->orderByDesc('updated_at')->first());
     }
 
     /**
@@ -46,18 +46,5 @@ class DuesPaymentDue extends Notification implements ShouldQueue
     public function shouldSend(User $user, string $channel)
     {
         return ! $user->is_active;
-    }
-
-    /**
-     * Determine the notification's delivery delay.
-     *
-     * @param  User  $user
-     * @return array<string, \Carbon\Carbon>
-     */
-    public function withDelay(User $user)
-    {
-        return [
-            'mail' => now()->addHours(48)->hour(10)->minute(0)->second(0),
-        ];
     }
 }

@@ -6,7 +6,7 @@ namespace App\Observers;
 
 use App\Jobs\CreateDuesPaymentDueNotificationInNova;
 use App\Jobs\PruneDuesNotificationsInNova;
-use App\Jobs\SendDuesPaymentDueNotification;
+use App\Jobs\SendDuesPaymentReminder;
 use App\Models\DuesTransaction;
 
 class DuesTransactionObserver
@@ -17,7 +17,7 @@ class DuesTransactionObserver
 
         PruneDuesNotificationsInNova::dispatch($duesTransaction->user);
 
-        SendDuesPaymentDueNotification::dispatch($duesTransaction->user)
+        SendDuesPaymentReminder::dispatch($duesTransaction->user)
             ->delay(now()->addHours(48)->hour(10)->startOfHour());
     }
 }
