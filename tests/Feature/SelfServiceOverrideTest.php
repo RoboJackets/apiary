@@ -28,8 +28,8 @@ class SelfServiceOverrideTest extends TestCase
         }
 
         $fy = FiscalYear::firstOrCreate([
-                'ending_year' => $base_date->year,
-            ]);
+            'ending_year' => $base_date->year,
+        ]);
 
         $pkg = DuesPackage::create([
             'fiscal_year_id' => $fy->id,

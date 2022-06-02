@@ -109,7 +109,7 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Get the date on which the self-service override would/will expire.
      *
-     * @return  CarbonImmutable|null
+     * @return CarbonImmutable|null
      */
     public function getOverrideUntil(): ?CarbonImmutable
     {
@@ -219,7 +219,6 @@ class SelfServiceAccessOverrideEligibility
 
         return $remainingConditions;
     }
-
 
     /**
      * Returns a string representation of the current status of this user's eligibility for a self-service override.
