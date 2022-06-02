@@ -964,9 +964,11 @@ class User extends Authenticatable
     {
         $ineligibleReason = 'Unable to provide a self-service override at this time';
 
+        // phpcs:ignore
         $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are '.
             'no dues packages with future access end dates';
         $INELIGIBLE_REQ_CONDS = 'Account and system conditions for self-service override not met';
+        // phpcs:ignore
         $INELIGIBLE_REQ_TASKS = 'You have outstanding required tasks that must be completed before receiving your '.
             'self-service override';
 
