@@ -243,7 +243,7 @@ class UserController extends Controller
         $overrideEndDate = $overrideEligibility->override_until;
 
         if ($overrideEligibility->eligible && ! $request->boolean('preview')) {
-            Log::info("Applying self-service access override for $requestingUser->uid until $overrideEndDate");
+            Log::info("Applying self-service access override for " . $requestingUser->uid . " until " . $overrideEndDate);
             $requestingUser->access_override_until = $overrideEndDate;
             $requestingUser->access_override_by_id = $request->user()->id;
             $requestingUser->save();

@@ -10,32 +10,24 @@ class SelfServiceAccessOverrideEligibility
 {
     /**
      * Indicates if the user is currently eligible for a self-service override.
-     *
-     * @var bool
      */
     public bool $eligible;
 
     /**
      * If user is not eligible for a self-service override, this variable indicates whether the user could
      * become eligible by themselves.
-     *
-     * @var bool
      */
     public bool $user_rectifiable;
 
     /**
      * If user is not eligible for a self-service override, this summarizes why the user is ineligible for a
      * self-service override.
-     *
-     * @var string
      */
     public string $ineligible_reason;
 
     /**
      * The date the user's self-service override would end, if they were eligible and applied
      * it at this instant. May be null if an self-service override end date cannot be provided.
-     *
-     * @var CarbonImmutable|null
      */
     public ?CarbonImmutable $override_until;
 
@@ -178,8 +170,8 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Remove each element of an associative array whose value is falsy.
      *
-     * @param  array<  $arr  An associative array to filter
-     * @return array A 1D array of the truthy values in $arr
+     * @param  array  $arr  An associative array to filter
+     * @return array A 1D array of the truthy values in the input array
      */
     private function removeFalsyAssocArrayValues(array $arr): array
     {
@@ -192,7 +184,7 @@ class SelfServiceAccessOverrideEligibility
      * Return an array of the incomplete required tasks for the user to potentially (if all required conditions are also
      * satisfied) become eligible for a self-service override.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRemainingTasks(): array
     {
@@ -208,7 +200,7 @@ class SelfServiceAccessOverrideEligibility
      * Return an array of the unsatisfied required conditions for the user to potentially (if all required tasks are
      * also completed) become eligible for a self-service override.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getUnmetConditions(): array
     {
@@ -235,9 +227,9 @@ class SelfServiceAccessOverrideEligibility
         $unmet_conditions = implode(', ', $this->getUnmetConditions());
 
         if ($this->isUserRectifiable()) {
-            return "Eligible if remaining required tasks are completed. Incomplete tasks: $remaining_tasks.";
+            return "Eligible if remaining required tasks are completed. Incomplete tasks: " . $remaining_tasks . ".";
         }
 
-        return "Ineligible. Unmet conditions: $unmet_conditions. Incomplete tasks: $remaining_tasks.";
+        return "Ineligible. Unmet conditions: " . $unmet_conditions . ". Incomplete tasks: " . $remaining_tasks . ".";
     }
 }

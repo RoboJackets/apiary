@@ -21,15 +21,21 @@ use Tests\TestCase;
 
 class SelfServiceOverrideTest extends TestCase
 {
-    public function createDuesPackage(?CarbonImmutable $base_date, int $cost = 10)
+
+    /**
+     * Shortcut to create a dummy dues package.
+     *
+     * @param CarbonImmutable|null $base_date Base date around which the dues package's validity periods will be defined
+     * @param float $cost
+     * @return mixed
+     */
+    public function createDuesPackage(?CarbonImmutable $base_date, float $cost = 10): DuesPackage
     {
         if (null === $base_date) {
             $base_date = CarbonImmutable::now();
         }
 
-        $fy = FiscalYear::firstOrCreate([
-            'ending_year' => $base_date->year,
-        ]);
+        $fy = FiscalYear::firstOrCreate(['ending_year' => $base_date->year]);
 
         $pkg = DuesPackage::create([
             'fiscal_year_id' => $fy->id,
@@ -46,6 +52,14 @@ class SelfServiceOverrideTest extends TestCase
         return $pkg;
     }
 
+    /**
+     * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
+     *
+     * @param DuesPackage $dues_package
+     * @param User $user
+     * @param bool $paid
+     * @return DuesTransaction
+     */
     public function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
     {
         $dues_transaction = DuesTransaction::create([
@@ -66,6 +80,13 @@ class SelfServiceOverrideTest extends TestCase
         return $dues_transaction;
     }
 
+    /**
+     * Shortcut to create a (optionally signed/completed) membership agreement signature for a given test user.
+     *
+     * @param User $signer_user
+     * @param bool $completed
+     * @return Signature
+     */
     public function createMembershipAgreementSignature(User $signer_user, bool $completed): Signature
     {
         if (0 === MembershipAgreementTemplate::count()) {
@@ -272,6 +293,6 @@ class SelfServiceOverrideTest extends TestCase
             'Future dues package must exist',
             $user->self_service_override_eligibility->getUnmetConditions(),
             (string) $user->self_service_override_eligibility
-            );
+        );
     }
 }
