@@ -26,7 +26,7 @@ class SelfServiceOverrideTest extends TestCase
      *
      * @param  CarbonImmutable|null  $base_date  Base date around which the dues package's validity periods will be defined
      * @param  float  $cost
-     * @return mixed
+     * @return DuesPackage
      */
     public function createDuesPackage(?CarbonImmutable $base_date, float $cost = 10): DuesPackage
     {

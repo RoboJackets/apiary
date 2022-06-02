@@ -65,7 +65,7 @@ class SelfServiceAccessOverrideEligibility
     /**
      * Replace the value of the required tasks array.
      *
-     * @param  array  $required_tasks
+     * @param  array<string, bool>  $required_tasks
      * @return SelfServiceAccessOverrideEligibility
      */
     public function setRequiredTasks(array $required_tasks): SelfServiceAccessOverrideEligibility
