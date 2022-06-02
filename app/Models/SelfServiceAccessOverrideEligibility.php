@@ -227,9 +227,9 @@ class SelfServiceAccessOverrideEligibility
         $unmet_conditions = implode(', ', $this->getUnmetConditions());
 
         if ($this->isUserRectifiable()) {
-            return "Eligible if remaining required tasks are completed. Incomplete tasks: " . $remaining_tasks . ".";
+            return 'Eligible if remaining required tasks are completed. Incomplete tasks: '.$remaining_tasks.'.';
         }
 
-        return "Ineligible. Unmet conditions: " . $unmet_conditions . ". Incomplete tasks: " . $remaining_tasks . ".";
+        return 'Ineligible. Unmet conditions: '.$unmet_conditions.'. Incomplete tasks: '.$remaining_tasks.'.';
     }
 }

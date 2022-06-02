@@ -21,12 +21,11 @@ use Tests\TestCase;
 
 class SelfServiceOverrideTest extends TestCase
 {
-
     /**
      * Shortcut to create a dummy dues package.
      *
-     * @param CarbonImmutable|null $base_date Base date around which the dues package's validity periods will be defined
-     * @param float $cost
+     * @param  CarbonImmutable|null  $base_date  Base date around which the dues package's validity periods will be defined
+     * @param  float  $cost
      * @return mixed
      */
     public function createDuesPackage(?CarbonImmutable $base_date, float $cost = 10): DuesPackage
@@ -55,9 +54,9 @@ class SelfServiceOverrideTest extends TestCase
     /**
      * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
      *
-     * @param DuesPackage $dues_package
-     * @param User $user
-     * @param bool $paid
+     * @param  DuesPackage  $dues_package
+     * @param  User  $user
+     * @param  bool  $paid
      * @return DuesTransaction
      */
     public function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
@@ -83,8 +82,8 @@ class SelfServiceOverrideTest extends TestCase
     /**
      * Shortcut to create a (optionally signed/completed) membership agreement signature for a given test user.
      *
-     * @param User $signer_user
-     * @param bool $completed
+     * @param  User  $signer_user
+     * @param  bool  $completed
      * @return Signature
      */
     public function createMembershipAgreementSignature(User $signer_user, bool $completed): Signature
