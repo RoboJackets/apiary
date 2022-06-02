@@ -964,11 +964,9 @@ class User extends Authenticatable
     {
         $ineligibleReason = 'Unable to provide a self-service override at this time';
 
-        $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are '.
-            'no dues packages with future access end dates';
+        $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are no dues packages with future access end dates';
         $INELIGIBLE_REQ_CONDS = 'Account and system conditions for self-service override not met';
-        $INELIGIBLE_REQ_TASKS = 'You have outstanding required tasks that must be completed before receiving your '.
-            'self-service override';
+        $INELIGIBLE_REQ_TASKS = 'You have outstanding required tasks that must be completed before receiving your self-service override';
 
         $now = CarbonImmutable::now();
         $nextAccessEndDuesPkg = DuesPackage::where('access_end', '>', $now)->get()->sortBy('access_end')->first();
@@ -981,9 +979,9 @@ class User extends Authenticatable
 
         // conditions
         $accessNotActive = ! $this->is_access_active;
-        $noExistingOverride = is_null($this->access_override_until);
+        $noExistingOverride = null === $this->access_override_until;
         $hasNotPaidDues = ! $this->paidDues()->exists();
-        $eligibleDuesPkgExists = ! is_null($nextAccessEndDuesPkg);
+        $eligibleDuesPkgExists = null !== $nextAccessEndDuesPkg;
 
         // tasks
         $attendedTeamMeeting = $this->attendance()->whereAttendableType('team')->exists();

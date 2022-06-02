@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Attendance;
@@ -19,19 +21,15 @@ use Tests\TestCase;
 
 class SelfServiceOverrideTest extends TestCase
 {
-    public function create_dues_package(?CarbonImmutable $base_date, int $cost = 10)
+    public function createDuesPackage(?CarbonImmutable $base_date, int $cost = 10)
     {
-        if (is_null($base_date)) {
+        if (null === $base_date) {
             $base_date = CarbonImmutable::now();
         }
 
-        if (FiscalYear::count() == 0) {
-            $fy = FiscalYear::create([
+        $fy = FiscalYear::firstOrCreate([
                 'ending_year' => $base_date->year,
             ]);
-        } else {
-            $fy = FiscalYear::first();
-        }
 
         $pkg = DuesPackage::create([
             'fiscal_year_id' => $fy->id,
@@ -48,7 +46,7 @@ class SelfServiceOverrideTest extends TestCase
         return $pkg;
     }
 
-    public function create_dues_transaction_for_user(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
+    public function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
     {
         $dues_transaction = DuesTransaction::create([
             'dues_package_id' => $dues_package->id,
@@ -68,9 +66,9 @@ class SelfServiceOverrideTest extends TestCase
         return $dues_transaction;
     }
 
-    public function create_membership_agreement_signature(User $signer_user, bool $completed): Signature
+    public function createMembershipAgreementSignature(User $signer_user, bool $completed): Signature
     {
-        if (MembershipAgreementTemplate::count() === 0) {
+        if (0 === MembershipAgreementTemplate::count()) {
             $this->seed(MembershipAgreementTemplateSeeder::class);
         }
 
@@ -93,24 +91,36 @@ class SelfServiceOverrideTest extends TestCase
      *
      * @return void
      */
-    public function test_override_eligibilty_tasks(): void
+    public function testOverrideEligibiltyTasks(): void
     {
         Notification::fake();
 
         $user = $this->getTestUser(['non-member']);
-        $this->create_dues_package(CarbonImmutable::now());
+        $this->createDuesPackage(CarbonImmutable::now());
 
-        $this->assertFalse($user->self_service_override_eligibility->eligible, $user->self_service_override_eligibility);
-        $this->assertTrue($user->self_service_override_eligibility->user_rectifiable, $user->self_service_override_eligibility);
-        $this->assertContains('None',
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertTrue(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
-        $this->assertContains('Attend a team meeting',
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Attend a team meeting',
             $user->self_service_override_eligibility->getRemainingTasks(),
-            $user->self_service_override_eligibility);
-        $this->assertContains('Sign the membership agreement',
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Sign the membership agreement',
             $user->self_service_override_eligibility->getRemainingTasks(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+        );
 
         $this->seed(TeamsSeeder::class);
         $team = Team::first();
@@ -120,32 +130,49 @@ class SelfServiceOverrideTest extends TestCase
             'gtid' => $user->gtid,
         ]);
 
-        $this->assertFalse($user->self_service_override_eligibility->eligible, $user->self_service_override_eligibility);
-        $this->assertTrue($user->self_service_override_eligibility->user_rectifiable, $user->self_service_override_eligibility);
-        $this->assertContains('None',
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertTrue(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
-        $this->assertContains('Sign the membership agreement',
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Sign the membership agreement',
             $user->self_service_override_eligibility->getRemainingTasks(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+        );
 
-        $this->create_membership_agreement_signature($user, true);
+        $this->createMembershipAgreementSignature($user, true);
 
-        $this->assertTrue($user->self_service_override_eligibility->eligible, $user->self_service_override_eligibility);
-        $this->assertContains('None',
+        $this->assertTrue(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
-        $this->assertContains('None',
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
             $user->self_service_override_eligibility->getRemainingTasks(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+        );
     }
 
-    public function test_user_with_override_not_eligible_for_self_service_override()
+    public function testUserWithOverrideNotEligibleForSelfServiceOverride()
     {
         Notification::fake();
 
         $user = $this->getTestUser(['non-member']);
-        $this->create_dues_package(CarbonImmutable::now());
+        $this->createDuesPackage(CarbonImmutable::now());
 
         $this->seed(TeamsSeeder::class);
         $team = Team::first();
@@ -155,60 +182,96 @@ class SelfServiceOverrideTest extends TestCase
             'gtid' => $user->gtid,
         ]);
 
-        $this->create_membership_agreement_signature($user, true);
+        $this->createMembershipAgreementSignature($user, true);
         $admin = $this->getTestUser(['admin'], 'admin3');
 
         $user->access_override_by_id = $admin->id;
         $user->access_override_until = CarbonImmutable::now()->subMonth();
 
-        $this->assertFalse($user->self_service_override_eligibility->eligible, $user->self_service_override_eligibility);
-        $this->assertFalse($user->self_service_override_eligibility->user_rectifiable, $user->self_service_override_eligibility);
-        $this->assertContains('Must have no previous access override',
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertFalse(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Must have no previous access override',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+        );
     }
 
-    public function test_user_with_active_paid_dues_not_eligible()
+    public function testUserWithActivePaidDuesNotEligible()
     {
         $user = $this->getTestUser(['non-member']);
-        $dues_package = $this->create_dues_package(CarbonImmutable::now());
-        $this->create_dues_transaction_for_user($dues_package, $user, true);
+        $dues_package = $this->createDuesPackage(CarbonImmutable::now());
+        $this->createDuesTransactionForUser($dues_package, $user, true);
 
-        $this->assertFalse($user->self_service_override_eligibility->eligible, $user->self_service_override_eligibility);
-        $this->assertFalse($user->self_service_override_eligibility->user_rectifiable, $user->self_service_override_eligibility);
-        $this->assertContains('Access must not be active',
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertFalse(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Access must not be active',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
-        $this->assertContains('Must have no prior dues payments',
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Must have no prior dues payments',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+        );
     }
 
-    public function test_no_future_dues_package()
+    public function testNoFutureDuesPackage()
     {
         $user = $this->getTestUser(['non-member']);
 
         // No dues packages at all
-        $this->assertFalse($user->self_service_override_eligibility->eligible, $user->self_service_override_eligibility);
-        $this->assertFalse($user->self_service_override_eligibility->user_rectifiable, $user->self_service_override_eligibility);
-        $this->assertContains('Future dues package must exist',
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertFalse(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Future dues package must exist',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+        );
 
         // Only dues packages in the past exist
-        $this->create_dues_package(CarbonImmutable::now()->subYear());
+        $this->createDuesPackage(CarbonImmutable::now()->subYear());
 
-        $this->assertFalse($user->self_service_override_eligibility->eligible, $user->self_service_override_eligibility);
-        $this->assertFalse($user->self_service_override_eligibility->user_rectifiable, $user->self_service_override_eligibility);
-        $this->assertContains('Future dues package must exist',
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertFalse(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Future dues package must exist',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+        );
 
         // A future dues package exists
         // Only dues packages in the past exist
-        $this->create_dues_package(CarbonImmutable::now()->addYear());
-        $this->assertNotContains('Future dues package must exist',
+        $this->createDuesPackage(CarbonImmutable::now()->addYear());
+        $this->assertNotContains(
+            'Future dues package must exist',
             $user->self_service_override_eligibility->getUnmetConditions(),
-            $user->self_service_override_eligibility);
+            (string) $user->self_service_override_eligibility
+            );
     }
 }

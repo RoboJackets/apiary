@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\CarbonImmutable;
@@ -7,44 +9,58 @@ use Carbon\CarbonImmutable;
 class SelfServiceAccessOverrideEligibility
 {
     /**
-     * @var bool Indicates if the user is currently eligible for a self-service override.
+     * Indicates if the user is currently eligible for a self-service override.
+     *
+     * @var bool
      */
     public bool $eligible;
 
     /**
-     * @var bool If user is not eligible for a self-service override, this variable indicates whether the user could
-     *           become eligible by themselves.
+     * If user is not eligible for a self-service override, this variable indicates whether the user could
+     * become eligible by themselves.
+     *
+     * @var bool
      */
     public bool $user_rectifiable;
 
     /**
-     * @var string If user is not eligible for a self-service override, this summarizes why the user is ineligible for a
-     *             self-service override.
+     * If user is not eligible for a self-service override, this summarizes why the user is ineligible for a
+     * self-service override.
+     *
+     * @var string
      */
     public string $ineligible_reason;
 
     /**
-     * @var CarbonImmutable|null The date the user's self-service override would end, if they were eligible and applied
-     *                           it at this instant. May be null if an self-service override end date cannot be provided.
+     * The date the user's self-service override would end, if they were eligible and applied
+     * it at this instant. May be null if an self-service override end date cannot be provided.
+     *
+     * @var CarbonImmutable|null
      */
     public ?CarbonImmutable $override_until;
 
     /**
-     * @var array An associative (string => bool) array of required tasks and their completion statuses. Array element
-     *            values should be set to true if the task has been completed, or false otherwise. All tasks must be completed to
-     *            receive a self-service override.
+     * An associative (string => bool) array of required tasks and their completion statuses. Array element
+     * values should be set to true if the task has been completed, or false otherwise. All tasks must be completed to
+     * receive a self-service override.
+     *
+     * @var array<string, bool>
      */
     public array $required_tasks = [];
 
     /**
-     * @var array An associative (string => bool) array of required system conditions and whether they are currently
-     *            satisfied. Array element values should be set to true if the condition is currently satisfied, or false
-     *            otherwise. All conditions must be satisfied (i.e., true) to receive a self-service override.
+     * An associative (string => bool) array of required system conditions and whether they are currently
+     * satisfied. Array element values should be set to true if the condition is currently satisfied, or false
+     * otherwise. All conditions must be satisfied (i.e., true) to receive a self-service override.
+     *
+     * @var array<string, bool>
      */
     public array $required_conditions = [];
 
     /**
-     * @param  array  $required_conditions
+     * Replace the value of the required conditions array.
+     *
+     * @param  array<string, bool>  $required_conditions
      * @return SelfServiceAccessOverrideEligibility
      */
     public function setRequiredConditions(array $required_conditions): SelfServiceAccessOverrideEligibility
@@ -55,17 +71,8 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
-     * @param  bool  $eligible
-     * @return SelfServiceAccessOverrideEligibility
-     */
-    public function setEligible(bool $eligible): SelfServiceAccessOverrideEligibility
-    {
-        $this->eligible = $eligible;
-
-        return $this;
-    }
-
-    /**
+     * Replace the value of the required tasks array.
+     *
      * @param  array  $required_tasks
      * @return SelfServiceAccessOverrideEligibility
      */
@@ -77,6 +84,8 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
+     * Indicates whether the user can become eligible for a self-service override.
+     *
      * @return bool
      */
     public function isUserRectifiable(): bool
@@ -85,6 +94,8 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
+     * Set whether the user can become eligible for a self-service override.
+     *
      * @param  bool  $user_rectifiable
      * @return SelfServiceAccessOverrideEligibility
      */
@@ -96,14 +107,18 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
-     * @return CarbonImmutable
+     * Get the date on which the self-service override would/will expire.
+     *
+     * @return  CarbonImmutable|null
      */
-    public function getOverrideUntil(): CarbonImmutable
+    public function getOverrideUntil(): ?CarbonImmutable
     {
         return $this->override_until;
     }
 
     /**
+     * Set the date on which the self-service override would/will expire.
+     *
      * @param  CarbonImmutable|null  $override_until
      * @return SelfServiceAccessOverrideEligibility
      */
@@ -115,6 +130,8 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
+     * Indicates whether the user is eligible for a self-service override right now.
+     *
      * @return bool
      */
     public function isEligible(): bool
@@ -123,6 +140,8 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
+     * Set whether the user is eligible for a self-service override right now.
+     *
      * @param  bool  $is_eligible
      * @return SelfServiceAccessOverrideEligibility
      */
@@ -134,6 +153,8 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
+     * Returns a simple explanation of why the user is currently ineligible for a self-service override.
+     *
      * @return string
      */
     public function getIneligibleReason(): string
@@ -142,6 +163,8 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
+     * Set a simple explanation of why the user is currently ineligible for a self-service override.
+     *
      * @param  string  $ineligible_reason
      * @return SelfServiceAccessOverrideEligibility
      */
@@ -153,39 +176,57 @@ class SelfServiceAccessOverrideEligibility
     }
 
     /**
-     * Remove elements of an associative array where the element's value is falsy.
+     * Remove each element of an associative array whose value is falsy.
      *
-     * @param  array  $arr  An associative array to filter
+     * @param  array<  $arr  An associative array to filter
      * @return array A 1D array of the truthy values in $arr
      */
     private function removeFalsyAssocArrayValues(array $arr): array
     {
-        $falsy_vals = array_map(fn ($k, $v) => ! $v ? $k : null, array_keys($arr), array_values($arr));
+        $falsy_vals = array_map(static fn ($k, $v) => ! $v ? $k : null, array_keys($arr), array_values($arr));
 
         return array_filter($falsy_vals);
     }
 
+    /**
+     * Return an array of the incomplete required tasks for the user to potentially (if all required conditions are also
+     * satisfied) become eligible for a self-service override.
+     *
+     * @return string[]
+     */
     public function getRemainingTasks(): array
     {
         $remainingTasks = $this->removeFalsyAssocArrayValues($this->required_tasks);
-        if (! count($remainingTasks)) {
+        if (0 === count($remainingTasks)) {
             return ['None'];
         }
 
         return $remainingTasks;
     }
 
+    /**
+     * Return an array of the unsatisfied required conditions for the user to potentially (if all required tasks are
+     * also completed) become eligible for a self-service override.
+     *
+     * @return string[]
+     */
     public function getUnmetConditions(): array
     {
         $remainingConditions = $this->removeFalsyAssocArrayValues($this->required_conditions);
-        if (! count($remainingConditions)) {
+        if (0 === count($remainingConditions)) {
             return ['None'];
         }
 
         return $remainingConditions;
     }
 
-    public function __toString()
+
+    /**
+     * Returns a string representation of the current status of this user's eligibility for a self-service override.
+     *
+     * @return string
+     */
+    public function __toString(): string
     {
         if ($this->eligible) {
             return 'Eligible';

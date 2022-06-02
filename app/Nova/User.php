@@ -149,8 +149,8 @@ class User extends Resource
                     BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
                         ->onlyOnDetail(),
 
-                    Text::make('Self-Service Override', function ($user) {
-                        if ($user->has_active_override && $user->access_override_by_id == $user->id) {
+                    Text::make('Self-Service Override', static function (User $user) {
+                        if ($user->has_active_override && $user->access_override_by_id === $user->id) {
                             return 'Active';
                         }
 
