@@ -68,7 +68,7 @@ class DuesPaymentDue extends Notification implements ShouldQueue, ShouldBeUnique
     public function withDelay(User $user)
     {
         return [
-            'mail' => now()->addHours(48)->hour(10)->minute(0),
+            'mail' => now()->addHours(48)->hour(10)->minute(0)->second(0),
         ];
     }
 
