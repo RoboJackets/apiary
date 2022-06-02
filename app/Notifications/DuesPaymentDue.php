@@ -50,7 +50,7 @@ class DuesPaymentDue extends Notification implements ShouldQueue, ShouldBeUnique
     /**
      * Determine if the notification should be sent.
      *
-     * @param  User    $user
+     * @param  User  $user
      * @param  string  $channel
      * @return bool
      */
