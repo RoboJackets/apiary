@@ -33,7 +33,7 @@ class DuesPaymentReminder extends Notification implements ShouldQueue
      */
     public function toMail(User $user): DuesPaymentReminderMailable
     {
-        return new DuesPaymentReminderMailable($user->dues()->orderByDesc('updated_at')->first());
+        return new DuesPaymentReminderMailable($user->dues()->unpaid()->orderByDesc('updated_at')->first());
     }
 
     /**

@@ -161,11 +161,22 @@ class Payment extends Model
         ];
     }
 
+    /**
+     * Generates a cryptographically safe unique string. Currently used for idempotency keys for the Square API.
+     */
     public static function generateUniqueId(): string
     {
         return bin2hex(openssl_random_pseudo_bytes(32));
     }
 
+    /**
+     * Calculates the surcharge to add to a transaction for Square so that RoboJackets receives the input amount.
+     *
+     * Fees are listed at https://squareup.com/us/en/payments/our-fees.
+     *
+     * @param  int $amount desired net amount, in cents
+     * @return int surcharge amount, in cents
+     */
     public static function calculateSurcharge(int $amount): int
     {
         return (int) round(

@@ -22,7 +22,7 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
 
     public int $tries = 1;
 
-    private User $user;
+    public User $user;
 
     /**
      * Create a new job instance.
