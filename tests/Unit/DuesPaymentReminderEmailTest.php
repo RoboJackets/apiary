@@ -27,6 +27,6 @@ class DuesPaymentReminderEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText(intval($package->cost));
         $mailable->assertSeeInText($package->name);
-        $mailable->assertSeeInText(number_format(Payment::calculateSurcharge($package->cost * 100) / 100, 2));
+        $mailable->assertSeeInText(number_format(Payment::calculateSurcharge(intval($package->cost * 100)) / 100, 2));
     }
 }
