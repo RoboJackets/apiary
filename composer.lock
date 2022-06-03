@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87cae3e9a67fe7eac17ab21d649f19a8",
+    "content-hash": "ae845b18cc11bb0185804e1a6e93abe7",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5428,16 +5428,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.13.2",
+            "version": "v4.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "210577fe3cf7badcc5814d99455df46564f3c077"
+                "reference": "34bea19b6e03d8153165d8f30bba4c3be86184c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/210577fe3cf7badcc5814d99455df46564f3c077",
-                "reference": "210577fe3cf7badcc5814d99455df46564f3c077",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/34bea19b6e03d8153165d8f30bba4c3be86184c1",
+                "reference": "34bea19b6e03d8153165d8f30bba4c3be86184c1",
                 "shasum": ""
             },
             "require": {
@@ -5478,9 +5478,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.13.2"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.14.0"
             },
-            "time": "2021-11-30T19:35:32+00:00"
+            "time": "2022-05-31T20:59:12+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -12723,16 +12723,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v2.1.6",
+            "version": "v2.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "d0d5114e757f516bb2a2679ee03b7102db61d587"
+                "reference": "086b665d173f65166b61f786210c180308294554"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/d0d5114e757f516bb2a2679ee03b7102db61d587",
-                "reference": "d0d5114e757f516bb2a2679ee03b7102db61d587",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/086b665d173f65166b61f786210c180308294554",
+                "reference": "086b665d173f65166b61f786210c180308294554",
                 "shasum": ""
             },
             "require": {
@@ -12748,7 +12748,7 @@
                 "mockery/mockery": "^1.4.4",
                 "php": "^8.0.2",
                 "phpmyadmin/sql-parser": "^5.5",
-                "phpstan/phpstan": "^1.7.0"
+                "phpstan/phpstan": "^1.7.10"
             },
             "require-dev": {
                 "nikic/php-parser": "^4.13.2",
@@ -12797,7 +12797,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v2.1.6"
+                "source": "https://github.com/nunomaduro/larastan/tree/v2.1.7"
             },
             "funding": [
                 {
@@ -12817,7 +12817,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-23T20:17:50+00:00"
+            "time": "2022-06-03T14:29:57+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
@@ -13616,16 +13616,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.7.3",
+            "version": "1.7.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "48c4621b1a6dde32aab2e9a79658b843ffb614f7"
+                "reference": "25e069474cf00215b0f64c60a26230908ef3eefa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/48c4621b1a6dde32aab2e9a79658b843ffb614f7",
-                "reference": "48c4621b1a6dde32aab2e9a79658b843ffb614f7",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/25e069474cf00215b0f64c60a26230908ef3eefa",
+                "reference": "25e069474cf00215b0f64c60a26230908ef3eefa",
                 "shasum": ""
             },
             "require": {
@@ -13651,7 +13651,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.7.3"
+                "source": "https://github.com/phpstan/phpstan/tree/1.7.10"
             },
             "funding": [
                 {
@@ -13671,7 +13671,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-29T11:36:09+00:00"
+            "time": "2022-06-03T14:12:23+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
