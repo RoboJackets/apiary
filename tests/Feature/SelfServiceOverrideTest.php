@@ -45,7 +45,6 @@ class SelfServiceOverrideTest extends TestCase
             'restricted_to_students' => false,
         ]);
 
-
         return $pkg;
     }
 
