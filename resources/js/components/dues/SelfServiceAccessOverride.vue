@@ -30,7 +30,7 @@
 import Toast from "../../mixins/Toast";
 import Moment from "moment";
 
-const OVERRIDE_ENDPOINT = '/api/v1/user/override/auto';
+const OVERRIDE_ENDPOINT = '/api/v1/user/override/self';
 
 export default {
   name: "SelfServiceAccessOverride",
@@ -43,7 +43,6 @@ export default {
         preview: true
       })
       .then(response => {
-        console.log(response.data);
         this.eligibility = response.data;
       })
       .catch(e => {
