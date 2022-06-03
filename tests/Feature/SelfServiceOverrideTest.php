@@ -25,10 +25,9 @@ class SelfServiceOverrideTest extends TestCase
      * Shortcut to create a dummy dues package.
      *
      * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
-     * @param  float  $cost
      * @return DuesPackage
      */
-    public function createDuesPackage(?CarbonImmutable $base_date, float $cost = 10): DuesPackage
+    public function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
     {
         if (null === $base_date) {
             $base_date = CarbonImmutable::now();
@@ -36,17 +35,16 @@ class SelfServiceOverrideTest extends TestCase
 
         $fy = FiscalYear::firstOrCreate(['ending_year' => $base_date->year]);
 
-        $pkg = DuesPackage::create([
+        $pkg = DuesPackage::factory()->create([
             'fiscal_year_id' => $fy->id,
             'effective_start' => $base_date->subMonth(),
             'effective_end' => $base_date->addMonth(),
             'access_start' => $base_date->subMonth(),
             'access_end' => $base_date->addMonth(),
-            'cost' => $cost,
             'available_for_purchase' => true,
-            'name' => 'Test dues package - '.bin2hex(openssl_random_pseudo_bytes(4)),
             'restricted_to_students' => false,
         ]);
+
 
         return $pkg;
     }
@@ -61,18 +59,17 @@ class SelfServiceOverrideTest extends TestCase
      */
     public function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
     {
-        $dues_transaction = DuesTransaction::create([
+        $dues_transaction = DuesTransaction::factory()->create([
             'dues_package_id' => $dues_package->id,
             'user_id' => $user->id,
         ]);
 
         if ($paid) {
-            Payment::create([
-                'payable_type' => 'dues-transaction',
+            Payment::factory()->create([
+                'payable_type' => DuesTransaction::getMorphClassStatic(),
                 'payable_id' => $dues_transaction->id,
                 'amount' => $dues_package->cost,
-                'processing_fee' => 0,
-                'method' => 'cash',
+                'notes' => '',
             ]);
         }
 
