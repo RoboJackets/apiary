@@ -517,10 +517,6 @@ class User extends Authenticatable
         )->withTimestamps();
     }
 
-    /**
-     * Route notifications for the mail channel.
-     * Send to GT email when present and fall back to personal email if not.
-     */
     public function routeNotificationForMail(): string
     {
         return $this->gt_email;

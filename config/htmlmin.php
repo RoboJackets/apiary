@@ -59,6 +59,7 @@ return [
     */
 
     'ignore' => [
+        'resources/views/mail',
         'resources/views/emails',
         'resources/views/html',
         'resources/views/notifications',
