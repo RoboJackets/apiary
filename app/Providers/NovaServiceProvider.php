@@ -28,6 +28,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot(): void
     {
         parent::boot();
+
         Nova::serving(static function (ServingNova $event): void {
             Nova::script('apiary-custom', asset('js/nova.js'));
         });
