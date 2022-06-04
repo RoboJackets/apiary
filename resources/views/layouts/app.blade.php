@@ -10,6 +10,7 @@
     <div style="text-align: center; height: 3em; padding: 0.7em; background-color: #eed202;">
         <strong>You are impersonating another user.</strong>
         <span>This functionality should only be used when troubleshooting an issue.</span>
+        <a href="{{ route('stopImpersonating') }}">Click here to stop impersonating.</a>
     </div>
     @endif
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
