@@ -18,10 +18,8 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
 
     /**
      * The signature that was just signed.
-     *
-     * @var \App\Models\Signature
      */
-    public $signature;
+    public Signature $signature;
 
     /**
      * Create a new message instance.
@@ -33,17 +31,17 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): self
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
+            ->to($this->signature->user->gt_email, $this->signature->user->name)
+            ->cc(config('services.membership_agreement_archive_email'))
             ->withSymfonyMessage(static function (Email $message): void {
                 $message->replyTo('RoboJackets <hello@robojackets.org>');
-            })->subject('[RoboJackets] Membership Agreement Signed')
-            ->markdown(
+            })->subject('Membership agreement signed')
+            ->text(
                 'mail.agreement.signed',
                 [
                     'agreement_text' => $this->signature->membershipAgreementTemplate->renderForUser(

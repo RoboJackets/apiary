@@ -7,10 +7,11 @@ namespace App\Notifications;
 use App\Mail\ExpiringPersonalAccessToken;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Laravel\Passport\Token;
 
-class ExpiringPersonalAccessTokenNotification extends Notification
+class ExpiringPersonalAccessTokenNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -41,15 +42,18 @@ class ExpiringPersonalAccessTokenNotification extends Notification
      */
     public function toMail(User $notifiable): ExpiringPersonalAccessToken
     {
-        return (new ExpiringPersonalAccessToken($this->token))
-            ->to($notifiable->gt_email);
+        return new ExpiringPersonalAccessToken($this->token);
     }
 
     /**
-     * Get the array representation of the notification.
+     * Determine which queues should be used for each notification channel.
+     *
+     * @return array<string,string>
      */
-    public function toArray(User $notifiable): array
+    public function viaQueues(): array
     {
-        return [];
+        return [
+            'mail' => 'email',
+        ];
     }
 }
