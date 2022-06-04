@@ -23,6 +23,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Scout\Searchable;
@@ -190,6 +191,7 @@ class User extends Authenticatable
     use HasApiTokens;
     use FirstNameSynonyms;
     use Searchable;
+    use Impersonatable;
 
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
@@ -887,6 +889,14 @@ class User extends Authenticatable
 
             return [] === $result ? null : $result[0][0];
         });
+    }
+
+    /**
+     * Determine if the user can impersonate another user.
+     */
+    public function canImpersonate(): bool
+    {
+        return $this->can('impersonate-users');
     }
 
     /**
