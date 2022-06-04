@@ -46,4 +46,16 @@ class PaymentReceipt extends Notification implements ShouldQueue
     {
         return new PaymentReceiptMailable($this->payment);
     }
+
+    /**
+     * Determine which queues should be used for each notification channel.
+     *
+     * @return array<string,string>
+     */
+    public function viaQueues(): array
+    {
+        return [
+            'mail' => 'email',
+        ];
+    }
 }

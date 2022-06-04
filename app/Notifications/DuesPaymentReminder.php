@@ -47,4 +47,16 @@ class DuesPaymentReminder extends Notification implements ShouldQueue
     {
         return ! $user->is_active;
     }
+
+    /**
+     * Determine which queues should be used for each notification channel.
+     *
+     * @return array<string,string>
+     */
+    public function viaQueues(): array
+    {
+        return [
+            'mail' => 'email',
+        ];
+    }
 }
