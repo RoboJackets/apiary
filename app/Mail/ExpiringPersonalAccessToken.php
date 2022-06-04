@@ -19,43 +19,34 @@ class ExpiringPersonalAccessToken extends Mailable
     /**
      * The Personal Access Token that is expiring.
      */
-    private Token $token;
+    public Token $token;
 
     /**
      * Indicates whether or not the token has already expired.
      */
-    private bool $already_expired;
+    public bool $already_expired;
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct(Token $token)
     {
         $this->token = $token;
-        $this->already_expired = Carbon::now() < $token->expires_at;
+        $this->already_expired = Carbon::now() > $token->expires_at;
     }
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): self
     {
         return $this
             ->from('noreply@my.robojackets.org', 'RoboJackets')
+            ->to($this->token->user->gt_email, $this->token->user->name)
             ->withSymfonyMessage(static function (Email $message): void {
                 $message->replyTo('RoboJackets <support@robojackets.org>');
-            })->subject('Your MyRoboJackets Personal Access Token '
-                .($this->already_expired ? 'Recently Expired' : 'Will Expire Soon'))
-            ->markdown(
-                'mail.oauth2.pat_expiration',
-                [
-                    'token' => $this->token,
-                    'already_expired' => $this->already_expired,
-                ]
-            );
+            })->subject('Your '.config('app.name').' personal access token '
+                .($this->already_expired ? 'recently expired' : 'will expire soon'))
+            ->text('mail.oauth2.pat_expiration');
     }
 }

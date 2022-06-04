@@ -20,8 +20,6 @@ class DuesPaymentReminder extends Mailable implements ShouldQueue
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct(DuesTransaction $transaction)
     {
@@ -30,8 +28,6 @@ class DuesPaymentReminder extends Mailable implements ShouldQueue
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
     public function build(): self
     {
