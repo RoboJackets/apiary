@@ -25,8 +25,8 @@ class TravelFactory extends Factory
             'name' => $this->faker->word(),
             'primary_contact_user_id' => User::all()->random()->id,
             'destination' => $this->faker->word(),
-            'departure_date' => $this->faker->dateTimeBetween('now', '1 year'),
-            'return_date' => $this->faker->dateTimeBetween('now', '1 year'),
+            'departure_date' => $this->faker->dateTimeBetween('now', '1 week'),
+            'return_date' => $this->faker->dateTimeBetween('1 week', '2 weeks'),
             'fee_amount' => (string) $this->faker->randomFloat(2, 0, 1000),
             'included_with_fee' => $this->faker->paragraph(),
         ];
