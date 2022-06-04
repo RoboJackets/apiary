@@ -82,7 +82,7 @@ class Travel extends Resource
 
             Date::make('Departure Date')
                 ->required()
-                ->rules('required'),
+                ->rules('required', 'date', 'before:return_date'),
 
             Date::make('Return Date')
                 ->required()
@@ -92,7 +92,7 @@ class Travel extends Resource
                 ->sortable()
                 ->required()
                 ->rules('required', 'integer')
-                ->min(1)
+                ->min(10)
                 ->max(1000),
 
             // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
@@ -250,7 +250,7 @@ class Travel extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
-    public function subtitle(): ?string
+    public function subtitle(): string
     {
         return $this->destination.' | '.$this->departure_date->format('F Y');
     }

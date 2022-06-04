@@ -2,25 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Notifications\Payment;
+namespace App\Notifications;
 
-use App\Mail\Payment\Confirmation as Mailable;
+use App\Mail\PaymentReceipt as PaymentReceiptMailable;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class ConfirmationNotification extends Notification implements ShouldQueue
+class PaymentReceipt extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * The payment that was completed.
-     *
-     * @var \App\Models\Payment
-     */
-    public $payment;
+    private Payment $payment;
 
     /**
      * Create a new notification instance.
@@ -33,29 +28,34 @@ class ConfirmationNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
+     * @param  User  $user
      * @return array<string>
      */
-    public function via(User $notifiable): array
+    public function via(User $user): array
     {
         return ['mail'];
     }
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @param  User  $user
+     * @return \App\Mail\PaymentReceipt
      */
-    public function toMail(User $notifiable): Mailable
+    public function toMail(User $user): PaymentReceiptMailable
     {
-        return (new Mailable($this->payment))->to($notifiable->gt_email);
+        return new PaymentReceiptMailable($this->payment);
     }
 
     /**
-     * Get the array representation of the notification.
+     * Determine which queues should be used for each notification channel.
      *
      * @return array<string,string>
      */
-    public function toArray(User $notifiable): array
+    public function viaQueues(): array
     {
         return [
+            'mail' => 'email',
         ];
     }
 }

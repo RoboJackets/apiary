@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -70,6 +71,7 @@ class Travel extends Model
 {
     use SoftDeletes;
     use Searchable;
+    use HasFactory;
 
     /**
      * The attributes that are not mass assignable.
