@@ -10,4 +10,6 @@ You can view more details about your payment at {{ $payment->receipt_url }}.
 
 Please keep this email for your records.
 
-@{{{ pm:unsubscribe }}}
+----
+
+To stop receiving emails from {{ config('app.name') }}, visit @{{{ pm:unsubscribe }}}.

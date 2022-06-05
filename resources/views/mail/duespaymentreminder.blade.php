@@ -10,4 +10,6 @@ Please write checks to Georgia Tech, with RoboJackets on the memo line. Don't fo
 
 If you have any questions, just reply to this email.
 
-@{{{ pm:unsubscribe }}}
+----
+
+To stop receiving emails from {{ config('app.name') }}, visit @{{{ pm:unsubscribe }}}.

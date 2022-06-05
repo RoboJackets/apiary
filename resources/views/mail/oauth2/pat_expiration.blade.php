@@ -10,4 +10,6 @@ Token expiration dates cannot be extended. If you're still using this token, you
 
 If you need any assistance, please ask in #it-helpdesk in Slack.
 
-@{{{ pm:unsubscribe }}}
+----
+
+To stop receiving emails from {{ config('app.name') }}, visit @{{{ pm:unsubscribe }}}.

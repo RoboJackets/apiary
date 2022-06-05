@@ -16,4 +16,6 @@ The full text of the agreement is included below for your reference.
 
 If you have any questions, just reply to this email.
 
-@{{{ pm:unsubscribe }}}
+----
+
+To stop receiving emails from {{ config('app.name') }}, visit @{{{ pm:unsubscribe }}}.
