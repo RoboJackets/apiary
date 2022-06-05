@@ -9,3 +9,5 @@ You can view more details about your payment at {{ $payment->receipt_url }}.
 @endif
 
 Please keep this email for your records.
+
+@{{{ pm:unsubscribe }}}

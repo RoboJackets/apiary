@@ -31,6 +31,7 @@ class MembershipAgreementSignedEmailTest extends TestCase
 
         $mailable->assertSeeInText($signature->user->preferred_first_name);
         $mailable->assertSeeInText('was uploaded');
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 
     public function testGenerateEmailForElectronicSignature(): void
@@ -43,5 +44,6 @@ class MembershipAgreementSignedEmailTest extends TestCase
 
         $mailable->assertSeeInText($signature->user->preferred_first_name);
         $mailable->assertSeeInText('electronically signed');
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 }

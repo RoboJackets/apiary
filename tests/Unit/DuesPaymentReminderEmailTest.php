@@ -28,5 +28,6 @@ class DuesPaymentReminderEmailTest extends TestCase
         $mailable->assertSeeInText(intval($package->cost));
         $mailable->assertSeeInText($package->name);
         $mailable->assertSeeInText(number_format(Payment::calculateSurcharge(intval($package->cost * 100)) / 100, 2));
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 }

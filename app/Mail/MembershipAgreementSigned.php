@@ -49,6 +49,8 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
                         $this->signature->electronic
                     ),
                 ]
-            );
+            )
+            ->tag('agreement-signed')
+            ->metadata('signature-id', strval($this->signature->id));
     }
 }

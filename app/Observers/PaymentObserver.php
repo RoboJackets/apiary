@@ -25,8 +25,7 @@ class PaymentObserver
         if ($payment->payable_type === DuesTransaction::getMorphClassStatic() &&
             0 === intval($payment->amount)
         ) {
-            SendDuesPaymentReminder::dispatch($payment->payable->user)
-                ->delay(now()->addHours(48)->hour(10)->startOfHour());
+            SendDuesPaymentReminder::dispatch($payment->payable->user);
         }
     }
 }

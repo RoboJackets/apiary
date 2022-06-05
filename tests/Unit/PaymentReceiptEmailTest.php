@@ -39,6 +39,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('online payment');
         $mailable->assertSeeInText($payment->receipt_url);
         $mailable->assertSeeInText(number_format($payment->amount, 2));
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 
     public function testGenerateEmailForCashDuesPayment(): void
@@ -69,6 +70,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText($package->name);
         $mailable->assertSeeInText('cash');
         $mailable->assertSeeInText(number_format($payment->amount, 2));
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 
     public function testGenerateEmailForOnlineTravelPayment(): void
@@ -95,6 +97,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('online payment');
         $mailable->assertSeeInText($payment->receipt_url);
         $mailable->assertSeeInText(number_format($payment->amount, 2));
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 
     public function testGenerateEmailForCashTravelPayment(): void
@@ -125,5 +128,6 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('cash');
         $mailable->assertSeeInText(number_format($payment->amount, 2));
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 }

@@ -17,7 +17,6 @@ class DuesTransactionObserver
 
         PruneDuesNotificationsInNova::dispatch($duesTransaction->user);
 
-        SendDuesPaymentReminder::dispatch($duesTransaction->user)
-            ->delay(now()->addHours(48)->hour(10)->startOfHour());
+        SendDuesPaymentReminder::dispatch($duesTransaction->user);
     }
 }
