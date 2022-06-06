@@ -7,7 +7,7 @@
           New Member Access
         </h4>
         <p class="card-text">
-          Welcome to RoboJackets! As a new member, you can request to temporarily use RoboJackets services without
+          As a new member, you can request to temporarily use RoboJackets services without
           paying dues until {{ overrideUntil }}.
         </p>
         <button class="btn btn-link p-0" @click="requestOverride()"

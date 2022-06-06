@@ -158,7 +158,6 @@ class DashboardController extends Controller
             $travelAuthorityRequestUrl = $travelAssignmentWithNoTravelAuthorityRequest->travel_authority_request_url;
         }
 
-        $isEligibleForSelfServiceOverride = $user->self_service_override_eligibility->eligible;
         $teamAttendanceExists = $user->attendance()->whereAttendableType('team')->exists();
 
         return view(
@@ -184,7 +183,6 @@ class DashboardController extends Controller
                 'needTravelAuthorityRequest' => $needTravelAuthorityRequest,
                 'travelAuthorityRequestUrl' => $travelAuthorityRequestUrl,
                 'travelName' => $travelName,
-                'isEligibleForSelfServiceOverride' => $isEligibleForSelfServiceOverride,
                 'teamAttendanceExists' => $teamAttendanceExists,
             ]
         );

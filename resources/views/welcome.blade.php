@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">
-                        Welcome back, {{ $preferredName }}!
+                        Welcome {{ $signedAnyAgreement ? "back" : "" }}, {{ $preferredName }}!
                     </h4>
                     <p class="card-text">
                         @if($isNew)
@@ -42,7 +42,7 @@
                                 Start Here
                             </h4>
                             <p class="card-text">
-                                Please review and sign the RoboJackets membership agreement. This document describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
+                                Welcome to RoboJackets! Please review and sign the RoboJackets membership agreement. This document describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
                             </p>
                         @else
                             <h4 class="card-title">
