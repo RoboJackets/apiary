@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">
-          New Member Activation
+          New Member Access
         </h4>
         <p class="card-text">
           Welcome to RoboJackets! As a new member, you can request to temporarily use RoboJackets services without
