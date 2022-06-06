@@ -42,7 +42,7 @@
                                 Start Here
                             </h4>
                             <p class="card-text">
-                                Welcome to RoboJackets! Please review and sign the RoboJackets membership agreement. This document describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
+                                Please review and sign the RoboJackets membership agreement. It describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
                             </p>
                         @else
                             <h4 class="card-title">
