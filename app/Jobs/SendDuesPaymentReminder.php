@@ -39,7 +39,13 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        $this->user->notify(new DuesPaymentReminder());
+        $transaction = $this->user->dues()->unpaid()->orderByDesc('updated_at')->first();
+
+        if (null === $transaction) {
+            return;
+        }
+
+        $this->user->notify(new DuesPaymentReminder($transaction));
     }
 
     /**

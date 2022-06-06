@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Notifications;
 
 use App\Mail\DuesPaymentReminder as DuesPaymentReminderMailable;
+use App\Models\DuesTransaction;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,6 +14,13 @@ use Illuminate\Notifications\Notification;
 class DuesPaymentReminder extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    private DuesTransaction $transaction;
+
+    public function __construct(DuesTransaction $transaction)
+    {
+        $this->transaction = $transaction;
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -33,7 +41,7 @@ class DuesPaymentReminder extends Notification implements ShouldQueue
      */
     public function toMail(User $user): DuesPaymentReminderMailable
     {
-        return new DuesPaymentReminderMailable($user->dues()->unpaid()->orderByDesc('updated_at')->first());
+        return new DuesPaymentReminderMailable($this->transaction);
     }
 
     /**
