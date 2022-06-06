@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
@@ -11,6 +12,7 @@ use App\Models\User;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -22,7 +24,7 @@ class UserController extends Controller
         $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
         $this->middleware('permission:create-users', ['only' => ['store']]);
         $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
-        $this->middleware('permission:update-users|update-users-own', ['only' => ['update']]);
+        $this->middleware('permission:update-users|update-users-own', ['only' => ['update', 'applySelfOverride']]);
         $this->middleware('permission:delete-users', ['only' => ['destroy']]);
     }
 
@@ -231,5 +233,31 @@ class UserController extends Controller
     public function showProfile(Request $request)
     {
         return view('users/userprofile', ['id' => $request->user()->id]);
+    }
+
+    public function applySelfOverride(SelfServiceAccessOverrideRequest $request): JsonResponse
+    {
+        $requestingUser = $request->user();
+
+        $overrideEligibility = $requestingUser->self_service_override_eligibility;
+        $overrideEndDate = $overrideEligibility->override_until;
+
+        if ($overrideEligibility->eligible && ! $request->boolean('preview')) {
+            Log::info('Applying self-service access override for '.$requestingUser->uid.' until '.$overrideEndDate);
+            $requestingUser->access_override_until = $overrideEndDate;
+            $requestingUser->access_override_by_id = $request->user()->id;
+            $requestingUser->save();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'preview' => $request->boolean('preview'),
+            'eligible' => $overrideEligibility->eligible,
+            'reason' => $overrideEligibility->ineligible_reason,
+            'user_rectifiable' => $overrideEligibility->user_rectifiable,
+            'conditions' => $overrideEligibility->required_conditions,
+            'tasks' => $overrideEligibility->required_tasks,
+            'override_until' => $overrideEndDate,
+        ]);
     }
 }

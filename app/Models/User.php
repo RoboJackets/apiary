@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Adldap\Laravel\Facades\Adldap;
 use BadMethodCallException;
+use Carbon\CarbonImmutable;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Traits\HasRelationshipObservables;
 use Illuminate\Database\Eloquent\Builder;
@@ -177,6 +178,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static QueryBuilder|User withTrashed()
  * @method static QueryBuilder|User withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property-read \App\Models\SelfServiceAccessOverrideEligibility $self_service_override_eligibility
  */
 class User extends Authenticatable
 {
@@ -961,5 +964,82 @@ class User extends Authenticatable
         $array['role_id'] = $this->roles->modelKeys();
 
         return $array;
+    }
+
+    public function getHasActiveOverrideAttribute(): bool
+    {
+        return ! $this->is_active && $this->access_override_until && $this->access_override_until > now();
+    }
+
+    public function getSelfServiceOverrideEligibilityAttribute(): SelfServiceAccessOverrideEligibility
+    {
+        $ineligibleReason = 'Unable to provide a self-service override at this time';
+
+        // phpcs:ignore
+        $INELIGIBLE_NO_FUTURE_DUES_PKG = 'Self-service access overrides are currently unavailable because there are '.
+            'no dues packages with future access end dates';
+        $INELIGIBLE_REQ_CONDS = 'Account and system conditions for self-service override not met';
+        // phpcs:ignore
+        $INELIGIBLE_REQ_TASKS = 'You have outstanding required tasks that must be completed before receiving your '.
+            'self-service override';
+
+        $now = CarbonImmutable::now();
+        $nextAccessEndDuesPkg = DuesPackage::where('access_end', '>', $now)->get()->sortBy('access_end')->first();
+
+        $eligible = false;
+        $userRectifiable = false; // Simple things the user can do (e.g., attend a team meeting, sign the membership
+        // agreement) to become eligible for a self-service access override. As opposed to things the user can't
+        // change such as having paid dues in the past
+        $overrideEndDate = null;
+
+        // conditions
+        $accessNotActive = ! $this->is_access_active;
+        $noExistingOverride = null === $this->access_override_until;
+        $hasNotPaidDues = ! $this->paidDues()->exists();
+        $eligibleDuesPkgExists = null !== $nextAccessEndDuesPkg;
+
+        // tasks
+        $attendedTeamMeeting = $this->attendance()->whereAttendableType('team')->exists();
+        $signedLatestAgreement = $this->hasSignedLatestAgreement();
+
+        if ($eligibleDuesPkgExists) {
+            $overrideEndDate = new CarbonImmutable($nextAccessEndDuesPkg->access_end);
+            $OVERRIDE_MIN_LENGTH_DAYS = 7;
+            $OVERRIDE_MAX_LENGTH_DAYS = 60;
+            $overrideLengthDays = $now->diffInDays($nextAccessEndDuesPkg->access_end, false);
+
+            if ($overrideLengthDays > $OVERRIDE_MAX_LENGTH_DAYS) {
+                $overrideEndDate = $now->addDays($OVERRIDE_MAX_LENGTH_DAYS)->endOfDay();
+            } elseif ($overrideLengthDays < $OVERRIDE_MIN_LENGTH_DAYS) {
+                $overrideEndDate = $now->addDays($OVERRIDE_MIN_LENGTH_DAYS)->endOfDay();
+            }
+
+            if (! $accessNotActive || ! $noExistingOverride || ! $hasNotPaidDues) {
+                $ineligibleReason = $INELIGIBLE_REQ_CONDS;
+            } elseif (! $attendedTeamMeeting || ! $signedLatestAgreement) {
+                $userRectifiable = true;
+                $ineligibleReason = $INELIGIBLE_REQ_TASKS;
+            } else {
+                $eligible = true;
+            }
+        } else {
+            $ineligibleReason = $INELIGIBLE_NO_FUTURE_DUES_PKG;
+        }
+
+        return (new SelfServiceAccessOverrideEligibility())
+            ->setEligibility($eligible)
+            ->setUserRectifiable($userRectifiable)
+            ->setIneligibleReason($eligible ? '' : $ineligibleReason)
+            ->setRequiredConditions([
+                'Access must not be active' => $accessNotActive,
+                'Must have no prior dues payments' => $hasNotPaidDues,
+                'Must have no previous access override' => $noExistingOverride,
+                'Future dues package must exist' => $eligibleDuesPkgExists,
+            ])
+            ->setRequiredTasks([
+                'Sign the membership agreement' => $signedLatestAgreement,
+                'Attend a team meeting' => $attendedTeamMeeting,
+            ])
+            ->setOverrideUntil($overrideEndDate);
     }
 }
