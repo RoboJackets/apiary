@@ -6,7 +6,7 @@ namespace App\Jobs;
 
 use App\Events\PaymentSuccess;
 use App\Models\Payment;
-use App\Notifications\Payment\ConfirmationNotification;
+use App\Notifications\PaymentReceipt;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
@@ -113,7 +113,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             return;
         }
 
-        $payment->payable->user->notify(new ConfirmationNotification($payment));
+        $payment->payable->user->notify(new PaymentReceipt($payment));
         event(new PaymentSuccess($payment));
     }
 }

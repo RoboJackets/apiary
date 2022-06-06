@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
+use Laravel\Nova\Menu\Menu;
+use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Vyuldashev\NovaPermission\NovaPermissionTool;
@@ -28,6 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot(): void
     {
         parent::boot();
+
         Nova::serving(static function (ServingNova $event): void {
             Nova::script('apiary-custom', asset('js/nova.js'));
         });
@@ -46,6 +49,31 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($exception);
             }
+        });
+
+        Nova::userMenu(static function (Request $request, Menu $menu): Menu {
+            $menu->append(
+                MenuItem::externalLink(
+                    'Member Dashboard',
+                    route('home')
+                )
+            );
+
+            $menu->append(
+                MenuItem::make(
+                    'Profile',
+                    '/resources/users/'.$request->user()->getKey()
+                )
+            );
+
+            $menu->append(
+                MenuItem::externalLink(
+                    'Logout',
+                    route('logout')
+                )
+            );
+
+            return $menu;
         });
     }
 

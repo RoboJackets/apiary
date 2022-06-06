@@ -4,45 +4,47 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
-use App\Mail\ExpiringPersonalAccessToken;
+use App\Mail\PaymentReceipt as PaymentReceiptMailable;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use Laravel\Passport\Token;
 
-class ExpiringPersonalAccessTokenNotification extends Notification implements ShouldQueue
+class PaymentReceipt extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private Token $token;
+    private Payment $payment;
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
-    public function __construct(Token $token)
+    public function __construct(Payment $payment)
     {
-        $this->token = $token;
+        $this->payment = $payment;
     }
 
     /**
      * Get the notification's delivery channels.
      *
+     * @param  User  $user
      * @return array<string>
      */
-    public function via(User $notifiable): array
+    public function via(User $user): array
     {
         return ['mail'];
     }
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @param  User  $user
+     * @return \App\Mail\PaymentReceipt
      */
-    public function toMail(User $notifiable): ExpiringPersonalAccessToken
+    public function toMail(User $user): PaymentReceiptMailable
     {
-        return new ExpiringPersonalAccessToken($this->token);
+        return new PaymentReceiptMailable($this->payment);
     }
 
     /**

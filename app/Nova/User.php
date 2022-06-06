@@ -114,6 +114,9 @@ class User extends Resource
                 ->creationRules('unique:users,gt_email')
                 ->updateRules('unique:users,gt_email,{{resourceId}}'),
 
+            Text::make('Email Suppression Reason')
+                ->onlyOnDetail(),
+
             Text::make('GTID')
                 ->hideFromIndex()
                 ->canSee(static function (Request $request): bool {

@@ -9,7 +9,7 @@ namespace App\Nova\Actions;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\TravelAssignment;
-use App\Notifications\Payment\ConfirmationNotification;
+use App\Notifications\PaymentReceipt;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
@@ -114,7 +114,7 @@ class AddPayment extends Action
         $payment->notes = 'Added in Nova';
         $payment->save();
 
-        $payment->payable->user->notify(new ConfirmationNotification($payment));
+        $payment->payable->user->notify(new PaymentReceipt($payment));
 
         return Action::message('The payment was added!');
     }

@@ -81,6 +81,8 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::view('oauth2/client', 'oauth2clientcreated')->name('oauth2.client.created');
     Route::view('oauth2/pat', 'personalaccesstokencreated')->name('oauth2.pat.created');
+
+    Route::get('stop-impersonating', [AuthController::class, 'stopImpersonating'])->name('stopImpersonating');
 });
 
 Route::get('/events/{event}/rsvp', [RsvpController::class, 'storeUser'])

@@ -27,9 +27,6 @@ use Square\SquareClient;
 
 class SquareCheckoutController extends Controller
 {
-    private const PER_TRANSACTION_FEE = 30;  // cents
-    private const PERCENTAGE_FEE = 2.9;
-
     public function payDues(Request $request)
     {
         $user = $request->user();
@@ -157,7 +154,7 @@ class SquareCheckoutController extends Controller
         $basePrice->setCurrency('USD');
 
         $surcharge = new Money();
-        $surcharge->setAmount(self::calculateSurcharge($amount));
+        $surcharge->setAmount(Payment::calculateSurcharge($amount));
         $surcharge->setCurrency('USD');
 
         $orderLineItem = new OrderLineItem('1');
@@ -286,14 +283,5 @@ class SquareCheckoutController extends Controller
             default:
                 throw new Exception('Unexpected order state');
         }
-    }
-
-    private static function calculateSurcharge(int $amount): int
-    {
-        return (int) round(
-            (($amount + self::PER_TRANSACTION_FEE) / ((100 - self::PERCENTAGE_FEE) / 100)) - $amount,
-            0,
-            PHP_ROUND_HALF_UP
-        );
     }
 }

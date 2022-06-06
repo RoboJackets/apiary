@@ -17,10 +17,8 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
 
     /**
      * The signature that was just signed.
-     *
-     * @var \App\Models\Signature
      */
-    private $signature;
+    private Signature $signature;
 
     /**
      * Create a new notification instance.
@@ -48,18 +46,30 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
         // Force the relation to load, because it doesn't in the mail view for some reason.
         $this->signature->load('uploadedBy');
 
-        return (new Mailable($this->signature))
-            ->to($notifiable->gt_email)
-            ->cc(config('services.membership_agreement_archive_email'));
+        return new Mailable($this->signature);
     }
 
     /**
-     * Get the array representation of the notification.
+     * Determine if the notification should be sent.
+     *
+     * @param  User  $user
+     * @param  string  $channel
+     * @return bool
+     */
+    public function shouldSend(User $user, string $channel)
+    {
+        return $user->should_receive_email;
+    }
+
+    /**
+     * Determine which queues should be used for each notification channel.
      *
      * @return array<string,string>
      */
-    public function toArray(User $notifiable): array
+    public function viaQueues(): array
     {
-        return [];
+        return [
+            'mail' => 'email',
+        ];
     }
 }

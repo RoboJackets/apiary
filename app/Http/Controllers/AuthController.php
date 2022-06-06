@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Nova\Contracts\ImpersonatesUsers;
 
 class AuthController extends Controller
 {
@@ -25,5 +28,14 @@ class AuthController extends Controller
     {
         $request->session()->regenerate();
         cas()->logout(config('app.url'));
+    }
+
+    public function stopImpersonating(Request $request, ImpersonatesUsers $impersonator)
+    {
+        if ($impersonator->impersonating($request)) {
+            $impersonator->stopImpersonating($request, Auth::guard(), User::class);
+        }
+
+        return redirect(route('home'));
     }
 }
