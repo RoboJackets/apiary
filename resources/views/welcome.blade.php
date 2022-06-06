@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">
-                        Welcome {{ $signedAnyAgreement ? "back" : "" }}, {{ $preferredName }}!
+                        Welcome{{ $signedAnyAgreement ? " back" : "" }}, {{ $preferredName }}!
                     </h4>
                     <p class="card-text">
                         @if($isNew)
