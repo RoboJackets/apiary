@@ -44,7 +44,9 @@ class PaymentReceipt extends Mailable implements ShouldQueue
                     )
                     ->withSymfonyMessage(static function (Email $email): void {
                         $email->replyTo('RoboJackets <treasurer@robojackets.org>');
-                    });
+                    })
+                    ->tag('payment-receipt')
+                    ->metadata('payment-id', strval($this->payment->id));
     }
 
     /**

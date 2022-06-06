@@ -56,8 +56,9 @@
         "spatie/once": "3.1.0",
         "square/square": "^19.0",
         "subfission/cas": "4.2.0",
-        "symfony/http-client": "6.1.0",
+        "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "6.1.0",
+        "symfony/postmark-mailer": "^6.1",
         "ukfast/laravel-health-check": "1.13.3"
     },
     "require-dev": {

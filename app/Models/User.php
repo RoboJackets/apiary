@@ -891,6 +891,11 @@ class User extends Authenticatable
         });
     }
 
+    public function getShouldReceiveEmailAttribute(): bool
+    {
+        return null === $this->email_suppression_reason;
+    }
+
     /**
      * Determine if the user can impersonate another user.
      */

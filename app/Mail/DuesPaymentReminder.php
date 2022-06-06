@@ -37,6 +37,8 @@ class DuesPaymentReminder extends Mailable implements ShouldQueue
                     ->text('mail.duespaymentreminder')
                     ->withSymfonyMessage(static function (Email $email): void {
                         $email->replyTo('RoboJackets <treasurer@robojackets.org>');
-                    });
+                    })
+                    ->tag('dues-payment-reminder')
+                    ->metadata('transaction-id', strval($this->transaction->id));
     }
 }

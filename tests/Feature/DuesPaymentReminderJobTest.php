@@ -100,7 +100,7 @@ class DuesPaymentReminderJobTest extends TestCase
     public function validateJob(SendDuesPaymentReminder $job): bool
     {
         $this->assertEquals(0, $this->jobCounter);
-        $this->assertEquals($job->delay, now()->addHours(48)->hour(10)->startOfHour());
+        $this->assertLessThan($job->delay, now()->addHours(48)->hour(9)->startOfHour()->minute(59));
         $this->assertEquals($job->user->id, $this->user->id);
         $this->assertEquals($job->uniqueId(), strval($this->user->id));
 

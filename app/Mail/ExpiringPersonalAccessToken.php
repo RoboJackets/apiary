@@ -47,6 +47,8 @@ class ExpiringPersonalAccessToken extends Mailable
                 $message->replyTo('RoboJackets <support@robojackets.org>');
             })->subject('Your '.config('app.name').' personal access token '
                 .($this->already_expired ? 'recently expired' : 'will expire soon'))
-            ->text('mail.oauth2.pat_expiration');
+            ->text('mail.oauth2.pat_expiration')
+            ->tag('token-expiring')
+            ->metadata('token-id', strval($this->token->id));
     }
 }

@@ -9,3 +9,7 @@ If you would prefer to pay by cash or check, please bring it to an officer or pr
 Please write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
 
 If you have any questions, just reply to this email.
+
+----
+
+To stop receiving emails from {{ config('app.name') }}, visit @{{{ pm:unsubscribe }}}.

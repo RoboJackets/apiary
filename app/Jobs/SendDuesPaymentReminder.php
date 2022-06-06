@@ -31,6 +31,7 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
     {
         $this->user = $user;
         $this->queue = 'email';
+        $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
     }
 
     /**

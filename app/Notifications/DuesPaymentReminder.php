@@ -45,7 +45,7 @@ class DuesPaymentReminder extends Notification implements ShouldQueue
      */
     public function shouldSend(User $user, string $channel)
     {
-        return ! $user->is_active;
+        return ! $user->is_active && $user->should_receive_email;
     }
 
     /**

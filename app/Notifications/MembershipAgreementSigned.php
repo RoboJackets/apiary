@@ -50,6 +50,18 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
     }
 
     /**
+     * Determine if the notification should be sent.
+     *
+     * @param  User  $user
+     * @param  string  $channel
+     * @return bool
+     */
+    public function shouldSend(User $user, string $channel)
+    {
+        return $user->should_receive_email;
+    }
+
+    /**
      * Determine which queues should be used for each notification channel.
      *
      * @return array<string,string>

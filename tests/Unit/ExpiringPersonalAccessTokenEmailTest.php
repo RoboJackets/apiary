@@ -41,6 +41,7 @@ class ExpiringPersonalAccessTokenEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText('expired on');
         $mailable->assertSeeInText($token->name);
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 
     public function testGenerateEmailForTokenExpiringSoon(): void
@@ -56,5 +57,6 @@ class ExpiringPersonalAccessTokenEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText('will expire on');
         $mailable->assertSeeInText($token->name);
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
     }
 }
