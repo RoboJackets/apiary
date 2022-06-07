@@ -32,7 +32,6 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
      * @phan-suppress PhanPossiblyNullTypeArgumentInternal
-     * @phan-suppress PhanPluginInvalidPregRegex
      */
     public function handle(): void
     {
