@@ -49,7 +49,9 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
                 break;
             case 'SubscriptionChange':
                 $email = $payload['Recipient'];
-                $reason = $recordType;
+                // if this address is suppressed then set the reason
+                // if it was reactivated in postmark then set to null
+                $reason = $payload['SuppressSending'] ? $payload['SuppressionReason'] : null;
                 break;
             default:
                 throw new \Exception('Unrecognized record type '.$recordType);
