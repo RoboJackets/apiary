@@ -40,10 +40,10 @@ class PaymentObserver
                     null !== $payment->receipt_url
                 )
             ) {
-                    $payment->receipt_sent = true;
-                    $payment->save();
+                $payment->receipt_sent = true;
+                $payment->save();
 
-                    SendPaymentReceipt::dispatch($payment);
+                SendPaymentReceipt::dispatch($payment);
             }
         });
     }
