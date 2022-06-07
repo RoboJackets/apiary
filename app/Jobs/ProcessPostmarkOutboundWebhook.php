@@ -63,7 +63,7 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
             ->orWhere('clickup_email', '=', $email)
             ->orWhere('autodesk_email', '=', $email);
 
-        if (1 === preg_match('(?P<uid>[a-z]+[0-9]+)@gatech\.edu', $email, $matches)) {
+        if (1 === preg_match('/(?P<uid>[a-z]+[0-9]+)@gatech\.edu/', $email, $matches)) {
             $query = $query->orWhere('uid', '=', $matches['uid']);
         }
 
