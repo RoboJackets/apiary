@@ -10,12 +10,13 @@ use App\Models\User;
 use App\Notifications\Nova\DuesAreLive;
 use App\Notifications\Nova\DuesPaymentDue;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PruneDuesNotificationsInNova implements ShouldQueue
+class PruneDuesNotificationsInNova implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -52,5 +53,13 @@ class PruneDuesNotificationsInNova implements ShouldQueue
                        ->where('type', DuesPaymentDue::class)
                        ->delete();
         }
+    }
+
+    /**
+     * The unique ID of the job.
+     */
+    public function uniqueId(): string
+    {
+        return strval($this->user->id);
     }
 }

@@ -9,8 +9,10 @@ namespace App\Observers;
 use App\Jobs\PruneDuesNotificationsInNova;
 use App\Jobs\PushToJedi;
 use App\Jobs\SendDuesPaymentReminder;
+use App\Jobs\SendPaymentReceipt;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Cache;
 
 class PaymentObserver
 {
@@ -27,5 +29,22 @@ class PaymentObserver
         ) {
             SendDuesPaymentReminder::dispatch($payment->payable->user);
         }
+
+        // this is pretty cursed but i don't have a better idea on guaranteeing exactly one receipt email from
+        // ~four save events
+        Cache::lock('send_payment_receipt_'.$payment->id, 5)->get(static function () use ($payment): void {
+            if (! $payment->receipt_sent &&
+                intval($payment->amount) > 0 &&
+                (
+                    'square' !== $payment->method ||
+                    null !== $payment->receipt_url
+                )
+            ) {
+                    $payment->receipt_sent = true;
+                    $payment->save();
+
+                    SendPaymentReceipt::dispatch($payment);
+            }
+        });
     }
 }

@@ -10,6 +10,7 @@ use App\Models\Payment as AppModelsPayment;
 use App\Models\User as AppModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
@@ -102,6 +103,13 @@ class Payment extends Resource
 
             Text::make('Notes')
                 ->onlyOnDetail(),
+
+            Boolean::make('Receipt Sent')
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    // Hidden to non-admins because it's confusing and not useful
+                    return $request->user()->hasRole('admin');
+                }),
 
             ...(in_array($this->method, ['square', 'squarecash', 'swipe'], true) ? [
                 new Panel('Square Metadata', $this->squareFields()),

@@ -8,7 +8,6 @@ use App\Events\PaymentSuccess;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Models\Payment;
-use App\Notifications\PaymentReceipt;
 use Illuminate\Http\JsonResponse;
 
 class PaymentController extends Controller
@@ -50,7 +49,7 @@ class PaymentController extends Controller
         $payment = Payment::create($request->all());
 
         $dbPayment = Payment::findOrFail($payment->id);
-        $dbPayment->payable->user->notify(new PaymentReceipt($dbPayment));
+
         event(new PaymentSuccess($dbPayment));
 
         return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
