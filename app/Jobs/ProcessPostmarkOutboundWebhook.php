@@ -32,7 +32,6 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
      * @phan-suppress PhanPossiblyNullTypeArgumentInternal
-     * @phan-suppress PhanPluginInvalidPregRegex
      */
     public function handle(): void
     {
@@ -50,7 +49,9 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
                 break;
             case 'SubscriptionChange':
                 $email = $payload['Recipient'];
-                $reason = $recordType;
+                // if this address is suppressed then set the reason
+                // if it was reactivated in postmark then set to null
+                $reason = $payload['SuppressSending'] ? $payload['SuppressionReason'] : null;
                 break;
             default:
                 throw new \Exception('Unrecognized record type '.$recordType);
@@ -63,7 +64,7 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
             ->orWhere('clickup_email', '=', $email)
             ->orWhere('autodesk_email', '=', $email);
 
-        if (1 === preg_match('(?P<uid>[a-z]+[0-9]+)@gatech\.edu', $email, $matches)) {
+        if (1 === preg_match('/(?P<uid>[a-z]+[0-9]+)@gatech\.edu/', $email, $matches)) {
             $query = $query->orWhere('uid', '=', $matches['uid']);
         }
 

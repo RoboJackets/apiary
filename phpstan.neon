@@ -157,7 +157,6 @@ parameters:
     - '#Property App\\Models\\Payment::\$(?:amount|processing_fee) \(string(?:\|null)?\) does not accept (?:float|int|float\|int)\.#'
     - '#Property App\\Models\\Signature::\$user_agent \(string\|null\) does not accept array\|string\|null\.#'
     - '#Property Spatie\\Permission\\Contracts\\(Permission|Role)::\$name \(string\) does not accept mixed\.#'
-    - '#Regex pattern is invalid: Unknown modifier ''@'' in pattern: .+#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>\|Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+>\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>\|Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+>\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.#'

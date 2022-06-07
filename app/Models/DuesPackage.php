@@ -205,7 +205,7 @@ class DuesPackage extends Model
                         ->where('payments.amount', '>', 0);
             })
             ->where('available_for_purchase', true)
-            ->where('dues_packages.effective_end', '>=', date('Y-m-d'))
+            ->where('dues_packages.effective_end', '>=', now())
             ->where('restricted_to_students', 'student' === $user->primary_affiliation);
 
         if ('mysql' === config('database.default')) {
@@ -223,8 +223,8 @@ class DuesPackage extends Model
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->where('effective_start', '<', date('Y-m-d H:i:s'))
-            ->where('effective_end', '>', date('Y-m-d H:i:s'));
+        return $query->where('effective_start', '<', now())
+            ->where('effective_end', '>', now());
     }
 
     /**
@@ -235,8 +235,8 @@ class DuesPackage extends Model
      */
     public function scopeAccessActive(Builder $query): Builder
     {
-        return $query->where('access_start', '<', date('Y-m-d H:i:s'))
-            ->where('access_end', '>', date('Y-m-d H:i:s'));
+        return $query->where('access_start', '<', now())
+            ->where('access_end', '>', now());
     }
 
     /**
