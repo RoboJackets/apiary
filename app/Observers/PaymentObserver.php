@@ -38,6 +38,7 @@ class PaymentObserver
             static function () use ($payment): void {
                 if (! $payment->receipt_sent &&
                     intval($payment->amount) > 0 &&
+                    'waiver' !== $payment->method &&
                     (
                         'square' !== $payment->method ||
                         null !== $payment->receipt_url
