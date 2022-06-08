@@ -46,6 +46,7 @@ class UserTest extends TestCase
         $payment = new Payment();
         $payment->payable_id = $transaction->id;
         $payment->payable_type = DuesTransaction::getMorphClassStatic();
+        $payment->recorded_by = $user->id;
         $payment->method = 'cash';
         $payment->amount = $package->cost;
         // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
