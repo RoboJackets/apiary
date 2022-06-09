@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e115b99c3b7a0fde292fdb066fc4424",
+    "content-hash": "9b2dda21559a0d2d2a542c1c1ab65e9f",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8540,16 +8540,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.1.0",
+            "version": "v6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "c9646197ef43b0e2ff44af61e7f0571526fd4170"
+                "reference": "6187424023fbffcd757789aeb517c9161b1eabee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/c9646197ef43b0e2ff44af61e7f0571526fd4170",
-                "reference": "c9646197ef43b0e2ff44af61e7f0571526fd4170",
+                "url": "https://api.github.com/repos/symfony/console/zipball/6187424023fbffcd757789aeb517c9161b1eabee",
+                "reference": "6187424023fbffcd757789aeb517c9161b1eabee",
                 "shasum": ""
             },
             "require": {
@@ -8616,7 +8616,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.1.0"
+                "source": "https://github.com/symfony/console/tree/v6.1.1"
             },
             "funding": [
                 {
@@ -8632,7 +8632,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-27T06:34:22+00:00"
+            "time": "2022-06-08T14:02:09+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -12626,16 +12626,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v2.1.8",
+            "version": "v2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "2a0b2dade387bc19bdf070650c1ba1e035c709da"
+                "reference": "e65978bc2ec0a6177cc1e00d9ed053a877d9e8d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/2a0b2dade387bc19bdf070650c1ba1e035c709da",
-                "reference": "2a0b2dade387bc19bdf070650c1ba1e035c709da",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/e65978bc2ec0a6177cc1e00d9ed053a877d9e8d3",
+                "reference": "e65978bc2ec0a6177cc1e00d9ed053a877d9e8d3",
                 "shasum": ""
             },
             "require": {
@@ -12700,7 +12700,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v2.1.8"
+                "source": "https://github.com/nunomaduro/larastan/tree/v2.1.10"
             },
             "funding": [
                 {
@@ -12720,7 +12720,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-06-04T14:21:33+00:00"
+            "time": "2022-06-09T21:29:45+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
@@ -13475,16 +13475,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "981cc368a216c988e862a75e526b6076987d1b50"
+                "reference": "3cb62d10845338136ff4ba299ab0986bbf84ba77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/981cc368a216c988e862a75e526b6076987d1b50",
-                "reference": "981cc368a216c988e862a75e526b6076987d1b50",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/3cb62d10845338136ff4ba299ab0986bbf84ba77",
+                "reference": "3cb62d10845338136ff4ba299ab0986bbf84ba77",
                 "shasum": ""
             },
             "require": {
@@ -13513,22 +13513,22 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.5.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.6.0"
             },
-            "time": "2022-05-05T11:32:40+00:00"
+            "time": "2022-06-09T09:45:59+00:00"
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.7.10",
+            "version": "1.7.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "25e069474cf00215b0f64c60a26230908ef3eefa"
+                "reference": "32f10779d9cd88a9cbd972ec611a4148a3cbbc7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/25e069474cf00215b0f64c60a26230908ef3eefa",
-                "reference": "25e069474cf00215b0f64c60a26230908ef3eefa",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/32f10779d9cd88a9cbd972ec611a4148a3cbbc7e",
+                "reference": "32f10779d9cd88a9cbd972ec611a4148a3cbbc7e",
                 "shasum": ""
             },
             "require": {
@@ -13554,7 +13554,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.7.10"
+                "source": "https://github.com/phpstan/phpstan/tree/1.7.12"
             },
             "funding": [
                 {
@@ -13574,7 +13574,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-03T14:12:23+00:00"
+            "time": "2022-06-09T12:39:36+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
