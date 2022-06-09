@@ -28,7 +28,7 @@
         "barryvdh/laravel-dompdf": "1.0.2",
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "3.3.6",
-        "guzzlehttp/guzzle": "7.4.3",
+        "guzzlehttp/guzzle": "7.4.4",
         "htmlmin/htmlmin": "9.0.1",
         "http-interop/http-factory-guzzle": "1.2.0",
         "kiritokatklian/nova-permission": "4.0.3",
