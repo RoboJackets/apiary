@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\DocuSignEnvelope;
 use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -108,6 +107,13 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 'envelopeId'
             );
 
+            $envelope->url = self::getValueWithRegex(
+                '/(?P<url>https:\/\/na3.docusign.net\/Member\/EmailStart.aspx.+)/',
+                $payload['TextBody'],
+                'url',
+                'email text'
+            );
+
             Storage::makeDirectory($envelope->envelope_id);
             Storage::disk('local')->put($envelope->envelope_id.'/Summary.pdf', $decoded);
 
@@ -120,14 +126,6 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             } else {
                 throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
             }
-        } elseif (Str::contains($subject, ' viewed ')) {
-            $name = self::getValueWithRegex('/(?P<name>.+) viewed .+/', $subject, 'name', 'subject line');
-            $user = User::search($name)->first();
-
-            $envelope = DocuSignEnvelope::where('signed_by', $user->id)->where('complete', false)->sole();
-
-            $envelope->viewed_at = now(); // TODO update when have parsed version of email
-            $envelope->url = 'https://example/com'; // TODO update when have parsed version of email
         } else {
             throw new \Exception('Unrecognized subject line');
         }
