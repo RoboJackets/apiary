@@ -7,6 +7,7 @@ use App\Http\Controllers\AutodeskLibraryController;
 use App\Http\Controllers\BuzzApiMockController;
 use App\Http\Controllers\ClickUpController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocuSignController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
@@ -56,6 +57,10 @@ Route::middleware('auth.cas.force')->group(static function (): void {
         Route::get('/dues', [SquareCheckoutController::class, 'payDues'])->name('pay.dues');
         Route::get('/travel', [SquareCheckoutController::class, 'payTravel'])->name('pay.travel');
         Route::get('/complete', [SquareCheckoutController::class, 'complete'])->name('pay.complete');
+    });
+
+    Route::prefix('sign')->group(static function (): void {
+        Route::get('/travel', [DocuSignController::class, 'signTravel'])->name('docusign.travel');
     });
 
     Route::get('github', [GitHubController::class, 'redirectToProvider']);

@@ -129,14 +129,11 @@ class DashboardController extends Controller
 
         $needTravelPayment = false;
         $needTravelAuthorityRequest = false;
-        $travelAuthorityRequestUrl = '';
         $travelName = '';
 
         if (null !== $travelAssignmentWithNoPayment) {
             $needTravelAuthorityRequest = ! $travelAssignmentWithNoPayment->tar_received &&
                 $travelAssignmentWithNoPayment->travel->tar_required;
-
-            $travelAuthorityRequestUrl = $travelAssignmentWithNoPayment->travel_authority_request_url;
 
             $needTravelPayment = true;
 
@@ -145,8 +142,6 @@ class DashboardController extends Controller
             $needTravelAuthorityRequest = ! $travelAssignmentWithIncompletePayment->tar_received &&
                 $travelAssignmentWithIncompletePayment->travel->tar_required;
 
-            $travelAuthorityRequestUrl = $travelAssignmentWithIncompletePayment->travel_authority_request_url;
-
             $needTravelPayment = true;
 
             $travelName = $travelAssignmentWithIncompletePayment->travel->name;
@@ -154,8 +149,6 @@ class DashboardController extends Controller
             $needTravelAuthorityRequest = true;
 
             $travelName = $travelAssignmentWithNoTravelAuthorityRequest->travel->name;
-
-            $travelAuthorityRequestUrl = $travelAssignmentWithNoTravelAuthorityRequest->travel_authority_request_url;
         }
 
         $teamAttendanceExists = $user->attendance()->whereAttendableType('team')->exists();
@@ -181,7 +174,7 @@ class DashboardController extends Controller
                 'agreementExists' => $agreementExists,
                 'needTravelPayment' => $needTravelPayment,
                 'needTravelAuthorityRequest' => $needTravelAuthorityRequest,
-                'travelAuthorityRequestUrl' => $travelAuthorityRequestUrl,
+                'travelAuthorityRequestUrl' => route('docusign.travel'),
                 'travelName' => $travelName,
                 'teamAttendanceExists' => $teamAttendanceExists,
             ]

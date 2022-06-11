@@ -32,6 +32,8 @@ return new class extends Migration
             $table->dateTimeTz('completed_at')->nullable();
             $table->softDeletesTz();
             $table->timestamps();
+
+            $table->foreign('signed_by')->references('id')->on('users');
         });
     }
 

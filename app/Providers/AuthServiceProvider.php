@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Attendance;
+use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
@@ -20,6 +21,7 @@ use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
 use App\Policies\AttendancePolicy;
+use App\Policies\DocuSignEnvelopePolicy;
 use App\Policies\DuesPackagePolicy;
 use App\Policies\DuesTransactionPolicy;
 use App\Policies\EventPolicy;
@@ -49,23 +51,24 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string,class-string>
      */
     protected $policies = [
-        Rsvp::class => RsvpPolicy::class,
-        Team::class => TeamPolicy::class,
-        User::class => UserPolicy::class,
-        Event::class => EventPolicy::class,
         Attendance::class => AttendancePolicy::class,
+        DocuSignEnvelope::class => DocuSignEnvelopePolicy::class,
         DuesPackage::class => DuesPackagePolicy::class,
-        Payment::class => PaymentPolicy::class,
         DuesTransaction::class => DuesTransactionPolicy::class,
-        Role::class => RolePolicy::class,
-        Permission::class => PermissionPolicy::class,
+        Event::class => EventPolicy::class,
         Major::class => MajorPolicy::class,
         Merchandise::class => MerchandisePolicy::class,
+        OAuth2AccessToken::class => OAuth2AccessTokenPolicy::class,
+        OAuth2Client::class => OAuth2ClientPolicy::class,
+        Payment::class => PaymentPolicy::class,
+        Permission::class => PermissionPolicy::class,
         RemoteAttendanceLink::class => RemoteAttendanceLinkPolicy::class,
+        Role::class => RolePolicy::class,
+        Rsvp::class => RsvpPolicy::class,
+        Team::class => TeamPolicy::class,
         Travel::class => TravelPolicy::class,
         TravelAssignment::class => TravelAssignmentPolicy::class,
-        OAuth2Client::class => OAuth2ClientPolicy::class,
-        OAuth2AccessToken::class => OAuth2AccessTokenPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**
