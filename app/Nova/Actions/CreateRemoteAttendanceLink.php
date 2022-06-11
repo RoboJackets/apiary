@@ -95,8 +95,8 @@ class CreateRemoteAttendanceLink extends Action
                 ->help('If you put a link to a Google Meet, BlueJeans, Zoom, or Microsoft Teams meeting here, '.
                     'everyone who clicks the attendance link will be redirected to that meeting after their '.
                     'attendance is recorded. If you add a redirect URL, do not share that URL directly. Only Google '.
-                    'Meet, BlueJeans, Zoom, and Microsoft Teams calls are supported currently. Ask in #it-helpdesk for '.
-                    'other redirect URLs.'),
+                    'Meet, BlueJeans, Zoom, and Microsoft Teams calls are supported currently. Ask in #it-helpdesk for'.
+                    ' other redirect URLs.'),
 
             Select::make('Purpose')
                 ->required(true)
