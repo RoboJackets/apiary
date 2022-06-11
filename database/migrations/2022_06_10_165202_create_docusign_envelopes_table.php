@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->string('envelope_id')->nullable();
             $table->morphs('signable');
-            $table->boolean('complete');
+            $table->boolean('complete')->default(false);
             $table->string('membership_agreement_filename')->nullable();
             $table->string('travel_authority_filename')->nullable();
             $table->string('direct_bill_airfare_filename')->nullable();
