@@ -66,7 +66,7 @@ class DocuSignController extends Controller
             return view('travel.alreadysigned');
         }
 
-        if ($envelope->wasRecentlyCreated {
+        if ($envelope->wasRecentlyCreated) {
             return redirect($assignment->travel_authority_request_url);
         }
 
