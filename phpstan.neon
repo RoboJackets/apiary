@@ -29,7 +29,7 @@ parameters:
     - '#Call to an undefined method Illuminate\\Http\\Request::model\(\)\.#'
     - '#Cannot access offset ''[a-z_]+'' on mixed\.#'
     - '#Cannot access offset [0-9]+ on mixed\.#'
-    - '#Cannot access property \$[a-z_]+ on App\\Models\\[a-zA-Z]+\|null\.#'
+    - '#Cannot access property \$[a-zA-Z_]+ on App\\Models\\[a-zA-Z]+\|null\.#'
     - '#Cannot access property \$[a-z_]+ on array<string, int\|string>\|object\.#'
     - '#Cannot access property \$[a-z_]+ on Illuminate\\Database\\Eloquent\\Model\|null\.#'
     - '#Cannot access property \$[a-z_]+ on mixed\.#'
