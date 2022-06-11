@@ -448,7 +448,7 @@ class User extends Authenticatable
      */
     public function envelopes(): HasMany
     {
-        return $this->hasMany(DocuSignEnvelope::class);
+        return $this->hasMany(DocuSignEnvelope::class, 'signed_by');
     }
 
     /**
