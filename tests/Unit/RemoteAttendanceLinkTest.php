@@ -85,6 +85,23 @@ class RemoteAttendanceLinkTest extends TestCase
         $this->redirectRegexTestCase('meet.google.com/aaa-aaaa-aaa?query@query', false);
     }
 
+    /**
+     * Test Zoom links.
+     */
+    public function testRedirectRegexZoom(): void
+    {
+        $this->redirectRegexTestCase('gatech.zoom.us/j/12345678901?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', true);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/12345678901', true);
+
+        $this->redirectRegexTestCase('zoom.us/j/12345678901?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', false);
+        $this->redirectRegexTestCase('zoom.us/j/12345678901', false);
+        $this->redirectRegexTestCase('uga.zoom.us/j/12345678901?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', false);
+        $this->redirectRegexTestCase('uga.zoom.us/j/12345678901', false);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', false);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/abcdefg', false);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/12345?query@query', false);
+    }
+
     private function redirectRegexTestCase(string $url, bool $expected): void
     {
         if ($expected) {
