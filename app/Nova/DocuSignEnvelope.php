@@ -107,22 +107,22 @@ class DocuSignEnvelope extends Resource
 
             Panel::make('Documents', [
                 ...(null === $this->membership_agreement_filename ? [] : [
-                    File::make('Membership Agreement', 'membership_agreement_filename'),
+                    File::make('Membership Agreement', 'membership_agreement_filename')->disk('local'),
                 ]),
 
                 ...(null === $this->travel_authority_filename ? [] : [
-                    File::make('Travel Authority Request', 'travel_authority_filename'),
+                    File::make('Travel Authority Request', 'travel_authority_filename')->disk('local'),
                 ]),
 
                 ...(null === $this->covid_risk_filename ? [] : [
-                    File::make('COVID Risk Acknowledgement', 'covid_risk_filename'),
+                    File::make('COVID Risk Acknowledgement', 'covid_risk_filename')->disk('local'),
                 ]),
 
                 ...(null === $this->direct_bill_airfare_filename ? [] : [
-                    File::make('Direct Bill Airfare Request', 'direct_bill_airfare_filename'),
+                    File::make('Direct Bill Airfare Request', 'direct_bill_airfare_filename')->disk('local'),
                 ]),
 
-                File::make('Summary', 'summary_filename'),
+                File::make('Summary', 'summary_filename')->disk('local'),
             ]),
 
             Panel::make('Timestamps', [
