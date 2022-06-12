@@ -53,7 +53,7 @@ Travel | {{ config('app.name') }}
             </table>
             <h2>Action Items</h2>
         @if($travel->tar_required && !$tar_received)
-            <p>Please <a href="{{ $tar_url }}">click here</a> to submit a Travel Authority Request. Georgia Tech requires this form to be submitted for all official travel.
+            <p>Please <a href="{{ route('docusign.travel') }}">click here</a> to submit a Travel Authority Request. Georgia Tech requires this form to be submitted for all official travel.
         @endif
         @if(!$paid)
 

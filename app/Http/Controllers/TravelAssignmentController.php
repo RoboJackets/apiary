@@ -56,7 +56,6 @@ class TravelAssignmentController extends Controller
             [
                 'travel' => $assignment->travel,
                 'tar_received' => $assignment->tar_received,
-                'tar_url' => $assignment->travel_authority_request_url,
                 'paid' => $assignment->is_paid,
             ]
         );
