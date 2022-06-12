@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use App\Models\DocuSignEnvelope;
+use App\Models\Travel;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -17,7 +19,7 @@ class DocuSignEnvelopePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('view-docusign-envelopes') || Travel::where('primary_contact_user_id', $user->id)->exists();
     }
 
     /**
@@ -25,7 +27,11 @@ class DocuSignEnvelopePolicy
      */
     public function view(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
-        return true;
+        return $user->can('view-docusign-envelopes') ||
+            (
+                $docuSignEnvelope->signable_type === TravelAssignment::getMorphClassStatic() &&
+                $docuSignEnvelope->signable->travel->primaryContact->id === $user->id
+            );
     }
 
     /**
