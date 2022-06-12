@@ -39,6 +39,10 @@ class DocuSignController extends Controller
         }
 
         $assignmentWithNoEnvelope = TravelAssignment::doesntHave('envelope')
+            ->whereHas('travel', static function (Builder $q): void {
+                $q->where('tar_required', true);
+            })
+            ->where('tar_received', false)
             ->where('user_id', $user->id)
             ->oldest('updated_at')
             ->first();
@@ -47,6 +51,10 @@ class DocuSignController extends Controller
             ->whereHas('envelope', static function (Builder $q): void {
                 $q->where('complete', false);
             })
+            ->whereHas('travel', static function (Builder $q): void {
+                $q->where('tar_required', true);
+            })
+            ->where('tar_received', false)
             ->oldest('updated_at')
             ->first();
 
