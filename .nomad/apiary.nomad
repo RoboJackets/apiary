@@ -18,6 +18,11 @@ variable "precompressed_assets" {
   description = "Whether assets in the image are pre-compressed"
 }
 
+variable "environment_name" {
+  type = string
+  description = "The name of the environment being deployed"
+}
+
 locals {
   # compressed in this context refers to the config string itself, not the assets
   compressed_nginx_configuration = trimspace(
