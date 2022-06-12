@@ -98,7 +98,7 @@ job "apiary" {
 
     volume "docusign" {
       type = "host"
-      source = "${NOMAD_JOB_NAME}_docusign"
+      source = "apiary_${var.environment_name}_docusign"
     }
 
     task "prestart" {
