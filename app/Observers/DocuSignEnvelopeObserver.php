@@ -34,7 +34,7 @@ class DocuSignEnvelopeObserver
     {
         if (
             $envelope->signable_type === TravelAssignment::getMorphClassStatic() &&
-            0 === $envelope->signable->envelope->count()
+            1 === $envelope->signable->envelope->count()
         ) {
             $envelope->signable->tar_received = $envelope->complete;
             $envelope->signable->save();
