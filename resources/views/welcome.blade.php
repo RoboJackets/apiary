@@ -192,7 +192,7 @@
                             <p class="card-text">
                                 You need to submit a Travel Authority Request for {{ $travelName }}.
                             </p>
-                            <a href="{{ route('sign.travel') }}">Submit Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
+                            <a href="{{ route('docusign.travel') }}">Submit Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
                         </div>
                     </div>
                 </div>
