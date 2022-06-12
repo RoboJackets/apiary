@@ -107,15 +107,33 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 'envelopeId'
             );
 
-            $envelope->url = self::getValueWithRegex(
+            $envelope->url = Str::trim(self::getValueWithRegex(
                 '/(?P<url>https:\/\/na3.docusign.net\/Member\/EmailStart.aspx.+)/',
                 $payload['TextBody'],
                 'url',
                 'email text'
-            );
+            ));
 
-            Storage::makeDirectory($envelope->envelope_id);
-            Storage::disk('local')->put($envelope->envelope_id.'/Summary.pdf', $decoded);
+            Storage::makeDirectory('docusign/'.$envelope->envelope_id);
+
+            collect($payload['Attachments'])->each(static function (array $value, int $key) use ($envelope): void {
+                $original_filename = $value['Name'];
+                $disk_path = 'docusign/'.$envelope->envelope_id.'/'.$original_filename;
+
+                if (Str::contains($original_filename, 'Summary')) {
+                    $envelope->summary_filename = $disk_path;
+                } elseif (Str::contains($original_filename, 'COVID')) {
+                    $envelope->covid_risk_filename = $disk_path;
+                } elseif (Str::contains($original_filename, 'Authority')) {
+                    $envelope->travel_authority_filename = $disk_path;
+                } elseif (Str::contains($original_filename, 'Airfare')) {
+                    $envelope->direct_bill_airfare_filename = $disk_path;
+                } else {
+                    throw new \Exception('Unable to determine column for attachment named '.$original_filename);
+                }
+
+                Storage::disk('local')->put($disk_path, base64_decode($value['Content'], true));
+            });
 
             $envelope->complete = true;
             $envelope->save();

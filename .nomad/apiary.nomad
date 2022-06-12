@@ -96,6 +96,11 @@ job "apiary" {
       }
     }
 
+    volume "docusign" {
+      type = "host"
+      source = "${NOMAD_JOB_NAME}_docusign"
+    }
+
     task "prestart" {
       driver = "docker"
 
@@ -221,6 +226,11 @@ EOF
         }
       }
 
+      volume_mount {
+        volume = "docusign"
+        destination = "/app/storage/app/docusign/"
+      }
+
       template {
         data = trimspace(file("conf/www.conf"))
 
@@ -336,6 +346,11 @@ EOF
         volume_mount {
           volume = "run"
           destination = "/var/opt/nomad/run/"
+        }
+
+        volume_mount {
+          volume = "docusign"
+          destination = "/app/storage/app/docusign/"
         }
 
         template {

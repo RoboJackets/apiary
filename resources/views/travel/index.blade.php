@@ -53,7 +53,7 @@ Travel | {{ config('app.name') }}
             </table>
             <h2>Action Items</h2>
         @if($travel->tar_required && !$tar_received)
-            <p>Please <a href="{{ $tar_url }}">click here</a> to submit a Travel Authority Request. Your completed form will be submitted to {{ $travel->primaryContact->full_name }} for review, and this item will be cleared manually once approved.</p>
+            <p>Please <a href="{{ $tar_url }}">click here</a> to submit a Travel Authority Request. Georgia Tech requires this form to be submitted for all official travel.
         @endif
         @if(!$paid)
 

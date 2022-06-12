@@ -174,7 +174,6 @@ class DashboardController extends Controller
                 'agreementExists' => $agreementExists,
                 'needTravelPayment' => $needTravelPayment,
                 'needTravelAuthorityRequest' => $needTravelAuthorityRequest,
-                'travelAuthorityRequestUrl' => route('docusign.travel'),
                 'travelName' => $travelName,
                 'teamAttendanceExists' => $teamAttendanceExists,
             ]
