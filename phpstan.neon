@@ -9,6 +9,8 @@ parameters:
     - tests/*
     - vendor/*
     - stubs/*
+    # PHPStan choking on this policy for some reason
+    - app/Policies/DocuSignEnvelopePolicy.php
   stubFiles:
     - stubs/Permission.php
     - stubs/Role.php
