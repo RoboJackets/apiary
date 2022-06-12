@@ -22,8 +22,6 @@ class DocuSignEnvelopeObserver
         ) {
             $envelope->signable->tar_received = false;
             $envelope->signable->save();
-        } else {
-            throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
         }
     }
 
@@ -38,8 +36,6 @@ class DocuSignEnvelopeObserver
         ) {
             $envelope->signable->tar_received = $envelope->complete;
             $envelope->signable->save();
-        } else {
-            throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
         }
     }
 
@@ -54,8 +50,6 @@ class DocuSignEnvelopeObserver
         ) {
             $envelope->signable->tar_received = false;
             $envelope->signable->save();
-        } else {
-            throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
         }
     }
 }
