@@ -11,6 +11,7 @@ parameters:
     - stubs/*
     # PHPStan choking on this policy for some reason
     - app/Policies/DocuSignEnvelopePolicy.php
+    - app/Observers/DocuSignEnvelopeObserver.php
   stubFiles:
     - stubs/Permission.php
     - stubs/Role.php
