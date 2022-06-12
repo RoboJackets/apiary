@@ -107,12 +107,12 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 'envelopeId'
             );
 
-            $envelope->url = Str::trim(self::getValueWithRegex(
+            $envelope->url = Str::of(self::getValueWithRegex(
                 '/(?P<url>https:\/\/na3.docusign.net\/Member\/EmailStart.aspx.+)/',
                 $payload['TextBody'],
                 'url',
                 'email text'
-            ));
+            ))->trim();
 
             Storage::makeDirectory('docusign/'.$envelope->envelope_id);
 
@@ -132,6 +132,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                     throw new \Exception('Unable to determine column for attachment named '.$original_filename);
                 }
 
+                // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
                 Storage::disk('local')->put($disk_path, base64_decode($value['Content'], true));
             });
 
