@@ -442,6 +442,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the DocuSign envelopes signed by the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope>
+     */
+    public function envelopes(): HasMany
+    {
+        return $this->hasMany(DocuSignEnvelope::class, 'signed_by');
+    }
+
+    /**
      * Get the DuesTransactions belonging to the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>

@@ -94,6 +94,9 @@ class TravelAssignment extends Resource
             MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
 
+            MorphMany::make('DocuSign Envelopes', 'envelope', DocuSignEnvelope::class)
+                ->onlyOnDetail(),
+
             self::metadataPanel(),
         ];
     }

@@ -144,6 +144,16 @@ class TravelAssignment extends Model
         return $this->morphMany(Payment::class, 'payable');
     }
 
+    /**
+     * Get the DocuSign envelope for this assignment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\DocuSignEnvelope>
+     */
+    public function envelope(): MorphMany
+    {
+        return $this->morphMany(DocuSignEnvelope::class, 'signable');
+    }
+
     public function getIsPaidAttribute(): bool
     {
         return 0 !== self::where('travel_assignments.id', $this->id)->paid()->count();
@@ -305,12 +315,12 @@ class TravelAssignment extends Model
                 ).'_Email' => $this->user->uid.'@gatech.edu',
 
                 config(
-                    'docusign.domestic_travel_authority_request.primary_contact_name'
-                ).'_UserName' => $this->travel->primaryContact->full_name,
+                    'docusign.domestic_travel_authority_request.ingest_mailbox_name'
+                ).'_UserName' => config('app.name'),
 
                 config(
-                    'docusign.domestic_travel_authority_request.primary_contact_name'
-                ).'_Email' => $this->travel->primaryContact->uid.'@gatech.edu',
+                    'docusign.domestic_travel_authority_request.ingest_mailbox_name'
+                ).'_Email' => config('docusign.ingest_mailbox'),
             ]
         );
     }

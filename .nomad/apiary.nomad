@@ -18,6 +18,11 @@ variable "precompressed_assets" {
   description = "Whether assets in the image are pre-compressed"
 }
 
+variable "environment_name" {
+  type = string
+  description = "The name of the environment being deployed"
+}
+
 locals {
   # compressed in this context refers to the config string itself, not the assets
   compressed_nginx_configuration = trimspace(
@@ -94,6 +99,11 @@ job "apiary" {
         type = "host"
         source = "apiary_production_resumes"
       }
+    }
+
+    volume "docusign" {
+      type = "host"
+      source = "apiary_${var.environment_name}_docusign"
     }
 
     task "prestart" {
@@ -221,6 +231,11 @@ EOF
         }
       }
 
+      volume_mount {
+        volume = "docusign"
+        destination = "/app/storage/app/docusign/"
+      }
+
       template {
         data = trimspace(file("conf/www.conf"))
 
@@ -336,6 +351,11 @@ EOF
         volume_mount {
           volume = "run"
           destination = "/var/opt/nomad/run/"
+        }
+
+        volume_mount {
+          volume = "docusign"
+          destination = "/app/storage/app/docusign/"
         }
 
         template {
