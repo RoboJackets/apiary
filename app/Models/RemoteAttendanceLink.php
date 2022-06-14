@@ -82,16 +82,16 @@ class RemoteAttendanceLink extends Model
 
     /**
      * A regular expression for acceptable redirect URLs for normal users to enter.
-     * The regex will match any of the following, with the https, http, or no schema:
+     * The regex will match any of the following, with the https, http, or no schema, and optional query strings:
      * https://meet.google.com/<alpha and dashes>
-     * https://teams.microsoft.com/l/meetup-join/<alphanumeric, -, %, .>/<digits, optional query string>
-     * https://gatech.zoom.us/j/<digits, optional query string>
+     * https://teams.microsoft.com/l/meetup-join/<alphanumeric, -, %, .>/<digits>
+     * https://gatech.zoom.us/j/<digits>
      * but nothing else, to avoid users redirecting to surprising things.
      *
      * @phan-suppress PhanReadOnlyPublicProperty
      */
-    public static string $redirectRegex = '/^(https?:\/\/)?meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
-        .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+)(\?[^@]*)?|gatech\.zoom\.us\/j\/[0-9]+(\?[^@]*)?$/';
+    public static string $redirectRegex = '/^(https?:\/\/)?(meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
+        .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+|gatech\.zoom\.us\/j\/[0-9]+)(\?[^@]*)?$/';
 
     /**
      * Given a user-submitted URL matching $redirectRegex, return a normalized URL that can be used for redirects.
