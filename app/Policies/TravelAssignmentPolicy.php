@@ -41,7 +41,7 @@ class TravelAssignmentPolicy
      */
     public function update(User $user, TravelAssignment $travel_assignment): bool
     {
-        return $user->can('manage-travel') || $travel_assignment->travel->primaryContact === $user;
+        return false;
     }
 
     /**
@@ -57,7 +57,7 @@ class TravelAssignmentPolicy
      */
     public function restore(User $user, TravelAssignment $travel_assignment): bool
     {
-        return false;
+        return $user->can('manage-travel') || $travel_assignment->travel->primaryContact === $user;
     }
 
     /**
