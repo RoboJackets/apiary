@@ -117,7 +117,13 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             Storage::makeDirectory('docusign/'.$envelope->envelope_id);
 
             collect($payload['Attachments'])->each(static function (array $value, int $key) use ($envelope): void {
-                $original_filename = $value['Name'];
+                $original_filename = self::getValueWithRegex(
+                    '/(?P<filename>^[a-zA-Z .]+$)/',
+                    $value['Name'],
+                    'filename',
+                    'PDF filename'
+                );
+
                 $disk_path = 'docusign/'.$envelope->envelope_id.'/'.$original_filename;
 
                 if (Str::contains($original_filename, 'Summary')) {
