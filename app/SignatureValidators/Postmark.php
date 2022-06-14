@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookConfig;
 
-class PostmarkOutbound implements SignatureValidator
+class Postmark implements SignatureValidator
 {
     /**
-     * Verifies a signature on a request from Square.
+     * Verifies a signature on a request from Postmark.
      */
     public function isValid(Request $request, WebhookConfig $config): bool
     {

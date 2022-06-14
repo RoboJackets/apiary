@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Attendance;
+use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
@@ -17,6 +18,7 @@ use App\Models\Team;
 use App\Models\TravelAssignment;
 use App\Models\User;
 use App\Observers\AttendanceObserver;
+use App\Observers\DocuSignEnvelopeObserver;
 use App\Observers\DuesPackageObserver;
 use App\Observers\DuesTransactionObserver;
 use App\Observers\MembershipAgreementTemplateObserver;
@@ -63,12 +65,13 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Attendance::observe(AttendanceObserver::class);
+        DocuSignEnvelope::observe(DocuSignEnvelopeObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
+        DuesTransaction::observe(DuesTransactionObserver::class);
         MembershipAgreementTemplate::observe(MembershipAgreementTemplateObserver::class);
         Payment::observe(PaymentObserver::class);
         Signature::observe(SignatureObserver::class);
         User::observe(UserObserver::class);
-        DuesTransaction::observe(DuesTransactionObserver::class);
 
         Relation::morphMap([
             'event' => Event::class,

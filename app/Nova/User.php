@@ -253,6 +253,8 @@ class User extends Resource
 
             HasMany::make('Travel Assignments', 'assignments', TravelAssignment::class),
 
+            HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class),
+
             BelongsToMany::make('Teams')
                 ->canSee(static function (Request $request): bool {
                     if ($request->resourceId === $request->user()->id) {

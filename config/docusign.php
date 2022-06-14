@@ -8,7 +8,7 @@ return [
     'domestic_travel_authority_request' => [
         'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=0b84b2d4-fed7-4a43-bfd2-b5bb934e13b6&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',
         'traveler_name' => 'Traveler',
-        'primary_contact_name' => 'Primary Contact',
+        'ingest_mailbox_name' => 'Ingest Mailbox',
         'fields' => [
             'state_contract_airline' => 'Checkbox d259085e-55cd-4e6e-a931-3d665524e8f1',
             'non_contract_airline' => 'Checkbox 92887317-7509-4759-b864-f1a909dc2998',
@@ -32,4 +32,8 @@ return [
             'home_department' => 'Text 10438f34-34d6-4b32-bbf3-3b9e32245d88',
         ],
     ],
+
+    'ingest_mailbox' => env('DOCUSIGN_INGEST_MAILBOX'),
+
+    'single_sign_on_url' => 'https://account.docusign.com/organizations/7097b206-c4cf-4e3c-8e62-2219e510c3c3/saml2/login/sp/4564d62e-c67b-46f2-b1d7-f8ccc628a269',
 ];
