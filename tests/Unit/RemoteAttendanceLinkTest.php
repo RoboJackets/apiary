@@ -18,45 +18,6 @@ class RemoteAttendanceLinkTest extends TestCase
     }
 
     /**
-     * Test BlueJeans links.
-     */
-    public function testRedirectRegexBlueJeans(): void
-    {
-        $this->redirectRegexTestCase('bluejeans.com/01234', true);
-        $this->redirectRegexTestCase('bluejeans.com/01234/01234', true);
-        $this->redirectRegexTestCase('bluejeans.com/01234?querystring', true);
-        $this->redirectRegexTestCase('bluejeans.com/01234/01234?querystring', true);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234', true);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234/01234', true);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234?querystring', true);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234/01234?querystring', true);
-        $this->redirectRegexTestCase('primetime.bluejeans.com/a2m/live-event/abcd', true);
-        $this->redirectRegexTestCase('primetime.bluejeans.com/a2m/live-event/abcd?querystring', true);
-
-        $this->redirectRegexTestCase('bluejeans.com/abcd', false);
-        $this->redirectRegexTestCase('bluejeans.com/abcd/01234', false);
-        $this->redirectRegexTestCase('bluejeans.com/01234/abcd', false);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/abcd', false);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/abcd/01234', false);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234/abcd', false);
-        $this->redirectRegexTestCase('primetime.bluejeans.com/a2m/live-event/0123', false);
-
-        $this->redirectRegexTestCase('bluejeans.com/01234?query@query', false);
-        $this->redirectRegexTestCase('bluejeans.com/01234/01234?query@query', false);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234?query@query', false);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234/01234?query@query', false);
-        $this->redirectRegexTestCase('primetime.bluejeans.com/a2m/live-event/abcd?query@query', false);
-
-        $this->redirectRegexTestCase('bluejeans.com/01234', true);
-        $this->redirectRegexTestCase('bluejeans.com/01234/01234', true);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234', true);
-        $this->redirectRegexTestCase('gatech.bluejeans.com/01234/01234', true);
-        $this->redirectRegexTestCase('primetime.bluejeans.com/a2m/live-event/abcd', true);
-
-        $this->redirectRegexTestCase('bluejeans.com/', false);
-    }
-
-    /**
      * Test Microsoft Teams links.
      */
     public function testRedirectRegexMicrosoftTeams(): void
@@ -83,6 +44,23 @@ class RemoteAttendanceLinkTest extends TestCase
         $this->redirectRegexTestCase('meet.google.com/0a0-a0a0-a0a', false);
         $this->redirectRegexTestCase('meet.google.com/aaa-aaaa-aaa', true);
         $this->redirectRegexTestCase('meet.google.com/aaa-aaaa-aaa?query@query', false);
+    }
+
+    /**
+     * Test Zoom links.
+     */
+    public function testRedirectRegexZoom(): void
+    {
+        $this->redirectRegexTestCase('gatech.zoom.us/j/12345678901?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', true);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/12345678901', true);
+
+        $this->redirectRegexTestCase('zoom.us/j/12345678901?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', false);
+        $this->redirectRegexTestCase('zoom.us/j/12345678901', false);
+        $this->redirectRegexTestCase('uga.zoom.us/j/12345678901?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', false);
+        $this->redirectRegexTestCase('uga.zoom.us/j/12345678901', false);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/?pwd=aBCdE1fghI2JKlMNOPQrSTuVWxYz3456', false);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/abcdefg', false);
+        $this->redirectRegexTestCase('gatech.zoom.us/j/12345?query@query', false);
     }
 
     private function redirectRegexTestCase(string $url, bool $expected): void
