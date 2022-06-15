@@ -120,8 +120,8 @@ class Travel extends Resource
                     Boolean::make('TAR Required', 'tar_required')
                         ->help(
                             'Check this box if Travel Authority Requests need to be submitted to the Institute.'
-                            .' Each traveler will need to submit one individually, and you will need to update'
-                            .' the status on each travel assignment as they are submitted.'
+                            .' Each traveler will need to submit one individually, and they will be automatically'
+                            .' collected within MyRoboJackets.'
                         )
                         ->hideFromIndex(),
 
@@ -141,7 +141,7 @@ class Travel extends Resource
 
                     Text::make('Itinerary', 'tar_itinerary')
                         ->required()
-                        ->rules('required', 'max:255')
+                        ->rules('required_if:tar_required,1', 'max:255')
                         ->help(
                             'This will be populated on TAR forms.'
                         )
@@ -149,7 +149,7 @@ class Travel extends Resource
 
                     Text::make('Purpose', 'tar_purpose')
                         ->required()
-                        ->rules('required', 'max:255')
+                        ->rules('required_if:tar_required,1', 'max:255')
                         ->help(
                             'This will be populated on TAR forms.'
                         )
@@ -157,7 +157,7 @@ class Travel extends Resource
 
                     Currency::make('Airfare Cost', 'tar_airfare')
                         ->required()
-                        ->rules('required', 'integer')
+                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
                         ->min(0)
                         ->max(1000)
                         ->help(
@@ -168,7 +168,7 @@ class Travel extends Resource
 
                     Currency::make('Lodging Cost', 'tar_lodging')
                         ->required()
-                        ->rules('required', 'integer')
+                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
                         ->min(0)
                         ->max(1000)
                         ->help(
@@ -179,7 +179,7 @@ class Travel extends Resource
 
                     Currency::make('Other Transportation Cost', 'tar_other_trans')
                         ->required()
-                        ->rules('required', 'integer')
+                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
                         ->min(0)
                         ->max(1000)
                         ->help(
@@ -190,7 +190,7 @@ class Travel extends Resource
 
                     Currency::make('Registration Cost', 'tar_registration')
                         ->required()
-                        ->rules('required', 'integer')
+                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
                         ->min(0)
                         ->max(1000)
                         ->help(
@@ -201,7 +201,12 @@ class Travel extends Resource
 
                     Text::make('Workday Project Number', 'tar_project_number')
                         ->required()
-                        ->rules('required', 'max:255', 'in:CE0339,DE00007513,GTF250000211') // agency, SGA, ME GTF
+                        ->rules(
+                            'required_if:tar_required,1',
+                            'nullable',
+                            'max:255',
+                            'in:CE0339,DE00007513,GTF250000211' // agency, SGA, ME GTF
+                        )
                         ->help(
                             'Ask the treasurer for the correct value for this field.'
                         )
@@ -209,7 +214,7 @@ class Travel extends Resource
 
                     Text::make('Account Code', 'tar_account_code')
                         ->required()
-                        ->rules('required', 'digits:6')
+                        ->rules('required_if:tar_required,1', 'nullable', 'digits:6')
                         ->help(
                             'Ask the treasurer for the correct value for this field.'
                         )
