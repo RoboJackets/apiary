@@ -76,7 +76,7 @@
         "robojackets/static-analysis": "1.4",
         "slevomat/coding-standard": "7.2.1",
         "spatie/ray": "1.34.5",
-        "spatie/laravel-ignition": "1.2.4",
+        "spatie/laravel-ignition": "1.3.0",
         "phpunit/phpunit": "9.5.20"
     },
     "replace": {
