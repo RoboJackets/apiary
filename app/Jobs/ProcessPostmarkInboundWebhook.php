@@ -118,7 +118,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 
             collect($payload['Attachments'])->each(static function (array $value, int $key) use ($envelope): void {
                 $original_filename = self::getValueWithRegex(
-                    '/(?P<filename>^[a-zA-Z .]+$)/',
+                    '/(?P<filename>^[a-zA-Z .-]+$)/',
                     $value['Name'],
                     'filename',
                     'PDF filename'

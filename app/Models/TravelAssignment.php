@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 namespace App\Models;
 
@@ -207,6 +208,170 @@ class TravelAssignment extends Model
 
     public function getTravelAuthorityRequestUrlAttribute(): string
     {
+        if (
+            true === (($this->travel->tar_transportation_mode ?? [
+                'state_contract_airline' => false,
+            ])['state_contract_airline']) ||
+            true === ($this->travel->tar_transportation_mode ?? [
+                'non_contract_airline' => false,
+            ])['non_contract_airline']
+        ) {
+            return $this->getAirfarePowerFormUrl();
+        }
+
+        if (
+            true === ($this->travel->tar_transportation_mode ?? [
+                'rental_vehicle' => false,
+            ])['rental_vehicle']
+        ) {
+            return $this->getTravelAuthorityRequestPowerFormUrl();
+        }
+
+        return $this->getCovidPowerFormUrl();
+    }
+
+    private function getAirfarePowerFormUrl(): string
+    {
+        return config('docusign.domestic_travel_authority_request_with_airfare.powerform_url').'&'.http_build_query(
+            [
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.state_contract_airline'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'state_contract_airline' => false,
+                ])['state_contract_airline'] ? 'x' : '',
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.non_contract_airline'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'non_contract_airline' => false,
+                ])['non_contract_airline'] ? 'x' : '',
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.personal_automobile'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'personal_automobile' => false,
+                ])['personal_automobile'] ? 'x' : '',
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.rental_vehicle'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'rental_vehicle' => false,
+                ])['rental_vehicle'] ? 'x' : '',
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.other'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'other' => false,
+                ])['other'] ? 'x' : '',
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.itinerary'
+                ) => $this->travel->tar_itinerary,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.purpose'
+                ) => $this->travel->tar_purpose,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_cost'
+                ) => $this->travel->tar_airfare,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.other_cost'
+                ) => $this->travel->tar_other_trans,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.lodging_cost'
+                ) => $this->travel->tar_lodging,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.registration_cost'
+                ) => $this->travel->tar_registration,
+
+                config('docusign.domestic_travel_authority_request_with_airfare.fields.tar_total_cost') => (
+                    ($this->travel->tar_airfare ?? 0) +
+                    ($this->travel->tar_other_trans ?? 0) +
+                    ($this->travel->tar_lodging ?? 0) +
+                    ($this->travel->tar_registration ?? 0)
+                ),
+
+                config('docusign.domestic_travel_authority_request_with_airfare.fields.accounting_total_cost') => (
+                    ($this->travel->tar_airfare ?? 0) +
+                    ($this->travel->tar_other_trans ?? 0) +
+                    ($this->travel->tar_lodging ?? 0) +
+                    ($this->travel->tar_registration ?? 0)
+                ),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.peoplesoft_project_number'
+                ) => $this->travel->tar_project_number,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.peoplesoft_account_code'
+                ) => $this->travel->tar_account_code,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.departure_date'
+                ) => $this->travel->departure_date->toDateString(),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.return_date'
+                ) => $this->travel->return_date->toDateString(),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.covid_dates'
+                ) => $this->travel->departure_date->toDateString().' - '
+                    .$this->travel->return_date->toDateString(),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.covid_destination'
+                ) => $this->travel->destination,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.home_department'
+                ) => $this->user->home_department,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_phone'
+                ) => $this->user->phone,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_non_employee_checkbox'
+                ) => (null === $this->user->home_department ? 'x' : ''),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_employee_checkbox'
+                ) => (null === $this->user->home_department ? '' : 'x'),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_non_employee_domestic_checkbox'
+                ) => (null === $this->user->home_department ? 'x' : ''),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_employee_domestic_checkbox'
+                ) => (null === $this->user->home_department ? '' : 'x'),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.traveler_name'
+                ).'_UserName' => $this->user->full_name,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.traveler_name'
+                ).'_Email' => $this->user->uid.'@gatech.edu',
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.ingest_mailbox_name'
+                ).'_UserName' => config('app.name'),
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.ingest_mailbox_name'
+                ).'_Email' => config('docusign.ingest_mailbox'),
+            ]
+        );
+    }
+
+    private function getTravelAuthorityRequestPowerFormUrl(): string
+    {
         return config('docusign.domestic_travel_authority_request.powerform_url').'&'.http_build_query(
             [
                 config(
@@ -320,6 +485,38 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.domestic_travel_authority_request.ingest_mailbox_name'
+                ).'_Email' => config('docusign.ingest_mailbox'),
+            ]
+        );
+    }
+
+    private function getCovidPowerFormUrl(): string
+    {
+        return config('docusign.covid_risk_acknowledgement.powerform_url').'&'.http_build_query(
+            [
+                config(
+                    'docusign.covid_risk_acknowledgement.fields.covid_dates'
+                ) => $this->travel->departure_date->toDateString().' - '
+                    .$this->travel->return_date->toDateString(),
+
+                config(
+                    'docusign.covid_risk_acknowledgement.fields.covid_destination'
+                ) => $this->travel->destination,
+
+                config(
+                    'docusign.covid_risk_acknowledgement.traveler_name'
+                ).'_UserName' => $this->user->full_name,
+
+                config(
+                    'docusign.covid_risk_acknowledgement.traveler_name'
+                ).'_Email' => $this->user->uid.'@gatech.edu',
+
+                config(
+                    'docusign.covid_risk_acknowledgement.ingest_mailbox_name'
+                ).'_UserName' => config('app.name'),
+
+                config(
+                    'docusign.covid_risk_acknowledgement.ingest_mailbox_name'
                 ).'_Email' => config('docusign.ingest_mailbox'),
             ]
         );
