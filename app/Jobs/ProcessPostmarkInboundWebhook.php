@@ -175,6 +175,13 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 'email text'
             ))->trim();
 
+            $envelope->viewed_at = self::getValueWithRegex(
+                '/(?P<viewedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/',
+                $payload['TextBody'],
+                'viewedAt',
+                'email text'
+            );
+
             $envelope->save();
         } else {
             throw new \Exception('Unrecognized subject line');
