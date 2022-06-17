@@ -46,6 +46,10 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
         $payload = $this->webhookCall->payload;
         $subject = $payload['Subject'];
 
+        if ('Test subject' === $subject) {
+            return;
+        }
+
         if (Str::startsWith($subject, 'Completed: ')) {
             $summary = collect($payload['Attachments'])->firstOrFail(static function (array $value, int $key): bool {
                 return 'Summary.pdf' === $value['Name'];
@@ -151,6 +155,27 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             } else {
                 throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
             }
+        } elseif (Str::contains($subject, ' viewed ')) {
+            $name = self::getValueWithRegex(
+                '/(Fw: )?(?P<name>[a-zA-Z ]+) viewed .+/',
+                $subject,
+                'name',
+                'subject'
+            );
+
+            $user = User::search($name)->first();
+
+            $envelope = $user->envelopes()->where('complete', false)->sole();
+
+            $envelope->url = Str::of(self::getValueWithRegex(
+                // this is NOT the same regex as the other one that looks the same
+                '/(?P<url>https:\/\/na3.docusign.net\/Member\/EmailStart.aspx.+)>/',
+                $payload['TextBody'],
+                'url',
+                'email text'
+            ))->trim();
+
+            $envelope->save();
         } else {
             throw new \Exception('Unrecognized subject line');
         }
