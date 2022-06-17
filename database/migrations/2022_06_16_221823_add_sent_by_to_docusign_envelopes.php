@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('docusign_envelopes', static function (Blueprint $table): void {
-            $table->dropColumn('sent_by')->nullable();
+            $table->dropColumn('sent_by');
         });
     }
 };
