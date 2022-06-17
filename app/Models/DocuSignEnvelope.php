@@ -52,4 +52,14 @@ class DocuSignEnvelope extends Model
     {
         return $this->belongsTo(User::class, 'signed_by');
     }
+
+    /**
+     * Get the User that sent the envelope.
+     *
+     * @return BelongsTo<User,DocuSignEnvelope>
+     */
+    public function sentBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'sent_by');
+    }
 }

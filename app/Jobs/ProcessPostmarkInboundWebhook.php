@@ -146,6 +146,17 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 Storage::disk('local')->put($disk_path, base64_decode($value['Content'], true));
             });
 
+            $sender_name = self::getValueWithRegex(
+                '/This message was sent to you by (?P<sender>.+) who is using the DocuSign Electronic Signature Service/',
+                $payload['TextBody'],
+                'sender',
+                'email text'
+            );
+
+            $sender_user = User::search($sender_name)->first();
+
+            $envelope->sent_by = $sender_user->id;
+
             $envelope->complete = true;
             $envelope->save();
 
@@ -181,6 +192,17 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 'viewedAt',
                 'email text'
             );
+
+            $sender_name = self::getValueWithRegex(
+                '/This message was sent to you by (?P<sender>.+) who is using the DocuSign Electronic Signature Service/',
+                $payload['TextBody'],
+                'sender',
+                'email text'
+            );
+
+            $sender_user = User::search($sender_name)->first();
+
+            $envelope->sent_by = $sender_user->id;
 
             $envelope->save();
         } else {
