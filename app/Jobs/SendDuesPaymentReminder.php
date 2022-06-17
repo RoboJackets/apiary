@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
+
 namespace App\Jobs;
 
 use App\Models\User;
@@ -32,6 +34,12 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
         $this->user = $user;
         $this->queue = 'email';
         $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
+
+        if (5 === $this->delay->dayOfWeek) {
+            // do not send reminders on thursdays to reduce the chance of user
+            // trying to use the app during a maintenance window
+            $this->delay = $this->delay->addHours(24);
+        }
     }
 
     /**
