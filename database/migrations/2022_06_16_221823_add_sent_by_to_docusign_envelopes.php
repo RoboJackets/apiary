@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::table('docusign_envelopes', static function (Blueprint $table): void {
             $table->unsignedInteger('sent_by')->nullable();
+
+            $table->foreign('sent_by')->references('id')->on('users');
         });
     }
 
