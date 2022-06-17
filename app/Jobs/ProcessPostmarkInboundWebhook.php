@@ -46,6 +46,10 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
         $payload = $this->webhookCall->payload;
         $subject = $payload['Subject'];
 
+        if ('Test subject' === $subject) {
+            return;
+        }
+
         if (Str::startsWith($subject, 'Completed: ')) {
             $summary = collect($payload['Attachments'])->firstOrFail(static function (array $value, int $key): bool {
                 return 'Summary.pdf' === $value['Name'];
@@ -142,6 +146,17 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 Storage::disk('local')->put($disk_path, base64_decode($value['Content'], true));
             });
 
+            $sender_name = self::getValueWithRegex(
+                '/This message was sent to you by (?P<sender>.+) who is using the DocuSign Electronic Signature Service/',
+                $payload['TextBody'],
+                'sender',
+                'email text'
+            );
+
+            $sender_user = User::search($sender_name)->first();
+
+            $envelope->sent_by = $sender_user->id;
+
             $envelope->complete = true;
             $envelope->save();
 
@@ -151,6 +166,45 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             } else {
                 throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
             }
+        } elseif (Str::contains($subject, ' viewed ')) {
+            $name = self::getValueWithRegex(
+                '/(Fw: )?(?P<name>[a-zA-Z ]+) viewed .+/',
+                $subject,
+                'name',
+                'subject'
+            );
+
+            $user = User::search($name)->first();
+
+            $envelope = $user->envelopes()->where('complete', false)->sole();
+
+            $envelope->url = Str::of(self::getValueWithRegex(
+                // this is NOT the same regex as the other one that looks the same
+                '/(?P<url>https:\/\/na3.docusign.net\/Member\/EmailStart.aspx.+)>/',
+                $payload['TextBody'],
+                'url',
+                'email text'
+            ))->trim();
+
+            $envelope->viewed_at = self::getValueWithRegex(
+                '/(?P<viewedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/',
+                $payload['TextBody'],
+                'viewedAt',
+                'email text'
+            );
+
+            $sender_name = self::getValueWithRegex(
+                '/This message was sent to you by (?P<sender>.+) who is using the DocuSign Electronic Signature Service/',
+                $payload['TextBody'],
+                'sender',
+                'email text'
+            );
+
+            $sender_user = User::search($sender_name)->first();
+
+            $envelope->sent_by = $sender_user->id;
+
+            $envelope->save();
         } else {
             throw new \Exception('Unrecognized subject line');
         }
