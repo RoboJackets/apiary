@@ -105,17 +105,17 @@ class DocuSignEnvelope extends Resource
                 ->onlyOnDetail(),
 
             URL::make('View in DocuSign', function (): ?string {
-                if (null === $this->url) {
+                if (null === $this->envelope_id) {
                     return null;
                 }
 
                 return Str::lower(
                     'https://app.docusign.com/documents/details/'.
-                        Str::substr($this->url, 0, 8).'-'.
-                        Str::substr($this->url, 8, 4).'-'.
-                        Str::substr($this->url, 12, 4).'-'.
-                        Str::substr($this->url, 16, 4).'-'.
-                        Str::substr($this->url, 20, 12)
+                        Str::substr($this->envelope_id, 0, 8).'-'.
+                        Str::substr($this->envelope_id, 8, 4).'-'.
+                        Str::substr($this->envelope_id, 12, 4).'-'.
+                        Str::substr($this->envelope_id, 16, 4).'-'.
+                        Str::substr($this->envelope_id, 20, 12)
                 );
             })
                 ->displayUsing(static fn () => 'Sender View')
