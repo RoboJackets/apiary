@@ -28,6 +28,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $tar_received
  * @property-read bool $is_paid
+ * @property-read bool $is_complete
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
  * @property-read \App\Models\Travel $travel
@@ -213,6 +214,11 @@ class TravelAssignment extends Model
         $array['updated_at_unix'] = $this->updated_at->getTimestamp();
 
         return $array;
+    }
+
+    public function getIsCompleteAttribute(): bool
+    {
+        return $this->is_paid && ($this->tar_received || ! $this->travel->tar_required);
     }
 
     public function getTravelAuthorityRequestUrlAttribute(): string

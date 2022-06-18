@@ -46,10 +46,7 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeU
     {
         if ($this->user->assignments->reduce(
             static function (bool $carry, TravelAssignment $assignment): bool {
-                return $carry && $assignment->is_paid &&
-                (
-                    $assignment->tar_received || ! $assignment->travel->tar_required
-                );
+                return $carry && $assignment->is_complete;
             },
             true
         )) {

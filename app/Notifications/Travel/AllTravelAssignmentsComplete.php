@@ -82,10 +82,7 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
     {
         return ($user->should_receive_email || NovaChannel::class === $channel) && $this->travel->assignments->reduce(
             static function (bool $carry, TravelAssignment $assignment): bool {
-                return $carry && $assignment->is_paid &&
-                (
-                    $assignment->tar_received || ! $assignment->travel->tar_required
-                );
+                return $carry && $assignment->is_complete;
             },
             true
         );
