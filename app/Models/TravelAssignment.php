@@ -26,7 +26,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property int $tar_received
+ * @property bool $tar_received
  * @property-read bool $is_paid
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
@@ -68,6 +68,15 @@ class TravelAssignment extends Model
         'deleted_at',
         'id',
         'updated_at',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'tar_received' => 'boolean',
     ];
 
     /**

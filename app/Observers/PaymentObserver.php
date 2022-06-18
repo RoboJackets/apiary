@@ -7,11 +7,14 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Jobs\PruneDuesNotificationsInNova;
+use App\Jobs\PruneTravelAssignmentNotificationsInNova;
 use App\Jobs\PushToJedi;
 use App\Jobs\SendDuesPaymentReminder;
 use App\Jobs\SendPaymentReceipt;
+use App\Jobs\SendTravelAssignmentReminder;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Models\TravelAssignment;
 use Illuminate\Support\Facades\Cache;
 
 class PaymentObserver
@@ -28,6 +31,11 @@ class PaymentObserver
             0 === intval($payment->amount)
         ) {
             SendDuesPaymentReminder::dispatch($payment->payable->user);
+        }
+
+        if ($payment->payable_type === TravelAssignment::getMorphClassStatic()) {
+            SendTravelAssignmentReminder::dispatch($payment->payable);
+            PruneTravelAssignmentNotificationsInNova::dispatch($payment->payable->user);
         }
 
         // this is pretty cursed but i don't have a better idea on guaranteeing exactly one receipt email

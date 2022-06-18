@@ -60,7 +60,7 @@ Travel | {{ config('app.name') }}
         @if($travel->tar_required && !$tar_received)
         <hr>
         @endif
-            <p>Please pay the travel fee. You can <a href="{{ route('pay.travel') }}">click here</a> to pay with a credit or debit card online, or make arrangements with {{ $travel->primaryContact->full_name }} to pay with cash or check in person. Please make checks out to Georgia Tech, and put RoboJackets on the memo line.</p>
+            <p>Please pay the travel fee. You can <a href="{{ route('pay.travel') }}">click here</a> to pay with a credit or debit card online, or make arrangements with {{ $travel->primaryContact->full_name }} to pay with cash or check in person. Please write checks to Georgia Tech, and put RoboJackets on the memo line.</p>
         @endif
         @if($paid && (!$travel->tar_required || $tar_received))
         <p>You're all set! Contact {{ $travel->primaryContact->full_name }} if you have any questions.</p>

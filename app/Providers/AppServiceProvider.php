@@ -24,6 +24,7 @@ use App\Observers\DuesTransactionObserver;
 use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\SignatureObserver;
+use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -71,6 +72,7 @@ class AppServiceProvider extends ServiceProvider
         MembershipAgreementTemplate::observe(MembershipAgreementTemplateObserver::class);
         Payment::observe(PaymentObserver::class);
         Signature::observe(SignatureObserver::class);
+        TravelAssignment::observe(TravelAssignmentObserver::class);
         User::observe(UserObserver::class);
 
         Relation::morphMap([

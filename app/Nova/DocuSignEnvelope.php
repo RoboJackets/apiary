@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -104,20 +103,7 @@ class DocuSignEnvelope extends Resource
                 ->displayUsing(static fn () => 'Signer View')
                 ->onlyOnDetail(),
 
-            URL::make('View in DocuSign', function (): ?string {
-                if (null === $this->envelope_id) {
-                    return null;
-                }
-
-                return Str::lower(
-                    'https://app.docusign.com/documents/details/'.
-                        Str::substr($this->envelope_id, 0, 8).'-'.
-                        Str::substr($this->envelope_id, 8, 4).'-'.
-                        Str::substr($this->envelope_id, 12, 4).'-'.
-                        Str::substr($this->envelope_id, 16, 4).'-'.
-                        Str::substr($this->envelope_id, 20, 12)
-                );
-            })
+            URL::make('View in DocuSign', 'sender_view_url')
                 ->displayUsing(static fn () => 'Sender View')
                 ->onlyOnDetail(),
 

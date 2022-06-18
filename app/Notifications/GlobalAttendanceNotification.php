@@ -48,14 +48,4 @@ class GlobalAttendanceNotification extends Notification
 
         return $slackMessage;
     }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string,string>
-     */
-    public function toArray(CoreNotifiable $notifiable): array
-    {
-        return [];
-    }
 }

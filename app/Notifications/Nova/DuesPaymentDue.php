@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Notifications\Nova;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Nova\Notifications\NovaNotification;
 use Laravel\Nova\URL;
@@ -16,7 +14,7 @@ use Laravel\Nova\URL;
  *
  * It is automatically deleted by \App\Jobs\PruneDuesNotificationsInNova when the user becomes active.
  */
-class DuesPaymentDue extends NovaNotification implements ShouldQueue, ShouldBeUnique
+class DuesPaymentDue extends NovaNotification implements ShouldQueue
 {
     use Queueable;
 
@@ -48,22 +46,11 @@ class DuesPaymentDue extends NovaNotification implements ShouldQueue, ShouldBeUn
      */
     public $type = 'info';
 
-    private int $userId;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user)
+    public function __construct()
     {
         $this->actionUrl = URL::remote(route('pay.dues'));
-        $this->userId = $user->id;
-    }
-
-    /**
-     * The unique ID of the job.
-     */
-    public function uniqueId(): string
-    {
-        return strval($this->userId);
     }
 }

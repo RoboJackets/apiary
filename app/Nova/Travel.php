@@ -64,7 +64,7 @@ class Travel extends Resource
     public function fields(Request $request): array
     {
         return [
-            Text::make('Event Name')
+            Text::make('Event Name', 'name')
                 ->sortable()
                 ->help('This should typically be the name of the competition followed by the year.')
                 ->required()

@@ -89,14 +89,4 @@ class TeamAttendanceNotification extends Notification
 
         return $slackMessage;
     }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string,string>
-     */
-    public function toArray(Team $notifiable): array
-    {
-        return [];
-    }
 }
