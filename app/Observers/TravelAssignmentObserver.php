@@ -21,5 +21,6 @@ class TravelAssignmentObserver
     {
         SendTravelAssignmentReminder::dispatch($assignment);
         PruneTravelAssignmentNotificationsInNova::dispatch($assignment->user);
+        CheckAllTravelAssignmentsComplete::dispatch($payment->payable->travel);
     }
 }

@@ -36,6 +36,7 @@ class PaymentObserver
         if ($payment->payable_type === TravelAssignment::getMorphClassStatic()) {
             SendTravelAssignmentReminder::dispatch($payment->payable);
             PruneTravelAssignmentNotificationsInNova::dispatch($payment->payable->user);
+            CheckAllTravelAssignmentsComplete::dispatch($payment->payable->travel);
         }
 
         // this is pretty cursed but i don't have a better idea on guaranteeing exactly one receipt email
