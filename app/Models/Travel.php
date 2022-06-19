@@ -95,6 +95,7 @@ class Travel extends Model
         'return_date' => 'date',
         'tar_transportation_mode' => 'array',
         'tar_required' => 'boolean',
+        'completion_email_sent' => 'boolean',
     ];
 
     /**

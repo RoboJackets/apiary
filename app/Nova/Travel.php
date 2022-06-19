@@ -115,6 +115,13 @@ class Travel extends Resource
                     .' that violates United States or local laws.'
                 ),
 
+            Boolean::make('Completion Email Sent')
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    // Hidden to non-admins because it's confusing and not useful
+                    return $request->user()->hasRole('admin');
+                }),
+
             new Panel(
                 'Travel Authority Request',
                 [

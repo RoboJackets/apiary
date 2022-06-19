@@ -6,7 +6,6 @@ namespace App\Notifications\Travel;
 
 use App\Mail\Travel\AllTravelAssignmentsComplete as AllTravelAssignmentsCompleteMailable;
 use App\Models\Travel;
-use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -80,12 +79,7 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return ($user->should_receive_email || NovaChannel::class === $channel) && $this->travel->assignments->reduce(
-            static function (bool $carry, TravelAssignment $assignment): bool {
-                return $carry && $assignment->is_complete;
-            },
-            true
-        );
+        return $user->should_receive_email || NovaChannel::class === $channel;
     }
 
     /**
