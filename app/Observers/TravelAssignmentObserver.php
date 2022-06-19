@@ -14,6 +14,7 @@ class TravelAssignmentObserver
     public function created(TravelAssignment $assignment): void
     {
         $assignment->user->notify(new TravelAssignmentCreated($assignment));
+        SendTravelAssignmentReminder::dispatch($assignment);
     }
 
     public function saved(TravelAssignment $assignment): void
