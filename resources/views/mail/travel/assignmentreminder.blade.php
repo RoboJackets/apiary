@@ -3,7 +3,6 @@ Hi {{ $assignment->user->preferred_first_name }},
 @if(!$assignment->tar_received && $assignment->travel->tar_required)
 You still need to submit a Travel Authority Request for {{ $assignment->travel->name }}. Please visit {{ route('docusign.travel') }} to fill out and sign it.
 @endif
-
 @if(!$assignment->is_paid)
 You{{ (!$assignment->tar_received && $assignment->travel->tar_required) ? ' also': '' }} still need to make a ${{ intval($assignment->travel->fee_amount) }} payment{{ (!$assignment->tar_received && $assignment->travel->tar_required) ? '' : ' for '.$assignment->travel->name }}.
 
