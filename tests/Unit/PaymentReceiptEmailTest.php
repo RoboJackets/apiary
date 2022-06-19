@@ -40,6 +40,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText($payment->receipt_url);
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testGenerateEmailForCashDuesPayment(): void
@@ -71,6 +72,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('cash');
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testGenerateEmailForOnlineTravelPaymentWithTarRequiredButNotComplete(): void
@@ -101,6 +103,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertSeeInText('submit a Travel Authority Request');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testGenerateEmailForOnlineTravelPaymentWithTarRequiredAndComplete(): void
@@ -133,6 +136,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertDontSeeInText('submit a Travel Authority Request');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testGenerateEmailForOnlineTravelPaymentWithNoTarRequired(): void
@@ -161,6 +165,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertDontSeeInText('submit a Travel Authority Request');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testGenerateEmailForCashTravelPayment(): void
@@ -192,5 +197,6 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('cash');
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 }

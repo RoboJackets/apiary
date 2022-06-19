@@ -28,6 +28,7 @@ class TravelAssignmentCreatedEmailTest extends TestCase
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('Please complete the following items');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testTarNotRequired(): void
@@ -47,5 +48,6 @@ class TravelAssignmentCreatedEmailTest extends TestCase
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('Please pay the $10 travel fee');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 }

@@ -51,6 +51,7 @@ class DocuSignEnvelopeReceivedEmailTest extends TestCase
         $mailable->assertSeeInText($contact->full_name);
         $mailable->assertDontSeeInText('still need to make a $10 payment');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testNotPaid(): void
@@ -82,5 +83,6 @@ class DocuSignEnvelopeReceivedEmailTest extends TestCase
         $mailable->assertSeeInText($contact->full_name);
         $mailable->assertSeeInText('still need to make a $10 payment');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 }
