@@ -33,10 +33,11 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
                     ->to($this->travel->primaryContact->gt_email, $this->travel->primaryContact->name)
+                    ->cc(config('services.treasurer_email'))
                     ->subject('All travel assignments completed for '.$this->travel->name)
                     ->text('mail.travel.allassignmentscomplete')
                     ->withSymfonyMessage(static function (Email $email): void {
-                        $email->replyTo('RoboJackets <treasurer@robojackets.org>');
+                        $email->replyTo(config('services.treasurer_email'));
                     })
                     ->tag('travel-assignments-complete')
                     ->metadata('travel-id', strval($this->travel->id));
