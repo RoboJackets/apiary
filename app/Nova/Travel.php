@@ -244,7 +244,7 @@ class Travel extends Resource
             return [];
         }
 
-        $requires_tar = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;
+        $requires_tar = AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;
 
         if ($requires_tar) {
             $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();
