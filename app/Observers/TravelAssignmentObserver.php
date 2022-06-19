@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Jobs\CheckAllTravelAssignmentsComplete;
 use App\Jobs\PruneTravelAssignmentNotificationsInNova;
 use App\Jobs\SendTravelAssignmentReminder;
 use App\Models\TravelAssignment;

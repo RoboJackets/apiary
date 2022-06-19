@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Jobs\CheckAllTravelAssignmentsComplete;
 use App\Jobs\PruneDuesNotificationsInNova;
 use App\Jobs\PruneTravelAssignmentNotificationsInNova;
 use App\Jobs\PushToJedi;
