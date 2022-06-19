@@ -33,7 +33,10 @@ class TravelAssignmentReminder extends Mailable implements ShouldQueue
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
                     ->to($this->assignment->user->gt_email, $this->assignment->user->name)
-                    ->subject('Reminder: action required for '.$this->assignment->travel->name.' travel')
+                    ->subject(
+                        'Reminder: '.($this->assignment->travel->tar_required ? 'action' : 'payment')
+                        .' required for '.$this->assignment->travel->name.' travel'
+                    )
                     ->text('mail.travel.assignmentreminder')
                     ->withSymfonyMessage(function (Email $email): void {
                         $email->replyTo(
