@@ -2,24 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Notifications;
+namespace App\Notifications\Travel;
 
-use App\Mail\DuesPaymentReminder as DuesPaymentReminderMailable;
-use App\Models\DuesTransaction;
+use App\Mail\Travel\TravelAssignmentReminder as TravelAssignmentReminderMailable;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class DuesPaymentReminder extends Notification implements ShouldQueue
+class TravelAssignmentReminder extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private DuesTransaction $transaction;
+    private TravelAssignment $assignment;
 
-    public function __construct(DuesTransaction $transaction)
+    /**
+     * Create a new notification instance.
+     */
+    public function __construct(TravelAssignment $assignment)
     {
-        $this->transaction = $transaction;
+        $this->assignment = $assignment;
     }
 
     /**
@@ -37,11 +40,11 @@ class DuesPaymentReminder extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  User  $user
-     * @return \App\Mail\DuesPaymentReminder
+     * @return \App\Mail\Travel\TravelAssignmentReminder
      */
-    public function toMail(User $user): DuesPaymentReminderMailable
+    public function toMail(User $user): TravelAssignmentReminderMailable
     {
-        return new DuesPaymentReminderMailable($this->transaction);
+        return new TravelAssignmentReminderMailable($this->assignment);
     }
 
     /**
@@ -53,7 +56,7 @@ class DuesPaymentReminder extends Notification implements ShouldQueue
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return ! $user->is_active && $user->should_receive_email;
+        return $user->should_receive_email && ! $this->assignment->is_complete;
     }
 
     /**

@@ -27,7 +27,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property int $tar_required
+ * @property bool $tar_required
  * @property array $tar_transportation_mode
  * @property string $tar_itinerary
  * @property string $tar_purpose
@@ -94,6 +94,8 @@ class Travel extends Model
         'departure_date' => 'date',
         'return_date' => 'date',
         'tar_transportation_mode' => 'array',
+        'tar_required' => 'boolean',
+        'completion_email_sent' => 'boolean',
     ];
 
     /**

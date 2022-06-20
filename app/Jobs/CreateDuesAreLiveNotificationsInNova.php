@@ -38,7 +38,7 @@ class CreateDuesAreLiveNotificationsInNova implements ShouldQueue, ShouldBeUniqu
             ->get()
             ->each(static function (User $user): void {
                 if (DuesPackage::userCanPurchase($user)->count() > 0) {
-                    $user->notify(new DuesAreLive($user));
+                    $user->notify(new DuesAreLive());
                 }
             });
     }

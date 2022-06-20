@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class DocuSignEnvelope extends Model
 {
@@ -61,5 +62,21 @@ class DocuSignEnvelope extends Model
     public function sentBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'sent_by');
+    }
+
+    public function getSenderViewUrlAttribute(): ?string
+    {
+        if (null === $this->envelope_id) {
+            return null;
+        }
+
+        return Str::lower(
+            'https://app.docusign.com/documents/details/'.
+                Str::substr($this->envelope_id, 0, 8).'-'.
+                Str::substr($this->envelope_id, 8, 4).'-'.
+                Str::substr($this->envelope_id, 12, 4).'-'.
+                Str::substr($this->envelope_id, 16, 4).'-'.
+                Str::substr($this->envelope_id, 20, 12)
+        );
     }
 }

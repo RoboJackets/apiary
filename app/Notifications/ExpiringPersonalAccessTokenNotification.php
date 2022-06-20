@@ -52,7 +52,7 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
      * @param  string  $channel
      * @return bool
      */
-    public function shouldSend(User $user, string $channel)
+    public function shouldSend(User $user, string $channel): bool
     {
         return $user->should_receive_email;
     }

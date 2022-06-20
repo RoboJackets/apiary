@@ -103,6 +103,15 @@ class Payment extends Model
     protected $guarded = ['id'];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'receipt_sent' => 'boolean',
+    ];
+
+    /**
      * All payment methods. Note that you probably want to also create a permission in the database for any
      * new methods added here.
      *

@@ -6,8 +6,9 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Models\TravelAssignment;
 use App\Models\User;
-use App\Notifications\Nova\DuesPaymentDue;
+use App\Notifications\Travel\TravelAssignmentCreated;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,7 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUnique
+class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -37,25 +38,26 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
     /**
      * Execute the job.
      *
+     * @phan-suppress PhanPluginNonBoolBranch
+     *
      * @return void
      */
     public function handle()
     {
-        if ($this->user->dues()->pending()->count() > 0 &&
-            $this->user->hasPermissionTo('access-nova') &&
-            0 === $this->user->novaNotifications()
-                             ->where('type', DuesPaymentDue::class)
-                             ->where('created_at', '>', now()->subMonths(3))
-                             ->count()
-        ) {
-            $this->user->notify(new DuesPaymentDue());
+        if ($this->user->assignments->reduce(
+            static function (bool $carry, TravelAssignment $assignment): bool {
+                return $carry && $assignment->is_complete;
+            },
+            true
+        )) {
+            $this->user->novaNotifications()
+                       ->where('type', TravelAssignmentCreated::class)
+                       ->delete();
         }
     }
 
     /**
      * The unique ID of the job.
-     *
-     * @return string
      */
     public function uniqueId(): string
     {

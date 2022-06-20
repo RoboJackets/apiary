@@ -9,9 +9,10 @@ parameters:
     - tests/*
     - vendor/*
     - stubs/*
-    # PHPStan choking on this policy for some reason
-    - app/Policies/DocuSignEnvelopePolicy.php
+    # PHPStan choking on anything DocuSign related for some reason
+    - app/Mail/Travel/DocuSignEnvelopeReceived.php
     - app/Observers/DocuSignEnvelopeObserver.php
+    - app/Policies/DocuSignEnvelopePolicy.php
   stubFiles:
     - stubs/Permission.php
     - stubs/Role.php
@@ -22,6 +23,7 @@ parameters:
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\[a-zA-Z]+>::\$id\.#'
     - '#Access to an undefined property Barryvdh\\LaravelIdeHelper\\Eloquent\|Illuminate\\Database\\Eloquent\\Model::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$[a-z_]+\.#'
+    - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$[a-zA-Z]+\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Laravel\\Passport\\Token::\$expires_at\.#'
     - '#Access to an undefined property object::\$[a-zA-Z_]+\.#'
@@ -71,12 +73,12 @@ parameters:
     - '#Method Database\\Factories\\[a-zA-Z]+::definition\(\) should return array<string, .+> but returns array<string, mixed>\.#'
     - '#Offset ''[A-Za-z]+'' does not exist on array\|null\.#'
     - '#Only booleans are allowed in &&, Illuminate\\Support\\Carbon\|null given on the (right|left) side\.#'
-    - '#Only booleans are allowed in &&, int given on the (right|left) side\.#'
     - '#Only booleans are allowed in a negated boolean, Illuminate\\Support\\Carbon\|null given\.#'
-    - '#Only booleans are allowed in a negated boolean, int given\.#'
     - '#Only booleans are allowed in a ternary operator condition, Illuminate\\Support\\Carbon\|null given\.#'
+    - '#Parameter \#1 ...\$addresses of method Symfony\\Component\\Mime\\Email::replyTo\(\) expects string\|Symfony\\Component\\Mime\\Address, mixed given\.#'
     - '#Parameter \#1 ...\$permissions of method Spatie\\Permission\\Models\\Role::givePermissionTo\(\) expects array\|Illuminate\\Support\\Collection\|int\|Spatie\\Permission\\Contracts\\Permission\|string, mixed given\.#'
     - '#Parameter \#1 \$address of method Illuminate\\Mail\\Mailable::cc\(\) expects array\|object\|string, mixed given\.#'
+    - '#Parameter \#1 \$assignment of job class App\\Jobs\\SendTravelAssignmentReminder constructor expects App\\Models\\TravelAssignment in App\\Jobs\\SendTravelAssignmentReminder::dispatch\(\), Barryvdh\\LaravelIdeHelper\\Eloquent\|Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Model::update\(\) expects array<string, mixed>, mixed given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::each\(\) expects callable\(mixed, \(int\|string\)\): mixed, Closure\(int\): void given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::first\(\) expects \(callable\(mixed, \(int\|string\)\): bool\)\|null, Closure\(App\\Models\\[a-zA-Z]+\): bool given\.#'
@@ -92,6 +94,7 @@ parameters:
     - '#Parameter \#1 \$cookie of static method Laravel\\Passport\\Passport::cookie\(\) expects string\|null, mixed given\.#'
     - '#Parameter \#1 \$date of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::[a-z]+\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(string\|null\): string\|null given\.#'
+    - '#Parameter \#1 \$envelope of class App\\Notifications\\Travel\\DocuSignEnvelopeReceived constructor expects App\\Models\\DocuSignEnvelope, Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#1 \$haystack of function str_contains expects string, mixed given\.#'
     - '#Parameter \#1 \$id of static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>::findByIdentifier\(\) expects string, int given\.#'
     - '#Parameter \#1 \$id of static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>::findByIdentifier\(\) expects string, mixed given\.#'

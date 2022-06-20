@@ -64,7 +64,7 @@ class Travel extends Resource
     public function fields(Request $request): array
     {
         return [
-            Text::make('Event Name')
+            Text::make('Event Name', 'name')
                 ->sortable()
                 ->help('This should typically be the name of the competition followed by the year.')
                 ->required()
@@ -114,6 +114,13 @@ class Travel extends Resource
                     .'excess of the minimum for the event, visa or passport fees, personal luggage fees, and any item'
                     .' that violates United States or local laws.'
                 ),
+
+            Boolean::make('Completion Email Sent')
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    // Hidden to non-admins because it's confusing and not useful
+                    return $request->user()->hasRole('admin');
+                }),
 
             new Panel(
                 'Travel Authority Request',
@@ -244,7 +251,7 @@ class Travel extends Resource
             return [];
         }
 
-        $requires_tar = null !== AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;
+        $requires_tar = AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;
 
         if ($requires_tar) {
             $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();

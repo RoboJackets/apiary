@@ -121,7 +121,7 @@ class DashboardController extends Controller
 
         $travelAssignmentWithNoTravelAuthorityRequest = TravelAssignment::where('user_id', $user->id)
             ->whereHas('travel', static function (Builder $q): void {
-                $q->whereNotNull('tar_required');
+                $q->where('tar_required', true);
             })
             ->where('tar_received', '=', false)
             ->oldest('updated_at')

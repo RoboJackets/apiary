@@ -12,6 +12,7 @@ namespace App\Jobs;
 
 use App\Models\TravelAssignment;
 use App\Models\User;
+use App\Notifications\Travel\DocuSignEnvelopeReceived;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
@@ -163,6 +164,8 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             if ($envelope->signable_type === TravelAssignment::getMorphClassStatic()) {
                 $envelope->signable->tar_received = true;
                 $envelope->signable->save();
+
+                $envelope->signedBy->notify(new DocuSignEnvelopeReceived($envelope));
             } else {
                 throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
             }

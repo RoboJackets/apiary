@@ -40,6 +40,7 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText($payment->receipt_url);
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testGenerateEmailForCashDuesPayment(): void
@@ -71,20 +72,23 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('cash');
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
-    public function testGenerateEmailForOnlineTravelPayment(): void
+    public function testGenerateEmailForOnlineTravelPaymentWithTarRequiredButNotComplete(): void
     {
         $user = User::factory()->create();
 
         $travel = Travel::factory()->create();
+        $travel->tar_required = true;
+        $travel->save();
 
         // this will always use the above two resources, because there aren't any others
-        $transaction = TravelAssignment::factory()->create();
+        $assignment = TravelAssignment::factory()->create();
 
         $payment = new Payment();
         $payment->payable_type = TravelAssignment::getMorphClassStatic();
-        $payment->payable_id = $transaction->id;
+        $payment->payable_id = $assignment->id;
         $payment->amount = 103.30;
         $payment->method = 'square';
         $payment->receipt_url = 'https://example.com';
@@ -97,7 +101,71 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('online payment');
         $mailable->assertSeeInText($payment->receipt_url);
         $mailable->assertSeeInText(number_format($payment->amount, 2));
+        $mailable->assertSeeInText('submit a Travel Authority Request');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
+    }
+
+    public function testGenerateEmailForOnlineTravelPaymentWithTarRequiredAndComplete(): void
+    {
+        $user = User::factory()->create();
+
+        $travel = Travel::factory()->create();
+        $travel->tar_required = true;
+        $travel->save();
+
+        // this will always use the above two resources, because there aren't any others
+        $assignment = TravelAssignment::factory()->create();
+        $assignment->tar_received = true;
+        $assignment->save();
+
+        $payment = new Payment();
+        $payment->payable_type = TravelAssignment::getMorphClassStatic();
+        $payment->payable_id = $assignment->id;
+        $payment->amount = 103.30;
+        $payment->method = 'square';
+        $payment->receipt_url = 'https://example.com';
+        $payment->save();
+
+        $mailable = new PaymentReceipt($payment);
+
+        $mailable->assertSeeInText($user->preferred_first_name);
+        $mailable->assertSeeInText($travel->name);
+        $mailable->assertSeeInText('online payment');
+        $mailable->assertSeeInText($payment->receipt_url);
+        $mailable->assertSeeInText(number_format($payment->amount, 2));
+        $mailable->assertDontSeeInText('submit a Travel Authority Request');
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
+    }
+
+    public function testGenerateEmailForOnlineTravelPaymentWithNoTarRequired(): void
+    {
+        $user = User::factory()->create();
+
+        $travel = Travel::factory()->create();
+
+        // this will always use the above two resources, because there aren't any others
+        $assignment = TravelAssignment::factory()->create();
+
+        $payment = new Payment();
+        $payment->payable_type = TravelAssignment::getMorphClassStatic();
+        $payment->payable_id = $assignment->id;
+        $payment->amount = 103.30;
+        $payment->method = 'square';
+        $payment->receipt_url = 'https://example.com';
+        $payment->save();
+
+        $mailable = new PaymentReceipt($payment);
+
+        $mailable->assertSeeInText($user->preferred_first_name);
+        $mailable->assertSeeInText($travel->name);
+        $mailable->assertSeeInText('online payment');
+        $mailable->assertSeeInText($payment->receipt_url);
+        $mailable->assertSeeInText(number_format($payment->amount, 2));
+        $mailable->assertDontSeeInText('submit a Travel Authority Request');
+        $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 
     public function testGenerateEmailForCashTravelPayment(): void
@@ -129,5 +197,6 @@ class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('cash');
         $mailable->assertSeeInText(number_format($payment->amount, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
+        $mailable->assertDontSeeInText("\n\n\n");
     }
 }
