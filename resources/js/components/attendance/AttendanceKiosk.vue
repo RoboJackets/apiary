@@ -467,8 +467,9 @@
                 return !isNaN(parseFloat(n)) && isFinite(n);
             },
             rowclass: function(team) {
-                // Teams with names starting with Robo are wider to fill the bottom row and avoid wrapping
-                return 'col-sm-12 ' + (this.teams.length > 6 && !team.name.startsWith('Robo') ? 'col-md-3' : 'col-md-4');
+                // This is broken out as a function because the teams starting with Robo- used to be wider. This will
+                // likely need to be dynamic again when a new team is added, so I'm leaving it as a function.
+                return 'col-sm-12 col-md-6';
             },
         },
     };
