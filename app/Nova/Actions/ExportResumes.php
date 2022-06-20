@@ -154,7 +154,7 @@ class ExportResumes extends Action
             return Action::danger('Error exporting resumes');
         }
 
-        // Generate signed URL to pass to backend to facilitate file download
+        // Generate signed URL to pass to frontend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
         return Action::download($url, $filename);

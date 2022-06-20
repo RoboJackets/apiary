@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
 /**
@@ -233,6 +234,26 @@ class Travel extends Resource
             HasMany::make('Assignments', 'assignments', TravelAssignment::class),
 
             self::metadataPanel(),
+        ];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    public function actions(Request $request): array
+    {
+        return [
+            (new Actions\DownloadDocuSignForms())
+                ->canSee(static function (Request $request): bool {
+                    return $request->user()->can('view-docusign-envelopes') ||
+                        Travel::where('primary_contact_user_id', $request->user()->id)->exists();
+                })
+                ->canRun(static function (NovaRequest $request, AppModelsTravel $travel): bool {
+                    return $request->user()->can('view-docusign-envelopes') ||
+                        $travel->primaryContact->id === $request->user()->id;
+                }),
         ];
     }
 
