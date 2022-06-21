@@ -112,6 +112,16 @@ class Merchandise extends Resource
      */
     public function actions(Request $request): array
     {
+        if (null === $request->resourceId) {
+            return [];
+        }
+
+        $name = Str::lower(AppModelsMerchandise::where('id', $request->resourceId)->sole()->name);
+
+        if (Str::contains($name, 'waive')) {
+            return [];
+        }
+
         return [
             (new Actions\DistributeMerchandise($request->resourceId))
                 ->canSee(static function (Request $request): bool {

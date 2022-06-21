@@ -1,0 +1,95 @@
+<?php
+
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
+
+namespace App\Nova\Actions;
+
+use App\Models\DocuSignEnvelope;
+use App\Models\TravelAssignment;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
+use ZipArchive;
+
+class DownloadDocuSignForms extends Action
+{
+    /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Download Forms';
+
+    /**
+     * Determine where the action redirection should be without confirmation.
+     *
+     * @var bool
+     */
+    public $withoutConfirmation = true;
+
+    /**
+     * Indicates if this action is only available on the resource detail view.
+     *
+     * @var bool
+     */
+    public $onlyOnDetail = true;
+
+    /**
+     * Perform the action on the given models.
+     *
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
+     * @param  \Illuminate\Support\Collection<int,\App\Models\Travel>  $models
+     * @return array<string,string>
+     */
+    public function handle(ActionFields $fields, Collection $models): array
+    {
+        $travel = $models->first();
+
+        $filename = $travel->name.'.zip';
+
+        $path = Storage::disk('local')->path('nova-exports/'.$filename);
+
+        $zip = new ZipArchive();
+        $zip->open($path, ZipArchive::CREATE);
+
+        $travel->assignments->each(static function (TravelAssignment $assignment, int $key) use ($zip): void {
+            $assignment->envelope->each(static function (DocuSignEnvelope $envelope, int $key) use ($zip): void {
+                if (null !== $envelope->travel_authority_filename) {
+                    $zip->addFile(
+                        Storage::disk('local')->path($envelope->travel_authority_filename),
+                        $envelope->signable->user->full_name.' - Travel Authority Request.pdf'
+                    );
+                }
+
+                if (null !== $envelope->covid_risk_filename) {
+                    $zip->addFile(
+                        Storage::disk('local')->path($envelope->covid_risk_filename),
+                        $envelope->signable->user->full_name.' - COVID Risk Acknowledgement.pdf'
+                    );
+                }
+
+                if (null !== $envelope->direct_bill_airfare_filename) {
+                    $zip->addFile(
+                        Storage::disk('local')->path($envelope->direct_bill_airfare_filename),
+                        $envelope->signable->user->full_name.' - Direct Bill Airfare Request.pdf'
+                    );
+                }
+            });
+        });
+
+        if (0 === $zip->count()) {
+            return Action::danger('No forms have been submitted!');
+        }
+
+        $zip->close();
+
+        // Generate signed URL to pass to frontend to facilitate file download
+        $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
+
+        return Action::download($url, $filename);
+    }
+}

@@ -11,6 +11,7 @@ parameters:
     - stubs/*
     # PHPStan choking on anything DocuSign related for some reason
     - app/Mail/Travel/DocuSignEnvelopeReceived.php
+    - app/Nova/Actions/DownloadDocuSignForms.php
     - app/Observers/DocuSignEnvelopeObserver.php
     - app/Policies/DocuSignEnvelopePolicy.php
   stubFiles:
