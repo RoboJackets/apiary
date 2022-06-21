@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ba451a7caeb0e4d82c6cf092e6965d9",
+    "content-hash": "667d0e93ac614dc887219c421dc763a3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -14083,16 +14083,16 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "7524304c07b1c5c93e248059bda995fbed962015"
+                "reference": "e56a90f322bef7246523ec76bdc31204f2ed6e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/7524304c07b1c5c93e248059bda995fbed962015",
-                "reference": "7524304c07b1c5c93e248059bda995fbed962015",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/e56a90f322bef7246523ec76bdc31204f2ed6e60",
+                "reference": "e56a90f322bef7246523ec76bdc31204f2ed6e60",
                 "shasum": ""
             },
             "require": {
@@ -14148,9 +14148,9 @@
             "homepage": "https://github.com/psalm/psalm-plugin-laravel",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.0.0"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.0.1"
             },
-            "time": "2022-05-02T17:39:46+00:00"
+            "time": "2022-06-21T18:50:45+00:00"
         },
         {
             "name": "robojackets/static-analysis",
