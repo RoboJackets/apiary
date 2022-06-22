@@ -174,7 +174,7 @@
                             Action Required for Travel
                         </h4>
                         <p class="card-text">
-                            You have been assigned to {{ $travelAssignment->travel->name }}. Please complete the following action items so that we can book travel for you:
+                            You have been assigned to {{ $travelAssignment->travel->name }}. Please complete the following action items so that we can book travel for you.
                         </p>
                         <ul>
                             @if(!$signedLatestAgreement)
