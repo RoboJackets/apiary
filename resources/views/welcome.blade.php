@@ -166,7 +166,7 @@
                 </div>
             </div>
         @endif
-        @if($travelAssignment)
+        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid)))
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
