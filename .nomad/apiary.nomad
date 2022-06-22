@@ -308,7 +308,7 @@ EOF
         mode = "fail"
       }
 
-      shutdown_delay = "30s"
+      shutdown_delay = var.environment_name == "production" ? "30s" : "0s"
     }
 
 
