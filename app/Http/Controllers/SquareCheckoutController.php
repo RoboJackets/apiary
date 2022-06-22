@@ -9,7 +9,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SquareCompleteRequest;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
-use App\Models\TravelAssignment;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,17 +34,30 @@ class SquareCheckoutController extends Controller
             return view('dues.agreementrequired');
         }
 
+        if ($user->is_active) {
+            return view('dues.alreadypaid');
+        }
+
         $transactionWithNoPayment = DuesTransaction::doesntHave('payment')
+            ->current()
+            ->whereHas('package', static function (Builder $query) use ($user): void {
+                $query->userCanPurchase($user);
+            })
             ->where('user_id', $user->id)
             ->latest('updated_at')
             ->first();
 
         $transactionWithIncompletePayment = DuesTransaction::where('user_id', $user->id)
             ->current()
+            ->whereHas('package', static function (Builder $query) use ($user): void {
+                $query->userCanPurchase($user);
+            })
             ->whereHas('payment', static function (Builder $q): void {
-                $q->where('amount', 0.00);
+                $q->where('amount', 0);
                 $q->where('method', 'square');
-            })->first();
+            })
+            ->latest('updated_at')
+            ->first();
 
         if (null !== $transactionWithIncompletePayment) {
             $transaction = $transactionWithIncompletePayment;
@@ -81,8 +93,25 @@ class SquareCheckoutController extends Controller
     {
         $user = $request->user();
 
-        // this is still a little wonky but rolling with it for right now
-        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
+        $assignment = $user->current_travel_assignment;
+
+        if (null === $assignment) {
+            return view('travel.noassignment');
+        }
+
+        if ($assignment->is_paid) {
+            $any_assignment_needs_payment = $user->assignments()
+                ->unpaid()
+                ->oldest('travel.departure_date')
+                ->oldest('travel.return_date')
+                ->first();
+
+            if (null === $any_assignment_needs_payment) {
+                return view('travel.alreadypaid');
+            }
+
+            $assignment = $any_assignment_needs_payment;
+        }
 
         if (! $user->is_active) {
             return view(
@@ -104,47 +133,23 @@ class SquareCheckoutController extends Controller
             );
         }
 
-        $transactionWithNoPayment = TravelAssignment::doesntHave('payment')
-            ->where('user_id', $user->id)
-            ->oldest('updated_at')
-            ->first();
-
-        $transactionWithIncompletePayment = TravelAssignment::where('user_id', $user->id)
-            ->whereHas('payment', static function (Builder $q): void {
-                $q->where('amount', 0.00);
-                $q->where('method', 'square');
-            })
-            ->oldest('updated_at')
-            ->first();
-
-        if (null !== $transactionWithIncompletePayment) {
-            $transaction = $transactionWithIncompletePayment;
-
-            $payment = $transaction->payment[0];
-        } elseif (null !== $transactionWithNoPayment) {
-            $transaction = $transactionWithNoPayment;
-
+        if (0 === $assignment->payment()->count()) {
             $payment = new Payment();
             // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
-            $payment->amount = 0.00;
+            $payment->amount = 0;
             $payment->method = 'square';
             $payment->recorded_by = $user->id;
             $payment->unique_id = Payment::generateUniqueId();
             $payment->notes = 'Checkout flow started';
 
-            $transaction->payment()->save($payment);
+            $assignment->payment()->save($payment);
         } else {
-            return view(
-                'square.error',
-                [
-                    'message' => 'We could not find a transaction ready for payment.',
-                ]
-            );
+            $payment = $assignment->payment()->sole();
         }
 
-        $amount = $transaction->travel->fee_amount * 100;
+        $amount = $assignment->travel->fee_amount * 100;
 
-        return self::redirect($amount, $payment, $user, 'Travel Fee', $transaction->travel->name);
+        return self::redirect($amount, $payment, $user, 'Travel Fee', $assignment->travel->name);
     }
 
     private static function redirect(int $amount, Payment $payment, User $user, string $name, string $variation_name)

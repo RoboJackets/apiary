@@ -193,23 +193,26 @@ class DuesPackage extends Model
     public function scopeUserCanPurchase(Builder $query, User $user): Builder
     {
         $newQuery = $query
-            ->selectRaw('dues_packages.*, payments.id as payments_id')
-            ->leftJoin('dues_transactions', static function (JoinClause $join) use ($user): void {
-                $join->on('dues_packages.conflicts_with_package_id', '=', 'dues_transactions.dues_package_id')
-                     ->where('dues_transactions.user_id', $user->id);
-            })
-            ->leftJoin('payments', static function (JoinClause $join): void {
-                $join->on('payments.payable_id', '=', 'dues_transactions.id')
-                        ->where('payments.payable_type', '=', DuesTransaction::getMorphClassStatic())
-                        ->where('payments.deleted_at', '=', null)
-                        ->where('payments.amount', '>', 0);
+            ->selectRaw('dues_packages.*, payments_ucp.id as payments_id')
+            ->leftJoin(
+                'dues_transactions as dues_transactions_ucp',
+                static function (JoinClause $join) use ($user): void {
+                    $join->on('dues_packages.conflicts_with_package_id', '=', 'dues_transactions_ucp.dues_package_id')
+                         ->where('dues_transactions_ucp.user_id', $user->id);
+                }
+            )
+            ->leftJoin('payments as payments_ucp', static function (JoinClause $join): void {
+                $join->on('payments_ucp.payable_id', '=', 'dues_transactions_ucp.id')
+                        ->where('payments_ucp.payable_type', '=', DuesTransaction::getMorphClassStatic())
+                        ->where('payments_ucp.deleted_at', '=', null)
+                        ->where('payments_ucp.amount', '>', 0);
             })
             ->where('available_for_purchase', true)
             ->where('dues_packages.effective_end', '>=', now())
-            ->where('restricted_to_students', 'student' === $user->primary_affiliation);
+            ->where('restricted_to_students', $user->is_student);
 
         if ('mysql' === config('database.default')) {
-            $newQuery->havingRaw('payments.id is null');
+            $newQuery->havingRaw('payments_ucp.id is null');
         }
 
         return $newQuery;
