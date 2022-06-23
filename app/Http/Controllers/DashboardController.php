@@ -8,7 +8,6 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Team;
-use App\Models\TravelAssignment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -43,14 +42,24 @@ class DashboardController extends Controller
         $isNew = (0 === $user->dues->count() || ($user->dues->count() >= 1 && 0 === $paidTxn));
 
         //User needs a transaction if they don't have one for an active dues package
-        $needsTransaction = (0 === DuesTransaction::current()->where('user_id', $user->id)->count());
+        $needsTransaction = (0 === DuesTransaction::current()
+            ->where('user_id', $user->id)
+            ->whereHas('package', static function (Builder $query) use ($user): void {
+                $query->userCanPurchase($user);
+            })
+            ->count()
+        );
         $needsTransaction = $needsTransaction && (DuesPackage::userCanPurchase($user)->count() > 0);
 
         //User needs a payment if they don't have enough payments to cover their pending dues transaction
         //Don't change this to use ->count(). It won't work - trust me.
         $needsPayment = (count(
             DuesTransaction::pending()
+                ->current()
                 ->where('user_id', $user->id)
+                ->whereHas('package', static function (Builder $query) use ($user): void {
+                    $query->userCanPurchase($user);
+                })
                 ->whereNotIn('dues_package_id', $paidPackageIds)
                 ->get()
         ) > 0);
@@ -105,53 +114,7 @@ class DashboardController extends Controller
             && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')
             && ($signedLatestAgreement || true !== $sumsRequiresAgreement);
 
-        // TA selection logic here should match SquareCheckoutController or UX won't make sense
-        $travelAssignmentWithNoPayment = TravelAssignment::doesntHave('payment')
-            ->where('user_id', $user->id)
-            ->oldest('updated_at')
-            ->first();
-
-        $travelAssignmentWithIncompletePayment = TravelAssignment::where('user_id', $user->id)
-            ->whereHas('payment', static function (Builder $q): void {
-                $q->where('amount', 0.00);
-                $q->where('method', 'square');
-            })
-            ->oldest('updated_at')
-            ->first();
-
-        $travelAssignmentWithNoTravelAuthorityRequest = TravelAssignment::where('user_id', $user->id)
-            ->whereHas('travel', static function (Builder $q): void {
-                $q->where('tar_required', true);
-            })
-            ->where('tar_received', '=', false)
-            ->oldest('updated_at')
-            ->first();
-
-        $needTravelPayment = false;
-        $needTravelAuthorityRequest = false;
-        $travelName = '';
-
-        if (null !== $travelAssignmentWithNoPayment) {
-            $needTravelAuthorityRequest = ! $travelAssignmentWithNoPayment->tar_received &&
-                $travelAssignmentWithNoPayment->travel->tar_required;
-
-            $needTravelPayment = true;
-
-            $travelName = $travelAssignmentWithNoPayment->travel->name;
-        } elseif (null !== $travelAssignmentWithIncompletePayment) {
-            $needTravelAuthorityRequest = ! $travelAssignmentWithIncompletePayment->tar_received &&
-                $travelAssignmentWithIncompletePayment->travel->tar_required;
-
-            $needTravelPayment = true;
-
-            $travelName = $travelAssignmentWithIncompletePayment->travel->name;
-        } elseif (null !== $travelAssignmentWithNoTravelAuthorityRequest) {
-            $needTravelAuthorityRequest = true;
-
-            $travelName = $travelAssignmentWithNoTravelAuthorityRequest->travel->name;
-        }
-
-        $teamAttendanceExists = $user->attendance()->whereAttendableType('team')->exists();
+        $travelAssignment = $user->current_travel_assignment;
 
         return view(
             'welcome',
@@ -172,10 +135,7 @@ class DashboardController extends Controller
                 'signedLatestAgreement' => $signedLatestAgreement,
                 'signedAnyAgreement' => $signedAnyAgreement,
                 'agreementExists' => $agreementExists,
-                'needTravelPayment' => $needTravelPayment,
-                'needTravelAuthorityRequest' => $needTravelAuthorityRequest,
-                'travelName' => $travelName,
-                'teamAttendanceExists' => $teamAttendanceExists,
+                'travelAssignment' => $travelAssignment,
             ]
         );
     }

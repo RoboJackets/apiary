@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 
 class TravelAssignmentController extends Controller
@@ -13,23 +12,11 @@ class TravelAssignmentController extends Controller
     {
         $user = $request->user();
 
-        if (0 === $user->assignments()->count()) {
+        $assignment = $user->current_travel_assignment;
+
+        if (null === $assignment) {
             return view('travel.noassignment');
         }
-
-        if (
-            0 === $user
-                ->assignments()
-                ->leftJoin('travel', static function (JoinClause $join): void {
-                    $join->on('travel.id', '=', 'travel_assignments.travel_id');
-                })
-                ->where('return_date', '>', date('Y-m-d'))
-                ->count()
-        ) {
-            return view('travel.noassignment');
-        }
-
-        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
 
         if (! $user->is_active) {
             return view(

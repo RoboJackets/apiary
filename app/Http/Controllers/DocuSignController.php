@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\DocuSignEnvelope;
-use App\Models\TravelAssignment;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class DocuSignController extends Controller
@@ -15,8 +13,25 @@ class DocuSignController extends Controller
     {
         $user = $request->user();
 
-        // this is still a little wonky but rolling with it for right now
-        $assignment = $user->assignments()->orderByDesc('travel_assignments.id')->first();
+        $assignment = $user->current_travel_assignment;
+
+        if (null === $assignment) {
+            return view('travel.noassignment');
+        }
+
+        if (! $assignment->needs_docusign) {
+            $any_assignment_needs_docusign = $user->assignments()
+                ->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+                ->needDocuSign()
+                ->oldest('travel.departure_date')
+                ->oldest('travel.return_date')
+                ->first();
+            if (null === $any_assignment_needs_docusign) {
+                return view('travel.alreadysigned');
+            }
+
+            $assignment = $any_assignment_needs_docusign;
+        }
 
         if (! $user->is_active) {
             return view(
@@ -38,51 +53,23 @@ class DocuSignController extends Controller
             );
         }
 
-        $assignmentWithNoEnvelope = TravelAssignment::doesntHave('envelope')
-            ->whereHas('travel', static function (Builder $q): void {
-                $q->where('tar_required', true);
-            })
-            ->where('tar_received', false)
-            ->where('user_id', $user->id)
-            ->oldest('updated_at')
-            ->first();
-
-        $assignmentWithIncompleteEnvelope = TravelAssignment::where('user_id', $user->id)
-            ->whereHas('envelope', static function (Builder $q): void {
-                $q->where('complete', false);
-            })
-            ->whereHas('travel', static function (Builder $q): void {
-                $q->where('tar_required', true);
-            })
-            ->where('tar_received', false)
-            ->oldest('updated_at')
-            ->first();
-
-        if (null !== $assignmentWithIncompleteEnvelope) {
-            $assignment = $assignmentWithIncompleteEnvelope;
-
-            $envelope = $assignmentWithIncompleteEnvelope->envelope[0];
-        } elseif (null !== $assignmentWithNoEnvelope) {
-            $assignment = $assignmentWithNoEnvelope;
-
+        if (0 === $assignment->envelope()->count()) {
             $envelope = new DocuSignEnvelope();
             $envelope->signed_by = $user->id;
-            $envelope->signable_type = $assignmentWithNoEnvelope->getMorphClass();
-            $envelope->signable_id = $assignmentWithNoEnvelope->id;
+            $envelope->signable_type = $assignment->getMorphClass();
+            $envelope->signable_id = $assignment->id;
             $envelope->save();
-        } else {
-            return view('travel.alreadysigned');
-        }
 
-        if ($envelope->wasRecentlyCreated) {
             return redirect($assignment->travel_authority_request_url);
         }
 
-        if (null !== $envelope->url) {
-            return redirect($envelope->url);
+        $maybe_url = $assignment->envelope()->sole()->url;
+
+        if (null !== $maybe_url) {
+            return redirect($maybe_url);
         }
 
-        // user can find envelope in "action required" section
+        // user can find envelope in "action required" section, theoretically, maybe
         return redirect(config('docusign.single_sign_on_url'));
     }
 }

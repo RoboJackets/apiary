@@ -190,6 +190,44 @@ class TravelAssignment extends Model
     }
 
     /**
+     * Scope only unpaid assignments.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>
+     */
+    public function scopeUnpaid(Builder $query): Builder
+    {
+        return $query->select(
+            'travel_assignments.*'
+        )->leftJoin('payments', function (JoinClause $j): void {
+            $j->on('payments.payable_id', '=', 'travel_assignments.id')
+                    ->where('payments.payable_type', '=', $this->getMorphClass())
+                    ->where('payments.deleted_at', '=', null);
+        })->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+            ->groupBy('travel_assignments.id', 'travel_assignments.travel_id', 'travel.fee_amount')
+            ->havingRaw('COALESCE(SUM(payments.amount),0.00) < travel.fee_amount');
+    }
+
+    /**
+     * Scope only assignments that need a DocuSign packet.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\TravelAssignment>
+     */
+    public function scopeNeedDocuSign(Builder $query): Builder
+    {
+        return $query->whereHas('travel', static function (Builder $q): void {
+            $q->where('tar_required', true);
+        })
+        ->where('tar_received', false);
+    }
+
+    public function getNeedsDocusignAttribute(): bool
+    {
+        return 0 !== self::where('travel_assignments.id', $this->id)->needDocuSign()->count();
+    }
+
+    /**
      * Get the indexable data array for the model.
      *
      * @return array<string,int|string>

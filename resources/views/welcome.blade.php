@@ -166,37 +166,37 @@
                 </div>
             </div>
         @endif
-        @if($signedLatestAgreement && !$needsTransaction && !$needsPayment)
-            @if($needTravelPayment)
-                <div class="col-sm-6 com-md-3 col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                Travel Payment Required
-                            </h4>
-                            <p class="card-text">
-                                You need to make a payment for {{ $travelName }}.
-                            </p>
-                            <a href="{{ route('pay.travel') }}">Pay Online Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
-                        </div>
+        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid)))
+            <div class="col-sm-6 com-md-3 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Action Required for Travel
+                        </h4>
+                        <p class="card-text">
+                            You have been assigned to {{ $travelAssignment->travel->name }}. Please complete the following action items so that we can book travel for you.
+                        </p>
+                        <ul>
+                            @if(!$signedLatestAgreement)
+                            <li><a href="{{ route('agreement.render') }}">Sign the latest membership agreement</a></li>
+                            @endif
+                            @if(!$status && $needsTransaction)
+                            <li><a href="{{ route('showDuesFlow') }}">Pay dues</a></li>
+                            @endif
+                            @if(!$status && $needsPayment)
+                            <li><a href="{{ route('pay.dues') }}">Pay dues</a></li>
+                            @endif
+                            @if($travelAssignment->needs_docusign)
+                            <li><a href="{{ route('docusign.travel') }}">Submit a Travel Authority Request</a></li>
+                            @endif
+                            @if(!$travelAssignment->is_paid)
+                            <li><a href="{{ route('pay.travel') }}">Pay the travel fee</a></li>
+                            @endif
+                        </ul>
+                        <a href="{{ route('travel.index') }}">View Travel</a>
                     </div>
                 </div>
-            @endif
-            @if($needTravelAuthorityRequest)
-                <div class="col-sm-6 com-md-3 col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                Travel Authority Request Required
-                            </h4>
-                            <p class="card-text">
-                                You need to submit a Travel Authority Request for {{ $travelName }}.
-                            </p>
-                            <a href="{{ route('docusign.travel') }}">Submit Now</a> or <a href="{{ route('travel.index') }}">View Travel</a>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            </div>
         @endif
         <self-service-access-override />
     </div>

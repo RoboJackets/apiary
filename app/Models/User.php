@@ -1052,4 +1052,36 @@ class User extends Authenticatable
             ])
             ->setOverrideUntil($overrideEndDate);
     }
+
+    public function getCurrentTravelAssignmentAttribute(): ?TravelAssignment
+    {
+        $needPayment = $this->assignments()
+            ->unpaid()
+            ->oldest('travel.departure_date')
+            ->oldest('travel.return_date')
+            ->first();
+
+        if (null !== $needPayment) {
+            return $needPayment;
+        }
+
+        $needDocuSign = $this->assignments()
+            ->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+            ->needDocuSign()
+            ->oldest('travel.departure_date')
+            ->oldest('travel.return_date')
+            ->first();
+
+        if (null !== $needDocuSign) {
+            return $needDocuSign;
+        }
+
+        // this might be null, but that's fine
+        return $this->assignments()
+            ->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+            ->oldest('travel.departure_date')
+            ->oldest('travel.return_date')
+            ->where('travel.return_date', '>=', now())
+            ->first();
+    }
 }
