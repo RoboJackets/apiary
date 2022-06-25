@@ -23,7 +23,6 @@ use App\Observers\DuesPackageObserver;
 use App\Observers\DuesTransactionObserver;
 use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
-use App\Observers\SignatureObserver;
 use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -71,13 +70,13 @@ class AppServiceProvider extends ServiceProvider
         DuesTransaction::observe(DuesTransactionObserver::class);
         MembershipAgreementTemplate::observe(MembershipAgreementTemplateObserver::class);
         Payment::observe(PaymentObserver::class);
-        Signature::observe(SignatureObserver::class);
         TravelAssignment::observe(TravelAssignmentObserver::class);
         User::observe(UserObserver::class);
 
         Relation::morphMap([
-            'event' => Event::class,
             'dues-transaction' => DuesTransaction::class,
+            'event' => Event::class,
+            'signature' => Signature::class,
             'team' => Team::class,
             'travel-assignment' => TravelAssignment::class,
         ]);

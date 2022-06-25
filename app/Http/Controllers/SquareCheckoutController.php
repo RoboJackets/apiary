@@ -30,7 +30,7 @@ class SquareCheckoutController extends Controller
     {
         $user = $request->user();
 
-        if (! $user->hasSignedLatestAgreement()) {
+        if (! $user->signed_latest_agreement) {
             return view('dues.agreementrequired');
         }
 
@@ -123,7 +123,7 @@ class SquareCheckoutController extends Controller
             );
         }
 
-        if (! $user->hasSignedLatestAgreement()) {
+        if (! $user->signed_latest_agreement) {
             return view(
                 'travel.actionrequired',
                 [

@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 
@@ -142,6 +143,9 @@ class Signature extends Resource
                     ]
                 ),
             ]),
+
+            MorphMany::make('DocuSign Envelopes', 'envelope', DocuSignEnvelope::class)
+                ->onlyOnDetail(),
 
             self::metadataPanel(),
         ];

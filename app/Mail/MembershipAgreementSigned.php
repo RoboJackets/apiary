@@ -38,8 +38,8 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
             ->from('noreply@my.robojackets.org', 'RoboJackets')
             ->to($this->signature->user->gt_email, $this->signature->user->name)
             ->cc(config('services.membership_agreement_archive_email'))
-            ->withSymfonyMessage(static function (Email $message): void {
-                $message->replyTo('RoboJackets <hello@robojackets.org>');
+            ->withSymfonyMessage(static function (Email $email): void {
+                $email->replyTo('RoboJackets <hello@robojackets.org>');
             })->subject('Membership agreement signed')
             ->text(
                 'mail.agreement.signed',

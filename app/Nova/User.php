@@ -135,7 +135,7 @@ class User extends Resource
                 ->hideWhenUpdating(),
 
             Boolean::make('Latest Agreement Signed', function (): bool {
-                return $this->hasSignedLatestAgreement();
+                return $this->signed_latest_agreement;
             })->onlyOnDetail(),
 
             HasMany::make('Signatures'),

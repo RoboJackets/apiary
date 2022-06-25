@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\GetMorphClassStatic;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Represents a signed membership agreement.
@@ -61,6 +63,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Signature extends Model
 {
+    use GetMorphClassStatic;
     use HasFactory;
 
     /**
@@ -116,6 +119,16 @@ class Signature extends Model
     public function uploadedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'uploaded_by');
+    }
+
+    /**
+     * Get the DocuSign envelope for this signature.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\DocuSignEnvelope>
+     */
+    public function envelope(): MorphMany
+    {
+        return $this->morphMany(DocuSignEnvelope::class, 'signable');
     }
 
     public static function hash(string $username, string $ipAddress, string $userAgent, Carbon $timestamp): string

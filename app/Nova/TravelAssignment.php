@@ -121,7 +121,7 @@ class TravelAssignment extends Resource
                         return false;
                     }
 
-                    if (! $assignment->user->hasSignedLatestAgreement()) {
+                    if (! $assignment->user->signed_latest_agreement) {
                         return false;
                     }
                 }

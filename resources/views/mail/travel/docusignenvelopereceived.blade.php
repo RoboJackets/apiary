@@ -2,7 +2,7 @@ Hi {{ $envelope->signedBy->preferred_first_name }},
 
 We received your Travel Authority Request for {{ $envelope->signable->travel->name }}. Once everyone has submitted their documents, we'll forward all of them to Georgia Tech for review and approval.
 
-You can view your completed form within DocuSign at {{ $envelope->sender_view_url }}.
+You can view your completed form within DocuSign at {{ $envelope->sender_view_url }}, or attached to a separate email from DocuSign.
 
 @if(!$envelope->signable->is_paid)
 You still need to make a ${{ intval($envelope->signable->travel->fee_amount) }} payment for the travel fee.

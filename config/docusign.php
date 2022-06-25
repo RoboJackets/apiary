@@ -76,6 +76,13 @@ return [
         ],
     ],
 
+    'membership_agreement' => [
+        'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=dd7151a0-bef9-4c5c-859d-5826fad304cf&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',
+        'member_name' => 'Member',
+        'ingest_mailbox_name' => 'Ingest Mailbox',
+        'archive_mailbox_name' => 'Agreement Archive Mailbox',
+    ],
+
     'ingest_mailbox' => env('DOCUSIGN_INGEST_MAILBOX'),
 
     'single_sign_on_url' => 'https://account.docusign.com/organizations/7097b206-c4cf-4e3c-8e62-2219e510c3c3/saml2/login/sp/4564d62e-c67b-46f2-b1d7-f8ccc628a269',

@@ -10,8 +10,10 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Models\Signature;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use App\Notifications\MembershipAgreementDocuSignEnvelopeReceived;
 use App\Notifications\Travel\DocuSignEnvelopeReceived;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -139,6 +141,8 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                     $envelope->travel_authority_filename = $disk_path;
                 } elseif (Str::contains($original_filename, 'Airfare')) {
                     $envelope->direct_bill_airfare_filename = $disk_path;
+                } elseif (Str::contains($original_filename, 'Agreement')) {
+                    $envelope->membership_agreement_filename = $disk_path;
                 } else {
                     throw new \Exception('Unable to determine column for attachment named '.$original_filename);
                 }
@@ -166,6 +170,11 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 $envelope->signable->save();
 
                 $envelope->signedBy->notify(new DocuSignEnvelopeReceived($envelope));
+            } elseif ($envelope->signable_type === Signature::getMorphClassStatic()) {
+                $envelope->signable->complete = true;
+                $envelope->signable->save();
+
+                $envelope->signedBy->notify(new MembershipAgreementDocuSignEnvelopeReceived($envelope));
             } else {
                 throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
             }

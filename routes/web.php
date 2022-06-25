@@ -61,6 +61,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::prefix('sign')->group(static function (): void {
         Route::get('/travel', [DocuSignController::class, 'signTravel'])->name('docusign.travel');
+        Route::get('/agreement', [DocuSignController::class, 'signAgreement'])->name('docusign.agreement');
     });
 
     Route::get('github', [GitHubController::class, 'redirectToProvider']);
@@ -73,9 +74,11 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::get('autodesk', [AutodeskLibraryController::class, 'index']);
 
-    Route::get('agreement/print', [SignatureController::class, 'print'])->name('agreement.print');
-    Route::get('agreement/render', [SignatureController::class, 'render'])->name('agreement.render');
-    Route::post('agreement/redirect', [SignatureController::class, 'redirect'])->name('agreement.redirect');
+    if (true !== config('features.docusign-membership-agreement')) {
+        Route::get('agreement/print', [SignatureController::class, 'print'])->name('agreement.print');
+        Route::get('agreement/render', [SignatureController::class, 'render'])->name('agreement.render');
+        Route::post('agreement/redirect', [SignatureController::class, 'redirect'])->name('agreement.redirect');
+    }
 
     Route::get('travel', [TravelAssignmentController::class, 'index'])->name('travel.index');
 
@@ -108,6 +111,8 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::view('privacy', 'privacy');
 
-Route::get('agreement/complete', [SignatureController::class, 'complete'])->name('agreement.complete');
+if (true !== config('features.docusign-membership-agreement')) {
+    Route::get('agreement/complete', [SignatureController::class, 'complete'])->name('agreement.complete');
+}
 
 Route::post('apiv3/{resource}/{action}', [BuzzApiMockController::class, 'anything']);

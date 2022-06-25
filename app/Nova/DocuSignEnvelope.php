@@ -92,6 +92,7 @@ class DocuSignEnvelope extends Resource
             MorphTo::make('Signed For', 'signable')
                 ->types([
                     TravelAssignment::class,
+                    Signature::class,
                 ]),
 
             Boolean::make('Complete'),
