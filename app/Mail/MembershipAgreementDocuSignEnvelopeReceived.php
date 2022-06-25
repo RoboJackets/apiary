@@ -33,7 +33,7 @@ class MembershipAgreementDocuSignEnvelopeReceived extends Mailable implements Sh
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
                     ->to($this->envelope->signedBy->gt_email, $this->envelope->signedBy->name)
-                    ->cc('Membership Agreement Archives', config('services.membership_agreement_archive_email'))
+                    ->cc(config('services.membership_agreement_archive_email'), 'Membership Agreement Archives')
                     ->subject('Membership agreement signed')
                     ->text('mail.agreement.docusignenvelopereceived')
                     ->withSymfonyMessage(static function (Email $email): void {
