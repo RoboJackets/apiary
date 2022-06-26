@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 // phpcs:disable Generic.Formatting.SpaceBeforeCast.NoSpace
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Http\Controllers;
 
@@ -252,7 +253,8 @@ class SquareCheckoutController extends Controller
             return view(
                 'square.error',
                 [
-                    'message' => 'We could not contact Square to begin your payment.',
+                    'message' => 'We could not contact Square to begin your payment. Please post in #it-helpdesk '
+                        .'with the trace ID shown at the bottom of this page.',
                 ]
             );
         }
