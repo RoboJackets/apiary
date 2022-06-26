@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Square\Models\OrderState;
@@ -187,7 +188,10 @@ class Payment extends Resource
             Text::make('Receipt Number')
                 ->onlyOnDetail(),
 
-            Text::make('Receipt URL')
+            URL::make('Receipt URL')
+                ->onlyOnDetail(),
+
+            URL::make('Checkout URL', 'url')
                 ->onlyOnDetail(),
         ];
     }

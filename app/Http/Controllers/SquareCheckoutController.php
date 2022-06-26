@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.Formatting.SpaceBeforeCast.NoSpace
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
 namespace App\Http\Controllers;
 
@@ -14,14 +15,19 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Square\Models\CreateCheckoutRequest;
-use Square\Models\CreateOrderRequest;
+use Illuminate\Support\Str;
+use Sentry\SentrySdk;
+use Sentry\Tracing\SpanContext;
+use Square\Models\AcceptedPaymentMethods;
+use Square\Models\CheckoutOptions;
+use Square\Models\CreatePaymentLinkRequest;
 use Square\Models\Money;
 use Square\Models\Order;
 use Square\Models\OrderLineItem;
 use Square\Models\OrderServiceCharge;
 use Square\Models\OrderServiceChargeCalculationPhase;
 use Square\Models\OrderState;
+use Square\Models\PrePopulatedData;
 use Square\SquareClient;
 
 class SquareCheckoutController extends Controller
@@ -149,6 +155,10 @@ class SquareCheckoutController extends Controller
 
         $amount = $assignment->travel->fee_amount * 100;
 
+        if (null !== $payment->url) {
+            return redirect($payment->url);
+        }
+
         return self::redirect($amount, $payment, $user, 'Travel Fee', $assignment->travel->name);
     }
 
@@ -177,14 +187,40 @@ class SquareCheckoutController extends Controller
         $order->setLineItems([$orderLineItem]);
         $order->setServiceCharges([$orderServiceCharge]);
 
-        $orderRequest = new CreateOrderRequest();
-        $orderRequest->setOrder($order);
-        $orderRequest->setIdempotencyKey($payment->unique_id);
+        $acceptedPaymentMethods = new AcceptedPaymentMethods();
+        $acceptedPaymentMethods->setApplePay(true);
+        $acceptedPaymentMethods->setGooglePay(true);
+        $acceptedPaymentMethods->setCashAppPay(true);
+        $acceptedPaymentMethods->setAfterpayClearpay(false);
 
-        $checkoutRequest = new CreateCheckoutRequest($payment->unique_id, $orderRequest);
-        $checkoutRequest->setMerchantSupportEmail('treasurer@robojackets.org');
-        $checkoutRequest->setPrePopulateBuyerEmail($user->gt_email);
-        $checkoutRequest->setRedirectUrl(route('pay.complete'));
+        $checkoutOptions = new CheckoutOptions();
+        $checkoutOptions->setAllowTipping(false);
+        $checkoutOptions->setRedirectUrl(route('pay.complete'));
+        $checkoutOptions->setMerchantSupportEmail(config('services.treasurer_email'));
+        $checkoutOptions->setAskForShippingAddress(false);
+        $checkoutOptions->setAcceptedPaymentMethods($acceptedPaymentMethods);
+
+        $prePopulatedData = new PrePopulatedData();
+        $prePopulatedData->setBuyerEmail($user->gt_email);
+
+        if (null !== $user->phone) {
+            if (Str::startsWith('+', $user->phone)) {
+                // already has country code prefix
+                $prePopulatedData->setBuyerPhoneNumber($user->phone);
+            } elseif (Str::startsWith('1', $user->phone) && 11 === Str::length($user->phone)) {
+                // has united states country code but no +, just add it
+                $prePopulatedData->setBuyerPhoneNumber('+'.$user->phone);
+            } else {
+                // assume united states number
+                $prePopulatedData->setBuyerPhoneNumber('+1'.$user->phone);
+            }
+        }
+
+        $paymentLinkRequest = new CreatePaymentLinkRequest();
+        $paymentLinkRequest->setIdempotencyKey($payment->unique_id);
+        $paymentLinkRequest->setOrder($order);
+        $paymentLinkRequest->setCheckoutOptions($checkoutOptions);
+        $paymentLinkRequest->setPrePopulatedData($prePopulatedData);
 
         $square = new SquareClient([
             'accessToken' => config('square.access_token'),
@@ -192,10 +228,26 @@ class SquareCheckoutController extends Controller
         ]);
 
         $checkoutApi = $square->getCheckoutApi();
-        $checkoutResponse = $checkoutApi->createCheckout(config('square.location_id'), $checkoutRequest);
 
-        if (! $checkoutResponse->isSuccess()) {
-            Log::error(self::class.' Error creating checkout - '.json_encode($checkoutResponse->getErrors()));
+        $parentSpan = SentrySdk::getCurrentHub()->getSpan();
+
+        if (null !== $parentSpan) {
+            $context = new SpanContext();
+            $context->setOp('square.create_payment_link');
+            $span = $parentSpan->startChild($context);
+            SentrySdk::getCurrentHub()->setSpan($span);
+        }
+
+        $paymentLinkResponse = $checkoutApi->createPaymentLink($paymentLinkRequest);
+
+        if (null !== $parentSpan) {
+            // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
+            $span->finish();
+            SentrySdk::getCurrentHub()->setSpan($parentSpan);
+        }
+
+        if (! $paymentLinkResponse->isSuccess()) {
+            Log::error(self::class.' Error creating payment link - '.json_encode($paymentLinkResponse->getErrors()));
 
             return view(
                 'square.error',
@@ -205,13 +257,14 @@ class SquareCheckoutController extends Controller
             );
         }
 
-        $checkout = $checkoutResponse->getResult()->getCheckout();
+        $paymentLink = $paymentLinkResponse->getResult()->getPaymentLink();
 
-        $payment->checkout_id = $checkout->getId();
-        $payment->order_id = $checkout->getOrder()->getId();
+        $payment->order_id = $paymentLinkResponse->getResult()->getPaymentLink()->getOrderId();
+        $payment->checkout_id = $paymentLink->getId();
+        $payment->url = $paymentLink->getUrl();
         $payment->save();
 
-        return redirect($checkout->getCheckoutPageUrl());
+        return redirect($payment->url);
     }
 
     public function complete(SquareCompleteRequest $request)
