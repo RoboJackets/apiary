@@ -102,7 +102,11 @@ class DocuSignEnvelope extends Resource
 
             URL::make('View in DocuSign', 'url')
                 ->displayUsing(static fn () => 'Signer View')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    // Hidden to non-admins because it's confusing and not useful
+                    return $request->user()->hasRole('admin');
+                }),
 
             URL::make('View in DocuSign', 'sender_view_url')
                 ->displayUsing(static fn () => 'Sender View')
