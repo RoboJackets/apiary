@@ -47,6 +47,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $clickup_invite_pending
  * @property string|null $autodesk_email
  * @property bool $autodesk_invite_pending
+ * @property bool $signed_latest_agreement
  * @property string $gt_email
  * @property string $first_name
  * @property string|null $middle_name
@@ -835,9 +836,9 @@ class User extends Authenticatable
         return $this->hasMany(Signature::class);
     }
 
-    public function hasSignedLatestAgreement(): bool
+    public function getSignedLatestAgreementAttribute(): bool
     {
-        return $this
+        $query = $this
             ->signatures()
             ->where('complete', true)
             ->where(
@@ -848,8 +849,15 @@ class User extends Authenticatable
                         ->orderByDesc('updated_at')
                         ->limit(1);
                 }
-            )
-            ->exists();
+            );
+
+        if (true === config('features.docusign-membership-agreement')) {
+            $query->whereHas('envelope', static function (Builder $query): void {
+                $query->where('complete', true);
+            });
+        }
+
+        return $query->exists();
     }
 
     /**
@@ -1010,7 +1018,7 @@ class User extends Authenticatable
 
         // tasks
         $attendedTeamMeeting = $this->attendance()->whereAttendableType('team')->exists();
-        $signedLatestAgreement = $this->hasSignedLatestAgreement();
+        $signedLatestAgreement = $this->signed_latest_agreement;
 
         if ($eligibleDuesPkgExists) {
             $overrideEndDate = new CarbonImmutable($nextAccessEndDuesPkg->access_end);

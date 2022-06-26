@@ -91,7 +91,7 @@ class DuesTransactionController extends Controller
             $request->merge(['user_id' => $user->id]);
         }
 
-        if (! User::where('id', $request->input('user_id'))->firstOrFail()->hasSignedLatestAgreement()) {
+        if (! User::where('id', $request->input('user_id'))->sole()->signed_latest_agreement) {
             return response()->json(['status' => 'error',
                 'message' => 'User has not signed latest agreement',
             ], 422);
@@ -258,7 +258,7 @@ class DuesTransactionController extends Controller
             return view('dues.alreadypaid');
         }
 
-        if (! $request->user()->hasSignedLatestAgreement()) {
+        if (! $request->user()->signed_latest_agreement) {
             return view('dues.agreementrequired');
         }
 

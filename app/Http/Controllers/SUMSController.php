@@ -19,7 +19,7 @@ class SUMSController extends Controller
     {
         $user = $request->user();
 
-        if (! $user->hasSignedLatestAgreement() && true === config('sums.requires_agreement')) {
+        if (! $user->signed_latest_agreement && true === config('sums.requires_agreement')) {
             return view(
                 'sums',
                 [

@@ -151,7 +151,7 @@ class DuesTransaction extends Resource
                         return false;
                     }
 
-                    if (! $transaction->user->hasSignedLatestAgreement()) {
+                    if (! $transaction->user->signed_latest_agreement) {
                         return false;
                     }
                 }

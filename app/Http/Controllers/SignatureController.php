@@ -9,6 +9,7 @@ use App\Http\Requests\MembershipAgreementRedirectRequest;
 use App\Jobs\RetrieveIpAddressGeoLocationForSignature;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
+use App\Notifications\MembershipAgreementSigned;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use DOMDocument;
@@ -26,7 +27,7 @@ class SignatureController extends Controller
         $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
-        if ($user->hasSignedLatestAgreement()) {
+        if ($user->signed_latest_agreement) {
             return view('agreement.alreadysigned');
         }
 
@@ -59,7 +60,7 @@ class SignatureController extends Controller
         $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
-        if ($user->hasSignedLatestAgreement()) {
+        if ($user->signed_latest_agreement) {
             return view('agreement.alreadysigned');
         }
 
@@ -104,7 +105,7 @@ class SignatureController extends Controller
         $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
-        if ($user->hasSignedLatestAgreement()) {
+        if ($user->signed_latest_agreement) {
             return view('agreement.alreadysigned');
         }
 
@@ -224,6 +225,9 @@ class SignatureController extends Controller
         $signature->cas_ticket_redeemed_timestamp = Carbon::now();
         $signature->complete = true;
         $signature->save();
+
+        $signature->user->notify(new MembershipAgreementSigned($signature));
+        $signature->user->searchable();
 
         alert()->success('Agreement saved!', 'Success!');
 

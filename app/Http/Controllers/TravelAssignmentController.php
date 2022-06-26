@@ -28,7 +28,7 @@ class TravelAssignmentController extends Controller
             );
         }
 
-        if (! $user->hasSignedLatestAgreement()) {
+        if (! $user->signed_latest_agreement) {
             return view(
                 'travel.actionrequired',
                 [

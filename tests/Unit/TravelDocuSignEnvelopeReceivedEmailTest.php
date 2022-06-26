@@ -12,7 +12,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class DocuSignEnvelopeReceivedEmailTest extends TestCase
+class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
 {
     public function testPaid(): void
     {
@@ -49,6 +49,7 @@ class DocuSignEnvelopeReceivedEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText($contact->full_name);
+        $mailable->assertSeeInText('https://app.docusign.com/documents/details/d96907e7-c7d9-45f5-a4bd-ba6b660c6f06');
         $mailable->assertDontSeeInText('still need to make a $10 payment');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");

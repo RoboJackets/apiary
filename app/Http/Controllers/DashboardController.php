@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $status = $user->is_active;
 
         $agreementExists = MembershipAgreementTemplate::exists();
-        $signedLatestAgreement = $user->hasSignedLatestAgreement();
+        $signedLatestAgreement = $user->signed_latest_agreement;
         $signedAnyAgreement = $user->signatures()->where('complete', true)->exists();
 
         //User is "new" if they don't have any transactions, or they have never paid dues

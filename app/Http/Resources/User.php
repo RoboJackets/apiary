@@ -54,7 +54,7 @@ class User extends JsonResource
             'resume_date' => $this->resume_date,
             'is_active' => $this->is_active,
             'is_access_active' => $this->is_access_active,
-            'signed_latest_agreement' => $this->hasSignedLatestAgreement(),
+            'signed_latest_agreement' => $this->signed_latest_agreement,
             'github_username' => $this->github_username,
             'github_invite_pending' => $this->github_invite_pending,
             'gmail_address' => $this->gmail_address,

@@ -30,7 +30,7 @@ class OverrideAccess extends Action
                 return Action::danger('You cannot override your own access!');
             }
 
-            if (! $user->hasSignedLatestAgreement() && MembershipAgreementTemplate::exists()) {
+            if (! $user->signed_latest_agreement && MembershipAgreementTemplate::exists()) {
                 return Action::danger('This user has not signed the latest agreement!');
             }
 
