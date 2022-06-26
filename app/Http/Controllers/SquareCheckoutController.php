@@ -306,7 +306,6 @@ class SquareCheckoutController extends Controller
             SentrySdk::getCurrentHub()->setSpan($parentSpan);
         }
 
-
         if (! $retrieveOrderResponse->isSuccess()) {
             Log::error(self::class.' Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
 
