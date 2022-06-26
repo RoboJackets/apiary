@@ -289,7 +289,23 @@ class SquareCheckoutController extends Controller
 
         $ordersApi = $square->getOrdersApi();
 
+        $parentSpan = SentrySdk::getCurrentHub()->getSpan();
+
+        if (null !== $parentSpan) {
+            $context = new SpanContext();
+            $context->setOp('square.retrieve_order');
+            $span = $parentSpan->startChild($context);
+            SentrySdk::getCurrentHub()->setSpan($span);
+        }
+
         $retrieveOrderResponse = $ordersApi->retrieveOrder($payment->order_id);
+
+        if (null !== $parentSpan) {
+            // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
+            $span->finish();
+            SentrySdk::getCurrentHub()->setSpan($parentSpan);
+        }
+
 
         if (! $retrieveOrderResponse->isSuccess()) {
             Log::error(self::class.' Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
