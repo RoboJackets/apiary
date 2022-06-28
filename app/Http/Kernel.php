@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
-            \App\Http\Middleware\AddUserToSentryEvents::class,
+            \App\Http\Middleware\Sentry::class,
             \Spatie\Csp\AddCspHeaders::class,
             \HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware::class,
         ],
@@ -44,7 +44,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:180,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\AddUserToSentryEvents::class,
+            \App\Http\Middleware\Sentry::class,
         ],
     ];
 
