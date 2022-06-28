@@ -24,6 +24,7 @@ class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('fee and submitted Travel Authority Requests for');
+        $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/travel/');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }
