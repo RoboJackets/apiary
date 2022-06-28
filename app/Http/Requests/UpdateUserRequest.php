@@ -43,6 +43,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'emergency_contact_name' => [
                 'required_with:emergency_contact_phone',
+                'regex:/^[a-zA-Z\s]+$/',
                 'max:255',
                 'nullable',
             ],
