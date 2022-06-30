@@ -84,6 +84,7 @@ parameters:
     - '#Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Model::update\(\) expects array<string, mixed>, mixed given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::each\(\) expects callable\(mixed, \(int\|string\)\): mixed, Closure\(int\): void given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::first\(\) expects \(callable\(mixed, \(int\|string\)\): bool\)\|null, Closure\(App\\Models\\[a-zA-Z]+\): bool given\.#'
+    - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::map\(\) expects callable\(mixed, \(int\|string\)\): array, Closure\(array, string\): array given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::map\(\) expects callable\(mixed, \(int\|string\)\): string, Closure\(string\): string given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::mapWithKeys\(\) expects callable\(mixed, \(int\|string\)\): array<int\|string, mixed>, Closure\(object\): non-empty-array<int\|string, mixed> given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::mapWithKeys\(\) expects callable\(mixed, \(int\|string\)\): array<string, mixed>, Closure\(object\): non-empty-array<string, mixed> given\.#'
