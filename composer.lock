@@ -3932,16 +3932,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.21",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12"
+                "reference": "34a68067b7ae3b836ea5e57e1fc432478372a4f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
-                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/34a68067b7ae3b836ea5e57e1fc432478372a4f5",
+                "reference": "34a68067b7ae3b836ea5e57e1fc432478372a4f5",
                 "shasum": ""
             },
             "require": {
@@ -4002,7 +4002,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.21"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.1.0"
             },
             "funding": [
                 {
@@ -4018,7 +4018,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-12T17:54:28+00:00"
+            "time": "2022-06-29T17:29:54+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -4242,16 +4242,16 @@
         },
         {
             "name": "league/uri",
-            "version": "6.6.0",
+            "version": "6.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri.git",
-                "reference": "4147f19b9de3b5af6a258f35d7a0efbbf9963298"
+                "reference": "2d7c87a0860f3126a39f44a8a9bf2fed402dcfea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri/zipball/4147f19b9de3b5af6a258f35d7a0efbbf9963298",
-                "reference": "4147f19b9de3b5af6a258f35d7a0efbbf9963298",
+                "url": "https://api.github.com/repos/thephpleague/uri/zipball/2d7c87a0860f3126a39f44a8a9bf2fed402dcfea",
+                "reference": "2d7c87a0860f3126a39f44a8a9bf2fed402dcfea",
                 "shasum": ""
             },
             "require": {
@@ -4265,6 +4265,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^v3.3.2",
+                "nyholm/psr7": "^1.5",
                 "php-http/psr7-integration-tests": "^1.1",
                 "phpstan/phpstan": "^1.2.0",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
@@ -4328,7 +4329,7 @@
                 "docs": "https://uri.thephpleague.com",
                 "forum": "https://thephpleague.slack.com",
                 "issues": "https://github.com/thephpleague/uri/issues",
-                "source": "https://github.com/thephpleague/uri/tree/6.6.0"
+                "source": "https://github.com/thephpleague/uri/tree/6.7.1"
             },
             "funding": [
                 {
@@ -4336,7 +4337,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-28T05:44:35+00:00"
+            "time": "2022-06-29T09:48:18+00:00"
         },
         {
             "name": "league/uri-interfaces",
@@ -8153,16 +8154,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.12.0",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "9e6c0382553f1317c02f1ae0ee71c64821eb5af0"
+                "reference": "09f80fa240d44fafb1c70657c74ee44ffa929357"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/9e6c0382553f1317c02f1ae0ee71c64821eb5af0",
-                "reference": "9e6c0382553f1317c02f1ae0ee71c64821eb5af0",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/09f80fa240d44fafb1c70657c74ee44ffa929357",
+                "reference": "09f80fa240d44fafb1c70657c74ee44ffa929357",
                 "shasum": ""
             },
             "require": {
@@ -8200,7 +8201,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.12.0"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.12.1"
             },
             "funding": [
                 {
@@ -8208,7 +8209,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-19T20:01:24+00:00"
+            "time": "2022-06-28T14:29:26+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -12778,23 +12779,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.5.0",
+            "version": "v7.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "39e4c9b147950a555e9f2b44035d5b06672f6951"
+                "reference": "4c4a7cf0df2d91cdd202aa6f7177a2476ddd8039"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/39e4c9b147950a555e9f2b44035d5b06672f6951",
-                "reference": "39e4c9b147950a555e9f2b44035d5b06672f6951",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/4c4a7cf0df2d91cdd202aa6f7177a2476ddd8039",
+                "reference": "4c4a7cf0df2d91cdd202aa6f7177a2476ddd8039",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.12",
+                "laravel/framework": "^9.19",
                 "mockery/mockery": "^1.4.4",
-                "orchestra/testbench-core": "^7.5",
+                "orchestra/testbench-core": "^7.6",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -12831,7 +12832,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.5.0"
+                "source": "https://github.com/orchestral/testbench/tree/v7.6.0"
             },
             "funding": [
                 {
@@ -12843,20 +12844,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-05-10T23:49:37+00:00"
+            "time": "2022-06-30T09:57:38+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.5.0",
+            "version": "v7.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "72eb3e159d17ff42bf786e9cea83f55e9c297380"
+                "reference": "3e4e7ed08c353f2178b0cbce845ca90c3cb28e08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/72eb3e159d17ff42bf786e9cea83f55e9c297380",
-                "reference": "72eb3e159d17ff42bf786e9cea83f55e9c297380",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/3e4e7ed08c353f2178b0cbce845ca90c3cb28e08",
+                "reference": "3e4e7ed08c353f2178b0cbce845ca90c3cb28e08",
                 "shasum": ""
             },
             "require": {
@@ -12864,7 +12865,7 @@
             },
             "require-dev": {
                 "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.12",
+                "laravel/framework": "^9.19",
                 "laravel/laravel": "9.x-dev",
                 "mockery/mockery": "^1.4.4",
                 "orchestra/canvas": "^7.0",
@@ -12876,7 +12877,7 @@
             "suggest": {
                 "brianium/paratest": "Allow using parallel tresting (^6.4).",
                 "fakerphp/faker": "Allow using Faker for testing (^1.9.2).",
-                "laravel/framework": "Required for testing (^9.12).",
+                "laravel/framework": "Required for testing (^9.19).",
                 "mockery/mockery": "Allow using Mockery for testing (^1.4.4).",
                 "nunomaduro/collision": "Allow using Laravel style tests output and parallel testing (^6.2).",
                 "orchestra/testbench-browser-kit": "Allow using legacy Laravel BrowserKit for testing (^7.0).",
@@ -12937,7 +12938,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-05-10T22:45:44+00:00"
+            "time": "2022-06-30T09:52:25+00:00"
         },
         {
             "name": "phan/phan",
@@ -13521,16 +13522,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.7.15",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cd0202ea1b1fc6d1bbe156c6e2e18a03e0ff160a"
+                "reference": "b7648d4ee9321665acaf112e49da9fd93df8fbd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cd0202ea1b1fc6d1bbe156c6e2e18a03e0ff160a",
-                "reference": "cd0202ea1b1fc6d1bbe156c6e2e18a03e0ff160a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b7648d4ee9321665acaf112e49da9fd93df8fbd5",
+                "reference": "b7648d4ee9321665acaf112e49da9fd93df8fbd5",
                 "shasum": ""
             },
             "require": {
@@ -13556,7 +13557,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.7.15"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.0"
             },
             "funding": [
                 {
@@ -13576,7 +13577,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-20T08:29:01+00:00"
+            "time": "2022-06-29T08:53:31+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
