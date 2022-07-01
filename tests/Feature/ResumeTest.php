@@ -98,7 +98,7 @@ class ResumeTest extends TestCase
         $payment = new Payment();
         $payment->payable_id = $transaction->id;
         $payment->payable_type = DuesTransaction::getMorphClassStatic();
-        $payment->method = 'cash';
+        $payment->method = 'square';
         $payment->amount = $package->cost;
         // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
         $payment->processing_fee = 0;

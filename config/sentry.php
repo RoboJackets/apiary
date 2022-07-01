@@ -49,7 +49,7 @@ return [
     ],
 
     // @see: https://docs.sentry.io/platforms/php/configuration/options/#send-default-pii
-    'send_default_pii' => false,
+    'send_default_pii' => true,
 
     'traces_sampler' => [\App\Sentry\Helpers::class, 'tracesSampler'],
 

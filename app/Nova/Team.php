@@ -175,6 +175,9 @@ class Team extends Resource
 
             Boolean::make('Self-Serviceable', 'self_serviceable')
                 ->sortable(),
+
+            Boolean::make('Self-Service Override Eligible', 'self_service_override_eligible')
+                ->hideFromIndex(),
         ];
     }
 
