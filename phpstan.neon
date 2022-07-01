@@ -47,7 +47,6 @@ parameters:
     - '#Cannot call method getMorphClass\(\) on App\\Models\\Event|App\\Models\\Team\|null\.#'
     - '#Cannot call method members\(\) on App\\Models\\[a-zA-Z]+|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\[a-zA-Z]+>\|null\.#'
     - '#Cannot call method notify\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.#'
-    - '#Cannot cast mixed to float\.#'
     - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
     - '#Dynamic call to static method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\TravelAssignment>::needDocuSign\(\)\.#'
