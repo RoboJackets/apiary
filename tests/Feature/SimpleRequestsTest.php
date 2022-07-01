@@ -14,6 +14,8 @@ class SimpleRequestsTest extends TestCase
      */
     public function testUnauthenticatedRequests(): void
     {
+        $this->withoutMix();
+
         $response = $this->get('/privacy');
         $response->assertStatus(200);
 
@@ -26,6 +28,8 @@ class SimpleRequestsTest extends TestCase
      */
     public function testHome(): void
     {
+        $this->withoutMix();
+
         $response = $this->actingAs($this->getTestUser(['member']), 'web')->get('/');
         $this->assertEquals(200, $response->status(), 'Response content: '.$response->getContent());
 
