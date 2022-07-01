@@ -11,6 +11,8 @@ class Helpers
     /**
      * URLs that should be ignored for performance tracing.
      *
+     * @phan-read-only
+     *
      * @var array<string>
      */
     private static array $ignoreUrls = [
