@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::table('teams', static function (Blueprint $table): void {
             $table->dropColumn('self_service_override_eligible');
         });
     }

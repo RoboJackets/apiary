@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Sentry\captureMessage;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
 use Square\Models\AcceptedPaymentMethods;
@@ -250,7 +249,8 @@ class SquareCheckoutController extends Controller
 
         if (! $paymentLinkResponse->isSuccess()) {
             Log::error(self::class.' Error creating payment link - '.json_encode($paymentLinkResponse->getErrors()));
-            captureMessage(json_encode($paymentLinkResponse->getErrors()));
+            // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+            \Sentry\captureMessage(json_encode($paymentLinkResponse->getErrors()));
 
             return view(
                 'square.error',

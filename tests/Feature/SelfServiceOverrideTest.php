@@ -274,7 +274,7 @@ class SelfServiceOverrideTest extends TestCase
     }
 
     /**
-     * Testing instances where a user would not be eligible due to existing override
+     * Testing instances where a user would not be eligible due to existing override.
      */
     public function testUserWithOverrideNotEligibleForSelfServiceOverride(): void
     {
@@ -314,7 +314,7 @@ class SelfServiceOverrideTest extends TestCase
 
 
     /**
-     * Testing instances where a user would not be eligible due to previous dues
+     * Testing instances where a user would not be eligible due to previous dues.
      */
     public function testUserWithActivePaidDuesNotEligible(): void
     {
@@ -343,7 +343,7 @@ class SelfServiceOverrideTest extends TestCase
     }
 
     /**
-     * Testing instances where a user would not be eligible due to no future dues package
+     * Testing instances where a user would not be eligible due to no future dues package.
      */
     public function testNoFutureDuesPackage(): void
     {

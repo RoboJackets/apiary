@@ -107,6 +107,7 @@ parameters:
     - '#Parameter \#1 \$key of method Illuminate\\Cache\\RateLimiting\\Limit::by\(\) expects string, int<min, -1>\|int<1, max>\|string\|null given\.#'
     - '#Parameter \#1 \$locationId of class Square\\Models\\Order constructor expects string, mixed given\.#'
     - '#Parameter \#1 \$merchantSupportEmail of method Square\\Models\\CheckoutOptions::setMerchantSupportEmail\(\) expects string\|null, mixed given\.#'
+    - '#Parameter \#1 \$message of function Sentry\\captureMessage expects string, string\|false given\.#'
     - '#Parameter \#1 \$model of method Illuminate\\Database\\Eloquent\\Relations\\HasOneOrMany<App\\Models\\Payment>::save\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\Payment\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\Payment> given\.#'
     - '#Parameter \#1 \$model of method Laravel\\Nova\\Actions\\Action::markAsFailed\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\[a-zA-Z]+\|null given\.#'
     - '#Parameter \#1 \$object_or_class of function is_a expects object, App\\Models\\[a-zA-Z]+\|null given\.#'
