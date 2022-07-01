@@ -312,7 +312,6 @@ class SelfServiceOverrideTest extends TestCase
         );
     }
 
-
     /**
      * Testing instances where a user would not be eligible due to previous dues.
      */
