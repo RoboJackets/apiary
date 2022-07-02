@@ -18,6 +18,10 @@ class SignatureTest extends TestCase
      */
     public function testAgreementUploadedEmail(): void
     {
+        $this->markTestSkipped(
+            'Paper uploads are not supported at this time'
+        );
+
         Notification::fake();
 
         $this->seed(MembershipAgreementTemplateSeeder::class);

@@ -249,6 +249,8 @@ class SquareCheckoutController extends Controller
 
         if (! $paymentLinkResponse->isSuccess()) {
             Log::error(self::class.' Error creating payment link - '.json_encode($paymentLinkResponse->getErrors()));
+            // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+            \Sentry\captureMessage(json_encode($paymentLinkResponse->getErrors()));
 
             return view(
                 'square.error',

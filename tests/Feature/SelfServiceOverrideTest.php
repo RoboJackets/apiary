@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Models\Attendance;
+use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\FiscalYear;
@@ -27,7 +28,7 @@ class SelfServiceOverrideTest extends TestCase
      * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
      * @return DuesPackage
      */
-    public function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
+    private function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
     {
         if (null === $base_date) {
             $base_date = CarbonImmutable::now();
@@ -56,7 +57,7 @@ class SelfServiceOverrideTest extends TestCase
      * @param  bool  $paid
      * @return DuesTransaction
      */
-    public function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
+    private function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
     {
         $dues_transaction = DuesTransaction::factory()->create([
             'dues_package_id' => $dues_package->id,
@@ -82,7 +83,7 @@ class SelfServiceOverrideTest extends TestCase
      * @param  bool  $completed
      * @return Signature
      */
-    public function createMembershipAgreementSignature(User $signer_user, bool $completed): Signature
+    private function createMembershipAgreementSignature(User $signer_user, bool $completed): Signature
     {
         if (0 === MembershipAgreementTemplate::count()) {
             $this->seed(MembershipAgreementTemplateSeeder::class);
@@ -99,15 +100,99 @@ class SelfServiceOverrideTest extends TestCase
         $signature->membership_agreement_template_id = MembershipAgreementTemplate::first()->id;
         $signature->save();
 
+        $envelope = new DocuSignEnvelope();
+        $envelope->complete = true;
+        $envelope->signed_by = $signer_user->id;
+        $signature->envelope()->save($envelope);
+
         return $signature;
     }
 
     /**
      * Tests override eligibility when conditions are all true and only tasks need to be completed.
-     *
-     * @return void
      */
-    public function testOverrideEligibiltyTasks(): void
+    public function testOverrideEligibilityTasks(): void
+    {
+        Notification::fake();
+
+        $user = $this->getTestUser(['non-member']);
+        $this->createDuesPackage(CarbonImmutable::now());
+
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertTrue(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
+            $user->self_service_override_eligibility->getUnmetConditions(),
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Attend a team meeting',
+            $user->self_service_override_eligibility->getRemainingTasks(),
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Sign the membership agreement',
+            $user->self_service_override_eligibility->getRemainingTasks(),
+            (string) $user->self_service_override_eligibility
+        );
+
+        $this->seed(TeamsSeeder::class);
+        $team = Team::first();
+        $team->self_service_override_eligible = true;
+        $team->save();
+        Attendance::create([
+            'attendable_type' => 'team',
+            'attendable_id' => $team->id,
+            'gtid' => $user->gtid,
+        ]);
+
+        $this->assertFalse(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertTrue(
+            $user->self_service_override_eligibility->user_rectifiable,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
+            $user->self_service_override_eligibility->getUnmetConditions(),
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'Sign the membership agreement',
+            $user->self_service_override_eligibility->getRemainingTasks(),
+            (string) $user->self_service_override_eligibility
+        );
+
+        $this->createMembershipAgreementSignature($user, true);
+
+        $this->assertTrue(
+            $user->self_service_override_eligibility->eligible,
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
+            $user->self_service_override_eligibility->getUnmetConditions(),
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
+            'None',
+            $user->self_service_override_eligibility->getRemainingTasks(),
+            (string) $user->self_service_override_eligibility
+        );
+    }
+
+    /**
+     * Tests override eligibility when conditions are all true and only tasks need to be completed.
+     */
+    public function testOverrideEligibilityTasksWithIneligibleTeam(): void
     {
         Notification::fake();
 
@@ -160,6 +245,11 @@ class SelfServiceOverrideTest extends TestCase
             (string) $user->self_service_override_eligibility
         );
         $this->assertContains(
+            'Attend a team meeting',
+            $user->self_service_override_eligibility->getRemainingTasks(),
+            (string) $user->self_service_override_eligibility
+        );
+        $this->assertContains(
             'Sign the membership agreement',
             $user->self_service_override_eligibility->getRemainingTasks(),
             (string) $user->self_service_override_eligibility
@@ -167,7 +257,7 @@ class SelfServiceOverrideTest extends TestCase
 
         $this->createMembershipAgreementSignature($user, true);
 
-        $this->assertTrue(
+        $this->assertFalse(
             $user->self_service_override_eligibility->eligible,
             (string) $user->self_service_override_eligibility
         );
@@ -177,13 +267,16 @@ class SelfServiceOverrideTest extends TestCase
             (string) $user->self_service_override_eligibility
         );
         $this->assertContains(
-            'None',
+            'Attend a team meeting',
             $user->self_service_override_eligibility->getRemainingTasks(),
             (string) $user->self_service_override_eligibility
         );
     }
 
-    public function testUserWithOverrideNotEligibleForSelfServiceOverride()
+    /**
+     * Testing instances where a user would not be eligible due to existing override.
+     */
+    public function testUserWithOverrideNotEligibleForSelfServiceOverride(): void
     {
         Notification::fake();
 
@@ -219,7 +312,10 @@ class SelfServiceOverrideTest extends TestCase
         );
     }
 
-    public function testUserWithActivePaidDuesNotEligible()
+    /**
+     * Testing instances where a user would not be eligible due to previous dues.
+     */
+    public function testUserWithActivePaidDuesNotEligible(): void
     {
         $user = $this->getTestUser(['non-member']);
         $dues_package = $this->createDuesPackage(CarbonImmutable::now());
@@ -245,7 +341,10 @@ class SelfServiceOverrideTest extends TestCase
         );
     }
 
-    public function testNoFutureDuesPackage()
+    /**
+     * Testing instances where a user would not be eligible due to no future dues package.
+     */
+    public function testNoFutureDuesPackage(): void
     {
         $user = $this->getTestUser(['non-member']);
 

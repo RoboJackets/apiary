@@ -1017,7 +1017,13 @@ class User extends Authenticatable
         $eligibleDuesPkgExists = null !== $nextAccessEndDuesPkg;
 
         // tasks
-        $attendedTeamMeeting = $this->attendance()->whereAttendableType('team')->exists();
+        $attendedTeamMeeting = $this
+            ->attendance()
+            ->whereAttendableType('team')
+            ->whereHasMorph('attendable', [Team::class], static function (Builder $query): void {
+                $query->where('self_service_override_eligible', true);
+            })
+            ->exists();
         $signedLatestAgreement = $this->signed_latest_agreement;
 
         if ($eligibleDuesPkgExists) {

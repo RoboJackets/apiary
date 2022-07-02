@@ -150,7 +150,7 @@
     "config": {
         "classmap-authoritative": true,
         "preferred-install": "dist",
-        "process-timeout": 60,
+        "process-timeout": 90,
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
