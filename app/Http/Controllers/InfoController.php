@@ -15,6 +15,8 @@ class InfoController extends Controller
             'info' => [
                 'appName' => config('app.name'),
                 'appEnv' => config('app.env'),
+                'allocId' => config('app.alloc_id'),
+                'release' => config('sentry.release'),
             ],
         ]);
     }

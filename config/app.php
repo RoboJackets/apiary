@@ -212,4 +212,6 @@ return [
         'Cas' => Subfission\Cas\Facades\Cas::class,
         'Redis' => Illuminate\Support\Facades\Redis::class,
     ])->toArray(),
+
+    'alloc_id' => env('NOMAD_ALLOC_ID'),
 ];
