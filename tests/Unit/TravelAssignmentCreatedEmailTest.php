@@ -16,11 +16,16 @@ class TravelAssignmentCreatedEmailTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->tar_required = true;
+        $travel = Travel::factory()->make([
+            'tar_required' => true,
+        ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->create();
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+        ]);
+        $assignment->save();
 
         $mailable = new TravelAssignmentCreated($assignment);
 
@@ -35,12 +40,17 @@ class TravelAssignmentCreatedEmailTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->tar_required = false;
-        $travel->fee_amount = 10;
+        $travel = Travel::factory()->make([
+            'tar_required' => false,
+            'fee_amount' => 10,
+        ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->create();
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+        ]);
+        $assignment->save();
 
         $mailable = new TravelAssignmentCreated($assignment);
 

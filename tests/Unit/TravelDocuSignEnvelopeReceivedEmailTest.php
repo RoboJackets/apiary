@@ -22,7 +22,11 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         $travel->fee_amount = 10;
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->create();
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+        ]);
+        $assignment->save();
 
         $payment = new Payment();
         $payment->payable_type = TravelAssignment::getMorphClassStatic();
@@ -63,7 +67,11 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         $travel->fee_amount = 10;
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->create();
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+        ]);
+        $assignment->save();
 
         $contact = User::factory()->create();
 

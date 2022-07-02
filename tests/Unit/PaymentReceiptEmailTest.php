@@ -21,8 +21,11 @@ class PaymentReceiptEmailTest extends TestCase
 
         $package = DuesPackage::factory()->create();
 
-        // this will always use the above two resources, because there aren't any others
-        $transaction = DuesTransaction::factory()->create();
+        $transaction = DuesTransaction::factory()->make([
+            'user_id' => $user->id,
+            'dues_package_id' => $package->id,
+        ]);
+        $transaction->save();
 
         $payment = new Payment();
         $payment->payable_type = DuesTransaction::getMorphClassStatic();
@@ -51,9 +54,10 @@ class PaymentReceiptEmailTest extends TestCase
 
         $package = DuesPackage::factory()->create();
 
-        $transaction = new DuesTransaction();
-        $transaction->dues_package_id = $package->id;
-        $transaction->user_id = $member->id;
+        $transaction = DuesTransaction::factory()->make([
+            'user_id' => $member->id,
+            'dues_package_id' => $package->id,
+        ]);
         $transaction->save();
 
         $payment = new Payment();
@@ -83,8 +87,11 @@ class PaymentReceiptEmailTest extends TestCase
         $travel->tar_required = true;
         $travel->save();
 
-        // this will always use the above two resources, because there aren't any others
-        $assignment = TravelAssignment::factory()->create();
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+        ]);
+        $assignment->save();
 
         $payment = new Payment();
         $payment->payable_type = TravelAssignment::getMorphClassStatic();
@@ -110,13 +117,16 @@ class PaymentReceiptEmailTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->tar_required = true;
+        $travel = Travel::factory()->make([
+            'tar_required' => true,
+        ]);
         $travel->save();
 
-        // this will always use the above two resources, because there aren't any others
-        $assignment = TravelAssignment::factory()->create();
-        $assignment->tar_received = true;
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+            'tar_received' => true,
+        ]);
         $assignment->save();
 
         $payment = new Payment();
@@ -145,8 +155,11 @@ class PaymentReceiptEmailTest extends TestCase
 
         $travel = Travel::factory()->create();
 
-        // this will always use the above two resources, because there aren't any others
-        $assignment = TravelAssignment::factory()->create();
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+        ]);
+        $assignment->save();
 
         $payment = new Payment();
         $payment->payable_type = TravelAssignment::getMorphClassStatic();
@@ -176,14 +189,15 @@ class PaymentReceiptEmailTest extends TestCase
 
         $travel = Travel::factory()->create();
 
-        $transaction = new TravelAssignment();
-        $transaction->travel_id = $travel->id;
-        $transaction->user_id = $member->id;
-        $transaction->save();
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $member->id,
+        ]);
+        $assignment->save();
 
         $payment = new Payment();
         $payment->payable_type = TravelAssignment::getMorphClassStatic();
-        $payment->payable_id = $transaction->id;
+        $payment->payable_id = $assignment->id;
         $payment->amount = 100;
         $payment->method = 'cash';
         $payment->recorded_by = $officer->id;

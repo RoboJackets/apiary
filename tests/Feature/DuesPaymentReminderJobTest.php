@@ -33,7 +33,10 @@ class DuesPaymentReminderJobTest extends TestCase
 
         DuesPackage::factory()->create();
 
-        DuesTransaction::factory()->create();
+        $transaction = DuesTransaction::factory()->make([
+            'user_id' => $this->user->id,
+        ]);
+        $transaction->save();
 
         Queue::assertPushed(SendDuesPaymentReminder::class, [$this, 'validateJob']);
     }
@@ -46,9 +49,15 @@ class DuesPaymentReminderJobTest extends TestCase
 
         DuesPackage::factory()->create();
 
-        DuesTransaction::factory()->create();
+        $transactionOne = DuesTransaction::factory()->make([
+            'user_id' => $this->user->id,
+        ]);
+        $transactionOne->save();
 
-        DuesTransaction::factory()->create();
+        $transactionTwo = DuesTransaction::factory()->make([
+            'user_id' => $this->user->id,
+        ]);
+        $transactionTwo->save();
 
         Queue::assertPushed(SendDuesPaymentReminder::class, [$this, 'validateJob']);
     }
@@ -61,8 +70,13 @@ class DuesPaymentReminderJobTest extends TestCase
 
         DuesPackage::factory()->create();
 
-        $transaction = DuesTransaction::withoutEvents(static function (): DuesTransaction {
-            return DuesTransaction::factory()->create();
+        $transaction = DuesTransaction::withoutEvents(function (): DuesTransaction {
+            $transaction = DuesTransaction::factory()->make([
+                'user_id' => $this->user->id,
+            ]);
+            $transaction->save();
+
+            return $transaction;
         });
 
         $payment = new Payment();
@@ -83,8 +97,13 @@ class DuesPaymentReminderJobTest extends TestCase
 
         DuesPackage::factory()->create();
 
-        $transaction = DuesTransaction::withoutEvents(static function (): DuesTransaction {
-            return DuesTransaction::factory()->create();
+        $transaction = DuesTransaction::withoutEvents(function (): DuesTransaction {
+            $transaction = DuesTransaction::factory()->make([
+                'user_id' => $this->user->id,
+            ]);
+            $transaction->save();
+
+            return $transaction;
         });
 
         $payment = new Payment();

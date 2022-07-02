@@ -48,7 +48,9 @@ class SimpleRequestsTest extends TestCase
             $json->where('status', 'success')
                  ->has('info', static function (AssertableJson $json): void {
                      $json->where('appName', 'TESTING Apiary')
-                          ->where('appEnv', 'testing');
+                          ->where('appEnv', 'testing')
+                          ->where('allocId', 'asdf')
+                          ->where('release', 'jkl');
                  });
         });
     }

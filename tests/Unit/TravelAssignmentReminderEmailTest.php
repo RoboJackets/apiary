@@ -17,19 +17,18 @@ class TravelAssignmentReminderEmailTest extends TestCase
         $member = User::factory()->create();
         $contact = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->tar_required = true;
-        $travel->fee_amount = 10;
-        $travel->primary_contact_user_id = $contact->id;
+        $travel = Travel::factory()->make([
+            'tar_required' => true,
+            'fee_amount' => 10,
+            'primary_contact_user_id' => $contact->id,
+        ]);
         $travel->save();
 
-        $assignment = new TravelAssignment();
-        $assignment->user_id = $member->id;
-        $assignment->travel_id = $travel->id;
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $member->id,
+        ]);
         $assignment->save();
-
-        ray($travel->primaryContact);
-        ray($contact);
 
         $mailable = new TravelAssignmentReminder($assignment);
 
@@ -47,16 +46,18 @@ class TravelAssignmentReminderEmailTest extends TestCase
         $member = User::factory()->create();
         $contact = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->primary_contact_user_id = $contact->id;
-        $travel->tar_required = true;
-        $travel->fee_amount = 10;
+        $travel = Travel::factory()->make([
+            'tar_required' => true,
+            'fee_amount' => 10,
+            'primary_contact_user_id' => $contact->id,
+        ]);
         $travel->save();
 
-        $assignment = new TravelAssignment();
-        $assignment->user_id = $member->id;
-        $assignment->travel_id = $travel->id;
-        $assignment->tar_received = true;
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $member->id,
+            'tar_received' => true,
+        ]);
         $assignment->save();
 
         $mailable = new TravelAssignmentReminder($assignment);
@@ -75,15 +76,18 @@ class TravelAssignmentReminderEmailTest extends TestCase
         $member = User::factory()->create();
         $contact = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->primary_contact_user_id = $contact->id;
-        $travel->tar_required = false;
-        $travel->fee_amount = 10;
+        $travel = Travel::factory()->make([
+            'tar_required' => false,
+            'fee_amount' => 10,
+            'primary_contact_user_id' => $contact->id,
+        ]);
         $travel->save();
 
-        $assignment = new TravelAssignment();
-        $assignment->user_id = $member->id;
-        $assignment->travel_id = $travel->id;
+        $assignment = TravelAssignment::factory()->make([
+            'travel_id' => $travel->id,
+            'user_id' => $member->id,
+            'tar_received' => false,
+        ]);
         $assignment->save();
 
         $mailable = new TravelAssignmentReminder($assignment);

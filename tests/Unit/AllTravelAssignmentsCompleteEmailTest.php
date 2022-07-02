@@ -15,8 +15,10 @@ class AllTravelAssignmentsCompleteEmailTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->tar_required = true;
+        $travel = Travel::factory()->make([
+            'tar_required' => true,
+            'primary_contact_user_id' => $user->id,
+        ]);
         $travel->save();
 
         $mailable = new AllTravelAssignmentsComplete($travel);
@@ -33,7 +35,10 @@ class AllTravelAssignmentsCompleteEmailTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $travel = Travel::factory()->create();
+        $travel = Travel::factory()->make([
+            'primary_contact_user_id' => $user->id,
+        ]);
+        $travel->save();
 
         $mailable = new AllTravelAssignmentsComplete($travel);
 

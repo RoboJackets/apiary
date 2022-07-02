@@ -19,8 +19,10 @@ class DuesPaymentReminderEmailTest extends TestCase
 
         $package = DuesPackage::factory()->create();
 
-        // this will always use the above two resources, because there aren't any others
-        $transaction = DuesTransaction::factory()->create();
+        $transaction = DuesTransaction::factory()->make([
+            'user_id' => $user->id,
+            'dues_package_id' => $package->id,
+        ]);
 
         $mailable = new DuesPaymentReminder($transaction);
 
