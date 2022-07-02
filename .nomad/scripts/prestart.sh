@@ -4,6 +4,12 @@ php artisan event:cache --no-interaction --verbose
 php artisan route:cache --no-interaction --verbose
 php artisan cache:clear --no-interaction --verbose
 php artisan migrate --no-interaction --force --verbose
+
+if [ ${APP_ENV} != "google-play-review" ]
+then
+php artisan enlightn --details --show-exceptions
+fi
+
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
 cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
 
