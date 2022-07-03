@@ -28,7 +28,7 @@
         "barryvdh/laravel-dompdf": "1.0.2",
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "3.3.7",
-        "enlightn/enlightn": "^2.1",
+        "enlightn/enlightn": "2.1.0",
         "guzzlehttp/guzzle": "7.4.5",
         "htmlmin/htmlmin": "9.0.1",
         "http-interop/http-factory-guzzle": "1.2.0",
