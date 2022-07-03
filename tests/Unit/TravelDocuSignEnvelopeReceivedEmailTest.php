@@ -18,8 +18,12 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->fee_amount = 10;
+        $contact = User::factory()->create();
+
+        $travel = Travel::factory()->make([
+            'primary_contact_user_id' => $contact->id,
+            'fee_amount' => 10,
+        ]);
         $travel->save();
 
         $assignment = TravelAssignment::factory()->make([
@@ -35,11 +39,6 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         $payment->method = 'square';
         $payment->receipt_url = 'https://example.com';
         $payment->save();
-
-        $contact = User::factory()->create();
-
-        $travel->primary_contact_user_id = $contact->id;
-        $travel->save();
 
         $envelope = new DocuSignEnvelope();
         $envelope->signable_type = $assignment->getMorphClass();
@@ -63,8 +62,12 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $travel = Travel::factory()->create();
-        $travel->fee_amount = 10;
+        $contact = User::factory()->create();
+
+        $travel = Travel::factory()->make([
+            'primary_contact_user_id' => $contact->id,
+            'fee_amount' => 10,
+        ]);
         $travel->save();
 
         $assignment = TravelAssignment::factory()->make([
@@ -72,11 +75,6 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
             'user_id' => $user->id,
         ]);
         $assignment->save();
-
-        $contact = User::factory()->create();
-
-        $travel->primary_contact_user_id = $contact->id;
-        $travel->save();
 
         $envelope = new DocuSignEnvelope();
         $envelope->signable_type = $assignment->getMorphClass();
