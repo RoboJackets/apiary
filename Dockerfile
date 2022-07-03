@@ -59,7 +59,7 @@ RUN set -eux && \
     sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.1/fpm/php.ini && \
     sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.1/cli/php.ini && \
     sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.1/fpm/php.ini && \
-    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.1/cli/php.ini && \
+    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.1/cli/php.ini
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 
