@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\AttendanceReportController;
 use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
@@ -31,31 +30,33 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
     static function (): void {
-        // Misc Resources
+        // Attendance
+        Route::apiResource('attendance', AttendanceController::class);
         Route::post('attendance/search', [AttendanceController::class, 'search'])->name('attendance.search');
         Route::get('attendance/statistics', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
-        Route::resource('attendance', AttendanceController::class)->except('create', 'edit');
+
+        // Users
+        Route::apiResource('users', UserController::class);
         Route::get('users/search', [UserController::class, 'search']);
-        Route::resource('users', UserController::class)->except('create', 'edit');
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);
         Route::get('user', [UserController::class, 'showSelf']);
         Route::post('user/override/self', [UserController::class, 'applySelfOverride']);
-        Route::get('attendancereports/{hash}', [AttendanceReportController::class, 'show'])
-            ->name('attendancereport.show');
-        Route::resource('events', EventController::class)->except('create', 'edit');
-        Route::resource('rsvps', RsvpController::class)->except('create', 'edit');
-        Route::resource('payments', PaymentController::class)->except('create', 'edit');
+
+        // Miscellany
+        Route::apiResource('events', EventController::class);
+        Route::apiResource('rsvps', RsvpController::class);
+        Route::apiResource('payments', PaymentController::class);
 
         // Dues Packages
         Route::get('dues/packages/active', [DuesPackageController::class, 'indexActive']);
         Route::get('dues/packages/available', [DuesPackageController::class, 'indexAvailable']);
         Route::get('dues/packages/purchase', [DuesPackageController::class, 'indexUserCanPurchase']);
-        Route::resource('dues/packages', DuesPackageController::class)->except('create', 'edit');
+        Route::apiResource('dues/packages', DuesPackageController::class);
 
         // Dues Transactions
         Route::get('dues/transactions/paid', [DuesTransactionController::class, 'indexPaid']);
         Route::get('dues/transactions/pending', [DuesTransactionController::class, 'indexPending']);
-        Route::resource('dues/transactions', DuesTransactionController::class)->except('create', 'edit');
+        Route::apiResource('dues/transactions', DuesTransactionController::class);
 
         // Roles + Permissions
         Route::post('roles/{id}/assign', [RoleController::class, 'assign']);
@@ -65,7 +66,7 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         // Teams
         Route::get('teams/{id}/members', [TeamController::class, 'showMembers'])->name('teams.show.members');
         Route::post('teams/{id}/members', [TeamController::class, 'updateMembers'])->name('teams.update.members');
-        Route::resource('teams', TeamController::class)->except('create', 'edit');
+        Route::apiResource('teams', TeamController::class);
     }
 );
 

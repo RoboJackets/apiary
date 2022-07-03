@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 return [
 
     /*
@@ -18,7 +20,13 @@ return [
 
     // If you wish to skip running some analyzers, list the classes in the array below.
     'exclude_analyzers' => [
+        \Enlightn\Enlightn\Analyzers\Performance\DebugLogAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\CustomErrorPageAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Reliability\EnvFileAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Reliability\ForeachIterableAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Reliability\InvalidMethodCallAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
         ...('test' === env('APP_ENV', 'local') ? [] : [
             \Enlightn\Enlightn\Analyzers\Security\AppDebugAnalyzer::class,
@@ -111,7 +119,12 @@ return [
     | to auto-generate this. Patterns are supported in details.
     |
     */
-    'ignore_errors' => [],
+    'ignore_errors' => [
+        \Enlightn\Enlightn\Analyzers\Security\FillableForeignKeyAnalyzer::class => [
+            'app/Models/Merchandise.php' => 'Potential foreign key fiscal_year_id declared as fillable and available for mass assignment.',
+            'app/Models/Signature.php' => 'Potential foreign key membership_agreement_template_id declared as fillable and available for mass assignment.',
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------

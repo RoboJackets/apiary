@@ -52,8 +52,6 @@ class AttendanceController extends Controller
         $include = $request->input('include');
         unset($request['include']);
 
-        $request['recorded_by'] = $request->user()->id;
-
         // Variables for comparison below
         $date = $request->input('created_at', date('Y-m-d'));
         $gtid = $request->input('gtid');
@@ -72,7 +70,14 @@ class AttendanceController extends Controller
             }
         } else {
             Log::debug(self::class.': No swipe yet on '.$date.' for '.$gtid.' - saving.');
-            $att = Attendance::create($request->all());
+            $att = Attendance::create(
+                array_merge(
+                    $request->validated(),
+                    [
+                        'recorded_by' => $request->user()->id,
+                    ]
+                )
+            );
             $code = 201;
         }
 
@@ -86,11 +91,11 @@ class AttendanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, int $id): JsonResponse
+    public function show(Request $request, Attendance $attendance): JsonResponse
     {
         $include = $request->input('include');
         $user = $request->user();
-        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($id);
+        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($attendance->id);
         if (null !== $att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
@@ -116,11 +121,11 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAttendanceRequest $request, int $id): JsonResponse
+    public function update(UpdateAttendanceRequest $request, Attendance $attendance): JsonResponse
     {
-        $att = Attendance::find($id);
+        $att = Attendance::find($attendance->id);
         if (null !== $att) {
-            $att->update($request->all());
+            $att->update($request->validated());
 
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
@@ -136,9 +141,9 @@ class AttendanceController extends Controller
      *
      * @param  int  $id  Resource ID
      */
-    public function destroy(Request $request, int $id): JsonResponse
+    public function destroy(Request $request, Attendance $attendance): JsonResponse
     {
-        $att = Attendance::find($id);
+        $att = Attendance::find($attendance->id);
         if (true === $att->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Attendance deleted.']);
         }

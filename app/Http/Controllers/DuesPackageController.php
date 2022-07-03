@@ -87,7 +87,7 @@ class DuesPackageController extends Controller
      */
     public function store(StoreDuesPackageRequest $request): JsonResponse
     {
-        $package = DuesPackage::create($request->all());
+        $package = DuesPackage::create($request->validated());
 
         $dbp = DuesPackage::findOrFail($package->id);
 
@@ -97,10 +97,10 @@ class DuesPackageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, int $id): JsonResponse
+    public function show(Request $request, DuesPackage $package): JsonResponse
     {
         $include = $request->input('include');
-        $package = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->find($id);
+        $package = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->find($package->id);
         if (null !== $package) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
         }
@@ -111,14 +111,9 @@ class DuesPackageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDuesPackageRequest $request, int $id): JsonResponse
+    public function update(UpdateDuesPackageRequest $request, DuesPackage $package): JsonResponse
     {
-        $package = DuesPackage::find($id);
-        if (null === $package) {
-            return response()->json(['status' => 'error', 'message' => 'DuesPackage not found.'], 404);
-        }
-
-        $package->update($request->all());
+        $package->update($request->validated());
 
         $package = DuesPackage::find($package->id);
         if (null === $package) {
@@ -131,9 +126,8 @@ class DuesPackageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(DuesPackage $package): JsonResponse
     {
-        $package = DuesPackage::find($id);
         if (true === $package->delete()) {
             return response()->json(['status' => 'success', 'message' => 'DuesPackage deleted.']);
         }

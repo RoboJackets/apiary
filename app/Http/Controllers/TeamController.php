@@ -66,7 +66,7 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request): JsonResponse
     {
-        $team = Team::create($request->all());
+        $team = Team::create($request->validated());
 
         if (null !== $team->id) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
@@ -78,7 +78,7 @@ class TeamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, Request $request): JsonResponse
+    public function show(Request $request, string $id): JsonResponse
     {
         $include = $request->input('include');
         $team = Team::with($this->authorizeInclude(Team::class, $include))
@@ -124,7 +124,7 @@ class TeamController extends Controller
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        $team->update($request->all());
+        $team->update($request->validated());
 
         return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
     }

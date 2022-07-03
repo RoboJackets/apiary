@@ -173,7 +173,14 @@ class DuesTransactionController extends Controller
             }
         }
 
-        $transact = DuesTransaction::create($request->all());
+        $transact = DuesTransaction::create(
+            array_merge(
+                $request->validated(),
+                [
+                    'user_id' => $request->user()->id,
+                ]
+            )
+        );
 
         $dbTransact = DuesTransaction::findOrFail($transact->id);
 
@@ -192,11 +199,11 @@ class DuesTransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id, Request $request): JsonResponse
+    public function show(Request $request, DuesTransaction $transaction): JsonResponse
     {
         $requestingUser = $request->user();
         $include = $request->input('include');
-        $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->find($id);
+        $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->find($transaction->id);
         if (null === $transact) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
@@ -218,28 +225,24 @@ class DuesTransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDuesTransactionRequest $request, int $id): JsonResponse
+    public function update(UpdateDuesTransactionRequest $request, DuesTransaction $transaction): JsonResponse
     {
-        $transact = DuesTransaction::find($id);
-        if (null === $transact) {
-            return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
-        }
+        $transaction->update($request->validated());
 
-        $transact->update($request->all());
-
-        $transact = DuesTransaction::find($transact->id);
-        $transact = new DuesTransactionResource($transact);
-
-        return response()->json(['status' => 'success', 'dues_transaction' => $transact]);
+        return response()->json(
+            [
+                'status' => 'success',
+                'dues_transaction' => new DuesTransactionResource(DuesTransaction::findOrFail($transaction->id)),
+            ]
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(DuesTransaction $transaction): JsonResponse
     {
-        $transact = DuesTransaction::find($id);
-        if (true === $transact->delete()) {
+        if (true === $transaction->delete()) {
             return response()->json(['status' => 'success', 'message' => 'DuesTransaction deleted.']);
         }
 
