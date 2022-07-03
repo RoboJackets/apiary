@@ -20,6 +20,9 @@ return [
     'exclude_analyzers' => [
         \Enlightn\Enlightn\Analyzers\Reliability\CustomErrorPageAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
+        ...('test' === env('APP_ENV', 'local') ? [] : [
+            \Enlightn\Enlightn\Analyzers\Security\AppDebugAnalyzer::class,
+        ]),
     ],
 
     // If you wish to skip running some analyzers in CI mode, list the classes below.
@@ -93,7 +96,9 @@ return [
     | Example: [\Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class].
     |
     */
-    'dont_report' => [],
+    'dont_report' => [
+        \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
