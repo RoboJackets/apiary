@@ -301,6 +301,8 @@ class SquareCheckoutController extends Controller
 
         if (! $retrieveOrderResponse->isSuccess()) {
             Log::error(self::class.' Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
+            // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+            \Sentry\captureMessage(json_encode($retrieveOrderResponse->getErrors()));
 
             return view(
                 'square.error',
