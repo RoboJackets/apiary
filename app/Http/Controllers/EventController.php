@@ -41,7 +41,7 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
-        $event = Event::create($request->all());
+        $event = Event::create($request->validated());
 
         return response()->json(['status' => 'success', 'event' => $event], 201);
     }
@@ -49,10 +49,10 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id, Request $request): JsonResponse
+    public function show(Request $request, Event $event): JsonResponse
     {
         $include = $request->input('include');
-        $event = Event::with($this->authorizeInclude(Event::class, $include))->find($id);
+        $event = Event::with($this->authorizeInclude(Event::class, $include))->find($event->id);
 
         if (null !== $event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)]);
@@ -64,13 +64,9 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventRequest $request, int $id): JsonResponse
+    public function update(UpdateEventRequest $request, Event $event): JsonResponse
     {
         $requestingUser = $request->user();
-        $event = Event::find($id);
-        if (null === $event) {
-            return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
-        }
 
         $requestedUser = $event->organizer;
         if ($requestingUser->cant('update-events') && $requestingUser->id !== $requestedUser->id) {
@@ -80,9 +76,9 @@ class EventController extends Controller
             ], 403);
         }
 
-        $event->update($request->all());
+        $event->update($request->validated());
 
-        $event = Event::find($id);
+        $event = Event::find($event->id);
         if (null !== $event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
         }
@@ -90,9 +86,8 @@ class EventController extends Controller
         return response()->json(['status' => 'error', 'message' => 'unknown_error'], 500);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(Event $event): JsonResponse
     {
-        $event = Event::find($id);
         if (true === $event->delete()) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }

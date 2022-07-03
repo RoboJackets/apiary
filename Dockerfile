@@ -53,7 +53,13 @@ RUN set -eux && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
-    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.1/fpm/php-fpm.conf
+    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.1/fpm/php-fpm.conf && \
+    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/fpm/php.ini && \
+    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/cli/php.ini && \
+    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.1/fpm/php.ini && \
+    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.1/cli/php.ini && \
+    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.1/fpm/php.ini && \
+    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.1/cli/php.ini
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 

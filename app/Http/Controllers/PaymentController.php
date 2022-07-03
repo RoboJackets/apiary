@@ -46,7 +46,7 @@ class PaymentController extends Controller
             );
         }
 
-        $payment = Payment::create($request->all());
+        $payment = Payment::create($request->validated());
 
         $dbPayment = Payment::findOrFail($payment->id);
 
@@ -58,27 +58,17 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id): JsonResponse
+    public function show(Payment $payment): JsonResponse
     {
-        $payment = Payment::find($id);
-        if (null !== $payment) {
-            return response()->json(['status' => 'success', 'payment' => $payment]);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
+        return response()->json(['status' => 'success', 'payment' => $payment]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePaymentRequest $request, int $id): JsonResponse
+    public function update(UpdatePaymentRequest $request, Payment $payment): JsonResponse
     {
-        $payment = Payment::find($id);
-        if (null === $payment) {
-            return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
-        }
-
-        $payment->update($request->all());
+        $payment->update($request->validated());
 
         $payment = Payment::find($payment->id);
         if (null !== $payment) {
@@ -91,9 +81,8 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(Payment $payment): JsonResponse
     {
-        $payment = Payment::find($id);
         if (true === $payment->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Payment deleted.']);
         }
