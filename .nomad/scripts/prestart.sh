@@ -7,11 +7,11 @@ php artisan migrate --no-interaction --force --verbose
 
 if [ ${APP_ENV} != "google-play-review" ]
 then
-    if ! php artisan ping
+    if ! php artisan ping --no-interaction --verbose
     then
         export SKIP_HTTP_CHECKS=true
     fi
-    php artisan enlightn --details --show-exceptions
+    php artisan enlightn --details --show-exceptions --no-interaction --verbose
 fi
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
