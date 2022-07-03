@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use GuzzleHttp\Client;
@@ -39,10 +41,6 @@ class Ping extends Command
 
         $response = $client->request('GET', config('app.url').'/ping');
 
-        if (200 !== $response->getStatusCode()) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return 200 === $response->getStatusCode() ? 0 : 1;
     }
 }
