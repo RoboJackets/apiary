@@ -7,7 +7,11 @@ php artisan migrate --no-interaction --force --verbose
 
 if [ ${APP_ENV} != "google-play-review" ]
 then
-php artisan enlightn --details --show-exceptions
+    if [ php artisan ping ]
+    then
+        export SKIP_HTTP_CHECKS=true
+    fi
+    php artisan enlightn --details --show-exceptions
 fi
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
@@ -20,5 +24,5 @@ fi
 
 if [ ${SCOUT_DRIVER} = "meilisearch" ]
 then
-php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true
+    php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true
 fi

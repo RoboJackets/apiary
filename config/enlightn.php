@@ -104,7 +104,9 @@ return [
     | Example: [\Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class].
     |
     */
-    'dont_report' => [
+    'dont_report' => env('SKIP_HTTP_CHECKS', false) ? [
+        \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
+    ] : [
         \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
     ],
 
@@ -121,8 +123,14 @@ return [
     */
     'ignore_errors' => [
         \Enlightn\Enlightn\Analyzers\Security\FillableForeignKeyAnalyzer::class => [
-            'app/Models/Merchandise.php' => 'Potential foreign key fiscal_year_id declared as fillable and available for mass assignment.',
-            'app/Models/Signature.php' => 'Potential foreign key membership_agreement_template_id declared as fillable and available for mass assignment.',
+            [
+                'path' => 'app/Models/Merchandise.php',
+                'details' => 'Potential foreign key fiscal_year_id declared as fillable and available for mass assignment.',
+            ],
+            [
+                'path' => 'app/Models/Signature.php',
+                'details' => 'Potential foreign key membership_agreement_template_id declared as fillable and available for mass assignment.',
+            ],
         ],
     ],
 
