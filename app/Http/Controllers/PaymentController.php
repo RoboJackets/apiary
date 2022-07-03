@@ -60,11 +60,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment): JsonResponse
     {
-        if (null !== $payment) {
-            return response()->json(['status' => 'success', 'payment' => $payment]);
-        }
-
-        return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
+        return response()->json(['status' => 'success', 'payment' => $payment]);
     }
 
     /**
@@ -72,10 +68,6 @@ class PaymentController extends Controller
      */
     public function update(UpdatePaymentRequest $request, Payment $payment): JsonResponse
     {
-        if (null === $payment) {
-            return response()->json(['status' => 'error', 'message' => 'Payment not found.'], 404);
-        }
-
         $payment->update($request->validated());
 
         $payment = Payment::find($payment->id);

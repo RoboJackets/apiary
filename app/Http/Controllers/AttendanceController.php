@@ -133,15 +133,10 @@ class AttendanceController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Attendance not found.'], 404);
     }
 
-    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
-    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id  Resource ID
      */
-    public function destroy(Request $request, Attendance $attendance): JsonResponse
+    public function destroy(Attendance $attendance): JsonResponse
     {
         $att = Attendance::find($attendance->id);
         if (true === $att->delete()) {
@@ -152,8 +147,6 @@ class AttendanceController extends Controller
             'message' => 'Attendance does not exist or was previously deleted.',
         ], 422);
     }
-
-    // phpcs:enable
 
     /**
      * Give a summary of attendance from the given time period.

@@ -67,9 +67,6 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event): JsonResponse
     {
         $requestingUser = $request->user();
-        if (null === $event) {
-            return response()->json(['status' => 'error', 'message' => 'event_not_found'], 404);
-        }
 
         $requestedUser = $event->organizer;
         if ($requestingUser->cant('update-events') && $requestingUser->id !== $requestedUser->id) {
@@ -81,7 +78,7 @@ class EventController extends Controller
 
         $event->update($request->validated());
 
-        $event = Event::find($id);
+        $event = Event::find($event->id);
         if (null !== $event) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
         }
