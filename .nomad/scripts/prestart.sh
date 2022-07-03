@@ -7,7 +7,7 @@ php artisan migrate --no-interaction --force --verbose
 
 if [ ${APP_ENV} != "google-play-review" ]
 then
-    if [ php artisan ping ]
+    if php artisan ping
     then
         export SKIP_HTTP_CHECKS=true
     fi
