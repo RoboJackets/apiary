@@ -106,12 +106,9 @@ return [
     | Example: [\Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class].
     |
     */
-    // @phan-suppress-next-line PhanPluginDuplicateConditionalUnnecessary
     'dont_report' => true === env('SKIP_HTTP_CHECKS', false) ? [
         \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
-    ] : [
-        \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
-    ],
+    ] : [],
 
     /*
     |--------------------------------------------------------------------------
