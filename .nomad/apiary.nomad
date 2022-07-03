@@ -135,6 +135,12 @@ job "apiary" {
         ]
       }
 
+      resources {
+        cpu = 500
+        memory = 512
+        memory_max = 2048
+      }
+
       volume_mount {
         volume = "assets"
         destination = "/assets/"
