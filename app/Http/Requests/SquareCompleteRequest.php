@@ -26,16 +26,11 @@ class SquareCompleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'checkoutId' => [
+            'transactionId' => [
                 'required',
                 'string',
-                'alpha_dash',
-                'exists:payments,checkout_id',
-            ],
-            'referenceId' => [
-                'required',
-                'integer',
-                'exists:payments,id',
+                'alpha_num',
+                'exists:payments,order_id',
             ],
         ];
     }

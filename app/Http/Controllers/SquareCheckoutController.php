@@ -273,16 +273,7 @@ class SquareCheckoutController extends Controller
 
     public function complete(SquareCompleteRequest $request)
     {
-        $payment = Payment::where('id', $request->input('referenceId'))->firstOrFail();
-
-        if ($payment->checkout_id !== $request->input('checkoutId') || null === $payment->order_id) {
-            return view(
-                'square.error',
-                [
-                    'message' => 'We could not match your payment in our database.',
-                ]
-            );
-        }
+        $payment = Payment::where('order_id', $request->input('transactionId'))->firstOrFail();
 
         $square = new SquareClient([
             'accessToken' => config('square.access_token'),
