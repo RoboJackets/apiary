@@ -6,7 +6,7 @@
       </div>
       <div class="text-muted">
         <a class="text-muted text-left" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSelERsYq3gLmHbWvVCWha5iCU8z3r9VYC0hCN4ArLpMAiysaQ/viewform?entry.1338203640={{ $request->fullUrl()}}">Make a Wish</a>
-@if(\Sentry\Laravel\Integration::currentTracingSpan() !== null)
+@if(\Sentry\Laravel\Integration::currentTracingSpan() !== null && \Sentry\Laravel\Integration::currentTracingSpan()->getSampled())
 @if(auth()->user() && auth()->user()->hasRole('admin'))
 • <a class="text-muted" href="https://sentry.io/organizations/robojackets/performance/trace/{{ \Sentry\Laravel\Integration::currentTracingSpan()->getTraceId() }}">Trace ID: {{ \Sentry\Laravel\Integration::currentTracingSpan()->getTraceId() }}</a>
 @else
