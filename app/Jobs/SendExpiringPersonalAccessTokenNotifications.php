@@ -42,8 +42,10 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
         foreach ($pats as $pat) {
             $owner = $pat->user()->first();
 
-            $owner->notify(new ExpiringPersonalAccessTokenNotification($pat))
-                ->delay(now()->addMinutes(random_int(10, 50)));
+            $owner->notify(
+                (new ExpiringPersonalAccessTokenNotification($pat))
+                    ->delay(now()->addMinutes(random_int(10, 50)))
+            );
         }
     }
 }
