@@ -16,10 +16,23 @@ class Helpers
      * @var array<string>
      */
     private static array $ignoreUrls = [
-        '/ping',
-        '/health',
-        '/privacy',
+        '/api/v1/info',
         '/attendance/kiosk',
+        '/health',
+        '/ping',
+        '/privacy',
+    ];
+
+    /**
+     * Methods that should be ignored for performance tracing.
+     *
+     * @phan-read-only
+     *
+     * @var array<string>
+     */
+    private static array $ignoreMethods = [
+        'GET',
+        'HEAD',
     ];
 
     public static function tracesSampler(SamplingContext $context): float
@@ -34,7 +47,7 @@ class Helpers
             null !== $transactionData &&
             array_key_exists('url', $transactionData) &&
             array_key_exists('method', $transactionData) &&
-            'GET' === $transactionData['method'] &&
+            in_array($transactionData['method'], self::$ignoreMethods, true) &&
             in_array($transactionData['url'], self::$ignoreUrls, true)
         ) {
             return 0;
