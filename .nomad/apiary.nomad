@@ -402,6 +402,12 @@ EOF
         ]
       }
 
+      resources {
+        cpu = 100
+        memory = 128
+        memory_max = 2048
+      }
+
       lifecycle {
         hook = "poststart"
       }
