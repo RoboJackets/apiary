@@ -136,8 +136,8 @@ job "apiary" {
       }
 
       resources {
-        cpu = 500
-        memory = 512
+        cpu = 100
+        memory = 128
         memory_max = 2048
       }
 
@@ -218,8 +218,8 @@ EOF
       }
 
       resources {
-        cpu = 500
-        memory = 512
+        cpu = 100
+        memory = 256
         memory_max = 2048
       }
 
@@ -350,7 +350,7 @@ EOF
 
         resources {
           cpu = 100
-          memory = 512
+          memory = task.value == "worker" ? 512 : 128
           memory_max = 2048
         }
 
