@@ -15,6 +15,7 @@ use Illuminate\Queue\SerializesModels;
 use Square\Models\Order;
 use Square\Models\OrderFulfillment;
 use Square\Models\OrderFulfillmentState;
+use Square\Models\OrderState;
 use Square\Models\UpdateOrderRequest;
 use Square\SquareClient;
 
@@ -59,6 +60,7 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
         $updateFulfillment->setState(OrderFulfillmentState::COMPLETED);
 
         $updateOrder = new Order(config('square.location_id'));
+        $updateOrder->setState(OrderState::COMPLETED);
         $updateOrder->setFulfillments([$updateFulfillment]);
         $updateOrder->setVersion($retrievedOrder->getVersion());
 
@@ -66,7 +68,13 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
         $updateOrderRequest->setOrder($updateOrder);
         $updateOrderRequest->setIdempotencyKey(Payment::generateUniqueId());
 
-        $ordersApi->updateOrder($this->order_id, $updateOrderRequest);
+        $updateOrderResponse = $ordersApi->updateOrder($this->order_id, $updateOrderRequest);
+
+        if (! $updateOrderResponse->isSuccess()) {
+            throw new Exception(
+                'Error updating order: '.json_encode($retrieveOrderResponse->getErrors())
+            );
+        }
     }
 
     /**
