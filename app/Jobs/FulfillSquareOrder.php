@@ -31,6 +31,8 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
      */
     public function __construct(private string $order_id)
     {
+        $this->tries = 1;
+        $this->queue = 'square';
     }
 
     /**
