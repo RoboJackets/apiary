@@ -27,11 +27,17 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
     use SerializesModels;
 
     /**
+     * The number of attempts for this job.
+     *
+     * @var int
+     */
+    public $tries = 1;
+
+    /**
      * Create a new job instance.
      */
     public function __construct(private string $order_id)
     {
-        $this->tries = 1;
         $this->queue = 'square';
     }
 
