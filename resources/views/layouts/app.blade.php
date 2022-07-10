@@ -83,9 +83,9 @@
     @include('layouts/footer')
   </body>
   <script src="{{ mix('/js/app.js') }}"></script>
-  @if (Session::has('sweet_alert.alert'))
+  @if (Session::has('alert.config'))
     <script>
-        Swal.fire({!! Session::pull('sweet_alert.alert') !!});
+        Swal.fire({!! Session::pull('alert.config') !!});
     </script>
   @endif
 </html>

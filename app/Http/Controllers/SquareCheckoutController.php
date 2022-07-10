@@ -27,7 +27,6 @@ use Square\Models\Order;
 use Square\Models\OrderLineItem;
 use Square\Models\OrderServiceCharge;
 use Square\Models\OrderServiceChargeCalculationPhase;
-use Square\Models\OrderState;
 use Square\Models\PrePopulatedData;
 use Square\SquareClient;
 
@@ -314,44 +313,34 @@ class SquareCheckoutController extends Controller
 
         $order = $retrieveOrderResponse->getResult()->getOrder();
 
-        switch ($order->getState()) {
-            case OrderState::COMPLETED:
-                $tender = $order->getTenders()[0];
-                $payment->amount = $tender->getAmountMoney()->getAmount() / 100;
+        if (null !== $order->getTenders() && count($order->getTenders()) > 0) {
+            $tender = $order->getTenders()[0];
+            $payment->amount = $tender->getAmountMoney()->getAmount() / 100;
 
-                $processingFeeMoney = $tender->getProcessingFeeMoney();
-                if (null !== $processingFeeMoney) {
-                    $payment->processing_fee = $processingFeeMoney->getAmount() / 100;
+            $processingFeeMoney = $tender->getProcessingFeeMoney();
+            if (null !== $processingFeeMoney) {
+                $payment->processing_fee = $processingFeeMoney->getAmount() / 100;
+            }
+
+            $cardDetails = $tender->getCardDetails();
+            if (null !== $cardDetails) {
+                $card = $cardDetails->getCard();
+                if (null !== $card) {
+                    $payment->card_brand = $card->getCardBrand();
+                    $payment->card_type = $card->getCardType();
+                    $payment->last_4 = $card->getLast4();
+                    $payment->prepaid_type = $card->getPrepaidType();
                 }
+                $payment->entry_method = $cardDetails->getEntryMethod();
+            }
+            $payment->notes = 'Checkout flow completed';
+            $payment->save();
 
-                $cardDetails = $tender->getCardDetails();
-                if (null !== $cardDetails) {
-                    $card = $cardDetails->getCard();
-                    if (null !== $card) {
-                        $payment->card_brand = $card->getCardBrand();
-                        $payment->card_type = $card->getCardType();
-                        $payment->last_4 = $card->getLast4();
-                        $payment->prepaid_type = $card->getPrepaidType();
-                    }
-                    $payment->entry_method = $cardDetails->getEntryMethod();
-                }
-                $payment->notes = 'Checkout flow completed';
-                $payment->save();
+            alert()->success("We've received your payment", 'Success!');
 
-                alert()->success("We've received your payment", 'Success!');
-
-                return redirect('/');
-            case OrderState::CANCELED:
-                return view(
-                    'square.error',
-                    [
-                        'message' => 'Your order was canceled.',
-                    ]
-                );
-            case OrderState::OPEN:
-                return view('square.processing');
-            default:
-                throw new Exception('Unexpected order state');
+            return redirect('/');
         }
+
+        throw new Exception('Unexpected order state');
     }
 }

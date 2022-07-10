@@ -113,5 +113,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
         }
 
         event(new PaymentSuccess($payment));
+
+        FulfillSquareOrder::dispatch($details['order_id']);
     }
 }
