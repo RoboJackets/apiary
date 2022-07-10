@@ -146,14 +146,19 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 
                 $disk_path = 'docusign/'.$envelope->envelope_id.'/'.$original_filename;
 
+                // @phan-suppress-next-line PhanTypeMismatchArgumentNullable
                 if (Str::contains($original_filename, 'Summary')) {
                     $envelope->summary_filename = $disk_path;
+                    // @phan-suppress-next-line PhanTypeMismatchArgumentNullable
                 } elseif (Str::contains($original_filename, 'COVID')) {
                     $envelope->covid_risk_filename = $disk_path;
+                    // @phan-suppress-next-line PhanTypeMismatchArgumentNullable
                 } elseif (Str::contains($original_filename, 'Authority')) {
                     $envelope->travel_authority_filename = $disk_path;
+                    // @phan-suppress-next-line PhanTypeMismatchArgumentNullable
                 } elseif (Str::contains($original_filename, 'Airfare')) {
                     $envelope->direct_bill_airfare_filename = $disk_path;
+                    // @phan-suppress-next-line PhanTypeMismatchArgumentNullable
                 } elseif (Str::contains($original_filename, 'Agreement')) {
                     $envelope->membership_agreement_filename = $disk_path;
                 } else {
