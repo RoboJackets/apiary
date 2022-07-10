@@ -66,14 +66,26 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 
             $text = $pdf->getText();
 
+            $maybeUid = self::getValueWithRegex(
+                '/Signed by link sent to (?P<uid>[a-z]+[0-9]+)@gatech\.edu/',
+                $text,
+                'uid',
+                'summary PDF',
+                false
+            );
+
+            if (null === $maybeUid) {
+                $maybeUid = self::getValueWithRegex(
+                    '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu\s+Security Level/',
+                    $text,
+                    'uid'
+                );
+            }
+
             $user = User::where(
                 'uid',
                 '=',
-                self::getValueWithRegex(
-                    '/Signed by link sent to (?P<uid>[a-z]+[0-9]+)@gatech\.edu/',
-                    $text,
-                    'uid'
-                )
+                $maybeUid
             )->sole();
 
             $envelope = $user->envelopes()->where('complete', false)->sole();
@@ -226,12 +238,17 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
         string $regex,
         string $text,
         string $groupName,
-        string $from = 'summary PDF'
-    ): string {
+        string $from = 'summary PDF',
+        bool $fail = true
+    ): ?string {
         $matches = [];
 
         if (1 !== preg_match($regex, $text, $matches)) {
-            throw new \Exception('Could not extract '.$groupName.' from '.$from);
+            if ($fail) {
+                throw new \Exception('Could not extract '.$groupName.' from '.$from);
+            }
+
+            return null;
         }
 
         return $matches[$groupName];
