@@ -43,6 +43,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
      * @phan-suppress PhanPossiblyFalseTypeArgument
+     * @phan-suppress PhanTypeMismatchArgumentNullable
      */
     public function handle(): void
     {
