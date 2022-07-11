@@ -60,7 +60,7 @@
         "subfission/cas": "4.2.0",
         "symfony/http-client": "6.1.2",
         "symfony/postmark-mailer": "6.1.0",
-        "ukfast/laravel-health-check": "1.13.3"
+        "ukfast/laravel-health-check": "1.13.4"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.12.3",
