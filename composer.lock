@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c63eda659def5a1bb0c1a9c1e497352",
+    "content-hash": "a541bc5c9247fbb9bb03265c4e252f86",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -11411,16 +11411,16 @@
         },
         {
             "name": "ukfast/laravel-health-check",
-            "version": "v1.13.3",
+            "version": "v1.13.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ukfast/laravel-health-check.git",
-                "reference": "bea6e9bb2ef64564359e65445e542653351350f3"
+                "url": "https://github.com/ans-group/laravel-health-check.git",
+                "reference": "c6f79fdd928bd61d8b91d7dd89c2860dcd585be5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ukfast/laravel-health-check/zipball/bea6e9bb2ef64564359e65445e542653351350f3",
-                "reference": "bea6e9bb2ef64564359e65445e542653351350f3",
+                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/c6f79fdd928bd61d8b91d7dd89c2860dcd585be5",
+                "reference": "c6f79fdd928bd61d8b91d7dd89c2860dcd585be5",
                 "shasum": ""
             },
             "require": {
@@ -11494,7 +11494,7 @@
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
             "abandoned": "ans-group/laravel-health-check",
-            "time": "2022-02-22T11:54:48+00:00"
+            "time": "2022-07-11T16:07:39+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
