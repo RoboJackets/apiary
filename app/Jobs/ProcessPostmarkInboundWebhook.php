@@ -79,8 +79,18 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 $maybeUid = self::getValueWithRegex(
                     '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu\s+Security Level/',
                     $text,
-                    'uid'
+                    'uid',
+                    'summary PDF',
+                    false
                 );
+
+                if (null === $maybeUid) {
+                    $maybeUid = self::getValueWithRegex(
+                        '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu\s+Georgia Institute of Technology/',
+                        $text,
+                        'uid'
+                    );
+                }
             }
 
             $user = User::where(
