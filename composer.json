@@ -33,7 +33,7 @@
         "htmlmin/htmlmin": "9.0.1",
         "http-interop/http-factory-guzzle": "1.2.0",
         "kiritokatklian/nova-permission": "4.0.3",
-        "laravel/framework": "9.19.0",
+        "laravel/framework": "9.20.0",
         "laravel/horizon": "5.9.9",
         "laravel/nova": "4.11.1",
         "laravel/passport": "10.4.1",
