@@ -17,7 +17,7 @@ REDIS_SCHEME="unix"
 REDIS_PATH="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
-{{- range service "meilisearch-v0-27" }}
+{{- range service "meilisearch-v0-28" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
 SESSION_SECURE_COOKIE="true"
