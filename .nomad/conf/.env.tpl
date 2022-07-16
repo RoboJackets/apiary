@@ -20,6 +20,7 @@ REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
 {{- range service "meilisearch-v0-28" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
+MEILISEARCH_KEY="{{- key "meilisearch/v0-28-admin-key" | trimSpace -}}"
 SESSION_SECURE_COOKIE="true"
 SESSION_COOKIE="__Host-apiary_session"
 {{ range $key, $value := (key (printf "apiary/%s" (slice (env "NOMAD_JOB_NAME") 7)) | parseJSON) -}}
