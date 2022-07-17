@@ -66,6 +66,7 @@ class MerchandiseSelections extends Partition
                 ->get()
                 ->mapWithKeys(
                     static function (object $record): array {
+                        // @phpstan-ignore-next-line
                         return [$record->merchandise_name => $record->count];
                     }
                 )
