@@ -4039,16 +4039,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.3",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "0da1dca5781dd3cfddbe328224d9a7a62571addc"
+                "reference": "155ec1c95626b16fda0889cf15904d24890a60d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/0da1dca5781dd3cfddbe328224d9a7a62571addc",
-                "reference": "0da1dca5781dd3cfddbe328224d9a7a62571addc",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/155ec1c95626b16fda0889cf15904d24890a60d5",
+                "reference": "155ec1c95626b16fda0889cf15904d24890a60d5",
                 "shasum": ""
             },
             "require": {
@@ -4141,7 +4141,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-07T21:28:26+00:00"
+            "time": "2022-07-17T16:25:47+00:00"
         },
         {
             "name": "league/config",
@@ -6161,14 +6161,14 @@
             "version": "0.1.4",
             "source": {
                 "type": "git",
-                "url": "https://it.github.gatech.edu/OIT-NetworkServices/BuzzAPIClient.git",
+                "url": "git@it.github.gatech.edu:OIT-NetworkServices/BuzzAPIClient.git",
                 "reference": "39a27f3b91ed0c8638ba3557d50dd91858920a90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657997661/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-39a27f3b91ed0c8638ba3557d50dd91858920a90-zip-527320.zip",
+                "url": "https://composer.robojackets.org/1657999184/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-39a27f3b91ed0c8638ba3557d50dd91858920a90-zip-527320.zip",
                 "reference": "39a27f3b91ed0c8638ba3557d50dd91858920a90",
-                "shasum": "d0cce1f41580c3e48995cd5486ee558f29f1d9cd"
+                "shasum": "439ce3c1db9f7052a1f097fc5f4e4b89815dff7c"
             },
             "require": {
                 "ext-json": "*",
@@ -6211,10 +6211,6 @@
                 }
             ],
             "description": "BuzzAPI Client Library",
-            "support": {
-                "source": "https://it.github.gatech.edu/OIT-NetworkServices/BuzzAPIClient/tree/0.1.4",
-                "issues": "https://it.github.gatech.edu/OIT-NetworkServices/BuzzAPIClient/issues"
-            },
             "time": "2022-05-26T23:22:51+00:00"
         },
         {
@@ -8167,9 +8163,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657997661/robojackets/auth-stickler/robojackets-auth-stickler-88beab79843c3bc48d2ec33018d8c3dcf1becf05-zip-cb995e.zip",
+                "url": "https://composer.robojackets.org/1657999184/robojackets/auth-stickler/robojackets-auth-stickler-88beab79843c3bc48d2ec33018d8c3dcf1becf05-zip-cb995e.zip",
                 "reference": "88beab79843c3bc48d2ec33018d8c3dcf1becf05",
-                "shasum": "04a8347a288c756eb9c1bbaa5d16009133cad724"
+                "shasum": "63ad899ee560db2d63cfb48002b0644cf909be6e"
             },
             "require": {
                 "apereo/phpcas": "^1.3",
@@ -8215,9 +8211,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657997661/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
+                "url": "https://composer.robojackets.org/1657999184/robojackets/error-pages/robojackets-error-pages-ce83cc96d3f3ba637b76480a71d6d7adba1fa134-zip-30c6c2.zip",
                 "reference": "ce83cc96d3f3ba637b76480a71d6d7adba1fa134",
-                "shasum": "8343c988d460eadad465d7fca5741c5e44bb13b8"
+                "shasum": "c4ade6f8119c7e79af46f33883cc3be4ef57dd64"
             },
             "require": {
                 "twig/twig": "^2.0"
@@ -8260,9 +8256,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657997661/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-db4f4d76835878c330951f198da19e806502a599-zip-db832a.zip",
+                "url": "https://composer.robojackets.org/1657999184/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-db4f4d76835878c330951f198da19e806502a599-zip-db832a.zip",
                 "reference": "db4f4d76835878c330951f198da19e806502a599",
-                "shasum": "5cad60ba825c58beaa812502e8a9059ea71b2d2c"
+                "shasum": "9584010766b459dfd9226ef530b2af5a6c742935"
             },
             "require": {
                 "haydenpierce/class-finder": "^0.4.3",
@@ -8329,9 +8325,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657997661/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
+                "url": "https://composer.robojackets.org/1657999184/robojackets/network-check/robojackets-network-check-9afdebbc97394d6dbff68d697271a64e8314ebe7-zip-bd4da1.zip",
                 "reference": "9afdebbc97394d6dbff68d697271a64e8314ebe7",
-                "shasum": "c71f173a309c4f15253c5ae510365e1f170b4826"
+                "shasum": "7fc8980b0c0fd99a358c718a263bc24bc5e95cc0"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
@@ -14554,9 +14550,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657997661/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
+                "url": "https://composer.robojackets.org/1657999184/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
                 "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7",
-                "shasum": "98b8a7d4544fb6927303672a5dd77a7d791caf5f"
+                "shasum": "6e18c4192a270c854ec1e49f37fefeb0c08eac01"
             },
             "require": {
                 "phan/phan": "*",
