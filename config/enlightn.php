@@ -106,9 +106,14 @@ return [
     | Example: [\Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class].
     |
     */
-    'dont_report' => true === env('SKIP_HTTP_CHECKS', false) ? [
-        \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
-    ] : [],
+    'dont_report' => [
+        ...(true === env('SKIP_HTTP_CHECKS', false) ? [
+            \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
+        ] : []),
+        ...(true === env('SKIP_DEPENDENCY_ANALYZER') ? [
+            \Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
+        ] : []),
+    ],
 
     /*
     |--------------------------------------------------------------------------
