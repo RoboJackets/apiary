@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d05dcba0e17b10afc5fea155bdc18e7b",
+    "content-hash": "266b520efb692900d35092ca204a777e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3328,17 +3328,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.12.12",
+            "version": "4.12.13",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "31be6c6d7b1cc47ca85a1a693d0ed201236e84d6"
+                "reference": "b0466833b338006758e43caeb65566004e07abd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-31be6c6d7b1cc47ca85a1a693d0ed201236e84d6-zip-780595.zip",
-                "reference": "31be6c6d7b1cc47ca85a1a693d0ed201236e84d6",
-                "shasum": "10b687b3ca048c3c04ff2a5edb52682f1780c771"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-b0466833b338006758e43caeb65566004e07abd4-zip-7c5d14.zip",
+                "reference": "b0466833b338006758e43caeb65566004e07abd4",
+                "shasum": "b7d8e1de05bf4dcb3ee2311c6311bf0dd9070b38"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -3357,13 +3357,13 @@
             },
             "require-dev": {
                 "laravel/nova-dusk-suite": "8.4.x-dev|9.4.x-dev",
-                "laravel/pint": "^0.1.0",
+                "laravel/pint": "^1.0",
                 "laravel/scout": "^9.4",
                 "mockery/mockery": "^1.4.4",
                 "nunomaduro/larastan": "^1.0.1|^2.0",
                 "orchestra/testbench-dusk": "^6.24|^7.0",
                 "phpunit/phpunit": "^9.5.10",
-                "predis/predis": "^1.1.9"
+                "predis/predis": "^1.1.9|^2.0"
             },
             "suggest": {
                 "ext-intl": "Required to format Currency field"
@@ -3432,9 +3432,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.12.12"
+                "source": "https://github.com/laravel/nova/tree/v4.12.13"
             },
-            "time": "2022-07-21T21:14:05+00:00"
+            "time": "2022-07-27T15:36:23+00:00"
         },
         {
             "name": "laravel/passport",
