@@ -105,6 +105,7 @@ parameters:
     - '#Parameter \#1 \$envelope of class App\\Notifications\\Travel\\DocuSignEnvelopeReceived constructor expects App\\Models\\DocuSignEnvelope, Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#1 \$haystack of function str_contains expects string, mixed given\.#'
     - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::contains\(\) expects string, string\|null given\.#'
+    - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::startsWith\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$id of static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>::findByIdentifier\(\) expects string, int given\.#'
     - '#Parameter \#1 \$id of static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\User>::findByIdentifier\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$idempotencyKey of class Square\\Models\\RefundPaymentRequest constructor expects string, string\|null given\.#'

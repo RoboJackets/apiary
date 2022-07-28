@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Sentry;
 
+use Illuminate\Support\Str;
 use Sentry\Tracing\SamplingContext;
 
 class Helpers
@@ -48,7 +49,10 @@ class Helpers
             array_key_exists('url', $transactionData) &&
             array_key_exists('method', $transactionData) &&
             in_array($transactionData['method'], self::$ignoreMethods, true) &&
-            in_array($transactionData['url'], self::$ignoreUrls, true)
+            (
+                in_array($transactionData['url'], self::$ignoreUrls, true) ||
+                Str::startsWith($transactionData['url'], '/horizon/')
+            )
         ) {
             return 0;
         }
