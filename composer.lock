@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a62d7a596d779e6200312fe18718956",
+    "content-hash": "083319b3ec1ae21fbcec450213aa1022",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -13511,16 +13511,16 @@
         },
         {
             "name": "phan/phan",
-            "version": "5.3.2",
+            "version": "5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "b7697eb811e912c038f709f8e1c4911c7ada3edc"
+                "reference": "d37335833cee86e06c0e16789cc86a86bd272ab8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/b7697eb811e912c038f709f8e1c4911c7ada3edc",
-                "reference": "b7697eb811e912c038f709f8e1c4911c7ada3edc",
+                "url": "https://api.github.com/repos/phan/phan/zipball/d37335833cee86e06c0e16789cc86a86bd272ab8",
+                "reference": "d37335833cee86e06c0e16789cc86a86bd272ab8",
                 "shasum": ""
             },
             "require": {
@@ -13584,9 +13584,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/5.3.2"
+                "source": "https://github.com/phan/phan/tree/5.4.0"
             },
-            "time": "2022-02-01T00:17:36+00:00"
+            "time": "2022-08-08T23:57:02+00:00"
         },
         {
             "name": "phar-io/manifest",
