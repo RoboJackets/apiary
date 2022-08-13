@@ -117,7 +117,9 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'eduPersonPrimaryAffiliation',
             'gtPrimaryGTAccountUsername',
             'gtAccountEntitlement',
-            'uid'
+            'uid',
+            'gtEmplId',
+            'gtEmployeeHomeDepartmentName'
         )->from(Resources::GTED_ACCOUNTS)
         // @phan-suppress-next-line PhanTypeMismatchArgument
         ->where([$this->identifier => $searchValue])
@@ -161,6 +163,11 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $user->last_name = $account->sn;
         $user->primary_affiliation = $account->eduPersonPrimaryAffiliation;
         $user->gtDirGUID = $account->gtPersonDirectoryId;
+        $user->employee_id = property_exists($account, 'gtEmplId') ? $account->gtEmplId : null;
+        $user->employee_home_department = property_exists(
+            $account,
+            'gtEmployeeHomeDepartmentName'
+        ) ? $account->gtEmployeeHomeDepartmentName : null;
         $user->save();
         $user->syncMajorsFromAccountEntitlements($account->gtAccountEntitlement);
         $standing_count = $user->syncClassStandingFromAccountEntitlements($account->gtAccountEntitlement);

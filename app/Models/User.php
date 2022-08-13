@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Adldap\Laravel\Facades\Adldap;
 use BadMethodCallException;
 use Carbon\CarbonImmutable;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
@@ -22,15 +21,12 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Scout\Searchable;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
-use Sentry\SentrySdk;
-use Sentry\Tracing\SpanContext;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -878,38 +874,6 @@ class User extends Authenticatable
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
-    }
-
-    public function getHomeDepartmentAttribute(): ?string
-    {
-        $uid = $this->uid;
-
-        return Cache::remember('home_department_'.$uid, now()->addDay(), static function () use ($uid): ?string {
-            $parentSpan = SentrySdk::getCurrentHub()->getSpan();
-
-            if (null !== $parentSpan) {
-                $context = new SpanContext();
-                $context->setOp('ldap.get_home_department');
-                $span = $parentSpan->startChild($context);
-                SentrySdk::getCurrentHub()->setSpan($span);
-            }
-
-            $result = Adldap::search()
-                ->where('uid', '=', $uid)
-                ->where('employeeType', '=', 'employee')
-                ->select('ou')
-                ->get()
-                ->pluck('ou')
-                ->toArray();
-
-            if (null !== $parentSpan) {
-                // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                $span->finish();
-                SentrySdk::getCurrentHub()->setSpan($parentSpan);
-            }
-
-            return [] === $result ? null : $result[0][0];
-        });
     }
 
     public function getShouldReceiveEmailAttribute(): bool

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -94,6 +95,8 @@ trait CreateOrUpdateCASUser
                 Log::error(self::class.": Role 'member' not found for assignment to ".$user->uid);
             }
         }
+
+        CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, 'cas_login');
 
         return $user;
     }

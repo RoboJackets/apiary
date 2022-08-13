@@ -382,7 +382,11 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.home_department'
-                ) => $this->user->home_department,
+                ) => $this->user->employee_home_department,
+
+                config(
+                    'docusign.domestic_travel_authority_request_with_airfare.fields.employee_id'
+                ) => $this->user->employee_id,
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_phone'
@@ -390,19 +394,19 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_non_employee_checkbox'
-                ) => (null === $this->user->home_department ? 'x' : ''),
+                ) => (null === $this->user->employee_home_department ? 'x' : ''),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_employee_checkbox'
-                ) => (null === $this->user->home_department ? '' : 'x'),
+                ) => (null === $this->user->employee_home_department ? '' : 'x'),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_non_employee_domestic_checkbox'
-                ) => (null === $this->user->home_department ? 'x' : ''),
+                ) => (null === $this->user->employee_home_department ? 'x' : ''),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_employee_domestic_checkbox'
-                ) => (null === $this->user->home_department ? '' : 'x'),
+                ) => (null === $this->user->employee_home_department ? '' : 'x'),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.traveler_name'
@@ -522,7 +526,11 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.domestic_travel_authority_request.fields.home_department'
-                ) => $this->user->home_department,
+                ) => $this->user->employee_home_department,
+
+                config(
+                    'docusign.domestic_travel_authority_request.fields.employee_id'
+                ) => $this->user->employee_id,
 
                 config(
                     'docusign.domestic_travel_authority_request.traveler_name'
