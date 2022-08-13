@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Adldap\Laravel\Facades\Adldap;
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreateOAuth2Client;
@@ -17,6 +18,7 @@ use App\Nova\Metrics\TotalAttendance;
 use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
@@ -24,10 +26,13 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use Sentry\SentrySdk;
+use Sentry\Tracing\SpanContext;
 
 /**
  * A Nova resource for users.
@@ -117,7 +122,7 @@ class User extends Resource
             Text::make('Email Suppression Reason')
                 ->onlyOnDetail(),
 
-            Text::make('GTID')
+            Number::make('GTID')
                 ->hideFromIndex()
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->can('read-users-gtid');
@@ -292,6 +297,62 @@ class User extends Resource
                 ->canSee(static function (Request $request): bool {
                     return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
                 }),
+
+            new Panel('Employment', [
+                Number::make('Employee ID (OneUSG)', 'employee_id')
+                    ->onlyOnDetail()
+                    ->canSee(static function (Request $request): bool {
+                        // Hidden to non-admins because it's confusing and not useful
+                        return $request->user()->hasRole('admin');
+                    }),
+
+                Text::make('Home Department (BuzzAPI)', 'employee_home_department')
+                    ->onlyOnDetail()
+                    ->canSee(static function (Request $request): bool {
+                        // Hidden to non-admins because it's confusing and not useful
+                        return $request->user()->hasRole('admin');
+                    }),
+
+                Text::make('Home Department (Whitepages)', static function (AppModelsUser $user): ?string {
+                    $uid = $user->uid;
+
+                    return Cache::remember(
+                        'home_department_'.$uid,
+                        now()->addDay(),
+                        static function () use ($uid): ?string {
+                            $parentSpan = SentrySdk::getCurrentHub()->getSpan();
+
+                            if (null !== $parentSpan) {
+                                $context = new SpanContext();
+                                $context->setOp('ldap.get_home_department');
+                                $span = $parentSpan->startChild($context);
+                                SentrySdk::getCurrentHub()->setSpan($span);
+                            }
+
+                            $result = Adldap::search()
+                                ->where('uid', '=', $uid)
+                                ->where('employeeType', '=', 'employee')
+                                ->select('ou')
+                                ->get()
+                                ->pluck('ou')
+                                ->toArray();
+
+                            if (null !== $parentSpan) {
+                                // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
+                                $span->finish();
+                                SentrySdk::getCurrentHub()->setSpan($parentSpan);
+                            }
+
+                            return [] === $result ? null : $result[0][0];
+                        }
+                    );
+                })
+                ->onlyOnDetail()
+                ->canSee(static function (Request $request): bool {
+                    // Hidden to non-admins because it's confusing and not useful
+                    return $request->user()->hasRole('admin');
+                }),
+            ]),
 
             new Panel('Metadata', $this->metaFields()),
         ];

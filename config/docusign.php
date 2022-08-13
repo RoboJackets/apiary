@@ -30,6 +30,7 @@ return [
             'covid_destination' => 'Text f8a52e89-4ad8-4d22-b907-1b07b3f64dd7',
             'covid_dates' => 'Text 5bc7773d-a2da-4872-be4b-2bec828b9874',
             'home_department' => 'Text 10438f34-34d6-4b32-bbf3-3b9e32245d88',
+            'employee_id' => 'Text ff02a451-65d5-49b9-bb29-6158fcb72229',
         ],
     ],
 
@@ -63,6 +64,7 @@ return [
             'covid_destination' => 'Text f8a52e89-4ad8-4d22-b907-1b07b3f64dd7',
             'covid_dates' => 'dates',
             'home_department' => 'Text 10438f34-34d6-4b32-bbf3-3b9e32245d88',
+            'employee_id' => 'employee_id',
         ],
     ],
 
