@@ -196,12 +196,6 @@ class User extends Authenticatable
     private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
     private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
 
-    // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
-    private const STANDING_ENTITLEMENT_PREFIX =
-        '/gt/central/services/office365/gtad-attributes/gtad-extensionattribute14=office365:';
-    // phpcs:enable
-    private const STANDING_ENTITLEMENT_PREFIX_LENGTH = 83;
-
     /**
      * The accessors to append to the model's array form.
      *
@@ -272,7 +266,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    public $searchable_attributes = [
+    public array $searchable_attributes = [
         'first_name',
         'preferred_name',
         'last_name',
@@ -292,7 +286,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    public $ranking_rules = [
+    public array $ranking_rules = [
         'revenue_total:desc',
         'attendance_count:desc',
         'signatures_count:desc',
@@ -304,7 +298,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    public $filterable_attributes = [
+    public array $filterable_attributes = [
         'class_standing_id',
         'major_id',
         'team_id',
@@ -317,7 +311,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    public $do_not_filter_on = [
+    public array $do_not_filter_on = [
         'dues_package_id',
         'travel_id',
         'merchandise_id',
@@ -329,15 +323,29 @@ class User extends Authenticatable
      *
      * @var array<string,string>
      *
-     * @phan-suppress PhanReadOnlyPublicProperty
+     * @phan-read-only
      */
-    public static $shirt_sizes = [
+    public static array $shirt_sizes = [
         's' => 'Small',
         'm' => 'Medium',
         'l' => 'Large',
         'xl' => 'Extra-Large',
         'xxl' => 'XXL',
         'xxxl' => 'XXXL',
+    ];
+
+    /**
+     * List of class-standing-like strings to ignore from eduPersonScopedAffiliation.
+     *
+     * @var array<string>
+     *
+     * @phan-read-only
+     */
+    public static array $ignore_class_standings = [
+        'former',
+        'credit',
+        'undergrad',
+        'graduate',
     ];
 
     protected string $guard_name = 'web';
@@ -773,32 +781,32 @@ class User extends Authenticatable
     }
 
     /**
-     * Synchronizes major relationship with a given list of gtAccountEntitlements.
+     * Synchronizes class standing relationships with a given list of eduPersonScopedAffiliation.
      *
-     * @param  array<string>  $accountEntitlements
+     * @param  array<string>  $eduPersonScopedAffiliation
      */
-    public function syncClassStandingFromAccountEntitlements(array $accountEntitlements): int
+    public function syncClassStandingFromEduPersonScopedAffiliation(array $eduPersonScopedAffiliation): int
     {
         $current_class_standings = $this->classStanding()->pluck('class_standings.id')->toArray();
 
         $new_class_standings = [];
 
-        foreach ($accountEntitlements as $entitlement) {
-            if (self::STANDING_ENTITLEMENT_PREFIX !== substr(
-                $entitlement,
-                0,
-                self::STANDING_ENTITLEMENT_PREFIX_LENGTH
-            )) {
+        foreach ($eduPersonScopedAffiliation as $scopedAffiliation) {
+            $affiliation_and_scope = explode('@', $scopedAffiliation);
+
+            if ('gt' !== $affiliation_and_scope[1]) {
                 continue;
             }
 
-            $standing_name = explode(
-                '-',
-                substr(
-                    $entitlement,
-                    self::STANDING_ENTITLEMENT_PREFIX_LENGTH
-                )
-            )[0];
+            if (! str_ends_with($affiliation_and_scope[0], '-student')) {
+                continue;
+            }
+
+            $standing_name = explode('-', $affiliation_and_scope[0])[0];
+
+            if (in_array($standing_name, self::$ignore_class_standings, true)) {
+                continue;
+            }
 
             $new_class_standings[] = ClassStanding::findOrCreateFromName($standing_name)->id;
         }

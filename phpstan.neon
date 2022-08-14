@@ -101,6 +101,7 @@ parameters:
     - '#Parameter \#1 \$cookie of static method Laravel\\Passport\\Passport::cookie\(\) expects string\|null, mixed given\.#'
     - '#Parameter \#1 \$date of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::[a-z]+\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(string\|null\): string\|null given\.#'
+    - '#Parameter \#1 \$eduPersonScopedAffiliation of method App\\Models\\User::syncClassStandingFromEduPersonScopedAffiliation\(\) expects array<string>, mixed given\.#'
     - '#Parameter \#1 \$envelope of class App\\Notifications\\MembershipAgreementDocuSignEnvelopeReceived constructor expects App\\Models\\DocuSignEnvelope, Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#1 \$envelope of class App\\Notifications\\Travel\\DocuSignEnvelopeReceived constructor expects App\\Models\\DocuSignEnvelope, Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#1 \$haystack of function str_contains expects string, mixed given\.#'
