@@ -335,7 +335,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * List of class-standing-like strings to ignore from eduPersonScopedAffiliation
+     * List of class-standing-like strings to ignore from eduPersonScopedAffiliation.
      *
      * @var array<string>
      *
