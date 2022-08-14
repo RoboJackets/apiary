@@ -36,6 +36,7 @@ trait CreateOrUpdateCASUser
             'givenName',
             'sn',
             'eduPersonPrimaryAffiliation',
+            'eduPersonScopedAffiliation',
         ];
         if ($this->cas->isMasquerading()) {
             $masq_attrs = [];
@@ -73,6 +74,17 @@ trait CreateOrUpdateCASUser
         $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
         $user->has_ever_logged_in = true;
         $user->save();
+
+        $standing_count = $user->syncClassStandingFromEduPersonScopedAffiliation(
+            $this->cas->getAttribute('eduPersonScopedAffiliation')
+        );
+
+        if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
+            Log::warning(
+                self::class.': User '.$user->uid
+                .' has primary affiliation of student but '.$standing_count.' class standings. Check data integrity.'
+            );
+        }
 
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {
