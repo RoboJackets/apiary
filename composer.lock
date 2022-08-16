@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97d3274df5e9a29eb27804ccde962a40",
+    "content-hash": "1d557850f0b61e39b07dd4c400833598",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -338,16 +338,16 @@
         },
         {
             "name": "apimatic/unirest-php",
-            "version": "2.3.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/unirest-php.git",
-                "reference": "52e226fb3b7081dc9ef64aee876142a240a5f0f9"
+                "reference": "247d24c7cfe5dac2c83a17d3f756409110bbf4dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/52e226fb3b7081dc9ef64aee876142a240a5f0f9",
-                "reference": "52e226fb3b7081dc9ef64aee876142a240a5f0f9",
+                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/247d24c7cfe5dac2c83a17d3f756409110bbf4dc",
+                "reference": "247d24c7cfe5dac2c83a17d3f756409110bbf4dc",
                 "shasum": ""
             },
             "require": {
@@ -355,14 +355,15 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5 || ^6 || ^7 || ^8 || ^9"
+                "phpunit/phpunit": "^5 || ^6 || ^7 || ^8 || ^9",
+                "squizlabs/php_codesniffer": "^3.0.0"
             },
             "suggest": {
                 "ext-json": "Allows using JSON Bodies for sending and parsing requests"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Unirest\\": "src/"
                 }
             },
@@ -396,9 +397,9 @@
             "support": {
                 "email": "opensource@apimatic.io",
                 "issues": "https://github.com/apimatic/unirest-php/issues",
-                "source": "https://github.com/apimatic/unirest-php/tree/2.3.0"
+                "source": "https://github.com/apimatic/unirest-php/tree/3.0.1"
             },
-            "time": "2022-06-15T08:29:49+00:00"
+            "time": "2022-07-27T08:45:19+00:00"
         },
         {
             "name": "arcanedev/laravel-markdown",
@@ -9304,21 +9305,21 @@
         },
         {
             "name": "square/square",
-            "version": "20.1.0.20220720",
+            "version": "21.0.0.20220817",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "9a2bf04c6b5f1ce37d0dd48270bb6ec7ea5a27f2"
+                "reference": "1e54ffa0bf764001244b1120b35bf096f164f6c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/9a2bf04c6b5f1ce37d0dd48270bb6ec7ea5a27f2",
-                "reference": "9a2bf04c6b5f1ce37d0dd48270bb6ec7ea5a27f2",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/1e54ffa0bf764001244b1120b35bf096f164f6c9",
+                "reference": "1e54ffa0bf764001244b1120b35bf096f164f6c9",
                 "shasum": ""
             },
             "require": {
                 "apimatic/jsonmapper": "^3.0.4",
-                "apimatic/unirest-php": "^2.3.0",
+                "apimatic/unirest-php": "^3.0.1",
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
@@ -9355,9 +9356,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/20.1.0.20220720"
+                "source": "https://github.com/square/square-php-sdk/tree/21.0.0.20220817"
             },
-            "time": "2022-07-21T00:50:49+00:00"
+            "time": "2022-08-16T21:16:50+00:00"
         },
         {
             "name": "stella-maris/clock",
