@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eecdd3fcbea58cb2fdea8d1f93e4011e",
+    "content-hash": "97d3274df5e9a29eb27804ccde962a40",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5171,16 +5171,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.24.1",
+            "version": "v0.24.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "43a5d1e69e42872be40308b4b5780a0bf8c91ecb"
+                "reference": "7f7b350480bce4bc80efc9a613a820261a96ef8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/43a5d1e69e42872be40308b4b5780a0bf8c91ecb",
-                "reference": "43a5d1e69e42872be40308b4b5780a0bf8c91ecb",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/7f7b350480bce4bc80efc9a613a820261a96ef8b",
+                "reference": "7f7b350480bce4bc80efc9a613a820261a96ef8b",
                 "shasum": ""
             },
             "require": {
@@ -5232,9 +5232,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.24.1"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.24.2"
             },
-            "time": "2022-08-09T13:05:07+00:00"
+            "time": "2022-08-16T15:18:17+00:00"
         },
         {
             "name": "mockery/mockery",
