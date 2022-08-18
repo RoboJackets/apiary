@@ -24,6 +24,12 @@ class AttendanceObserver
             return;
         }
 
+        CreateOrUpdateUserFromBuzzAPI::dispatch(
+            CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER,
+            $attendance->attendee,
+            'attendance'
+        );
+
         PushToJedi::dispatch($attendance->attendee, Attendance::class, $attendance->id, 'saved');
 
         $attendance->attendee->searchable();

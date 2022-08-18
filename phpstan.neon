@@ -104,6 +104,7 @@ parameters:
     - '#Parameter \#1 \$eduPersonScopedAffiliation of method App\\Models\\User::syncClassStandingFromEduPersonScopedAffiliation\(\) expects array<string>, mixed given\.#'
     - '#Parameter \#1 \$envelope of class App\\Notifications\\MembershipAgreementDocuSignEnvelopeReceived constructor expects App\\Models\\DocuSignEnvelope, Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#1 \$envelope of class App\\Notifications\\Travel\\DocuSignEnvelopeReceived constructor expects App\\Models\\DocuSignEnvelope, Illuminate\\Database\\Eloquent\\Model given\.#'
+    - '#Parameter \#1 \$gtCurriculum of method App\\Models\\User::syncMajorsFromGtCurriculum\(\) expects array<string>, mixed given\.#'
     - '#Parameter \#1 \$haystack of function str_contains expects string, mixed given\.#'
     - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::contains\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::startsWith\(\) expects string, mixed given\.#'

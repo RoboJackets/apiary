@@ -146,11 +146,13 @@ class SelfServiceOverrideTest extends TestCase
         $team = Team::first();
         $team->self_service_override_eligible = true;
         $team->save();
-        Attendance::create([
-            'attendable_type' => 'team',
-            'attendable_id' => $team->id,
-            'gtid' => $user->gtid,
-        ]);
+        Attendance::withoutEvents(static function () use ($team, $user): void {
+            Attendance::create([
+                'attendable_type' => 'team',
+                'attendable_id' => $team->id,
+                'gtid' => $user->gtid,
+            ]);
+        });
 
         $this->assertFalse(
             $user->self_service_override_eligibility->eligible,
@@ -225,11 +227,13 @@ class SelfServiceOverrideTest extends TestCase
 
         $this->seed(TeamsSeeder::class);
         $team = Team::first();
-        Attendance::create([
-            'attendable_type' => 'team',
-            'attendable_id' => $team->id,
-            'gtid' => $user->gtid,
-        ]);
+        Attendance::withoutEvents(static function () use ($team, $user): void {
+            Attendance::create([
+                'attendable_type' => 'team',
+                'attendable_id' => $team->id,
+                'gtid' => $user->gtid,
+            ]);
+        });
 
         $this->assertFalse(
             $user->self_service_override_eligibility->eligible,
@@ -285,11 +289,13 @@ class SelfServiceOverrideTest extends TestCase
 
         $this->seed(TeamsSeeder::class);
         $team = Team::first();
-        Attendance::create([
-            'attendable_type' => 'team',
-            'attendable_id' => $team->id,
-            'gtid' => $user->gtid,
-        ]);
+        Attendance::withoutEvents(static function () use ($team, $user): void {
+            Attendance::create([
+                'attendable_type' => 'team',
+                'attendable_id' => $team->id,
+                'gtid' => $user->gtid,
+            ]);
+        });
 
         $this->createMembershipAgreementSignature($user, true);
         $admin = $this->getTestUser(['admin'], 'admin3');

@@ -193,8 +193,7 @@ class User extends Authenticatable
     use Searchable;
     use Impersonatable;
 
-    private const MAJOR_ENTITLEMENT_PREFIX = '/gt/gtad/gt_resources/stu_majorgroups/';
-    private const MAJOR_ENTITLEMENT_PREFIX_LENGTH = 38;
+    private const MAJOR_REGEX = '/(?P<college>[A-Z])\/(?P<school>[A-Z0-9]+)\/(?P<major>[A-Z]+)/';
 
     /**
      * The accessors to append to the model's array form.
@@ -742,24 +741,23 @@ class User extends Authenticatable
     /**
      * Synchronizes major relationship with a given list of gtAccountEntitlements.
      *
-     * @param  array<string>  $accountEntitlements
+     * @param  array<string>  $gtCurriculum
      */
-    public function syncMajorsFromAccountEntitlements(array $accountEntitlements): void
+    public function syncMajorsFromGtCurriculum(array $gtCurriculum): int
     {
         $current_major_ids = $this->majors()->pluck('majors.id')->toArray();
 
         $new_major_ids = [];
 
-        foreach ($accountEntitlements as $entitlement) {
-            if (self::MAJOR_ENTITLEMENT_PREFIX !== substr($entitlement, 0, self::MAJOR_ENTITLEMENT_PREFIX_LENGTH)) {
+        foreach ($gtCurriculum as $curriculum) {
+            $matches = [];
+
+            if (1 !== preg_match(self::MAJOR_REGEX, $curriculum, $matches)) {
                 continue;
             }
 
             $new_major_ids[] = Major::findOrCreateFromGtadGroup(
-                substr(
-                    $entitlement,
-                    self::MAJOR_ENTITLEMENT_PREFIX_LENGTH
-                )
+                $matches['school'] . '_' . $matches['major']
             )->id;
         }
 
@@ -778,6 +776,8 @@ class User extends Authenticatable
 
             $this->majors()->updateExistingPivot($current_major_id, ['deleted_at' => Carbon::now()]);
         }
+
+        return count($new_major_ids);
     }
 
     /**
