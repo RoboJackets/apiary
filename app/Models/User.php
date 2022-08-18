@@ -757,7 +757,7 @@ class User extends Authenticatable
             }
 
             $new_major_ids[] = Major::findOrCreateFromGtadGroup(
-                $matches['school'].'_'.$matches['major']
+                $matches['major'].'_'.$matches['school']
             )->id;
         }
 
