@@ -341,10 +341,11 @@ class User extends Authenticatable
      * @phan-read-only
      */
     public static array $ignore_class_standings = [
-        'former',
+        'account',
         'credit',
-        'undergrad',
+        'former',
         'graduate',
+        'undergrad',
     ];
 
     protected string $guard_name = 'web';
