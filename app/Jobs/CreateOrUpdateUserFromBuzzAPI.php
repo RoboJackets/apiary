@@ -117,11 +117,11 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'givenName',
             'eduPersonPrimaryAffiliation',
             'gtPrimaryGTAccountUsername',
-            'gtAccountEntitlement',
             'uid',
             'gtEmplId',
             'gtEmployeeHomeDepartmentName',
-            'eduPersonScopedAffiliation'
+            'eduPersonScopedAffiliation',
+            'gtCurriculum'
         )->from(Resources::GTED_ACCOUNTS)
         // @phan-suppress-next-line PhanTypeMismatchArgument
         ->where([$this->identifier => $searchValue])
@@ -171,13 +171,25 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'gtEmployeeHomeDepartmentName'
         ) ? $account->gtEmployeeHomeDepartmentName : null;
         $user->save();
-        $user->syncMajorsFromAccountEntitlements($account->gtAccountEntitlement);
+        $major_count = $user->syncMajorsFromGtCurriculum(
+            property_exists(
+                $account,
+                'gtCurriculum'
+            ) ? $account->gtCurriculum : []
+        );
         $standing_count = $user->syncClassStandingFromEduPersonScopedAffiliation($account->eduPersonScopedAffiliation);
 
         if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
             Log::warning(
                 self::class.': User '.$user->uid
                 .' has primary affiliation of student but '.$standing_count.' class standings. Check data integrity.'
+            );
+        }
+
+        if ('student' === $user->primary_affiliation && 0 === $major_count) {
+            Log::warning(
+                self::class.': User '.$user->uid
+                .' has primary affiliation of student but no majors. Check data integrity.'
             );
         }
 

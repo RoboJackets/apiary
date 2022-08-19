@@ -86,6 +86,19 @@ trait CreateOrUpdateCASUser
             );
         }
 
+        if (! $this->cas->hasAttribute('gtCurriculum') || null === $this->cas->getAttribute('gtCurriculum')) {
+            $user->syncMajorsFromGtCurriculum([]);
+        } else {
+            $major_count = $user->syncMajorsFromGtCurriculum($this->cas->getAttribute('gtCurriculum'));
+
+            if ('student' === $user->primary_affiliation && 1 !== $major_count) {
+                Log::warning(
+                    self::class.': User '.$user->uid
+                    .' has primary affiliation of student but no majors. Check data integrity.'
+                );
+            }
+        }
+
         //Initial Role Assignment
         if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {
             $role = Role::where('name', 'non-member')->first();
