@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $providedBy
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise query()

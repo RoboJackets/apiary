@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read int|null $members_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Major newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Major newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Major query()
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereSchool($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Major whereWhitepagesOu($value)
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */

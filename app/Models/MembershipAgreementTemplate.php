@@ -24,6 +24,7 @@ use Throwable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Signature> $signatures
  * @property-read int|null $signatures_count
+ *
  * @method static \Database\Factories\MembershipAgreementTemplateFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate newQuery()

@@ -37,6 +37,7 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $jank_for_nova_count
  * @property-read \App\Models\User|null $providedBy
  * @property-read \App\Models\User $user
+ *
  * @method static Builder|DuesTransaction accessCurrent()
  * @method static Builder|DuesTransaction current()
  * @method static \Database\Factories\DuesTransactionFactory factory(...$parameters)

@@ -51,6 +51,7 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $members_count
  * @property-read \App\Models\User|null $projectManager
  * @property-read int|null $remote_attendance_links_count
+ *
  * @method static Builder|Team attendable()
  * @method static Builder|Team newModelQuery()
  * @method static Builder|Team newQuery()

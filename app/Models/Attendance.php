@@ -32,6 +32,7 @@ use Laravel\Scout\Searchable;
  * @property-read \App\Models\User|null $attendee
  * @property-read \App\Models\User|null $recorded
  * @property-read \App\Models\RemoteAttendanceLink|null $remoteAttendanceLink
+ *
  * @method static Builder|Attendance end(string $date)
  * @method static Builder|Attendance newModelQuery()
  * @method static Builder|Attendance newQuery()

@@ -46,6 +46,7 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read string $method_presentation
  * @property-read \App\Models\DuesTransaction|\App\Models\TravelAssignment $payable
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Database\Factories\PaymentFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()

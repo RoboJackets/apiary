@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property-read \App\Models\MembershipAgreementTemplate $membershipAgreementTemplate
  * @property-read \App\Models\User|null $uploadedBy
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\SignatureFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newQuery()

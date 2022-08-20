@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Event $event
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp newQuery()
  * @method static \Illuminate\Database\Query\Builder|Rsvp onlyTrashed()

@@ -38,6 +38,7 @@ use Illuminate\Support\Str;
  * @property-read \App\Models\User|null $sentBy
  * @property-read \App\Models\Signature|\App\Models\TravelAssignment $signable
  * @property-read \App\Models\User $signedBy
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newQuery()
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope onlyTrashed()
