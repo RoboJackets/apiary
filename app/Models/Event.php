@@ -35,7 +35,6 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $remote_attendance_links_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Rsvp> $rsvps
  * @property-read int|null $rsvps_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
  * @method static \Illuminate\Database\Query\Builder|Event onlyTrashed()

@@ -20,7 +20,6 @@ use Laravel\Passport\Token;
  * @property \Illuminate\Support\Carbon|null $expires_at
  * @property-read \App\Models\OAuth2Client|null $client
  * @property-read \App\Models\User|null $user
- *
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken query()

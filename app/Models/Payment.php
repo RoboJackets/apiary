@@ -40,11 +40,12 @@ use Laravel\Nova\Actions\Actionable;
  * @property string|null $receipt_url
  * @property string|null $square_cash_transaction_id
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property bool $receipt_sent
+ * @property string|null $url
  * @property-read int|null $actions_count
  * @property-read string $method_presentation
- * @property-read Model|\Barryvdh\LaravelIdeHelper\Eloquent $payable
+ * @property-read \App\Models\DuesTransaction|\App\Models\TravelAssignment $payable
  * @property-read \App\Models\User|null $user
- *
  * @method static \Database\Factories\PaymentFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
@@ -68,6 +69,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePrepaidType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereProcessingFee($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptSent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereReceiptUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereRecordedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereServerTxnId($value)
@@ -75,6 +77,7 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereStatementDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUniqueId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUrl($value)
  * @method static \Illuminate\Database\Query\Builder|Payment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent

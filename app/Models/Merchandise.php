@@ -20,14 +20,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\FiscalYear $fiscalYear
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
- * @property-read int|null $packages_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
- * @property-read int|null $transactions_count
  * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $jankForNova
  * @property-read int|null $jank_for_nova_count
+ * @property-read int|null $packages_count
  * @property-read \App\Models\User $providedBy
- *
+ * @property-read int|null $transactions_count
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
  * @method static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()

@@ -46,7 +46,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read int|null $merchandise_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
- *
  * @method static Builder|DuesPackage accessActive()
  * @method static Builder|DuesPackage active()
  * @method static Builder|DuesPackage availableForPurchase()
