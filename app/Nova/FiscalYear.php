@@ -80,12 +80,12 @@ class FiscalYear extends Resource
     {
         return [
             (new Actions\CreateDuesPackages())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-dues-packages');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsFiscalYear $fiscalYear): bool {
-                    return $request->user()->can('create-dues-packages');
-                })->confirmButtonText('Create Packages'),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('create-dues-packages'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsFiscalYear $fiscalYear): bool => $request->user()->can(
+                        'create-dues-packages'
+                    )
+                )->confirmButtonText('Create Packages'),
         ];
     }
 
@@ -99,29 +99,19 @@ class FiscalYear extends Resource
         return [
             (new MembersForOneFiscalYear())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
             (new TotalCollections())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
             (new PaymentMethodBreakdown())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
             (new MerchandiseSelections())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
             (new TransactionsByDuesPackage())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
         ];
     }
 }

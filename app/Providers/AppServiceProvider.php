@@ -42,13 +42,11 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         Horizon::auth(static function (): bool {
-            if (auth()->guard('web')->user() instanceof User
-                && auth()->guard('web')->user()->can('access-horizon')
-            ) {
+            if (auth()->guard('web')->user() instanceof User && auth()->guard('web')->user()->can('access-horizon')) {
                 return true;
             }
 
-            if (null === auth()->guard('web')->user()) {
+            if (auth()->guard('web')->user() === null) {
                 // Theoretically, this should never happen since we're calling the CAS middleware before this.
                 abort(401, 'Authentication Required');
             }
@@ -58,10 +56,8 @@ class AppServiceProvider extends ServiceProvider
             // No return as this is unreachable.
         });
 
-        if (null !== config('horizon.master_supervisor_name')) {
-            MasterSupervisor::determineNameUsing(static function (): string {
-                return config('horizon.master_supervisor_name');
-            });
+        if (config('horizon.master_supervisor_name') !== null) {
+            MasterSupervisor::determineNameUsing(static fn (): string => config('horizon.master_supervisor_name'));
         }
 
         Attendance::observe(AttendanceObserver::class);

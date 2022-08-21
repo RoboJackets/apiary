@@ -13,7 +13,7 @@ class RemoveUniqueConstraintFromReceiptNumber extends Migration
      */
     public function up(): void
     {
-        if ('mysql' !== config('database.default')) {
+        if (config('database.default') !== 'mysql') {
             return;
         }
 
@@ -27,7 +27,7 @@ class RemoveUniqueConstraintFromReceiptNumber extends Migration
      */
     public function down(): void
     {
-        if ('mysql' !== config('database.default')) {
+        if (config('database.default') !== 'mysql') {
             return;
         }
 

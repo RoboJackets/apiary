@@ -68,29 +68,29 @@ class RsvpController extends Controller
         // Get the user to store, if present
         // If not present and required, redirect to CAS
         $user = $request->user();
-        if (false === $event->allow_anonymous_rsvp && null === $request->user()) {
+        if ($event->allow_anonymous_rsvp === false && $request->user() === null) {
             cas()->authenticate();
         }
 
         $now = new DateTime();
         $end = isset($event->end_time) ? new DateTime($event->end_time->toDateTimeString()) : null;
-        if (null !== $end && $end <= $now) {
+        if ($end !== null && $end <= $now) {
             return view('rsvp.ended')->with(['event' => $event]);
         }
 
         if (
-            null === $user ||
+            $user === null ||
             Rsvp::where('user_id', '=', $user->id)->where('event_id', '=', $event->id)->doesntExist()
         ) {
             $rsvp = new Rsvp();
 
-            if (null !== $user) {
+            if ($user !== null) {
                 $rsvp->user_id = $user->id;
             }
 
             $rsvp->ip_address = $request->ip();
             $rsvp->user_agent = null;
-            if (null !== $request->userAgent()) {
+            if ($request->userAgent() !== null) {
                 $rsvp->user_agent = Str::limit($request->userAgent(), 1023, '');
             }
             $rsvp->event_id = $event->id;
@@ -110,7 +110,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (null === $rsvp) {
+        if ($rsvp === null) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -129,7 +129,7 @@ class RsvpController extends Controller
     {
         $requestingUser = $request->user();
         $rsvp = Rsvp::find($id);
-        if (null === $rsvp) {
+        if ($rsvp === null) {
             return response()->json(['status' => 'error', 'message' => 'rsvp_not_found'], 404);
         }
 
@@ -141,7 +141,7 @@ class RsvpController extends Controller
             ], 403);
         }
 
-        if (true === $rsvp->delete()) {
+        if ($rsvp->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }
 

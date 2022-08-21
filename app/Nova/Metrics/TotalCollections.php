@@ -56,13 +56,13 @@ class TotalCollections extends Value
                     ]
                 )->first()->revenue
             );
-        } elseif ($revenue > 0 && 'fiscal-years' === $request->resource) {
+        } elseif ($revenue > 0 && $request->resource === 'fiscal-years') {
             $previousFiscalYear = FiscalYear::where(
                 'ending_year',
                 intval(FiscalYear::where('id', $request->resourceId)->sole()->ending_year) - 1
             )->first();
 
-            if (null !== $previousFiscalYear) {
+            if ($previousFiscalYear !== null) {
                 $result->previous(self::query($request->resource, $previousFiscalYear->id)->first()->revenue);
             }
         }
@@ -82,7 +82,7 @@ class TotalCollections extends Value
                 $q->select('id')
                     ->from('dues_transactions')
                     ->when(
-                        'fiscal-years' === $resource,
+                        $resource === 'fiscal-years',
                         static function (Builder $query, bool $isFiscalYear) use ($resourceId): void {
                             $query
                                 ->whereIn(

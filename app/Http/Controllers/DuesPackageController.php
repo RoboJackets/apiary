@@ -101,7 +101,7 @@ class DuesPackageController extends Controller
     {
         $include = $request->input('include');
         $package = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->find($package->id);
-        if (null !== $package) {
+        if ($package !== null) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
         }
 
@@ -116,7 +116,7 @@ class DuesPackageController extends Controller
         $package->update($request->validated());
 
         $package = DuesPackage::find($package->id);
-        if (null === $package) {
+        if ($package === null) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
         }
 
@@ -128,7 +128,7 @@ class DuesPackageController extends Controller
      */
     public function destroy(DuesPackage $package): JsonResponse
     {
-        if (true === $package->delete()) {
+        if ($package->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'DuesPackage deleted.']);
         }
 

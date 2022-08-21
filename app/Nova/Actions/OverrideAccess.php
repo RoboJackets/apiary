@@ -35,7 +35,7 @@ class OverrideAccess extends Action
             }
 
             $date = Carbon::createFromFormat('Y-m-d', $fields->access_override_until);
-            if (false === $date) {
+            if ($date === false) {
                 return Action::danger('You must select a date!');
             }
             $date->hour = 23;
@@ -46,7 +46,7 @@ class OverrideAccess extends Action
             $user->save();
         }
 
-        return Action::message('The access override'.(1 === count($users) ? ' was' : 's were').' saved!');
+        return Action::message('The access override'.(count($users) === 1 ? ' was' : 's were').' saved!');
     }
 
     /**

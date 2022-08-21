@@ -22,7 +22,7 @@ abstract class TestCase extends BaseTestCase
     protected function getTestUser(array $roles, string $uid = 'apiarytesting4'): User
     {
         $user = User::where('uid', $uid)->first();
-        if (null === $user) {
+        if ($user === null) {
             $faker = Factory::create();
             $user = new User();
             $user->create_reason = 'phpunit';

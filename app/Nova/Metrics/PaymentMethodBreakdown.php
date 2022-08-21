@@ -33,7 +33,7 @@ class PaymentMethodBreakdown extends Partition
                         $query->select('id')
                             ->from('dues_transactions')
                             ->when(
-                                'fiscal-years' === $request->resource,
+                                $request->resource === 'fiscal-years',
                                 static function (Builder $query, bool $isFiscalYear) use ($request): void {
                                     $query
                                         ->whereIn(
@@ -57,9 +57,9 @@ class PaymentMethodBreakdown extends Partition
                     ->groupBy('method')
                     ->orderByDesc('count')
                     ->get()
-                    ->mapWithKeys(static function (object $row): array {
-                        return [Payment::$methods[$row->method] => $row->count];
-                    })->toArray()
+                    ->mapWithKeys(
+                        static fn (object $row): array => [Payment::$methods[$row->method] => $row->count]
+                    )->toArray()
         );
     }
 

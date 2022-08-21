@@ -21,7 +21,7 @@ class AutodeskLibraryController extends Controller
             );
         }
 
-        if (0 === count($user->teams)) {
+        if (count($user->teams) === 0) {
             return view(
                 'autodesk',
                 [
@@ -30,7 +30,7 @@ class AutodeskLibraryController extends Controller
             );
         }
 
-        if (null === $user->autodesk_email) {
+        if ($user->autodesk_email === null) {
             return redirect()->to('/profile');
         }
 

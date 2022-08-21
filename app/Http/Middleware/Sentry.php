@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -42,8 +38,8 @@ class Sentry
                         $request['headers'] = collect($request['headers'])->map(
                             static function (array $values, string $header): array {
                                 if (
-                                    0 === strcasecmp($header, 'X-Xsrf-Token') ||
-                                    0 === strcasecmp($header, 'X-Csrf-Token')
+                                    strcasecmp($header, 'X-Xsrf-Token') === 0 ||
+                                    strcasecmp($header, 'X-Csrf-Token') === 0
                                 ) {
                                     return ['[redacted]'];
                                 }

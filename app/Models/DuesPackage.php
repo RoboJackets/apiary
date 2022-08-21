@@ -211,7 +211,7 @@ class DuesPackage extends Model
             ->where('dues_packages.effective_end', '>=', now())
             ->where('restricted_to_students', $user->is_student);
 
-        if ('mysql' === config('database.default')) {
+        if (config('database.default') === 'mysql') {
             $newQuery->havingRaw('payments_ucp.id is null');
         }
 

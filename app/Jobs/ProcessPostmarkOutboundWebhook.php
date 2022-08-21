@@ -64,13 +64,13 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
             ->orWhere('clickup_email', '=', $email)
             ->orWhere('autodesk_email', '=', $email);
 
-        if (1 === preg_match('/(?P<uid>[a-z]+[0-9]+)@gatech\.edu/', $email, $matches)) {
+        if (preg_match('/(?P<uid>[a-z]+[0-9]+)@gatech\.edu/', $email, $matches) === 1) {
             $query = $query->orWhere('uid', '=', $matches['uid']);
         }
 
         $user = $query->first();
 
-        if (null === $user) {
+        if ($user === null) {
             if (array_key_exists('Metadata', $payload)) {
                 if (array_key_exists('transaction-id', $payload['Metadata'])) {
                     $user = DuesTransaction::where('id', '=', $payload['Metadata']['transaction-id'])->sole()->user;
@@ -84,7 +84,7 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
             }
         }
 
-        if (null === $user) {
+        if ($user === null) {
             throw new \Exception('Could not match event to user. Manual match required.');
         }
 

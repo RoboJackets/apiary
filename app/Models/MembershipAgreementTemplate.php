@@ -81,7 +81,7 @@ class MembershipAgreementTemplate extends Model
         extract($data, EXTR_SKIP);
 
         try {
-            eval('?'.'>'.$php);
+            eval('?>'.$php);
         } catch (Throwable $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();
@@ -91,7 +91,7 @@ class MembershipAgreementTemplate extends Model
 
         $output = ob_get_clean();
 
-        if (false === $output) {
+        if ($output === false) {
             throw new Exception('Failed to render agreement');
         }
 

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
 // phpcs:disable Generic.Files.LineLength.TooLong
 
 namespace App\Models;
@@ -172,7 +171,7 @@ class TravelAssignment extends Model
 
     public function getIsPaidAttribute(): bool
     {
-        return 0 !== self::where('travel_assignments.id', $this->id)->paid()->count();
+        return self::where('travel_assignments.id', $this->id)->paid()->count() !== 0;
     }
 
     /**
@@ -183,9 +182,7 @@ class TravelAssignment extends Model
      */
     public function scopePaid(Builder $query): Builder
     {
-        return $query->select(
-            'travel_assignments.*'
-        )->leftJoin('payments', function (JoinClause $j): void {
+        return $query->select('travel_assignments.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'travel_assignments.id')
                     ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
@@ -202,9 +199,7 @@ class TravelAssignment extends Model
      */
     public function scopeUnpaid(Builder $query): Builder
     {
-        return $query->select(
-            'travel_assignments.*'
-        )->leftJoin('payments', function (JoinClause $j): void {
+        return $query->select('travel_assignments.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'travel_assignments.id')
                     ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
@@ -229,7 +224,7 @@ class TravelAssignment extends Model
 
     public function getNeedsDocusignAttribute(): bool
     {
-        return 0 !== self::where('travel_assignments.id', $this->id)->needDocuSign()->count();
+        return self::where('travel_assignments.id', $this->id)->needDocuSign()->count() !== 0;
     }
 
     /**
@@ -267,9 +262,9 @@ class TravelAssignment extends Model
     public function getTravelAuthorityRequestUrlAttribute(): string
     {
         if (
-            true === (($this->travel->tar_transportation_mode ?? [
+            (($this->travel->tar_transportation_mode ?? [
                 'state_contract_airline' => false,
-            ])['state_contract_airline']) ||
+            ])['state_contract_airline']) === true ||
             true === ($this->travel->tar_transportation_mode ?? [
                 'non_contract_airline' => false,
             ])['non_contract_airline']
@@ -277,11 +272,7 @@ class TravelAssignment extends Model
             return $this->getAirfarePowerFormUrl();
         }
 
-        if (
-            true === ($this->travel->tar_transportation_mode ?? [
-                'rental_vehicle' => false,
-            ])['rental_vehicle']
-        ) {
+        if (true === ($this->travel->tar_transportation_mode ?? ['rental_vehicle' => false,])['rental_vehicle']) {
             return $this->getTravelAuthorityRequestPowerFormUrl();
         }
 
@@ -399,19 +390,19 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_non_employee_checkbox'
-                ) => (null === $this->user->employee_home_department ? 'x' : ''),
+                ) => ($this->user->employee_home_department === null ? 'x' : ''),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_employee_checkbox'
-                ) => (null === $this->user->employee_home_department ? '' : 'x'),
+                ) => ($this->user->employee_home_department === null ? '' : 'x'),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_non_employee_domestic_checkbox'
-                ) => (null === $this->user->employee_home_department ? 'x' : ''),
+                ) => ($this->user->employee_home_department === null ? 'x' : ''),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.fields.airfare_employee_domestic_checkbox'
-                ) => (null === $this->user->employee_home_department ? '' : 'x'),
+                ) => ($this->user->employee_home_department === null ? '' : 'x'),
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.traveler_name'

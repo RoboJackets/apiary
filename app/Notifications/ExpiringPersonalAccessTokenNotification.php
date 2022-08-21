@@ -15,16 +15,13 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
 {
     use Queueable;
 
-    private Token $token;
-
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Token $token)
+    public function __construct(private Token $token)
     {
-        $this->token = $token;
     }
 
     /**

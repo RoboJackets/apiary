@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Nova\Actions;
 
 use App\Models\DuesTransaction;
@@ -45,17 +43,13 @@ class AddPayment extends Action
         if ($model->is_paid) {
             $this->markAsFailed($models->first(), 'Transaction already paid in full');
 
-            return Action::danger(
-                'Transaction already paid in full. New transaction was not saved.'
-            );
+            return Action::danger('Transaction already paid in full. New transaction was not saved.');
         }
 
         if (is_a($model, DuesTransaction::class) && ! $model->package->is_active) {
             $this->markAsFailed($models->first(), 'Package no longer active');
 
-            return Action::danger(
-                'Associated package is no longer active.'
-            );
+            return Action::danger('Associated package is no longer active.');
         }
 
         // shouldn't happen but might if someone is abusing the API
@@ -77,7 +71,7 @@ class AddPayment extends Action
             DuesTransaction::class
         ) ? round(floatval($fields->amount), 2) : intval($fields->amount);
 
-        if ('square' === $fields->method || 'swipe' === $fields->method) {
+        if ($fields->method === 'square' || $fields->method === 'swipe') {
             if ($entered_amount !== round($package_amount + 3, 2)) {
                 if ($entered_amount === $package_amount) {
                     $this->markAsFailed($models->first(), 'Missing transaction fee');
@@ -98,9 +92,7 @@ class AddPayment extends Action
             if ($entered_amount !== $package_amount) {
                 $this->markAsFailed($model, 'Unexpected amount (non-card transaction)');
 
-                return Action::danger(
-                    'Unexpected amount '.$entered_amount.' entered - should be '.$package_amount
-                );
+                return Action::danger('Unexpected amount '.$entered_amount.' entered - should be '.$package_amount);
             }
         }
 

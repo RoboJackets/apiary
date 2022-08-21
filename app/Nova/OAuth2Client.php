@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -104,9 +102,7 @@ class OAuth2Client extends Resource
                 ->rules('required')
                 ->hideFromIndex(),
 
-            Boolean::make('Public (PKCE-Enabled Client)', function (): bool {
-                return null !== $this->secret;
-            })
+            Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret !== null)
                 ->hideFromIndex(),
 
             HasMany::make('Tokens', 'tokens', OAuth2AccessToken::class),

@@ -33,16 +33,16 @@ abstract class MajorDemographicsBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        return $this->result(User::active()
-            ->with('majors')
-            ->get()
-            ->map(function (User $user): string {
-                return $user->majors->pluck($this->field_name)->sort()->join('/');
-            })->groupBy(static function (string $majors): string {
-                return 0 === strlen($majors) ? 'none or unknown' : $majors;
-            })->map(static function (Collection $coll): int {
-                return $coll->count();
-            })->sort()
-            ->reverse()->toArray());
+        return $this->result(
+            User::active()
+                ->with('majors')
+                ->get()
+                ->map(fn (User $user): string => $user->majors->pluck($this->field_name)->sort()->join('/'))
+                ->groupBy(static fn (string $majors): string => strlen($majors) === 0 ? 'none or unknown' : $majors)
+                ->map(static fn (Collection $coll): int => $coll->count())
+                ->sort()
+                ->reverse()
+                ->toArray()
+        );
     }
 }

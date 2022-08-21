@@ -98,12 +98,8 @@ class Attendance extends Resource
             Text::make('GTID')
                 ->hideFromIndex()
                 ->rules('required', 'max:255')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })->resolveUsing(function (string $gtid): string {
-                    // Hide GTID when the attendee is known
-                    return null !== $this->attendee ? '—' : $gtid;
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->resolveUsing(fn (string $gtid): string => $this->attendee !== null ? '—' : $gtid),
 
             BelongsTo::make('User', 'attendee')
                 ->searchable(),
@@ -127,9 +123,7 @@ class Attendance extends Resource
 
             BelongsTo::make('Remote Attendance Link', 'remoteAttendanceLink')
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-remote-attendance-links');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-remote-attendance-links')),
 
             self::metadataPanel(),
         ];
@@ -170,9 +164,9 @@ class Attendance extends Resource
     public function lenses(Request $request): array
     {
         return [
-            (new RecentInactiveUsers())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
-            }),
+            (new RecentInactiveUsers())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-attendance')
+            ),
         ];
     }
 
@@ -184,11 +178,11 @@ class Attendance extends Resource
     public function actions(Request $request): array
     {
         return [
-            (new ExportAttendance())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
-            })->canRun(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
-            })->confirmButtonText('Export Attendance'),
+            (new ExportAttendance())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-attendance')
+            )->canRun(
+                static fn (Request $request): bool => $request->user()->can('read-attendance')
+            )->confirmButtonText('Export Attendance'),
         ];
     }
 

@@ -31,27 +31,23 @@ class JEDI extends Dashboard
     public function cards(): array
     {
         return [
-            (new ActiveMembers())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new AccessActiveMembers())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new AccessOverrides())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            }),
-            (new SUMSUsers())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            }),
-            (new PendingGitHubInvitations())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            }),
-            (new LinkedGoogleAccounts())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new LinkedGitHubAccounts())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
+            (new ActiveMembers())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new AccessActiveMembers())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new AccessOverrides())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
+            (new SUMSUsers())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
+            (new PendingGitHubInvitations())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            ),
+            (new LinkedGoogleAccounts())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new LinkedGitHubAccounts())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
         ];
     }
 

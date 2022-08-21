@@ -48,9 +48,7 @@ class DuesRevenueByFiscalYear extends Trend
             ->orderBy('ending_year')
             ->get()
             ->mapWithKeys(
-                static function (object $record): array {
-                    return [$record->ending_year => $record->revenue];
-                }
+                static fn (object $record): array => [$record->ending_year => $record->revenue]
             )
             ->toArray()
         )

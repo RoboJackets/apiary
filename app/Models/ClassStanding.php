@@ -55,7 +55,7 @@ class ClassStanding extends Model
     {
         $classStanding = self::where('name', strtolower($name))->first();
 
-        if (null === $classStanding) {
+        if ($classStanding === null) {
             $classStanding = new self();
             $classStanding->name = strtolower($name);
             $classStanding->save();

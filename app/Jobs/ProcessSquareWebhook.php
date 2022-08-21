@@ -41,7 +41,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             throw new Exception('data.object.payment.status field not present');
         }
 
-        if ('COMPLETED' !== $details['status'] && 'APPROVED' !== $details['status']) {
+        if ($details['status'] !== 'COMPLETED' && $details['status'] !== 'APPROVED') {
             Log::warning('Payment for Order ID '.$details['order_id'].' was pushed as '.$details['status']);
 
             return;
@@ -49,7 +49,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
 
         $payment = Payment::where('order_id', $details['order_id'])->first();
 
-        if (null === $payment) {
+        if ($payment === null) {
             Log::warning('Payment object with Order ID '.$details['order_id'].' not found, ignoring');
 
             return;
@@ -108,7 +108,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
 
         $payment->save();
 
-        if ('payment.created' !== $type || $refunded) {
+        if ($type !== 'payment.created' || $refunded) {
             return;
         }
 

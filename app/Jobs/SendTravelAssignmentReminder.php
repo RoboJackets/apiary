@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Jobs;
 
 use App\Models\TravelAssignment;
@@ -24,18 +22,15 @@ class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
 
     public int $tries = 1;
 
-    public TravelAssignment $assignment;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(TravelAssignment $assignment)
+    public function __construct(public TravelAssignment $assignment)
     {
-        $this->assignment = $assignment;
         $this->queue = 'email';
         $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
 
-        if (5 === $this->delay->dayOfWeek) {
+        if ($this->delay->dayOfWeek === 5) {
             // do not send reminders on thursdays to reduce the chance of user
             // trying to use the app during a maintenance window
             $this->delay = $this->delay->addHours(24);

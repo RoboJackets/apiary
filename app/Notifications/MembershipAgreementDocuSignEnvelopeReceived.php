@@ -15,14 +15,11 @@ class MembershipAgreementDocuSignEnvelopeReceived extends Notification implement
 {
     use Queueable;
 
-    private DocuSignEnvelope $envelope;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(DocuSignEnvelope $envelope)
+    public function __construct(private DocuSignEnvelope $envelope)
     {
-        $this->envelope = $envelope;
     }
 
     /**

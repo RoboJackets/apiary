@@ -52,9 +52,9 @@ class ExportUsernames extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $output = $models->pluck('uid')->reduce(static function (?string $carry, string $username): string {
-            return ($carry ?? '').$username."\n";
-        });
+        $output = $models->pluck('uid')->reduce(
+            static fn (?string $carry, string $username): string => ($carry ?? '').$username."\n"
+        );
 
         $timestamp = Carbon::now()->toDateTimeLocalString();
         $filename = 'usernames-'.$timestamp.'.csv';

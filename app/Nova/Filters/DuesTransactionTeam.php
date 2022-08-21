@@ -51,9 +51,7 @@ class DuesTransactionTeam extends Filter
             $teams = Team::where('attendable', 1)
                 ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
-                })->get()->mapWithKeys(static function (Team $item): array {
-                    return [$item->name => $item->id];
-                })->toArray();
+                })->get()->mapWithKeys(static fn (Team $item): array => [$item->name => $item->id])->toArray();
         }
 
         return $teams;

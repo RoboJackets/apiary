@@ -79,7 +79,7 @@ class UserPolicy
             return false;
         }
 
-        if (false === $team->visible && $user->cant('read-teams-hidden')) {
+        if ($team->visible === false && $user->cant('read-teams-hidden')) {
             return false;
         }
 
@@ -87,7 +87,7 @@ class UserPolicy
             return true;
         }
 
-        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+        if (($team->projectManager !== null) && $team->projectManager->is($user)) {
             return true;
         }
 
@@ -124,7 +124,7 @@ class UserPolicy
      */
     public function detachTeam(User $user, User $userResource, Team $team): bool
     {
-        if (false === $team->visible && $user->cant('read-teams-hidden')) {
+        if ($team->visible === false && $user->cant('read-teams-hidden')) {
             return false;
         }
 
@@ -132,7 +132,7 @@ class UserPolicy
             return true;
         }
 
-        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+        if (($team->projectManager !== null) && $team->projectManager->is($user)) {
             return true;
         }
 

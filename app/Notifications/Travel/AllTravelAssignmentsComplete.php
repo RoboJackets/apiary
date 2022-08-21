@@ -18,14 +18,11 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private Travel $travel;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(Travel $travel)
+    public function __construct(private Travel $travel)
     {
-        $this->travel = $travel;
     }
 
     /**
@@ -79,7 +76,7 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return $user->should_receive_email || NovaChannel::class === $channel;
+        return $user->should_receive_email || $channel === NovaChannel::class;
     }
 
     /**

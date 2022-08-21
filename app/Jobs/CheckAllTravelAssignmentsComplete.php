@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Jobs;
 
 use App\Models\Travel;
@@ -26,14 +24,11 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
 
     public int $tries = 1;
 
-    public Travel $travel;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(Travel $travel)
+    public function __construct(public Travel $travel)
     {
-        $this->travel = $travel;
     }
 
     /**
@@ -46,9 +41,7 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
             static function () use ($travel): void {
                 if (! $travel->completion_email_sent &&
                     $travel->assignments->reduce(
-                        static function (bool $carry, TravelAssignment $assignment): bool {
-                            return $carry && $assignment->is_complete;
-                        },
+                        static fn (bool $carry, TravelAssignment $each): bool => $carry && $each->is_complete,
                         true
                     )
                 ) {

@@ -68,16 +68,16 @@ class Attendable extends Filter
             $teams = Team::where('attendable', 1)
                 ->when($request->user()->cant('read-teams-hidden'), static function (Builder $query): void {
                     $query->where('visible', 1);
-                })->get()->mapWithKeys(static function (Team $item): array {
-                    return ['Team: '.$item->name => $item->getMorphClass().','.$item->id];
-                })->toArray();
+                })->get()->mapWithKeys(
+                    static fn (Team $item): array => ['Team: '.$item->name => $item->getMorphClass().','.$item->id]
+                )->toArray();
         }
 
         $events = [];
         if ($this->includeEvents && $request->user()->can('read-events')) {
-            $events = Event::all()->mapWithKeys(static function (Event $item): array {
-                return ['Event: '.$item->name => $item->getMorphClass().','.$item->id];
-            })->toArray();
+            $events = Event::all()->mapWithKeys(
+                static fn (Event $item): array => ['Event: '.$item->name => $item->getMorphClass().','.$item->id]
+            )->toArray();
         }
 
         return array_merge($teams, $events);

@@ -26,7 +26,7 @@ class SummaryNotification extends Notification
      */
     public function via(TreasurerNotifiable $notifiable): array
     {
-        return null !== $notifiable->routeNotificationForSlack($this)
+        return $notifiable->routeNotificationForSlack($this) !== null
             && count($this->getPayments()) > 0 ? ['slack'] : [];
     }
 
@@ -43,12 +43,10 @@ class SummaryNotification extends Notification
 
         // Use updated_at because if you return to Square payment after it created a $0 payment it'll update it.
         // Nothing else will update it as far as I can tell.
-        $payments = Payment::whereBetween('updated_at', [$startOfDay, $endOfDay])
+        return Payment::whereBetween('updated_at', [$startOfDay, $endOfDay])
             ->where('amount', '>', 0)
             ->where('payable_type', DuesTransaction::getMorphClassStatic())
             ->get();
-
-        return $payments;
     }
 
     /**
@@ -68,23 +66,18 @@ class SummaryNotification extends Notification
                 }
 
                 return $a->count() > $b->count() ? -1 : 1;
-            })->map(static function (Collection $payment, string $method): string {
-                return $payment->count().' paid with '.Payment::$methods[$method];
-            })->join(', ', ' and ');
-        $packages = $payments->groupBy(static function (Payment $payment): string {
-            // We know it's a DuesTransaction because of filtering in getPayments. Include trashed because in some
-            // cases transactions can be trashed, but payments that aren't still refer to them.
-            return DuesTransaction::with('package')->withTrashed()->find($payment->payable_id)->package->name;
-        })->sort(static function (Collection $a, Collection $b): int {
-            // Sort by quantity descending
-            if ($a->count() === $b->count()) {
-                return 0;
-            }
-
-            return $a->count() > $b->count() ? -1 : 1;
-        })->map(static function (Collection $payment, string $package): string {
-            return $payment->count().' paid for '.$package;
-        })->join(', ', ' and ');
+            })->map(
+                static fn (Collection $p, string $m): string => $p->count().' paid with '.Payment::$methods[$m]
+            )->join(', ', ' and ');
+        $packages = $payments->groupBy(
+            static fn (Payment $payment): string => DuesTransaction::with('package')->withTrashed()->find(
+                $payment->payable_id
+            )->package->name
+        )->sort(
+            static fn (Collection $a, Collection $b): int => $b->count() - $a->count()
+        )->map(
+            static fn (Collection $payment, string $package): string => $payment->count().' paid for '.$package
+        )->join(', ', ' and ');
 
         $active = User::active()->count();
 
@@ -92,7 +85,7 @@ class SummaryNotification extends Notification
         // with a check. There are now 13 active members.
         $message = $num.' '.Str::plural('member', $num).' paid dues yesterday, totaling '.$total.' collected. ';
         $message .= $methods.'. '.$packages;
-        $message .= '. There '.(1 === $active ? 'is' : 'are').' now '.$active.' active '.Str::plural('member', $active);
+        $message .= '. There '.($active === 1 ? 'is' : 'are').' now '.$active.' active '.Str::plural('member', $active);
         $message .= '.';
 
         return (new SlackMessage())

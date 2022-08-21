@@ -27,7 +27,7 @@ class ResumeController extends Controller
     public function show(string $id, Request $request)
     {
         $user = User::findByIdentifier($id)->first();
-        if (null !== $user) {
+        if ($user !== null) {
             if (! $request->user()->can('read-users-resume') && $request->user()->id !== $user->id) {
                 return response()->json(
                     [
@@ -72,7 +72,7 @@ class ResumeController extends Controller
         // -b to be "brief" and return *just* the MIME type
         exec('file --mime-type -b '.escapeshellarg($filePath), $output);
 
-        if (0 === count($output)) {
+        if (count($output) === 0) {
             return null;
         }
 
@@ -80,7 +80,7 @@ class ResumeController extends Controller
 
         // Sanity check to make sure we got a MIME type back, rather than an error (file names can't contain the /
         // character so that was a good indicator)
-        if (null !== $output && false !== strpos($output, '/') && false === strpos($output, 'cannot open')) {
+        if ($output !== null && strpos($output, '/') !== false && strpos($output, 'cannot open') === false) {
             return $output;
         }
 
@@ -95,7 +95,7 @@ class ResumeController extends Controller
     public function store(string $id, StoreResumeRequest $request)
     {
         $user = User::findByIdentifier($id)->first();
-        if (null !== $user) {
+        if ($user !== null) {
             if (! $request->user()->can('update-users-resume') && $request->user()->id !== $user->id) {
                 return response()->json(
                     [
@@ -106,7 +106,7 @@ class ResumeController extends Controller
                 );
             }
 
-            if (true !== $user->is_active) {
+            if ($user->is_active !== true) {
                 return response()->json(
                     [
                         'status' => 'error',
@@ -116,7 +116,7 @@ class ResumeController extends Controller
                 );
             }
 
-            if (true !== $user->is_student) {
+            if ($user->is_student !== true) {
                 return response()->json(
                     [
                         'status' => 'error',
@@ -128,7 +128,7 @@ class ResumeController extends Controller
 
             // Make sure there's exactly one file
             $file = $request->file('resume');
-            if (null === $file || is_array($file)) {
+            if ($file === null || is_array($file)) {
                 return response()->json(
                     [
                         'status' => 'error',
@@ -155,10 +155,10 @@ class ResumeController extends Controller
             $fileCommandMimeType = $this->getFileCommandMimeType($tempPath);
 
             if ($PDF_MIME_TYPE !== $fileCommandMimeType) {
-                // phpcs:disable
-                Log::debug("User resume uploaded for user $user->uid but was invalid (`file` command's ".
-                    "reported MIME type was $fileCommandMimeType)");
-                // phpcs:enable
+                Log::debug(
+                    'User resume uploaded for user '.$user->uid.' but was invalid (`file` command\'s '.
+                    'reported MIME type was '.$fileCommandMimeType.')'
+                );
 
                 return response()->json(
                     [
@@ -180,9 +180,9 @@ class ResumeController extends Controller
             $pageCount = array_key_exists('PageCount', $exifOutput) ? $exifOutput['PageCount'] : -1;
             $exifError = array_key_exists('Error', $exifOutput) ? $exifOutput['Error'] : null;
 
-            $valid = null === $exifError && 'PDF' === $fileType && $PDF_MIME_TYPE === $mimeType;
-            $pageCountValid = 1 === $pageCount;
-            $exifErrorInvalidType = 'Unknown file type' === $exifError;
+            $valid = $exifError === null && $fileType === 'PDF' && $PDF_MIME_TYPE === $mimeType;
+            $pageCountValid = $pageCount === 1;
+            $exifErrorInvalidType = $exifError === 'Unknown file type';
 
             if (! $valid || ! $pageCountValid) {
                 Log::debug('User resume uploaded for user '.$user->uid.', but was invalid (PDF: '

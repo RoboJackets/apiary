@@ -189,7 +189,7 @@ class SelfServiceAccessOverrideEligibility
     public function getRemainingTasks(): array
     {
         $remainingTasks = $this->removeFalsyAssocArrayValues($this->required_tasks);
-        if (0 === count($remainingTasks)) {
+        if (count($remainingTasks) === 0) {
             return ['None'];
         }
 
@@ -205,7 +205,7 @@ class SelfServiceAccessOverrideEligibility
     public function getUnmetConditions(): array
     {
         $remainingConditions = $this->removeFalsyAssocArrayValues($this->required_conditions);
-        if (0 === count($remainingConditions)) {
+        if (count($remainingConditions) === 0) {
             return ['None'];
         }
 

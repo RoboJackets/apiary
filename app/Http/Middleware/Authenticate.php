@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Access\AuthorizationException;

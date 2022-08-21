@@ -33,7 +33,7 @@ class CreateDuesPackages extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        if (1 !== count($models)) {
+        if (count($models) !== 1) {
             return Action::danger('This action can only be run on a single fiscal year at a time.');
         }
 
@@ -122,10 +122,7 @@ class CreateDuesPackages extends Action
             $duesPackage->available_for_purchase = false;
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
-            $duesPackage->conflicts_with_package_id = DuesPackage::where(
-                'name',
-                $fallPackageName
-            )->firstOrFail()->id;
+            $duesPackage->conflicts_with_package_id = DuesPackage::where('name', $fallPackageName)->firstOrFail()->id;
             $duesPackage->save();
             $duesPackage->merchandise()->attach($shirt, ['group' => 'Fall']);
             $duesPackage->merchandise()->attach($waiveShirt, ['group' => 'Fall']);
@@ -135,7 +132,7 @@ class CreateDuesPackages extends Action
             $createdPackages++;
         }
 
-        if (DuesPackage::where('name', $nonStudentFullYear)->doesntExist() && true === $fields->non_student) {
+        if (DuesPackage::where('name', $nonStudentFullYear)->doesntExist() && $fields->non_student === true) {
             $duesPackage = new DuesPackage();
             $duesPackage->name = $nonStudentFullYear;
             $duesPackage->effective_start = $fallEffectiveStart;
@@ -152,7 +149,7 @@ class CreateDuesPackages extends Action
             $createdPackages++;
         }
 
-        if (0 === $createdPackages) {
+        if ($createdPackages === 0) {
             return Action::message('All packages already exist; no changes were made.');
         }
 

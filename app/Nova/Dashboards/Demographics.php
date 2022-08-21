@@ -23,24 +23,24 @@ class Demographics extends Dashboard
     public function cards(): array
     {
         return [
-            (new MajorsBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new SchoolsBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new ClassStandingsBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new PrimaryAffiliationBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new GenderBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
-            (new EthnicityBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            })->width('1/2'),
+            (new MajorsBreakdown())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new SchoolsBreakdown())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new ClassStandingsBreakdown())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new PrimaryAffiliationBreakdown())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new GenderBreakdown())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
+            (new EthnicityBreakdown())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users')
+            )->width('1/2'),
         ];
     }
 

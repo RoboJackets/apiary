@@ -14,7 +14,7 @@ class TravelAssignmentController extends Controller
 
         $assignment = $user->current_travel_assignment;
 
-        if (null === $assignment) {
+        if ($assignment === null) {
             return view('travel.noassignment');
         }
 

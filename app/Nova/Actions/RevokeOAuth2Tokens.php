@@ -44,7 +44,7 @@ class RevokeOAuth2Tokens extends DestructiveAction
             $user_access_tokens = $user->tokens()
                 ->whereRevoked(false)
                 ->whereHas('client', static function (Builder $clientQuery) use ($fields): void {
-                    if (true === $fields->include_personal_access_tokens) {
+                    if ($fields->include_personal_access_tokens === true) {
                         return;
                     }
 
@@ -71,7 +71,6 @@ class RevokeOAuth2Tokens extends DestructiveAction
     public function fields(NovaRequest $request)
     {
         return [
-            // phpcs:disable
             Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal '.
                 'access tokens associated with this user.'),
             Boolean::make('Include Personal Access Tokens')

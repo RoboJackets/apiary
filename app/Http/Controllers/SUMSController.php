@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Http\Controllers;
 
 use App\Models\Team;
@@ -19,7 +17,7 @@ class SUMSController extends Controller
     {
         $user = $request->user();
 
-        if (! $user->signed_latest_agreement && true === config('sums.requires_agreement')) {
+        if (! $user->signed_latest_agreement && config('sums.requires_agreement') === true) {
             return view(
                 'sums',
                 [
@@ -37,7 +35,7 @@ class SUMSController extends Controller
             );
         }
 
-        if (0 === count($user->teams)) {
+        if (count($user->teams) === 0) {
             return view(
                 'sums',
                 [
@@ -49,7 +47,7 @@ class SUMSController extends Controller
         $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
             ->orderByDesc('created_at')->first();
 
-        if (null !== $lastAttendance
+        if ($lastAttendance !== null
             && $lastAttendance->created_at < new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')
         ) {
             return view(

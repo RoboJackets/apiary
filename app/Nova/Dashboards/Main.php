@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition
+// phpcs:disable SlevomatCodingStandard.Functions.RequireSingleLineCall
+
 namespace App\Nova\Dashboards;
 
 use App\Models\Travel;
@@ -30,25 +33,25 @@ class Main extends Dashboard
     public function cards(): array
     {
         $cards = [
-            (new PaymentsPerDay())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-payments');
-            }),
-            (new MembersByFiscalYear())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-dues-transactions');
-            }),
-            (new DuesRevenueByFiscalYear())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-dues-transactions');
-            }),
-            (new AttendancePerWeek())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-attendance');
-            }),
-            (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users') && $request->user()->can('read-attendance');
-            }),
+            (new PaymentsPerDay())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-payments')
+            ),
+            (new MembersByFiscalYear())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-dues-transactions')
+            ),
+            (new DuesRevenueByFiscalYear())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-dues-transactions')
+            ),
+            (new AttendancePerWeek())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-attendance')
+            ),
+            (new ActiveAttendanceBreakdown())->canSee(
+                static fn (Request $request): bool => $request->user()->can('read-users') && $request->user()->can(
+                    'read-attendance'
+                )
+            ),
             (new TransactionsByDuesPackage())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
         ];
 
         if (request()->is('nova-api/dashboards/main')) {
@@ -59,21 +62,18 @@ class Main extends Dashboard
                     $should_include = true;
                 }
 
-                if (
-                    null !== $travel->tar_required
-                    && $travel->assignments()->where('tar_received', false)->exists()
-                ) {
+                if ($travel->tar_required !== null && $travel->assignments()->where('tar_received', false)->exists()) {
                     $should_include = true;
                 }
 
-                if (
-                    $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
-                        $join->on('travel_assignments.id', '=', 'payable_id')
-                             ->where('payments.amount', '>', 0)
-                             ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                             ->whereNull('payments.deleted_at');
-                    })->whereNull('payments.id')->exists()
-                ) {
+                if ($travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
+                    $join->on('travel_assignments.id', '=', 'payable_id')
+                         ->where('payments.amount', '>', 0)
+                         ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                         ->whereNull('payments.deleted_at');
+                })->whereNull(
+                    'payments.id'
+                )->exists()) {
                     $should_include = true;
                 }
 
@@ -81,14 +81,12 @@ class Main extends Dashboard
                     continue;
                 }
 
-                if (null !== $travel->tar_required) {
+                if ($travel->tar_required !== null) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
                 $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
-                    static function (Request $request): bool {
-                        return $request->user()->can('read-payments');
-                    }
+                    static fn (Request $request): bool => $request->user()->can('read-payments')
                 );
             }
 
@@ -106,9 +104,9 @@ class Main extends Dashboard
                     return [new TravelAuthorityRequestReceivedForTravel($id)];
                 case 'payment':
                     return [
-                        (new PaymentReceivedForTravel($id))->canSee(static function (Request $request): bool {
-                            return $request->user()->can('read-payments');
-                        }),
+                        (new PaymentReceivedForTravel($id))->canSee(
+                            static fn (Request $request): bool => $request->user()->can('read-payments')
+                        ),
                     ];
             }
         }

@@ -11,7 +11,7 @@ class GoogleController extends Controller
 {
     public function redirectToProvider(Request $request)
     {
-        if (null !== $request->user()->gmail_address) {
+        if ($request->user()->gmail_address !== null) {
             return response(
                 view(
                     'errors.generic',
@@ -31,7 +31,7 @@ class GoogleController extends Controller
     {
         $localUser = $request->user();
 
-        if (null !== $localUser->gmail_address) {
+        if ($localUser->gmail_address !== null) {
             return response(
                 view(
                     'errors.generic',

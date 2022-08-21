@@ -83,16 +83,20 @@ class Team extends Resource
             new Panel('Controls', $this->controlFields()),
 
             BelongsToMany::make('Members', 'members', User::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-teams-membership') && $request->user()->can('read-users');
-                })
+                ->canSee(
+                    static fn (Request $request): bool => $request->user()->can(
+                        'read-teams-membership'
+                    ) && $request->user()->can(
+                        'read-users'
+                    )
+                )
                 ->required(true),
 
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppModelsTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                        if ($resource !== null && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -101,16 +105,14 @@ class Team extends Resource
                 }),
 
             MorphMany::make('Attendance')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-attendance');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
 
             CollectAttendance::make()
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppModelsTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppModelsTeam::class)
-                            && false === $resource->attendable) {
+                        if ($resource !== null && is_a($resource, AppModelsTeam::class)
+                            && $resource->attendable === false) {
                             return false;
                         }
                     }
@@ -191,20 +193,16 @@ class Team extends Resource
         return [
             (new TotalTeamMembers())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-teams-membership');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-teams-membership')),
             (new ActiveMembers())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-teams-membership');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-teams-membership')),
             (new AttendancePerWeek())
                 ->onlyOnDetail()
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppModelsTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                        if ($resource !== null && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -216,7 +214,7 @@ class Team extends Resource
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppModelsTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                        if ($resource !== null && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
@@ -238,16 +236,14 @@ class Team extends Resource
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = AppModelsTeam::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
+                        if ($resource !== null && is_a($resource, AppModelsTeam::class) && ! $resource->attendable) {
                             return false;
                         }
                     }
 
                     return $request->user()->can('create-remote-attendance-links');
                 })
-                ->canRun(static function (Request $request): bool {
-                    return $request->user()->can('create-remote-attendance-links');
-                })
+                ->canRun(static fn (Request $request): bool => $request->user()->can('create-remote-attendance-links'))
                 ->confirmText('Are you sure you want to create a remote attendance link?')
                 ->confirmButtonText('Create Link')
                 ->cancelButtonText('Cancel'),
@@ -283,7 +279,7 @@ class Team extends Resource
      */
     public function subtitle(): ?string
     {
-        if (null !== $this->projectManager) {
+        if ($this->projectManager !== null) {
             return 'Project Manager: '.$this->projectManager->full_name;
         }
 

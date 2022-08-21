@@ -16,14 +16,11 @@ class TravelAssignmentCreated extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public TravelAssignment $assignment;
-
     /**
      * Create a new message instance.
      */
-    public function __construct(TravelAssignment $assignment)
+    public function __construct(public TravelAssignment $assignment)
     {
-        $this->assignment = $assignment;
     }
 
     /**

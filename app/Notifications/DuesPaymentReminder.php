@@ -15,11 +15,8 @@ class DuesPaymentReminder extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private DuesTransaction $transaction;
-
-    public function __construct(DuesTransaction $transaction)
+    public function __construct(private DuesTransaction $transaction)
     {
-        $this->transaction = $transaction;
     }
 
     /**

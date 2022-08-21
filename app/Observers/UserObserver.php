@@ -17,7 +17,7 @@ class UserObserver
 
     public function updated(User $user): void
     {
-        if (null === $user->access_override_until || $user->access_override_until <= new DateTime()) {
+        if ($user->access_override_until === null || $user->access_override_until <= new DateTime()) {
             return;
         }
 

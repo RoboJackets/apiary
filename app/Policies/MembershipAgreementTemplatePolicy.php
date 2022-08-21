@@ -42,7 +42,7 @@ class MembershipAgreementTemplatePolicy
     public function update(User $user, MembershipAgreementTemplate $membershipAgreementTemplate): bool
     {
         return $user->can('update-membership-agreement-templates')
-            && 0 === $membershipAgreementTemplate->signatures()->count();
+            && $membershipAgreementTemplate->signatures()->count() === 0;
     }
 
     /**
@@ -51,7 +51,7 @@ class MembershipAgreementTemplatePolicy
     public function delete(User $user, MembershipAgreementTemplate $membershipAgreementTemplate): bool
     {
         return $user->can('update-membership-agreement-templates')
-            && 0 === $membershipAgreementTemplate->signatures()->count();
+            && $membershipAgreementTemplate->signatures()->count() === 0;
     }
 
     /**

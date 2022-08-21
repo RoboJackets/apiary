@@ -196,23 +196,22 @@ class Attendance extends Model
                     $attendables[] = $name;
 
                     return $name;
-                })->map(static function (Collection $days): int {
-                    return $days->count();
-                });
+                })->map(static fn (Collection $days): int => $days->count());
             });
 
         // Get an array of all possible attendables with the value of 0 for each
         $attendables = collect($attendables)->unique()
-            ->mapWithKeys(static function (string $attendable): array {
-                return [$attendable => 0];
-            });
+            ->mapWithKeys(static fn (string $attendable): array => [$attendable => 0]);
 
         // Ensure each value in the previous arrary has all possible attendable keys, then prepend the GTID:
         // [gtid => ['GTID' => gtid, attendable => count, attendable => count, ...], ...]
         $collection = $collection->map(
-            static function (Collection $columns, int $gtid) use ($attendables): Collection {
-                return $columns->union($attendables)->sortKeys()->prepend($gtid, 'GTID');
-            }
+            static fn (Collection $columns, int $gtid): Collection => $columns->union(
+                $attendables
+            )->sortKeys()->prepend(
+                $gtid,
+                'GTID'
+            )
         );
 
         $attendables_array = $attendables->sortKeys()->keys()->all();
@@ -221,7 +220,7 @@ class Attendance extends Model
 
         foreach ($collection as $person) {
             $user = User::where('gtid', $person->get('GTID'))->first();
-            if (null === $user) {
+            if ($user === null) {
                 // Skip when there's not a user because it's likely to not be a valid GTID.
                 continue;
             }
@@ -262,7 +261,7 @@ class Attendance extends Model
             $array['attendable'] = $this->attendable->toArray();
         }
 
-        if (! array_key_exists('attendee', $array) && null !== $this->attendee) {
+        if (! array_key_exists('attendee', $array) && $this->attendee !== null) {
             $array['attendee'] = $this->attendee->toArray();
         }
 

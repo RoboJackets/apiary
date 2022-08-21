@@ -75,7 +75,7 @@ class SignatureController extends Controller
 
         $ip = $request->ip();
 
-        if (null === $ip) { // I have no idea what could possibly cause this, but that's what the contract says
+        if ($ip === null) { // I have no idea what could possibly cause this, but that's what the contract says
             return view(
                 'agreement.error',
                 [
@@ -117,7 +117,7 @@ class SignatureController extends Controller
 
         $deviceCheck = $this->ipAddressAndUserAgentMatch($signature, $request);
 
-        if (null !== $deviceCheck) {
+        if ($deviceCheck !== null) {
             return $deviceCheck;
         }
 
@@ -155,7 +155,7 @@ class SignatureController extends Controller
 
         $deviceCheck = $this->ipAddressAndUserAgentMatch($signature, $request);
 
-        if (null !== $deviceCheck) {
+        if ($deviceCheck !== null) {
             return $deviceCheck;
         }
 
@@ -188,7 +188,7 @@ class SignatureController extends Controller
 
         $responseContents = $response->getBody()->getContents();
 
-        if (200 !== $response->getStatusCode()) {
+        if ($response->getStatusCode() !== 200) {
             Log::error(self::class.' CAS said '.$responseContents);
 
             return view(
@@ -201,7 +201,7 @@ class SignatureController extends Controller
 
         $username = $this->getUsernameFromCasResponse($responseContents);
 
-        if (null === $username) {
+        if ($username === null) {
             Log::error(self::class.' CAS said '.$responseContents);
 
             return view(
@@ -242,25 +242,25 @@ class SignatureController extends Controller
         $dom->preserveWhiteSpace = false;
         $dom->encoding = 'utf-8';
 
-        if (false === $dom->loadXML($text_response)) {
+        if ($dom->loadXML($text_response) === false) {
             return null;
         }
 
         $tree_response = $dom->documentElement;
 
-        if (null === $tree_response) {
+        if ($tree_response === null) {
             return null;
         }
 
-        if ('serviceResponse' !== $tree_response->localName) {
+        if ($tree_response->localName !== 'serviceResponse') {
             return null;
         }
 
-        if (0 !== $tree_response->getElementsByTagName('authenticationFailure')->length) {
+        if ($tree_response->getElementsByTagName('authenticationFailure')->length !== 0) {
             return null;
         }
 
-        if (0 === $tree_response->getElementsByTagName('authenticationSuccess')->length) {
+        if ($tree_response->getElementsByTagName('authenticationSuccess')->length === 0) {
             return null;
         }
 
@@ -268,19 +268,19 @@ class SignatureController extends Controller
 
         $authenticationSuccessElement = $success_elements->item(0);
 
-        if (null === $authenticationSuccessElement) {
+        if ($authenticationSuccessElement === null) {
             return null;
         }
 
         $userElements = $authenticationSuccessElement->getElementsByTagName('user');
 
-        if (0 === $userElements->length) {
+        if ($userElements->length === 0) {
             return null;
         }
 
         $element = $userElements->item(0);
 
-        if (null === $element) {
+        if ($element === null) {
             return null;
         }
 

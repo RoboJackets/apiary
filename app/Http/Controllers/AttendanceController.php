@@ -65,7 +65,7 @@ class AttendanceController extends Controller
             $att = $attExistingQ->first();
             $code = 200;
 
-            if (null !== $user) {
+            if ($user !== null) {
                 PushToJedi::dispatch($user, self::class, -1, 'duplicate-attendance');
             }
         } else {
@@ -96,7 +96,7 @@ class AttendanceController extends Controller
         $include = $request->input('include');
         $user = $request->user();
         $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($attendance->id);
-        if (null !== $att && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
+        if ($att !== null && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
 
@@ -124,7 +124,7 @@ class AttendanceController extends Controller
     public function update(UpdateAttendanceRequest $request, Attendance $attendance): JsonResponse
     {
         $att = Attendance::find($attendance->id);
-        if (null !== $att) {
+        if ($att !== null) {
             $att->update($request->validated());
 
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
@@ -139,7 +139,7 @@ class AttendanceController extends Controller
     public function destroy(Attendance $attendance): JsonResponse
     {
         $att = Attendance::find($attendance->id);
-        if (true === $att->delete()) {
+        if ($att->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'Attendance deleted.']);
         }
 
@@ -166,9 +166,9 @@ class AttendanceController extends Controller
             ->groupBy('day')
             ->orderBy('day')
             ->get()
-            ->mapWithKeys(static function (object $item) use ($numberOfWeeks): array {
-                return [substr($item->day, 1) => $item->aggregate / $numberOfWeeks];
-            });
+            ->mapWithKeys(
+                static fn (object $item): array => [substr($item->day, 1) => $item->aggregate / $numberOfWeeks]
+            );
 
         $attendanceByDayAndTeam = Attendance::whereBetween('created_at', [$startDay, $endDay])
             ->where('attendable_type', Team::getMorphClassStatic())
@@ -190,11 +190,9 @@ class AttendanceController extends Controller
                         'Thursday' => 0,
                         'Friday' => 0,
                         'Saturday' => 0,
-                    ])->merge($item->mapWithKeys(static function (object $day) use ($numberOfWeeks): array {
-                        return [
-                            substr($day->day, 1) => $day->aggregate / $numberOfWeeks,
-                        ];
-                    })),
+                    ])->merge($item->mapWithKeys(static fn (object $day): array => [
+                        substr($day->day, 1) => $day->aggregate / $numberOfWeeks,
+                    ])),
                 ];
             });
 
@@ -204,8 +202,6 @@ class AttendanceController extends Controller
             ->groupBy('week')
             ->get()
             ->sum('aggregate')) / $numberOfWeeks;
-
-        // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
         $attendanceByTeam = Attendance::selectRaw(
@@ -221,22 +217,13 @@ class AttendanceController extends Controller
             ->orderBy('week')
             ->get();
 
-        // phpcs:enable
-        // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
-
         // If the user can't read teams only give them the attendable_id
-        if ($user->can('read-teams')) {
-            $attendanceByTeam = $attendanceByTeam->groupBy('name');
-        } else {
-            $attendanceByTeam = $attendanceByTeam->groupBy('attendable_id');
-        }
-
-        // phpcs:enable
+        $attendanceByTeam = $attendanceByTeam->groupBy($user->can('read-teams') ? 'name' : 'attendable_id');
 
         // Return only the team ID/name, the day, and the count of records on that day
-        $attendanceByTeam = $attendanceByTeam->map(static function (Collection $item): Collection {
-            return $item->pluck('aggregate', 'week');
-        });
+        $attendanceByTeam = $attendanceByTeam->map(
+            static fn (Collection $item): Collection => $item->pluck('aggregate', 'week')
+        );
 
         $statistics = [
             'averageDailyMembers' => $attendanceByDay,

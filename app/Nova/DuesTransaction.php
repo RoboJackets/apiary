@@ -79,9 +79,7 @@ class DuesTransaction extends Resource
             BelongsTo::make('Dues Package', 'package', DuesPackage::class),
 
             Text::make('Status')
-                ->resolveUsing(static function (string $str): string {
-                    return ucfirst($str);
-                })
+                ->resolveUsing(static fn (string $str): string => ucfirst($str))
                 ->exceptOnForms(),
 
             Currency::make('Payment Due', function (): ?float {
@@ -90,7 +88,7 @@ class DuesTransaction extends Resource
                     return null;
                 }
 
-                if (null === $this->package) {
+                if ($this->package === null) {
                     return null;
                 }
 
@@ -138,7 +136,7 @@ class DuesTransaction extends Resource
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
                 $transaction = AppModelsDuesTransaction::find($request->resourceId);
 
-                if (null !== $transaction && is_a($transaction, AppModelsDuesTransaction::class)) {
+                if ($transaction !== null && is_a($transaction, AppModelsDuesTransaction::class)) {
                     if ($transaction->user->id === $request->user()->id) {
                         return false;
                     }
@@ -157,17 +155,18 @@ class DuesTransaction extends Resource
                 }
 
                 return $request->user()->can('create-payments');
-            })->canRun(static function (NovaRequest $request, AppModelsDuesTransaction $dues_transaction): bool {
-                return $request->user()->can('create-payments')
-                    && ($dues_transaction->user()->first()->id !== $request->user()->id);
-            })->confirmButtonText('Add Payment'),
+            })->canRun(
+                static fn (NovaRequest $r, AppModelsDuesTransaction $t): bool => $r->user()->can(
+                    'create-payments'
+                ) && ($t->user()->first()->id !== $r->user()->id)
+            )->confirmButtonText('Add Payment'),
         ];
     }
 
     // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
-        return $request->user()->can('update-dues-transactions') && 'merchandise' !== $request->viaResource;
+        return $request->user()->can('update-dues-transactions') && $request->viaResource !== 'merchandise';
     }
 
     /**

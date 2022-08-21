@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Http;
 
 use Spatie\Csp\Directive;
@@ -15,7 +13,7 @@ class ContentSecurityPolicy extends Policy
 {
     public function configure(): void
     {
-        if ('' !== config('csp.report_uri') && null !== config('csp.report_uri')) {
+        if (config('csp.report_uri') !== '' && config('csp.report_uri') !== null) {
             $this->reportTo(
                 config('csp.report_uri')
                 .'&sentry_environment='.config('app.env')
@@ -68,7 +66,7 @@ class ContentSecurityPolicy extends Policy
         $this->addDirective(Directive::FRAME_ANCESTORS, Keyword::NONE);
         $this->addDirective(Directive::FRAME, Keyword::NONE);
         $this->addDirective(Directive::CHILD, Keyword::NONE);
-        if ('' !== config('sentry.dsn') && null !== config('sentry.dsn')) {
+        if (config('sentry.dsn') !== '' && config('sentry.dsn') !== null) {
             $this->addDirective(Directive::CONNECT, [
                 Keyword::SELF,
                 'https://'.parse_url(config('sentry.dsn'), PHP_URL_HOST),

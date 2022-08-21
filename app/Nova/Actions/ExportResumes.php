@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Nova\Actions;
 
 use App\Models\ClassStanding;
@@ -43,7 +41,7 @@ class ExportResumes extends Action
         $majors = [];
 
         foreach ($fields->majors as $major => $selected) {
-            if (false === $selected) {
+            if ($selected === false) {
                 continue;
             }
 
@@ -55,7 +53,7 @@ class ExportResumes extends Action
         $classStandings = [];
 
         foreach ($fields->class_standings as $classStanding => $selected) {
-            if (false === $selected) {
+            if ($selected === false) {
                 continue;
             }
 
@@ -75,35 +73,25 @@ class ExportResumes extends Action
                 $join->on('users.id', '=', 'major_user.user_id')
                      ->whereNull('major_user.deleted_at');
             })
-            ->leftJoin(
-                'majors',
-                'major_user.major_id',
-                '=',
-                'majors.id'
-            )
+            ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
             ->leftJoin('class_standing_user', static function (JoinClause $join): void {
                 $join->on('users.id', '=', 'class_standing_user.user_id')
                      ->whereNull('class_standing_user.deleted_at');
             })
-            ->leftJoin(
-                'class_standings',
-                'class_standing_user.class_standing_id',
-                '=',
-                'class_standings.id'
-            )
+            ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
             ->whereIn('majors.display_name', $majors)
             ->whereIn('class_standings.name', $classStandings)
             ->orderBy('last_name')
             ->orderBy('first_name')
             ->pluck('uid');
 
-        if (0 === $users->count()) {
+        if ($users->count() === 0) {
             return Action::danger('No resumes matched the criteria!');
         }
 
-        $filenames = $users->uniqueStrict()->map(static function (string $uid): string {
-            return escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'));
-        });
+        $filenames = $users->uniqueStrict()->map(
+            static fn (string $uid): string => escapeshellarg(Storage::disk('local')->path('resumes/'.$uid.'.pdf'))
+        );
 
         $datecode = now()->format('Y-m-d-H-i-s');
         $filename = 'robojackets-resumes-'.$datecode.'.pdf';
@@ -133,7 +121,7 @@ class ExportResumes extends Action
         $gsExit = -1;
         exec($cmd, $gsOutput, $gsExit);
 
-        if (0 !== $gsExit) {
+        if ($gsExit !== 0) {
             Log::error('gs did not exit cleanly (status code '.$gsExit.'), output: '.implode("\n", $gsOutput));
 
             return Action::danger('Error exporting resumes');
@@ -147,7 +135,7 @@ class ExportResumes extends Action
         $exifExit = -1;
         exec($cmdExif, $exifOutput, $exifExit);
 
-        if (0 !== $exifExit) {
+        if ($exifExit !== 0) {
             Log::error('exiftool did not exit cleanly (status code '.$exifExit.'), output: '
                 .implode("\n", $exifOutput));
 
@@ -169,36 +157,37 @@ class ExportResumes extends Action
     {
         // This is only stored for 30 seconds because it only needs to stick for one page load
         // Nova runs this function for every record in the user view so it slows down the page otherwise
-        $majors = Cache::remember('majors_with_resumes', 30, static function (): array {
-            return User::selectRaw('distinct(majors.display_name) as distinct_display_names')
-                ->active()
-                ->whereNotNull('resume_date')
-                ->where('primary_affiliation', 'student')
-                ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                    $q->where('restricted_to_students', false);
-                })
-                ->leftJoin('major_user', static function (JoinClause $join): void {
-                    $join->on('users.id', '=', 'major_user.user_id')
-                         ->whereNull('major_user.deleted_at');
-                })
-                ->leftJoin(
-                    'majors',
-                    'major_user.major_id',
-                    '=',
-                    'majors.id'
-                )
-                ->orderBy('distinct_display_names')
-                ->pluck('distinct_display_names')
-                ->mapWithKeys(static function (?string $displayName): array {
-                    return null === $displayName ? [] : [$displayName => $displayName];
-                })
-                ->toArray();
-        });
+        $majors = Cache::remember(
+            'majors_with_resumes',
+            30,
+            static fn (): array => User::selectRaw('distinct(majors.display_name) as distinct_display_names')
+                    ->active()
+                    ->whereNotNull('resume_date')
+                    ->where('primary_affiliation', 'student')
+                    ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                        $q->where('restricted_to_students', false);
+                    })
+                    ->leftJoin('major_user', static function (JoinClause $join): void {
+                        $join->on('users.id', '=', 'major_user.user_id')
+                             ->whereNull('major_user.deleted_at');
+                    })
+                    ->leftJoin(
+                        'majors',
+                        'major_user.major_id',
+                        '=',
+                        'majors.id'
+                    )
+                    ->orderBy('distinct_display_names')
+                    ->pluck('distinct_display_names')
+                    ->mapWithKeys(
+                        static fn (?string $name): array => $name === null ? [] : [$name => $name]
+                    )
+                    ->toArray()
+        );
 
-        $classStandings = Cache::remember('class_standings_with_resumes', 30, static function (): array {
-            return User::selectRaw(
-                'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
-            )
+        $classStandings = Cache::remember('class_standings_with_resumes', 30, static fn (): array => User::selectRaw(
+            'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
+        )
                 ->active()
                 ->whereNotNull('resume_date')
                 ->where('primary_affiliation', 'student')
@@ -217,11 +206,8 @@ class ExportResumes extends Action
                 )
                 ->orderBy('class_standings.rank_order')
                 ->pluck('distinct_class_standings')
-                ->mapWithKeys(static function (?string $name): array {
-                    return null === $name ? [] : [$name => ucfirst($name)];
-                })
-                ->toArray();
-        });
+                ->mapWithKeys(static fn (?string $name): array => $name === null ? [] : [$name => ucfirst($name)])
+                ->toArray());
 
         $now = Carbon::now();
         $year = $now->year;

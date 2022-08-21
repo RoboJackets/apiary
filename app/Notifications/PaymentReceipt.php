@@ -15,14 +15,11 @@ class PaymentReceipt extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private Payment $payment;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(Payment $payment)
+    public function __construct(private Payment $payment)
     {
-        $this->payment = $payment;
     }
 
     /**

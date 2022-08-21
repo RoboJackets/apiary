@@ -68,7 +68,7 @@ class TeamController extends Controller
     {
         $team = Team::create($request->validated());
 
-        if (null !== $team->id) {
+        if ($team->id !== null) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)], 201);
         }
 
@@ -86,11 +86,11 @@ class TeamController extends Controller
             ->orWhere('slug', $id)
             ->first();
 
-        if (null !== $team && false === $team->visible && $request->user()->cant('read-teams-hidden')) {
+        if ($team !== null && $team->visible === false && $request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        if (null !== $team) {
+        if ($team !== null) {
             return response()->json(['status' => 'success', 'team' => new TeamResource($team)]);
         }
 
@@ -103,11 +103,11 @@ class TeamController extends Controller
     public function showMembers(Request $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (null === $team) {
+        if ($team === null) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
-        if (false === $team->visible && $request->user()->cant('read-teams-hidden')) {
+        if ($team->visible === false && $request->user()->cant('read-teams-hidden')) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -120,7 +120,7 @@ class TeamController extends Controller
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (null === $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
+        if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -137,7 +137,7 @@ class TeamController extends Controller
         $requestingUser = $request->user();
 
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (null === $team || (false === $team->visible && $request->user()->cant('update-teams-hidden'))) {
+        if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
 
@@ -149,17 +149,17 @@ class TeamController extends Controller
         }
 
         //Enforce updating membership via self-service only for eligible teams
-        if ($requestingUser->cant('update-teams') && false === $team->self_serviceable) {
+        if ($requestingUser->cant('update-teams') && $team->self_serviceable === false) {
             return response()->json(['status' => 'error',
                 'message' => 'self_service_disabled',
             ], 403);
         }
 
         $user = User::find($request->input('user_id'));
-        if (null === $user || ! is_a($user, User::class)) {
+        if ($user === null || ! is_a($user, User::class)) {
             return response()->json(['status' => 'user_not_found'], 400);
         }
-        if ('join' === $request->input('action')) {
+        if ($request->input('action') === 'join') {
             $team->members()->syncWithoutDetaching($user);
         } else {
             $team->members()->detach($user);
@@ -176,7 +176,7 @@ class TeamController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $team = Team::where('id', $id)->orWhere('slug', $id)->first();
-        if (null === $team) {
+        if ($team === null) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -186,7 +186,7 @@ class TeamController extends Controller
             );
         }
 
-        if (true === $team->delete()) {
+        if ($team->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'team_deleted']);
         }
 

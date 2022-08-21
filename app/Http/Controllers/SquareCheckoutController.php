@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.Formatting.SpaceBeforeCast.NoSpace
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 
 namespace App\Http\Controllers;
 
@@ -65,11 +63,11 @@ class SquareCheckoutController extends Controller
             ->latest('updated_at')
             ->first();
 
-        if (null !== $transactionWithIncompletePayment) {
+        if ($transactionWithIncompletePayment !== null) {
             $transaction = $transactionWithIncompletePayment;
 
             $payment = $transaction->payment[0];
-        } elseif (null !== $transactionWithNoPayment) {
+        } elseif ($transactionWithNoPayment !== null) {
             $transaction = $transactionWithNoPayment;
 
             $payment = new Payment();
@@ -101,7 +99,7 @@ class SquareCheckoutController extends Controller
 
         $assignment = $user->current_travel_assignment;
 
-        if (null === $assignment) {
+        if ($assignment === null) {
             return view('travel.noassignment');
         }
 
@@ -112,7 +110,7 @@ class SquareCheckoutController extends Controller
                 ->oldest('travel.return_date')
                 ->first();
 
-            if (null === $any_assignment_needs_payment) {
+            if ($any_assignment_needs_payment === null) {
                 return view('travel.alreadypaid');
             }
 
@@ -139,7 +137,7 @@ class SquareCheckoutController extends Controller
             );
         }
 
-        if (0 === $assignment->payment()->count()) {
+        if ($assignment->payment()->count() === 0) {
             $payment = new Payment();
             // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
             $payment->amount = 0;
@@ -155,7 +153,7 @@ class SquareCheckoutController extends Controller
 
         $amount = $assignment->travel->fee_amount * 100;
 
-        if (null !== $payment->url) {
+        if ($payment->url !== null) {
             return redirect($payment->url);
         }
 
@@ -203,11 +201,11 @@ class SquareCheckoutController extends Controller
         $prePopulatedData = new PrePopulatedData();
         $prePopulatedData->setBuyerEmail($user->gt_email);
 
-        if (null !== $user->phone) {
+        if ($user->phone !== null) {
             if (Str::startsWith('+', $user->phone)) {
                 // already has country code prefix
                 $prePopulatedData->setBuyerPhoneNumber($user->phone);
-            } elseif (Str::startsWith('1', $user->phone) && 11 === Str::length($user->phone)) {
+            } elseif (Str::startsWith('1', $user->phone) && Str::length($user->phone) === 11) {
                 // has united states country code but no +, just add it
                 $prePopulatedData->setBuyerPhoneNumber('+'.$user->phone);
             } else {
@@ -231,7 +229,7 @@ class SquareCheckoutController extends Controller
 
         $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
-        if (null !== $parentSpan) {
+        if ($parentSpan !== null) {
             $context = new SpanContext();
             $context->setOp('square.create_payment_link');
             $span = $parentSpan->startChild($context);
@@ -240,7 +238,7 @@ class SquareCheckoutController extends Controller
 
         $paymentLinkResponse = $checkoutApi->createPaymentLink($paymentLinkRequest);
 
-        if (null !== $parentSpan) {
+        if ($parentSpan !== null) {
             // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
             $span->finish();
             SentrySdk::getCurrentHub()->setSpan($parentSpan);
@@ -283,7 +281,7 @@ class SquareCheckoutController extends Controller
 
         $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
-        if (null !== $parentSpan) {
+        if ($parentSpan !== null) {
             $context = new SpanContext();
             $context->setOp('square.retrieve_order');
             $span = $parentSpan->startChild($context);
@@ -292,7 +290,7 @@ class SquareCheckoutController extends Controller
 
         $retrieveOrderResponse = $ordersApi->retrieveOrder($payment->order_id);
 
-        if (null !== $parentSpan) {
+        if ($parentSpan !== null) {
             // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
             $span->finish();
             SentrySdk::getCurrentHub()->setSpan($parentSpan);
@@ -313,19 +311,19 @@ class SquareCheckoutController extends Controller
 
         $order = $retrieveOrderResponse->getResult()->getOrder();
 
-        if (null !== $order->getTenders() && count($order->getTenders()) > 0) {
+        if ($order->getTenders() !== null && count($order->getTenders()) > 0) {
             $tender = $order->getTenders()[0];
             $payment->amount = $tender->getAmountMoney()->getAmount() / 100;
 
             $processingFeeMoney = $tender->getProcessingFeeMoney();
-            if (null !== $processingFeeMoney) {
+            if ($processingFeeMoney !== null) {
                 $payment->processing_fee = $processingFeeMoney->getAmount() / 100;
             }
 
             $cardDetails = $tender->getCardDetails();
-            if (null !== $cardDetails) {
+            if ($cardDetails !== null) {
                 $card = $cardDetails->getCard();
-                if (null !== $card) {
+                if ($card !== null) {
                     $payment->card_brand = $card->getCardBrand();
                     $payment->card_type = $card->getCardType();
                     $payment->last_4 = $card->getLast4();

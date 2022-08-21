@@ -108,7 +108,7 @@ class RoleController extends Controller
 
         foreach ($request->input('users') as $user) {
             $dbUser = User::findByIdentifier($user)->first();
-            if (null === $dbUser) {
+            if ($dbUser === null) {
                 return response()->json(['status' => 'error', 'message' => 'User '.$user.' not found.'], 422);
             }
 

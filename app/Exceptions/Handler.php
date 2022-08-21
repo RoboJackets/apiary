@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 

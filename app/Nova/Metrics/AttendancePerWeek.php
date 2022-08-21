@@ -34,10 +34,8 @@ class AttendancePerWeek extends Trend
 
         // Aggregate based on counting distinct values in the gtid column
         $column = DB::raw('distinct attendance.gtid');
-        $result = $this->aggregate($request, $query, Trend::BY_WEEKS, 'count', $column, 'created_at')
+        return $this->aggregate($request, $query, Trend::BY_WEEKS, 'count', $column, 'created_at')
             ->showLatestValue();
-
-        return $result;
     }
 
     /**

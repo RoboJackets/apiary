@@ -41,7 +41,7 @@ class CASCheck
     public function handle(Request $request, Closure $next)
     {
         phpCAS::checkAuthentication();
-        if (null === $request->user()) {
+        if ($request->user() === null) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser();
                 Auth::login($user);

@@ -46,9 +46,9 @@ trait CreateOrUpdateCASUser
             $this->cas->setAttributes($masq_attrs);
         }
 
-        if (null === config('features.demo-mode')) {
+        if (config('features.demo-mode') === null) {
             foreach ($attrs as $attr) {
-                if (! $this->cas->hasAttribute($attr) || null === $this->cas->getAttribute($attr)) {
+                if (! $this->cas->hasAttribute($attr) || $this->cas->getAttribute($attr) === null) {
                     throw new Exception('Missing attribute '.$attr.' from CAS');
                 }
             }
@@ -57,7 +57,7 @@ trait CreateOrUpdateCASUser
         //User is starting a new session, so let's update data from CAS
         //Sadly we can't use updateOrCreate here because of $guarded in the User model
         $user = User::where('uid', $this->cas->user())->first();
-        if (null === $user) {
+        if ($user === null) {
             $user = new User();
             $user->create_reason = 'cas_login';
             $user->is_service_account = false;
@@ -67,7 +67,7 @@ trait CreateOrUpdateCASUser
             exit;
         }
         $user->uid = $this->cas->user();
-        $user->gtid = null === config('features.demo-mode') ? $this->cas->getAttribute('gtGTID') : 999999999;
+        $user->gtid = config('features.demo-mode') === null ? $this->cas->getAttribute('gtGTID') : 999999999;
         $user->gt_email = $this->cas->getAttribute('email_primary');
         $user->first_name = $this->cas->getAttribute('givenName');
         $user->last_name = $this->cas->getAttribute('sn');
@@ -79,19 +79,19 @@ trait CreateOrUpdateCASUser
             $this->cas->getAttribute('eduPersonScopedAffiliation')
         );
 
-        if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
+        if ($user->primary_affiliation === 'student' && $standing_count !== 1) {
             Log::warning(
                 self::class.': User '.$user->uid
                 .' has primary affiliation of student but '.$standing_count.' class standings. Check data integrity.'
             );
         }
 
-        if (! $this->cas->hasAttribute('gtCurriculum') || null === $this->cas->getAttribute('gtCurriculum')) {
+        if (! $this->cas->hasAttribute('gtCurriculum') || $this->cas->getAttribute('gtCurriculum') === null) {
             $user->syncMajorsFromGtCurriculum([]);
         } else {
             $major_count = $user->syncMajorsFromGtCurriculum($this->cas->getAttribute('gtCurriculum'));
 
-            if ('student' === $user->primary_affiliation && 1 !== $major_count) {
+            if ($user->primary_affiliation === 'student' && $major_count !== 1) {
                 Log::warning(
                     self::class.': User '.$user->uid
                     .' has primary affiliation of student but no majors. Check data integrity.'
@@ -100,9 +100,9 @@ trait CreateOrUpdateCASUser
         }
 
         //Initial Role Assignment
-        if ($user->wasRecentlyCreated || 0 === $user->roles->count()) {
+        if ($user->wasRecentlyCreated || $user->roles->count() === 0) {
             $role = Role::where('name', 'non-member')->first();
-            if (null !== $role) {
+            if ($role !== null) {
                 $user->assignRole($role);
             } else {
                 Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
@@ -110,11 +110,11 @@ trait CreateOrUpdateCASUser
         }
 
         //Role update based on active status (in case it didn't happen elsewhere)
-        if (true === $user->is_active && $user->hasRole('non-member')) {
+        if ($user->is_active === true && $user->hasRole('non-member')) {
             Log::info(self::class.': Updating role membership for '.$user->uid);
             $user->removeRole('non-member');
             $role_member = Role::where('name', 'member')->first();
-            if (null !== $role_member && ! $user->hasRole('member')) {
+            if ($role_member !== null && ! $user->hasRole('member')) {
                 $user->assignRole($role_member);
             } else {
                 Log::error(self::class.": Role 'member' not found for assignment to ".$user->uid);

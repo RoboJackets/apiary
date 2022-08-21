@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Nova\Metrics\MerchandiseSelections;
 use App\Nova\Metrics\PaymentMethodBreakdown;
@@ -99,9 +97,8 @@ class DuesPackage extends Resource
             BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
                 ->sortable(),
 
-            Number::make('Paid Transactions', function (): int {
-                // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
-                return DB::table('dues_transactions')
+            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
+            Number::make('Paid Transactions', fn (): int => DB::table('dues_transactions')
                     ->selectRaw('count(distinct dues_transactions.id) as count')
                     ->leftJoin('payments', static function (JoinClause $join): void {
                         $join->on('dues_transactions.id', '=', 'payable_id')
@@ -111,17 +108,15 @@ class DuesPackage extends Resource
                     ->whereNotNull('payments.id')
                     ->whereNull('payments.deleted_at')
                     ->whereNull('dues_transactions.deleted_at')
-                    ->where('dues_package_id', $this->id)->get()[0]->count;
-            })->onlyOnIndex(),
+                    ->where('dues_package_id', $this->id)->get()[0]->count)
+                ->onlyOnIndex(),
 
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
             DateTime::make('Start Date', 'effective_start')
-                ->help(
-                    'This is the date when someone who paid for this package will be considered a member.'
-                )
+                ->help('This is the date when someone who paid for this package will be considered a member.')
                 ->hideFromIndex()
                 ->rules('required'),
 
@@ -150,14 +145,12 @@ class DuesPackage extends Resource
             HasMany::make('Prevents Purchase Of', 'hasConflictWith', self::class),
 
             BelongsToMany::make('Merchandise')
-                ->fields(static function (): array {
-                    return [
-                        Select::make('Group')->options([
-                            'Fall' => 'Fall',
-                            'Spring' => 'Spring',
-                        ]),
-                    ];
-                }),
+                ->fields(static fn (): array => [
+                    Select::make('Group')->options([
+                        'Fall' => 'Fall',
+                        'Spring' => 'Spring',
+                    ]),
+                ]),
 
             new Panel('Access', [
                 Boolean::make('Active', 'is_access_active')
@@ -188,9 +181,7 @@ class DuesPackage extends Resource
             ]),
 
             HasMany::make('Dues Transactions', 'duesTransactions', DuesTransaction::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-dues-transactions');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-dues-transactions')),
 
             self::metadataPanel(),
         ];
@@ -206,19 +197,13 @@ class DuesPackage extends Resource
         return [
             (new TotalCollections())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
             (new PaymentMethodBreakdown())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
             (new MerchandiseSelections())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-payments');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
         ];
     }
 }

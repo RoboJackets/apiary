@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
-
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use Illuminate\Database\Query\JoinClause;
@@ -35,9 +33,10 @@ class PaymentReceivedForTravel extends Partition
      */
     public function name()
     {
-        return -1 === $this->resourceId
-            ? 'Payment Received'
-            : 'Payment Received for '.Travel::where('id', $this->resourceId)->sole()->name;
+        return $this->resourceId === -1 ? 'Payment Received' : 'Payment Received for '.Travel::where(
+            'id',
+            $this->resourceId
+        )->sole()->name;
     }
 
     /**
@@ -60,10 +59,7 @@ class PaymentReceivedForTravel extends Partition
                 ->groupBy('paid')
                 ->orderByDesc('paid') // sorts "Paid" first
                 ->get()
-                ->mapWithKeys(static function (object $row): array {
-                    // @phpstan-ignore-next-line
-                    return [$row->paid => $row->count];
-                })
+                ->mapWithKeys(static fn (object $row): array => [$row->paid => $row->count])
                 ->toArray()
         )->colors(  // nova default pie chart colors but mapped to specific series
             [
@@ -80,6 +76,6 @@ class PaymentReceivedForTravel extends Partition
      */
     public function uriKey()
     {
-        return -1 === $this->resourceId ? 'payment-received' : 'payment-received-'.$this->resourceId;
+        return $this->resourceId === -1 ? 'payment-received' : 'payment-received-'.$this->resourceId;
     }
 }

@@ -24,8 +24,8 @@ class TeamAttendanceNotification extends Notification
      */
     public function via(Team $notifiable): array
     {
-        return null !== $notifiable->routeNotificationForSlack($this)
-            && null !== $notifiable->slack_private_channel_id ? ['slack'] : [];
+        return $notifiable->routeNotificationForSlack($this) !== null
+            && $notifiable->slack_private_channel_id !== null ? ['slack'] : [];
     }
 
     /**
@@ -53,15 +53,13 @@ class TeamAttendanceNotification extends Notification
 
         $inactiveNames = $knownAttendance->pluck('attendee')
             ->unique()
-            ->filter(static function (User $user): bool {
-                return false === $user->is_active;
-            })->pluck('name');
+            ->filter(static fn (User $user): bool => $user->is_active === false)->pluck('name');
 
         $inactive = $inactiveNames->count() + $unknown;
 
         if ($unknown > 0) {
             $inactiveNames = $inactiveNames->concat([
-                $unknown.' '.Str::plural('person', $unknown).' who'.(1 === $unknown ? ' has' : ' have')
+                $unknown.' '.Str::plural('person', $unknown).' who'.($unknown === 1 ? ' has' : ' have')
                     .' never logged in to MyRoboJackets',
             ]);
         }
@@ -72,7 +70,7 @@ class TeamAttendanceNotification extends Notification
         // e.g. Of those attendees, the following 1 person has not paid dues.
         // e.g. Of those attendees, the following 3 people have not paid dues.
         $inactiveTitle = 'Of those attendees, the following '.$inactive.' '.Str::plural('person', $inactive);
-        $inactiveTitle .= (1 === $inactive ? ' has' : ' have').' not paid dues:';
+        $inactiveTitle .= ($inactive === 1 ? ' has' : ' have').' not paid dues:';
         $inactiveNames = $inactiveNames->join(', ', ' and ');
 
         $slackMessage = (new SlackMessage())

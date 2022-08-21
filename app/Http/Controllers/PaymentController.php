@@ -71,7 +71,7 @@ class PaymentController extends Controller
         $payment->update($request->validated());
 
         $payment = Payment::find($payment->id);
-        if (null !== $payment) {
+        if ($payment !== null) {
             return response()->json(['status' => 'success', 'payment' => $payment]);
         }
 
@@ -83,7 +83,7 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment): JsonResponse
     {
-        if (true === $payment->delete()) {
+        if ($payment->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'Payment deleted.']);
         }
 

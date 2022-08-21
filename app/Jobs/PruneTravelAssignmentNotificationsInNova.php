@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Jobs;
 
 use App\Models\TravelAssignment;
@@ -23,16 +21,13 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeU
     use Queueable;
     use SerializesModels;
 
-    private User $user;
-
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
     }
 
     /**
@@ -45,9 +40,7 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeU
     public function handle()
     {
         if ($this->user->assignments->reduce(
-            static function (bool $carry, TravelAssignment $assignment): bool {
-                return $carry && $assignment->is_complete;
-            },
+            static fn (bool $carry, TravelAssignment $assignment): bool => $carry && $assignment->is_complete,
             true
         )) {
             $this->user->novaNotifications()

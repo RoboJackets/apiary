@@ -45,7 +45,7 @@ class MerchandiseSelections extends Partition
                 ->whereNull('payments.deleted_at')
                 ->whereNull('dues_transactions.deleted_at')
                 ->when(
-                    'fiscal-years' === $request->resource,
+                    $request->resource === 'fiscal-years',
                     static function (EloquentBuilder $query, bool $isFiscalYear) use ($request): void {
                         $query
                             ->whereIn(
@@ -65,10 +65,7 @@ class MerchandiseSelections extends Partition
                 ->orderByDesc('count')
                 ->get()
                 ->mapWithKeys(
-                    static function (object $record): array {
-                        // @phpstan-ignore-next-line
-                        return [$record->merchandise_name => $record->count];
-                    }
+                    static fn (object $record): array => [$record->merchandise_name => $record->count]
                 )
                 ->toArray()
         );

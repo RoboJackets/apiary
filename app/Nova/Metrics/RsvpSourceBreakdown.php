@@ -32,7 +32,7 @@ class RsvpSourceBreakdown extends Partition
                 ->orderByDesc('aggregate')
                 ->get()
                 ->mapWithKeys(static function (object $item): array {
-                    if (null !== $item->rsvpsource) {
+                    if ($item->rsvpsource !== null) {
                         return [$item->rsvpsource => $item->aggregate];
                     }
 

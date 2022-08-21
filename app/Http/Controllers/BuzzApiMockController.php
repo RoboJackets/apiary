@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
@@ -17,7 +14,7 @@ class BuzzApiMockController extends Controller
         $gtid = $request->input('gtid');
         $results = [];
 
-        if (null !== $gtid) {
+        if ($gtid !== null) {
             $results[] = [
                 'eduPersonPrimaryAffiliation' => 'student',
                 'givenName' => 'George',

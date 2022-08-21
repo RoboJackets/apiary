@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Nova;
 
 use Carbon\Carbon;
@@ -80,9 +78,7 @@ class Signature extends Resource
                 ->exceptOnForms(),
 
             Text::make('Type', 'electronic')
-                ->resolveUsing(static function (bool $electronic): string {
-                    return $electronic ? 'Electronic' : 'Paper';
-                })
+                ->resolveUsing(static fn (bool $electronic): string => $electronic ? 'Electronic' : 'Paper')
                 ->exceptOnForms(),
 
             DateTime::make('Rendered', 'render_timestamp')
@@ -136,9 +132,9 @@ class Signature extends Resource
                             ->onlyOnDetail(),
 
                         DateTime::make('Uploaded At', 'updated_at')
-                            ->resolveUsing(function (Carbon $str): ?Carbon {
-                                return null === $this->scanned_agreement ? null : $this->updated_at;
-                            })
+                            ->resolveUsing(
+                                fn (Carbon $updated): ?Carbon => $this->scanned_agreement === null ? null : $updated
+                            )
                             ->onlyOnDetail(),
                     ]
                 ),

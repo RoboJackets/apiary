@@ -18,11 +18,7 @@ class ExpiringPersonalAccessTokenEmailTest extends TestCase
 
         $clientRepository = new ClientRepository();
 
-        $client = $clientRepository->createPersonalAccessClient(
-            null,
-            'test',
-            'http://localhost'
-        );
+        $client = $clientRepository->createPersonalAccessClient(null, 'test', 'http://localhost');
 
         Config::set('passport.personal_access_client.id', $client->id);
         Config::set('passport.personal_access_client.secret', $client->plain_secret);

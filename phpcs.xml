@@ -35,6 +35,9 @@
     <rule ref="Generic.Classes.DuplicateClassName"/>
 
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+        <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
+        <exclude-pattern>/app/Jobs/ProcessPostmarkInboundWebhook.php</exclude-pattern>
+        <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
         <exclude-pattern>/app/Http/Resources/</exclude-pattern>
         <exclude-pattern>/app/Notifiables/</exclude-pattern>
         <exclude-pattern>/app/Notifications/</exclude-pattern>
@@ -55,10 +58,6 @@
         <exclude name="Generic.Commenting.DocComment.NonParamGroup"/>
     </rule>
 
-    <rule ref="Generic.ControlStructures">
-        <exclude name="Generic.ControlStructures.DisallowYodaConditions"/>
-    </rule>
-
     <rule ref="Generic.Files.ByteOrderMark"/>
     <rule ref="Generic.Files.EndFileNewline"/>
     <rule ref="Generic.Files.InlineHTML"/>
@@ -66,6 +65,12 @@
     <rule ref="Generic.Files.LineEndings">
         <properties>
             <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>/config/</exclude-pattern>
+        <properties>
+            <property name="ignoreComments" value="true" />
         </properties>
     </rule>
 
@@ -108,7 +113,9 @@
     <rule ref="Generic.PHP.NoSilencedErrors"/>
     <rule ref="Generic.PHP.SAPIUsage"/>
 
-    <rule ref="Generic.Strings"/>
+    <rule ref="Generic.Strings">
+        <exclude name="Generic.Strings.UnnecessaryStringConcat"/>
+    </rule>
 
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
     <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
@@ -125,6 +132,7 @@
 
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+    <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion"/>
     <rule ref="SlevomatCodingStandard.Classes.RequireSingleLineMethodSignature"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
@@ -142,15 +150,21 @@
 
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
 
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition">
+        <properties>
+            <property name="maxLineLength" value="120"/>
+        </properties>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.ControlStructures">
+        <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
@@ -180,6 +194,8 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
+        <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
+        <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
         <exclude-pattern>/app/Http/Resources/</exclude-pattern>
         <exclude-pattern>/app/Notifiables/</exclude-pattern>
         <exclude-pattern>/app/Notifications/</exclude-pattern>
@@ -188,12 +204,16 @@
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.Functions.RequireSingleLineCall">
+        <properties>
+            <property name="maxLineLength" value="120"/>
+        </properties>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.Functions">
+        <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
         <exclude name="SlevomatCodingStandard.Functions.FunctionLength"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
-        <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction" />
-        <exclude name="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
-        <exclude name="SlevomatCodingStandard.Functions.RequireSingleLineCall.RequiredSingleLineCall"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
     </rule>
 
@@ -220,6 +240,10 @@
         </properties>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.Numbers">
+        <exclude name="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator"/>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.Operators">
         <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators"/>
     </rule>
@@ -239,6 +263,7 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
         <exclude-pattern>/app/Http/Resources</exclude-pattern>
         <exclude-pattern>/app/Nova/</exclude-pattern>
     </rule>
@@ -249,9 +274,25 @@
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+        <properties>
+            <property name="withSpaces" value="no"/>
+            <property name="shortNullable" value="yes"/>
+            <property name="nullPosition" value="last"/>
+        </properties>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints">
         <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
     </rule>
+
+    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
+        <properties>
+            <property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Variables"/>
 
     <rule ref="Squiz.Arrays">
         <exclude name="Squiz.Arrays.ArrayDeclaration"/>
@@ -282,7 +323,9 @@
     </rule>
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
 
-    <rule ref="Squiz.PHP.CommentedOutCode"/>
+    <rule ref="Squiz.PHP.CommentedOutCode">
+        <exclude-pattern>/config/</exclude-pattern>
+    </rule>
     <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
     <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
     <rule ref="Squiz.PHP.DiscouragedFunctions"/>
@@ -303,6 +346,7 @@
         <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
         <exclude name="Squiz.WhiteSpace.MemberVarSpacing"/>
         <exclude name="Squiz.WhiteSpace.ObjectOperatorSpacing.Before"/>
+        <exclude name="Squiz.WhiteSpace.OperatorSpacing.SpacingAfter"/>
     </rule>
     <rule ref="Squiz.WhiteSpace.FunctionSpacing">
         <properties>

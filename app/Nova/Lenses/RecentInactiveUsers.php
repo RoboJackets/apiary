@@ -56,12 +56,8 @@ class RecentInactiveUsers extends Lens
     {
         return [
             Text::make('GTID')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })->resolveUsing(function (string $gtid): string {
-                    // Hide GTID when the attendee is known
-                    return null !== $this->attendee ? '—' : $gtid;
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->resolveUsing(fn (string $gtid): string => $this->attendee !== null ? '—' : $gtid),
 
             BelongsTo::make('User', 'attendee', User::class),
 
@@ -81,9 +77,9 @@ class RecentInactiveUsers extends Lens
     public function cards(NovaRequest $request): array
     {
         return [
-            (new ActiveAttendanceBreakdown())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users') && $request->user()->can('read-attendance');
-            }),
+            (new ActiveAttendanceBreakdown())->canSee(
+                static fn (Request $r): bool => $r->user()->can('read-users') && $r->user()->can('read-attendance')
+            ),
         ];
     }
 

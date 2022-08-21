@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Jobs;
 
 use App\Models\User;
@@ -22,16 +20,13 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
     use Queueable;
     use SerializesModels;
 
-    private User $user;
-
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
     }
 
     /**
@@ -43,10 +38,10 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
     {
         if ($this->user->dues()->pending()->count() > 0 &&
             $this->user->hasPermissionTo('access-nova') &&
-            0 === $this->user->novaNotifications()
+            $this->user->novaNotifications()
                              ->where('type', DuesPaymentDue::class)
                              ->where('created_at', '>', now()->subMonths(3))
-                             ->count()
+                             ->count() === 0
         ) {
             $this->user->notify(new DuesPaymentDue());
         }

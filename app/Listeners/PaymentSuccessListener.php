@@ -19,7 +19,7 @@ class PaymentSuccessListener
         $payable = $payment->payable;
         Log::info(self::class.': Handling successful payment ID '.$payment->id);
 
-        if ('paid' !== $payable->status) {
+        if ($payable->status !== 'paid') {
             return;
         }
 
@@ -29,7 +29,7 @@ class PaymentSuccessListener
             $user->removeRole('non-member');
         }
         $role_member = Role::where('name', 'member')->first();
-        if (null !== $role_member && ! $user->hasRole('member')) {
+        if ($role_member !== null && ! $user->hasRole('member')) {
             $user->assignRole($role_member);
         } elseif ($user->hasRole('member')) {
             Log::notice(self::class.": Role 'member' already assigned to ".$user->uid);

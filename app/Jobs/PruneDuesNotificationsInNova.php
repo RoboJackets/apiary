@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Jobs;
 
 use App\Models\User;
@@ -23,16 +21,13 @@ class PruneDuesNotificationsInNova implements ShouldQueue, ShouldBeUnique
     use Queueable;
     use SerializesModels;
 
-    private User $user;
-
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
     }
 
     /**

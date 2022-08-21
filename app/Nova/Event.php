@@ -87,31 +87,21 @@ class Event extends Resource
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
 
-            Text::make('RSVP URL', function (): string {
-                return route('events.rsvp', ['event' => $this->id]);
-            })->onlyOnDetail(),
+            Text::make('RSVP URL', fn (): string => route('events.rsvp', ['event' => $this->id]))->onlyOnDetail(),
 
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-remote-attendance-links');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-remote-attendance-links')),
 
             self::metadataPanel(),
 
             HasMany::make('RSVPs')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-rsvps');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-rsvps')),
 
             MorphMany::make('Attendance')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-attendance');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
 
             CollectAttendance::make()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-attendance');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('create-attendance')),
         ];
     }
 
@@ -125,14 +115,10 @@ class Event extends Resource
         return [
             (new RsvpSourceBreakdown())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-rsvps');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-rsvps')),
             (new ActiveAttendanceBreakdown(true))
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-attendance');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
         ];
     }
 
@@ -145,12 +131,8 @@ class Event extends Resource
     {
         return [
             (new Actions\CreateRemoteAttendanceLink())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('create-remote-attendance-links');
-                })
-                ->canRun(static function (Request $request): bool {
-                    return $request->user()->can('create-remote-attendance-links');
-                })
+                ->canSee(static fn (Request $request): bool => $request->user()->can('create-remote-attendance-links'))
+                ->canRun(static fn (Request $request): bool => $request->user()->can('create-remote-attendance-links'))
                 ->confirmText('Are you sure you want to create a remote attendance link?')
                 ->confirmButtonText('Create Link')
                 ->cancelButtonText('Cancel'),
@@ -162,11 +144,11 @@ class Event extends Resource
      */
     public function subtitle(): ?string
     {
-        if (null === $this->start_time && null !== $this->end_time) {
+        if ($this->start_time === null && $this->end_time !== null) {
             return $this->end_time->format('F jS, Y');
         }
 
-        if (null !== $this->start_time) {
+        if ($this->start_time !== null) {
             return $this->start_time->format('F jS, Y');
         }
 

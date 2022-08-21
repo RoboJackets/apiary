@@ -11,7 +11,7 @@ class GitHubController extends Controller
 {
     public function redirectToProvider(Request $request)
     {
-        if (null !== $request->user()->github_username) {
+        if ($request->user()->github_username !== null) {
             return response(
                 view(
                     'errors.generic',
@@ -31,7 +31,7 @@ class GitHubController extends Controller
     {
         $localUser = $request->user();
 
-        if (null !== $localUser->github_username) {
+        if ($localUser->github_username !== null) {
             return response(
                 view(
                     'errors.generic',
@@ -48,7 +48,7 @@ class GitHubController extends Controller
 
         $localUser->save(); // this will trigger a JEDI sync
 
-        if ($localUser->is_access_active && 0 !== count($localUser->teams)) {
+        if ($localUser->is_access_active && count($localUser->teams) !== 0) {
             return redirect(config('jedi.host').'/self-service/github');
         }
 

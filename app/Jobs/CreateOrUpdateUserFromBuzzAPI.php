@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator
-
 namespace App\Jobs;
 
 use App\Models\User;
@@ -90,7 +88,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
      */
     public function handle(): void
     {
-        if (null === config('buzzapi.app_password')) {
+        if (config('buzzapi.app_password') === null) {
             return;
         }
 
@@ -99,7 +97,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $searchUid = null;
         if ($this->value instanceof User) {
             $searchUid = $this->value->uid;
-            if (null === $this->value->gtDirGUID) {
+            if ($this->value->gtDirGUID === null) {
                 $this->identifier = self::IDENTIFIER_USERNAME;
                 $searchValue = $this->value->uid;
             } else {
@@ -131,7 +129,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             throw new Exception('GTED accounts search failed with message '.$accountsResponse->errorInfo()->message);
         }
         $numResults = count($accountsResponse->json->api_result_data);
-        if (0 === $numResults) {
+        if ($numResults === 0) {
             throw new Exception('GTED accounts search was successful but gave no results for '.$searchValue);
         }
 
@@ -141,7 +139,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         $account = collect($accountsResponse->json->api_result_data)->firstWhere('uid', $searchUid);
 
         $user = User::where('uid', $account->uid)->first();
-        $userIsNew = null === $user;
+        $userIsNew = $user === null;
         if ($userIsNew) {
             $user = new User();
             $user->create_reason = $this->reason;
@@ -179,14 +177,14 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         );
         $standing_count = $user->syncClassStandingFromEduPersonScopedAffiliation($account->eduPersonScopedAffiliation);
 
-        if ('student' === $user->primary_affiliation && 1 !== $standing_count) {
+        if ($user->primary_affiliation === 'student' && $standing_count !== 1) {
             Log::warning(
                 self::class.': User '.$user->uid
                 .' has primary affiliation of student but '.$standing_count.' class standings. Check data integrity.'
             );
         }
 
-        if ('student' === $user->primary_affiliation && 0 === $major_count) {
+        if ($user->primary_affiliation === 'student' && $major_count === 0) {
             Log::warning(
                 self::class.': User '.$user->uid
                 .' has primary affiliation of student but no majors. Check data integrity.'
@@ -194,12 +192,12 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
         }
 
         // Initial role assignment
-        if (! $userIsNew && 0 !== $user->roles->count()) {
+        if (! $userIsNew && $user->roles->count() !== 0) {
             return;
         }
 
         $role = Role::where('name', 'non-member')->first();
-        if (null !== $role) {
+        if ($role !== null) {
             $user->assignRole($role);
 
             return;

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Nova;
 
 use Adldap\Laravel\Facades\Adldap;
@@ -105,14 +103,11 @@ class User extends Resource
                 ->rules('required', 'max:127'),
 
             Text::make('GTED Primary Affiliation', 'primary_affiliation')
-                ->displayUsing(static function (?string $affiliation): ?string {
-                    return null === $affiliation || 'member' === $affiliation ? null : ucfirst($affiliation);
-                })
+                ->displayUsing(
+                    static fn (?string $a): ?string => $a === null || $a === 'member' ? null : ucfirst($a)
+                )
                 ->rules('required')
-                ->canSee(static function (Request $request): bool {
-                    // Hidden to non-admins because it's confusing and not useful
-                    return $request->user()->hasRole('admin');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             Text::make('Georgia Tech Email', 'gt_email')
                 ->rules('required', 'email')
@@ -124,9 +119,7 @@ class User extends Resource
 
             Number::make('GTID')
                 ->hideFromIndex()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-gtid');
-                })
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-gtid'))
                 ->rules('required', 'integer', 'min:900000000', 'max:999999999')
                 ->creationRules('unique:users,gtid')
                 ->updateRules('unique:users,gtid,{{resourceId}}'),
@@ -139,9 +132,8 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            Boolean::make('Latest Agreement Signed', function (): bool {
-                return $this->signed_latest_agreement;
-            })->onlyOnDetail(),
+            Boolean::make('Latest Agreement Signed', 'signed_latest_agreement')
+                ->onlyOnDetail(),
 
             HasMany::make('Signatures'),
 
@@ -224,9 +216,12 @@ class User extends Resource
             new Panel(
                 'Resume',
                 [
-                    File::make('Resume', function (): ?string {
-                        return null !== $this->resume_date ? 'resumes/'.$this->uid.'.pdf' : null;
-                    })->path('resumes')
+                    File::make(
+                        'Resume',
+                        fn (): ?string => $this->resume_date !== null ? 'resumes/'.$this->uid.'.pdf' : null
+                    )->path(
+                        'resumes'
+                    )
                         ->disk('local')
                         ->deletable(false)
                         ->onlyOnDetail()
@@ -279,39 +274,33 @@ class User extends Resource
                 }),
 
             BelongsToMany::make('Majors')
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                }),
+                ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin')),
 
             BelongsToMany::make('Class Standing', 'classStanding')
-                ->readonly(static function (Request $request): bool {
-                    return ! $request->user()->hasRole('admin');
-                }),
+                ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin')),
 
             HasMany::make('OAuth2 Clients', 'clients')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
-                }),
+                ->canSee(
+                    static fn (Request $request): bool => $request->user()->hasRole(
+                        'admin'
+                    ) || $request->resourceId === $request->user()->id
+                ),
 
             HasMany::make('OAuth2 Access Tokens', 'tokens', OAuth2AccessToken::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin') || $request->resourceId === $request->user()->id;
-                }),
+                ->canSee(
+                    static fn (Request $request): bool => $request->user()->hasRole(
+                        'admin'
+                    ) || $request->resourceId === $request->user()->id
+                ),
 
             new Panel('Employment', [
                 Number::make('Employee ID (OneUSG)', 'employee_id')
                     ->onlyOnDetail()
-                    ->canSee(static function (Request $request): bool {
-                        // Hidden to non-admins because it's confusing and not useful
-                        return $request->user()->hasRole('admin');
-                    }),
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                 Text::make('Home Department (BuzzAPI)', 'employee_home_department')
                     ->onlyOnDetail()
-                    ->canSee(static function (Request $request): bool {
-                        // Hidden to non-admins because it's confusing and not useful
-                        return $request->user()->hasRole('admin');
-                    }),
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                 Text::make('Home Department (Whitepages)', static function (AppModelsUser $user): ?string {
                     $uid = $user->uid;
@@ -322,7 +311,7 @@ class User extends Resource
                         static function () use ($uid): ?string {
                             $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
-                            if (null !== $parentSpan) {
+                            if ($parentSpan !== null) {
                                 $context = new SpanContext();
                                 $context->setOp('ldap.get_home_department');
                                 $span = $parentSpan->startChild($context);
@@ -337,21 +326,18 @@ class User extends Resource
                                 ->pluck('ou')
                                 ->toArray();
 
-                            if (null !== $parentSpan) {
+                            if ($parentSpan !== null) {
                                 // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
                                 $span->finish();
                                 SentrySdk::getCurrentHub()->setSpan($parentSpan);
                             }
 
-                            return [] === $result ? null : $result[0][0];
+                            return $result === [] ? null : $result[0][0];
                         }
                     );
                 })
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    // Hidden to non-admins because it's confusing and not useful
-                    return $request->user()->hasRole('admin');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
             ]),
 
             new Panel('Metadata', $this->metaFields()),
@@ -368,15 +354,11 @@ class User extends Resource
         return [
             Text::make('Emergency Contact Name')
                 ->hideFromIndex()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-emergency_contact');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact')),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
                 ->hideFromIndex()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-emergency_contact');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact')),
         ];
     }
 
@@ -429,14 +411,10 @@ class User extends Resource
                 ->hideFromIndex(),
 
             MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
         ];
     }
 
@@ -450,13 +428,9 @@ class User extends Resource
         return [
             (new TotalAttendance())
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-attendance');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
             (new ResumesSubmitted())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-resume');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-resume')),
             (new CreateReasonBreakdown()),
         ];
     }
@@ -485,70 +459,60 @@ class User extends Resource
     {
         return [
             (new Actions\SyncAccess())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->hasRole('admin');
-                })->confirmButtonText('Sync Access'),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
+                )->confirmButtonText('Sync Access'),
             (new Actions\OverrideAccess())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->hasRole('admin');
-                })->confirmButtonText('Override Access'),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
+                )->confirmButtonText('Override Access'),
             resolve(CreatePersonalAccessToken::class)
-                ->canSee(static function (Request $request): bool {
-                    return true;
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-                })->confirmButtonText('Create Access Token'),
+                ->canSee(static fn (Request $request): bool => true)
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole(
+                        'admin'
+                    ) || ($request->user()->id === $user->id)
+                )->confirmButtonText('Create Access Token'),
             resolve(CreateOAuth2Client::class)
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->hasRole('admin');
-                })->confirmButtonText('Create Client'),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
+                )->confirmButtonText('Create Client'),
             resolve(RevokeOAuth2Tokens::class)
-                ->canSee(static function (Request $request): bool {
-                    return true;
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->hasRole('admin') || ($request->user()->id === $user->id);
-                })->confirmButtonText('Revoke Tokens'),
+                ->canSee(static fn (Request $request): bool => true)
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole(
+                        'admin'
+                    ) || ($request->user()->id === $user->id)
+                )->confirmButtonText('Revoke Tokens'),
             (new Actions\ExportResumes())
                 ->standalone()
                 ->onlyOnIndex()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-resume');
-                })->confirmButtonText('Export Resumes'),
+                ->canSee(
+                    static fn (Request $request): bool => $request->user()->can('read-users-resume')
+                )->confirmButtonText('Export Resumes'),
             (new Actions\RefreshFromGTED())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->hasRole('admin');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->hasRole('admin');
-                })->confirmButtonText('Refresh from GTED'),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
+                )->confirmButtonText('Refresh from GTED'),
             (new Actions\ExportUsersBuzzCardAccess())
                 ->standalone()
                 ->onlyOnIndex()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users-gtid');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->can('read-users-gtid');
-                })->confirmButtonText('Export List'),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-gtid'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can(
+                        'read-users-gtid'
+                    )
+                )->confirmButtonText('Export List'),
             (new Actions\ExportUsernames())
                 ->onlyOnIndex()
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-users');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsUser $user): bool {
-                    return $request->user()->can('read-users');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can('read-users')
+                ),
         ];
     }
 
@@ -562,11 +526,11 @@ class User extends Resource
         if (count($managed_team_names) > 0) {
             $team_name = $managed_team_names[0];
 
-            if ('Core' === $team_name) {
+            if ($team_name === 'Core') {
                 return 'President';
             }
 
-            if ('Alumni Leadership' === $team_name) {
+            if ($team_name === 'Alumni Leadership') {
                 return 'Corporation President';
             }
 
@@ -603,10 +567,8 @@ class User extends Resource
         $firstPaidTransact = $paidTransactions->first();
         $lastPaidTransact = $paidTransactions->last();
 
-        if (null !== $firstPaidTransact && null !== $lastPaidTransact) {
-            // @phpstan-ignore-next-line
+        if ($firstPaidTransact !== null && $lastPaidTransact !== null) {
             $firstYear = (new Carbon($firstPaidTransact->effective_start, 'America/New_York'))->year;
-            // @phpstan-ignore-next-line
             $lastYear = (new Carbon($lastPaidTransact->effective_end, 'America/New_York'))->year;
 
             return $firstYear === $lastYear ? 'Member '.$firstYear : 'Member '.$firstYear.'-'.$lastYear;
@@ -616,7 +578,7 @@ class User extends Resource
 
         $class_standing_names = $this->classStanding()->pluck('name')->toArray();
 
-        if (count($major_names) > 0 && null !== $major_names[0] && count($class_standing_names) > 0) {
+        if (count($major_names) > 0 && $major_names[0] !== null && count($class_standing_names) > 0) {
             return $major_names[0].' | '.ucfirst($class_standing_names[0]);
         }
 

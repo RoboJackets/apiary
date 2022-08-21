@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found,Squiz.WhiteSpace.OperatorSpacing.SpacingAfter,SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
-
 namespace App\Nova\Actions;
 
 use App\Models\Attendance;
@@ -49,7 +47,7 @@ class CreateRemoteAttendanceLink extends Action
         $link->attendable_id = $attendable->id;
         $link->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $link->expires_at = $expiration;
-        if (null !== $fields->redirect_url) {
+        if ($fields->redirect_url !== null) {
             $link->redirect_url = RemoteAttendanceLink::normalizeRedirectUrl($fields->redirect_url);
         }
         $link->note = $fields->purpose;
@@ -84,9 +82,7 @@ class CreateRemoteAttendanceLink extends Action
     public function fields(NovaRequest $request): array
     {
         $notes = collect(NovaRemoteAttendanceLink::$recommendedNotes)
-            ->mapWithKeys(static function (string $note): array {
-                return [$note => $note];
-            });
+            ->mapWithKeys(static fn (string $note): array => [$note => $note]);
 
         return [
             Text::make('Redirect URL')

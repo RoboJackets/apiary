@@ -38,14 +38,14 @@ class Helpers
 
     public static function tracesSampler(SamplingContext $context): float
     {
-        if (true === $context->getParentSampled()) {
+        if ($context->getParentSampled() === true) {
             return 1;
         }
 
         $transactionData = $context->getTransactionContext()?->getData();
 
         if (
-            null !== $transactionData &&
+            $transactionData !== null &&
             array_key_exists('url', $transactionData) &&
             array_key_exists('method', $transactionData) &&
             in_array($transactionData['method'], self::$ignoreMethods, true) &&
