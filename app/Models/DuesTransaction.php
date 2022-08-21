@@ -26,13 +26,13 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\DuesPackage $for
  * @property-read bool $is_paid
- * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
  * @property-read string $status
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
  * @property-read int|null $merchandise_count
  * @property-read \App\Models\DuesPackage $package
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read int|null $payment_count
+ * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $jankForNova
  * @property-read int|null $jank_for_nova_count
  * @property-read \App\Models\User|null $providedBy

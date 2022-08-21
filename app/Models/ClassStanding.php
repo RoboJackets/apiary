@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property int $id
  * @property string $name
+ * @property int|null $rank_order
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
- * @property int|null $rank_order
  * @property-read int|null $members_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding newModelQuery()

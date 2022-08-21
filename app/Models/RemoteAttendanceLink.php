@@ -25,8 +25,8 @@ use Illuminate\Support\Str;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Team|\App\Models\Event $attendable
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
- * @property-read Model|\Barryvdh\LaravelIdeHelper\Eloquent $attendable
  * @property-read int|null $attendance_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|RemoteAttendanceLink newModelQuery()
