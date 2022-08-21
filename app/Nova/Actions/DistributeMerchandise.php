@@ -104,7 +104,7 @@ class DistributeMerchandise extends Action
                     static fn (): array => User::whereHas(
                         'duesTransactions',
                         static function (Builder $query) use ($resource): void {
-                                $query->whereHas(
+                            $query->whereHas(
                                     'merchandise',
                                     static function (Builder $query) use ($resource): void {
                                         $query->when(

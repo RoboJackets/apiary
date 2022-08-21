@@ -272,7 +272,7 @@ class TravelAssignment extends Model
             return $this->getAirfarePowerFormUrl();
         }
 
-        if (true === ($this->travel->tar_transportation_mode ?? ['rental_vehicle' => false,])['rental_vehicle']) {
+        if (true === ($this->travel->tar_transportation_mode ?? ['rental_vehicle' => false])['rental_vehicle']) {
             return $this->getTravelAuthorityRequestPowerFormUrl();
         }
 
