@@ -43,7 +43,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $clickup_invite_pending
  * @property string|null $autodesk_email
  * @property bool $autodesk_invite_pending
- * @property bool $signed_latest_agreement
  * @property string $gt_email
  * @property string $first_name
  * @property string|null $middle_name
@@ -72,11 +71,15 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $primary_affiliation
  * @property string|null $gtDirGUID
  * @property bool $buzzcard_access_opt_out
- * @property string|null $preferred_first_name
+ * @property string|null $email_suppression_reason
+ * @property int|null $employee_id
+ * @property string|null $employee_home_department
  * @property-read User|null $accessOverrideBy
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
  * @property-read int|null $actions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
+ * @property-read int|null $assignments_count
  * @property-read int|null $attendance_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ClassStanding> $classStanding
  * @property-read int|null $class_standing_count
@@ -87,19 +90,28 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $duesTransactions
  * @property-read int|null $dues_transactions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Event> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
+ * @property-read int|null $envelopes_count
  * @property-read int|null $events_count
+ * @property-read \App\Models\TravelAssignment|null $current_travel_assignment
  * @property-read string $full_name
+ * @property-read bool $has_active_override
  * @property-read bool $has_ordered_polo
  * @property-read bool $is_access_active
  * @property-read bool $is_active
+ * @property-read bool $is_student
  * @property-read string $name
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Major> $majors
+ * @property string|null $preferred_first_name
+ * @property-read \App\Models\SelfServiceAccessOverrideEligibility $self_service_override_eligibility
+ * @property-read bool $should_receive_email
+ * @property-read bool $signed_latest_agreement
  * @property-read int|null $majors_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $manages
  * @property-read int|null $manages_count
- * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $paidDues
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<Notification> $novaNotifications
+ * @property-read int|null $nova_notifications_count
  * @property-read int|null $paid_dues_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
@@ -111,11 +123,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $signatures_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Team> $teams
  * @property-read int|null $teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
- * @property-read int|null $assignments_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2Client> $clients
  * @property-read int|null $clients_count
- * @property-read bool $is_student
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
  *
@@ -135,7 +144,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User role($roles, $guard = null)
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
- * @method static Builder|User whereApiToken($value)
  * @method static Builder|User whereAutodeskEmail($value)
  * @method static Builder|User whereAutodeskInvitePending($value)
  * @method static Builder|User whereBuzzcardAccessOptOut($value)
@@ -145,8 +153,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereCreateReason($value)
  * @method static Builder|User whereCreatedAt($value)
  * @method static Builder|User whereDeletedAt($value)
+ * @method static Builder|User whereEmailSuppressionReason($value)
  * @method static Builder|User whereEmergencyContactName($value)
  * @method static Builder|User whereEmergencyContactPhone($value)
+ * @method static Builder|User whereEmployeeHomeDepartment($value)
+ * @method static Builder|User whereEmployeeId($value)
  * @method static Builder|User whereEthnicity($value)
  * @method static Builder|User whereExistsInSums($value)
  * @method static Builder|User whereFirstName($value)
@@ -175,8 +186,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static QueryBuilder|User withTrashed()
  * @method static QueryBuilder|User withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
- * @property-read \App\Models\SelfServiceAccessOverrideEligibility $self_service_override_eligibility
  */
 class User extends Authenticatable
 {

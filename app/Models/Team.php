@@ -42,15 +42,14 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int|null $project_manager_id user_id of the project manager
  * @property \Illuminate\Database\Eloquent\Collection|array<\App\Models\RemoteAttendanceLink> $remoteAttendanceLinks
- * @property-read \App\Models\User|null $projectManager
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Nova\Actions\ActionEvent> $actions
+ * @property bool $self_service_override_eligible
  * @property-read int|null $actions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attendance> $attendance
  * @property-read int|null $attendance_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\User> $members
  * @property-read int|null $members_count
- * @property-read array<\Illuminate\Notifications\DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
+ * @property-read \App\Models\User|null $projectManager
  * @property-read int|null $remote_attendance_links_count
  *
  * @method static Builder|Team attendable()
@@ -69,6 +68,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Team whereMailingListName($value)
  * @method static Builder|Team whereName($value)
  * @method static Builder|Team whereProjectManagerId($value)
+ * @method static Builder|Team whereSelfServiceOverrideEligible($value)
  * @method static Builder|Team whereSelfServiceable($value)
  * @method static Builder|Team whereSlackChannelId($value)
  * @method static Builder|Team whereSlackChannelName($value)
@@ -113,6 +113,7 @@ class Team extends Model
         'attendable' => 'boolean',
         'self_serviceable' => 'boolean',
         'visible' => 'boolean',
+        'self_service_override_eligible' => 'boolean',
     ];
 
     /**

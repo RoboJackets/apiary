@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\DestructiveAction;
@@ -42,14 +43,14 @@ class RevokeOAuth2Tokens extends DestructiveAction
         foreach ($models as $user) {
             $user_access_tokens = $user->tokens()
                 ->whereRevoked(false)
-                ->whereHas('client', static function ($clientQuery) use ($fields) {
-                    // @phan-suppress-next-line PhanPluginNonBoolBranch
-                    if ($fields->include_personal_access_tokens) {
-                        return $clientQuery;
+                ->whereHas('client', static function (Builder $clientQuery) use ($fields): void {
+                    if (true === $fields->include_personal_access_tokens) {
+                        return;
                     }
 
-                    return $clientQuery->whereNotNull('user_id'); // PATs are created with a Personal Access Client that
+                    // PATs are created with a Personal Access Client that
                     // isn't associated with any user
+                    $clientQuery->whereNotNull('user_id');
                 })
                 ->get();
 

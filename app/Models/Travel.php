@@ -27,44 +27,51 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property bool $tar_required
- * @property array $tar_transportation_mode
- * @property string $tar_itinerary
- * @property string $tar_purpose
- * @property int $tar_airfare
- * @property int $tar_other_trans
- * @property int $tar_lodging
- * @property int $tar_registration
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
+ * @property bool|null $tar_required
+ * @property array|null $tar_transportation_mode
+ * @property string|null $tar_itinerary
+ * @property string|null $tar_purpose
+ * @property int|null $tar_airfare
+ * @property int|null $tar_other_trans
+ * @property int|null $tar_lodging
+ * @property int|null $tar_registration
+ * @property string|null $tar_project_number
+ * @property string|null $tar_account_code
+ * @property bool $completion_email_sent
  * @property-read int|null $assignments_count
  * @property-read \App\Models\User $primaryContact
  *
- * @method static \Illuminate\Database\Eloquent\Builder|Travel newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Travel newQuery()
+ * @method static \Database\Factories\TravelFactory factory(...$parameters)
+ * @method static Builder|Travel newModelQuery()
+ * @method static Builder|Travel newQuery()
  * @method static \Illuminate\Database\Query\Builder|Travel onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Travel query()
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDepartureDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereDestination($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereFeeAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereIncludedWithFee($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereNotIncludedWithFee($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel wherePrimaryContactUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereReturnDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Travel whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
+ * @method static Builder|Travel query()
+ * @method static Builder|Travel whereCompletionEmailSent($value)
+ * @method static Builder|Travel whereCreatedAt($value)
+ * @method static Builder|Travel whereDeletedAt($value)
+ * @method static Builder|Travel whereDepartureDate($value)
+ * @method static Builder|Travel whereDestination($value)
+ * @method static Builder|Travel whereFeeAmount($value)
+ * @method static Builder|Travel whereId($value)
+ * @method static Builder|Travel whereIncludedWithFee($value)
+ * @method static Builder|Travel whereName($value)
+ * @method static Builder|Travel whereNotIncludedWithFee($value)
+ * @method static Builder|Travel wherePrimaryContactUserId($value)
+ * @method static Builder|Travel whereReturnDate($value)
+ * @method static Builder|Travel whereTarAccountCode($value)
  * @method static Builder|Travel whereTarAirfare($value)
  * @method static Builder|Travel whereTarItinerary($value)
  * @method static Builder|Travel whereTarLodging($value)
  * @method static Builder|Travel whereTarOtherTrans($value)
+ * @method static Builder|Travel whereTarProjectNumber($value)
  * @method static Builder|Travel whereTarPurpose($value)
  * @method static Builder|Travel whereTarRegistration($value)
  * @method static Builder|Travel whereTarRequired($value)
  * @method static Builder|Travel whereTarTransportationMode($value)
+ * @method static Builder|Travel whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Travel extends Model

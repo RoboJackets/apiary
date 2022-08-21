@@ -8,6 +8,7 @@ use App\Notifications\ExpiringPersonalAccessTokenNotification;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -34,7 +35,7 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
             ->whereDate('expires_at', '>=', $recently_expired)
             ->whereDate('expires_at', '<', $expiring_soon)
             ->whereRevoked(false)
-            ->whereHas('client', static function ($clientQuery): void {
+            ->whereHas('client', static function (Builder $clientQuery): void {
                 $clientQuery->where('user_id', '=', null); // PATs are created with a Personal Access Client that
                 // isn't associated with any user
             })->get();

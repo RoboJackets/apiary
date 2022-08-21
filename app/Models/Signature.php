@@ -14,29 +14,31 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 /**
  * Represents a signed membership agreement.
  *
- * @property bool $electronic
- * @property bool $complete
- * @property string $ip_address
- * @property object $ip_address_location_estimate
- * @property \App\Models\MembershipAgreementTemplate $membershipAgreementTemplate
- * @property \App\Models\User $user
  * @property int $id
  * @property int $membership_agreement_template_id
  * @property int $user_id
  * @property int|null $uploaded_by
  * @property string|null $scanned_agreement
+ * @property bool $electronic
  * @property string|null $cas_host
  * @property string|null $cas_service_url_hash
  * @property string|null $cas_ticket
+ * @property string|null $ip_address
+ * @property array|null $ip_address_location_estimate
  * @property string|null $user_agent
+ * @property bool $complete
  * @property \Illuminate\Support\Carbon|null $render_timestamp
  * @property \Illuminate\Support\Carbon|null $redirect_to_cas_timestamp
  * @property \Illuminate\Support\Carbon|null $cas_ticket_redeemed_timestamp
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $upload_timestamp
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelope
+ * @property-read int|null $envelope_count
+ * @property-read \App\Models\MembershipAgreementTemplate $membershipAgreementTemplate
  * @property-read \App\Models\User|null $uploadedBy
+ * @property-read \App\Models\User $user
  *
+ * @method static \Database\Factories\SignatureFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Signature newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Signature query()
@@ -58,7 +60,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUploadedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUploadTimestamp($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Signature extends Model

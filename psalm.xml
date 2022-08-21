@@ -5,6 +5,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedVariablesAndParams="true"
+    findUnusedPsalmSuppress="true"
 >
     <projectFiles>
         <directory name="app" />
@@ -15,6 +17,10 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+    <stubs>
+        <file name="stubs/Permission.php" />
+        <file name="stubs/Role.php" />
+    </stubs>
     <issueHandlers>
         <UndefinedClass>
             <errorLevel type="suppress">
@@ -68,5 +74,226 @@
                 <file name="app/Providers/NovaServiceProvider.php" />
             </errorLevel>
         </UndefinedClass>
+        <UnresolvableInclude>
+            <errorLevel type="suppress">
+                <file name="app/Console/Kernel.php" />
+            </errorLevel>
+        </UnresolvableInclude>
+        <UndefinedMagicPropertyFetch>
+            <errorLevel type="suppress">
+                <directory name="app" />
+                <directory name="database/factories" />
+            </errorLevel>
+        </UndefinedMagicPropertyFetch>
+        <PossiblyInvalidPropertyFetch>
+            <errorLevel type="suppress">
+                <file name="app/Http/Controllers/AttendanceController.php" />
+            </errorLevel>
+        </PossiblyInvalidPropertyFetch>
+        <ArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <directory name="app" />
+                <file name="database/seeders/DuesTransactionsSeeder.php" />
+            </errorLevel>
+        </ArgumentTypeCoercion>
+        <PossiblyInvalidArgument>
+            <errorLevel type="suppress">
+                <directory name="app" />
+                <file name="database/seeders/DuesTransactionsSeeder.php" />
+            </errorLevel>
+        </PossiblyInvalidArgument>
+        <UndefinedMagicMethod>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </UndefinedMagicMethod>
+        <InvalidTemplateParam>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </InvalidTemplateParam>
+        <PossiblyInvalidMethodCall>
+            <errorLevel type="suppress">
+                <directory name="app" />
+                <directory name="routes" />
+            </errorLevel>
+        </PossiblyInvalidMethodCall>
+        <PossiblyInvalidPropertyFetch>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyInvalidPropertyFetch>
+        <PossiblyUndefinedMethod>
+            <errorLevel type="suppress">
+                <directory name="app" />
+                <directory name="database/migrations" />
+            </errorLevel>
+        </PossiblyUndefinedMethod>
+        <UndefinedInterfaceMethod>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </UndefinedInterfaceMethod>
+        <NoInterfaceProperties>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </NoInterfaceProperties>
+        <PossiblyNullPropertyFetch>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyNullPropertyFetch>
+        <PossiblyNullArgument>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyNullArgument>
+        <PossiblyNullOperand>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyNullOperand>
+        <PossiblyNullOperand>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyNullOperand>
+        <PropertyTypeCoercion>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PropertyTypeCoercion>
+        <InvalidPropertyAssignmentValue>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </InvalidPropertyAssignmentValue>
+        <TooManyTemplateParams>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </TooManyTemplateParams>
+        <PossiblyUndefinedVariable>
+            <errorLevel type="suppress">
+                <file name="app/Http/Controllers/SquareCheckoutController.php" />
+                <file name="app/Nova/User.php" />
+            </errorLevel>
+        </PossiblyUndefinedVariable>
+        <NonInvariantDocblockPropertyType>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </NonInvariantDocblockPropertyType>
+        <PossiblyNullReference>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyNullReference>
+        <PossiblyNullArrayAccess>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyNullArrayAccess>
+        <UndefinedDocblockClass>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </UndefinedDocblockClass>
+        <MethodSignatureMismatch>
+            <errorLevel type="suppress">
+                <file name="app/Models/OAuth2Client.php" />
+            </errorLevel>
+        </MethodSignatureMismatch>
+        <NullOperand>
+            <errorLevel type="suppress">
+                <file name="app/Models/Attendance.php" />
+            </errorLevel>
+        </NullOperand>
+        <InvalidArrayOffset>
+            <errorLevel type="suppress">
+                <file name="app/Models/TravelAssignment.php" />
+            </errorLevel>
+        </InvalidArrayOffset>
+        <PossiblyNullPropertyAssignmentValue>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Actions" />
+            </errorLevel>
+        </PossiblyNullPropertyAssignmentValue>
+        <InvalidScalarArgument>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Actions/CreateDuesPackages.php" />
+            </errorLevel>
+        </InvalidScalarArgument>
+        <PossiblyNullPropertyAssignment>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Actions" />
+            </errorLevel>
+        </PossiblyNullPropertyAssignment>
+        <MoreSpecificImplementedParamType>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Filters" />
+            </errorLevel>
+        </MoreSpecificImplementedParamType>
+        <UndefinedPropertyAssignment>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Metrics" />
+            </errorLevel>
+        </UndefinedPropertyAssignment>
+        <ImplicitToStringCast>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Metrics" />
+            </errorLevel>
+        </ImplicitToStringCast>
+        <InvalidFalsableReturnType>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Metrics" />
+                <file name="app/Traits/GetMorphClassStatic.php" />
+            </errorLevel>
+        </InvalidFalsableReturnType>
+        <FalsableReturnStatement>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Metrics" />
+            </errorLevel>
+        </FalsableReturnStatement>
+        <DocblockTypeContradiction>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Metrics/EthnicityBreakdown.php" />
+                <directory name="app/Policies" />
+            </errorLevel>
+        </DocblockTypeContradiction>
+        <MoreSpecificReturnType>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Tools/AttendanceReport.php" />
+            </errorLevel>
+        </MoreSpecificReturnType>
+        <LessSpecificReturnStatement>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Tools/AttendanceReport.php" />
+            </errorLevel>
+        </LessSpecificReturnStatement>
+        <UndefinedMagicPropertyAssignment>
+            <errorLevel type="suppress">
+                <file name="app/Observers/DocuSignEnvelopeObserver.php" />
+            </errorLevel>
+        </UndefinedMagicPropertyAssignment>
+        <PossiblyInvalidCast>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </PossiblyInvalidCast>
+        <UnusedClosureParam>
+            <errorLevel type="suppress">
+                <directory name="app/Nova" />
+                <file name="app/Http/Middleware/Sentry.php" />
+                <file name="app/Jobs/ProcessPostmarkInboundWebhook.php" />
+                <file name="app/Providers/NovaServiceProvider.php" />
+            </errorLevel>
+        </UnusedClosureParam>
+        <InvalidStringClass>
+            <errorLevel type="suppress">
+                <file name="app/Traits/AuthorizeInclude.php" />
+            </errorLevel>
+        </InvalidStringClass>
     </issueHandlers>
 </psalm>
