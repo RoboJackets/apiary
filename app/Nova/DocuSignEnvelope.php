@@ -104,10 +104,7 @@ class DocuSignEnvelope extends Resource
             URL::make('View in DocuSign', 'url')
                 ->displayUsing(static fn () => 'Signer View')
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    // Hidden to non-admins because it's confusing and not useful
-                    return $request->user()->hasRole('admin');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             URL::make('View in DocuSign', 'sender_view_url')
                 ->displayUsing(static fn () => 'Sender View')
@@ -119,19 +116,19 @@ class DocuSignEnvelope extends Resource
                 ->onlyOnDetail(),
 
             Panel::make('Documents', [
-                ...(null === $this->membership_agreement_filename ? [] : [
+                ...($this->membership_agreement_filename === null ? [] : [
                     File::make('Membership Agreement', 'membership_agreement_filename')->disk('local'),
                 ]),
 
-                ...(null === $this->travel_authority_filename ? [] : [
+                ...($this->travel_authority_filename === null ? [] : [
                     File::make('Travel Authority Request', 'travel_authority_filename')->disk('local'),
                 ]),
 
-                ...(null === $this->covid_risk_filename ? [] : [
+                ...($this->covid_risk_filename === null ? [] : [
                     File::make('COVID Risk Acknowledgement', 'covid_risk_filename')->disk('local'),
                 ]),
 
-                ...(null === $this->direct_bill_airfare_filename ? [] : [
+                ...($this->direct_bill_airfare_filename === null ? [] : [
                     File::make('Direct Bill Airfare Request', 'direct_bill_airfare_filename')->disk('local'),
                 ]),
 

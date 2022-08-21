@@ -124,7 +124,7 @@ class DocuSignEnvelope extends Model
 
     public function getSenderViewUrlAttribute(): ?string
     {
-        if (null === $this->envelope_id) {
+        if ($this->envelope_id === null) {
             return null;
         }
 

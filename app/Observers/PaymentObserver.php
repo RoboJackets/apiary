@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Observers;
 
 use App\Jobs\CheckAllTravelAssignmentsComplete;
@@ -28,9 +26,7 @@ class PaymentObserver
 
         PruneDuesNotificationsInNova::dispatch($payment->payable->user);
 
-        if ($payment->payable_type === DuesTransaction::getMorphClassStatic() &&
-            0 === intval($payment->amount)
-        ) {
+        if ($payment->payable_type === DuesTransaction::getMorphClassStatic() && intval($payment->amount) === 0) {
             SendDuesPaymentReminder::dispatch($payment->payable->user);
         }
 
@@ -48,10 +44,10 @@ class PaymentObserver
             static function () use ($payment): void {
                 if (! $payment->receipt_sent &&
                     intval($payment->amount) > 0 &&
-                    'waiver' !== $payment->method &&
+                    $payment->method !== 'waiver' &&
                     (
-                        'square' !== $payment->method ||
-                        null !== $payment->receipt_url
+                        $payment->method !== 'square' ||
+                        $payment->receipt_url !== null
                     )
                 ) {
                     $payment->receipt_sent = true;

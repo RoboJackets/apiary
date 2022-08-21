@@ -91,14 +91,12 @@ class Merchandise extends Resource
             BelongsTo::make('Fiscal Year', 'fiscalYear'),
 
             BelongsToMany::make('Dues Packages', 'packages')
-                ->fields(static function (): array {
-                    return [
-                        Select::make('Group')->options([
-                            'Fall' => 'Fall',
-                            'Spring' => 'Spring',
-                        ]),
-                    ];
-                }),
+                ->fields(static fn (): array => [
+                    Select::make('Group')->options([
+                        'Fall' => 'Fall',
+                        'Spring' => 'Spring',
+                    ]),
+                ]),
 
             BelongsToMany::make('Dues Transactions', 'jankForNova')
                 ->fields(new MerchandisePivotFields()),
@@ -112,7 +110,7 @@ class Merchandise extends Resource
      */
     public function actions(Request $request): array
     {
-        if (null === $request->resourceId) {
+        if ($request->resourceId === null) {
             return [];
         }
 
@@ -124,12 +122,12 @@ class Merchandise extends Resource
 
         return [
             (new Actions\DistributeMerchandise($request->resourceId))
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('distribute-swag');
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsMerchandise $merchandise): bool {
-                    return $request->user()->can('distribute-swag');
-                })->confirmButtonText('Mark as Picked Up')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('distribute-swag'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsMerchandise $merchandise): bool => $request->user()->can(
+                        'distribute-swag'
+                    )
+                )->confirmButtonText('Mark as Picked Up')
                 ->onlyOnDetail(),
         ];
     }
@@ -145,7 +143,7 @@ class Merchandise extends Resource
     // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
-        return $request->user()->can('update-merchandise') && 'dues-transactions' !== $request->viaResource;
+        return $request->user()->can('update-merchandise') && $request->viaResource !== 'dues-transactions';
     }
 
     /**
@@ -159,7 +157,7 @@ class Merchandise extends Resource
             (new MerchandisePickupRate())->onlyOnDetail(),
         ];
 
-        if (null === $request->resourceId) {
+        if ($request->resourceId === null) {
             return [];
         }
 

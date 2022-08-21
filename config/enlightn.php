@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Files.LineLength.TooLong
-
 return [
 
     /*
@@ -28,7 +26,7 @@ return [
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
-        ...('test' === env('APP_ENV', 'local') ? [] : [
+        ...(env('APP_ENV', 'local') === 'test' ? [] : [
             \Enlightn\Enlightn\Analyzers\Security\AppDebugAnalyzer::class,
         ]),
     ],
@@ -107,10 +105,10 @@ return [
     |
     */
     'dont_report' => [
-        ...(true === env('SKIP_HTTP_CHECKS', false) ? [
+        ...(env('SKIP_HTTP_CHECKS', false) === true ? [
             \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
         ] : []),
-        ...(true === env('SKIP_DEPENDENCY_ANALYZER') ? [
+        ...(env('SKIP_DEPENDENCY_ANALYZER') === true ? [
             \Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
         ] : []),
     ],

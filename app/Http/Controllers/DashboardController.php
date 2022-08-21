@@ -34,20 +34,20 @@ class DashboardController extends Controller
         //User is "new" if they don't have any transactions, or they have never paid dues
         $paidTxnColl = DuesTransaction::paid()->where('user_id', $user->id)->get();
 
-        $paidPackageIds = $paidTxnColl->map(static function (DuesTransaction $transaction): int {
-            return $transaction->dues_package_id;
-        })->uniqueStrict()->toArray();
+        $paidPackageIds = $paidTxnColl->map(
+            static fn (DuesTransaction $transaction): int => $transaction->dues_package_id
+        )->uniqueStrict()->toArray();
 
         $paidTxn = count($paidTxnColl);
-        $isNew = (0 === $user->dues->count() || ($user->dues->count() >= 1 && 0 === $paidTxn));
+        $isNew = ($user->dues->count() === 0 || ($user->dues->count() >= 1 && $paidTxn === 0));
 
         //User needs a transaction if they don't have one for an active dues package
-        $needsTransaction = (0 === DuesTransaction::current()
+        $needsTransaction = (DuesTransaction::current()
             ->where('user_id', $user->id)
             ->whereHas('package', static function (Builder $query) use ($user): void {
                 $query->userCanPurchase($user);
             })
-            ->count()
+            ->count() === 0
         );
         $needsTransaction = $needsTransaction && (DuesPackage::userCanPurchase($user)->count() > 0);
 
@@ -65,10 +65,7 @@ class DashboardController extends Controller
         ) > 0);
 
         if (! $isNew) {
-            $paidTransactions = DuesTransaction::select(
-                'dues_transactions.id',
-                'dues_transactions.dues_package_id'
-            )
+            $paidTransactions = DuesTransaction::select('dues_transactions.id', 'dues_transactions.dues_package_id')
             ->leftJoin('payments', static function (JoinClause $join): void {
                 $join->on('dues_transactions.id', '=', 'payable_id')
                      ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
@@ -98,7 +95,7 @@ class DashboardController extends Controller
 
         $needsResume = $user->is_active &&
             (($user->resume_date && $user->resume_date < now()->startOfDay()->subDays(28)) || ! $user->resume_date)
-            && true === config('features.resumes')
+            && config('features.resumes') === true
             && $user->is_student;
 
         $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
@@ -108,11 +105,11 @@ class DashboardController extends Controller
 
         $sumsAccessPending = $user->is_access_active
             && ! $user->exists_in_sums
-            && null !== $lastAttendance
+            && $lastAttendance !== null
             // Not sure if this is an actual problem
             // @phan-suppress-next-line PhanTypeExpectedObjectPropAccessButGotNull
             && $lastAttendance->created_at > new Carbon(config('sums.attendance_timeout_limit'), 'America/New_York')
-            && ($signedLatestAgreement || true !== $sumsRequiresAgreement);
+            && ($signedLatestAgreement || $sumsRequiresAgreement !== true);
 
         $travelAssignment = $user->current_travel_assignment;
 

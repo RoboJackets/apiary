@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Nova;
 
 use Illuminate\Http\Request;

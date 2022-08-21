@@ -39,6 +39,6 @@ class Ping extends Command
 
         $response = $client->request('GET', config('app.url').'/ping');
 
-        return 200 === $response->getStatusCode() ? 0 : 1;
+        return $response->getStatusCode() === 200 ? 0 : 1;
     }
 }

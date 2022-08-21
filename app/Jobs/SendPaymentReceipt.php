@@ -22,14 +22,11 @@ class SendPaymentReceipt implements ShouldQueue, ShouldBeUnique
 
     public int $tries = 1;
 
-    public Payment $payment;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(Payment $payment)
+    public function __construct(public Payment $payment)
     {
-        $this->payment = $payment;
     }
 
     /**

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found,Squiz.WhiteSpace.OperatorSpacing.SpacingAfter
-
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
@@ -20,7 +18,7 @@ class RemoteAttendanceController extends Controller
     {
         $link = RemoteAttendanceLink::where('secret', $secret)->first();
 
-        if (null === $link) {
+        if ($link === null) {
             return view(
                 'attendance.remote',
                 [
@@ -31,7 +29,7 @@ class RemoteAttendanceController extends Controller
 
         $expired = $link->expires_at < Carbon::now('America/New_York');
         // Sanity check that the URL is actually a URL before we show it to the user as a link
-        $urlIsValid = null !== $link->redirect_url && Validator::make([
+        $urlIsValid = $link->redirect_url !== null && Validator::make([
             'redirect_url' => $link->redirect_url,
         ], [
             'redirect_url' => 'url',

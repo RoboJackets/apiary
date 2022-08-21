@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
-
 use App\Models\DuesTransaction;
 use App\Models\FiscalYear;
 use Illuminate\Database\Query\JoinClause;
@@ -52,9 +50,7 @@ class TransactionsByDuesPackage extends Partition
                 ->orderBy('name')
                 ->get()
                 ->mapWithKeys(
-                    static function (object $record): array {
-                        return [$record->name => $record->count];
-                    }
+                    static fn (object $record): array => [$record->name => $record->count]
                 )
                 ->toArray()
         );

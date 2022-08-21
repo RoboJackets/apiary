@@ -26,7 +26,7 @@ class UserAccessActive extends Filter
      */
     public function apply(Request $request, $query, $value): Builder
     {
-        return 'yes' === $value ? $query->accessActive() : $query->accessInactive();
+        return $value === 'yes' ? $query->accessActive() : $query->accessInactive();
     }
 
     /**

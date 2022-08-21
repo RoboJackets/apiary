@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter,SlevomatCodingStandard.Functions.UnusedParameter,Generic.Commenting.DocComment.TagValueIndent
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
 
 namespace App\Models;
 
@@ -248,7 +249,7 @@ class Team extends Model
     {
         $array = $this->toArray();
 
-        if (! array_key_exists('project_manager', $array) && null !== $this->projectManager) {
+        if (! array_key_exists('project_manager', $array) && $this->projectManager !== null) {
             $array['project_manager'] = $this->projectManager->toArray();
         }
 

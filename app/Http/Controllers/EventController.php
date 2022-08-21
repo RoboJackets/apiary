@@ -54,7 +54,7 @@ class EventController extends Controller
         $include = $request->input('include');
         $event = Event::with($this->authorizeInclude(Event::class, $include))->find($event->id);
 
-        if (null !== $event) {
+        if ($event !== null) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)]);
         }
 
@@ -79,7 +79,7 @@ class EventController extends Controller
         $event->update($request->validated());
 
         $event = Event::find($event->id);
-        if (null !== $event) {
+        if ($event !== null) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)], 201);
         }
 
@@ -88,7 +88,7 @@ class EventController extends Controller
 
     public function destroy(Event $event): JsonResponse
     {
-        if (true === $event->delete()) {
+        if ($event->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'event_deleted']);
         }
 

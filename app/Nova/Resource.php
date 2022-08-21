@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -34,7 +32,7 @@ abstract class Resource extends NovaResource
      */
     public static function scoutQuery(NovaRequest $request, $query): Builder
     {
-        if (null !== $request->viaResource) {
+        if ($request->viaResource !== null) {
             $filter_on_attribute = Str::replace('-', '_', Str::singular($request->viaResource)).'_id';
 
             if (! property_exists($query->model, 'filterable_attributes')) {

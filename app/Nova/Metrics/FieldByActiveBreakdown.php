@@ -45,7 +45,7 @@ abstract class FieldByActiveBreakdown extends Partition
             ->get()
             ->groupBy($this->use_access_active ? 'is_access_active' : 'is_active')
             ->mapWithKeys(function (Collection $coll, int $key): array {
-                $keyStr = 1 === $key ? 'Active' : 'Inactive';
+                $keyStr = $key === 1 ? 'Active' : 'Inactive';
                 if ($this->use_access_active) {
                     $keyStr = 'Access '.$keyStr;
                 }

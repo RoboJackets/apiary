@@ -5,8 +5,6 @@ declare(strict_types=1);
 // phpcs:disable Generic.Files.LineLength.TooLong
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-// phpcs:disable Generic.Commenting.Todo.TaskFound
 
 namespace App\Jobs;
 
@@ -50,14 +48,14 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
         $payload = $this->webhookCall->payload;
         $subject = $payload['Subject'];
 
-        if ('Test subject' === $subject) {
+        if ($subject === 'Test subject') {
             return;
         }
 
         if (Str::startsWith($subject, 'Completed: ')) {
-            $summary = collect($payload['Attachments'])->firstOrFail(static function (array $value, int $key): bool {
-                return 'Summary.pdf' === $value['Name'];
-            });
+            $summary = collect($payload['Attachments'])->firstOrFail(
+                static fn (array $value, int $key): bool => $value['Name'] === 'Summary.pdf'
+            );
 
             $decoded = base64_decode($summary['Content'], true);
 
@@ -75,7 +73,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 false
             );
 
-            if (null === $maybeUid) {
+            if ($maybeUid === null) {
                 $maybeUid = self::getValueWithRegex(
                     '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu\s+Security Level/',
                     $text,
@@ -84,7 +82,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                     false
                 );
 
-                if (null === $maybeUid) {
+                if ($maybeUid === null) {
                     $maybeUid = self::getValueWithRegex(
                         '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu\s+Georgia Institute of Technology/',
                         $text,
@@ -93,31 +91,15 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 }
             }
 
-            $user = User::where(
-                'uid',
-                '=',
-                $maybeUid
-            )->sole();
+            $user = User::where('uid', '=', $maybeUid)->sole();
 
             $envelope = $user->envelopes()->where('complete', false)->sole();
 
-            $envelope->sent_at = self::getValueWithRegex(
-                self::SIGNER_INFO_REGEX,
-                $text,
-                'sentAt'
-            );
+            $envelope->sent_at = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'sentAt');
 
-            $envelope->viewed_at = self::getValueWithRegex(
-                self::SIGNER_INFO_REGEX,
-                $text,
-                'viewedAt'
-            );
+            $envelope->viewed_at = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'viewedAt');
 
-            $envelope->signed_at = self::getValueWithRegex(
-                self::SIGNER_INFO_REGEX,
-                $text,
-                'signedAt'
-            );
+            $envelope->signed_at = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'signedAt');
 
             $envelope->completed_at = self::getValueWithRegex(
                 '/Completed\s+Security Checked\s+(?P<completedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/',
@@ -125,11 +107,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 'completedAt'
             );
 
-            $envelope->signer_ip_address = self::getValueWithRegex(
-                self::SIGNER_INFO_REGEX,
-                $text,
-                'ipAddress'
-            );
+            $envelope->signer_ip_address = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'ipAddress');
 
             $envelope->envelope_id = self::getValueWithRegex(
                 '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/',
@@ -207,12 +185,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
             }
         } elseif (Str::contains($subject, ' viewed ')) {
-            $name = self::getValueWithRegex(
-                '/(Fw: )?(?P<name>[a-zA-Z ]+) viewed .+/',
-                $subject,
-                'name',
-                'subject'
-            );
+            $name = self::getValueWithRegex('/(Fw: )?(?P<name>[a-zA-Z ]+) viewed .+/', $subject, 'name', 'subject');
 
             $user = User::search($name)->first();
 
@@ -259,7 +232,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
     ): ?string {
         $matches = [];
 
-        if (1 !== preg_match($regex, $text, $matches)) {
+        if (preg_match($regex, $text, $matches) !== 1) {
             if ($fail) {
                 throw new \Exception('Could not extract '.$groupName.' from '.$from);
             }

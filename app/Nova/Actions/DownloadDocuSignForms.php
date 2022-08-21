@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Nova\Actions;
 
 use App\Models\DocuSignEnvelope;
@@ -58,21 +56,21 @@ class DownloadDocuSignForms extends Action
 
         $travel->assignments->each(static function (TravelAssignment $assignment, int $key) use ($zip): void {
             $assignment->envelope->each(static function (DocuSignEnvelope $envelope, int $key) use ($zip): void {
-                if (null !== $envelope->travel_authority_filename) {
+                if ($envelope->travel_authority_filename !== null) {
                     $zip->addFile(
                         Storage::disk('local')->path($envelope->travel_authority_filename),
                         $envelope->signable->user->full_name.' - Travel Authority Request.pdf'
                     );
                 }
 
-                if (null !== $envelope->covid_risk_filename) {
+                if ($envelope->covid_risk_filename !== null) {
                     $zip->addFile(
                         Storage::disk('local')->path($envelope->covid_risk_filename),
                         $envelope->signable->user->full_name.' - COVID Risk Acknowledgement.pdf'
                     );
                 }
 
-                if (null !== $envelope->direct_bill_airfare_filename) {
+                if ($envelope->direct_bill_airfare_filename !== null) {
                     $zip->addFile(
                         Storage::disk('local')->path($envelope->direct_bill_airfare_filename),
                         $envelope->signable->user->full_name.' - Direct Bill Airfare Request.pdf'
@@ -81,7 +79,7 @@ class DownloadDocuSignForms extends Action
             });
         });
 
-        if (0 === $zip->count()) {
+        if ($zip->count() === 0) {
             return Action::danger('No forms have been submitted!');
         }
 

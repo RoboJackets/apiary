@@ -18,14 +18,11 @@ class PaymentReceipt extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public Payment $payment;
-
     /**
      * Create a new message instance.
      */
-    public function __construct(Payment $payment)
+    public function __construct(public Payment $payment)
     {
-        $this->payment = $payment;
     }
 
     /**

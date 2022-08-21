@@ -15,10 +15,10 @@ class DuesPackageObserver
         CreateDuesAreLiveNotificationsInNova::dispatch();
         DuesPackageSync::dispatch($package);
 
-        if (null !== $package->access_start && $package->access_start > date('Y-m-d H:i:s')) {
+        if ($package->access_start !== null && $package->access_start > date('Y-m-d H:i:s')) {
             DuesPackageSync::dispatch($package)->delay($package->access_start);
         }
-        if (null === $package->access_end || $package->access_end <= date('Y-m-d H:i:s')) {
+        if ($package->access_end === null || $package->access_end <= date('Y-m-d H:i:s')) {
             return;
         }
 

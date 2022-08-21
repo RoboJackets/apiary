@@ -16,14 +16,11 @@ class DuesPaymentReminder extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public DuesTransaction $transaction;
-
     /**
      * Create a new message instance.
      */
-    public function __construct(DuesTransaction $transaction)
+    public function __construct(public DuesTransaction $transaction)
     {
-        $this->transaction = $transaction;
     }
 
     /**

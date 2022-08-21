@@ -84,7 +84,7 @@ class RemoteAttendanceLinkTest extends TestCase
 
             // Ensure it doesn't somehow get fixed by the normalize function.
             $normalized = RemoteAttendanceLink::normalizeRedirectUrl($url);
-            $this->assertDoesNotMatchRegularExpression(RemoteAttendanceLink::$redirectRegex, $url);
+            $this->assertDoesNotMatchRegularExpression(RemoteAttendanceLink::$redirectRegex, $normalized);
         }
     }
 }

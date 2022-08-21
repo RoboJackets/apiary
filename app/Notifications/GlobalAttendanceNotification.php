@@ -22,7 +22,7 @@ class GlobalAttendanceNotification extends Notification
      */
     public function via(CoreNotifiable $notifiable): array
     {
-        return null !== $notifiable->routeNotificationForSlack($this) ? ['slack'] : [];
+        return $notifiable->routeNotificationForSlack($this) !== null ? ['slack'] : [];
     }
 
     /**
@@ -42,10 +42,8 @@ class GlobalAttendanceNotification extends Notification
         // e.g. 15 members attended any team or event last week.
         $message = $total.' '.Str::plural('member', $total).' attended any team or event last week.';
 
-        $slackMessage = (new SlackMessage())
+        return (new SlackMessage())
             ->from(config('app.name'), ':robobuzz:')
             ->content($message);
-
-        return $slackMessage;
     }
 }

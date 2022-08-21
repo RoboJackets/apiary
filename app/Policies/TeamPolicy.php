@@ -45,7 +45,7 @@ class TeamPolicy
             return true;
         }
 
-        return (null !== $team->projectManager) && $team->projectManager->is($user);
+        return ($team->projectManager !== null) && $team->projectManager->is($user);
     }
 
     /**
@@ -81,11 +81,11 @@ class TeamPolicy
             return false;
         }
 
-        if (false === $team->visible && $user->cant('read-teams-hidden')) {
+        if ($team->visible === false && $user->cant('read-teams-hidden')) {
             return false;
         }
 
-        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+        if (($team->projectManager !== null) && $team->projectManager->is($user)) {
             return true;
         }
 
@@ -101,11 +101,11 @@ class TeamPolicy
      */
     public function attachAnyUser(User $user, Team $team): bool
     {
-        if (false === $team->visible && $user->cant('read-teams-hidden')) {
+        if ($team->visible === false && $user->cant('read-teams-hidden')) {
             return false;
         }
 
-        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+        if (($team->projectManager !== null) && $team->projectManager->is($user)) {
             return true;
         }
 
@@ -124,11 +124,11 @@ class TeamPolicy
      */
     public function detachUser(User $user, Team $team, User $userResource): bool
     {
-        if (false === $team->visible && $user->cant('read-teams-hidden')) {
+        if ($team->visible === false && $user->cant('read-teams-hidden')) {
             return false;
         }
 
-        if ((null !== $team->projectManager) && $team->projectManager->is($user)) {
+        if (($team->projectManager !== null) && $team->projectManager->is($user)) {
             return true;
         }
 

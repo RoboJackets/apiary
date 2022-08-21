@@ -12,7 +12,7 @@ class AttendanceObserver
 {
     public function saved(Attendance $attendance): void
     {
-        if (null === $attendance->attendee) {
+        if ($attendance->attendee === null) {
             // I know this will not cause a PushToJedi run, but if the user is being created from attendance they will
             // not have access to anything with Jedi anyway.
             CreateOrUpdateUserFromBuzzAPI::dispatch(

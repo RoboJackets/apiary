@@ -100,9 +100,7 @@ class DuesTransactionController extends Controller
         if ($request->filled('merchandise')) {
             $selectedMerch = collect($request->input('merchandise'));
             $package = DuesPackage::where('id', $request->input('dues_package_id'))->sole();
-            $groups = $package->merchandise->groupBy(static function (Merchandise $merch): string {
-                return $merch->pivot->group;
-            });
+            $groups = $package->merchandise->groupBy(static fn (Merchandise $merch): string => $merch->pivot->group);
 
             if (count($selectedMerch) !== $groups->count()) {
                 return response()->json(['status' => 'error',
@@ -118,12 +116,11 @@ class DuesTransactionController extends Controller
 
             // For every merch group, ensure that one of the selected merch is in it. This assumes that merch is not
             // in multiple groups.
-            $valid = $groups->every(static function (Collection $collection) use ($selectedMerch): bool {
-                // Ensure one of the selectedMerch is contained in the group.
-                return $selectedMerch->contains(static function (int $selectedID) use ($collection): bool {
-                    return $collection->contains('id', $selectedID);
-                });
-            });
+            $valid = $groups->every(
+                static fn (Collection $collection): bool => $selectedMerch->contains(
+                    static fn (int $selectedID): bool => $collection->contains('id', $selectedID)
+                )
+            );
 
             if (! $valid) {
                 return response()->json(['status' => 'error',
@@ -135,11 +132,11 @@ class DuesTransactionController extends Controller
                 // For each group, ensure that if there is a polo, the user selected it.
                 // This assumes that there are not multiple Merchandise in a group that start with Polo.
                 $selectedPolo = $groups->every(static function (Collection $collection) use ($selectedMerch): bool {
-                    $polo = $collection->first(static function (Merchandise $merch): bool {
-                        return Str::startsWith($merch->name, 'Polo ');
-                    });
+                    $polo = $collection->first(
+                        static fn (Merchandise $merch): bool => Str::startsWith($merch->name, 'Polo ')
+                    );
 
-                    if (null !== $polo) {
+                    if ($polo !== null) {
                         // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
                         return $selectedMerch->contains($polo->id);
                     }
@@ -205,10 +202,8 @@ class DuesTransactionController extends Controller
         $include = $request->input('include');
         $transact = DuesTransaction::with(
             $this->authorizeInclude(DuesTransaction::class, $include)
-        )->find(
-            $transaction->id
-        );
-        if (null === $transact) {
+        )->find($transaction->id);
+        if ($transact === null) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);
         }
 
@@ -246,7 +241,7 @@ class DuesTransactionController extends Controller
      */
     public function destroy(DuesTransaction $transaction): JsonResponse
     {
-        if (true === $transaction->delete()) {
+        if ($transaction->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'DuesTransaction deleted.']);
         }
 

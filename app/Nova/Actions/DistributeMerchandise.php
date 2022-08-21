@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Nova\Actions;
 
 use App\Models\DuesTransaction;
@@ -30,7 +28,7 @@ class DistributeMerchandise extends Action
 
     public function __construct(?string $resourceId)
     {
-        if (null === $resourceId) {
+        if ($resourceId === null) {
             return;
         }
 
@@ -45,7 +43,7 @@ class DistributeMerchandise extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        if (1 !== count($models)) {
+        if (count($models) !== 1) {
             return Action::danger('This action requires exactly one model.');
         }
 
@@ -74,11 +72,11 @@ class DistributeMerchandise extends Action
         ->where('user_id', $provided_to->id)
         ->first();
 
-        if (null === $dtm) {
+        if ($dtm === null) {
             return Action::danger('This user is not eligible for this merchandise.');
         }
 
-        if (null !== $dtm->provided_at) {
+        if ($dtm->provided_at !== null) {
             return Action::danger('This user already picked up this merchandise.');
         }
 
@@ -102,27 +100,31 @@ class DistributeMerchandise extends Action
 
         return [
             Select::make('Distributed To', 'provided_to')
-                ->options(static function () use ($resource): array {
-                    return User::whereHas('duesTransactions', static function (Builder $query) use ($resource): void {
-                        $query->whereHas('merchandise', static function (Builder $query) use ($resource): void {
-                            $query->when(
-                                null !== $resource,
+                ->options(
+                    static fn (): array => User::whereHas(
+                        'duesTransactions',
+                        static function (Builder $query) use ($resource): void {
+                            $query->whereHas(
+                                'merchandise',
                                 static function (Builder $query) use ($resource): void {
-                                    $query->where('merchandise.id', $resource->id);
+                                    $query->when(
+                                        $resource !== null,
+                                        static function (Builder $query) use ($resource): void {
+                                            $query->where('merchandise.id', $resource->id);
+                                        }
+                                    )
+                                    ->whereNull('dues_transaction_merchandise.provided_at');
                                 }
                             )
-                            ->whereNull('dues_transaction_merchandise.provided_at');
-                        })
-                        ->whereHas('payment', static function (Builder $query): void {
-                            $query->where('amount', '>', 0);
-                        });
-                    })
-                    ->get()
-                    ->mapWithKeys(static function (User $user): array {
-                        return [strval($user->id) => $user->name];
-                    })
-                    ->toArray();
-                })
+                            ->whereHas('payment', static function (Builder $query): void {
+                                $query->where('amount', '>', 0);
+                            });
+                        }
+                    )
+                        ->get()
+                        ->mapWithKeys(static fn (User $user): array => [strval($user->id) => $user->name])
+                        ->toArray()
+                )
                 ->searchable()
                 ->required()
                 ->rules('required'),

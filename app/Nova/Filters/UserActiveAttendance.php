@@ -26,7 +26,7 @@ class UserActiveAttendance extends Filter
      */
     public function apply(Request $request, $query, $value): Builder
     {
-        if ('yes' === $value) {
+        if ($value === 'yes') {
             return $query->whereHas('attendee', static function (Builder $q): void {
                 $q->active();
             });

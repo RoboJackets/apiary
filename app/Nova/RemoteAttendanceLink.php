@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
 namespace App\Nova;
 
 use App\Models\RemoteAttendanceLink as RAL;
@@ -82,9 +80,7 @@ class RemoteAttendanceLink extends Resource
     public function fields(Request $request): array
     {
         $notes = collect(self::$recommendedNotes)
-            ->mapWithKeys(static function (string $note): array {
-                return [$note => $note];
-            })->toArray();
+            ->mapWithKeys(static fn (string $note): array => [$note => $note])->toArray();
 
         return [
             MorphTo::make('Team/Event', 'attendable')
@@ -92,44 +88,34 @@ class RemoteAttendanceLink extends Resource
                     Event::class,
                     Team::class,
                 ])
-                ->readonly(static function (Request $request): bool {
-                    return true;
-                }),
+                ->readonly(static fn (Request $request): bool => true),
 
             Text::make('Auto-redirecting Link', 'secret')
                 ->onlyOnDetail()
-                ->resolveUsing(static function (string $secret): string {
-                    return route('attendance.remote.redirect', ['secret' => $secret]);
-                })
+                ->resolveUsing(
+                    static fn (string $secret): string => route('attendance.remote.redirect', ['secret' => $secret])
+                )
                 ->canSee(static function (Request $request): bool {
                     if (isset($request->resourceId)) {
                         $resource = RAL::find($request->resourceId);
-                        if (null !== $resource && is_a($resource, RAL::class)) {
-                            return null !== $resource->redirect_url;
+                        if ($resource !== null && is_a($resource, RAL::class)) {
+                            return $resource->redirect_url !== null;
                         }
                     }
 
                     return false;
                 })
-                ->readonly(static function (Request $request): bool {
-                    return true;
-                }),
+                ->readonly(static fn (Request $request): bool => true),
 
             Text::make('Non-redirecting Link', 'secret')
                 ->onlyOnDetail()
-                ->resolveUsing(static function (string $secret): string {
-                    return route('attendance.remote', ['secret' => $secret]);
-                })
-                ->readonly(static function (Request $request): bool {
-                    return true;
-                }),
+                ->resolveUsing(static fn (string $secret): string => route('attendance.remote', ['secret' => $secret]))
+                ->readonly(static fn (Request $request): bool => true),
 
             Text::make('Secret')
                 ->onlyOnForms()
                 ->default(bin2hex(openssl_random_pseudo_bytes(32)))
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('update-remote-attendance-links');
-                })
+                ->canSee(static fn (Request $request): bool => $request->user()->can('update-remote-attendance-links'))
                 ->creationRules('unique:remote_attendance_links,secret')
                 ->updateRules('unique:remote_attendance_links,secret,{{resourceId}}')
                 ->help('This is contained in the attendance URL that will be shared. The default value for this field'.
@@ -159,9 +145,7 @@ class RemoteAttendanceLink extends Resource
                 ->options($notes),
 
             HasMany::make('Attendance')
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('read-attendance');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
 
             self::metadataPanel(),
         ];

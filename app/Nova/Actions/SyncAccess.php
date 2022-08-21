@@ -29,7 +29,7 @@ class SyncAccess extends Action
                 $user,
                 self::class,
                 request()->user()->id,
-                1 === count($models) ? 'manual' : 'manual_batch'
+                count($models) === 1 ? 'manual' : 'manual_batch'
             );
         }
     }

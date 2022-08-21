@@ -80,7 +80,7 @@ class TravelAssignment extends Resource
                     return null;
                 }
 
-                if (null === $this->travel) {
+                if ($this->travel === null) {
                     return null;
                 }
 
@@ -112,7 +112,7 @@ class TravelAssignment extends Resource
             (new Actions\AddPayment())->canSee(static function (Request $request): bool {
                 $assignment = AppModelsTravelAssignment::find($request->resourceId);
 
-                if (null !== $assignment && is_a($assignment, AppModelsTravelAssignment::class)) {
+                if ($assignment !== null && is_a($assignment, AppModelsTravelAssignment::class)) {
                     if ($assignment->user->id === $request->user()->id) {
                         return false;
                     }
@@ -127,10 +127,12 @@ class TravelAssignment extends Resource
                 }
 
                 return $request->user()->can('create-payments');
-            })->canRun(static function (NovaRequest $request, AppModelsTravelAssignment $assignment): bool {
-                return $request->user()->can('create-payments')
-                    && ($assignment->user()->first()->id !== $request->user()->id);
-            })->confirmButtonText('Add Payment'),
+            })->canRun(
+                static fn (NovaRequest $request, AppModelsTravelAssignment $assignment): bool => $request->user()->can(
+                    'create-payments'
+                )
+                        && ($assignment->user()->first()->id !== $request->user()->id)
+            )->confirmButtonText('Add Payment'),
         ];
     }
 

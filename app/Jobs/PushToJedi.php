@@ -74,7 +74,7 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        if (null === config('jedi.host') || null === config('jedi.token')) {
+        if (config('jedi.host') === null || config('jedi.token') === null) {
             return;
         }
 
@@ -119,7 +119,7 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
         }
 
         $gmail_address = $this->user->gmail_address;
-        if (null !== $gmail_address) {
+        if ($gmail_address !== null) {
             $send['google_accounts'][] = strtolower($gmail_address);
         }
 
@@ -143,7 +143,7 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
 
         $response = $client->request('POST', config('jedi.host').'/api/v1/apiary', ['json' => $send]);
 
-        if (202 !== $response->getStatusCode()) {
+        if ($response->getStatusCode() !== 202) {
             throw new Exception(
                 'Sending data to JEDI failed with HTTP response code '.$response->getStatusCode()
             );

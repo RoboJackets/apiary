@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator
-
 namespace App\Nova\Metrics;
 
 use App\Models\Attendance;
@@ -34,11 +32,12 @@ class TotalAttendance extends Value
 
         $gtid = User::where('id', $request->resourceId)->first()->gtid;
         // If a subrange is selected, let the library do the work, otherwise just count everything
-        if ($request->range > 0) {
-            $result = $this->count($request, (new Attendance())->newQuery()->where('gtid', $gtid));
-        } else {
-            $result = $this->result(Attendance::where('gtid', $gtid)->count());
-        }
+        $result = $request->range > 0 ? $this->count(
+            $request,
+            (new Attendance())->newQuery()->where('gtid', $gtid)
+        ) : $this->result(
+            Attendance::where('gtid', $gtid)->count()
+        );
 
         $request->timezone = $originalTimezone;
 

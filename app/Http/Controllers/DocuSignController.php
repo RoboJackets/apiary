@@ -19,7 +19,7 @@ class DocuSignController extends Controller
 
         $assignment = $user->current_travel_assignment;
 
-        if (null === $assignment) {
+        if ($assignment === null) {
             return view('travel.noassignment');
         }
 
@@ -30,7 +30,7 @@ class DocuSignController extends Controller
                 ->oldest('travel.departure_date')
                 ->oldest('travel.return_date')
                 ->first();
-            if (null === $any_assignment_needs_docusign) {
+            if ($any_assignment_needs_docusign === null) {
                 return view('travel.alreadysigned');
             }
 
@@ -57,7 +57,7 @@ class DocuSignController extends Controller
             );
         }
 
-        if (0 === $assignment->envelope()->count()) {
+        if ($assignment->envelope()->count() === 0) {
             $envelope = new DocuSignEnvelope();
             $envelope->signed_by = $user->id;
             $envelope->signable_type = $assignment->getMorphClass();
@@ -69,7 +69,7 @@ class DocuSignController extends Controller
 
         $maybe_url = $assignment->envelope()->sole()->url;
 
-        if (null !== $maybe_url) {
+        if ($maybe_url !== null) {
             return redirect($maybe_url);
         }
 
@@ -98,7 +98,7 @@ class DocuSignController extends Controller
 
         $ip = $request->ip();
 
-        if (null === $ip) { // I have no idea what could possibly cause this, but that's what the contract says
+        if ($ip === null) { // I have no idea what could possibly cause this, but that's what the contract says
             return view(
                 'agreement.error',
                 [
@@ -113,7 +113,7 @@ class DocuSignController extends Controller
 
         RetrieveIpAddressGeoLocationForSignature::dispatch($signature);
 
-        if (0 === $signature->envelope()->count()) {
+        if ($signature->envelope()->count() === 0) {
             $envelope = new DocuSignEnvelope();
             $envelope->signed_by = $user->id;
             $envelope->signable_type = $signature->getMorphClass();
@@ -125,7 +125,7 @@ class DocuSignController extends Controller
 
         $maybe_url = $signature->envelope()->sole()->url;
 
-        if (null !== $maybe_url) {
+        if ($maybe_url !== null) {
             return redirect($maybe_url);
         }
 

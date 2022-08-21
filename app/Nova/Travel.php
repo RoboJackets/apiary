@@ -97,8 +97,6 @@ class Travel extends Resource
                 ->min(10)
                 ->max(1000),
 
-            // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-
             Markdown::make('Included with Fee')
                 ->required()
                 ->rules('required')
@@ -118,10 +116,7 @@ class Travel extends Resource
 
             Boolean::make('Completion Email Sent')
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    // Hidden to non-admins because it's confusing and not useful
-                    return $request->user()->hasRole('admin');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             new Panel(
                 'Travel Authority Request',
@@ -246,14 +241,14 @@ class Travel extends Resource
     {
         return [
             (new Actions\DownloadDocuSignForms())
-                ->canSee(static function (Request $request): bool {
-                    return $request->user()->can('view-docusign-envelopes') ||
-                        Travel::where('primary_contact_user_id', $request->user()->id)->exists();
-                })
-                ->canRun(static function (NovaRequest $request, AppModelsTravel $travel): bool {
-                    return $request->user()->can('view-docusign-envelopes') ||
-                        $travel->primaryContact->id === $request->user()->id;
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('view-docusign-envelopes') ||
+                        self::where('primary_contact_user_id', $request->user()->id)->exists())
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsTravel $travel): bool => $request->user()->can(
+                        'view-docusign-envelopes'
+                    ) ||
+                            $travel->primaryContact->id === $request->user()->id
+                ),
         ];
     }
 
@@ -268,7 +263,7 @@ class Travel extends Resource
             (new PaymentReceivedForTravel())->onlyOnDetail(),
         ];
 
-        if (null === $request->resourceId) {
+        if ($request->resourceId === null) {
             return [];
         }
 

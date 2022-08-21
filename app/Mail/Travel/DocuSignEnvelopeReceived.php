@@ -16,14 +16,11 @@ class DocuSignEnvelopeReceived extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public DocuSignEnvelope $envelope;
-
     /**
      * Create a new message instance.
      */
-    public function __construct(DocuSignEnvelope $envelope)
+    public function __construct(public DocuSignEnvelope $envelope)
     {
-        $this->envelope = $envelope;
     }
 
     /**

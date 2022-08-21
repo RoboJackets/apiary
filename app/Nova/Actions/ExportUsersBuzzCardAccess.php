@@ -43,7 +43,7 @@ class ExportUsersBuzzCardAccess extends Action
         $population = $fields->population;
         $users = User::select('gtid', 'first_name', 'last_name')->buzzCardAccessEligible()
             ->when(
-                'core' === $population,
+                $population === 'core',
                 static function (Builder $q): void {
                     $q->whereHas('teams', static function (Builder $query): void {
                         $query->where('name', 'Core');
@@ -57,15 +57,15 @@ class ExportUsersBuzzCardAccess extends Action
             )
             ->get();
 
-        if (0 === count($users)) {
+        if (count($users) === 0) {
             return Action::danger('No users match the provided criteria!');
         }
 
-        $output = $users->reduce(static function (?string $carry, User $user): string {
-            return ($carry ?? '').$user->gtid.','.$user->first_name.','.$user->last_name."\n";
-        });
+        $output = $users->reduce(
+            static fn (?string $c, User $u): string => ($c ?? '').$u->gtid.','.$u->first_name.','.$u->last_name."\n"
+        );
 
-        $phrasing = 'core' === $population ? 'with' : 'without';
+        $phrasing = $population === 'core' ? 'with' : 'without';
         $timestamp = Carbon::now()->toDateTimeLocalString();
         $filename = '575F-GRP_SCC_'.$phrasing.'_RoboJackets-'.$timestamp.'.csv';
         $path = 'nova-exports/'.$filename;

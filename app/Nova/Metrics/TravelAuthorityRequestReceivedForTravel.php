@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
-
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -46,9 +44,10 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
      */
     public function name()
     {
-        return -1 === $this->resourceId
-            ? 'TAR Received'
-            : 'TAR Received for '.Travel::where('id', $this->resourceId)->sole()->name;
+        return $this->resourceId === -1 ? 'TAR Received' : 'TAR Received for '.Travel::where(
+            'id',
+            $this->resourceId
+        )->sole()->name;
     }
 
     /**
@@ -65,9 +64,9 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
                 ->groupBy('tar_received')
                 ->orderByDesc('tar_received')
                 ->get()
-                ->mapWithKeys(static function (object $row): array {
-                    return [self::$partition_labels[$row->tar_received] => $row->count];
-                })
+                ->mapWithKeys(
+                    static fn (object $row): array => [self::$partition_labels[$row->tar_received] => $row->count]
+                )
                 ->toArray()
         )->colors(  // nova default pie chart colors but mapped to specific series
             [
@@ -84,6 +83,6 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
      */
     public function uriKey()
     {
-        return -1 === $this->resourceId ? 'tar-received' : 'tar-received-'.$this->resourceId;
+        return $this->resourceId === -1 ? 'tar-received' : 'tar-received-'.$this->resourceId;
     }
 }

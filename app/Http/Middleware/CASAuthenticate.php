@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-
 namespace App\Http\Middleware;
 
 use App\Traits\CreateOrUpdateCASUser;
@@ -66,7 +64,7 @@ class CASAuthenticate
         //Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
             // Run the user update only if they don't have an active session
-            if ($this->cas->isAuthenticated() && null === $request->user()) {
+            if ($this->cas->isAuthenticated() && $request->user() === null) {
                 if ($this->cas->isMasquerading()) {
                     $masq_attrs = [];
                     foreach (self::$attrs as $attr) {
@@ -75,7 +73,7 @@ class CASAuthenticate
                     $this->cas->setAttributes($masq_attrs);
                 }
 
-                if (null === config('features.demo-mode')) {
+                if (config('features.demo-mode') === null) {
                     AuthStickler::check($this->cas);
                 } else {
                     if ($this->cas->user() !== config('features.demo-mode')) {
@@ -93,7 +91,7 @@ class CASAuthenticate
                 Auth::login($user);
             }
 
-            if ($this->cas->isAuthenticated() && null !== $request->user()) {
+            if ($this->cas->isAuthenticated() && $request->user() !== null) {
                 //User is authenticated and already has an existing session
                 return $next($request);
             }

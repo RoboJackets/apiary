@@ -15,14 +15,11 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private TravelAssignment $assignment;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(TravelAssignment $assignment)
+    public function __construct(private TravelAssignment $assignment)
     {
-        $this->assignment = $assignment;
     }
 
     /**

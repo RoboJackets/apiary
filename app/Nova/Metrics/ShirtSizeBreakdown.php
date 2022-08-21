@@ -80,21 +80,18 @@ class ShirtSizeBreakdown extends Partition
                 ->groupBy($column_name)
                 ->get()
                 ->mapWithKeys(static function (object $row) use ($column_name): array {
-                    // @phpstan-ignore-next-line
-                    if (null === $row->$column_name) {
+                    if ($row->$column_name === null) {
                         return ['Unknown' => $row->count];
                     }
 
-                    // @phpstan-ignore-next-line
                     return [User::$shirt_sizes[$row->$column_name] => $row->count];
                 })
                 // @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
                 ->sortBy(static function (string $count, string $shirt_size): int {
-                    if ('Unknown' === $shirt_size) {
+                    if ($shirt_size === 'Unknown') {
                         return -1;
                     }
 
-                    // @phpstan-ignore-next-line
                     return array_search(
                         array_search(
                             $shirt_size,

@@ -60,7 +60,7 @@ class Major extends Model
     {
         $major = self::where('gtad_majorgroup_name', strtolower($gtad_group))->first();
 
-        if (null === $major) {
+        if ($major === null) {
             $exploded = explode('_', $gtad_group);
 
             $major = new self();

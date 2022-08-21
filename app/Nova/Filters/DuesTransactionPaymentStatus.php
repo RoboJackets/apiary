@@ -25,7 +25,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return true === $value['pending'] ? $query->pending() : $query;
+        return $value['pending'] === true ? $query->pending() : $query;
     }
 
     /**

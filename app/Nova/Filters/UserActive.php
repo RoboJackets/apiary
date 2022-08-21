@@ -25,7 +25,7 @@ class UserActive extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return 'yes' === $value ? $query->active() : $query->inactive();
+        return $value === 'yes' ? $query->active() : $query->inactive();
     }
 
     /**

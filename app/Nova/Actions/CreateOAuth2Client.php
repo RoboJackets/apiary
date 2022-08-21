@@ -23,14 +23,11 @@ class CreateOAuth2Client extends Action
      */
     public $name = 'Create OAuth2 Client';
 
-    private ClientRepository $clientRepository;
-
     private const STANDARD_CLIENT = 'standard';
     private const PUBLIC_CLIENT = 'public';
 
-    public function __construct(ClientRepository $clientRepository)
+    public function __construct(private ClientRepository $clientRepository)
     {
-        $this->clientRepository = $clientRepository;
     }
 
     /**
@@ -61,7 +58,7 @@ class CreateOAuth2Client extends Action
         $personalAccessClient = false; // Deliberately unsupported - creating a personal access client only has
         // to be done once and the client ID/secret must be added as environment variables
         $passwordGrantClient = false; // We don't support this right now
-        $confidential = self::PUBLIC_CLIENT !== $clientType; // Confidential means the client has a secret
+        $confidential = $clientType !== self::PUBLIC_CLIENT; // Confidential means the client has a secret
 
         $client = $this->clientRepository->create(
             // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess

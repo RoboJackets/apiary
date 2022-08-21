@@ -30,13 +30,13 @@ class SelfServiceOverrideTest extends TestCase
      */
     private function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
     {
-        if (null === $base_date) {
+        if ($base_date === null) {
             $base_date = CarbonImmutable::now();
         }
 
         $fy = FiscalYear::firstOrCreate(['ending_year' => $base_date->year]);
 
-        $pkg = DuesPackage::factory()->create([
+        return DuesPackage::factory()->create([
             'fiscal_year_id' => $fy->id,
             'effective_start' => $base_date->subMonth(),
             'effective_end' => $base_date->addMonth(),
@@ -45,8 +45,6 @@ class SelfServiceOverrideTest extends TestCase
             'available_for_purchase' => true,
             'restricted_to_students' => false,
         ]);
-
-        return $pkg;
     }
 
     /**
@@ -85,7 +83,7 @@ class SelfServiceOverrideTest extends TestCase
      */
     private function createMembershipAgreementSignature(User $signer_user, bool $completed): Signature
     {
-        if (0 === MembershipAgreementTemplate::count()) {
+        if (MembershipAgreementTemplate::count() === 0) {
             $this->seed(MembershipAgreementTemplateSeeder::class);
         }
 

@@ -49,9 +49,7 @@ class MerchandisePickupRate extends Partition
                 ->orderByDesc('provided') // sorts "Picked Up" first
                 ->get()
                 ->mapWithKeys(
-                    static function (object $record): array {
-                        return [$record->provided => $record->count];
-                    }
+                    static fn (object $record): array => [$record->provided => $record->count]
                 )
                 ->toArray()
         )->colors(  // nova default pie chart colors but mapped to specific series

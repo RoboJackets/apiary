@@ -200,7 +200,7 @@ class DuesTransaction extends Model
             return 'expired';
         }
 
-        if (0 === $this->payment->count()
+        if ($this->payment->count() === 0
             || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())
         ) {
             return 'pending';
@@ -247,9 +247,7 @@ class DuesTransaction extends Model
      */
     public function scopePaid(Builder $query): Builder
     {
-        return $query->select(
-            'dues_transactions.*'
-        )->leftJoin('payments', function (JoinClause $j): void {
+        return $query->select('dues_transactions.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
@@ -263,7 +261,7 @@ class DuesTransaction extends Model
      */
     public function getIsPaidAttribute(): bool
     {
-        return 0 !== self::where('dues_transactions.id', $this->id)->paid()->count();
+        return self::where('dues_transactions.id', $this->id)->paid()->count() !== 0;
     }
 
     /**
@@ -275,9 +273,7 @@ class DuesTransaction extends Model
      */
     public function scopeUnpaid(Builder $query): Builder
     {
-        return $query->select(
-            'dues_transactions.*'
-        )->leftJoin('payments', function (JoinClause $j): void {
+        return $query->select('dues_transactions.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
                     ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
@@ -373,7 +369,7 @@ class DuesTransaction extends Model
         $viaResource = request()->viaResource;
         $viaResourceId = request()->viaResourceId;
 
-        if ('merchandise' === $viaResource && null !== $viaResourceId) {
+        if ($viaResource === 'merchandise' && $viaResourceId !== null) {
             return DuesTransactionMerchandise::where('dues_transaction_id', $this->id)
                 ->where('merchandise_id', $viaResourceId)
                 ->sole();

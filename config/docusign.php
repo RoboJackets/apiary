@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Files.LineLength.TooLong
-
 return [
     'domestic_travel_authority_request' => [
         'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=0b84b2d4-fed7-4a43-bfd2-b5bb934e13b6&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',

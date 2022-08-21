@@ -27,13 +27,16 @@ class ClassStandingsBreakdown extends Partition
         return $this->result(User::active()
             ->with('classStanding')
             ->get()
-            ->map(static function (User $user): string {
-                return $user->classStanding->pluck('name')->sort()->join('/');
-            })->groupBy(static function (string $classStandings): string {
-                return 0 === strlen($classStandings) ? 'none or unknown' : ucfirst($classStandings);
-            })->map(static function (Collection $coll): int {
-                return $coll->count();
-            })->sort()
+            ->map(static fn (User $user): string => $user->classStanding->pluck('name')->sort()->join('/'))
+            ->groupBy(
+                static fn (string $classStandings): string => strlen(
+                    $classStandings
+                ) === 0 ? 'none or unknown' : ucfirst(
+                    $classStandings
+                )
+            )->map(
+                static fn (Collection $coll): int => $coll->count()
+            )->sort()
             ->reverse()->toArray());
     }
 

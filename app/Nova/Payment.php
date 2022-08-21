@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition
 
 namespace App\Nova;
 
@@ -107,10 +107,7 @@ class Payment extends Resource
 
             Boolean::make('Receipt Sent')
                 ->onlyOnDetail()
-                ->canSee(static function (Request $request): bool {
-                    // Hidden to non-admins because it's confusing and not useful
-                    return $request->user()->hasRole('admin');
-                }),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             ...(in_array($this->method, ['square', 'squarecash', 'swipe'], true) ? [
                 new Panel('Square Metadata', $this->squareFields()),
@@ -150,7 +147,7 @@ class Payment extends Resource
                 ->onlyOnDetail(),
 
             Text::make('Order State (retrieved from Square)', function (): ?string {
-                if (null === $this->order_id) {
+                if ($this->order_id === null) {
                     return null;
                 }
 
@@ -207,32 +204,28 @@ class Payment extends Resource
             (new Actions\ResetIdempotencyKey())->canSee(static function (Request $request): bool {
                 $payment = AppModelsPayment::find($request->resourceId);
 
-                if (null !== $payment && is_a($payment, AppModelsPayment::class)) {
+                if ($payment !== null && is_a($payment, AppModelsPayment::class)) {
                     return self::canResetKey($request->user(), $payment);
                 }
 
                 return $request->user()->can('delete-payments');
-            })->canRun(static function (NovaRequest $request, AppModelsPayment $payment): bool {
-                return self::canResetKey($request->user(), $payment);
-            })->confirmText(
+            })->canRun(
+                static fn (NovaRequest $r, AppModelsPayment $p): bool => self::canResetKey($r->user(), $p)
+            )->confirmText(
                 'Are you sure you want to reset the idempotency key for this payment? This can result in duplicate'
                 .'payments and should only be used if you are sure that the associated Square order is canceled.'
-            )->confirmButtonText(
-                'Reset Idempotency Key'
-            ),
+            )->confirmButtonText('Reset Idempotency Key'),
             (new Actions\RefundPayment())->canSee(static function (Request $request): bool {
                 $payment = AppModelsPayment::find($request->resourceId);
 
-                if (null !== $payment && is_a($payment, AppModelsPayment::class)) {
+                if ($payment !== null && is_a($payment, AppModelsPayment::class)) {
                     return self::canRefundPayment($request->user(), $payment);
                 }
 
                 return $request->user()->can('refund-payments');
-            })->canRun(static function (NovaRequest $request, AppModelsPayment $payment): bool {
-                return self::canRefundPayment($request->user(), $payment);
-            })->confirmButtonText(
-                'Refund Payment'
-            ),
+            })->canRun(
+                static fn (NovaRequest $r, AppModelsPayment $p): bool => self::canRefundPayment($r->user(), $p)
+            )->confirmButtonText('Refund Payment'),
         ];
     }
 
@@ -242,18 +235,18 @@ class Payment extends Resource
             return false;
         }
 
-        if (null === $payment->unique_id) {
+        if ($payment->unique_id === null) {
             return false;
         }
 
         $order_id = $payment->order_id;
 
-        if (null === $order_id) {
+        if ($order_id === null) {
             return false;
         }
 
         if (
-            OrderState::COMPLETED === (new SquareClient(
+            (new SquareClient(
                 [
                     'accessToken' => config('square.access_token'),
                     'environment' => config('square.environment'),
@@ -262,7 +255,7 @@ class Payment extends Resource
             ->retrieveOrder($order_id)
             ->getResult()
             ->getOrder()
-            ->getState()
+            ->getState() === OrderState::COMPLETED
         ) {
             return false;
         }
@@ -272,22 +265,22 @@ class Payment extends Resource
 
     private static function canRefundPayment(AppModelsUser $user, AppModelsPayment $payment): bool
     {
-        if (0 === intval($payment->amount)) {
+        if (intval($payment->amount) === 0) {
             return false;
         }
 
-        if (null === $payment->unique_id) {
+        if ($payment->unique_id === null) {
             return false;
         }
 
         $order_id = $payment->order_id;
 
-        if (null === $order_id) {
+        if ($order_id === null) {
             return false;
         }
 
         if (
-            OrderState::COMPLETED !== (new SquareClient(
+            (new SquareClient(
                 [
                     'accessToken' => config('square.access_token'),
                     'environment' => config('square.environment'),
@@ -296,7 +289,7 @@ class Payment extends Resource
             ->retrieveOrder($order_id)
             ->getResult()
             ->getOrder()
-            ->getState()
+            ->getState() !== OrderState::COMPLETED
         ) {
             return false;
         }

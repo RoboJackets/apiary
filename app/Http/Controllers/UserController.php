@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SelfServiceAccessOverrideRequest;
@@ -98,7 +100,7 @@ class UserController extends Controller
     {
         $include = $request->input('include');
         $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
-        if (null !== $user) {
+        if ($user !== null) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
             if ($requestingUser->cant('read-users') && $requestingUser->id !== $user->id) {
@@ -125,7 +127,7 @@ class UserController extends Controller
         $allowedIncludes[] = 'roles';
         $user = User::findByIdentifier($id)->with($allowedIncludes)->first();
 
-        if (null === $user) {
+        if ($user === null) {
             // This shouldn't be possible.
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
@@ -140,7 +142,7 @@ class UserController extends Controller
     {
         $requestingUser = $request->user();
         $user = User::findByIdentifier($id)->first();
-        if (null === $user) {
+        if ($user === null) {
             return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
         }
 
@@ -157,11 +159,15 @@ class UserController extends Controller
         if ($request->filled('clickup_email')) {
             // Check that this is one of their verified emails
             // gmail_address can be null and clickup_email can't be empty here so fall back to an empty string.
-            if (! in_array($request->input('clickup_email'), [
-                strtolower($user->uid).'@gatech.edu',
-                strtolower($user->gt_email),
-                strtolower($user->gmail_address ?? ''),
-            ], true)) {
+            if (! in_array(
+                $request->input('clickup_email'),
+                [
+                    strtolower($user->uid).'@gatech.edu',
+                    strtolower($user->gt_email),
+                    strtolower($user->gmail_address ?? ''),
+                ],
+                true
+            )) {
                 return response()->json(['status' => 'error',
                     'message' => 'requested clickup_email value has not been verified',
                 ], 422);
@@ -171,11 +177,15 @@ class UserController extends Controller
         if ($request->filled('autodesk_email')) {
             // Check that this is one of their verified emails
             // gmail_address can be null and autodesk_email can't be empty here so fall back to an empty string.
-            if (! in_array($request->input('autodesk_email'), [
-                strtolower($user->uid).'@gatech.edu',
-                strtolower($user->gt_email),
-                strtolower($user->gmail_address ?? ''),
-            ], true)) {
+            if (! in_array(
+                $request->input('autodesk_email'),
+                [
+                    strtolower($user->uid).'@gatech.edu',
+                    strtolower($user->gt_email),
+                    strtolower($user->gmail_address ?? ''),
+                ],
+                true
+            )) {
                 return response()->json(['status' => 'error',
                     'message' => 'requested autodesk_email value has not been verified',
                 ], 422);
@@ -195,7 +205,7 @@ class UserController extends Controller
 
         $user = User::find($user->id);
 
-        if (null !== $user) {
+        if ($user !== null) {
             return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
         }
 
@@ -208,7 +218,7 @@ class UserController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $user = User::findByIdentifier($id)->first();
-        if (null === $user) {
+        if ($user === null) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -218,7 +228,7 @@ class UserController extends Controller
             );
         }
 
-        if (true === $user->delete()) {
+        if ($user->delete() === true) {
             return response()->json(['status' => 'success', 'message' => 'User deleted.']);
         }
 

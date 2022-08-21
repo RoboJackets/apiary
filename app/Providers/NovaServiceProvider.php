@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-// phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
 
 namespace App\Providers;
 
@@ -35,15 +34,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Nova::script('apiary-custom', asset('js/nova.js'));
         });
 
-        Nova::footer(static function (Request $request): string {
-            return '
+        Nova::footer(static fn (Request $request): string => '
 <p class="mt-8 text-center text-xs text-80">
     <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/apiary">Made with ♥ by RoboJackets</a>
     <span class="px-1">&middot;</span>
     <a class="text-primary dim no-underline" class="text-muted" href="/privacy">Privacy Policy</a>
 </p>
-';
-        });
+');
 
         Nova::report(static function (\Throwable $exception): void {
             if (app()->bound('sentry')) {
@@ -92,15 +89,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate(): void
     {
-        Gate::define('viewNova', static function (User $user): bool {
-            return Cache::remember(
-                'can_access_nova_'.$user->uid,
-                now()->addDay(),
-                static function () use ($user): bool {
-                    return $user->can('access-nova');
-                }
-            );
-        });
+        Gate::define('viewNova', static fn (User $user): bool => Cache::remember(
+            'can_access_nova_'.$user->uid,
+            now()->addDay(),
+            static fn (): bool => $user->can('access-nova')
+        ));
     }
 
     /**
@@ -111,9 +104,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools(): array
     {
         return [
-            (new NovaPermissionTool())->canSee(static function (Request $request): bool {
-                return $request->user()->hasRole('admin');
-            }),
+            (new NovaPermissionTool())->canSee(
+                static fn (Request $request): bool => $request->user()->hasRole('admin')
+            ),
         ];
     }
 
@@ -126,12 +119,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new Main(),
-            (new JEDI())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            }),
-            (new Demographics())->canSee(static function (Request $request): bool {
-                return $request->user()->can('read-users');
-            }),
+            (new JEDI())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
+            (new Demographics())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
         ];
     }
 }

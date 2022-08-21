@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Squiz.PHP.CommentedOutCode.Found
-
 use Laravel\Nova\Actions\ActionResource;
 use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Http\Middleware\Authorize;

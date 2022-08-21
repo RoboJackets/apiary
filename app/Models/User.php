@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Models;
 
 use BadMethodCallException;
@@ -439,7 +442,7 @@ class User extends Authenticatable
      */
     public function getIsStudentAttribute(): bool
     {
-        return 'student' === $this->primary_affiliation
+        return $this->primary_affiliation === 'student'
             && $this->duesTransactions()->paid()->whereHas('package', static function (Builder $query): void {
                 $query->where('restricted_to_students', false);
             })->doesntExist();
@@ -539,9 +542,7 @@ class User extends Authenticatable
      */
     public function classStanding(): BelongsToMany
     {
-        return $this->belongsToMany(
-            ClassStanding::class
-        )->whereNull(
+        return $this->belongsToMany(ClassStanding::class)->whereNull(
             'class_standing_user.deleted_at'
         )->withTimestamps();
     }
@@ -571,16 +572,10 @@ class User extends Authenticatable
         throw new BadMethodCallException('Not implemented');
     }
 
-    // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
-    // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
-
     public function setRememberToken($value): void
     {
         throw new BadMethodCallException('Not implemented');
     }
-
-    // phpcs:enable
 
     public function getRememberTokenName(): string
     {
@@ -609,7 +604,7 @@ class User extends Authenticatable
      */
     public function getIsActiveAttribute(): bool
     {
-        return 0 !== self::where('id', $this->id)->active()->count();
+        return self::where('id', $this->id)->active()->count() !== 0;
     }
 
     /**
@@ -617,7 +612,7 @@ class User extends Authenticatable
      */
     public function getIsAccessActiveAttribute(): bool
     {
-        return 0 !== self::where('id', $this->id)->accessActive()->count();
+        return self::where('id', $this->id)->accessActive()->count() !== 0;
     }
 
     /**
@@ -638,7 +633,7 @@ class User extends Authenticatable
      */
     public function scopeFindByIdentifier(Builder $query, string $id): Builder
     {
-        if (is_numeric($id) && 9 === strlen($id) && '9' === $id[0]) {
+        if (is_numeric($id) && strlen($id) === 9 && $id[0] === '9') {
             return $query->where('gtid', $id);
         }
 
@@ -762,13 +757,11 @@ class User extends Authenticatable
         foreach ($gtCurriculum as $curriculum) {
             $matches = [];
 
-            if (1 !== preg_match(self::MAJOR_REGEX, $curriculum, $matches)) {
+            if (preg_match(self::MAJOR_REGEX, $curriculum, $matches) !== 1) {
                 continue;
             }
 
-            $new_major_ids[] = Major::findOrCreateFromGtadGroup(
-                $matches['major'].'_'.$matches['school']
-            )->id;
+            $new_major_ids[] = Major::findOrCreateFromGtadGroup($matches['major'].'_'.$matches['school'])->id;
         }
 
         foreach ($new_major_ids as $new_major_id) {
@@ -804,7 +797,7 @@ class User extends Authenticatable
         foreach ($eduPersonScopedAffiliation as $scopedAffiliation) {
             $affiliation_and_scope = explode('@', $scopedAffiliation);
 
-            if ('gt' !== $affiliation_and_scope[1]) {
+            if ($affiliation_and_scope[1] !== 'gt') {
                 continue;
             }
 
@@ -865,7 +858,7 @@ class User extends Authenticatable
                 }
             );
 
-        if (true === config('features.docusign-membership-agreement')) {
+        if (config('features.docusign-membership-agreement') === true) {
             $query->whereHas('envelope', static function (Builder $query): void {
                 $query->where('complete', true);
             });
@@ -896,7 +889,7 @@ class User extends Authenticatable
 
     public function getShouldReceiveEmailAttribute(): bool
     {
-        return null === $this->email_suppression_reason;
+        return $this->email_suppression_reason === null;
     }
 
     /**
@@ -927,7 +920,7 @@ class User extends Authenticatable
     {
         $array = $this->toArray();
 
-        $array['revenue_total'] = intval(Payment::selectRaw(  // @phpstan-ignore-line
+        $array['revenue_total'] = intval(Payment::selectRaw(
             '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'
         )->leftJoin('dues_transactions', static function (JoinClause $join): void {
             $join->on('dues_transactions.id', '=', 'payable_id')
@@ -994,9 +987,9 @@ class User extends Authenticatable
 
         // conditions
         $accessNotActive = ! $this->is_access_active;
-        $noExistingOverride = null === $this->access_override_until;
+        $noExistingOverride = $this->access_override_until === null;
         $hasNotPaidDues = ! $this->paidDues()->exists();
-        $eligibleDuesPkgExists = null !== $nextAccessEndDuesPkg;
+        $eligibleDuesPkgExists = $nextAccessEndDuesPkg !== null;
 
         // tasks
         $attendedTeamMeeting = $this
@@ -1057,7 +1050,7 @@ class User extends Authenticatable
             ->oldest('travel.return_date')
             ->first();
 
-        if (null !== $needPayment) {
+        if ($needPayment !== null) {
             return $needPayment;
         }
 
@@ -1068,7 +1061,7 @@ class User extends Authenticatable
             ->oldest('travel.return_date')
             ->first();
 
-        if (null !== $needDocuSign) {
+        if ($needDocuSign !== null) {
             return $needDocuSign;
         }
 

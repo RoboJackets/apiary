@@ -21,7 +21,7 @@ class ClickUpController extends Controller
             );
         }
 
-        if (0 === count($user->teams)) {
+        if (count($user->teams) === 0) {
             return view(
                 'clickup',
                 [
@@ -30,7 +30,7 @@ class ClickUpController extends Controller
             );
         }
 
-        if (null === $user->clickup_email) {
+        if ($user->clickup_email === null) {
             return redirect()->to('/profile');
         }
 
