@@ -105,20 +105,20 @@ class DistributeMerchandise extends Action
                         'duesTransactions',
                         static function (Builder $query) use ($resource): void {
                             $query->whereHas(
-                                    'merchandise',
-                                    static function (Builder $query) use ($resource): void {
-                                        $query->when(
-                                            $resource !== null,
-                                            static function (Builder $query) use ($resource): void {
-                                                $query->where('merchandise.id', $resource->id);
-                                            }
-                                        )
-                                        ->whereNull('dues_transaction_merchandise.provided_at');
-                                    }
-                                )
-                                ->whereHas('payment', static function (Builder $query): void {
-                                    $query->where('amount', '>', 0);
-                                });
+                                'merchandise',
+                                static function (Builder $query) use ($resource): void {
+                                    $query->when(
+                                        $resource !== null,
+                                        static function (Builder $query) use ($resource): void {
+                                            $query->where('merchandise.id', $resource->id);
+                                        }
+                                    )
+                                    ->whereNull('dues_transaction_merchandise.provided_at');
+                                }
+                            )
+                            ->whereHas('payment', static function (Builder $query): void {
+                                $query->where('amount', '>', 0);
+                            });
                         }
                     )
                         ->get()
