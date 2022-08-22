@@ -11464,16 +11464,16 @@
         },
         {
             "name": "tightenco/collect",
-            "version": "v8.83.15",
+            "version": "v8.83.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tighten/collect.git",
-                "reference": "7275c1b5f6bfc539d72bb5984d3b9a89e47e27c9"
+                "reference": "a4423c6ace6b54ba4f86c0ac9de588c57bc94d79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/collect/zipball/7275c1b5f6bfc539d72bb5984d3b9a89e47e27c9",
-                "reference": "7275c1b5f6bfc539d72bb5984d3b9a89e47e27c9",
+                "url": "https://api.github.com/repos/tighten/collect/zipball/a4423c6ace6b54ba4f86c0ac9de588c57bc94d79",
+                "reference": "a4423c6ace6b54ba4f86c0ac9de588c57bc94d79",
                 "shasum": ""
             },
             "require": {
@@ -11512,9 +11512,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tighten/collect/issues",
-                "source": "https://github.com/tighten/collect/tree/v8.83.15"
+                "source": "https://github.com/tighten/collect/tree/v8.83.23"
             },
-            "time": "2022-04-15T20:31:14+00:00"
+            "time": "2022-08-22T17:50:04+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
