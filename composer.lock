@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05b92e91269df663c88b5db5e900c838",
+    "content-hash": "5db44fac8983869399913e245f79bf80",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -13543,16 +13543,16 @@
         },
         {
             "name": "phan/phan",
-            "version": "5.4.0",
+            "version": "5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "d37335833cee86e06c0e16789cc86a86bd272ab8"
+                "reference": "fef40178a952bcfcc3f69b76989dd613c3d5c759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/d37335833cee86e06c0e16789cc86a86bd272ab8",
-                "reference": "d37335833cee86e06c0e16789cc86a86bd272ab8",
+                "url": "https://api.github.com/repos/phan/phan/zipball/fef40178a952bcfcc3f69b76989dd613c3d5c759",
+                "reference": "fef40178a952bcfcc3f69b76989dd613c3d5c759",
                 "shasum": ""
             },
             "require": {
@@ -13562,7 +13562,7 @@
                 "ext-json": "*",
                 "ext-tokenizer": "*",
                 "felixfbecker/advanced-json-rpc": "^3.0.4",
-                "microsoft/tolerant-php-parser": "^0.1.0",
+                "microsoft/tolerant-php-parser": "0.1.1",
                 "netresearch/jsonmapper": "^1.6.0|^2.0|^3.0|^4.0",
                 "php": "^7.2.0|^8.0.0",
                 "sabre/event": "^5.1.3",
@@ -13616,9 +13616,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/5.4.0"
+                "source": "https://github.com/phan/phan/tree/5.4.1"
             },
-            "time": "2022-08-08T23:57:02+00:00"
+            "time": "2022-08-26T00:49:07+00:00"
         },
         {
             "name": "phar-io/manifest",
