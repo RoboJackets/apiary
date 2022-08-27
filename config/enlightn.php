@@ -28,6 +28,7 @@ return [
         \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
         ...(env('SKIP_PHPSTAN_CHECKS', false) === true ? [
             \Enlightn\Enlightn\Analyzers\Performance\CollectionCallAnalyzer::class,
+            \Enlightn\Enlightn\Analyzers\Reliability\DeadCodeAnalyzer::class,
         ] : []),
         ...(env('APP_ENV', 'local') === 'test' ? [] : [
             \Enlightn\Enlightn\Analyzers\Security\AppDebugAnalyzer::class,
