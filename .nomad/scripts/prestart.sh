@@ -15,6 +15,7 @@ then
     if ! php artisan ping --no-interaction --verbose
     then
         export SKIP_HTTP_CHECKS=true
+        php artisan config:cache --no-interaction --verbose
     fi
     php artisan enlightn --details --show-exceptions --no-interaction --verbose
 fi
