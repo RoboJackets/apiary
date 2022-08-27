@@ -31,6 +31,7 @@ return [
             \Enlightn\Enlightn\Analyzers\Reliability\DeadCodeAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\ForeachIterableAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidFunctionCallAnalyzer::class,
+            \Enlightn\Enlightn\Analyzers\Reliability\InvalidImportAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidMethodCallAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidMethodOverrideAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidOffsetAnalyzer::class,
