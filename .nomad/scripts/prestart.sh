@@ -1,3 +1,12 @@
+if [ ${APP_ENV} != "google-play-review" ]
+then
+    if ! php artisan ping --no-interaction --verbose
+    then
+        export SKIP_HTTP_CHECKS=true
+    fi
+    php artisan enlightn --details --show-exceptions --no-interaction --verbose
+fi
+
 php artisan config:cache --no-interaction --verbose
 php artisan view:cache --no-interaction --verbose
 php artisan event:cache --no-interaction --verbose
@@ -8,15 +17,6 @@ php artisan migrate --no-interaction --force --verbose
 if [ ${APP_ENV} = "production" ]
 then
     export SKIP_DEPENDENCY_ANALYZER=true
-fi
-
-if [ ${APP_ENV} != "google-play-review" ]
-then
-    if ! php artisan ping --no-interaction --verbose
-    then
-        export SKIP_HTTP_CHECKS=true
-    fi
-    php artisan enlightn --details --show-exceptions --no-interaction --verbose
 fi
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
