@@ -12,6 +12,7 @@ fi
 
 if [ ${APP_ENV} != "google-play-review" ]
 then
+    export SKIP_PHPSTAN_CHECKS=true
     if ! php artisan ping --no-interaction --verbose
     then
         export SKIP_HTTP_CHECKS=true
