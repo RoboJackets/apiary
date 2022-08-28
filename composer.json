@@ -30,7 +30,7 @@
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "3.4.2",
         "enlightn/enlightn": "2.1.0",
-        "guzzlehttp/guzzle": "7.4.5",
+        "guzzlehttp/guzzle": "7.5.0",
         "htmlmin/htmlmin": "9.0.1",
         "http-interop/http-factory-guzzle": "1.2.0",
         "kiritokatklian/nova-permission": "4.0.3",
