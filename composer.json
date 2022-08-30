@@ -78,7 +78,7 @@
         "slevomat/coding-standard": "8.4.0",
         "spatie/ray": "1.36.0",
         "spatie/laravel-ignition": "1.4.0",
-        "phpunit/phpunit": "9.5.23"
+        "phpunit/phpunit": "9.5.24"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
