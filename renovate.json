@@ -23,6 +23,10 @@
             "type / technical debt"
         ]
     },
+    "lockFileMaintenance": {
+        "enabled": true,
+        "schedule": ["at any time"],
+    },
     "hostRules": [
         {
             "hostName": "nova.laravel.com",
