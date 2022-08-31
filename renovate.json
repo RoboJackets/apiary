@@ -23,9 +23,11 @@
             "type / technical debt"
         ]
     },
+    "automerge": true,
+    "platformAutomerge": true,
     "lockFileMaintenance": {
         "enabled": true,
-        "schedule": ["at any time"],
+        "schedule": ["at any time"]
     },
     "hostRules": [
         {
