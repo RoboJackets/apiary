@@ -24,6 +24,7 @@ class CreateOAuth2Client extends Action
     public $name = 'Create OAuth2 Client';
 
     private const STANDARD_CLIENT = 'standard';
+
     private const PUBLIC_CLIENT = 'public';
 
     public function __construct(private ClientRepository $clientRepository)

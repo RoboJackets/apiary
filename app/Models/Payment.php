@@ -90,6 +90,7 @@ class Payment extends Model
     use SoftDeletes;
 
     private const PER_TRANSACTION_FEE = 30;  // cents
+
     private const PERCENTAGE_FEE = 2.9;
 
     /**

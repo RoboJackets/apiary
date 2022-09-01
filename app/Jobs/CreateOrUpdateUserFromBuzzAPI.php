@@ -24,10 +24,14 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     use SerializesModels;
 
     public const IDENTIFIER_GTID = 'gtid';
+
     public const IDENTIFIER_USERNAME = 'uid';
+
     // @phan-suppress-next-line PhanUnreferencedPublicClassConstant
     public const IDENTIFIER_MAIL = 'email';
+
     public const IDENTIFIER_USER = 'user';
+
     public const IDENTIFIER_GTDIRGUID = 'gtPersonDirectoryID';
 
     public const EXPECTED_ATTRIBUTES = [
@@ -73,7 +77,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(string $identifier, string|int|\App\Models\User $value, string $reason)
+    public function __construct(string $identifier, string|int|User $value, string $reason)
     {
         $this->identifier = $identifier;
         $this->value = $value;
