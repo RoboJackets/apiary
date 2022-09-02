@@ -24,6 +24,7 @@
         ]
     },
     "automerge": true,
+    "platformAutomerge": true,
     "lockFileMaintenance": {
         "enabled": true,
         "schedule": ["at any time"]
