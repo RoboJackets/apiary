@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6accbc697d911eda432a68640bc23909",
+    "content-hash": "a97b32c1580a54aef7a274812c6c4435",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8913,16 +8913,16 @@
         },
         {
             "name": "spatie/laravel-csp",
-            "version": "2.8.0",
+            "version": "2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-csp.git",
-                "reference": "495bcc73d38e3a502b56bee70d78d86f1174addf"
+                "reference": "78a521f7d6cd9f1f94ef7fe6d780577d6cca1c78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/495bcc73d38e3a502b56bee70d78d86f1174addf",
-                "reference": "495bcc73d38e3a502b56bee70d78d86f1174addf",
+                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/78a521f7d6cd9f1f94ef7fe6d780577d6cca1c78",
+                "reference": "78a521f7d6cd9f1f94ef7fe6d780577d6cca1c78",
                 "shasum": ""
             },
             "require": {
@@ -8983,7 +8983,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-csp/tree/2.8.0"
+                "source": "https://github.com/spatie/laravel-csp/tree/2.8.1"
             },
             "funding": [
                 {
@@ -8991,7 +8991,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-08-25T10:55:03+00:00"
+            "time": "2022-09-01T20:11:43+00:00"
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
