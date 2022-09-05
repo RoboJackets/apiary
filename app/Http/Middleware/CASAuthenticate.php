@@ -48,7 +48,7 @@ class CASAuthenticate
         'sn',
         'authnContextClass',
         'eduPersonPrimaryAffiliation',
-        'eduPersonScopedAffiliation'
+        'eduPersonScopedAffiliation',
     ];
 
     public function __construct(Guard $auth)
