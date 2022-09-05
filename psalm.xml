@@ -51,6 +51,7 @@
         <TooManyArguments>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <directory name="routes" />
             </errorLevel>
         </TooManyArguments>
         <MissingReturnType>
@@ -61,13 +62,6 @@
                 <directory name="app/Http/Middleware" />
             </errorLevel>
         </MissingReturnType>
-        <TooManyArguments>
-            <errorLevel type="suppress">
-                <directory name="routes" />
-                <file name="app/Models/DuesTransaction.php" />
-                <file name="app/Nova/Lenses/RecentInactiveUsers.php" />
-            </errorLevel>
-        </TooManyArguments>
         <UndefinedClass>
             <errorLevel type="suppress">
                 <file name="app/Exceptions/Handler.php" />

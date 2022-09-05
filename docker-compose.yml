@@ -24,6 +24,7 @@ services:
       CAS_MASQUERADE_sn: Testing
       CAS_MASQUERADE_authnContextClass: mfa-duo
       CAS_MASQUERADE_eduPersonPrimaryAffiliation: student
+      CAS_MASQUERADE_eduPersonScopedAffiliation: student@gt
       JEDI_HOST: null
       JEDI_TOKEN: null
       PASSPORT_PERSONAL_ACCESS_CLIENT_ID: 95b2031a-5593-4d67-909a-ef32ae06a86a
