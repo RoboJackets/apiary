@@ -124,8 +124,9 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
         }
 
         if (in_array('G Suite', $send['teams'], true)) {
-            $send['google_accounts'][] = strtolower($this->user->preferred_first_name.'.'.$this->user->last_name)
-                .'@robojackets.org';
+            $send['google_accounts'][] = preg_replace(
+                '/[^[:alnum:]-]/u', '', strtolower($this->user->preferred_first_name.'.'.$this->user->last_name)
+            ).'@robojackets.org';
         }
 
         $send['google_accounts'] = array_unique($send['google_accounts'], SORT_STRING);
