@@ -26,7 +26,7 @@ return [
     /*
      * The channels to which the notification will be sent.
      */
-    'channels' => ['mail', 'slack'],
+    'channels' => ['slack'],
 
     'mail' => [
         'to' => env('FAILED_JOB_EMAIL_ADDRESS'),
