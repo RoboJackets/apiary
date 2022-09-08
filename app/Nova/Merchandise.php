@@ -110,18 +110,18 @@ class Merchandise extends Resource
      */
     public function actions(Request $request): array
     {
-        if ($request->resourceId === null) {
+        if ($request->resources === null) {
             return [];
         }
 
-        $name = Str::lower(AppModelsMerchandise::where('id', $request->resourceId)->sole()->name);
+        $name = Str::lower(AppModelsMerchandise::where('id', $request->resources)->sole()->name);
 
         if (Str::contains($name, 'waive')) {
             return [];
         }
 
         return [
-            (new Actions\DistributeMerchandise($request->resourceId))
+            (new Actions\DistributeMerchandise($request->resources))
                 ->canSee(static fn (Request $request): bool => $request->user()->can('distribute-swag'))
                 ->canRun(
                     static fn (NovaRequest $request, AppModelsMerchandise $merchandise): bool => $request->user()->can(
