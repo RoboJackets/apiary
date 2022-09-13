@@ -9,7 +9,6 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\UnauthorizedException;
 
 class CASAuthenticate
 {
@@ -75,7 +74,7 @@ class CASAuthenticate
 
                 if (config('features.demo-mode') !== null) {
                     if ($this->cas->user() !== config('features.demo-mode')) {
-                        throw new UnauthorizedException();
+                        abort(403);
                     }
                 }
 
