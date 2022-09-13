@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85564310e90c3290fcca5519095f7968",
+    "content-hash": "0fe9f98d08b3fd072028a01aee95ae12",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3342,17 +3342,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.13.0",
+            "version": "4.14.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "cfa590fae6c3fb0b2a58e78d4aa74a169bd07930"
+                "reference": "d9854b3b84f169e813494e3a9b361736a5a8ba4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-cfa590fae6c3fb0b2a58e78d4aa74a169bd07930-zip-9ec0c1.zip",
-                "reference": "cfa590fae6c3fb0b2a58e78d4aa74a169bd07930",
-                "shasum": "48b7596e35f08a6a0b7d0cd50d1fde48d75a1d6c"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d9854b3b84f169e813494e3a9b361736a5a8ba4c-zip-9c190f.zip",
+                "reference": "d9854b3b84f169e813494e3a9b361736a5a8ba4c",
+                "shasum": "72a105edea3274c2f0cf0c1df8af257b58c0fb06"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0",
@@ -3446,9 +3446,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.13.0"
+                "source": "https://github.com/laravel/nova/tree/v4.14.1"
             },
-            "time": "2022-08-23T18:05:42+00:00"
+            "time": "2022-09-13T18:52:43+00:00"
         },
         {
             "name": "laravel/passport",
@@ -3859,16 +3859,16 @@
         },
         {
             "name": "laravel/ui",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/ui.git",
-                "reference": "c43d29941ee8f41547572968123eadbd81392841"
+                "reference": "9aa6930c8ae98b2465594d7f14f4ac131bfd6a99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/ui/zipball/c43d29941ee8f41547572968123eadbd81392841",
-                "reference": "c43d29941ee8f41547572968123eadbd81392841",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/9aa6930c8ae98b2465594d7f14f4ac131bfd6a99",
+                "reference": "9aa6930c8ae98b2465594d7f14f4ac131bfd6a99",
                 "shasum": ""
             },
             "require": {
@@ -3914,9 +3914,9 @@
                 "ui"
             ],
             "support": {
-                "source": "https://github.com/laravel/ui/tree/v4.0.1"
+                "source": "https://github.com/laravel/ui/tree/v4.0.2"
             },
-            "time": "2022-09-06T14:48:07+00:00"
+            "time": "2022-09-09T18:20:35+00:00"
         },
         {
             "name": "lcobucci/clock",
