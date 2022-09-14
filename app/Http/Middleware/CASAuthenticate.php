@@ -72,10 +72,8 @@ class CASAuthenticate
                     $this->cas->setAttributes($masq_attrs);
                 }
 
-                if (config('features.demo-mode') !== null) {
-                    if ($this->cas->user() !== config('features.demo-mode')) {
-                        abort(403);
-                    }
+                if (config('features.demo-mode') !== null && $this->cas->user() !== config('features.demo-mode')) {
+                    abort(403);
                 }
 
                 $user = $this->createOrUpdateCASUser();
