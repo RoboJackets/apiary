@@ -119,7 +119,7 @@ trait CreateOrUpdateCASUser
             }
         }
 
-        if (config('features.demo-mode') !== null) {
+        if (config('features.demo-mode') === null) {
             CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, 'cas_login');
         }
 
