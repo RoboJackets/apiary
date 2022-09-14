@@ -9,8 +9,6 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RoboJackets\AuthStickler;
-use RoboJackets\ErrorPages\Unauthorized;
 
 class CASAuthenticate
 {
@@ -74,13 +72,8 @@ class CASAuthenticate
                     $this->cas->setAttributes($masq_attrs);
                 }
 
-                if (config('features.demo-mode') === null) {
-                    AuthStickler::check($this->cas);
-                } else {
-                    if ($this->cas->user() !== config('features.demo-mode')) {
-                        Unauthorized::render(0);
-                        exit;
-                    }
+                if (config('features.demo-mode') !== null && $this->cas->user() !== config('features.demo-mode')) {
+                    abort(403);
                 }
 
                 $user = $this->createOrUpdateCASUser();

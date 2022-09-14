@@ -8,7 +8,6 @@ use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
-use RoboJackets\ErrorPages\Unauthorized;
 use Spatie\Permission\Models\Role;
 
 trait CreateOrUpdateCASUser
@@ -63,8 +62,7 @@ trait CreateOrUpdateCASUser
             $user->is_service_account = false;
         }
         if ($user->is_service_account) {
-            Unauthorized::render(0b110);
-            exit;
+            abort(403);
         }
         $user->uid = $this->cas->user();
         $user->gtid = config('features.demo-mode') === null ? $this->cas->getAttribute('gtGTID') : 999999999;
