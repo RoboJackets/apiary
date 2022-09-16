@@ -25,10 +25,14 @@
     },
     "automerge": true,
     "platformAutomerge": true,
-    "lockFileMaintenance": {
-        "enabled": true,
-        "schedule": ["at any time"]
+    "php": {
+        "lockFileMaintenance": {
+            "enabled": true,
+            "schedule": ["before 8am every weekday"]
+        }
     },
+    "timezone": "America/New_York",
+    "schedule": ["before 4pm every weekday"],
     "hostRules": [
         {
             "hostName": "nova.laravel.com",
