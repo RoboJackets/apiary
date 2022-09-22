@@ -15,7 +15,7 @@ class DateTo extends DateFilter
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $value
-     * @return \Illuminate\Database\Eloquent\Builder<\Illuminate\Database\Eloquent\Model>|\Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return \Illuminate\Database\Eloquent\Builder<\Illuminate\Database\Eloquent\Model>|\Illuminate\Database\Eloquent\Relations\MorphMany<\Illuminate\Database\Eloquent\Model>
      */
     public function apply(Request $request, $query, $value)
     {
