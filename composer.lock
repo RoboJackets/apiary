@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f9111ba0e2ac8a6b377e4fe0821412d",
+    "content-hash": "acb599a1707b793a6c7b2944f7b728d8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4300,16 +4300,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.5.1",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f14993c6e394450ac4649da35264df0544d0234e"
+                "reference": "c73c4eb31f2e883b3897ab5591aa2dbc48112433"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f14993c6e394450ac4649da35264df0544d0234e",
-                "reference": "f14993c6e394450ac4649da35264df0544d0234e",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/c73c4eb31f2e883b3897ab5591aa2dbc48112433",
+                "reference": "c73c4eb31f2e883b3897ab5591aa2dbc48112433",
                 "shasum": ""
             },
             "require": {
@@ -4371,7 +4371,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.5.1"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.5.2"
             },
             "funding": [
                 {
@@ -4387,7 +4387,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-18T18:23:19+00:00"
+            "time": "2022-09-23T18:59:16+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -9219,16 +9219,16 @@
         },
         {
             "name": "square/square",
-            "version": "21.1.0.20220823",
+            "version": "22.0.0.20220921",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "eff2315d62f9616e8fa4535d7a76c1757427b2b9"
+                "reference": "76b5cc250c021a8b81d6d2c131477120faf7a517"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/eff2315d62f9616e8fa4535d7a76c1757427b2b9",
-                "reference": "eff2315d62f9616e8fa4535d7a76c1757427b2b9",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/76b5cc250c021a8b81d6d2c131477120faf7a517",
+                "reference": "76b5cc250c021a8b81d6d2c131477120faf7a517",
                 "shasum": ""
             },
             "require": {
@@ -9270,9 +9270,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/21.1.0.20220823"
+                "source": "https://github.com/square/square-php-sdk/tree/22.0.0.20220921"
             },
-            "time": "2022-08-22T22:47:25+00:00"
+            "time": "2022-09-21T16:47:40+00:00"
         },
         {
             "name": "stella-maris/clock",
