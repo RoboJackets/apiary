@@ -13273,23 +13273,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.7.1",
+            "version": "v7.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "51cd568d65c8e9cf9a9c88c5fc83b32fd25a1935"
+                "reference": "ebb01398b1fff9516dd3a2c5aae5a0af01c72abd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/51cd568d65c8e9cf9a9c88c5fc83b32fd25a1935",
-                "reference": "51cd568d65c8e9cf9a9c88c5fc83b32fd25a1935",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/ebb01398b1fff9516dd3a2c5aae5a0af01c72abd",
+                "reference": "ebb01398b1fff9516dd3a2c5aae5a0af01c72abd",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.19",
+                "laravel/framework": "^9.32",
                 "mockery/mockery": "^1.4.4",
-                "orchestra/testbench-core": "^7.7.1",
+                "orchestra/testbench-core": "^7.8",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -13326,7 +13326,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.7.1"
+                "source": "https://github.com/orchestral/testbench/tree/v7.8.0"
             },
             "funding": [
                 {
@@ -13338,20 +13338,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-09-28T01:53:58+00:00"
+            "time": "2022-09-28T05:58:44+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.7.1",
+            "version": "v7.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "c310e732203e3b40d12dcbd91b7e3451053d0cd7"
+                "reference": "e9f7bf1765825c562182f7a6cbde854ed512a42f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/c310e732203e3b40d12dcbd91b7e3451053d0cd7",
-                "reference": "c310e732203e3b40d12dcbd91b7e3451053d0cd7",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/e9f7bf1765825c562182f7a6cbde854ed512a42f",
+                "reference": "e9f7bf1765825c562182f7a6cbde854ed512a42f",
                 "shasum": ""
             },
             "require": {
@@ -13359,7 +13359,7 @@
             },
             "require-dev": {
                 "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.19",
+                "laravel/framework": "^9.32",
                 "laravel/laravel": "9.x-dev",
                 "laravel/pint": "^1.1",
                 "mockery/mockery": "^1.4.4",
@@ -13372,7 +13372,7 @@
             "suggest": {
                 "brianium/paratest": "Allow using parallel tresting (^6.4).",
                 "fakerphp/faker": "Allow using Faker for testing (^1.9.2).",
-                "laravel/framework": "Required for testing (^9.19).",
+                "laravel/framework": "Required for testing (^9.32).",
                 "mockery/mockery": "Allow using Mockery for testing (^1.4.4).",
                 "nunomaduro/collision": "Allow using Laravel style tests output and parallel testing (^6.2).",
                 "orchestra/testbench-browser-kit": "Allow using legacy Laravel BrowserKit for testing (^7.0).",
@@ -13433,7 +13433,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-09-28T01:42:50+00:00"
+            "time": "2022-09-28T05:52:37+00:00"
         },
         {
             "name": "phan/phan",
