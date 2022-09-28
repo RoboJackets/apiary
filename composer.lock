@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "429b0bb39660a3ee6d3363e351978497",
+    "content-hash": "48aeb21c844157e74e9f1b6815efdc0c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4779,16 +4779,16 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.41",
+            "version": "3.1.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SpartnerNL/Laravel-Excel.git",
-                "reference": "f7a1c3159fab8b4069a67c30e71810b358a2797e"
+                "reference": "b3938c9a4cf70d01173612fe35e64f31ca830132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/f7a1c3159fab8b4069a67c30e71810b358a2797e",
-                "reference": "f7a1c3159fab8b4069a67c30e71810b358a2797e",
+                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/b3938c9a4cf70d01173612fe35e64f31ca830132",
+                "reference": "b3938c9a4cf70d01173612fe35e64f31ca830132",
                 "shasum": ""
             },
             "require": {
@@ -4842,7 +4842,7 @@
             ],
             "support": {
                 "issues": "https://github.com/SpartnerNL/Laravel-Excel/issues",
-                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.41"
+                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.42"
             },
             "funding": [
                 {
@@ -4854,7 +4854,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-09-26T14:55:28+00:00"
+            "time": "2022-09-28T11:25:11+00:00"
         },
         {
             "name": "madewithlove/laravel-nova-uuid-support",
