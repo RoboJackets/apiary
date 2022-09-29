@@ -85,8 +85,10 @@
 </template>
 
 <script>
-import { alpha, email, minLength, maxLength, required } from 'vuelidate/lib/validators';
+import { email, minLength, maxLength, required, helpers } from 'vuelidate/lib/validators';
 import notGTEmail from '../../customValidators/notGTEmail';
+
+const alphaSpace = helpers.regex('alphaSpace', /^[a-zA-Z ]*$/);
 
 export default {
   props: ['user'],
@@ -151,7 +153,7 @@ export default {
   validations: {
     localUser: {
       phone: { maxLength: maxLength(15) },
-      preferred_first_name: { alpha },
+      preferred_first_name: { alphaSpace },
       emergency_contact_name: { required },
       emergency_contact_phone: { required, maxLength: maxLength(15) },
     },
