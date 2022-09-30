@@ -53,6 +53,8 @@ RUN set -eux && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
+    sed -i '/pid/c\\' /etc/php/8.1/fpm/php-fpm.conf && \
+    sed -i '/systemd_interval/c\systemd_interval = 0' /etc/php/8.1/fpm/php-fpm.conf && \
     sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.1/fpm/php-fpm.conf && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/fpm/php.ini && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/cli/php.ini && \
