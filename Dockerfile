@@ -52,7 +52,8 @@ RUN set -eux && \
         unzip libfcgi-bin default-mysql-client zopfli php8.1-redis && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
-    chown www-data:www-data /app && \
+    mkdir -p /run/php && \
+    chown www-data:www-data /app /run/php && \
     sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.1/fpm/php-fpm.conf && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/fpm/php.ini && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/cli/php.ini && \
