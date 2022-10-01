@@ -245,7 +245,7 @@
 </template>
 
 <script>
-import { alphaSpace, email, maxLength, minLength, required } from 'vuelidate/lib/validators';
+import { email, maxLength, minLength, required, helpers } from 'vuelidate/lib/validators';
 import notGTEmail from '../customValidators/notGTEmail';
 
 const alphaSpace = helpers.regex('alphaSpace', /^[a-zA-Z ]*$/);
