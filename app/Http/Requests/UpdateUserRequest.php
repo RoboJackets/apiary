@@ -36,6 +36,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'preferred_first_name' => [
                 'max:127',
+                'regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             ],
             'phone' => [
                 'digits_between:10,15',

@@ -88,7 +88,7 @@
 import { email, minLength, maxLength, required, helpers } from 'vuelidate/lib/validators';
 import notGTEmail from '../../customValidators/notGTEmail';
 
-const alphaSpace = helpers.regex('alphaSpace', /^[a-zA-Z ]*$/);
+const alphaSpace = helpers.regex('alphaSpace', /^([a-zA-Z]+\s)*[a-zA-Z]+$/);
 
 export default {
   props: ['user'],
