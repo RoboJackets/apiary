@@ -120,12 +120,6 @@ job "apiary" {
 
         network_mode = "host"
 
-        mount {
-          type   = "bind"
-          source = "local/"
-          target = "/app/storage/logs/"
-        }
-
         entrypoint = [
           "/bin/bash",
           "-xeuo",
@@ -191,21 +185,6 @@ EOF
           type   = "bind"
           source = "local/fpm/"
           target = "/etc/php/8.1/fpm/pool.d/"
-        }
-
-        mount {
-          type   = "bind"
-          source = "local/"
-          target = "/app/storage/logs/"
-        }
-
-        mount {
-          type = "tmpfs"
-          target = "/run/php"
-          readonly = false
-          tmpfs_options {
-            size = 16000
-          }
         }
 
         entrypoint = [
@@ -332,12 +311,6 @@ EOF
           force_pull = true
 
           network_mode = "host"
-
-          mount {
-            type   = "bind"
-            source = "local/"
-            target = "/app/storage/logs/"
-          }
 
           entrypoint = [
             "/bin/bash",
