@@ -157,7 +157,6 @@ parameters:
     - '#Parameter \#1 \$username of method Illuminate\\Notifications\\Messages\\SlackMessage::from\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$value of method Carbon\\Carbon::subDays\(\) expects int, mixed given\.#'
     - '#Parameter \#1 \$value of method Laravel\\Nova\\Metrics\\Partition::result\(\) expects array<string, float\|int>, array given\.#'
-    - '#Parameter \#1 \$value of static method Illuminate\\Support\\Str::singular\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$year of static method Carbon\\Carbon::create\(\) expects int\|null, string given\.#'
     - '#Parameter \#2 \$array of function array_key_exists expects array, array\|null given\.#'
     - '#Parameter \#2 \$array of function array_key_exists expects array, mixed given\.#'
