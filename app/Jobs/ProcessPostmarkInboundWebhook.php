@@ -20,7 +20,7 @@ use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 {
-    private const SIGNER_INFO_REGEX = '/Using IP Address: (?P<ipAddress>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+(?>Signed using mobile)?\s+Sent: (?P<sentAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+Viewed: (?P<viewedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+Signed: (?P<signedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/';
+    private const SIGNER_INFO_REGEX = '/Using IP Address: (?P<ipAddress>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+(?>Signed using mobile)?\s+Sent: (?P<sentAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+(Resent: (?P<resentAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+)?Viewed: (?P<viewedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+Signed: (?P<signedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/';
 
     /**
      * The queue this job will run on. This is fairly arbitrary since it only touches the local DB.
