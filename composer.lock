@@ -6272,9 +6272,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657999184/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-39a27f3b91ed0c8638ba3557d50dd91858920a90-zip-527320.zip",
+                "url": "https://composer.robojackets.org/1665410014/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-39a27f3b91ed0c8638ba3557d50dd91858920a90-zip-527320.zip",
                 "reference": "39a27f3b91ed0c8638ba3557d50dd91858920a90",
-                "shasum": "439ce3c1db9f7052a1f097fc5f4e4b89815dff7c"
+                "shasum": "0a5d3e51bf736578f69732a603938ee284e43dc7"
             },
             "require": {
                 "ext-json": "*",
@@ -13274,28 +13274,28 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.8.1",
+            "version": "v7.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "9beb56686cadd34dc65ce2a422eb3299ed83dd87"
+                "reference": "9f86679cd51127260915a33e2fbdc269a402a6e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/9beb56686cadd34dc65ce2a422eb3299ed83dd87",
-                "reference": "9beb56686cadd34dc65ce2a422eb3299ed83dd87",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/9f86679cd51127260915a33e2fbdc269a402a6e2",
+                "reference": "9f86679cd51127260915a33e2fbdc269a402a6e2",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.32",
-                "mockery/mockery": "^1.4.4",
-                "orchestra/testbench-core": "^7.8.1",
+                "laravel/framework": "^9.34",
+                "mockery/mockery": "^1.5.1",
+                "orchestra/testbench-core": "^7.9",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
-                "symfony/process": "^6.0",
-                "symfony/yaml": "^6.0",
+                "symfony/process": "^6.0.9",
+                "symfony/yaml": "^6.0.9",
                 "vlucas/phpdotenv": "^5.4.1"
             },
             "type": "library",
@@ -13327,7 +13327,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.8.1"
+                "source": "https://github.com/orchestral/testbench/tree/v7.9.0"
             },
             "funding": [
                 {
@@ -13339,7 +13339,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-10-04T09:54:01+00:00"
+            "time": "2022-10-05T00:41:32+00:00"
         },
         {
             "name": "orchestra/testbench-core",
@@ -14475,9 +14475,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657999184/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
+                "url": "https://composer.robojackets.org/1665410014/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
                 "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7",
-                "shasum": "6e18c4192a270c854ec1e49f37fefeb0c08eac01"
+                "shasum": "fc2e8ccc569a21b6fcd1f1d8fe4c1572aa90137e"
             },
             "require": {
                 "phan/phan": "*",
@@ -16339,16 +16339,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.27.0",
+            "version": "4.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff"
+                "reference": "52e96bea381e6cb07a672aefec791a5817694a26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/faf106e717c37b8c81721845dba9de3d8deed8ff",
-                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/52e96bea381e6cb07a672aefec791a5817694a26",
+                "reference": "52e96bea381e6cb07a672aefec791a5817694a26",
                 "shasum": ""
             },
             "require": {
@@ -16387,6 +16387,7 @@
                 "phpdocumentor/reflection-docblock": "^5",
                 "phpmyadmin/sql-parser": "5.1.0||dev-master",
                 "phpspec/prophecy": ">=1.9.0",
+                "phpstan/phpdoc-parser": "1.2.* || 1.6.4",
                 "phpunit/phpunit": "^9.0",
                 "psalm/plugin-phpunit": "^0.16",
                 "slevomat/coding-standard": "^7.0",
@@ -16440,9 +16441,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/4.27.0"
+                "source": "https://github.com/vimeo/psalm/tree/4.28.0"
             },
-            "time": "2022-08-31T13:47:09+00:00"
+            "time": "2022-10-07T16:13:24+00:00"
         },
         {
             "name": "webmozart/path-util",
