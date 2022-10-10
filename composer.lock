@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e5c67875bdc34499af5e0e687698606",
+    "content-hash": "dbdca7472af9df6f9a8b90f2c8110993",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5213,16 +5213,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.24.2",
+            "version": "v0.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "7f7b350480bce4bc80efc9a613a820261a96ef8b"
+                "reference": "95148ea251d4d8117c68d2faf22dc3ef2f1d6dc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/7f7b350480bce4bc80efc9a613a820261a96ef8b",
-                "reference": "7f7b350480bce4bc80efc9a613a820261a96ef8b",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/95148ea251d4d8117c68d2faf22dc3ef2f1d6dc5",
+                "reference": "95148ea251d4d8117c68d2faf22dc3ef2f1d6dc5",
                 "shasum": ""
             },
             "require": {
@@ -5274,9 +5274,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.24.2"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.25.0"
             },
-            "time": "2022-08-16T15:18:17+00:00"
+            "time": "2022-10-03T14:09:17+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8363,23 +8363,23 @@
         },
         {
             "name": "robojackets/meilisearch-index-settings-helper",
-            "version": "v0.7.0",
+            "version": "v0.8.0",
             "source": {
                 "type": "git",
                 "url": "git@github.gatech.edu:RoboJackets/meilisearch-index-settings-helper.git",
-                "reference": "db4f4d76835878c330951f198da19e806502a599"
+                "reference": "1e746a90f12303a1ef6aea0e1b74bdc656f389d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.robojackets.org/1657999184/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-db4f4d76835878c330951f198da19e806502a599-zip-db832a.zip",
-                "reference": "db4f4d76835878c330951f198da19e806502a599",
-                "shasum": "9584010766b459dfd9226ef530b2af5a6c742935"
+                "url": "https://composer.robojackets.org/1665410014/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-1e746a90f12303a1ef6aea0e1b74bdc656f389d9-zip-d81013.zip",
+                "reference": "1e746a90f12303a1ef6aea0e1b74bdc656f389d9",
+                "shasum": "96c05715f8996c76ea4350b845b4004275a21cca"
             },
             "require": {
                 "haydenpierce/class-finder": "^0.4.3",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "laravel/scout": "^9.4",
-                "meilisearch/meilisearch-php": "^0.24.0"
+                "meilisearch/meilisearch-php": "^0.25.0"
             },
             "require-dev": {
                 "laravel/framework": "*",
@@ -8425,10 +8425,10 @@
             "description": "Manage Meilisearch indexing settings in Eloquent models",
             "homepage": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper",
             "support": {
-                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.7.0",
+                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.8.0",
                 "issues": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/issues"
             },
-            "time": "2022-07-16T18:36:24+00:00"
+            "time": "2022-10-10T13:49:53+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
