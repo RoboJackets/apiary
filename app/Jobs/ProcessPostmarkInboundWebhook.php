@@ -66,30 +66,12 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             $text = $pdf->getText();
 
             $maybeUid = self::getValueWithRegex(
-                '/Signed by link sent to (?P<uid>[a-z]+[0-9]+)@gatech\.edu/',
+                '/[a-zA-Z]\n\n(?P<uid>[a-z]+[0-9]+)@gatech\.edu/',
                 $text,
                 'uid',
                 'summary PDF',
                 false
             );
-
-            if ($maybeUid === null) {
-                $maybeUid = self::getValueWithRegex(
-                    '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu\s+Security Level/',
-                    $text,
-                    'uid',
-                    'summary PDF',
-                    false
-                );
-
-                if ($maybeUid === null) {
-                    $maybeUid = self::getValueWithRegex(
-                        '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu\n\n[a-zA-Z\s]+\n\nSecurity Level:/',
-                        $text,
-                        'uid'
-                    );
-                }
-            }
 
             $user = User::where('uid', '=', $maybeUid)->sole();
 
