@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1cbe9ffbb48f9a044cdbed55475ebe25",
+    "content-hash": "2b3f0fcc3de31022b39491d4e441b8c2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8647,16 +8647,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "2.14.1",
+            "version": "2.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "5c696daa2d4e32447211cd7c306e7427c1b7720e"
+                "reference": "4538ed31d77868dd3b6d72ad6e5e68b572beeb9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/5c696daa2d4e32447211cd7c306e7427c1b7720e",
-                "reference": "5c696daa2d4e32447211cd7c306e7427c1b7720e",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/4538ed31d77868dd3b6d72ad6e5e68b572beeb9f",
+                "reference": "4538ed31d77868dd3b6d72ad6e5e68b572beeb9f",
                 "shasum": ""
             },
             "require": {
@@ -8719,7 +8719,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/2.14.1"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/2.14.2"
             },
             "funding": [
                 {
@@ -8731,7 +8731,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-10-10T10:18:04+00:00"
+            "time": "2022-10-13T09:21:29+00:00"
         },
         {
             "name": "smalot/pdfparser",
