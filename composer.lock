@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed0813391d1d910285b24dd76e2003b8",
+    "content-hash": "62fdcdf99fa7230db7a1679f75a30678",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -13795,7 +13795,7 @@
         },
         {
             "name": "phpstan/extension-installer",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/extension-installer.git",
@@ -13833,7 +13833,7 @@
             "description": "Composer plugin for automatic installation of PHPStan extensions",
             "support": {
                 "issues": "https://github.com/phpstan/extension-installer/issues",
-                "source": "https://github.com/phpstan/extension-installer/tree/1.1.1"
+                "source": "https://github.com/phpstan/extension-installer/tree/1.2.0"
             },
             "time": "2022-10-17T12:59:16+00:00"
         },
