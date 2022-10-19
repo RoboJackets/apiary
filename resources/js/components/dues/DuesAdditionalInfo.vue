@@ -15,6 +15,9 @@
               id="user-preferredname"
               :class="{ 'is-invalid': $v.localUser.preferred_first_name.$error }"
               @input="$v.localUser.preferred_first_name.$touch()">
+            <div class="invalid-feedback">
+              Must be letters, with optional spaces between words only
+            </div>
           </div>
         </div>
 
