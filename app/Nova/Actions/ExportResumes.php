@@ -222,19 +222,21 @@ class ExportResumes extends Action
         return [
             BooleanGroup::make('Majors')
                 ->options($majors)
-                ->help('Only include resumes for these majors')
+                ->help('Only include resumes for these majors. Note that filters not selected in this dialog do not'.
+                    ' apply to the export.')
                 ->required(),
 
             BooleanGroup::make('Class Standings')
                 ->options($classStandings)
-                ->help('Only include resumes for these class standings')
+                ->help('Only include resumes for these class standings. Note that filters not selected in this dialog'.
+                    ' do not apply to the export.')
                 ->required(),
 
             // "before:yesterday" stops users from putting in a date that doesn't make sense that will generate an
             // empty output. "yesterday" is either 7PM or 8PM yesterdady, depending on timezones (EST vs EDT).
             Date::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date. This should generally be the start date of the'.
-                    ' fall semester.')
+                    ' fall semester. When users upload a resume, all older resumes are deleted.')
                 ->default($defaultDate)
                 ->required()
                 ->rules('required', 'before:yesterday'),
