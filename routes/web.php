@@ -84,6 +84,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::redirect('admin', '/nova');
 
+    Route::redirect('nova/login', '/login/cas');
     Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
         ->name('login.cas');
 
