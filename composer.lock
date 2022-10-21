@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e862e87ad9c66282126b456d4f8367df",
+    "content-hash": "756848de733ad6a926ff13411dca0970",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8929,16 +8929,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "5.5.5",
+            "version": "5.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "f2303a70be60919811ca8afc313e8244fda00974"
+                "reference": "87850d72185278b65a33b58b6016dd3564d3a583"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/f2303a70be60919811ca8afc313e8244fda00974",
-                "reference": "f2303a70be60919811ca8afc313e8244fda00974",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/87850d72185278b65a33b58b6016dd3564d3a583",
+                "reference": "87850d72185278b65a33b58b6016dd3564d3a583",
                 "shasum": ""
             },
             "require": {
@@ -8999,7 +8999,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.5.5"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.5.14"
             },
             "funding": [
                 {
@@ -9007,7 +9007,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-29T23:11:42+00:00"
+            "time": "2022-10-21T04:50:01+00:00"
         },
         {
             "name": "spatie/laravel-webhook-client",
