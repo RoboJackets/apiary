@@ -76,7 +76,7 @@
         "phpunit/phpunit": "9.5.25",
         "psalm/plugin-laravel": "2.0.1",
         "robojackets/static-analysis": "1.4",
-        "slevomat/coding-standard": "8.6.0",
+        "slevomat/coding-standard": "8.6.1",
         "spatie/laravel-ignition": "1.5.2",
         "spatie/ray": "1.36.0"
     },
