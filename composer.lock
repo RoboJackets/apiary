@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59bfaa4355b2a41db795f4dbc5f0ba8e",
+    "content-hash": "92d094dec921b4c0af4a3080820729cc",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -284,6 +284,101 @@
             "time": "2022-05-03T21:12:54+00:00"
         },
         {
+            "name": "apimatic/core",
+            "version": "0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apimatic/core-lib-php.git",
+                "reference": "514093bea77f1ed6efaa12c9e8bb94c6adafe26c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/514093bea77f1ed6efaa12c9e8bb94c6adafe26c",
+                "reference": "514093bea77f1ed6efaa12c9e8bb94c6adafe26c",
+                "shasum": ""
+            },
+            "require": {
+                "apimatic/core-interfaces": "^0.1.0",
+                "apimatic/jsonmapper": "^3.0.4",
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "php": ">=7.2 <8.2"
+            },
+            "require-dev": {
+                "phan/phan": "5.3.1",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Core\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Core logic and the utilities for the Apimatic's PHP SDK",
+            "homepage": "https://github.com/apimatic/core-lib-php",
+            "keywords": [
+                "apimatic",
+                "core",
+                "corelib",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/apimatic/core-lib-php/issues",
+                "source": "https://github.com/apimatic/core-lib-php/tree/0.1.3"
+            },
+            "time": "2022-10-12T10:17:49+00:00"
+        },
+        {
+            "name": "apimatic/core-interfaces",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apimatic/core-interfaces-php.git",
+                "reference": "51ac49e29598cf30cdecb23436b93e94db30b223"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apimatic/core-interfaces-php/zipball/51ac49e29598cf30cdecb23436b93e94db30b223",
+                "reference": "51ac49e29598cf30cdecb23436b93e94db30b223",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2 <8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CoreInterfaces\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Definition of the behavior of apimatic/core, apimatic/unirest-php and Apimatic's PHP SDK",
+            "homepage": "https://github.com/apimatic/core-interfaces-php",
+            "keywords": [
+                "apimatic",
+                "core",
+                "corelib",
+                "interface",
+                "php",
+                "unirest"
+            ],
+            "support": {
+                "issues": "https://github.com/apimatic/core-interfaces-php/issues",
+                "source": "https://github.com/apimatic/core-interfaces-php/tree/0.1.0"
+            },
+            "time": "2022-09-30T10:15:48+00:00"
+        },
+        {
             "name": "apimatic/jsonmapper",
             "version": "v3.0.4",
             "source": {
@@ -338,28 +433,28 @@
         },
         {
             "name": "apimatic/unirest-php",
-            "version": "3.0.1",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/unirest-php.git",
-                "reference": "247d24c7cfe5dac2c83a17d3f756409110bbf4dc"
+                "reference": "70ccda3d712cdc395d39004b8ef619837f23994b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/247d24c7cfe5dac2c83a17d3f756409110bbf4dc",
-                "reference": "247d24c7cfe5dac2c83a17d3f756409110bbf4dc",
+                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/70ccda3d712cdc395d39004b8ef619837f23994b",
+                "reference": "70ccda3d712cdc395d39004b8ef619837f23994b",
                 "shasum": ""
             },
             "require": {
+                "apimatic/core-interfaces": "^0.1.0",
                 "ext-curl": "*",
-                "php": ">=5.6.0"
+                "ext-json": "*",
+                "php": ">=7.2 <8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5 || ^6 || ^7 || ^8 || ^9",
-                "squizlabs/php_codesniffer": "^3.0.0"
-            },
-            "suggest": {
-                "ext-json": "Allows using JSON Bodies for sending and parsing requests"
+                "phan/phan": "5.3.1",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
             "autoload": {
@@ -397,9 +492,9 @@
             "support": {
                 "email": "opensource@apimatic.io",
                 "issues": "https://github.com/apimatic/unirest-php/issues",
-                "source": "https://github.com/apimatic/unirest-php/tree/3.0.1"
+                "source": "https://github.com/apimatic/unirest-php/tree/4.0.0"
             },
-            "time": "2022-07-27T08:45:19+00:00"
+            "time": "2022-09-30T10:57:16+00:00"
         },
         {
             "name": "arcanedev/laravel-markdown",
@@ -4225,16 +4320,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.9.0",
+            "version": "3.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "60f3760352fe08e918bc3b1acae4e91af092ebe1"
+                "reference": "9857d7208a94fc63c7bf09caf223280e59ac7274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/60f3760352fe08e918bc3b1acae4e91af092ebe1",
-                "reference": "60f3760352fe08e918bc3b1acae4e91af092ebe1",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9857d7208a94fc63c7bf09caf223280e59ac7274",
+                "reference": "9857d7208a94fc63c7bf09caf223280e59ac7274",
                 "shasum": ""
             },
             "require": {
@@ -4250,7 +4345,7 @@
             },
             "require-dev": {
                 "async-aws/s3": "^1.5",
-                "async-aws/simple-s3": "^1.0",
+                "async-aws/simple-s3": "^1.1",
                 "aws/aws-sdk-php": "^3.198.1",
                 "composer/semver": "^3.0",
                 "ext-fileinfo": "*",
@@ -4296,7 +4391,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.9.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.1"
             },
             "funding": [
                 {
@@ -4312,7 +4407,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-18T21:02:43+00:00"
+            "time": "2022-10-21T18:57:47+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -9142,29 +9237,28 @@
         },
         {
             "name": "square/square",
-            "version": "22.0.0.20220921",
+            "version": "23.0.0.20221019",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "76b5cc250c021a8b81d6d2c131477120faf7a517"
+                "reference": "9cc66e479e42ce6bc32face9e91c4c3109881691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/76b5cc250c021a8b81d6d2c131477120faf7a517",
-                "reference": "76b5cc250c021a8b81d6d2c131477120faf7a517",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/9cc66e479e42ce6bc32face9e91c4c3109881691",
+                "reference": "9cc66e479e42ce6bc32face9e91c4c3109881691",
                 "shasum": ""
             },
             "require": {
-                "apimatic/jsonmapper": "^3.0.4",
-                "apimatic/unirest-php": "^3.0.1",
-                "ext-curl": "*",
+                "apimatic/core": "~0.1.0",
+                "apimatic/core-interfaces": "~0.1.0",
+                "apimatic/unirest-php": "^4.0.0",
                 "ext-json": "*",
-                "ext-mbstring": "*",
                 "php": ">=7.2 <8.2"
             },
             "require-dev": {
                 "phan/phan": "5.3.1",
-                "phpunit/phpunit": "^7.5 || ^8.5",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -9193,9 +9287,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/22.0.0.20220921"
+                "source": "https://github.com/square/square-php-sdk/tree/23.0.0.20221019"
             },
-            "time": "2022-09-21T16:47:40+00:00"
+            "time": "2022-10-19T16:31:24+00:00"
         },
         {
             "name": "stella-maris/clock",
