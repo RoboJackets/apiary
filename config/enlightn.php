@@ -198,6 +198,8 @@ return [
     // List your commercial packages (licensed by you) below, so that they are not
     // flagged by the License Analyzer.
     'commercial_packages' => [
+        'apimatic/core',
+        'apimatic/core-interfaces',
         'enlightn/enlightnpro',
         'oitnetworkservices/buzzapiclient',
         'phpmyadmin/sql-parser',
