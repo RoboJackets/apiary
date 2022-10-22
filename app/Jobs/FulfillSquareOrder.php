@@ -12,8 +12,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Square\Models\Fulfillment;
 use Square\Models\Order;
-use Square\Models\OrderFulfillment;
 use Square\Models\OrderFulfillmentState;
 use Square\Models\OrderState;
 use Square\Models\UpdateOrderRequest;
@@ -63,7 +63,7 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
 
         $retrievedOrder = $retrieveOrderResponse->getResult()->getOrder();
 
-        $updateFulfillment = new OrderFulfillment();
+        $updateFulfillment = new Fulfillment();
         $updateFulfillment->setUid($retrievedOrder->getFulfillments()[0]->getUid());
         $updateFulfillment->setState(OrderFulfillmentState::COMPLETED);
 

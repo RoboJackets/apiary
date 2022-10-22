@@ -136,6 +136,7 @@
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "ci": [
+            "vendor/bin/pint --test",
             "vendor/bin/phpcs",
             "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
