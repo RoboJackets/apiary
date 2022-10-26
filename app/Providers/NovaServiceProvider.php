@@ -50,6 +50,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         Nova::userMenu(static function (Request $request, Menu $menu): Menu {
             $menu->append(
+                // @phan-suppress-next-line PhanTypeMismatchArgument
                 MenuItem::externalLink(
                     'Member Dashboard',
                     route('home')
@@ -57,6 +58,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             );
 
             $menu->append(
+                // @phan-suppress-next-line PhanTypeMismatchArgument
                 MenuItem::make(
                     'Profile',
                     '/resources/users/'.$request->user()->getKey()
@@ -64,6 +66,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             );
 
             $menu->append(
+                // @phan-suppress-next-line PhanTypeMismatchArgument
                 MenuItem::externalLink(
                     'Logout',
                     route('logout')

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a8ef5817f4e1d4cc24575539c079511",
+    "content-hash": "ef698426e42b9e127428f4a8e927ca45",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3293,21 +3293,22 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.16.1",
+            "version": "4.17.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "b05c1158ba588ce4ddf9f1f7fc2b450c4c351d48"
+                "reference": "9c5d946dc8fbc4b23f357b9b998e9c434b267a5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-b05c1158ba588ce4ddf9f1f7fc2b450c4c351d48-zip-a70d8d.zip",
-                "reference": "b05c1158ba588ce4ddf9f1f7fc2b450c4c351d48",
-                "shasum": "8ef51d8d4a62e26241727ec522b5cd18f715ff72"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-9c5d946dc8fbc4b23f357b9b998e9c434b267a5c-zip-a6d619.zip",
+                "reference": "9c5d946dc8fbc4b23f357b9b998e9c434b267a5c",
+                "shasum": "ddd1ac0d284aa7b8843ea18831096240ae2e2f81"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0",
                 "doctrine/dbal": "^2.13.3|^3.1.2",
+                "ext-json": "*",
                 "illuminate/support": "^8.83.4|^9.3.1",
                 "inertiajs/inertia-laravel": "^0.4.5|^0.5.2|^0.6.0",
                 "laravel/ui": "^3.3|^4.0",
@@ -3397,9 +3398,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.16.1"
+                "source": "https://github.com/laravel/nova/tree/v4.17.1"
             },
-            "time": "2022-10-12T23:08:07+00:00"
+            "time": "2022-10-26T15:11:06+00:00"
         },
         {
             "name": "laravel/passport",
