@@ -228,6 +228,8 @@ class Team extends Resource
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     public function actions(Request $request): array
     {
