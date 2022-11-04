@@ -63,6 +63,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Client service: host, port, protocol.
+    |--------------------------------------------------------------------------
+    | Example: 'http://localhost', 'https://example.com:8888'
+    */
+    'cas_client_service' => env('CAS_CLIENT_SERVICE', 'http://localhost'),
+
+
+    /*
+    |--------------------------------------------------------------------------
     | CAS Validation
     |--------------------------------------------------------------------------
     | CAS server SSL validation: 'self' for self-signed certificate, 'ca' for
@@ -176,4 +185,16 @@ return [
     'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null),
     'cas_masquerade_authnContextClass' => env('CAS_MASQUERADE_authnContextClass', null),
     'cas_masquerade_eduPersonScopedAffiliation' => [env('CAS_MASQUERADE_eduPersonScopedAffiliation', null)],
+
+    /*
+    |--------------------------------------------------------------------------
+    | The value to set in the Domain field on cookies.
+     */
+    'cas_session_domain' => env('APP_DOMAIN', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Whether to add the Secure flag to cookies.
+     */
+    'cas_session_secure' => env('HTTPS_ONLY_COOKIES', false),
 ];

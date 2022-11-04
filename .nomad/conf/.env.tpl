@@ -28,4 +28,5 @@ SESSION_COOKIE="__Host-apiary_session"
 {{ end -}}
 APP_ENV="{{ slice (env "NOMAD_JOB_NAME") 7 }}"
 APP_URL="https://{{- with (key "nginx/hostnames" | parseJSON) -}}{{- index . (env "NOMAD_JOB_NAME") -}}{{- end -}}"
+CAS_CLIENT_SERVICE="https://{{- with (key "nginx/hostnames" | parseJSON) -}}{{- index . (env "NOMAD_JOB_NAME") -}}{{- end -}}"
 HOME="/secrets/"
