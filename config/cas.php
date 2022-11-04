@@ -69,7 +69,6 @@ return [
     */
     'cas_client_service' => env('CAS_CLIENT_SERVICE', 'http://localhost'),
 
-
     /*
     |--------------------------------------------------------------------------
     | CAS Validation
