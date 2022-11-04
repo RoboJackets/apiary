@@ -24,7 +24,7 @@
         "ext-xml": "*",
         "adldap2/adldap2-laravel": "6.1.6",
         "ans-group/laravel-health-check": "1.13.4",
-        "apereo/phpcas": "1.5.0",
+        "apereo/phpcas": "1.6.0",
         "arcanedev/laravel-markdown": "6.0.0",
         "barryvdh/laravel-dompdf": "2.0.0",
         "chelout/laravel-relationship-events": "1.5.0",
@@ -57,7 +57,7 @@
         "spatie/laravel-webhook-client": "3.1.3",
         "spatie/once": "3.1.0",
         "square/square": "23.0.0.20221019",
-        "subfission/cas": "4.2.0",
+        "subfission/cas": "4.3.0",
         "symfony/http-client": "6.1.7",
         "symfony/postmark-mailer": "6.1.0"
     },
