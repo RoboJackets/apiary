@@ -188,6 +188,7 @@ parameters:
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>\|Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+>\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Return type \(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>\|Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+>\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be covariant with return type \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
     - '#Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.#'
+    - '#Strict comparison using !== between string and null will always evaluate to true\.#'
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Database\\Eloquent\\Collection<int,App\\Models\\[a-zA-Z]+>::mapWithKeys\(\)#'
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Support\\Collection<\(int\|string\),mixed>::mapWithKeys\(\)#'
     - '#Variable property access on App\\Models\\User\.#'
