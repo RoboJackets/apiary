@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66d159d0a78ceebf57443ab1ced4555f",
+    "content-hash": "2720135ba20ab88383e8911fc5a4afef",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8818,16 +8818,16 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "4.1.1",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "16014a76a314be3f9f6369d4e61e20e9c9367d58"
+                "reference": "bac13298724d6d49c586c33c87db0926a051f8b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/16014a76a314be3f9f6369d4e61e20e9c9367d58",
-                "reference": "16014a76a314be3f9f6369d4e61e20e9c9367d58",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/bac13298724d6d49c586c33c87db0926a051f8b6",
+                "reference": "bac13298724d6d49c586c33c87db0926a051f8b6",
                 "shasum": ""
             },
             "require": {
@@ -8881,8 +8881,7 @@
                 "spatie"
             ],
             "support": {
-                "issues": "https://github.com/spatie/laravel-failed-job-monitor/issues",
-                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.1.1"
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.2.0"
             },
             "funding": [
                 {
@@ -8890,7 +8889,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-25T10:36:01+00:00"
+            "time": "2022-11-06T16:00:06+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
