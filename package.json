@@ -32,11 +32,11 @@
     "moment": "2.29.4",
     "popper.js": "1.16.1",
     "sweetalert2": "11.6.7",
-    "vue": "2.7.13",
+    "vue": "2.7.14",
     "vue-flatpickr-component": "8.1.7",
     "vue-moment": "4.1.0",
     "vue-select": "3.20.0",
-    "vue-template-compiler": "2.7.13",
+    "vue-template-compiler": "2.7.14",
     "vuelidate": "0.7.7"
   }
 }
