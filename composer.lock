@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9a71362afb76995a4d6708ad1ded259",
+    "content-hash": "584e125f70a38b85991c53c14a45118a",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3031,16 +3031,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.39.0",
+            "version": "v9.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "67e674709e1e7db14f304a871481f310822d68c5"
+                "reference": "650e728cabf63b4bfd6c45b421ec7bc7a916b0bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/67e674709e1e7db14f304a871481f310822d68c5",
-                "reference": "67e674709e1e7db14f304a871481f310822d68c5",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/650e728cabf63b4bfd6c45b421ec7bc7a916b0bf",
+                "reference": "650e728cabf63b4bfd6c45b421ec7bc7a916b0bf",
                 "shasum": ""
             },
             "require": {
@@ -3213,7 +3213,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-11-08T14:47:39+00:00"
+            "time": "2022-11-15T14:20:05+00:00"
         },
         {
             "name": "laravel/horizon",
