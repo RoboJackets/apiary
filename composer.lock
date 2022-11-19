@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18b08b02bdb36c5da96f3032feef3a96",
+    "content-hash": "6bea3d91a687055b74eb89f2a2441164",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -9164,16 +9164,16 @@
         },
         {
             "name": "square/square",
-            "version": "23.0.0.20221019",
+            "version": "24.0.0.20221116",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "9cc66e479e42ce6bc32face9e91c4c3109881691"
+                "reference": "4aea41708d3c4d48bcf49b067b3e56ad5757464a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/9cc66e479e42ce6bc32face9e91c4c3109881691",
-                "reference": "9cc66e479e42ce6bc32face9e91c4c3109881691",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/4aea41708d3c4d48bcf49b067b3e56ad5757464a",
+                "reference": "4aea41708d3c4d48bcf49b067b3e56ad5757464a",
                 "shasum": ""
             },
             "require": {
@@ -9214,9 +9214,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/23.0.0.20221019"
+                "source": "https://github.com/square/square-php-sdk/tree/24.0.0.20221116"
             },
-            "time": "2022-10-19T16:31:24+00:00"
+            "time": "2022-11-16T18:46:02+00:00"
         },
         {
             "name": "stella-maris/clock",
@@ -14005,16 +14005,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.18",
+            "version": "9.2.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "12fddc491826940cf9b7e88ad9664cf51f0f6d0a"
+                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/12fddc491826940cf9b7e88ad9664cf51f0f6d0a",
-                "reference": "12fddc491826940cf9b7e88ad9664cf51f0f6d0a",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c77b56b63e3d2031bd8997fcec43c1925ae46559",
+                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559",
                 "shasum": ""
             },
             "require": {
@@ -14070,7 +14070,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.18"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.19"
             },
             "funding": [
                 {
@@ -14078,7 +14078,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-27T13:35:33+00:00"
+            "time": "2022-11-18T07:47:47+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
