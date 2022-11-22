@@ -36,8 +36,9 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         Route::get('attendance/statistics', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
 
         // Users
-        Route::apiResource('users', UserController::class);
+        // The search endpoint MUST be registered before the apiResource, otherwise it will not take precedence
         Route::get('users/search', [UserController::class, 'search']);
+        Route::apiResource('users', UserController::class);
         Route::post('users/{id}/resume', [ResumeController::class, 'store']);
         Route::get('user', [UserController::class, 'showSelf']);
         Route::post('user/override/self', [UserController::class, 'applySelfOverride']);
