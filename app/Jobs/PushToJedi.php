@@ -90,7 +90,7 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
             ->orderByDesc('created_at')->first();
 
         $send = [
-            'uid' => strtolower($this->user->uid),
+            'username' => strtolower($this->user->uid),
             'first_name' => $this->user->preferred_first_name,
             'last_name' => $this->user->last_name,
             'is_access_active' => $this->user->is_access_active,
