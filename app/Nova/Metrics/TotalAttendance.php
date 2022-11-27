@@ -30,7 +30,7 @@ class TotalAttendance extends Value
         $originalTimezone = $request->timezone;
         $request->timezone = 'Etc/GMT';
 
-        $gtid = User::where('id', $request->resourceId)->first()->gtid;
+        $gtid = User::where('id', $request->resourceId)->withTrashed()->first()->gtid;
         // If a subrange is selected, let the library do the work, otherwise just count everything
         $result = $request->range > 0 ? $this->count(
             $request,
