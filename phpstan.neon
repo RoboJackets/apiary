@@ -169,7 +169,6 @@ parameters:
     - '#Parameter \#2 \$requestedInclude of method App\\Http\\Controllers\\[a-zA-Z]+::authorizeInclude\(\) expects string\|null, mixed given\.#'
     - '#Parameter \#2 \$timestamp of function date expects int\|null, int\|false given\.#'
     - '#Parameter \#2 \$values of method Spatie\\Csp\\Policies\\Policy::addDirective\(\) expects array\|bool\|string, mixed given\.#'
-    - '#Parameter \#3 \$subject of function preg_replace expects array\|string, string\|null given\.#'
     - '#Parameter \#3 \$user of static method App\\Http\\Controllers\\SquareCheckoutController::redirect\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#3 \$userAgent of static method App\\Models\\Signature::hash\(\) expects string, string\|null given\.#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'

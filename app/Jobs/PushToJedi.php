@@ -71,8 +71,6 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
 
     /**
      * Execute the job.
-     *
-     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
      */
     public function handle(): void
     {
