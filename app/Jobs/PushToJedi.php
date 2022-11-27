@@ -95,7 +95,7 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
             'last_name' => $this->user->last_name,
             'is_access_active' => $this->user->is_access_active,
             'github_username' => $this->user->github_username,
-            'google_accounts' => [],
+            'google_account' => $this->user->gmail_address,
             'model_class' => $this->model_class,
             'model_id' => $this->model_id,
             'model_event' => $this->model_event,
@@ -119,27 +119,6 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
         foreach ($this->user->manages as $team) {
             $send['project_manager_of_teams'][] = $team->name;
         }
-
-        $gmail_address = $this->user->gmail_address;
-        if ($gmail_address !== null) {
-            $send['google_accounts'][] = strtolower($gmail_address);
-        }
-
-        if (in_array('G Suite', $send['teams'], true)) {
-            $send['google_accounts'][] = strtolower(
-                preg_replace(
-                    '/[^[:alnum:]-]/u',
-                    '',
-                    $this->user->preferred_first_name
-                ).'.'.preg_replace(
-                    '/[^[:alnum:]-]/u',
-                    '',
-                    $this->user->last_name
-                )
-            ).'@robojackets.org';
-        }
-
-        $send['google_accounts'] = array_unique($send['google_accounts'], SORT_STRING);
 
         $client = new Client(
             [
