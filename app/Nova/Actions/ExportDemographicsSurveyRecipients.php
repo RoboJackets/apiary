@@ -30,8 +30,7 @@ class ExportDemographicsSurveyRecipients extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $users = User::select('preferred_first_name', 'gt_email')
-            ->active()
+        $users = User::active()
             ->whereNull('email_suppression_reason')
             ->get();
 
