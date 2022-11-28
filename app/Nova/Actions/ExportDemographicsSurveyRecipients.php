@@ -30,7 +30,7 @@ class ExportDemographicsSurveyRecipients extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $users = User::select('first_name', 'gt_email')
+        $users = User::select('preferred_first_name', 'gt_email')
             ->active()
             ->whereNull('email_suppression_reason')
             ->get();
@@ -40,7 +40,7 @@ class ExportDemographicsSurveyRecipients extends Action
         }
 
         $output = $users->reduce(
-            static fn (?string $c, User $u): string => ($c ?? '').$u->first_name.','.$u->gt_email."\n"
+            static fn (?string $c, User $u): string => ($c ?? '').$u->preferred_first_name.','.$u->gt_email."\n"
         );
 
         $filename = 'demographics-survey-'.Carbon::now()->toDateTimeLocalString().'.csv';
