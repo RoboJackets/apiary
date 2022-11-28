@@ -515,6 +515,13 @@ class User extends Resource
                 ->canRun(
                     static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can('read-users')
                 ),
+            (new Actions\ExportDemographicsSurveyRecipients())
+                ->standalone()
+                ->onlyOnIndex()
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users'))
+                ->canRun(
+                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can('read-users')
+                ),
         ];
     }
 
