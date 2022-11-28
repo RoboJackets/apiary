@@ -27,6 +27,8 @@ class ExportDemographicsSurveyRecipients extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      * @return array<string,string>
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
