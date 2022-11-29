@@ -13350,23 +13350,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.14.0",
+            "version": "v7.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "717d97c9f8d256371c46659af2754f51accbfdce"
+                "reference": "37b4ddb07035ca41a34ae158f20b2691f7454133"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/717d97c9f8d256371c46659af2754f51accbfdce",
-                "reference": "717d97c9f8d256371c46659af2754f51accbfdce",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/37b4ddb07035ca41a34ae158f20b2691f7454133",
+                "reference": "37b4ddb07035ca41a34ae158f20b2691f7454133",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.9.2",
                 "laravel/framework": "^9.36",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^7.14",
+                "orchestra/testbench-core": "^7.14.1",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -13403,7 +13403,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.14.0"
+                "source": "https://github.com/orchestral/testbench/tree/v7.14.1"
             },
             "funding": [
                 {
@@ -13415,20 +13415,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-11-22T22:19:11+00:00"
+            "time": "2022-11-29T04:28:20+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.14.0",
+            "version": "v7.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "fb8c90c5f5cb9033e085e4fbf581093cd6e32862"
+                "reference": "aae50b7278bca62e7b46f1ba15fb82c8437a972e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/fb8c90c5f5cb9033e085e4fbf581093cd6e32862",
-                "reference": "fb8c90c5f5cb9033e085e4fbf581093cd6e32862",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/aae50b7278bca62e7b46f1ba15fb82c8437a972e",
+                "reference": "aae50b7278bca62e7b46f1ba15fb82c8437a972e",
                 "shasum": ""
             },
             "require": {
@@ -13512,7 +13512,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-11-22T09:06:48+00:00"
+            "time": "2022-11-29T04:21:17+00:00"
         },
         {
             "name": "phan/phan",
