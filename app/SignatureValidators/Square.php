@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\SignatureValidators;
 
-use Exception;
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookConfig;
@@ -21,11 +20,7 @@ class Square implements SignatureValidator
         $payload = $request->getContent();
 
         if (! is_string($sentSignature)) {
-            throw new Exception('Header is not a string, possibly missing');
-        }
-
-        if (! is_string($payload)) {
-            throw new Exception('Payload is not a string');
+            return false;
         }
 
         $calculatedSignature = base64_encode(hash_hmac('sha1', $request->url().$payload, $secret, true));
