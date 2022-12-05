@@ -74,7 +74,7 @@
         "phan/phan": "5.4.1",
         "phpstan/extension-installer": "1.2.0",
         "phpunit/phpunit": "9.5.26",
-        "psalm/plugin-laravel": "2.0.1",
+        "psalm/plugin-laravel": "2.0.2",
         "robojackets/static-analysis": "1.4",
         "slevomat/coding-standard": "8.6.4",
         "spatie/laravel-ignition": "1.6.1",
