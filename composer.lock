@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f211a1e54da5e33d6ada243c3d5bebd",
+    "content-hash": "f57de86e762e5064a81e2a6c61192eda",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3482,16 +3482,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.4.12",
+            "version": "v9.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "83f0027f37dd950d50efe4ecfc84a6eb4a476e15"
+                "reference": "dfffdfc197abe5c71ee1112f774859c7b6649523"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/83f0027f37dd950d50efe4ecfc84a6eb4a476e15",
-                "reference": "83f0027f37dd950d50efe4ecfc84a6eb4a476e15",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/dfffdfc197abe5c71ee1112f774859c7b6649523",
+                "reference": "dfffdfc197abe5c71ee1112f774859c7b6649523",
                 "shasum": ""
             },
             "require": {
@@ -3550,7 +3550,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2022-10-04T14:18:55+00:00"
+            "time": "2022-12-06T16:26:44+00:00"
         },
         {
             "name": "laravel/serializable-closure",
