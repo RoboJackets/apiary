@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2898e43c97d0c8bb90a18c19578d092a",
+    "content-hash": "003f6f7b6653072f21020648f483d40d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8736,16 +8736,16 @@
         },
         {
             "name": "smalot/pdfparser",
-            "version": "v2.2.1",
+            "version": "v2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smalot/pdfparser.git",
-                "reference": "7c007090776f29119e72be28f7780e638ea0cbf4"
+                "reference": "e2e3581a9bf15c9ab214fbd48c23fe42bdebe200"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smalot/pdfparser/zipball/7c007090776f29119e72be28f7780e638ea0cbf4",
-                "reference": "7c007090776f29119e72be28f7780e638ea0cbf4",
+                "url": "https://api.github.com/repos/smalot/pdfparser/zipball/e2e3581a9bf15c9ab214fbd48c23fe42bdebe200",
+                "reference": "e2e3581a9bf15c9ab214fbd48c23fe42bdebe200",
                 "shasum": ""
             },
             "require": {
@@ -8781,9 +8781,9 @@
             ],
             "support": {
                 "issues": "https://github.com/smalot/pdfparser/issues",
-                "source": "https://github.com/smalot/pdfparser/tree/v2.2.1"
+                "source": "https://github.com/smalot/pdfparser/tree/v2.2.2"
             },
-            "time": "2022-05-02T06:42:03+00:00"
+            "time": "2022-12-05T14:43:18+00:00"
         },
         {
             "name": "spatie/laravel-csp",
