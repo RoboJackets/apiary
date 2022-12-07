@@ -380,16 +380,16 @@
         },
         {
             "name": "apimatic/jsonmapper",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/jsonmapper.git",
-                "reference": "99fc5372d69e773a623bec78b91061857d0b6832"
+                "reference": "7f998fba2a5ad4a41d9c010e89c2f0922f249111"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/99fc5372d69e773a623bec78b91061857d0b6832",
-                "reference": "99fc5372d69e773a623bec78b91061857d0b6832",
+                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/7f998fba2a5ad4a41d9c010e89c2f0922f249111",
+                "reference": "7f998fba2a5ad4a41d9c010e89c2f0922f249111",
                 "shasum": ""
             },
             "require": {
@@ -427,9 +427,9 @@
             "support": {
                 "email": "mehdi.jaffery@apimatic.io",
                 "issues": "https://github.com/apimatic/jsonmapper/issues",
-                "source": "https://github.com/apimatic/jsonmapper/tree/v3.0.4"
+                "source": "https://github.com/apimatic/jsonmapper/tree/v3.0.5"
             },
-            "time": "2022-06-13T08:54:54+00:00"
+            "time": "2022-12-06T15:07:38+00:00"
         },
         {
             "name": "apimatic/unirest-php",
