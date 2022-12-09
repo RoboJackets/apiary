@@ -289,5 +289,10 @@
                 <file name="app/Traits/AuthorizeInclude.php" />
             </errorLevel>
         </InvalidStringClass>
+        <MissingTemplateParam>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Resource.php"/>
+            </errorLevel>
+        </MissingTemplateParam>
     </issueHandlers>
 </psalm>
