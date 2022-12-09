@@ -81,27 +81,7 @@ class Attendance extends Model
     protected $with = ['attendable'];
 
     /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'updated_at_unix:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-        'team_id',
-        'event_id',
-        'user_id',
-    ];
-
-    /**
-     * Get all of the owning attendable models.
+     * Get all the owning attendable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\Team|\App\Models\Event,\App\Models\Attendance>
      */

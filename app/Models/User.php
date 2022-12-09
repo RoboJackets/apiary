@@ -29,7 +29,6 @@ use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Scout\Searchable;
-use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -201,7 +200,6 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
     use HasApiTokens;
-    use FirstNameSynonyms;
     use Searchable;
     use Impersonatable;
 
@@ -270,51 +268,6 @@ class User extends Authenticatable
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
         'buzzcard_access_opt_out' => 'boolean',
-    ];
-
-    /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'first_name',
-        'preferred_name',
-        'last_name',
-        'uid',
-        'gt_email',
-        'gmail_address',
-        'clickup_email',
-        'autodesk_email',
-        'github_username',
-        'gtid',
-        'phone',
-        'gtDirGUID',
-    ];
-
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $ranking_rules = [
-        'revenue_total:desc',
-        'attendance_count:desc',
-        'signatures_count:desc',
-        'gtid:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $filterable_attributes = [
-        'class_standing_id',
-        'major_id',
-        'team_id',
-        'permission_id',
-        'role_id',
     ];
 
     /**

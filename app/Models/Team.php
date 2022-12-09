@@ -118,24 +118,6 @@ class Team extends Model
     ];
 
     /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'attendance_count:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-        'user_id',
-    ];
-
-    /**
      * Get the Users that are members of this Team.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User>

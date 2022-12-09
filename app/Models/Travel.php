@@ -106,24 +106,6 @@ class Travel extends Model
     ];
 
     /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'departure_date_unix:desc',
-        'return_date_unix:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-    ];
-
-    /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
      *
      * @var array<string>

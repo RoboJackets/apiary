@@ -83,52 +83,6 @@ class DuesTransaction extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $searchable_attributes = [
-        'user_first_name',
-        'user_preferred_name',
-        'user_last_name',
-        'user_uid',
-        'user_gt_email',
-        'user_gmail_address',
-        'user_clickup_email',
-        'user_autodesk_email',
-        'user_github_username',
-        'package_name',
-        'package_effective_start',
-        'package_effective_end',
-        'status',
-        'payable_type',
-    ];
-
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'user_revenue_total:desc',
-        'user_attendance_count:desc',
-        'user_signatures_count:desc',
-        'user_gtid:desc',
-        'updated_at_unix:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-        'dues_package_id',
-        'user_id',
-        'merchandise_id',
-    ];
-
-    /**
      * Get the Payment associated with the DuesTransaction model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>

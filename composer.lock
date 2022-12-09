@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "136119a46182683d6d285e395d8fcba2",
+    "content-hash": "b094456d0884f0c9ea34a0668538ec87",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2609,48 +2609,6 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
-        },
-        {
-            "name": "haydenpierce/class-finder",
-            "version": "0.4.4",
-            "source": {
-                "type": "git",
-                "url": "git@gitlab.com:hpierce1102/ClassFinder.git",
-                "reference": "94c602870ddf8d4fa2d67fb9bae637d88f9bd76e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/hpierce1102%2FClassFinder/repository/archive.zip?sha=94c602870ddf8d4fa2d67fb9bae637d88f9bd76e",
-                "reference": "94c602870ddf8d4fa2d67fb9bae637d88f9bd76e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "~9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "HaydenPierce\\ClassFinder\\": "src/",
-                    "HaydenPierce\\ClassFinder\\UnitTest\\": "test/unit"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Hayden Pierce",
-                    "email": "hayden@haydenpierce.com"
-                }
-            ],
-            "description": "A library that can provide of a list of classes in a given namespace",
-            "time": "2022-09-26T22:42:59+00:00"
         },
         {
             "name": "htmlmin/htmlmin",
@@ -8362,75 +8320,6 @@
                 }
             ],
             "time": "2022-05-28T13:28:03+00:00"
-        },
-        {
-            "name": "robojackets/meilisearch-index-settings-helper",
-            "version": "v0.9.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.gatech.edu:RoboJackets/meilisearch-index-settings-helper.git",
-                "reference": "a8f22c7282b57c316f099fd506701c55e3ebb903"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.robojackets.org/1669675255/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-a8f22c7282b57c316f099fd506701c55e3ebb903-zip-507838.zip",
-                "reference": "a8f22c7282b57c316f099fd506701c55e3ebb903",
-                "shasum": "74b61520974cc5f6b6babe60c1c9fb03baf0d166"
-            },
-            "require": {
-                "haydenpierce/class-finder": "^0.4.3",
-                "http-interop/http-factory-guzzle": "^1.0",
-                "laravel/scout": "^9.4",
-                "meilisearch/meilisearch-php": "^0.26.0"
-            },
-            "require-dev": {
-                "laravel/framework": "*",
-                "phpstan/extension-installer": "^1.0",
-                "robojackets/static-analysis": "*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RoboJackets\\MeilisearchIndexSettingsHelper\\MeilisearchIndexSettingsHelperServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RoboJackets\\MeilisearchIndexSettingsHelper\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "files": [
-                    "vendor/laravel/framework/src/Illuminate/Foundation/helpers.php"
-                ]
-            },
-            "scripts": {
-                "ci": [
-                    "vendor/bin/phpcs --standard=vendor/robojackets/static-analysis/defaults/phpcs.xml .",
-                    "vendor/bin/phpstan analyse --level=max .",
-                    "vendor/bin/phan",
-                    "vendor/bin/psalm"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kristaps Berzinch",
-                    "email": "kristapsberzinch@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Manage Meilisearch indexing settings in Eloquent models",
-            "homepage": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper",
-            "support": {
-                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.9.0",
-                "issues": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/issues"
-            },
-            "time": "2022-11-28T22:36:25+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -14563,52 +14452,6 @@
             "time": "2022-12-01T20:24:04+00:00"
         },
         {
-            "name": "robojackets/static-analysis",
-            "version": "v1.4",
-            "source": {
-                "type": "git",
-                "url": "git@github.gatech.edu:RoboJackets/static-analysis.git",
-                "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.robojackets.org/1669675255/robojackets/static-analysis/robojackets-static-analysis-0906526a8b0546d43b1eaec8832f26e1ca6640b7-zip-2eb0ee.zip",
-                "reference": "0906526a8b0546d43b1eaec8832f26e1ca6640b7",
-                "shasum": "da202c3ac1b71dfeb199a8bd082382b961a47677"
-            },
-            "require": {
-                "phan/phan": "*",
-                "phpstan/phpstan": "*",
-                "phpstan/phpstan-deprecation-rules": "*",
-                "phpstan/phpstan-strict-rules": "*",
-                "slevomat/coding-standard": "*",
-                "squizlabs/php_codesniffer": "*",
-                "vimeo/psalm": "^4.7"
-            },
-            "suggest": {
-                "nunomaduro/larastan": "For analyzing Laravel projects",
-                "phpstan/extension-installer": "For automatically registering PHPStan extensions",
-                "psalm/plugin-laravel": "For analyzing Laravel projects"
-            },
-            "type": "library",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kristaps Berzinch",
-                    "email": "kristapsberzinch@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Standard static analyzers for PHP, with sensible defaults",
-            "homepage": "https://github.gatech.edu/RoboJackets/static-analysis",
-            "support": {
-                "source": "https://github.gatech.edu/RoboJackets/static-analysis/tree/v1.4"
-            },
-            "time": "2021-04-24T18:35:44+00:00"
-        },
-        {
             "name": "sabre/event",
             "version": "5.1.4",
             "source": {
@@ -16265,6 +16108,69 @@
             "time": "2022-06-18T07:21:10+00:00"
         },
         {
+            "name": "symfony/filesystem",
+            "version": "v6.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "50b2523c874605cf3d4acf7a9e2b30b6a440a016"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/50b2523c874605cf3d4acf7a9e2b30b6a440a016",
+                "reference": "50b2523c874605cf3d4acf7a9e2b30b6a440a016",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides basic utilities for the filesystem",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/filesystem/tree/v6.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-11-20T13:01:27+00:00"
+        },
+        {
             "name": "symfony/stopwatch",
             "version": "v6.2.0",
             "source": {
@@ -16440,24 +16346,24 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.30.0",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "d0bc6e25d89f649e4f36a534f330f8bb4643dd69"
+                "reference": "4defa177c89397c5e14737a80fe4896584130674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/d0bc6e25d89f649e4f36a534f330f8bb4643dd69",
-                "reference": "d0bc6e25d89f649e4f36a534f330f8bb4643dd69",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/4defa177c89397c5e14737a80fe4896584130674",
+                "reference": "4defa177c89397c5e14737a80fe4896584130674",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^2.4.2",
                 "amphp/byte-stream": "^1.5",
-                "composer/package-versions-deprecated": "^1.8.0",
+                "composer/package-versions-deprecated": "^1.10.0",
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
-                "composer/xdebug-handler": "^1.1 || ^2.0 || ^3.0",
+                "composer/xdebug-handler": "^2.0 || ^3.0",
                 "dnoegel/php-xdg-base-dir": "^0.1.1",
                 "ext-ctype": "*",
                 "ext-dom": "*",
@@ -16466,35 +16372,34 @@
                 "ext-mbstring": "*",
                 "ext-simplexml": "*",
                 "ext-tokenizer": "*",
-                "felixfbecker/advanced-json-rpc": "^3.0.3",
-                "felixfbecker/language-server-protocol": "^1.5",
+                "felixfbecker/advanced-json-rpc": "^3.1",
+                "felixfbecker/language-server-protocol": "^1.5.2",
                 "netresearch/jsonmapper": "^1.0 || ^2.0 || ^3.0 || ^4.0",
                 "nikic/php-parser": "^4.13",
                 "openlss/lib-array2xml": "^1.0",
-                "php": "^7.1|^8",
-                "sebastian/diff": "^3.0 || ^4.0",
-                "symfony/console": "^3.4.17 || ^4.1.6 || ^5.0 || ^6.0",
-                "symfony/polyfill-php80": "^1.25",
-                "webmozart/path-util": "^2.3"
+                "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0",
+                "sebastian/diff": "^4.0",
+                "symfony/console": "^4.1.6 || ^5.0 || ^6.0",
+                "symfony/filesystem": "^5.4 || ^6.0",
+                "symfony/polyfill-php80": "^1.25"
             },
             "provide": {
                 "psalm/psalm": "self.version"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.2",
-                "brianium/paratest": "^4.0||^6.0",
+                "bamarni/composer-bin-plugin": "^1.4",
+                "brianium/paratest": "^6.0",
                 "ext-curl": "*",
+                "mockery/mockery": "^1.5",
+                "nunomaduro/mock-final-classes": "^1.1",
                 "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpdocumentor/reflection-docblock": "^5",
-                "phpmyadmin/sql-parser": "5.1.0||dev-master",
-                "phpspec/prophecy": ">=1.9.0",
-                "phpstan/phpdoc-parser": "1.2.* || 1.6.4",
-                "phpunit/phpunit": "^9.0",
-                "psalm/plugin-phpunit": "^0.16",
-                "slevomat/coding-standard": "^7.0",
-                "squizlabs/php_codesniffer": "^3.5",
-                "symfony/process": "^4.3 || ^5.0 || ^6.0",
-                "weirdan/prophecy-shim": "^1.0 || ^2.0"
+                "phpstan/phpdoc-parser": "^1.6",
+                "phpunit/phpunit": "^9.5",
+                "psalm/plugin-mockery": "^1.1",
+                "psalm/plugin-phpunit": "^0.18",
+                "slevomat/coding-standard": "^8.4",
+                "squizlabs/php_codesniffer": "^3.6",
+                "symfony/process": "^4.4 || ^5.0 || ^6.0"
             },
             "suggest": {
                 "ext-curl": "In order to send data to shepherd",
@@ -16510,17 +16415,14 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.x-dev",
+                    "dev-master": "5.x-dev",
+                    "dev-4.x": "4.x-dev",
                     "dev-3.x": "3.x-dev",
                     "dev-2.x": "2.x-dev",
                     "dev-1.x": "1.x-dev"
                 }
             },
             "autoload": {
-                "files": [
-                    "src/functions.php",
-                    "src/spl_object_id.php"
-                ],
                 "psr-4": {
                     "Psalm\\": "src/Psalm/"
                 }
@@ -16542,60 +16444,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/4.30.0"
+                "source": "https://github.com/vimeo/psalm/tree/5.1.0"
             },
-            "time": "2022-11-06T20:37:08+00:00"
-        },
-        {
-            "name": "webmozart/path-util",
-            "version": "2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webmozart/path-util.git",
-                "reference": "d939f7edc24c9a1bb9c0dee5cb05d8e859490725"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/path-util/zipball/d939f7edc24c9a1bb9c0dee5cb05d8e859490725",
-                "reference": "d939f7edc24c9a1bb9c0dee5cb05d8e859490725",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "webmozart/assert": "~1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.6",
-                "sebastian/version": "^1.0.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webmozart\\PathUtil\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bernhard Schussek",
-                    "email": "bschussek@gmail.com"
-                }
-            ],
-            "description": "A robust cross-platform utility for normalizing, comparing and modifying file paths.",
-            "support": {
-                "issues": "https://github.com/webmozart/path-util/issues",
-                "source": "https://github.com/webmozart/path-util/tree/2.3.0"
-            },
-            "abandoned": "symfony/filesystem",
-            "time": "2015-12-17T08:42:14+00:00"
+            "time": "2022-12-02T01:23:35+00:00"
         },
         {
             "name": "zbateson/mail-mime-parser",
@@ -16813,6 +16664,7 @@
         "ext-ldap": "*",
         "ext-mbstring": "*",
         "ext-mysqli": "*",
+        "ext-openssl": "*",
         "ext-redis": "*",
         "ext-sqlite3": "*",
         "ext-uuid": "*",

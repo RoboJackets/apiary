@@ -92,16 +92,6 @@ class Event extends Model
     ];
 
     /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'start_time_unix:desc',
-        'end_time_unix:desc',
-    ];
-
-    /**
      * Get the organizer for this event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Event>

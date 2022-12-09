@@ -85,51 +85,6 @@ class TravelAssignment extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $searchable_attributes = [
-        'user_first_name',
-        'user_preferred_name',
-        'user_last_name',
-        'user_uid',
-        'user_gt_email',
-        'user_gmail_address',
-        'user_clickup_email',
-        'user_autodesk_email',
-        'user_github_username',
-        'travel_name',
-        'travel_destination',
-        'travel_departure_date',
-        'travel_return_date',
-        'payable_type',
-    ];
-
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'user_revenue_total:desc',
-        'user_attendance_count:desc',
-        'user_signatures_count:desc',
-        'user_gtid:desc',
-        'updated_at_unix:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-        'user_id',
-        'travel_id',
-    ];
-
-    /**
      * Get the User assigned to Travel.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\TravelAssignment>
