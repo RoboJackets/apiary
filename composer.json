@@ -73,7 +73,7 @@
         "nunomaduro/larastan": "2.2.9",
         "phan/phan": "5.4.1",
         "phpstan/extension-installer": "1.2.0",
-        "phpunit/phpunit": "9.5.26",
+        "phpunit/phpunit": "9.5.27",
         "psalm/plugin-laravel": "2.0.2",
         "robojackets/static-analysis": "1.4",
         "slevomat/coding-standard": "8.6.4",
