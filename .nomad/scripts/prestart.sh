@@ -31,5 +31,5 @@ fi
 
 if [ ${SCOUT_DRIVER} = "meilisearch" ]
 then
-    php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true
+    php artisan scout:sync-index-settings --no-interaction --verbose || true
 fi
