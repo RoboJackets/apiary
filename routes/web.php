@@ -21,6 +21,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TravelAssignmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Http\Controllers\AuthorizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,8 +118,6 @@ if (config('features.docusign-membership-agreement') !== true) {
 
 Route::post('apiv3/{resource}/{action}', [BuzzApiMockController::class, 'anything']);
 
-Route::get('oauth/authorize', [
-    'uses' => [\Laravel\Passport\Http\Controllers\AuthorizationController::class, 'authorize'],
-    'as' => 'authorizations.authorize',
-    'middleware' => ['web', 'auth'],
-]);
+Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
+    ->name('passport.authorizations.authorize')
+    ->middleware(['web', 'auth']);
