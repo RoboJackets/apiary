@@ -29,7 +29,13 @@
         "lockFileMaintenance": {
             "enabled": true,
             "schedule": ["before 8am every weekday"]
-        }
+        },
+        "packageRules": [
+            {
+                "matchPackageNames": ["php"],
+                "rangeStrategy": "replace",
+            }
+        ]
     },
     "rangeStrategy": "pin",
     "timezone": "America/New_York",
