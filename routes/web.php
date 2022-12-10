@@ -120,4 +120,4 @@ Route::post('apiv3/{resource}/{action}', [BuzzApiMockController::class, 'anythin
 
 Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->name('passport.authorizations.authorize')
-    ->middleware(['web', 'auth']);
+    ->middleware('auth.cas.force');
