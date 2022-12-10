@@ -11,7 +11,7 @@ CAS_ENABLE_SAML="false"
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
-REDIS_CLIENT="predis"
+REDIS_CLIENT="phpredis"
 REDIS_SCHEME="unix"
 {{- range service "redis" }}
 REDIS_PATH="{{- index .ServiceMeta "socket" | trimSpace -}}"
