@@ -31,6 +31,7 @@
             "schedule": ["before 8am every weekday"]
         }
     },
+    "rangeStrategy": "pin",
     "timezone": "America/New_York",
     "schedule": ["before 4pm every weekday"],
     "hostRules": [
