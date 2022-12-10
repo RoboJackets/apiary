@@ -78,10 +78,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        if (! $this->app->routesAreCached()) {
-            Passport::routes();
-        }
-
         Passport::useClientModel(OAuth2Client::class);
         Passport::useTokenModel(OAuth2AccessToken::class);
         Passport::hashClientSecrets();
