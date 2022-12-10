@@ -6,11 +6,11 @@
       </div>
       <div class="text-muted">
         <a class="text-muted text-left" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSelERsYq3gLmHbWvVCWha5iCU8z3r9VYC0hCN4ArLpMAiysaQ/viewform?entry.1338203640={{ $request->fullUrl()}}">Make a Wish</a>
-@if(SentrySdk::getCurrentHub()->getSpan() !== null && SentrySdk::getCurrentHub()->getSpan()->getSampled())
+@if(SentrySdk::getCurrentHub()->getSpan() !== null && \Sentry\SentrySdk::getCurrentHub()->getSpan()->getSampled())
 @if(auth()->user() && auth()->user()->hasRole('admin'))
-• <a class="text-muted" href="https://sentry.io/organizations/robojackets/performance/trace/{{ \SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}">Trace ID: {{ \SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}</a>
+• <a class="text-muted" href="https://sentry.io/organizations/robojackets/performance/trace/{{ \Sentry\SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}">Trace ID: {{ \Sentry\SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}</a>
 @else
-• Trace ID: {{ \SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}
+• Trace ID: {{ \Sentry\SentrySdk::getCurrentHub()->getSpan()->getTraceId() }}
 @endif
 @endif
       </div>
