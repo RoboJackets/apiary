@@ -84,8 +84,8 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::redirect('admin', '/nova');
 
-    Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
-        ->name('login.cas');
+    Route::get('login', [AuthController::class, 'forceCasAuth'])
+        ->name('login');
 
     Route::view('oauth2/client', 'oauth2clientcreated')->name('oauth2.client.created');
     Route::view('oauth2/pat', 'personalaccesstokencreated')->name('oauth2.pat.created');

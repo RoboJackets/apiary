@@ -21,7 +21,7 @@ class Authenticate extends AuthenticateMiddleware
     {
         if (! $request->expectsJson()) {
             if ($request->is('oauth/*')) {
-                return route('login.cas', ['next' => url()->full()]);
+                return route('login', ['next' => url()->full()]);
             }
 
             throw new AuthorizationException('Unauthorized');
