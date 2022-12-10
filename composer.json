@@ -38,7 +38,7 @@
         "laravel/framework": "9.43.0",
         "laravel/horizon": "5.10.5",
         "laravel/nova": "4.19.4",
-        "laravel/passport": "^11.3",
+        "laravel/passport": "11.3.1",
         "laravel/scout": "9.5.1",
         "laravel/slack-notification-channel": "2.4.0",
         "laravel/socialite": "5.5.6",
@@ -48,7 +48,7 @@
         "meilisearch/meilisearch-php": "0.26.0",
         "oitnetworkservices/buzzapiclient": "0.1.4",
         "realrashid/sweet-alert": "5.1.0",
-        "sentry/sentry-laravel": "^3.1",
+        "sentry/sentry-laravel": "3.1.2",
         "smalot/pdfparser": "2.2.2",
         "spatie/laravel-csp": "2.8.2",
         "spatie/laravel-failed-job-monitor": "4.2.0",
@@ -80,8 +80,8 @@
         "slevomat/coding-standard": "8.6.4",
         "spatie/laravel-ignition": "1.6.2",
         "spatie/ray": "1.36.0",
-        "squizlabs/php_codesniffer": "^3.7",
-        "vimeo/psalm": "^5.1"
+        "squizlabs/php_codesniffer": "3.7.1",
+        "vimeo/psalm": "5.1.0"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
