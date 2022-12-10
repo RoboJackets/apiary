@@ -84,8 +84,8 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::redirect('admin', '/nova');
 
-    Route::get('login', [AuthController::class, 'forceCasAuth'])
-        ->name('login');
+    Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
+        ->name('login.cas');
 
     Route::view('oauth2/client', 'oauth2clientcreated')->name('oauth2.client.created');
     Route::view('oauth2/pat', 'personalaccesstokencreated')->name('oauth2.pat.created');
@@ -116,3 +116,9 @@ if (config('features.docusign-membership-agreement') !== true) {
 }
 
 Route::post('apiv3/{resource}/{action}', [BuzzApiMockController::class, 'anything']);
+
+Route::get('oauth/authorize', [
+    'uses' => [\Laravel\Passport\Http\Controllers\AuthorizationController::class, 'authorize'],
+    'as' => 'authorizations.authorize',
+    'middleware' => ['web', 'auth'],
+]);
