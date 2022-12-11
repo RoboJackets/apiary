@@ -66,15 +66,17 @@ class DashboardController extends Controller
 
         if (! $isNew) {
             $paidTransactions = DuesTransaction::select('dues_transactions.id', 'dues_transactions.dues_package_id')
-            ->leftJoin('payments', static function (JoinClause $join): void {
-                $join->on('dues_transactions.id', '=', 'payable_id')
-                     ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                     ->where('payments.amount', '>', 0);
-            })
-            ->where('user_id', $user->id)
-            ->whereNotNull('payments.id')
-            ->orderBy('payments.updated_at')
-            ->get();
+                ->leftJoin('payments', static function (JoinClause $join): void {
+                    $join->on('dues_transactions.id', '=', 'payable_id')
+                         ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                         ->where('payments.amount', '>', 0);
+                })
+                ->where('user_id', $user->id)
+                ->whereNotNull('payments.id')
+                ->orderBy('payments.updated_at')
+                ->with('package')
+                ->with('payment')
+                ->get();
 
             $firstPaidTransact = $paidTransactions->first();
             $lastPaidTransact = $paidTransactions->last();
