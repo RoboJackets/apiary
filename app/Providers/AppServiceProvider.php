@@ -29,6 +29,7 @@ use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
+use App\Sentry\Helpers;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
 use Laravel\Passport\Passport;
@@ -98,7 +100,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app[Kernel::class]->whenRequestLifecycleIsLongerThan(
             100,
             static function (Carbon $startedAt, Request $request, Response $response): void {
-                \Sentry\captureMessage('Request exceeded 100ms');
+                if (! Helpers::shouldIgnoreUrl($request->url()) && ! Str::startsWith($request->url(), '/pay/')) {
+                    \Sentry\captureMessage('Request exceeded 100ms');
+                }
             }
         );
 

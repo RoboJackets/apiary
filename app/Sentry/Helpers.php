@@ -49,14 +49,19 @@ class Helpers
             array_key_exists('url', $transactionData) &&
             array_key_exists('method', $transactionData) &&
             in_array($transactionData['method'], self::$ignoreMethods, true) &&
-            (
-                in_array($transactionData['url'], self::$ignoreUrls, true) ||
-                Str::startsWith($transactionData['url'], '/horizon/')
-            )
+            self::shouldIgnoreUrl($transactionData['url'])
         ) {
             return 0;
         }
 
         return 1;
+    }
+
+    public static function shouldIgnoreUrl(string $url): bool
+    {
+        return (
+            in_array($url, self::$ignoreUrls, true) ||
+            Str::startsWith($url, '/horizon/')
+        );
     }
 }
