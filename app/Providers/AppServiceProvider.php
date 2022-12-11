@@ -100,7 +100,7 @@ class AppServiceProvider extends ServiceProvider
 
         // @phan-suppress-next-line PhanTypeArraySuspicious
         $this->app[Kernel::class]->whenRequestLifecycleIsLongerThan(
-            100,
+            500,
             static function (Carbon $startedAt, Request $request, Response $response): void {
                 if (! Helpers::shouldIgnoreUrl('/'.$request->path()) && ! $request->is('pay/*')) {
                     \Sentry\captureMessage(
