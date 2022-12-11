@@ -5,6 +5,7 @@ declare(strict_types=1);
 // @phan-file-suppress PhanPluginAlwaysReturnFunction
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
 // phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments.DisallowedNamedArgument
 // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 
