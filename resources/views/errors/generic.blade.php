@@ -13,10 +13,7 @@
     <div class="row">
         <div class="col-md-12">
             Something went wrong. Please try your request again later. If you continue to receive this error,
-            please contact #it-helpdesk on <a href="https://robojackets.slack.com">Slack</a>.<br/><br>
-            <strong>If you submitted payment information before reaching this screen, try refreshing this page once.</strong> 
-            If you continue to receive this error, please contact the treasurer to verify the status of your payment.
-            You should not re-enter your card information unless instructed.
+            please contact #it-helpdesk on <a href="https://robojackets.slack.com">Slack</a>.
         </div>
     </div>
     <hr>

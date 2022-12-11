@@ -44,6 +44,20 @@ class GitHubController extends Controller
             );
         }
 
+        if ($request->error === 'access_denied') {
+            return response(
+                view(
+                    'errors.generic',
+                    [
+                        'error_code' => 400,
+                        'error_message' => 'You canceled connecting MyRoboJackets to your GitHub account. This is '
+                            .'required for us to verify your GitHub identity.',
+                    ]
+                ),
+                400
+            );
+        }
+
         $localUser->github_username = Socialite::driver('github')->user()->getNickname();
 
         $localUser->save(); // this will trigger a JEDI sync
