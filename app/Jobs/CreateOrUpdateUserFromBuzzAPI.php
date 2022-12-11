@@ -54,34 +54,13 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     public $tries = 1;
 
     /**
-     * The identifier to search for the account with.
-     *
-     * @var string
-     */
-    private $identifier;
-
-    /**
-     * The value of the identifier to search for the account with.
-     *
-     * @var string|int|\App\Models\User
-     */
-    private $value;
-
-    /**
-     * The reason the user is being created (or null if the user is not being created).
-     *
-     * @var string
-     */
-    private $reason;
-
-    /**
      * Create a new job instance.
      */
-    public function __construct(string $identifier, string|int|User $value, string $reason)
-    {
-        $this->identifier = $identifier;
-        $this->value = $value;
-        $this->reason = $reason;
+    public function __construct(
+        private string $identifier,
+        private readonly string|int|User $value,
+        private readonly string $reason
+    ) {
         $this->queue = 'buzzapi';
     }
 
@@ -207,5 +186,19 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             return;
         }
         Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            $this->identifier.':'.(
+                $this->identifier === self::IDENTIFIER_USER ? User::whereId($this->value)->sole()->uid : $this->value
+            ),
+        ];
     }
 }

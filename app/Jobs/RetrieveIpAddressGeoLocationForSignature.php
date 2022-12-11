@@ -29,18 +29,10 @@ class RetrieveIpAddressGeoLocationForSignature implements ShouldQueue
     public $tries = 1;
 
     /**
-     * The signature to update.
-     *
-     * @var \App\Models\Signature
-     */
-    private $signature;
-
-    /**
      * Create a new job instance.
      */
-    public function __construct(Signature $signature)
+    public function __construct(private readonly Signature $signature)
     {
-        $this->signature = $signature;
         $this->queue = 'ipstack';
     }
 

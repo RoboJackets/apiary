@@ -30,42 +30,14 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
     public $tries = 1;
 
     /**
-     * The user that will be sent to JEDI.
-     *
-     * @var \App\Models\User
-     */
-    private $user;
-
-    /**
-     * The name of the class that caused the push to be run.
-     *
-     * @var string
-     */
-    private $model_class;
-
-    /**
-     * The ID of the model that caused the push to be run.
-     *
-     * @var int
-     */
-    private $model_id;
-
-    /**
-     * A description of the event that caused the push to be run.
-     *
-     * @var string
-     */
-    private $model_event;
-
-    /**
      * Create a new job instance.
      */
-    public function __construct(User $user, string $model_class, int $model_id, string $model_event)
-    {
-        $this->user = $user;
-        $this->model_class = $model_class;
-        $this->model_id = $model_id;
-        $this->model_event = $model_event;
+    public function __construct(
+        private readonly User $user,
+        private readonly string $model_class,
+        private readonly int $model_id,
+        private readonly string $model_event
+    ) {
         $this->queue = 'jedi';
     }
 
@@ -105,8 +77,6 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
             'clickup_email' => $this->user->clickup_email,
             'clickup_id' => $this->user->clickup_id,
             'clickup_invite_pending' => $this->user->clickup_invite_pending,
-            'autodesk_email' => $this->user->autodesk_email,
-            'autodesk_invite_pending' => $this->user->autodesk_invite_pending,
             'signed_latest_agreement' => $this->user->signed_latest_agreement,
         ];
 
@@ -144,5 +114,17 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
     public function uniqueId(): string
     {
         return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }

@@ -27,7 +27,7 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public Travel $travel)
+    public function __construct(private readonly Travel $travel)
     {
     }
 

@@ -25,7 +25,7 @@ class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public TravelAssignment $assignment)
+    public function __construct(private readonly TravelAssignment $assignment)
     {
         $this->queue = 'email';
         $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));

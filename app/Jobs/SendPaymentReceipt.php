@@ -25,7 +25,7 @@ class SendPaymentReceipt implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public Payment $payment)
+    public function __construct(private readonly Payment $payment)
     {
     }
 

@@ -23,19 +23,15 @@ class PruneDuesNotificationsInNova implements ShouldQueue, ShouldBeUnique
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
-    public function __construct(private User $user)
+    public function __construct(private readonly User $user)
     {
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->user->dues()->pending()->count() > 0 || $this->user->is_active) {
             $this->user->novaNotifications()
@@ -56,5 +52,17 @@ class PruneDuesNotificationsInNova implements ShouldQueue, ShouldBeUnique
     public function uniqueId(): string
     {
         return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }

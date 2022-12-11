@@ -19,18 +19,10 @@ class DuesPackageSync implements ShouldQueue
     use SerializesModels;
 
     /**
-     * The dues package that will expire.
-     *
-     * @var \App\Models\DuesPackage
-     */
-    private $package;
-
-    /**
      * Create a new job instance.
      */
-    public function __construct(DuesPackage $package)
+    public function __construct(private readonly DuesPackage $package)
     {
-        $this->package = $package;
         $this->queue = 'jedi';
     }
 

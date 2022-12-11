@@ -36,7 +36,7 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(private string $order_id)
+    public function __construct(private readonly string $order_id)
     {
         $this->queue = 'square';
     }
@@ -90,6 +90,16 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
      */
     public function uniqueId(): string
     {
-        return strval($this->order_id);
+        return $this->order_id;
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return ['order:'.$this->order_id];
     }
 }

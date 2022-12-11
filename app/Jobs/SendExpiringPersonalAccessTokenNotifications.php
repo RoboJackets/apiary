@@ -23,10 +23,8 @@ class SendExpiringPersonalAccessTokenNotifications implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $recently_expired = Carbon::now()->subWeek();
         $expiring_soon = Carbon::now()->addWeek();

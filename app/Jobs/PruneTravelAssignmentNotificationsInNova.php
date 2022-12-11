@@ -23,10 +23,8 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeU
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
-    public function __construct(private User $user)
+    public function __construct(private readonly User $user)
     {
     }
 
@@ -34,10 +32,8 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeU
      * Execute the job.
      *
      * @phan-suppress PhanPluginNonBoolBranch
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->user->assignments->reduce(
             static fn (bool $carry, TravelAssignment $assignment): bool => $carry && $assignment->is_complete,
@@ -55,5 +51,17 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeU
     public function uniqueId(): string
     {
         return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }

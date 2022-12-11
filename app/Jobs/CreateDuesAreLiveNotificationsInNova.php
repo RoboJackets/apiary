@@ -22,10 +22,8 @@ class CreateDuesAreLiveNotificationsInNova implements ShouldQueue, ShouldBeUniqu
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         User::permission('access-nova')
             ->inactive()

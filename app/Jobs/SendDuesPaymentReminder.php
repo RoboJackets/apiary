@@ -25,7 +25,7 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public User $user)
+    public function __construct(private readonly User $user)
     {
         $this->queue = 'email';
         $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
@@ -57,5 +57,17 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
     public function uniqueId(): string
     {
         return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }
