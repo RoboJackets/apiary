@@ -27,6 +27,7 @@ FROM scratch as backend-source
 COPY --link app/ /app/app/
 COPY --link bootstrap/ /app/bootstrap/
 COPY --link config/ /app/config/
+COPY --link config-validation/ /app/config-validation/
 COPY --link database/ /app/database/
 COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
