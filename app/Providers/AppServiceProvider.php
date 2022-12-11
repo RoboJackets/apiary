@@ -84,24 +84,26 @@ class AppServiceProvider extends ServiceProvider
             });
         }
 
-        DB::whenQueryingForLongerThan(100, static function (Connection $connection): void {
-            \Sentry\captureMessage('Total database query time exceeded 100ms');
-        });
+        if (! $this->app->runningInConsole()) {
+            DB::whenQueryingForLongerThan(100, static function (Connection $connection): void {
+                \Sentry\captureMessage('Total database query time exceeded 100ms');
+            });
 
-        DB::listen(static function (QueryExecuted $query): void {
-            if ($query->time > 100) {
-                \Sentry\captureMessage(
-                    message: 'Database query exceeded 100ms',
-                    hint: EventHint::fromArray(['extra' => ['query' => $query->sql]])
-                );
-            }
-        });
+            DB::listen(static function (QueryExecuted $query): void {
+                if ($query->time > 100) {
+                    \Sentry\captureMessage(
+                        message: 'Database query took '.$query->time.'ms',
+                        hint: EventHint::fromArray(['extra' => ['query' => $query->sql]])
+                    );
+                }
+            });
+        }
 
         // @phan-suppress-next-line PhanTypeArraySuspicious
         $this->app[Kernel::class]->whenRequestLifecycleIsLongerThan(
             100,
             static function (Carbon $startedAt, Request $request, Response $response): void {
-                if (Helpers::shouldIgnoreUrl($request->url()) || Str::startsWith($request->url(), '/pay/')) {
+                if (! Helpers::shouldIgnoreUrl($request->url()) && ! Str::startsWith($request->url(), '/pay/')) {
                     \Sentry\captureMessage(
                         $request->method().' '.$request->url().' took '
                         .$startedAt->diffAsCarbonInterval()->milliseconds.'ms'
