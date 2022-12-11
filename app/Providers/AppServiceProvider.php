@@ -104,7 +104,7 @@ class AppServiceProvider extends ServiceProvider
             static function (Carbon $startedAt, Request $request, Response $response): void {
                 if (! Helpers::shouldIgnoreUrl($request->path()) && ! $request->is('pay/*')) {
                     \Sentry\captureMessage(
-                        $request->method().' '.$request->url().' took '
+                        $request->method().' '.$request->path().' took '
                         .$startedAt->diffAsCarbonInterval()->milliseconds.'ms'
                     );
                 }
