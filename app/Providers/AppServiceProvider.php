@@ -102,9 +102,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app[Kernel::class]->whenRequestLifecycleIsLongerThan(
             100,
             static function (Carbon $startedAt, Request $request, Response $response): void {
-                if (! Helpers::shouldIgnoreUrl($request->path()) && ! $request->is('pay/*')) {
+                if (! Helpers::shouldIgnoreUrl('/'.$request->path()) && ! $request->is('pay/*')) {
                     \Sentry\captureMessage(
-                        $request->method().' '.$request->path().' took '
+                        $request->method().' /'.$request->path().' took '
                         .$startedAt->diffAsCarbonInterval()->milliseconds.'ms'
                     );
                 }
