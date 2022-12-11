@@ -197,7 +197,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     {
         return [
             $this->identifier.':'.(
-                $this->identifier === self::IDENTIFIER_USER ? User::whereId($this->value)->sole()->uid : $this->value
+                $this->identifier === self::IDENTIFIER_USER ? $this->value->uid : $this->value
             ),
         ];
     }
