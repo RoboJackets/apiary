@@ -41,7 +41,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
 use Laravel\Passport\Passport;
