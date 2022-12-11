@@ -27,6 +27,7 @@
         "ans-group/laravel-health-check": "1.13.4",
         "apereo/phpcas": "1.6.0",
         "arcanedev/laravel-markdown": "6.0.0",
+        "ashallendesign/laravel-config-validator": "^2.3",
         "barryvdh/laravel-dompdf": "2.0.0",
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "3.5.1",

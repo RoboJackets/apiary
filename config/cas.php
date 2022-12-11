@@ -140,7 +140,7 @@ return [
     | this feature, you may be able to retrieve user meta data.
     |--------------------------------------------------------------------------
     */
-    'cas_enable_saml' => env('CAS_ENABLE_SAML', true),
+    'cas_enable_saml' => env('CAS_ENABLE_SAML', false),
 
     /*
     |--------------------------------------------------------------------------
