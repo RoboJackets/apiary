@@ -105,7 +105,6 @@ return [
         ->rules([
             'required',
             'string',
-            'file',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
 
@@ -174,12 +173,14 @@ return [
 
     Rule::make('cas_masquerade')
         ->rules([
+            'nullable',
             'prohibited',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_session_domain')
         ->rules([
+            'nullable',
             'prohibited',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),

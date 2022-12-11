@@ -47,7 +47,6 @@ return [
         ->rules([
             'required',
             'string',
-            'active_url',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 
