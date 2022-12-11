@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AshAllenDesign\ConfigValidator\Services\Rule;
 
 return [
@@ -7,14 +9,14 @@ return [
         ->rules([
             'required',
             'string',
-            'in:collection'
+            'in:collection',
         ]),
 
     Rule::make('driver')
         ->rules([
             'required',
             'string',
-            'in:meilisearch'
+            'in:meilisearch',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 

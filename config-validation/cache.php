@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AshAllenDesign\ConfigValidator\Services\Rule;
 
 return [
@@ -7,7 +9,7 @@ return [
         ->rules([
             'required',
             'string',
-            'in:redis'
+            'in:redis',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 ];

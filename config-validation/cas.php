@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AshAllenDesign\ConfigValidator\Services\Rule;
 
 return [
@@ -29,7 +31,7 @@ return [
         ->rules([
             'required',
             'string',
-            'alpha_dash'
+            'alpha_dash',
         ]),
 
     Rule::make('cas_session_name')
@@ -37,7 +39,7 @@ return [
             'required',
             'string',
             'alpha_dash',
-            'starts_with:__Host-'
+            'starts_with:__Host-',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
 
@@ -117,7 +119,7 @@ return [
 
     Rule::make('cas_login_url')
         ->rules([
-            'prohibited'
+            'prohibited',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
 
@@ -130,13 +132,13 @@ return [
 
     Rule::make('cas_logout_redirect')
         ->rules([
-            'prohibited'
+            'prohibited',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_redirect_path')
         ->rules([
-            'prohibited'
+            'prohibited',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AshAllenDesign\ConfigValidator\Services\Rule;
 
 return [
@@ -34,7 +36,7 @@ return [
             'required',
             'string',
             'alpha_dash',
-            'starts_with:__Host-'
+            'starts_with:__Host-',
         ])
         ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
 ];

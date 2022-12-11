@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AshAllenDesign\ConfigValidator\Services\Rule;
 
 return [
@@ -7,49 +9,49 @@ return [
         ->rules([
             'required',
             'string',
-            'alpha_dash'
+            'alpha_dash',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 
     Rule::make('github.client_id')
         ->rules([
             'required',
-            'string'
+            'string',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 
     Rule::make('github.client_secret')
         ->rules([
             'required',
-            'string'
+            'string',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 
     Rule::make('github.redirect')
         ->rules([
             'required',
-            'string'
+            'string',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 
     Rule::make('google.client_id')
         ->rules([
             'required',
-            'string'
+            'string',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 
     Rule::make('google.client_secret')
         ->rules([
             'required',
-            'string'
+            'string',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 
     Rule::make('google.redirect')
         ->rules([
             'required',
-            'string'
+            'string',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 

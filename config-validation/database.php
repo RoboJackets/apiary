@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AshAllenDesign\ConfigValidator\Services\Rule;
 
 return [
@@ -37,7 +39,7 @@ return [
 
     Rule::make('redis.default.scheme')
         ->rules([
-            'prohibited'
+            'prohibited',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 
@@ -75,7 +77,7 @@ return [
 
     Rule::make('redis.cache.scheme')
         ->rules([
-            'prohibited'
+            'prohibited',
         ])
         ->environments(['test', Rule::ENV_PRODUCTION]),
 
