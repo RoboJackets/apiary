@@ -38,7 +38,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -47,6 +46,7 @@ use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
 use Laravel\Passport\Passport;
 use Sentry\EventHint;
+use Symfony\Component\HttpFoundation\Response;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -101,7 +101,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app[Kernel::class]->whenRequestLifecycleIsLongerThan(
             100,
             static function (Carbon $startedAt, Request $request, Response $response): void {
-                if (! Helpers::shouldIgnoreUrl($request->url()) && ! Str::startsWith($request->url(), '/pay/')) {
+                if (Helpers::shouldIgnoreUrl($request->path()) || Str::startsWith($request->url(), '/pay/')) {
                     \Sentry\captureMessage('Request exceeded 100ms');
                 }
             }
