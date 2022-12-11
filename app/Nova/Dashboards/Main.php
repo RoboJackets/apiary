@@ -62,18 +62,20 @@ class Main extends Dashboard
                     $should_include = true;
                 }
 
-                if ($travel->tar_required !== null && $travel->assignments()->where('tar_received', false)->exists()) {
+                if ($travel->tar_required === true && $travel->assignments()->where('tar_received', false)->exists()) {
                     $should_include = true;
                 }
 
-                if ($travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
-                    $join->on('travel_assignments.id', '=', 'payable_id')
-                         ->where('payments.amount', '>', 0)
-                         ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                         ->whereNull('payments.deleted_at');
-                })->whereNull(
-                    'payments.id'
-                )->exists()) {
+                if (
+                    $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
+                        $join->on('travel_assignments.id', '=', 'payable_id')
+                             ->where('payments.amount', '>', 0)
+                             ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                             ->whereNull('payments.deleted_at');
+                    })->whereNull(
+                        'payments.id'
+                    )->exists()
+                ) {
                     $should_include = true;
                 }
 
@@ -81,7 +83,7 @@ class Main extends Dashboard
                     continue;
                 }
 
-                if ($travel->tar_required !== null) {
+                if ($travel->tar_required === true) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
