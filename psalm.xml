@@ -294,5 +294,13 @@
                 <file name="app/Nova/Resource.php"/>
             </errorLevel>
         </MissingTemplateParam>
+        <UnusedClosureParam>
+            <errorLevel type="suppress">
+                <directory name="app/Jobs"/>
+                <directory name="app/Nova"/>
+                <directory name="app/Providers"/>
+                <file name="app/Http/Middleware/Sentry.php"/>
+            </errorLevel>
+        </UnusedClosureParam>
     </issueHandlers>
 </psalm>

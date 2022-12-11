@@ -111,7 +111,7 @@ class AppServiceProvider extends ServiceProvider
         TravelAssignment::observe(TravelAssignmentObserver::class);
         User::observe(UserObserver::class);
 
-        Relation::enforceMorphMap([
+        Relation::morphMap([
             'dues-transaction' => DuesTransaction::class,
             'event' => Event::class,
             'signature' => Signature::class,
