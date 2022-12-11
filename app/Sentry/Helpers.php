@@ -59,9 +59,6 @@ class Helpers
 
     public static function shouldIgnoreUrl(string $url): bool
     {
-        return (
-            in_array($url, self::$ignoreUrls, true) ||
-            Str::startsWith($url, '/horizon/')
-        );
+        return in_array($url, self::$ignoreUrls, true) || Str::startsWith($url, '/horizon/');
     }
 }
