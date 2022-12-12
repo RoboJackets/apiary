@@ -84,8 +84,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         if (! $this->app->runningInConsole()) {
-            DB::whenQueryingForLongerThan(100, static function (Connection $connection): void {
-                \Sentry\captureMessage('Total database query time exceeded 100ms');
+            DB::whenQueryingForLongerThan(200, static function (Connection $connection): void {
+                \Sentry\captureMessage('Total database query time exceeded 200ms');
             });
 
             DB::listen(static function (QueryExecuted $query): void {
@@ -100,7 +100,7 @@ class AppServiceProvider extends ServiceProvider
 
         // @phan-suppress-next-line PhanTypeArraySuspicious
         $this->app[Kernel::class]->whenRequestLifecycleIsLongerThan(
-            500,
+            1000,
             static function (Carbon $startedAt, Request $request, Response $response): void {
                 if (! Helpers::shouldIgnoreUrl('/'.$request->path()) && ! $request->is('pay/*')) {
                     \Sentry\captureMessage(
