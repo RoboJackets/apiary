@@ -29,12 +29,6 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
     {
         $this->queue = 'email';
         $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
-
-        if ($this->delay->dayOfWeek === 5) {
-            // do not send reminders on thursdays to reduce the chance of user
-            // trying to use the app during a maintenance window
-            $this->delay = $this->delay->addHours(24);
-        }
     }
 
     /**
