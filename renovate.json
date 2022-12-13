@@ -39,7 +39,8 @@
                 "matchPackageNames": ["square/square"],
                 "major": {
                     "enabled": true
-                }
+                },
+                "versioning": "loose"
             }
         ]
     },
