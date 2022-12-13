@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25a19f93c6bab61accbc157e1997de27",
+    "content-hash": "8804b9e96ac66af35352da554e778fdd",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -9120,16 +9120,16 @@
         },
         {
             "name": "square/square",
-            "version": "24.0.0.20221116",
+            "version": "25.0.0.20221214",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "4aea41708d3c4d48bcf49b067b3e56ad5757464a"
+                "reference": "33e3740ec37ca03674c13b08ee74924b40346d17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/4aea41708d3c4d48bcf49b067b3e56ad5757464a",
-                "reference": "4aea41708d3c4d48bcf49b067b3e56ad5757464a",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/33e3740ec37ca03674c13b08ee74924b40346d17",
+                "reference": "33e3740ec37ca03674c13b08ee74924b40346d17",
                 "shasum": ""
             },
             "require": {
@@ -9170,9 +9170,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/24.0.0.20221116"
+                "source": "https://github.com/square/square-php-sdk/tree/25.0.0.20221214"
             },
-            "time": "2022-11-16T18:46:02+00:00"
+            "time": "2022-12-13T22:06:13+00:00"
         },
         {
             "name": "stella-maris/clock",
