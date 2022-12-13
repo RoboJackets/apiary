@@ -34,6 +34,12 @@
             {
                 "matchPackageNames": ["php"],
                 "rangeStrategy": "replace",
+            },
+            {
+                "matchPackageNames": ["square/square"],
+                "major": {
+                    "enabled": true
+                }
             }
         ]
     },
