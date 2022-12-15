@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -60,7 +61,7 @@ class Merchandise extends Resource
     public static $globallySearchable = false;
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
@@ -68,7 +69,7 @@ class Merchandise extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {
@@ -100,6 +101,8 @@ class Merchandise extends Resource
 
             BelongsToMany::make('Dues Transactions', 'jankForNova')
                 ->fields(new MerchandisePivotFields()),
+
+            Boolean::make('Distributable', 'distributable')->default(true),
         ];
     }
 
@@ -118,9 +121,9 @@ class Merchandise extends Resource
             return [];
         }
 
-        $name = Str::lower(AppModelsMerchandise::where('id', $resourceId)->sole()->name);
+        $merch_item = AppModelsMerchandise::where('id', $resourceId)->sole();
 
-        if (Str::contains($name, 'waive')) {
+        if (! $merch_item->distributable) {
             return [];
         }
 
@@ -165,20 +168,20 @@ class Merchandise extends Resource
             return [];
         }
 
-        $name = Str::lower(AppModelsMerchandise::where('id', $request->resourceId)->sole()->name);
+        $merch_item = AppModelsMerchandise::where('id', $request->resourceId)->sole();
 
-        if (Str::contains($name, 'waive')) {
+        if (! $merch_item->distributable) {
             return [];
         }
 
-        if (Str::contains($name, 'shirt')) {
+        if (Str::contains($merch_item->name, 'shirt')) {
             return [
                 (new ShirtSizeBreakdown('shirt'))->onlyOnDetail(),
                 ...$defaults,
             ];
         }
 
-        if (Str::contains($name, 'polo')) {
+        if (Str::contains($merch_item->name, 'polo')) {
             return [
                 (new ShirtSizeBreakdown('polo'))->onlyOnDetail(),
                 ...$defaults,
