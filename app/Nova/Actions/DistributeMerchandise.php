@@ -134,7 +134,8 @@ class DistributeMerchandise extends Action
                 ->default(strval($request->user()->id))
                 ->required()
                 ->rules('required')
-                ->readonly(),
+                // If we use `readonly()`, then this field's value isn't passed to the action
+                ->withMeta(['extraAttributes' => [ 'readonly' => true ]]),
         ];
     }
 }
