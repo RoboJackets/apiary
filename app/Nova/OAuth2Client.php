@@ -65,7 +65,7 @@ class OAuth2Client extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {
