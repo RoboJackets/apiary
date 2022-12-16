@@ -58,7 +58,7 @@
         "spatie/once": "3.1.0",
         "square/square": "25.0.0.20221214",
         "subfission/cas": "4.3.0",
-        "symfony/http-client": "6.2.0",
+        "symfony/http-client": "6.2.2",
         "symfony/postmark-mailer": "6.2.0"
     },
     "require-dev": {
