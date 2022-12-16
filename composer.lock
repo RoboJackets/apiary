@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "742df8f11f0e50219e8e2316517391ba",
+    "content-hash": "37bbda984623c21aa7d1c674e0f51e82",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5204,16 +5204,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.26.0",
+            "version": "v0.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "ecbe0f6c178df54589d829bcc776bdcf428778b5"
+                "reference": "05db1b22821dc34a9b71cfbe78189ec4abe600ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/ecbe0f6c178df54589d829bcc776bdcf428778b5",
-                "reference": "ecbe0f6c178df54589d829bcc776bdcf428778b5",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/05db1b22821dc34a9b71cfbe78189ec4abe600ce",
+                "reference": "05db1b22821dc34a9b71cfbe78189ec4abe600ce",
                 "shasum": ""
             },
             "require": {
@@ -5228,7 +5228,7 @@
                 "guzzlehttp/guzzle": "^7.1",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "1.9.2",
+                "phpstan/phpstan": "1.9.3",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -5241,7 +5241,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "MeiliSearch\\": "src/"
+                    "MeiliSearch\\": "src/",
+                    "Meilisearch\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5265,9 +5266,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.26.0"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.26.1"
             },
-            "time": "2022-11-28T14:55:44+00:00"
+            "time": "2022-12-16T17:11:53+00:00"
         },
         {
             "name": "mockery/mockery",
