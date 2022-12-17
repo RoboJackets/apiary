@@ -49,6 +49,7 @@ trait AuthorizeInclude
 
             if (Auth::user()->cant('read-'.$permission)) {
                 Log::debug('User is missing permission: read-'.$permission);
+
                 continue;
             }
 
