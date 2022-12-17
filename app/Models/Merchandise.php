@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\User $providedBy
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
  * @property-read int|null $transactions_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
  * @method static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()
