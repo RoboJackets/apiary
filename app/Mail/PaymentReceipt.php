@@ -21,7 +21,7 @@ class PaymentReceipt extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public Payment $payment)
+    public function __construct(public readonly Payment $payment)
     {
     }
 

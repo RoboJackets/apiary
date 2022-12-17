@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\User;
-use App\Notifications\DuesPaymentReminder;
+use App\Notifications\Dues\PaymentReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -42,7 +42,7 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
             return;
         }
 
-        $this->user->notify(new DuesPaymentReminder($transaction));
+        $this->user->notify(new PaymentReminder($transaction));
     }
 
     /**

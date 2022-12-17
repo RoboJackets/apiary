@@ -19,7 +19,7 @@ class TravelAssignmentCreated extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public TravelAssignment $assignment)
+    public function __construct(public readonly TravelAssignment $assignment)
     {
     }
 

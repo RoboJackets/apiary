@@ -17,10 +17,8 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
-    public function __construct(private Token $token)
+    public function __construct(private readonly Token $token)
     {
     }
 
@@ -44,10 +42,6 @@ class ExpiringPersonalAccessTokenNotification extends Notification implements Sh
 
     /**
      * Determine if the notification should be sent.
-     *
-     * @param  User  $user
-     * @param  string  $channel
-     * @return bool
      */
     public function shouldSend(User $user, string $channel): bool
     {

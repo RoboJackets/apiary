@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Jobs\SendReminders;
 use App\Models\DocuSignEnvelope;
 use App\Models\TravelAssignment;
 
 class DocuSignEnvelopeObserver
 {
-    /**
-     * Handle the DocuSignEnvelope "deleted" event.
-     */
     public function deleted(DocuSignEnvelope $envelope): void
     {
         if (
@@ -23,9 +21,6 @@ class DocuSignEnvelopeObserver
         }
     }
 
-    /**
-     * Handle the DocuSignEnvelope "restored" event.
-     */
     public function restored(DocuSignEnvelope $envelope): void
     {
         if (
@@ -37,9 +32,6 @@ class DocuSignEnvelopeObserver
         }
     }
 
-    /**
-     * Handle the DocuSignEnvelope "force deleted" event.
-     */
     public function forceDeleted(DocuSignEnvelope $envelope): void
     {
         if (
@@ -49,5 +41,10 @@ class DocuSignEnvelopeObserver
             $envelope->signable->tar_received = false;
             $envelope->signable->save();
         }
+    }
+
+    public function saved(DocuSignEnvelope $envelope): void
+    {
+        SendReminders::dispatch($envelope->signedBy);
     }
 }

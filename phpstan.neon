@@ -88,6 +88,7 @@ parameters:
     - '#Parameter \#1 ...\$permissions of method Spatie\\Permission\\Models\\Role::givePermissionTo\(\) expects array\|Illuminate\\Support\\Collection\|int\|Spatie\\Permission\\Contracts\\Permission\|string, mixed given\.#'
     - '#Parameter \#1 \$address of method Illuminate\\Mail\\Mailable::cc\(\) expects array\|object\|string, mixed given\.#'
     - '#Parameter \#1 \$assignment of job class App\\Jobs\\SendTravelAssignmentReminder constructor expects App\\Models\\TravelAssignment in App\\Jobs\\SendTravelAssignmentReminder::dispatch\(\), App\\Models\\DuesTransaction\|App\\Models\\TravelAssignment given\.#'
+    - '#Parameter \#1 \$assignment of job class App\\Jobs\\SendTravelAssignmentReminder constructor expects App\\Models\\TravelAssignment in App\\Jobs\\SendTravelAssignmentReminder::dispatch\(\), App\\Models\\TravelAssignment\|null given\.#'
     - '#Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Model::update\(\) expects array<string, mixed>, mixed given\.#'
     - '#Parameter \#1 \$attributes of static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::create\(\) expects array<string, mixed>, mixed given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::each\(\) expects callable\(mixed, \(int\|string\)\): mixed, Closure\(int\): void given\.#'

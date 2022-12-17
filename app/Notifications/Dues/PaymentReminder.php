@@ -2,23 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Notifications;
+namespace App\Notifications\Dues;
 
-use App\Mail\MembershipAgreementSigned as Mailable;
-use App\Models\Signature;
+use App\Mail\Dues\PaymentReminder as DuesPaymentReminderMailable;
+use App\Models\DuesTransaction;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class MembershipAgreementSigned extends Notification implements ShouldQueue
+class PaymentReminder extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(private readonly Signature $signature)
+    public function __construct(private readonly DuesTransaction $transaction)
     {
     }
 
@@ -27,7 +24,7 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
      *
      * @return array<string>
      */
-    public function via(User $notifiable): array
+    public function via(User $user): array
     {
         return ['mail'];
     }
@@ -35,12 +32,9 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(User $notifiable): Mailable
+    public function toMail(User $user): DuesPaymentReminderMailable
     {
-        // Force the relation to load, because it doesn't in the mail view for some reason.
-        $this->signature->load('uploadedBy');
-
-        return new Mailable($this->signature);
+        return new DuesPaymentReminderMailable($this->transaction);
     }
 
     /**
@@ -48,7 +42,7 @@ class MembershipAgreementSigned extends Notification implements ShouldQueue
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return $user->should_receive_email;
+        return ! $user->is_active && $user->should_receive_email;
     }
 
     /**

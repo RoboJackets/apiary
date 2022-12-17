@@ -19,7 +19,7 @@ class MembershipAgreementDocuSignEnvelopeReceived extends Mailable implements Sh
     /**
      * Create a new message instance.
      */
-    public function __construct(public DocuSignEnvelope $envelope)
+    public function __construct(public readonly DocuSignEnvelope $envelope)
     {
     }
 
