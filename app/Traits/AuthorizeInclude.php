@@ -47,7 +47,7 @@ trait AuthorizeInclude
             ) ? $relationPermMap[$include] : $this->camelToDashed($include);
 
             if (Auth::user()->cant('read-'.$permission)) {
-                Log::debug("User can't read-$permission");
+                Log::debug('User is missing permission: read-'.$permission);
                 continue;
             }
 
