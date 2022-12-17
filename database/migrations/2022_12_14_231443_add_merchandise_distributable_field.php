@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Merchandise;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,11 @@ return new class extends Migration
     {
         Schema::table('merchandise', static function (Blueprint $table): void {
             $table->boolean('distributable')->default(false);
+        });
+
+        Merchandise::get()->each(static function (Merchandise $merchItem): void {
+            $merchItem->distributable = ! Str::contains($merchItem->name, 'waive', true);
+            $merchItem->save();
         });
     }
 
