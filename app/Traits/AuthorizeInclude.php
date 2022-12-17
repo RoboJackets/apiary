@@ -28,6 +28,7 @@ trait AuthorizeInclude
 
         // Get permission mapping from the target model class
         $model = new $class();
+
         if (method_exists($model, 'getRelationshipPermissionMap')) {
             $relationPermMap = $model->getRelationshipPermissionMap();
         } else {
