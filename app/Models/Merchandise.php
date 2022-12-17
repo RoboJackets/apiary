@@ -18,29 +18,30 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $distributable
  * @property-read \App\Models\FiscalYear $fiscalYear
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
- * @property-read int|null $packages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
- * @property-read int|null $transactions_count
  * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $jankForNova
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesTransaction[] $jankForNova
  * @property-read int|null $jank_for_nova_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesPackage[] $packages
+ * @property-read int|null $packages_count
  * @property-read \App\Models\User $providedBy
- *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesTransaction[] $transactions
+ * @property-read int|null $transactions_count
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
  * @method static \Illuminate\Database\Query\Builder|Merchandise onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise query()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereDistributable($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereFiscalYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Merchandise withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Merchandise withoutTrashed()
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Eloquent
  */
 class Merchandise extends Model
 {
