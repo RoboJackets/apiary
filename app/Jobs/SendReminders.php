@@ -73,7 +73,7 @@ class SendReminders implements ShouldQueue, ShouldBeUnique
             DuesPackage::userCanPurchase($this->user)->exists() &&
             $this->user->duesTransactions()->pending()->exists()
         ) {
-            SendDuesPaymentReminder::dispatch($this->user);
+            SendDuesPaymentReminder::dispatch($this->user, 24);
         }
     }
 
