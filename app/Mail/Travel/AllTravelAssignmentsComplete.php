@@ -19,7 +19,7 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public Travel $travel)
+    public function __construct(public readonly Travel $travel)
     {
     }
 

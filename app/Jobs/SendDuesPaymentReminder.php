@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\User;
-use App\Notifications\DuesPaymentReminder;
+use App\Notifications\Dues\PaymentReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,10 +25,10 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(private readonly User $user)
+    public function __construct(private readonly User $user, int $delay = 48)
     {
         $this->queue = 'email';
-        $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
+        $this->delay = now()->addHours($delay)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
     }
 
     /**
@@ -42,7 +42,7 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
             return;
         }
 
-        $this->user->notify(new DuesPaymentReminder($transaction));
+        $this->user->notify(new PaymentReminder($transaction));
     }
 
     /**

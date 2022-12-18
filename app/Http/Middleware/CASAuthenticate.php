@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Jobs\SendReminders;
 use App\Traits\CreateOrUpdateCASUser;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -83,6 +84,8 @@ class CASAuthenticate
                 }
 
                 Auth::login($user);
+
+                SendReminders::dispatch($user);
             }
 
             if ($this->cas->isAuthenticated() && $request->user() !== null) {

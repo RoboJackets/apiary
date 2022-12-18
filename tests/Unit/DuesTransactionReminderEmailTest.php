@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use App\Mail\Dues\PaymentReminder;
+use App\Mail\Dues\TransactionReminder;
 use App\Models\DuesPackage;
-use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\User;
 use Tests\TestCase;
 
-class DuesPaymentReminderEmailTest extends TestCase
+class DuesTransactionReminderEmailTest extends TestCase
 {
     public function testGenerateEmailNoOtherPackageAvailable(): void
     {
         $user = User::factory()->create();
+        $user->primary_affiliation = 'student';
+        $user->save();
 
         $package = DuesPackage::factory()->create();
+        $package->available_for_purchase = true;
+        $package->effective_end = now()->addHour();
+        $package->restricted_to_students = true;
+        $package->save();
 
-        $transaction = DuesTransaction::factory()->make([
-            'user_id' => $user->id,
-            'dues_package_id' => $package->id,
-        ]);
-
-        $mailable = new PaymentReminder($transaction);
+        $mailable = new TransactionReminder($user);
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText(intval($package->cost));
@@ -42,6 +42,10 @@ class DuesPaymentReminderEmailTest extends TestCase
         $user->save();
 
         $firstPackage = DuesPackage::factory()->create();
+        $firstPackage->available_for_purchase = true;
+        $firstPackage->effective_end = now()->addHour();
+        $firstPackage->restricted_to_students = true;
+        $firstPackage->save();
 
         $secondPackage = DuesPackage::factory()->create();
         $secondPackage->available_for_purchase = true;
@@ -49,21 +53,14 @@ class DuesPaymentReminderEmailTest extends TestCase
         $secondPackage->restricted_to_students = true;
         $secondPackage->save();
 
-        $transaction = DuesTransaction::factory()->make([
-            'user_id' => $user->id,
-            'dues_package_id' => $firstPackage->id,
-        ]);
-
-        $mailable = new PaymentReminder($transaction);
+        $mailable = new TransactionReminder($user);
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText(intval($firstPackage->cost));
         $mailable->assertSeeInText($firstPackage->name);
-        $mailable->assertSeeInText(
-            number_format(Payment::calculateSurcharge(intval($firstPackage->cost * 100)) / 100, 2)
-        );
+        $mailable->assertSeeInText(intval($secondPackage->cost));
+        $mailable->assertSeeInText($secondPackage->name);
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
-        $mailable->assertSeeInText('If you would prefer to pay for '.$secondPackage->name.' instead,');
         $mailable->assertDontSeeInText("\n\n\n");
     }
 }

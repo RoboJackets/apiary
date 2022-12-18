@@ -18,14 +18,13 @@ class DocuSignEnvelopeReceived extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(private DocuSignEnvelope $envelope)
+    public function __construct(private readonly DocuSignEnvelope $envelope)
     {
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  User  $user
      * @return array<string>
      */
     public function via(User $user): array
@@ -35,9 +34,6 @@ class DocuSignEnvelopeReceived extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  User  $user
-     * @return \App\Mail\Travel\DocuSignEnvelopeReceived
      */
     public function toMail(User $user): DocuSignEnvelopeReceivedMailable
     {
@@ -46,10 +42,6 @@ class DocuSignEnvelopeReceived extends Notification implements ShouldQueue
 
     /**
      * Determine if the notification should be sent.
-     *
-     * @param  User  $user
-     * @param  string  $channel
-     * @return bool
      */
     public function shouldSend(User $user, string $channel): bool
     {

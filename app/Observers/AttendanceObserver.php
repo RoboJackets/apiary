@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Jobs\PushToJedi;
+use App\Jobs\SendReminders;
 use App\Models\Attendance;
 
 class AttendanceObserver
@@ -33,5 +34,7 @@ class AttendanceObserver
         PushToJedi::dispatch($attendance->attendee, Attendance::class, $attendance->id, 'saved');
 
         $attendance->attendee->searchable();
+
+        SendReminders::dispatch($attendance->attendee);
     }
 }

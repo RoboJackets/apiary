@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\TravelAssignment;
-use App\Notifications\Travel\TravelAssignmentReminder;
+use App\Models\User;
+use App\Notifications\Dues\TransactionReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
+class SendDuesTransactionReminder implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -25,10 +25,10 @@ class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(private readonly TravelAssignment $assignment, int $delay = 48)
+    public function __construct(private readonly User $user)
     {
         $this->queue = 'email';
-        $this->delay = now()->addHours($delay)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
+        $this->delay = now()->addHours(24)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
     }
 
     /**
@@ -36,7 +36,7 @@ class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        $this->assignment->user->notify(new TravelAssignmentReminder($this->assignment));
+        $this->user->notify(new TransactionReminder());
     }
 
     /**
@@ -44,6 +44,18 @@ class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
      */
     public function uniqueId(): string
     {
-        return strval($this->assignment->user->id);
+        return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }

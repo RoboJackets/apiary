@@ -17,16 +17,10 @@ class MembershipAgreementSigned extends Mailable implements ShouldQueue
     use SerializesModels;
 
     /**
-     * The signature that was just signed.
-     */
-    public Signature $signature;
-
-    /**
      * Create a new message instance.
      */
-    public function __construct(Signature $signature)
+    public function __construct(public readonly Signature $signature)
     {
-        $this->signature = $signature;
     }
 
     /**

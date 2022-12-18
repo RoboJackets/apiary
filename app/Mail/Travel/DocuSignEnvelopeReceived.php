@@ -19,7 +19,7 @@ class DocuSignEnvelopeReceived extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public DocuSignEnvelope $envelope)
+    public function __construct(public readonly DocuSignEnvelope $envelope)
     {
     }
 
