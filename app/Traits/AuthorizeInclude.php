@@ -28,6 +28,7 @@ trait AuthorizeInclude
 
         // Get permission mapping from the target model class
         $model = new $class();
+
         if (method_exists($model, 'getRelationshipPermissionMap')) {
             $relationPermMap = $model->getRelationshipPermissionMap();
         } else {
@@ -47,6 +48,8 @@ trait AuthorizeInclude
             ) ? $relationPermMap[$include] : $this->camelToDashed($include);
 
             if (Auth::user()->cant('read-'.$permission)) {
+                Log::debug('User is missing permission: read-'.$permission);
+
                 continue;
             }
 

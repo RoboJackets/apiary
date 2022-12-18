@@ -37,7 +37,7 @@ class DuesPackage extends Resource
     public static $model = \App\Models\DuesPackage::class;
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
@@ -45,7 +45,7 @@ class DuesPackage extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {

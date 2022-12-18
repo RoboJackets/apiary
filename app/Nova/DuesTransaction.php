@@ -36,7 +36,7 @@ class DuesTransaction extends Resource
     public static $with = ['payment', 'package', 'user'];
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
@@ -44,7 +44,7 @@ class DuesTransaction extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {

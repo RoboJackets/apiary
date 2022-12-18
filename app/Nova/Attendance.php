@@ -34,7 +34,7 @@ class Attendance extends Resource
     public static $model = \App\Models\Attendance::class;
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
@@ -42,7 +42,7 @@ class Attendance extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {

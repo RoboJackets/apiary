@@ -100,21 +100,22 @@ $ cp .env.example .env
 
 For a basic development environment, you'll need to modify the following settings:
 
-| Key                          | Value                                                                                                                                                                          |
-|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| APP_URL                      | Set to the hostname of your local dev environment, ex. `apiary.test`.                                                                                                          |
-| DB_*                         | Set appropriately for your database.                                                                                                                                           |
-| MAIL_*                       | Mailgun is the suggested mail driver, but you can easily configure Mailtrap or a local mail server referencing the [Laravel documentation](https://laravel.com/docs/5.4/mail). |
-| CAS_HOSTNAME                 | FQDN of the CAS server to use, ex. login.gatech.edu                                                                                                                            |
-| CAS_REAL_HOSTS               | Should match CAS_HOSTNAME                                                                                                                                                      |
-| CAS_LOGOUT_URL               | CAS logout URL, ex. https://login.gatech.edu/cas/logout                                                                                                                |
-| CAS_MASQUERADE               | If set, bypasses the CAS authentication flow and authenticates as the specified username.                                                                                      |
-| CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
-| CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
-| CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
-| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user
-| PASSPORT_PERSONAL_ACCESS_CLIENT_ID | Client ID from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
-| PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET | Client secret from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
+| Key                                    | Value                                                                                                                                                                          |
+|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| APP_URL                                | Set to the hostname of your local dev environment, ex. `apiary.test`.                                                                                                          |
+| DB_*                                   | Set appropriately for your database.                                                                                                                                           |
+| MAIL_*                                 | Mailgun is the suggested mail driver, but you can easily configure Mailtrap or a local mail server referencing the [Laravel documentation](https://laravel.com/docs/5.4/mail). |
+| CAS_HOSTNAME                           | FQDN of the CAS server to use, ex. login.gatech.edu                                                                                                                            |
+| CAS_REAL_HOSTS                         | Should match CAS_HOSTNAME                                                                                                                                                      |
+| CAS_LOGOUT_URL                         | CAS logout URL, ex. https://login.gatech.edu/cas/logout                                                                                                                        |
+| CAS_CLIENT_SERVICE                     | Base URL for your local instance, e.g., localhost:PORT or possibly something like https://apiary-local.robojackets.org, depending on your local configuration                  |
+| CAS_MASQUERADE                         | If set, bypasses the CAS authentication flow and authenticates as the specified username.                                                                                      |
+| CAS_MASQUERADE_gtGTID                  | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
+| CAS_MASQUERADE_email_primary           | Primary email address for the masquerading user                                                                                                                                |
+| CAS_MASQUERADE_givenName               | Given Name (First Name) for the masquerading user                                                                                                                              |
+| CAS_MASQUERADE_sn                      | SN (Second/Last Name) for the masquerading user                                                                                                                                |
+| PASSPORT_PERSONAL_ACCESS_CLIENT_ID     | Client ID from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens                                                                 |
+| PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET | Client secret from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens                                                             |
 
 #### Installing dependencies
 

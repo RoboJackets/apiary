@@ -18,15 +18,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property bool $distributable
  * @property-read \App\Models\FiscalYear $fiscalYear
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
- * @property-read int|null $packages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
- * @property-read int|null $transactions_count
  * @property-read \App\Models\DuesTransactionMerchandise $jank_for_nova
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $jankForNova
  * @property-read int|null $jank_for_nova_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesPackage> $packages
+ * @property-read int|null $packages_count
  * @property-read \App\Models\User $providedBy
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DuesTransaction> $transactions
+ * @property-read int|null $transactions_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise newQuery()
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise query()
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereDistributable($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereFiscalYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Merchandise whereName($value)
@@ -52,6 +54,15 @@ class Merchandise extends Model
      * @var string
      */
     protected $table = 'merchandise';
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'distributable' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
