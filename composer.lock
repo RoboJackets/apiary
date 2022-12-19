@@ -6311,16 +6311,16 @@
         },
         {
             "name": "openspout/openspout",
-            "version": "v4.9.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openspout/openspout.git",
-                "reference": "7b0db352e25c83e42d3375f57041a30a1ea9cd2c"
+                "reference": "cbf753126f43095112a099eff23ba4f0a47245eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openspout/openspout/zipball/7b0db352e25c83e42d3375f57041a30a1ea9cd2c",
-                "reference": "7b0db352e25c83e42d3375f57041a30a1ea9cd2c",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/cbf753126f43095112a099eff23ba4f0a47245eb",
+                "reference": "cbf753126f43095112a099eff23ba4f0a47245eb",
                 "shasum": ""
             },
             "require": {
@@ -6388,7 +6388,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openspout/openspout/issues",
-                "source": "https://github.com/openspout/openspout/tree/v4.9.0"
+                "source": "https://github.com/openspout/openspout/tree/v4.10.0"
             },
             "funding": [
                 {
@@ -6400,7 +6400,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-13T07:41:37+00:00"
+            "time": "2022-12-17T07:17:20+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -7203,16 +7203,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.17",
+            "version": "3.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "dbc2307d5c69aeb22db136c52e91130d7f2ca761"
+                "reference": "f28693d38ba21bb0d9f0c411ee5dae2b178201da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/dbc2307d5c69aeb22db136c52e91130d7f2ca761",
-                "reference": "dbc2307d5c69aeb22db136c52e91130d7f2ca761",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/f28693d38ba21bb0d9f0c411ee5dae2b178201da",
+                "reference": "f28693d38ba21bb0d9f0c411ee5dae2b178201da",
                 "shasum": ""
             },
             "require": {
@@ -7293,7 +7293,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.17"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.18"
             },
             "funding": [
                 {
@@ -7309,7 +7309,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-24T10:51:50+00:00"
+            "time": "2022-12-17T18:26:50+00:00"
         },
         {
             "name": "phpstan/phpstan",
@@ -13282,23 +13282,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.15.0",
+            "version": "v7.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "46833b62191d740c8b2dca91303c15cd2d8f35ed"
+                "reference": "ee49131989293c548870f648d6b3b70cee054d50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/46833b62191d740c8b2dca91303c15cd2d8f35ed",
-                "reference": "46833b62191d740c8b2dca91303c15cd2d8f35ed",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/ee49131989293c548870f648d6b3b70cee054d50",
+                "reference": "ee49131989293c548870f648d6b3b70cee054d50",
                 "shasum": ""
             },
             "require": {
-                "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.41",
+                "fakerphp/faker": "^1.21",
+                "laravel/framework": "^9.44",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^7.15",
+                "orchestra/testbench-core": "^7.16",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -13335,7 +13335,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.15.0"
+                "source": "https://github.com/orchestral/testbench/tree/v7.16.0"
             },
             "funding": [
                 {
@@ -13347,28 +13347,28 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-11-29T22:35:22+00:00"
+            "time": "2022-12-17T05:29:10+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.15.0",
+            "version": "v7.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "47fa2d2802ce3fda44d766f8b225effa9a0ea0f8"
+                "reference": "44ad7354f0bde2cd70fbe7daff6274c7e3838a41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/47fa2d2802ce3fda44d766f8b225effa9a0ea0f8",
-                "reference": "47fa2d2802ce3fda44d766f8b225effa9a0ea0f8",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/44ad7354f0bde2cd70fbe7daff6274c7e3838a41",
+                "reference": "44ad7354f0bde2cd70fbe7daff6274c7e3838a41",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.0"
             },
             "require-dev": {
-                "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.41",
+                "fakerphp/faker": "^1.21",
+                "laravel/framework": "^9.44",
                 "laravel/laravel": "9.x-dev",
                 "laravel/pint": "^1.1",
                 "mockery/mockery": "^1.5.1",
@@ -13382,8 +13382,8 @@
             },
             "suggest": {
                 "brianium/paratest": "Allow using parallel tresting (^6.4).",
-                "fakerphp/faker": "Allow using Faker for testing (^1.9.2).",
-                "laravel/framework": "Required for testing (^9.41).",
+                "fakerphp/faker": "Allow using Faker for testing (^1.21).",
+                "laravel/framework": "Required for testing (^9.44).",
                 "mockery/mockery": "Allow using Mockery for testing (^1.5.1).",
                 "nunomaduro/collision": "Allow using Laravel style tests output and parallel testing (^6.2).",
                 "orchestra/testbench-browser-kit": "Allow using legacy Laravel BrowserKit for testing (^7.0).",
@@ -13434,17 +13434,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "funding": [
-                {
-                    "url": "https://paypal.me/crynobone",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://liberapay.com/crynobone",
-                    "type": "liberapay"
-                }
-            ],
-            "time": "2022-11-29T22:30:20+00:00"
+            "time": "2022-12-17T05:15:50+00:00"
         },
         {
             "name": "phan/phan",
@@ -13988,16 +13978,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.21",
+            "version": "9.2.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0"
+                "reference": "e4bf60d2220b4baaa0572986b5d69870226b06df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
-                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/e4bf60d2220b4baaa0572986b5d69870226b06df",
+                "reference": "e4bf60d2220b4baaa0572986b5d69870226b06df",
                 "shasum": ""
             },
             "require": {
@@ -14053,7 +14043,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.21"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.22"
             },
             "funding": [
                 {
@@ -14061,7 +14051,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-14T13:26:54+00:00"
+            "time": "2022-12-18T16:40:55+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
