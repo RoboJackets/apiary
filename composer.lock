@@ -4286,16 +4286,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "7e423e5dd240a60adfab9bde058d7668863b7731"
+                "reference": "2aef65a47e44f2d6f9938f720f6dd697e7ba7b76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/7e423e5dd240a60adfab9bde058d7668863b7731",
-                "reference": "7e423e5dd240a60adfab9bde058d7668863b7731",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/2aef65a47e44f2d6f9938f720f6dd697e7ba7b76",
+                "reference": "2aef65a47e44f2d6f9938f720f6dd697e7ba7b76",
                 "shasum": ""
             },
             "require": {
@@ -4357,7 +4357,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.11.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.12.0"
             },
             "funding": [
                 {
@@ -4373,7 +4373,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-02T14:39:57+00:00"
+            "time": "2022-12-20T20:21:10+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -6094,16 +6094,16 @@
         },
         {
             "name": "nunomaduro/termwind",
-            "version": "v1.14.2",
+            "version": "v1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/termwind.git",
-                "reference": "9a8218511eb1a0965629ff820dda25985440aefc"
+                "reference": "594ab862396c16ead000de0c3c38f4a5cbe1938d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/9a8218511eb1a0965629ff820dda25985440aefc",
-                "reference": "9a8218511eb1a0965629ff820dda25985440aefc",
+                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/594ab862396c16ead000de0c3c38f4a5cbe1938d",
+                "reference": "594ab862396c16ead000de0c3c38f4a5cbe1938d",
                 "shasum": ""
             },
             "require": {
@@ -6160,7 +6160,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/termwind/issues",
-                "source": "https://github.com/nunomaduro/termwind/tree/v1.14.2"
+                "source": "https://github.com/nunomaduro/termwind/tree/v1.15.0"
             },
             "funding": [
                 {
@@ -6176,7 +6176,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-28T22:51:32+00:00"
+            "time": "2022-12-20T19:00:15+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -13840,16 +13840,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.15.2",
+            "version": "1.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "5941477f100993652218928039d530b75a13a9ca"
+                "reference": "61800f71a5526081d1b5633766aa88341f1ade76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/5941477f100993652218928039d530b75a13a9ca",
-                "reference": "5941477f100993652218928039d530b75a13a9ca",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/61800f71a5526081d1b5633766aa88341f1ade76",
+                "reference": "61800f71a5526081d1b5633766aa88341f1ade76",
                 "shasum": ""
             },
             "require": {
@@ -13879,9 +13879,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.2"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.3"
             },
-            "time": "2022-12-16T06:42:48+00:00"
+            "time": "2022-12-20T20:56:55+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
