@@ -52,6 +52,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Attendance whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Attendance withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attendance withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Attendance extends Model

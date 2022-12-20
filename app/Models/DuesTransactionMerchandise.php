@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereProvidedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DuesTransactionMerchandise whereUpdatedAt($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DuesTransactionMerchandise extends Pivot

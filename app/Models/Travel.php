@@ -72,6 +72,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Travel extends Model
