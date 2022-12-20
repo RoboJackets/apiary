@@ -17,6 +17,7 @@ use Laravel\Scout\Builder;
  * @template TModel of \Illuminate\Database\Eloquent\Model
  *
  * @phan-suppress-next-line PhanInvalidMixin
+ *
  * @mixin TModel
  *
  * @method string getKey()

@@ -80,6 +80,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Team whereVisibleOnKiosk($value)
  * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Team extends Model

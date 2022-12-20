@@ -60,6 +60,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUploadedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserId($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Signature extends Model

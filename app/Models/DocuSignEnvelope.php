@@ -66,6 +66,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereViewedAt($value)
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DocuSignEnvelope extends Model

@@ -33,6 +33,7 @@ use Laravel\Passport\Token;
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereScopes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OAuth2AccessToken whereUserId($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class OAuth2AccessToken extends Token

@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereEndingYear($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereUpdatedAt($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class FiscalYear extends Model

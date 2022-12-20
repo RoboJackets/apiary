@@ -187,6 +187,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereUpdatedAt($value)
  * @method static QueryBuilder|User withTrashed()
  * @method static QueryBuilder|User withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class User extends Authenticatable

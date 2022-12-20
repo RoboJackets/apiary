@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|Rsvp withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Rsvp withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Rsvp extends Model
