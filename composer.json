@@ -50,7 +50,7 @@
         "oitnetworkservices/buzzapiclient": "0.1.4",
         "realrashid/sweet-alert": "5.1.0",
         "sentry/sentry-laravel": "3.1.2",
-        "smalot/pdfparser": "2.2.2",
+        "smalot/pdfparser": "2.3.0",
         "spatie/laravel-csp": "2.8.2",
         "spatie/laravel-failed-job-monitor": "4.2.0",
         "spatie/laravel-permission": "5.7.0",
