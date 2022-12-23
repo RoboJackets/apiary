@@ -256,16 +256,6 @@
                 <directory name="app/Policies" />
             </errorLevel>
         </DocblockTypeContradiction>
-        <MoreSpecificReturnType>
-            <errorLevel type="suppress">
-                <file name="app/Nova/Tools/AttendanceReport.php" />
-            </errorLevel>
-        </MoreSpecificReturnType>
-        <LessSpecificReturnStatement>
-            <errorLevel type="suppress">
-                <file name="app/Nova/Tools/AttendanceReport.php" />
-            </errorLevel>
-        </LessSpecificReturnStatement>
         <UndefinedMagicPropertyAssignment>
             <errorLevel type="suppress">
                 <file name="app/Observers/DocuSignEnvelopeObserver.php" />
