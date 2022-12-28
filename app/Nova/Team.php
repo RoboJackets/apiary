@@ -107,19 +107,6 @@ class Team extends Resource
             MorphMany::make('Attendance')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
 
-            CollectAttendance::make()
-                ->canSee(static function (Request $request): bool {
-                    if (isset($request->resourceId)) {
-                        $resource = AppModelsTeam::find($request->resourceId);
-                        if ($resource !== null && is_a($resource, AppModelsTeam::class)
-                            && $resource->attendable === false) {
-                            return false;
-                        }
-                    }
-
-                    return $request->user()->can('create-attendance');
-                }),
-
             self::metadataPanel(),
         ];
     }
