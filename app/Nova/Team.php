@@ -50,6 +50,15 @@ class Team extends Resource
     public static $group = 'Meetings';
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'projectManager',
+    ];
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
