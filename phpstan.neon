@@ -33,7 +33,6 @@ parameters:
     - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::envelopes\(\)\.#'
     - '#Call to an undefined method Illuminate\\Http\\Request::model\(\)\.#'
     - '#Cannot access offset ''[a-z_]+'' on mixed\.#'
-    - '#Cannot access offset ''Illuminate\\\\Contracts\\\\Http\\\\Kernel'' on Illuminate\\Contracts\\Foundation\\Application\.#'
     - '#Cannot access offset [0-9]+ on mixed\.#'
     - '#Cannot access property \$[a-z_]+ on array<string, int\|string>\|object\.#'
     - '#Cannot access property \$[a-z_]+ on Illuminate\\Database\\Eloquent\\Model\|null\.#'

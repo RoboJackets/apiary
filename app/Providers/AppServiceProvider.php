@@ -83,34 +83,6 @@ class AppServiceProvider extends ServiceProvider
             });
         }
 
-        if (! $this->app->runningInConsole()) {
-            DB::whenQueryingForLongerThan(200, static function (Connection $connection): void {
-                \Sentry\captureMessage('Total database query time exceeded 200ms');
-            });
-
-            DB::listen(static function (QueryExecuted $query): void {
-                if ($query->time > 100) {
-                    \Sentry\captureMessage(
-                        message: 'Database query took '.$query->time.'ms',
-                        hint: EventHint::fromArray(['extra' => ['query' => $query->sql]])
-                    );
-                }
-            });
-        }
-
-        // @phan-suppress-next-line PhanTypeArraySuspicious
-        $this->app[Kernel::class]->whenRequestLifecycleIsLongerThan(
-            1000,
-            static function (Carbon $startedAt, Request $request, Response $response): void {
-                if (! Helpers::shouldIgnoreUrl('/'.$request->path()) && ! $request->is('pay/*')) {
-                    \Sentry\captureMessage(
-                        $request->method().' /'.$request->path().' took '
-                        .$startedAt->diffAsCarbonInterval()->milliseconds.'ms'
-                    );
-                }
-            }
-        );
-
         Attendance::observe(AttendanceObserver::class);
         DocuSignEnvelope::observe(DocuSignEnvelopeObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
