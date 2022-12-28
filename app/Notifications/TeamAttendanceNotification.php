@@ -41,10 +41,10 @@ class TeamAttendanceNotification extends Notification
         $endDay = now()->subDays(1)->endOfDay();
 
         $total = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])
-            ->selectRaw('count(distinct attendance.gtid) as aggregate')
+            ->selectRaw('count(distinct attendance.gtid) as aggregate, \'team\' as attendable_type')
             ->get()[0]->aggregate;
         $unknown = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->doesntHave('attendee')
-            ->selectRaw('count(distinct attendance.gtid) as aggregate')
+            ->selectRaw('count(distinct attendance.gtid) as aggregate, \'team\' as attendable_type')
             ->get()[0]->aggregate;
         $unknown = intval($unknown); // Silences Phan warnings
         $knownAttendance = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->has('attendee')
