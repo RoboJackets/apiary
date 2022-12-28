@@ -36,16 +36,11 @@ abstract class Resource extends NovaResource
     {
         if ($request->viaResource !== null) {
             $filter_on_attribute = Str::replace('-', '_', Str::singular($request->viaResource)).'_id';
+            $class = $query->model::class;
 
-            if (
-                ! in_array(
-                    'filterableAttributes',
-                    config('scout.meilisearch.index-settings.'.$query->model::class, []),
-                    true
-                )
-            ) {
+            if (! array_key_exists('filterableAttributes', config('scout.meilisearch.index-settings.'.$class, []))) {
                 throw new ScoutFilterConfigurationError(
-                    'Attempted to query Scout model '.$query->model::class.' with filter '.$filter_on_attribute
+                    'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
                     .', but model does not have filterableAttributes configured'
                 );
             }
@@ -53,7 +48,7 @@ abstract class Resource extends NovaResource
             if (
                 ! in_array(
                     $filter_on_attribute,
-                    config('scout.meilisearch.index-settings.'.$query->model::class.'.filterableAttributes', []),
+                    config('scout.meilisearch.index-settings.'.$class.'.filterableAttributes', []),
                     true
                 )
             ) {
@@ -63,13 +58,13 @@ abstract class Resource extends NovaResource
                     }
 
                     throw new ScoutFilterConfigurationError(
-                        'Attempted to query Scout model '.$query->model::class.' with filter '.$filter_on_attribute
+                        'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
                         .', but filter not in filterableAttributes nor $do_not_filter_on'
                     );
                 }
 
                 throw new ScoutFilterConfigurationError(
-                    'Attempted to query Scout model '.$query->model::class.' with filter '.$filter_on_attribute
+                    'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
                     .', but filter not in filterableAttributes and model does not have $do_not_filter_on'
                 );
             }
