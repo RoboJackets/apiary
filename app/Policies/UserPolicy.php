@@ -75,7 +75,7 @@ class UserPolicy
      */
     public function attachTeam(User $user, User $userResource, Team $team): bool
     {
-        if ($team->members->contains('id', $userResource->id)) {
+        if ($team->members()->where('user_id', $userResource->id)->exists()) {
             return false;
         }
 

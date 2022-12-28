@@ -36,7 +36,7 @@ class GlobalAttendanceNotification extends Notification
         $endDay = now()->subDays(1)->endOfDay();
 
         $total = Attendance::whereBetween('created_at', [$startDay, $endDay])
-            ->selectRaw('count(distinct attendance.gtid) as aggregate')
+            ->selectRaw('count(distinct attendance.gtid) as aggregate, \'team\' as attendable_type')
             ->get()[0]->aggregate;
 
         // e.g. 15 members attended any team or event last week.

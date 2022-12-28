@@ -41,7 +41,7 @@ class WeeklyAttendanceSlack implements ShouldQueue
      */
     public function handle(): void
     {
-        foreach (Team::where('attendable', 1)->get() as $team) {
+        foreach (Team::where('attendable', true)->get() as $team) {
             $team->notify(new TeamAttendanceNotification());
         }
 

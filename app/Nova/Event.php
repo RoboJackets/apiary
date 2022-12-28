@@ -6,7 +6,6 @@ namespace App\Nova;
 
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\RsvpSourceBreakdown;
-use App\Nova\ResourceTools\CollectAttendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -99,9 +98,6 @@ class Event extends Resource
 
             MorphMany::make('Attendance')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
-
-            CollectAttendance::make()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('create-attendance')),
         ];
     }
 

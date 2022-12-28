@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+
 namespace App\Nova;
 
+use App\Exceptions\ScoutFilterConfigurationError;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -33,29 +36,36 @@ abstract class Resource extends NovaResource
     {
         if ($request->viaResource !== null) {
             $filter_on_attribute = Str::replace('-', '_', Str::singular($request->viaResource)).'_id';
+            $class = $query->model::class;
 
-            if (! property_exists($query->model, 'filterable_attributes')) {
-                throw new \Exception(
-                    'Attempted to query Scout model '.get_class($query->model).' with filter '.$filter_on_attribute
-                    .', but model does not have $filterable_attributes'
+            if (! array_key_exists('filterableAttributes', config('scout.meilisearch.index-settings.'.$class, []))) {
+                throw new ScoutFilterConfigurationError(
+                    'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
+                    .', but model does not have filterableAttributes configured'
                 );
             }
 
-            if (! in_array($filter_on_attribute, $query->model->filterable_attributes, true)) {
+            if (
+                ! in_array(
+                    $filter_on_attribute,
+                    config('scout.meilisearch.index-settings.'.$class.'.filterableAttributes', []),
+                    true
+                )
+            ) {
                 if (property_exists($query->model, 'do_not_filter_on')) {
                     if (in_array($filter_on_attribute, $query->model->do_not_filter_on, true)) {
                         return $query;
                     }
 
-                    throw new \Exception(
-                        'Attempted to query Scout model '.get_class($query->model).' with filter '.$filter_on_attribute
-                        .', but filter not in $filterable_attributes nor $do_not_filter_on'
+                    throw new ScoutFilterConfigurationError(
+                        'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
+                        .', but filter not in filterableAttributes nor $do_not_filter_on'
                     );
                 }
 
-                throw new \Exception(
-                    'Attempted to query Scout model '.get_class($query->model).' with filter '.$filter_on_attribute
-                    .', but filter not in $filterable_attributes and model does not have $do_not_filter_on'
+                throw new ScoutFilterConfigurationError(
+                    'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
+                    .', but filter not in filterableAttributes and model does not have $do_not_filter_on'
                 );
             }
 
