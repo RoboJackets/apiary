@@ -30,22 +30,13 @@ use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
-use App\Sentry\Helpers;
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Events\QueryExecuted;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
 use Laravel\Passport\Passport;
-use Sentry\EventHint;
-use Symfony\Component\HttpFoundation\Response;
 
 class AppServiceProvider extends ServiceProvider
 {

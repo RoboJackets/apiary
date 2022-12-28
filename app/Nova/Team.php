@@ -9,7 +9,6 @@ use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\TotalTeamMembers;
-use App\Nova\ResourceTools\CollectAttendance;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;

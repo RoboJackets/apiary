@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+
 namespace App\Nova;
 
-use App\Exceptions\ScoutFilterConfigurationException;
+use App\Exceptions\ScoutFilterConfigurationError;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -42,7 +44,7 @@ abstract class Resource extends NovaResource
                     true
                 )
             ) {
-                throw new ScoutFilterConfigurationException(
+                throw new ScoutFilterConfigurationError(
                     'Attempted to query Scout model '.$query->model::class.' with filter '.$filter_on_attribute
                     .', but model does not have filterableAttributes configured'
                 );
@@ -60,13 +62,13 @@ abstract class Resource extends NovaResource
                         return $query;
                     }
 
-                    throw new ScoutFilterConfigurationException(
+                    throw new ScoutFilterConfigurationError(
                         'Attempted to query Scout model '.$query->model::class.' with filter '.$filter_on_attribute
                         .', but filter not in filterableAttributes nor $do_not_filter_on'
                     );
                 }
 
-                throw new ScoutFilterConfigurationException(
+                throw new ScoutFilterConfigurationError(
                     'Attempted to query Scout model '.$query->model::class.' with filter '.$filter_on_attribute
                     .', but filter not in filterableAttributes and model does not have $do_not_filter_on'
                 );
