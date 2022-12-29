@@ -122,7 +122,6 @@ parameters:
     - '#Parameter \#1 \$model of method Laravel\\Nova\\Actions\\Action::markAsFailed\(\) expects Illuminate\\Database\\Eloquent\\Model, App\\Models\\[a-zA-Z]+\|null given\.#'
     - '#Parameter \#1 \$object_or_class of function is_a expects object, App\\Models\\[a-zA-Z]+\|null given\.#'
     - '#Parameter \#1 \$options of method Laravel\\Nova\\Fields\\BooleanGroup::options\(\) expects array\|\(Closure\(\): array\|Illuminate\\Support\\Collection\)\|Illuminate\\Support\\Collection, mixed given\.#'
-    - '#Parameter \#1 \$options of method Laravel\\Nova\\Fields\\Select::options\(\) expects array<int\|string, array<string, mixed>\|string>\|\(callable\(\): mixed\)\|Illuminate\\Support\\Collection, array given\.#'
     - '#Parameter \#1 \$orderId of method Square\\Apis\\OrdersApi::retrieveOrder\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$path of method Illuminate\\Routing\\Redirector::away\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$permission of method Spatie\\Permission\\Contracts\\Role::givePermissionTo\(\) expects string, mixed given\.#'
