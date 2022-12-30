@@ -77,6 +77,7 @@ class Signature extends Model
         'membership_agreement_template_id',
         'user_id',
         'electronic',
+        'complete',
     ];
 
     /**
