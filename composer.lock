@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "863c608c107416b56992e63c52c6290a",
+    "content-hash": "e85c6931971ec9b37d2a4d9ff5af552e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5997,16 +5997,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "f5103aaa9ebe050689b7c4f7870563bb2de33f92"
+                "reference": "8558ec396e10ac060c3e9b9e2c365dc2ea741fa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/f5103aaa9ebe050689b7c4f7870563bb2de33f92",
-                "reference": "f5103aaa9ebe050689b7c4f7870563bb2de33f92",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/8558ec396e10ac060c3e9b9e2c365dc2ea741fa1",
+                "reference": "8558ec396e10ac060c3e9b9e2c365dc2ea741fa1",
                 "shasum": ""
             },
             "require": {
@@ -6070,7 +6070,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/2.3.2"
+                "source": "https://github.com/nunomaduro/larastan/tree/2.3.3"
             },
             "funding": [
                 {
@@ -6090,7 +6090,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-12-29T10:58:10+00:00"
+            "time": "2022-12-29T22:13:56+00:00"
         },
         {
             "name": "nunomaduro/termwind",
