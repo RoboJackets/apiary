@@ -10,6 +10,6 @@ namespace Laravel\Nova\Actions;
  * @phan-suppress PhanAccessExtendsFinalClassInternal
  * @phan-suppress PhanUnreferencedClass
  */
-class TAuthoriseCallback
+interface TAuthoriseCallback
 {
 }
