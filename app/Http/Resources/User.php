@@ -30,6 +30,7 @@ class User extends JsonResource
             'uid' => $this->uid,
             'gtid' => $this->when(Auth::user()->can('read-users-gtid'), $this->gtid),
             'gt_email' => $this->gt_email,
+            'email_suppression_reason' => $this->email_suppression_reason,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
