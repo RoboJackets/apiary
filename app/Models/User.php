@@ -864,7 +864,14 @@ class User extends Authenticatable
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
-        return $query->withCount('attendance')->withCount('signatures');
+        return $query
+            ->withCount('attendance')
+            ->withCount('signatures')
+            ->with('classStanding')
+            ->with('majors')
+            ->with('teams')
+            ->with('permissions')
+            ->with('roles');
     }
 
     /**
