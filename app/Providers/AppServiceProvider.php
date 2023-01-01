@@ -69,7 +69,7 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict();
 
         // Lazy-loading needs to be allowed for console commands due to https://github.com/laravel/scout/issues/462
-        if ($this->app->isProduction() && !$this->app->runningInConsole()) {
+        if ($this->app->isProduction() && ! $this->app->runningInConsole()) {
             Model::handleLazyLoadingViolationUsing(static function (Model $model, string $relation): void {
                 \Sentry\captureMessage('Attemped to lazy-load '.$relation.' on '.$model::class);
             });
