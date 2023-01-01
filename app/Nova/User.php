@@ -418,7 +418,8 @@ class User extends Resource
 
             Text::make('Create Reason')
                 ->hideFromIndex()
-                ->required(),
+                ->required()
+                ->rules('required'),
 
             Text::make('gtDirGUID', 'gtDirGUID')
                 ->hideFromIndex(),
