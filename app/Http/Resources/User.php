@@ -68,7 +68,7 @@ class User extends JsonResource
             $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-dues-transactions'), [
                 'has_ordered_polo' => $this->has_ordered_polo,
             ]),
-            'manager' => $this->manager,
+            'manager' => $this->when(Auth::user()->can('read-users'), fn (): ?User => $this->manager),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
