@@ -127,7 +127,7 @@ class UserController extends Controller
                 ], 403);
             }
 
-            return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
+            return response()->json(['status' => 'success', 'user' => new UserResource($user, true)]);
         }
 
         return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);

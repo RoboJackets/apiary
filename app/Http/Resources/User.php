@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {
+    public function __construct(\App\Models\User $resource, private readonly bool $withManager = false)
+    {
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -69,7 +74,7 @@ class User extends JsonResource
                 'has_ordered_polo' => $this->has_ordered_polo,
             ]),
             'manager' => $this->when(
-                Auth::user()->can('read-users'),
+                Auth::user()->can('read-users') && $this->withManager,
                 fn (): ?self => $this->manager === null ? null : new self($this->manager)
             ),
             'created_at' => $this->created_at,
