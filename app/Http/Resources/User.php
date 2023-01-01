@@ -67,6 +67,7 @@ class User extends JsonResource
             $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-dues-transactions'), [
                 'has_ordered_polo' => $this->has_ordered_polo,
             ]),
+            'manager' => $this->manager,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -81,7 +82,8 @@ class User extends JsonResource
             $this->mergeWhen(
                 $this->resource->relationLoaded('permissions') && $this->resource->relationLoaded('roles'),
                 [
-                    'allPermissions' => $this->getAllPermissions()->pluck('name'),
+                    'allPermissions' => $this->resource->relationLoaded('permissions') &&
+                    $this->resource->relationLoaded('roles') ? $this->getAllPermissions()->pluck('name') : [],
                 ]
             ),
         ];

@@ -27,6 +27,7 @@ use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Sentry\SentrySdk;
@@ -133,6 +134,16 @@ class User extends Resource
                 ->hideWhenUpdating(),
 
             Boolean::make('Latest Agreement Signed', 'signed_latest_agreement')
+                ->onlyOnDetail(),
+
+            URL::make('Manager', static fn (AppModelsUser $user): ?string => $user->manager === null ? null : route(
+                'nova.pages.detail',
+                [
+                    'resource' => self::uriKey(),
+                    'resourceId' => $user->manager->id,
+                ]
+            ))
+                ->displayUsing(fn (): ?string => $this->manager?->name)
                 ->onlyOnDetail(),
 
             HasMany::make('Signatures'),
@@ -302,42 +313,44 @@ class User extends Resource
                     ->onlyOnDetail()
                     ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
-                Text::make('Home Department (Whitepages)', static function (AppModelsUser $user): ?string {
-                    $uid = $user->uid;
+                ...(config('features.whitepages') === true ? [
+                    Text::make('Home Department (Whitepages)', static function (AppModelsUser $user): ?string {
+                        $uid = $user->uid;
 
-                    return Cache::remember(
-                        'home_department_'.$uid,
-                        now()->addDay(),
-                        static function () use ($uid): ?string {
-                            $parentSpan = SentrySdk::getCurrentHub()->getSpan();
+                        return Cache::remember(
+                            'home_department_'.$uid,
+                            now()->addDay(),
+                            static function () use ($uid): ?string {
+                                $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
-                            if ($parentSpan !== null) {
-                                $context = new SpanContext();
-                                $context->setOp('ldap.get_home_department');
-                                $span = $parentSpan->startChild($context);
-                                SentrySdk::getCurrentHub()->setSpan($span);
+                                if ($parentSpan !== null) {
+                                    $context = new SpanContext();
+                                    $context->setOp('ldap.get_home_department');
+                                    $span = $parentSpan->startChild($context);
+                                    SentrySdk::getCurrentHub()->setSpan($span);
+                                }
+
+                                $result = Adldap::search()
+                                    ->where('uid', '=', $uid)
+                                    ->where('employeeType', '=', 'employee')
+                                    ->select('ou')
+                                    ->get()
+                                    ->pluck('ou')
+                                    ->toArray();
+
+                                if ($parentSpan !== null) {
+                                    // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
+                                    $span->finish();
+                                    SentrySdk::getCurrentHub()->setSpan($parentSpan);
+                                }
+
+                                return $result === [] ? null : $result[0][0];
                             }
-
-                            $result = Adldap::search()
-                                ->where('uid', '=', $uid)
-                                ->where('employeeType', '=', 'employee')
-                                ->select('ou')
-                                ->get()
-                                ->pluck('ou')
-                                ->toArray();
-
-                            if ($parentSpan !== null) {
-                                // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                                $span->finish();
-                                SentrySdk::getCurrentHub()->setSpan($parentSpan);
-                            }
-
-                            return $result === [] ? null : $result[0][0];
-                        }
-                    );
-                })
-                ->onlyOnDetail()
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                        );
+                    })
+                        ->onlyOnDetail()
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ] : []),
             ]),
 
             new Panel('Metadata', $this->metaFields()),

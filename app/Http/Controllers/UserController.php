@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -39,6 +40,23 @@ class UserController extends Controller
         $users = User::with($this->authorizeInclude(User::class, $include))->get();
 
         return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
+    }
+
+    public function indexManagers(Request $request): JsonResponse
+    {
+        return response()
+            ->json(
+                [
+                    'status' => 'success',
+                    'users' => UserResource::collection(
+                        User::whereHas('manages')
+                            ->orWhereHas('roles', static function (Builder $query): void {
+                                $query->whereIn('name', ['project-manager', 'officer']);
+                            })
+                            ->get()
+                    ),
+                ]
+            );
     }
 
     /**

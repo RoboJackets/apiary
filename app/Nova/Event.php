@@ -68,7 +68,7 @@ class Event extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            (new BelongsTo('Organizer', 'organizer', User::class))
+            BelongsTo::make('Organizer', 'organizer', User::class)
                 ->searchable()
                 ->rules('required')
                 ->help('The organizer of the event'),

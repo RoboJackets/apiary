@@ -24,6 +24,7 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Nova\Notifications\Notification;
@@ -129,6 +130,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $clients_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
+ * @property-read \App\Models\User|null $manager
  *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
@@ -1026,5 +1028,24 @@ class User extends Authenticatable
             ->oldest('travel.return_date')
             ->where('travel.return_date', '>=', now())
             ->first();
+    }
+
+    public function getManagerAttribute(): ?User
+    {
+        $teams = Attendance::where('gtid', $this->gtid)
+            ->where('attendable_type', Team::getMorphClassStatic())
+            ->leftJoin('teams', function (JoinClause $join): void {
+                $join->on('teams.id', '=', 'attendance.attendable_id')
+                    ->whereNotNull('teams.project_manager_id')
+                    ->where('teams.project_manager_id', '!=', $this->id);
+            })
+            ->whereNotNull('teams.project_manager_id')
+            ->groupBy('attendable_id')
+            ->select('attendable_id', DB::raw('count(*) as count'), DB::raw('\'team\' as attendable_type'))
+            ->orderByDesc('count')
+            ->get()
+            ->toArray();
+
+        return count($teams) === 0 ? null : Team::whereId($teams[0])->sole()->projectManager;
     }
 }
