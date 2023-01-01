@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
+        $this->middleware('permission:read-users', ['only' => ['index', 'indexManagers', 'search']]);
         $this->middleware('permission:create-users', ['only' => ['store']]);
         $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
         $this->middleware('permission:update-users|update-users-own', ['only' => ['update', 'applySelfOverride']]);
