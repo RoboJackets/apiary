@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {
+    public function __construct(\App\Models\User $resource, private readonly bool $withManager = false)
+    {
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -30,6 +35,7 @@ class User extends JsonResource
             'uid' => $this->uid,
             'gtid' => $this->when(Auth::user()->can('read-users-gtid'), $this->gtid),
             'gt_email' => $this->gt_email,
+            'email_suppression_reason' => $this->email_suppression_reason,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
@@ -67,6 +73,10 @@ class User extends JsonResource
             $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-dues-transactions'), [
                 'has_ordered_polo' => $this->has_ordered_polo,
             ]),
+            'manager' => $this->when(
+                Auth::user()->can('read-users') && $this->withManager,
+                fn (): ?self => $this->manager === null ? null : new self($this->manager)
+            ),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -81,7 +91,8 @@ class User extends JsonResource
             $this->mergeWhen(
                 $this->resource->relationLoaded('permissions') && $this->resource->relationLoaded('roles'),
                 [
-                    'allPermissions' => $this->getAllPermissions()->pluck('name'),
+                    'allPermissions' => $this->resource->relationLoaded('permissions') &&
+                    $this->resource->relationLoaded('roles') ? $this->getAllPermissions()->pluck('name') : [],
                 ]
             ),
         ];

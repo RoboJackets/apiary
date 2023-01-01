@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +24,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
+        $this->middleware('permission:read-users', ['only' => ['index', 'indexManagers', 'search']]);
         $this->middleware('permission:create-users', ['only' => ['store']]);
         $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
         $this->middleware('permission:update-users|update-users-own', ['only' => ['update', 'applySelfOverride']]);
@@ -39,6 +40,23 @@ class UserController extends Controller
         $users = User::with($this->authorizeInclude(User::class, $include))->get();
 
         return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
+    }
+
+    public function indexManagers(Request $request): JsonResponse
+    {
+        return response()
+            ->json(
+                [
+                    'status' => 'success',
+                    'users' => UserResource::collection(
+                        User::whereHas('manages')
+                            ->orWhereHas('roles', static function (Builder $query): void {
+                                $query->whereIn('name', ['project-manager', 'officer']);
+                            })
+                            ->get()
+                    ),
+                ]
+            );
     }
 
     /**
@@ -109,7 +127,7 @@ class UserController extends Controller
                 ], 403);
             }
 
-            return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
+            return response()->json(['status' => 'success', 'user' => new UserResource($user, true)]);
         }
 
         return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
