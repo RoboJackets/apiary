@@ -5694,16 +5694,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.64.0",
+            "version": "2.64.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "889546413c97de2d05063b8cb7b193c2531ea211"
+                "reference": "f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/889546413c97de2d05063b8cb7b193c2531ea211",
-                "reference": "889546413c97de2d05063b8cb7b193c2531ea211",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c",
+                "reference": "f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c",
                 "shasum": ""
             },
             "require": {
@@ -5792,7 +5792,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-26T17:36:00+00:00"
+            "time": "2023-01-01T23:17:36+00:00"
         },
         {
             "name": "nette/schema",
@@ -6316,16 +6316,16 @@
         },
         {
             "name": "openspout/openspout",
-            "version": "v4.11.0",
+            "version": "v4.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openspout/openspout.git",
-                "reference": "10b0235c34f5620005c625c24eb03790053569ae"
+                "reference": "278952f27a3f753b7e2c34928685a411d883bc98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openspout/openspout/zipball/10b0235c34f5620005c625c24eb03790053569ae",
-                "reference": "10b0235c34f5620005c625c24eb03790053569ae",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/278952f27a3f753b7e2c34928685a411d883bc98",
+                "reference": "278952f27a3f753b7e2c34928685a411d883bc98",
                 "shasum": ""
             },
             "require": {
@@ -6393,7 +6393,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openspout/openspout/issues",
-                "source": "https://github.com/openspout/openspout/tree/v4.11.0"
+                "source": "https://github.com/openspout/openspout/tree/v4.11.1"
             },
             "funding": [
                 {
@@ -6405,7 +6405,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-28T15:50:13+00:00"
+            "time": "2023-01-02T09:11:35+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
