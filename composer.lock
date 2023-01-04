@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f7699bd4e93ea39f9817026a13c0218",
+    "content-hash": "168850a496d260eb9205e128c715a9dc",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3409,17 +3409,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.19.5",
+            "version": "4.19.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "1c4f32ab373d93314ae84bd175b644b71c96a28d"
+                "reference": "63c89dcf701a0345b03d4be2a504ed1d74127b2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-1c4f32ab373d93314ae84bd175b644b71c96a28d-zip-42a3e1.zip",
-                "reference": "1c4f32ab373d93314ae84bd175b644b71c96a28d",
-                "shasum": "853ce862f1e4adb43b3f18b0542512d6dd54f18a"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-63c89dcf701a0345b03d4be2a504ed1d74127b2f-zip-ffac32.zip",
+                "reference": "63c89dcf701a0345b03d4be2a504ed1d74127b2f",
+                "shasum": "88876041ffb75e15003f0b97f67cc6a4025bb6e2"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0",
@@ -3438,7 +3438,7 @@
                 "symfony/process": "^5.4|^6.0"
             },
             "require-dev": {
-                "laravel/nova-dusk-suite": "8.4.x-dev|9.4.x-dev",
+                "laravel/nova-dusk-suite": "dev-fixes-5194",
                 "laravel/pint": "^1.0",
                 "laravel/scout": "^9.4",
                 "mockery/mockery": "^1.4.4",
@@ -3514,9 +3514,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.19.5"
+                "source": "https://github.com/laravel/nova/tree/v4.19.6"
             },
-            "time": "2022-12-14T02:03:19+00:00"
+            "time": "2023-01-03T18:14:28+00:00"
         },
         {
             "name": "laravel/passport",
