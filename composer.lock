@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51145e63564ae2b824e36dda3c5c3aa3",
+    "content-hash": "be9c585658f41d97bb7445c19a75e8bb",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3597,16 +3597,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.7.1",
+            "version": "v9.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "7aaffde3fff649002562db5baffafe76659c54e1"
+                "reference": "2b8b8403d28f2a5658b151c00adcc77056b36f26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/7aaffde3fff649002562db5baffafe76659c54e1",
-                "reference": "7aaffde3fff649002562db5baffafe76659c54e1",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/2b8b8403d28f2a5658b151c00adcc77056b36f26",
+                "reference": "2b8b8403d28f2a5658b151c00adcc77056b36f26",
                 "shasum": ""
             },
             "require": {
@@ -3623,6 +3623,7 @@
                 "meilisearch/meilisearch-php": "^0.19",
                 "mockery/mockery": "^1.0",
                 "orchestra/testbench": "^6.17|^7.0",
+                "php-http/guzzle7-adapter": "^1.0",
                 "phpunit/phpunit": "^9.3"
             },
             "suggest": {
@@ -3665,7 +3666,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2023-01-06T08:01:32+00:00"
+            "time": "2023-01-09T09:17:48+00:00"
         },
         {
             "name": "laravel/serializable-closure",
