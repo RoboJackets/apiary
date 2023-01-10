@@ -6398,16 +6398,16 @@
         },
         {
             "name": "openspout/openspout",
-            "version": "v4.11.1",
+            "version": "v4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openspout/openspout.git",
-                "reference": "278952f27a3f753b7e2c34928685a411d883bc98"
+                "reference": "3c645504a09c9441ab68068bdfe31eee6d13f086"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openspout/openspout/zipball/278952f27a3f753b7e2c34928685a411d883bc98",
-                "reference": "278952f27a3f753b7e2c34928685a411d883bc98",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/3c645504a09c9441ab68068bdfe31eee6d13f086",
+                "reference": "3c645504a09c9441ab68068bdfe31eee6d13f086",
                 "shasum": ""
             },
             "require": {
@@ -6475,7 +6475,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openspout/openspout/issues",
-                "source": "https://github.com/openspout/openspout/tree/v4.11.1"
+                "source": "https://github.com/openspout/openspout/tree/v4.12.0"
             },
             "funding": [
                 {
@@ -6487,7 +6487,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-02T09:11:35+00:00"
+            "time": "2023-01-10T07:39:16+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
