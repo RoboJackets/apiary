@@ -56,6 +56,8 @@ parameters:
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<Illuminate\\Database\\Eloquent\\Model,Illuminate\\Database\\Eloquent\\Model>::first\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Relations\\HasMany<App\\Models\\[A-Za-z]+>::[A-Za-z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Relations\\MorphMany<Laravel\\Nova\\Notifications\\Notification>::[a-z]+\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Foundation\\Application::isProduction\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Routing\\UrlGenerator::full\(\)\.#'
     - '#Method [a-zA-Z]+::getConnection\(\) should return string but returns mixed\.#'
     - '#Method App\\Http\\Controllers\\[a-zA-Z]+::[a-zA-Z]+\(\) has no return type specified\.#'
     - '#Method App\\Http\\Middleware\\[a-zA-Z]+::handle\(\) has no return type specified\.#'
