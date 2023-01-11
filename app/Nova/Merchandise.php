@@ -172,14 +172,14 @@ class Merchandise extends Resource
             return [];
         }
 
-        if (Str::contains($merch_item->name, 'shirt')) {
+        if (Str::contains(Str::lower($merch_item->name), 'shirt')) {
             return [
                 (new ShirtSizeBreakdown('shirt'))->onlyOnDetail(),
                 ...$defaults,
             ];
         }
 
-        if (Str::contains($merch_item->name, 'polo')) {
+        if (Str::contains(Str::lower($merch_item->name), 'polo')) {
             return [
                 (new ShirtSizeBreakdown('polo'))->onlyOnDetail(),
                 ...$defaults,
