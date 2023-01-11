@@ -8839,25 +8839,25 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.13.8",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "781a2f637237e69c277eb401063acf15e2b4156b"
+                "reference": "9964e65c318c30577ca1b91469f739d2b381359b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/781a2f637237e69c277eb401063acf15e2b4156b",
-                "reference": "781a2f637237e69c277eb401063acf15e2b4156b",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/9964e65c318c30577ca1b91469f739d2b381359b",
+                "reference": "9964e65c318c30577ca1b91469f739d2b381359b",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^9.28",
+                "illuminate/contracts": "^9.28|^10.0",
                 "php": "^8.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.5",
-                "orchestra/testbench": "^7.7",
+                "orchestra/testbench": "^7.7|^8.0",
                 "pestphp/pest": "^1.22",
                 "phpunit/phpunit": "^9.5.24",
                 "spatie/pest-plugin-test-time": "^1.1"
@@ -8887,7 +8887,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.13.8"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.14.0"
             },
             "funding": [
                 {
@@ -8895,7 +8895,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-20T14:09:05+00:00"
+            "time": "2023-01-10T14:09:55+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -13271,23 +13271,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.18.0",
+            "version": "v7.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "9c5f7bc111c9fe90dc74f16433116f9cd2912174"
+                "reference": "c413751e85972067e7c48cae68514935321c87f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/9c5f7bc111c9fe90dc74f16433116f9cd2912174",
-                "reference": "9c5f7bc111c9fe90dc74f16433116f9cd2912174",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/c413751e85972067e7c48cae68514935321c87f0",
+                "reference": "c413751e85972067e7c48cae68514935321c87f0",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.21",
                 "laravel/framework": "^9.45",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^7.18",
+                "orchestra/testbench-core": "^7.19",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -13324,22 +13324,22 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.18.0"
+                "source": "https://github.com/orchestral/testbench/tree/v7.19.0"
             },
-            "time": "2023-01-04T00:22:35+00:00"
+            "time": "2023-01-10T10:16:26+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.18.0",
+            "version": "v7.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "81edf14237d8ac31ebdb627128b62c08dce5c34a"
+                "reference": "2bfbbd451481cf27c9663060b792487925236500"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/81edf14237d8ac31ebdb627128b62c08dce5c34a",
-                "reference": "81edf14237d8ac31ebdb627128b62c08dce5c34a",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/2bfbbd451481cf27c9663060b792487925236500",
+                "reference": "2bfbbd451481cf27c9663060b792487925236500",
                 "shasum": ""
             },
             "require": {
@@ -13413,7 +13413,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2023-01-04T00:14:05+00:00"
+            "time": "2023-01-10T10:14:44+00:00"
         },
         {
             "name": "phan/phan",
@@ -16650,16 +16650,16 @@
         },
         {
             "name": "zbateson/stream-decorators",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zbateson/stream-decorators.git",
-                "reference": "8f8ca208572963258b7e6d91106181706deacd10"
+                "reference": "0c2816e16a67d00c60680d8d4539ec555fb43d11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zbateson/stream-decorators/zipball/8f8ca208572963258b7e6d91106181706deacd10",
-                "reference": "8f8ca208572963258b7e6d91106181706deacd10",
+                "url": "https://api.github.com/repos/zbateson/stream-decorators/zipball/0c2816e16a67d00c60680d8d4539ec555fb43d11",
+                "reference": "0c2816e16a67d00c60680d8d4539ec555fb43d11",
                 "shasum": ""
             },
             "require": {
@@ -16699,7 +16699,7 @@
             ],
             "support": {
                 "issues": "https://github.com/zbateson/stream-decorators/issues",
-                "source": "https://github.com/zbateson/stream-decorators/tree/1.0.7"
+                "source": "https://github.com/zbateson/stream-decorators/tree/1.0.8"
             },
             "funding": [
                 {
@@ -16707,7 +16707,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-09-08T15:44:55+00:00"
+            "time": "2022-12-30T20:50:33+00:00"
         }
     ],
     "aliases": [],
