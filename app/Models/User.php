@@ -261,6 +261,10 @@ class User extends Authenticatable
         'clickup_email',
         'ethnicity',
         'gender',
+        'clickup_invite_pending',
+        'clickup_id',
+        'exists_in_sums',
+        'github_invite_pending',
     ];
 
     /**
