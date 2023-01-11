@@ -246,6 +246,24 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'emergency_contact_name',
+        'emergency_contact_phone',
+        'phone',
+        'preferred_first_name',
+        'shirt_size',
+        'polo_size',
+        'graduation_semester',
+        'clickup_email',
+        'ethnicity',
+        'gender',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array<string>
