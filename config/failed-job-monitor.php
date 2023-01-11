@@ -26,7 +26,7 @@ return [
     /*
      * The channels to which the notification will be sent.
      */
-    'channels' => ['slack'],
+    'channels' => env('FAILED_JOB_SLACK_WEBHOOK_URL') === null ? [] : ['slack'],
 
     'mail' => [
         'to' => env('FAILED_JOB_EMAIL_ADDRESS'),

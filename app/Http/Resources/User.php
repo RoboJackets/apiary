@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {
-    public function __construct(\App\Models\User $resource, private readonly bool $withManager = false)
-    {
+    public function __construct(
+        \App\Models\User|\Illuminate\Http\Resources\MissingValue $resource,
+        private readonly bool $withManager = false
+    ) {
         parent::__construct($resource);
     }
 

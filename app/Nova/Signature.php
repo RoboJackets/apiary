@@ -74,8 +74,7 @@ class Signature extends Resource
             BelongsTo::make('Template', 'membershipAgreementTemplate', MembershipAgreementTemplate::class)
                 ->readonly(),
 
-            Boolean::make('Complete')
-                ->exceptOnForms(),
+            Boolean::make('Complete'),
 
             Text::make('Type', 'electronic')
                 ->resolveUsing(static fn (bool $electronic): string => $electronic ? 'Electronic' : 'Paper')

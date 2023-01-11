@@ -41,7 +41,7 @@ class SignaturePolicy
      */
     public function update(User $user, Signature $signature): bool
     {
-        return $user->can('upload-signatures') && ! $signature->electronic && ! $signature->complete;
+        return $user->can('upload-signatures') && ! $signature->complete;
     }
 
     /**
