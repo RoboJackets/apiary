@@ -46,7 +46,7 @@
         "laravel/tinker": "2.8.0",
         "maatwebsite/excel": "3.1.45",
         "madewithlove/laravel-nova-uuid-support": "1.4",
-        "meilisearch/meilisearch-php": "0.26.1",
+        "meilisearch/meilisearch-php": "0.27.0",
         "oitnetworkservices/buzzapiclient": "0.1.4",
         "realrashid/sweet-alert": "5.1.0",
         "sentry/sentry-laravel": "3.1.2",
