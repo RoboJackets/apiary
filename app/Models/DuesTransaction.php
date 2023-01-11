@@ -84,6 +84,16 @@ class DuesTransaction extends Model
     ];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'user_id',
+        'dues_package_id',
+    ];
+
+    /**
      * Get the Payment associated with the DuesTransaction model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Payment>

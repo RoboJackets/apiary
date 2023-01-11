@@ -170,14 +170,10 @@ class DuesTransactionController extends Controller
             }
         }
 
-        $transact = DuesTransaction::create(
-            array_merge(
-                $request->validated(),
-                [
-                    'user_id' => $request->user()->id,
-                ]
-            )
-        );
+        $transact = DuesTransaction::create([
+            'user_id' => $request->user()->id,
+            'dues_package_id' => $request->validated('dues_package_id'),
+        ]);
 
         $dbTransact = DuesTransaction::findOrFail($transact->id);
 
