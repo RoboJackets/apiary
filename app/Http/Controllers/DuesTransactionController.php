@@ -155,7 +155,7 @@ class DuesTransactionController extends Controller
         // If there's an existing active transaction that hasn't been paid, delete it
         // and replace it with the one currently being requested
         if ($user->dues->count() > 0) {
-            $existingTransaction = $user->dues->last();
+            $existingTransaction = $user->dues()->last();
             $pkgIsActive = $existingTransaction->package->is_active;
             if ($pkgIsActive) {
                 $hasPayment = $existingTransaction->payment()->exists();
