@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "352d7d17f3c02ae972c6c1021ffbb4e7",
+    "content-hash": "85c0ba04646212f57ca7627294fba2d1",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -14286,33 +14286,33 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v2.0.2",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "681b22cea74ac4ba06acd47f5db79daf5351dc08"
+                "reference": "08df9530dedbff5f192365d5410e69984847d21b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/681b22cea74ac4ba06acd47f5db79daf5351dc08",
-                "reference": "681b22cea74ac4ba06acd47f5db79daf5351dc08",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/08df9530dedbff5f192365d5410e69984847d21b",
+                "reference": "08df9530dedbff5f192365d5410e69984847d21b",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/laravel-ide-helper": "^2.10",
                 "ext-simplexml": "*",
-                "illuminate/config": "^8.0 || ^9.0",
-                "illuminate/container": "^8.0 || ^9.0",
-                "illuminate/contracts": "^8.0 || ^9.0",
-                "illuminate/database": "^8.0 || ^9.0",
-                "illuminate/events": "^8.0 || ^9.0",
-                "illuminate/http": "^8.0 || ^9.0",
-                "illuminate/routing": "^8.0 || ^9.0",
-                "illuminate/support": "^8.0 || ^9.0",
-                "illuminate/view": "^8.0 || ^9.0",
-                "orchestra/testbench": "^6.22 || ^7.0",
+                "illuminate/config": "^9.0",
+                "illuminate/container": "^9.0",
+                "illuminate/contracts": "^9.0",
+                "illuminate/database": "^9.0",
+                "illuminate/events": "^9.0",
+                "illuminate/http": "^9.0",
+                "illuminate/routing": "^9.0",
+                "illuminate/support": "^9.0",
+                "illuminate/view": "^9.0",
+                "orchestra/testbench": "^7.0",
                 "php": "^8.0",
-                "vimeo/psalm": "^4.8.1|^5"
+                "vimeo/psalm": "^4.8.1 || ^5"
             },
             "require-dev": {
                 "codeception/codeception": "^5.0",
@@ -14351,9 +14351,9 @@
             "homepage": "https://github.com/psalm/psalm-plugin-laravel",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.0.2"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.1.0"
             },
-            "time": "2022-12-01T20:24:04+00:00"
+            "time": "2023-01-12T17:30:01+00:00"
         },
         {
             "name": "sabre/event",
