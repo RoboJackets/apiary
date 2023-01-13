@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85c0ba04646212f57ca7627294fba2d1",
+    "content-hash": "d15328584a58a616688e2fd7b1d5c712",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3680,21 +3680,21 @@
         },
         {
             "name": "laravel/slack-notification-channel",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/slack-notification-channel.git",
-                "reference": "060617a31562c88656c95c5971a36989122d4b53"
+                "reference": "e0d4be5e01d443a69fa89f0a4cac6bd2eda2be8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/060617a31562c88656c95c5971a36989122d4b53",
-                "reference": "060617a31562c88656c95c5971a36989122d4b53",
+                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/e0d4be5e01d443a69fa89f0a4cac6bd2eda2be8f",
+                "reference": "e0d4be5e01d443a69fa89f0a4cac6bd2eda2be8f",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.0|^7.0",
-                "illuminate/notifications": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/notifications": "~5.8.0|^6.0|^7.0|^8.0|^9.0|^10.0",
                 "php": "^7.1.3|^8.0"
             },
             "require-dev": {
@@ -3735,9 +3735,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/slack-notification-channel/issues",
-                "source": "https://github.com/laravel/slack-notification-channel/tree/v2.4.0"
+                "source": "https://github.com/laravel/slack-notification-channel/tree/v2.5.0"
             },
-            "time": "2022-01-12T18:07:54+00:00"
+            "time": "2023-01-12T16:21:26+00:00"
         },
         {
             "name": "laravel/socialite",
