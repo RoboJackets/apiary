@@ -16,7 +16,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', static function (Blueprint $table): void {
-            $table->dropUnique('users_autodesk_email_unique');
+            if (
+                array_key_exists(
+                    "users_autodesk_email_unique",
+                    Schema::getConnection()->getDoctrineSchemaManager()->listTableIndexes("users")
+                )
+            ) {
+                $table->dropUnique('users_autodesk_email_unique');
+            }
+
             $table->dropColumn(['autodesk_email', 'autodesk_invite_pending', 'middle_name']);
         });
     }
