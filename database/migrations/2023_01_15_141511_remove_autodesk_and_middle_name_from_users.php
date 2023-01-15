@@ -18,8 +18,8 @@ return new class extends Migration
         Schema::table('users', static function (Blueprint $table): void {
             if (
                 array_key_exists(
-                    "users_autodesk_email_unique",
-                    Schema::getConnection()->getDoctrineSchemaManager()->listTableIndexes("users")
+                    'users_autodesk_email_unique',
+                    Schema::getConnection()->getDoctrineSchemaManager()->listTableIndexes('users')
                 )
             ) {
                 $table->dropUnique('users_autodesk_email_unique');
