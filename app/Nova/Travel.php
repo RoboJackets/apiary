@@ -7,6 +7,8 @@ namespace App\Nova;
 use App\Models\Travel as AppModelsTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -274,6 +276,25 @@ class Travel extends Resource
         }
 
         return $cards;
+    }
+
+    /**
+     * Only show travel scheduled for the future for relatable queries.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>
+     */
+    public static function relatableQuery(NovaRequest $request, $query): Builder
+    {
+        if ($request->current !== null) {
+            return $query->where('id', '=', $request->current);
+        }
+
+        if ($request->is('nova-api/travel-assignments/*')) {
+            return $query->whereDate('departure_date', '>=', Carbon::now());
+        }
+
+        return $query;
     }
 
     /**

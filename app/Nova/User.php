@@ -14,6 +14,7 @@ use App\Nova\Metrics\CreateReasonBreakdown;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -523,6 +524,25 @@ class User extends Resource
                     static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can('read-users')
                 ),
         ];
+    }
+
+    /**
+     * Only show relevant users for relatable queries.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
+     */
+    public static function relatableQuery(NovaRequest $request, $query): Builder
+    {
+        if ($request->is('nova-api/dues-transactions/*')) {
+            return $query->inactive();
+        }
+
+        if ($request->is('nova-api/travel-assignments/*')) {
+            return $query->accessActive();
+        }
+
+        return $query;
     }
 
     /**

@@ -74,9 +74,13 @@ class DuesTransaction extends Resource
             ID::make(),
 
             BelongsTo::make('Paid By', 'user', User::class)
-                ->searchable(),
+                ->searchable()
+                ->rules('required', 'unique:dues_transactions,user_id,NULL,id,dues_package_id,'.$request->package)
+                ->withoutTrashed(),
 
-            BelongsTo::make('Dues Package', 'package', DuesPackage::class),
+            BelongsTo::make('Dues Package', 'package', DuesPackage::class)
+                ->rules('required', 'unique:dues_transactions,dues_package_id,NULL,id,user_id,'.$request->user)
+                ->withoutTrashed(),
 
             Text::make('Status')
                 ->resolveUsing(static fn (string $str): string => ucfirst($str))

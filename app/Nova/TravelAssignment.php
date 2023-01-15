@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\TravelAssignment as AppModelsTravelAssignment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -69,8 +70,17 @@ class TravelAssignment extends Resource
 
             BelongsTo::make('Travel', 'travel', Travel::class)
                 ->withoutTrashed()
-                ->searchable()
-                ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user),
+                ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user)
+                ->default(
+                    static fn (NovaRequest $request): ?int => \App\Models\Travel::whereDate(
+                        'departure_date',
+                        '>=',
+                        Carbon::now()
+                    )
+                            ->orderBy('departure_date')
+                            ->first()
+                            ?->id
+                ),
 
             Boolean::make('Travel Authority Request Received', 'tar_received')
                 ->sortable()

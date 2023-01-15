@@ -8,6 +8,7 @@ use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Nova\Metrics\MerchandiseSelections;
 use App\Nova\Metrics\PaymentMethodBreakdown;
 use App\Nova\Metrics\TotalCollections;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
 /**
@@ -185,6 +187,21 @@ class DuesPackage extends Resource
 
             self::metadataPanel(),
         ];
+    }
+
+    /**
+     * Only show packages available for purchase for relatable queries.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
+     */
+    public static function relatableQuery(NovaRequest $request, $query): Builder
+    {
+        if ($request->is('nova-api/dues-transactions/*')) {
+            return $query->availableForPurchase();
+        }
+
+        return $query;
     }
 
     /**
