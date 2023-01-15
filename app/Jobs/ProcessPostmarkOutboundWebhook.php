@@ -61,8 +61,7 @@ class ProcessPostmarkOutboundWebhook extends ProcessWebhookJob
 
         $query = User::where('gt_email', '=', $email)
             ->orWhere('gmail_address', '=', $email)
-            ->orWhere('clickup_email', '=', $email)
-            ->orWhere('autodesk_email', '=', $email);
+            ->orWhere('clickup_email', '=', $email);
 
         if (preg_match('/(?P<uid>[a-z]+[0-9]+)@gatech\.edu/', $email, $matches) === 1) {
             $query = $query->orWhere('uid', '=', $matches['uid']);

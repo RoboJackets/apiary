@@ -245,8 +245,6 @@ export default {
       ],
       clickUpEmailOptions: [],
       clickUpEmailInDatabase: null,
-      autodeskEmailOptions: [],
-      autodeskEmailInDatabase: null,
     };
   },
   mounted() {
@@ -259,12 +257,6 @@ export default {
           ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
         ];
         this.clickUpEmailInDatabase = this.user.clickup_email;
-
-        this.autodeskEmailOptions = [
-          ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
-        ];
-        this.autodeskEmailInDatabase = this.user.autodesk_email;
-
       })
       .catch(response => {
         console.log(response);
@@ -288,17 +280,9 @@ export default {
         .put(this.dataUrl, this.user)
         .then(response => {
           this.hasError = false;
-          if ((this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0)
-          && (this.user.autodesk_email !== this.autodeskEmailInDatabase && this.user.autodesk_email && this.user.autodesk_email.length > 0)) {
-            this.clickUpEmailInDatabase = this.user.clickup_email;
-            this.autodeskEmailInDatabase = this.user.autodesk_email;
-            this.feedback = 'Saved! Look out for emails from ClickUp and Autodesk in the next few minutes.'
-          } else if (this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0) {
+          if (this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0) {
             this.clickUpEmailInDatabase = this.user.clickup_email;
             this.feedback = 'Saved! Look out for an email from ClickUp in the next few minutes.'
-          } else if (this.user.autodesk_email !== this.autodeskEmailInDatabase && this.user.autodesk_email && this.user.autodesk_email.length > 0) {
-            this.autodeskEmailInDatabase = this.user.autodesk_email;
-            this.feedback = 'Saved! Look out for an email from Autodesk in the next few minutes.'
           } else {
             this.feedback = 'Saved!';
           }

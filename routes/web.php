@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AutodeskLibraryController;
 use App\Http\Controllers\BuzzApiMockController;
 use App\Http\Controllers\ClickUpController;
 use App\Http\Controllers\DashboardController;
@@ -72,8 +71,6 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('google/callback', [GoogleController::class, 'handleProviderCallback']);
 
     Route::get('clickup', [ClickUpController::class, 'index']);
-
-    Route::get('autodesk', [AutodeskLibraryController::class, 'index']);
 
     if (config('features.docusign-membership-agreement') !== true) {
         Route::get('agreement/print', [SignatureController::class, 'print'])->name('agreement.print');

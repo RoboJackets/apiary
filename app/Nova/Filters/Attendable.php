@@ -9,6 +9,7 @@ use App\Models\Team;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Attendable extends Filter
 {
@@ -41,7 +42,7 @@ class Attendable extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         $parts = explode(',', $value);
         $attendableType = $parts[0];

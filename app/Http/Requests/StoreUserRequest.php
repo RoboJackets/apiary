@@ -45,9 +45,6 @@ class StoreUserRequest extends FormRequest
                 'required',
                 'max:127',
             ],
-            'middle_name' => [
-                'max:127',
-            ],
             'last_name' => [
                 'required',
                 'max:127',

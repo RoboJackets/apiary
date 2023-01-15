@@ -39,7 +39,6 @@ class User extends JsonResource
             'gt_email' => $this->gt_email,
             'email_suppression_reason' => $this->email_suppression_reason,
             'first_name' => $this->first_name,
-            'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
             'preferred_first_name' => $this->preferred_first_name,
             'full_name' => $this->full_name,
@@ -69,8 +68,6 @@ class User extends JsonResource
             'clickup_email' => $this->clickup_email,
             'clickup_id' => $this->clickup_id,
             'clickup_invite_pending' => $this->clickup_invite_pending,
-            'autodesk_email' => $this->autodesk_email,
-            'autodesk_invite_pending' => $this->autodesk_invite_pending,
             'exists_in_sums' => $this->exists_in_sums,
             $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-dues-transactions'), [
                 'has_ordered_polo' => $this->has_ordered_polo,

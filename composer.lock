@@ -2855,16 +2855,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v0.6.7",
+            "version": "v0.6.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "4e5bf5c254d8a6fb8a1049293fb415945c280213"
+                "reference": "c07625de0c1ba4d12d07e4063c56d813ef4a8e4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/4e5bf5c254d8a6fb8a1049293fb415945c280213",
-                "reference": "4e5bf5c254d8a6fb8a1049293fb415945c280213",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/c07625de0c1ba4d12d07e4063c56d813ef4a8e4c",
+                "reference": "c07625de0c1ba4d12d07e4063c56d813ef4a8e4c",
                 "shasum": ""
             },
             "require": {
@@ -2912,7 +2912,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v0.6.7"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v0.6.8"
             },
             "funding": [
                 {
@@ -2920,7 +2920,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-13T02:28:35+00:00"
+            "time": "2023-01-14T13:48:00+00:00"
         },
         {
             "name": "intervention/httpauth",

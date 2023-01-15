@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Nova\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class UserActive extends Filter
 {
@@ -22,8 +24,10 @@ class UserActive extends Filter
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>|\Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User>
+     *
+     * @phan-suppress PhanTypeMismatchDeclaredReturn
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $value === 'yes' ? $query->active() : $query->inactive();
     }

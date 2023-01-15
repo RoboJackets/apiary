@@ -283,6 +283,7 @@ EOF
           nginx-config = var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static
           socket = "/var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock"
           firewall-rules = jsonencode(["internet"])
+          referrer-policy = "same-origin"
         }
       }
 

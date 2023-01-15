@@ -7,6 +7,7 @@ namespace App\Nova\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class UserType extends Filter
 {
@@ -24,7 +25,7 @@ class UserType extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $query->role($value);
     }

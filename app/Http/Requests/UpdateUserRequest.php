@@ -25,15 +25,6 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => [
-                'max:127',
-            ],
-            'last_name' => [
-                'max:127',
-            ],
-            'middle_name' => [
-                'max:127',
-            ],
             'preferred_first_name' => [
                 'max:127',
             ],
@@ -52,9 +43,6 @@ class UpdateUserRequest extends FormRequest
                 'digits_between:10,15',
                 'different:phone',
                 'nullable',
-            ],
-            'join_semester' => [
-                'max:6',
             ],
             'graduation_semester' => [
                 'max:6',
@@ -94,14 +82,6 @@ class UpdateUserRequest extends FormRequest
                 'nullable',
             ],
             'clickup_invite_pending' => [
-                'boolean',
-            ],
-            'autodesk_email' => [
-                'string',
-                'nullable',
-                'email:rfc,strict,dns,spoof',
-            ],
-            'autodesk_invite_pending' => [
                 'boolean',
             ],
         ];

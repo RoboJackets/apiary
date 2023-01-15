@@ -8,6 +8,7 @@ use App\Models\Team;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class DuesTransactionTeam extends Filter
 {
@@ -31,8 +32,10 @@ class DuesTransactionTeam extends Filter
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  int  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>|\Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
+     *
+     * @phan-suppress PhanTypeMismatchDeclaredReturn
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $query
             ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')

@@ -44,11 +44,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $clickup_email
  * @property int|null $clickup_id
  * @property bool $clickup_invite_pending
- * @property string|null $autodesk_email
- * @property bool $autodesk_invite_pending
  * @property string $gt_email
  * @property string $first_name
- * @property string|null $middle_name
  * @property string $last_name
  * @property string|null $preferred_name
  * @property string|null $phone
@@ -148,8 +145,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User role($roles, $guard = null)
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
- * @method static Builder|User whereAutodeskEmail($value)
- * @method static Builder|User whereAutodeskInvitePending($value)
  * @method static Builder|User whereBuzzcardAccessOptOut($value)
  * @method static Builder|User whereClickupEmail($value)
  * @method static Builder|User whereClickupId($value)
@@ -178,7 +173,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereIsServiceAccount($value)
  * @method static Builder|User whereJoinSemester($value)
  * @method static Builder|User whereLastName($value)
- * @method static Builder|User whereMiddleName($value)
  * @method static Builder|User wherePhone($value)
  * @method static Builder|User wherePoloSize($value)
  * @method static Builder|User wherePreferredName($value)
@@ -288,7 +282,6 @@ class User extends Authenticatable
         'resume_date' => 'datetime',
         'github_invite_pending' => 'boolean',
         'clickup_invite_pending' => 'boolean',
-        'autodesk_invite_pending' => 'boolean',
         'exists_in_sums' => 'boolean',
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
@@ -412,7 +405,7 @@ class User extends Authenticatable
      */
     public function getFullNameAttribute(): string
     {
-        return implode(' ', array_filter([$this->first_name, $this->middle_name, $this->last_name]));
+        return implode(' ', array_filter([$this->first_name, $this->last_name]));
     }
 
     /**
