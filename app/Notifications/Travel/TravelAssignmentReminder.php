@@ -45,7 +45,9 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return $user->should_receive_email && ! $this->assignment->is_complete;
+        return $user->should_receive_email &&
+            ! $this->assignment->is_complete &&
+            $this->assignment->deleted_at === null;
     }
 
     /**
