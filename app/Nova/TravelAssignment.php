@@ -64,11 +64,13 @@ class TravelAssignment extends Resource
         return [
             BelongsTo::make('Member', 'user', User::class)
                 ->withoutTrashed()
-                ->searchable(),
+                ->searchable()
+                ->rules('required', 'unique:travel_assignments,user_id,NULL,id,travel_id,'.$request->travel),
 
             BelongsTo::make('Travel', 'travel', Travel::class)
                 ->withoutTrashed()
-                ->searchable(),
+                ->searchable()
+                ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user),
 
             Boolean::make('Travel Authority Request Received', 'tar_received')
                 ->sortable()
