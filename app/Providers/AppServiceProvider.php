@@ -69,7 +69,7 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict();
 
         // Lazy-loading needs to be allowed for console commands due to https://github.com/laravel/scout/issues/462
-        if ($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole() || $this->app->environment() === 'local') {
             Model::preventLazyLoading(false);
         }
 
