@@ -33,7 +33,7 @@
         "packageRules": [
             {
                 "matchPackageNames": ["php"],
-                "rangeStrategy": "replace",
+                "rangeStrategy": "replace"
             },
             {
                 "matchPackageNames": ["square/square"],
