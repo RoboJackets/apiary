@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "150e3b4a3481835f0f07a56ee778dc7a",
+    "content-hash": "6a4abd72cdbe6e18e9df294f69a84f57",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3286,16 +3286,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.12.0",
+            "version": "v5.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "7dcddbfa4ccb988dd1307d1da7f8ccb042c522b8"
+                "reference": "7cfef61b82457359a4cafbcb1840cdaf9ed5ed84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/7dcddbfa4ccb988dd1307d1da7f8ccb042c522b8",
-                "reference": "7dcddbfa4ccb988dd1307d1da7f8ccb042c522b8",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/7cfef61b82457359a4cafbcb1840cdaf9ed5ed84",
+                "reference": "7cfef61b82457359a4cafbcb1840cdaf9ed5ed84",
                 "shasum": ""
             },
             "require": {
@@ -3357,9 +3357,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.12.0"
+                "source": "https://github.com/laravel/horizon/tree/v5.13.0"
             },
-            "time": "2023-01-09T10:28:53+00:00"
+            "time": "2023-01-17T14:59:22+00:00"
         },
         {
             "name": "laravel/nova",
