@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69d67062cd871e5244f7c0334c9c2f13",
+    "content-hash": "c5920f0b0f3d9a9d8610bcef36acb7b0",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8769,26 +8769,26 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "bac13298724d6d49c586c33c87db0926a051f8b6"
+                "reference": "b07a6d9736c49ba6519346a101bb98224d7b4608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/bac13298724d6d49c586c33c87db0926a051f8b6",
-                "reference": "bac13298724d6d49c586c33c87db0926a051f8b6",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/b07a6d9736c49ba6519346a101bb98224d7b4608",
+                "reference": "b07a6d9736c49ba6519346a101bb98224d7b4608",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^7.0|^8.0|^9.0",
+                "laravel/framework": "^7.0|^8.0|^9.0|^10.0",
                 "php": "^8.0",
                 "spatie/laravel-package-tools": "^1.6"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
                 "phpunit/phpunit": "^8.5|^9.5"
             },
             "suggest": {
@@ -8832,7 +8832,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.2.0"
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.2.1"
             },
             "funding": [
                 {
@@ -8840,7 +8840,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-11-06T16:00:06+00:00"
+            "time": "2023-01-19T17:12:44+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
