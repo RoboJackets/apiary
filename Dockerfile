@@ -49,9 +49,15 @@ RUN set -eux && \
     apt-get upgrade -qq --assume-yes && \
     apt-get install -qq --assume-yes \
         php8.1-fpm php8.1-mysql php8.1-gd php8.1-xml php8.1-mbstring php8.1-zip php8.1-curl php8.1-intl \
-        php8.1-opcache php8.1-bcmath php8.1-ldap php8.1-uuid php8.1-sqlite sqlite3 exiftool ghostscript \
-        unzip libfcgi-bin default-mysql-client zopfli php8.1-redis file && \
+        php8.1-opcache php8.1-bcmath php8.1-ldap php8.1-sqlite sqlite3 exiftool ghostscript \
+        unzip libfcgi-bin default-mysql-client zopfli file php-pear php8.1-dev uuid-dev && \
     apt-get autoremove -qq --assume-yes && \
+    pecl channel-update pecl.php.net && \
+    pecl install uuid redis && \
+    echo "extension=redis.so" > /etc/php/8.1/cli/conf.d/20-redis.ini && \
+    echo "extension=redis.so" > /etc/php/8.1/fpm/conf.d/20-redis.ini && \
+    echo "extension=uuid.so" > /etc/php/8.1/cli/conf.d/20-uuid.ini && \
+    echo "extension=uuid.so" > /etc/php/8.1/fpm/conf.d/20-uuid.ini && \
     mkdir /app && \
     chown www-data:www-data /app && \
     sed -i '/pid/c\\' /etc/php/8.1/fpm/php-fpm.conf && \
