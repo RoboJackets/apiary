@@ -39,7 +39,7 @@ class SendReminders implements ShouldQueue, ShouldBeUnique
         // check if travel assignment reminder should be sent
         if ($this->user->assignments()->needDocuSign()->exists()) {
             SendTravelAssignmentReminder::dispatch(
-                $this->user->assignments()->needDocuSign()->orderBy('travel.departure_date')->first(),
+                $this->user->assignments()->needDocuSign()->first(),
                 24
             );
 
@@ -48,7 +48,7 @@ class SendReminders implements ShouldQueue, ShouldBeUnique
 
         if ($this->user->assignments()->unpaid()->exists()) {
             SendTravelAssignmentReminder::dispatch(
-                $this->user->assignments()->unpaid()->orderBy('travel.departure_date')->first(),
+                $this->user->assignments()->unpaid()->first(),
                 24
             );
 
