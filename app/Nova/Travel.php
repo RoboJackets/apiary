@@ -244,7 +244,7 @@ class Travel extends Resource
         return [
             (new Actions\DownloadDocuSignForms())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('view-docusign-envelopes') ||
-                        self::where('primary_contact_user_id', $request->user()->id)->exists())
+                        \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
                 ->canRun(
                     static fn (NovaRequest $request, AppModelsTravel $travel): bool => $request->user()->can(
                         'view-docusign-envelopes'
