@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7c46198c1edde15329467eda0e83232",
+    "content-hash": "8fffaad5adc23f22ace5c94d4c983c7d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -14383,16 +14383,16 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "e6eaed7d935663acce940fc70ca2c7bd2ddb2d8e"
+                "reference": "70e9f16c5b35c1f3404914532f23a792159fa369"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/e6eaed7d935663acce940fc70ca2c7bd2ddb2d8e",
-                "reference": "e6eaed7d935663acce940fc70ca2c7bd2ddb2d8e",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/70e9f16c5b35c1f3404914532f23a792159fa369",
+                "reference": "70e9f16c5b35c1f3404914532f23a792159fa369",
                 "shasum": ""
             },
             "require": {
@@ -14417,6 +14417,7 @@
                 "codeception/module-cli": "^2.0",
                 "codeception/module-filesystem": "^3.0",
                 "codeception/module-phpbrowser": "^3.0",
+                "phpunit/phpunit": "^9.5",
                 "ramsey/collection": "^1.3",
                 "slevomat/coding-standard": "^8.8",
                 "squizlabs/php_codesniffer": "*",
@@ -14447,9 +14448,9 @@
             "homepage": "https://github.com/psalm/psalm-plugin-laravel",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.4.0"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.5.0"
             },
-            "time": "2023-01-23T16:54:33+00:00"
+            "time": "2023-01-27T08:35:04+00:00"
         },
         {
             "name": "sabre/event",
