@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\Events\PaymentSuccess;
+use App\Models\DuesTransaction;
+use App\Models\TravelAssignment;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
@@ -19,7 +21,10 @@ class PaymentSuccessListener
         $payable = $payment->payable;
         Log::info(self::class.': Handling successful payment ID '.$payment->id);
 
-        if ($payable->status !== 'paid') {
+        if (
+            ($payment->payable_type === DuesTransaction::getMorphClassStatic() && $payable->status !== 'paid') ||
+            ($payment->payable_type === TravelAssignment::getMorphClassStatic() && ! $payable->is_paid)
+        ) {
             return;
         }
 
