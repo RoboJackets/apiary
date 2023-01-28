@@ -78,6 +78,16 @@ class DocuSignEnvelope extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'signable',
+        'signedBy',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
