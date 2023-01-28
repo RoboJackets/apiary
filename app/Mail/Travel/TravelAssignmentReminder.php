@@ -31,7 +31,7 @@ class TravelAssignmentReminder extends Mailable implements ShouldQueue
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
                     ->to($this->assignment->user->gt_email, $this->assignment->user->name)
                     ->subject(
-                        'Reminder: '.($this->assignment->travel->tar_required ? 'action' : 'payment')
+                        'Reminder: '.self::subjectLineCallToAction()
                         .' required for '.$this->assignment->travel->name.' travel'
                     )
                     ->text('mail.travel.assignmentreminder')
@@ -43,5 +43,16 @@ class TravelAssignmentReminder extends Mailable implements ShouldQueue
                     })
                     ->tag('travel-assignment-reminder')
                     ->metadata('assignment-id', strval($this->assignment->id));
+    }
+
+    private function subjectLineCallToAction(): string
+    {
+        if ($this->assignment->needs_docusign && $this->assignment->is_paid) {
+            return 'documents';
+        } elseif ($this->assignment->needs_docusign) {
+            return 'action';
+        } else {
+            return 'payment';
+        }
     }
 }
