@@ -1033,7 +1033,7 @@ class User extends Authenticatable
         }
 
         $needDocuSign = $this->assignments()
-            ->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+            ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->needDocuSign()
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
@@ -1045,7 +1045,7 @@ class User extends Authenticatable
 
         // this might be null, but that's fine
         return $this->assignments()
-            ->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+            ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
             ->where('travel.return_date', '>=', now())

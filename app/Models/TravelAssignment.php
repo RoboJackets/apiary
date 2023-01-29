@@ -159,7 +159,7 @@ class TravelAssignment extends Model
             $j->on('payments.payable_id', '=', 'travel_assignments.id')
                     ->where('payments.payable_type', '=', $this->getMorphClass())
                     ->where('payments.deleted_at', '=', null);
-        })->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+        })->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->groupBy('travel_assignments.id', 'travel_assignments.travel_id', 'travel.fee_amount')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) < travel.fee_amount');
     }
