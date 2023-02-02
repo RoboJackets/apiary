@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df213575d694a780ca06442af0b549bc",
+    "content-hash": "a720210f5bc923d4c81be7dc30d01c67",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -16820,7 +16820,8 @@
         "ext-redis": "*",
         "ext-sqlite3": "*",
         "ext-uuid": "*",
-        "ext-xml": "*"
+        "ext-xml": "*",
+        "ext-zip": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
