@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d80a1ea6b85426f3d9f7dd34be450dd9",
+    "content-hash": "44cec77f99ddce682f76b33610ad78b3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -11878,26 +11878,26 @@
         },
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.12.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "3ba1e2573b38f72107b8aacc4ee177fcab30a550"
+                "reference": "edfb05621cf8c2613eceb2c2283a3267b5ab2777"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/3ba1e2573b38f72107b8aacc4ee177fcab30a550",
-                "reference": "3ba1e2573b38f72107b8aacc4ee177fcab30a550",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/edfb05621cf8c2613eceb2c2283a3267b5ab2777",
+                "reference": "edfb05621cf8c2613eceb2c2283a3267b5ab2777",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/reflection-docblock": "^2.0.6",
-                "composer/pcre": "^1 || ^2 || ^3",
+                "composer/class-map-generator": "^1.0",
                 "doctrine/dbal": "^2.6 || ^3",
                 "ext-json": "*",
-                "illuminate/console": "^8 || ^9",
-                "illuminate/filesystem": "^8 || ^9",
-                "illuminate/support": "^8 || ^9",
+                "illuminate/console": "^8 || ^9 || ^10",
+                "illuminate/filesystem": "^8 || ^9 || ^10",
+                "illuminate/support": "^8 || ^9 || ^10",
                 "nikic/php-parser": "^4.7",
                 "php": "^7.3 || ^8.0",
                 "phpdocumentor/type-resolver": "^1.1.0"
@@ -11905,17 +11905,18 @@
             "require-dev": {
                 "ext-pdo_sqlite": "*",
                 "friendsofphp/php-cs-fixer": "^2",
-                "illuminate/config": "^8 || ^9",
-                "illuminate/view": "^8 || ^9",
+                "illuminate/config": "^8 || ^9 || ^10",
+                "illuminate/view": "^8 || ^9 || ^10",
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^6 || ^7",
+                "orchestra/testbench": "^6 || ^7 || ^8",
                 "phpunit/phpunit": "^8.5 || ^9",
                 "spatie/phpunit-snapshot-assertions": "^3 || ^4",
                 "vimeo/psalm": "^3.12"
             },
             "suggest": {
-                "illuminate/events": "Required for automatic helper generation (^6|^7|^8|^9)."
+                "illuminate/events": "Required for automatic helper generation (^6|^7|^8|^9|^10)."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -11956,7 +11957,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-ide-helper/issues",
-                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v2.12.3"
+                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/master"
             },
             "funding": [
                 {
@@ -11968,7 +11969,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-06T14:33:42+00:00"
+            "time": "2023-02-01T16:24:13+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -12086,6 +12087,79 @@
                 "source": "https://github.com/beyondcode/laravel-dump-server/tree/1.8.0"
             },
             "time": "2022-02-12T12:37:34+00:00"
+        },
+        {
+            "name": "composer/class-map-generator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/class-map-generator.git",
+                "reference": "1e1cb2b791facb2dfe32932a7718cf2571187513"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/1e1cb2b791facb2dfe32932a7718cf2571187513",
+                "reference": "1e1cb2b791facb2dfe32932a7718cf2571187513",
+                "shasum": ""
+            },
+            "require": {
+                "composer/pcre": "^2 || ^3",
+                "php": "^7.2 || ^8.0",
+                "symfony/finder": "^4.4 || ^5.3 || ^6"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.6",
+                "phpstan/phpstan-deprecation-rules": "^1",
+                "phpstan/phpstan-phpunit": "^1",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "symfony/filesystem": "^5.4 || ^6",
+                "symfony/phpunit-bridge": "^5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\ClassMapGenerator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "https://seld.be"
+                }
+            ],
+            "description": "Utilities to scan PHP code and generate class maps.",
+            "keywords": [
+                "classmap"
+            ],
+            "support": {
+                "issues": "https://github.com/composer/class-map-generator/issues",
+                "source": "https://github.com/composer/class-map-generator/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-06-19T11:31:27+00:00"
         },
         {
             "name": "composer/package-versions-deprecated",
@@ -13276,23 +13350,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.19.0",
+            "version": "v7.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "c413751e85972067e7c48cae68514935321c87f0"
+                "reference": "bd481b00d1535797edfc87aa8be5063408b27b63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/c413751e85972067e7c48cae68514935321c87f0",
-                "reference": "c413751e85972067e7c48cae68514935321c87f0",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/bd481b00d1535797edfc87aa8be5063408b27b63",
+                "reference": "bd481b00d1535797edfc87aa8be5063408b27b63",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.21",
                 "laravel/framework": "^9.45",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^7.19",
+                "orchestra/testbench-core": "^7.20",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -13329,22 +13403,22 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.19.0"
+                "source": "https://github.com/orchestral/testbench/tree/v7.20.0"
             },
-            "time": "2023-01-10T10:16:26+00:00"
+            "time": "2023-02-01T02:20:22+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.19.0",
+            "version": "v7.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "2bfbbd451481cf27c9663060b792487925236500"
+                "reference": "f37b3ef9a1d679609d87477073836036faf5671b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/2bfbbd451481cf27c9663060b792487925236500",
-                "reference": "2bfbbd451481cf27c9663060b792487925236500",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/f37b3ef9a1d679609d87477073836036faf5671b",
+                "reference": "f37b3ef9a1d679609d87477073836036faf5671b",
                 "shasum": ""
             },
             "require": {
@@ -13353,11 +13427,10 @@
             "require-dev": {
                 "fakerphp/faker": "^1.21",
                 "laravel/framework": "^9.45",
-                "laravel/laravel": "9.x-dev",
-                "laravel/pint": "^1.1",
+                "laravel/pint": "^1.4",
                 "mockery/mockery": "^1.5.1",
                 "orchestra/canvas": "^7.0",
-                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan": "^1.9.14",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
                 "symfony/process": "^6.0.9",
@@ -13418,7 +13491,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2023-01-10T10:14:44+00:00"
+            "time": "2023-02-01T02:08:55+00:00"
         },
         {
             "name": "phan/phan",
@@ -14382,33 +14455,33 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v2.6.0",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "7f0d2fd5509b0776e3ed58cc7aa1c00c574f43cd"
+                "reference": "c49a4cbdb4a7e3e5719748d4125f4da88c9ae502"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/7f0d2fd5509b0776e3ed58cc7aa1c00c574f43cd",
-                "reference": "7f0d2fd5509b0776e3ed58cc7aa1c00c574f43cd",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/c49a4cbdb4a7e3e5719748d4125f4da88c9ae502",
+                "reference": "c49a4cbdb4a7e3e5719748d4125f4da88c9ae502",
                 "shasum": ""
             },
             "require": {
-                "barryvdh/laravel-ide-helper": "^2.12",
+                "barryvdh/laravel-ide-helper": "dev-master as 2.12.4",
                 "ext-simplexml": "*",
-                "illuminate/config": "^9.2",
-                "illuminate/container": "^9.2",
-                "illuminate/contracts": "^9.2",
-                "illuminate/database": "^9.2",
-                "illuminate/events": "^9.2",
-                "illuminate/http": "^9.2",
-                "illuminate/routing": "^9.2",
-                "illuminate/support": "^9.2",
-                "illuminate/view": "^9.2",
-                "orchestra/testbench": "^7.1",
+                "illuminate/config": "^9.48 || ^10.0.0",
+                "illuminate/container": "^9.48 || ^10.0.0",
+                "illuminate/contracts": "^9.48 || ^10.0.0",
+                "illuminate/database": "^9.48 || ^10.0.0",
+                "illuminate/events": "^9.48 || ^10.0.0",
+                "illuminate/http": "^9.48 || ^10.0.0",
+                "illuminate/routing": "^9.48 || ^10.0.0",
+                "illuminate/support": "^9.48 || ^10.0.0",
+                "illuminate/view": "^9.48 || ^10.0.0",
+                "orchestra/testbench": "^7.19 || ^8.0.0",
                 "php": "^8.0.2",
-                "vimeo/psalm": "^4.30 || ^5.0.0-rc1"
+                "vimeo/psalm": "^4.30 || ^5.1"
             },
             "require-dev": {
                 "codeception/codeception": "^5.0",
@@ -14447,9 +14520,9 @@
             "homepage": "https://github.com/psalm/psalm-plugin-laravel",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.6.0"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v2.7.0"
             },
-            "time": "2023-01-31T20:53:41+00:00"
+            "time": "2023-02-01T14:04:08+00:00"
         },
         {
             "name": "sabre/event",
@@ -16720,9 +16793,18 @@
             "time": "2023-01-11T23:22:44+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "barryvdh/laravel-ide-helper",
+            "version": "9999999-dev",
+            "alias": "2.12.4",
+            "alias_normalized": "2.12.4.0"
+        }
+    ],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "barryvdh/laravel-ide-helper": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

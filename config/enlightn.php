@@ -25,6 +25,7 @@ return [
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidMethodCallAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Security\UpToDateDependencyAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
         ...(env('SKIP_PHPSTAN_CHECKS', false) === true ? [
             \Enlightn\Enlightn\Analyzers\Performance\CollectionCallAnalyzer::class,
