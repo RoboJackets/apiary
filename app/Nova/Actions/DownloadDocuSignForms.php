@@ -45,7 +45,7 @@ class DownloadDocuSignForms extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $travel = $models->first()->load('assignments.envelope');
+        $travel = $models->first()->load('assignments.envelope.signable.user');
 
         $filename = $travel->name.'.zip';
 
