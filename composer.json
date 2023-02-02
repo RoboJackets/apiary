@@ -62,7 +62,7 @@
         "symfony/postmark-mailer": "6.2.5"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "2.12.3",
+        "barryvdh/laravel-ide-helper": "dev-master as 2.12.4",
         "beyondcode/laravel-dump-server": "1.8.0",
         "fakerphp/faker": "1.21.0",
         "filp/whoops": "2.14.6",
