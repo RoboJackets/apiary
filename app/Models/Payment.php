@@ -147,12 +147,12 @@ class Payment extends Model
 
     public function duesTransaction(): BelongsTo
     {
-        return $this->belongsTo(DuesTransaction::class, "payable_id", "id");
+        return $this->belongsTo(DuesTransaction::class, 'payable_id', 'id');
     }
 
     public function travelAssignment(): BelongsTo
     {
-        return $this->belongsTo(TravelAssignment::class, "payable_id", "id");
+        return $this->belongsTo(TravelAssignment::class, 'payable_id', 'id');
     }
 
     /**

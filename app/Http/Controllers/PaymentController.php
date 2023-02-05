@@ -43,7 +43,7 @@ class PaymentController extends Controller
         if (null == $user) {
             return response()->json(
                 [
-                    'status' => 'error', 'message' => 'User ' . $id . ' not found'
+                    'status' => 'error', 'message' => 'User '.$id.' not found',
                 ],
                 404
             );
@@ -64,15 +64,15 @@ class PaymentController extends Controller
             ->whereHas('duesTransaction.user', static function ($q) use ($id) {
                 return $q->whereId($id);
             })
-            ->where("amount", ">", 0)
-            ->orWhereNotNull("card_brand")
+            ->where('amount', '>', 0)
+            ->orWhereNotNull('card_brand')
             ->orderBy('updated_at')
             ->get();
 
         return response()->json([
-                'status' => 'success',
-                'duesTransactions' => PaymentResource::collection($duesTransactions),
-            ]
+            'status' => 'success',
+            'duesTransactions' => PaymentResource::collection($duesTransactions),
+        ]
         );
     }
 
