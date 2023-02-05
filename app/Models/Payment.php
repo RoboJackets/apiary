@@ -165,6 +165,16 @@ class Payment extends Model
         return $this->belongsTo(User::class, 'recorded_by');
     }
 
+    /**
+     * Get the User associated with the Payment model. This is only used by Nova to show a list of Payments
+     * associated with a payable resource (DuesTransaction or Travel Assignment).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Payment>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'recorded_by');
+    }
 
     /**
      * Get the presentation-ready format of a Payment Method.
