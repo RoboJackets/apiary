@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Http\Resources\User as UserResource;
+use Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Payment extends JsonResource
@@ -12,7 +14,7 @@ class Payment extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array<string,mixed>
      */
     public function toArray($request): array
@@ -30,12 +32,22 @@ class Payment extends JsonResource
             'client_txn_id' => $this->client_txn_id,
             'server_txn_id' => $this->server_txn_id,
             'unique_id' => $this->unique_id,
-            'notes' => $this->notes,
+            'card_type' => $this->card_type,
+            'card_brand' => $this->card_brand,
+            'last_4' => $this->last_4,
+            'entry_method' => $this->entry_method,
+            'statement_description' => $this->statement_description,
+            'receipt_url' => $this->receipt_url,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
 
-            // payable relationships
+            // relationships
+            'recorded_by_user' => Auth::user()->can('read-users') ?
+                new UserResource($this->whenLoaded('recordedBy')) :
+                $this->when($this->recordedBy, [
+                    'name' => $this->recordedBy->name,
+                ]),
             'dues_transaction' => new DuesTransactionResource($this->whenLoaded('duesTransaction')),
             // TODO: travelAssignment relationship
         ];
