@@ -145,6 +145,16 @@ class Payment extends Model
         return $this->morphTo();
     }
 
+    public function duesTransaction(): BelongsTo
+    {
+        return $this->belongsTo(DuesTransaction::class, "payable_id", "id");
+    }
+
+    public function travelAssignment(): BelongsTo
+    {
+        return $this->belongsTo(TravelAssignment::class, "payable_id", "id");
+    }
+
     /**
      * Get the User associated with the Payment model.
      *
@@ -173,6 +183,8 @@ class Payment extends Model
         return [
             'user' => 'users',
             'payable' => 'dues-transactions',
+            'duesTransaction' => 'dues-transactions',
+            'travelAssignment' => 'travel-assignments',
         ];
     }
 

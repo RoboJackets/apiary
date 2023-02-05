@@ -114,6 +114,9 @@ Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalI
 Vue.component('demographics', require('./components/dues/Demographics.vue').default);
 Vue.component('self-service-access-override', require('./components/dues/SelfServiceAccessOverride.vue').default);
 
+// Payments
+Vue.component('payment-history', require('./components/payments/PaymentHistory.vue').default);
+
 // Teams
 Vue.component('team-card', require('./components/teams/TeamCard.vue').default);
 Vue.component('team-membership-button', require('./components/teams/TeamMembershipButton.vue').default);

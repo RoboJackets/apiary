@@ -7,8 +7,12 @@ namespace App\Http\Controllers;
 use App\Events\PaymentSuccess;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Http\Resources\Payment as PaymentResource;
+use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -16,7 +20,7 @@ class PaymentController extends Controller
     {
         $this->middleware('permission:read-payments', ['only' => ['index']]);
         $this->middleware('permission:create-payments|create-payments-own', ['only' => ['store']]);
-        $this->middleware('permission:read-payments|read-payments-own', ['only' => ['show']]);
+        $this->middleware('permission:read-payments|read-payments-own', ['only' => ['show', 'indexForUser']]);
         $this->middleware('permission:update-payments', ['only' => ['update']]);
         $this->middleware('permission:delete-payments', ['only' => ['destroy']]);
     }
@@ -29,6 +33,45 @@ class PaymentController extends Controller
         $payments = Payment::all();
 
         return response()->json(['status' => 'success', 'payments' => $payments]);
+    }
+
+    public function indexForUser(Request $request, int $id): JsonResponse
+    {
+        $user = User::find($id);
+        $requestingUser = $request->user();
+
+        if (null == $user) {
+            return response()->json(
+                [
+                    'status' => 'error', 'message' => 'User ' . $id . ' not found'
+                ],
+                404
+            );
+        }
+
+        if ($id !== $requestingUser->id && $requestingUser->cannot('read-payments')) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Forbidden - you do not have permission to view payments for other users',
+                ],
+                403
+            );
+        }
+
+        $duesTransactions = Payment::wherePayableType(DuesTransaction::getMorphClassStatic())
+            ->with('duesTransaction', 'duesTransaction.package')
+            ->whereHas('duesTransaction.user', static function ($q) use ($id) {
+                return $q->whereId($id);
+            })
+            ->orderBy('created_at')
+            ->get();
+
+        return response()->json([
+                'status' => 'success',
+                'duesTransactions' => PaymentResource::collection($duesTransactions),
+            ]
+        );
     }
 
     /**

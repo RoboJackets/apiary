@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\DuesTransaction as DuesTransactionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Payment extends JsonResource
@@ -33,6 +34,10 @@ class Payment extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
+
+            // payable relationships
+            'dues_transaction' => new DuesTransactionResource($this->whenLoaded('duesTransaction')),
+            // TODO: travelAssignment relationship
         ];
     }
 }

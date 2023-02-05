@@ -204,6 +204,13 @@
             <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
           </div>
 
+          <h3>Payment History</h3>
+          <div class="row">
+            <div class="col-12">
+              <payment-history :user-uid="userUid" />
+            </div>
+          </div>
+
           <h3>Authorized Applications</h3>
           <div class="row">
             <div class="col-12">
@@ -223,8 +230,7 @@
 </template>
 
 <script>
-import {alpha, email, maxLength, minLength, required} from 'vuelidate/lib/validators';
-import notGTEmail from '../customValidators/notGTEmail';
+import {alpha, maxLength, minLength, required} from 'vuelidate/lib/validators';
 
 export default {
   props: ['userUid'],
