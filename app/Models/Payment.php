@@ -136,7 +136,7 @@ class Payment extends Model
     ];
 
     /**
-     * Get all of the owning payable models.
+     * Get all the owning payable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\DuesTransaction|\App\Models\TravelAssignment,\App\Models\Payment>
      */
@@ -160,10 +160,11 @@ class Payment extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Payment>
      */
-    public function user(): BelongsTo
+    public function recordedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'recorded_by');
     }
+
 
     /**
      * Get the presentation-ready format of a Payment Method.
