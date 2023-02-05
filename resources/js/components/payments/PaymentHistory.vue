@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         <tr v-for="payment in duesPayments" :key="payment.id">
-          <td class="align-middle">{{ payment.updated_at | moment("MMM D, YYYY hh:mm A") }}</td>
+          <td class="align-middle">{{ payment.updated_at | moment("MMM D, YYYY h:mm A") }}</td>
           <td class="align-middle">Dues: {{ payment.dues_transaction.package.name }}</td>
           <td class="align-middle">${{ payment.amount }}</td>
           <td class="align-middle"><payment-method-details :payment="payment" /></td>
