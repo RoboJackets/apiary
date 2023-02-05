@@ -116,6 +116,8 @@ Vue.component('self-service-access-override', require('./components/dues/SelfSer
 
 // Payments
 Vue.component('payment-history', require('./components/payments/PaymentHistory.vue').default);
+Vue.component('payment-method-details', require('./components/payments/PaymentMethodDetails.vue').default);
+Vue.component('payment-card-icon', require('./components/payments/PaymentCardIcon.vue').default);
 
 // Teams
 Vue.component('team-card', require('./components/teams/TeamCard.vue').default);
