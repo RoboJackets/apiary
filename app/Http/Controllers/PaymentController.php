@@ -60,11 +60,13 @@ class PaymentController extends Controller
         }
 
         $duesTransactions = Payment::wherePayableType(DuesTransaction::getMorphClassStatic())
-            ->with('duesTransaction', 'duesTransaction.package')
+            ->with('duesTransaction', 'duesTransaction.package', 'recordedBy')
             ->whereHas('duesTransaction.user', static function ($q) use ($id) {
                 return $q->whereId($id);
             })
-            ->orderBy('created_at')
+            ->where("amount", ">", 0)
+            ->orWhereNotNull("card_brand")
+            ->orderBy('updated_at')
             ->get();
 
         return response()->json([
