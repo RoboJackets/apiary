@@ -19,31 +19,6 @@ export default {
     }
   },
   computed: {
-    isUnknown() {
-      return this.payment.method === "unknown";
-    },
-    isCash() {
-      return this.payment.method === "cash";
-    },
-    isSquareCash() {
-      return this.payment.method === "squarecash";
-    },
-    isCheck() {
-      return this.payment.method === "check";
-    },
-    normalizedEntryMethod() {
-      if (!this.payment.entry_method) {
-        return "";
-      }
-
-      return this.payment.entry_method.toLowerCase();
-    },
-    isSwipedCard() {
-      return this.payment.method === "swipe" || this.normalizedEntryMethod === "swiped";
-    },
-    isWaiver() {
-      return this.payment.method === "waiver";
-    },
     isSquare() {
       return this.payment.method === "square";
     },
@@ -65,9 +40,6 @@ export default {
       }
 
       return this.payment.method_presentation;
-    },
-    recordedByName() {
-      return this.payment.recorded_by_user.name;
     },
     acceptedByPresentation() {
       if (this.isSquare) {
