@@ -12,7 +12,7 @@ use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\TravelAssignment;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
