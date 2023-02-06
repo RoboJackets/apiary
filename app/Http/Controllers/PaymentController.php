@@ -45,7 +45,7 @@ class PaymentController extends Controller
         if ($user === null) {
             return response()->json(
                 [
-                    'status' => 'error', 'message' => 'User ' . $id . ' not found',
+                    'status' => 'error', 'message' => 'User '.$id.' not found',
                 ],
                 404
             );
@@ -63,16 +63,16 @@ class PaymentController extends Controller
 
         $duesTransactions = Payment::wherePayableType(DuesTransaction::getMorphClassStatic())
             ->with('duesTransaction', 'duesTransaction.package', 'recordedBy')
-            ->whereHas('duesTransaction.user', static fn(Builder $q): Builder => $q->whereId($id))
-            ->where(static fn(Builder $q): Builder => $q->where('amount', '>', 0)
+            ->whereHas('duesTransaction.user', static fn (Builder $q): Builder => $q->whereId($id))
+            ->where(static fn (Builder $q): Builder => $q->where('amount', '>', 0)
                 ->orWhereNotNull('card_brand'))
             ->orderBy('updated_at')
             ->get();
 
         $travelAssignments = Payment::wherePayableType(TravelAssignment::getMorphClassStatic())
             ->with('travelAssignment', 'travelAssignment.travel', 'recordedBy')
-            ->whereHas('travelAssignment.user', static fn(Builder $q): Builder => $q->whereId($id))
-            ->where(static fn($q): Builder => $q->where('amount', '>', 0)
+            ->whereHas('travelAssignment.user', static fn (Builder $q): Builder => $q->whereId($id))
+            ->where(static fn ($q): Builder => $q->where('amount', '>', 0)
                 ->orWhereNotNull('card_brand')
             )
             ->orderBy('updated_at')
@@ -91,7 +91,7 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
-        if ($request->user()->cant('create-payments-' . $request->input('method'))) {
+        if ($request->user()->cant('create-payments-'.$request->input('method'))) {
             return response()->json(
                 [
                     'status' => 'error',

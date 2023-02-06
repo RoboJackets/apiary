@@ -36,6 +36,7 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $payment_count
  * @property-read \App\Models\Travel|null $travel
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\TravelAssignmentFactory factory(...$parameters)
  * @method static Builder|TravelAssignment needDocuSign()
  * @method static Builder|TravelAssignment newModelQuery()
