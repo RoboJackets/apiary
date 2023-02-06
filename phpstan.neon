@@ -53,6 +53,7 @@ parameters:
     - '#Dynamic call to static method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Payment>::orWhereNotNull\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\TravelAssignment>::needDocuSign\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::whereId\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Passport\\Token>::whereDate\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Passport\\Token>::whereRevoked\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<Illuminate\\Database\\Eloquent\\Model,Illuminate\\Database\\Eloquent\\Model>::first\(\)\.#'

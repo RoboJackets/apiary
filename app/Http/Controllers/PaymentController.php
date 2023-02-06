@@ -37,6 +37,9 @@ class PaymentController extends Controller
         return response()->json(['status' => 'success', 'payments' => $payments]);
     }
 
+    /**
+     * Display a list of payments for a given user.
+     */
     public function indexForUser(Request $request, int $id): JsonResponse
     {
         $user = User::find($id);
@@ -77,6 +80,7 @@ class PaymentController extends Controller
             ->orderBy('updated_at')
             ->get();
 
+        // @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
         $combined = $duesTransactions->concat($travelAssignments)->sortBy('updated_at');
 
         return response()->json([
