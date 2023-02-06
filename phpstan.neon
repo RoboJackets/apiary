@@ -14,7 +14,7 @@ parameters:
     - stubs/Role.php
   ignoreErrors:
     - '#(?:Dynamic call to static method|Call to an undefined method) Illuminate\\Database\\Eloquent\\(?:Builder|Collection|Relations\\[a-zA-Z]+)?(?:<mixed>|<App\\Models\\[a-zA-Z,\\]+>|<Illuminate\\Database\\Eloquent\\Model>)?::(?:distinct|doesntHave|first|groupBy|has|havingRaw|join|leftJoin|orderBy|orderByRaw|orWhereNull|select|selectRaw|selectSub|where|whereBetween|whereHas|whereDate|whereNotIn|whereNotNull|count|whereIn|whereBetween|sum|distinct|paid|active|accessActive|inactive|role|pending|pendingSwag|accessInactive|visible|whereNull|current|start|end|availableForPurchase|userCanPurchase|pluck|orderByDesc|withTrashed|exists|limit|doesntExist|storeExcel|buzzCardAccessEligible|from|unpaid|whereRevoked|whereNotExists)\(\)\.#'
-    - '#Access to an undefined property App\\Http\\Resources\\[a-zA-Z]+::\$[a-z_]+\.#'
+    - '#Access to an undefined property App\\Http\\Resources\\[a-zA-Z]+::\$[a-zA-Z_0-9]+\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$(aggregate|day|rsvpsource|count|ending_year|member_count|active|revenue|is_paid|pivot)\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+\|App\\Models\\[a-zA-Z]+::\$[a-z_]+\.#'
     - '#Access to an undefined property App\\Models\\DuesTransaction::\$effective_end\.#'
@@ -42,6 +42,7 @@ parameters:
     - '#Cannot access property \$uid on App\\Models\\User\|int\|string\.#'
     - '#Cannot call method (?:pluck|count|contains|first)\(\) on array<App\\Models\\[a-zA-Z]+>|Illuminate\\Database\\Eloquent\\Collection\.#'
     - '#Cannot call method [a-zA-Z]+\(\) on App\\Models\\[a-zA-Z]+\|null\.#'
+    - '#Cannot call method [a-zA-Z]+\(\) on Illuminate\\Contracts\\Auth\\Authenticatable\|null\.#'
     - '#Cannot call method [a-zA-Z_]+\(\) on mixed\.#'
     - '#Cannot call method getMorphClass\(\) on App\\Models\\Event|App\\Models\\Team\|null\.#'
     - '#Cannot call method getTimestamp\(\) on Illuminate\\Support\\Carbon\|null\.#'
@@ -50,6 +51,7 @@ parameters:
     - '#Cannot call method pluck\(\) on Adldap\\Query\\Collection\|array\.#'
     - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
     - '#Dynamic call to static method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Payment>::orWhereNotNull\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\TravelAssignment>::needDocuSign\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Passport\\Token>::whereDate\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Laravel\\Passport\\Token>::whereRevoked\(\)\.#'
