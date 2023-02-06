@@ -136,7 +136,7 @@ $ php artisan key:generate
 ```
 
 Run database migrations to set up tables (run this for initial setup and when any new migrations are added later.)
-
+php
 ```
 $ php artisan migrate
 ```

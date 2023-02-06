@@ -41,7 +41,6 @@ use Laravel\Scout\Searchable;
  * @property bool $completion_email_sent
  * @property-read int|null $assignments_count
  * @property-read \App\Models\User $primaryContact
- *
  * @method static \Database\Factories\TravelFactory factory(...$parameters)
  * @method static Builder|Travel newModelQuery()
  * @method static Builder|Travel newQuery()
@@ -72,8 +71,8 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Eloquent
  */
 class Travel extends Model
 {

@@ -46,7 +46,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read string $method_presentation
  * @property-read \App\Models\DuesTransaction|\App\Models\TravelAssignment $payable
  * @property-read \App\Models\User|null $user
- *
  * @method static \Database\Factories\PaymentFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
@@ -81,8 +80,11 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUrl($value)
  * @method static \Illuminate\Database\Query\Builder|Payment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
- *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ * @property-read \App\Models\DuesTransaction|null $duesTransaction
+ * @property-read \App\Models\User|null $recordedBy
+ * @property-read \App\Models\TravelAssignment|null $travelAssignment
+ * @mixin \Eloquent
  */
 class Payment extends Model
 {
