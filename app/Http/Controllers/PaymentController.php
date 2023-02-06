@@ -71,7 +71,6 @@ class PaymentController extends Controller
             ->orderBy('updated_at')
             ->get();
 
-
         $travelAssignments = Payment::wherePayableType(TravelAssignment::getMorphClassStatic())
             ->with('travelAssignment', 'travelAssignment.travel', 'recordedBy')
             ->whereHas('travelAssignment.user', static function ($q) use ($id) {
@@ -83,7 +82,7 @@ class PaymentController extends Controller
             ->orderBy('updated_at')
             ->get();
 
-        $combined = $duesTransactions->concat($travelAssignments)->sortBy("updated_at");
+        $combined = $duesTransactions->concat($travelAssignments)->sortBy('updated_at');
 
         return response()->json([
             'status' => 'success',
