@@ -12,6 +12,7 @@ use App\Models\DuesTransaction;
 use App\Models\Payment;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -41,10 +42,10 @@ class PaymentController extends Controller
         $user = User::find($id);
         $requestingUser = $request->user();
 
-        if (null == $user) {
+        if ($user === null) {
             return response()->json(
                 [
-                    'status' => 'error', 'message' => 'User '.$id.' not found',
+                    'status' => 'error', 'message' => 'User ' . $id . ' not found',
                 ],
                 404
             );
@@ -62,23 +63,18 @@ class PaymentController extends Controller
 
         $duesTransactions = Payment::wherePayableType(DuesTransaction::getMorphClassStatic())
             ->with('duesTransaction', 'duesTransaction.package', 'recordedBy')
-            ->whereHas('duesTransaction.user', static function ($q) use ($id) {
-                return $q->whereId($id);
-            })->where(function ($q) {
-                $q->where('amount', '>', 0)
-                    ->orWhereNotNull('card_brand');
-            })
+            ->whereHas('duesTransaction.user', static fn(Builder $q): Builder => $q->whereId($id))
+            ->where(static fn(Builder $q): Builder => $q->where('amount', '>', 0)
+                ->orWhereNotNull('card_brand'))
             ->orderBy('updated_at')
             ->get();
 
         $travelAssignments = Payment::wherePayableType(TravelAssignment::getMorphClassStatic())
             ->with('travelAssignment', 'travelAssignment.travel', 'recordedBy')
-            ->whereHas('travelAssignment.user', static function ($q) use ($id) {
-                return $q->whereId($id);
-            })->where(function ($q) {
-                $q->where('amount', '>', 0)
-                    ->orWhereNotNull('card_brand');
-            })
+            ->whereHas('travelAssignment.user', static fn(Builder $q): Builder => $q->whereId($id))
+            ->where(static fn($q): Builder => $q->where('amount', '>', 0)
+                ->orWhereNotNull('card_brand')
+            )
             ->orderBy('updated_at')
             ->get();
 
@@ -87,8 +83,7 @@ class PaymentController extends Controller
         return response()->json([
             'status' => 'success',
             'payments' => PaymentResource::collection($combined),
-        ]
-        );
+        ]);
     }
 
     /**
@@ -96,7 +91,7 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
-        if ($request->user()->cant('create-payments-'.$request->input('method'))) {
+        if ($request->user()->cant('create-payments-' . $request->input('method'))) {
             return response()->json(
                 [
                     'status' => 'error',

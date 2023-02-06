@@ -145,11 +145,21 @@ class Payment extends Model
         return $this->morphTo();
     }
 
+    /**
+     * Get the owning payable model as a DuesTransaction
+     *
+     * @return BelongsTo<DuesTransaction, Payment>
+     */
     public function duesTransaction(): BelongsTo
     {
         return $this->belongsTo(DuesTransaction::class, 'payable_id', 'id');
     }
 
+    /**
+     * Get the owning payable model as a TravelAssignment
+     *
+     * @return BelongsTo<TravelAssignment, Payment>
+     */
     public function travelAssignment(): BelongsTo
     {
         return $this->belongsTo(TravelAssignment::class, 'payable_id', 'id');
