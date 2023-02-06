@@ -54,6 +54,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|TravelAssignment whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|TravelAssignment withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class TravelAssignment extends Model
