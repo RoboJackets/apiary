@@ -73,8 +73,7 @@ class PaymentController extends Controller
             ->with('travelAssignment', 'travelAssignment.travel', 'recordedBy')
             ->whereHas('travelAssignment.user', static fn (Builder $q): Builder => $q->whereId($id))
             ->where(static fn ($q): Builder => $q->where('amount', '>', 0)
-                ->orWhereNotNull('card_brand')
-            )
+                ->orWhereNotNull('card_brand'))
             ->orderBy('updated_at')
             ->get();
 

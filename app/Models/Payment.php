@@ -86,7 +86,6 @@ use Laravel\Nova\Actions\Actionable;
  * @property-read \App\Models\DuesTransaction|null $duesTransaction
  * @property-read \App\Models\User|null $recordedBy
  * @property-read \App\Models\TravelAssignment|null $travelAssignment
- * @mixin \Eloquent
  */
 class Payment extends Model
 {

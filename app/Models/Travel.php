@@ -73,7 +73,6 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- * @mixin \Eloquent
  */
 class Travel extends Model
 {
