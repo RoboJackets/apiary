@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePaymentRequest;
 use App\Http\Resources\Payment as PaymentResource;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -63,15 +64,30 @@ class PaymentController extends Controller
             ->with('duesTransaction', 'duesTransaction.package', 'recordedBy')
             ->whereHas('duesTransaction.user', static function ($q) use ($id) {
                 return $q->whereId($id);
+            })->where(function ($q) {
+                $q->where('amount', '>', 0)
+                    ->orWhereNotNull('card_brand');
             })
-            ->where('amount', '>', 0)
-            ->orWhereNotNull('card_brand')
             ->orderBy('updated_at')
             ->get();
 
+
+        $travelAssignments = Payment::wherePayableType(TravelAssignment::getMorphClassStatic())
+            ->with('travelAssignment', 'travelAssignment.travel', 'recordedBy')
+            ->whereHas('travelAssignment.user', static function ($q) use ($id) {
+                return $q->whereId($id);
+            })->where(function ($q) {
+                $q->where('amount', '>', 0)
+                    ->orWhereNotNull('card_brand');
+            })
+            ->orderBy('updated_at')
+            ->get();
+
+        $combined = $duesTransactions->concat($travelAssignments)->sortBy("updated_at");
+
         return response()->json([
             'status' => 'success',
-            'duesTransactions' => PaymentResource::collection($duesTransactions),
+            'payments' => PaymentResource::collection($combined),
         ]
         );
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
+use App\Http\Resources\TravelAssignment as TravelAssignmentResource;
 use App\Http\Resources\User as UserResource;
 use Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -49,7 +50,7 @@ class Payment extends JsonResource
                     'name' => $this->recordedBy->name,
                 ]),
             'dues_transaction' => new DuesTransactionResource($this->whenLoaded('duesTransaction')),
-            // TODO: travelAssignment relationship
+            'travel_assignment' => new TravelAssignmentResource($this->whenLoaded('travelAssignment')),
         ];
     }
 }
