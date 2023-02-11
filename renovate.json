@@ -26,7 +26,8 @@
     "php": {
         "lockFileMaintenance": {
             "enabled": true,
-            "schedule": ["before 4pm every weekday except before 9am every weekday"]
+            "schedule": ["before 4pm every weekday except before 9am every weekday"],
+            "prPriority": -3
         },
         "packageRules": [
             {
@@ -54,20 +55,20 @@
             },
             {
               "matchPackagePatterns": ["^laravel/"],
-              "prPriority": 2
+              "prPriority": 1
             },
             {
               "matchPackageNames": ["laravel/framework"],
-              "prPriority": 3
+              "prPriority": 2
             }
         ]
     },
     "js": {
-        "prPriority": -2,
+        "prPriority": -4,
         "packageRules": [
             {
               "matchDepTypes": ["devDependencies"],
-              "prPriority": -3
+              "prPriority": -5
             }
         ],
     },
