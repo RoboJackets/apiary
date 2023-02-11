@@ -45,16 +45,20 @@
                 "rangeStrategy": "replace"
             },
             {
-              "matchDepTypes": ["devDependencies"],
+              "matchDepTypes": ["require-dev"],
+              "prPriority": -2
+            },
+            {
+              "matchPackagePatterns": ["^phpstan/"],
               "prPriority": -1
             },
             {
               "matchPackagePatterns": ["^laravel/"],
-              "prPriority": 1
+              "prPriority": 2
             },
             {
               "matchPackageNames": ["laravel/framework"],
-              "prPriority": 2
+              "prPriority": 3
             }
         ]
     },
