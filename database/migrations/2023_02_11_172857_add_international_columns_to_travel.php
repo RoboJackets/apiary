@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::table('travel', static function (Blueprint $table): void {
             $table->boolean('is_international');
-            $table->boolean('export_controlled_technology');
+            $table->boolean('export_controlled_technology')->nullable();
             $table->text('export_controlled_technology_description')->nullable();
-            $table->boolean('embargoed_destination');
+            $table->boolean('embargoed_destination')->nullable();
             $table->text('embargoed_countries')->nullable();
-            $table->boolean('biological_materials');
+            $table->boolean('biological_materials')->nullable();
             $table->text('biological_materials_description')->nullable();
-            $table->boolean('equipment');
+            $table->boolean('equipment')->nullable();
             $table->text('equipment_description')->nullable();
             $table->text('international_travel_justification')->nullable();
         });
