@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.Files.LineLength.TooLong
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
 namespace App\Models;
 
@@ -228,9 +227,9 @@ class TravelAssignment extends Model
         ) {
             if ($this->travel->is_international) {
                 return $this->getInternationalAirfarePowerFormUrl();
-            } else {
-                return $this->getDomesticAirfarePowerFormUrl();
             }
+
+            return $this->getDomesticAirfarePowerFormUrl();
         }
 
         if (true === ($this->travel->tar_transportation_mode ?? ['rental_vehicle' => false])['rental_vehicle']) {
