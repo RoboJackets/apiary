@@ -228,6 +228,87 @@ class Travel extends Resource
                 ]
             ),
 
+            new Panel(
+                'International Travel',
+                [
+                    Boolean::make('Destination Outside United States', 'is_international')
+                        ->help(
+                            'Check this box if your destination is outside of the United States.'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Justification', 'international_travel_justification')
+                        ->required()
+                        ->rules('required_if:is_international,1', 'nullable')
+                        ->help(
+                            'Please explain how this travel meets essential travel criteria as defined by Georgia Tech.'
+                        )
+                        ->hideFromIndex(),
+
+                    Boolean::make('Export-Controlled Technology', 'export_controlled_technology')
+                        ->required()
+                        ->help(
+                            'Do you plan to take any information or technology that is controlled?'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Export-Controlled Technology Description', 'export_controlled_technology_description')
+                        ->required()
+                        ->rules('required_if:export_controlled_technology,1', 'nullable')
+                        ->help(
+                            'If yes, please describe the information or technology.'
+                        )
+                        ->hideFromIndex(),
+
+                    Boolean::make('Embargoed Destination', 'embargoed_destination')
+                        ->required()
+                        ->help(
+                            'Do you plan to travel to an embargoed destination?'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Embargoed Destination Description', 'embargoed_countries')
+                        ->required()
+                        ->rules('required_if:embargoed_destination,1', 'nullable')
+                        ->help(
+                            'If yes, please list the country or countries.'
+                        )
+                        ->hideFromIndex(),
+
+                    Boolean::make('Biological Materials', 'biological_materials')
+                        ->required()
+                        ->help(
+                            'Are you taking any biological materials?'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Biological Materials Description', 'biological_materials_description')
+                        ->required()
+                        ->rules('required_if:biological_materials,1', 'nullable')
+                        ->help(
+                            'If yes, please identify the material.'
+                        )
+                        ->hideFromIndex(),
+
+                    Boolean::make('Equipment', 'equipment')
+                        ->required()
+                        ->help(
+                            'Are you taking any equipment containing work involving foreign national restrictions,'.
+                            ' publication restrictions, technology control plans, proprietary information, or '.
+                            'specialized encryption software?'
+                        )
+                        ->hideFromIndex(),
+
+                    Text::make('Equipment Description', 'equipment_description')
+                        ->required()
+                        ->rules('required_if:equipment,1', 'nullable')
+                        ->help(
+                            'If yes, please list the equipment.'
+                        )
+                        ->hideFromIndex(),
+                ]
+            ),
+
             HasMany::make('Assignments', 'assignments', TravelAssignment::class),
 
             self::metadataPanel(),
