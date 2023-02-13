@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c0b78c7dd40be42ef3cbbd25141ee9b",
+    "content-hash": "4d8cd72dbe21be8720513a3d79184557",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -9007,16 +9007,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "5.8.0",
+            "version": "5.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "9f5a74f858d22ecefd9ee44a0ac64a95fd0bf755"
+                "reference": "a88ed98c8937442737e0c50163682e832d608f13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/9f5a74f858d22ecefd9ee44a0ac64a95fd0bf755",
-                "reference": "9f5a74f858d22ecefd9ee44a0ac64a95fd0bf755",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/a88ed98c8937442737e0c50163682e832d608f13",
+                "reference": "a88ed98c8937442737e0c50163682e832d608f13",
                 "shasum": ""
             },
             "require": {
@@ -9024,7 +9024,7 @@
                 "illuminate/container": "^7.0|^8.0|^9.0|^10.0",
                 "illuminate/contracts": "^7.0|^8.0|^9.0|^10.0",
                 "illuminate/database": "^7.0|^8.0|^9.0|^10.0",
-                "php": "^7.3|^8.0|^8.1"
+                "php": "^7.3|^8.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
@@ -9077,7 +9077,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.8.0"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.9.1"
             },
             "funding": [
                 {
@@ -9085,7 +9085,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-14T05:16:37+00:00"
+            "time": "2023-02-06T21:37:02+00:00"
         },
         {
             "name": "spatie/laravel-webhook-client",
