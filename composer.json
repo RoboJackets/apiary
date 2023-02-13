@@ -74,7 +74,7 @@
         "nunomaduro/larastan": "2.4.0",
         "phan/phan": "5.4.1",
         "phpstan/extension-installer": "1.2.0",
-        "phpstan/phpstan": "1.9.14",
+        "phpstan/phpstan": "1.9.17",
         "phpstan/phpstan-deprecation-rules": "1.1.1",
         "phpstan/phpstan-strict-rules": "1.4.5",
         "phpunit/phpunit": "9.6.3",
