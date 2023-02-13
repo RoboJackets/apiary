@@ -189,6 +189,8 @@ parameters:
     - '#Property App\\Models\\Payment::\$(?:amount|processing_fee) \(string(?:\|null)?\) does not accept (?:float|int|float\|int)\.#'
     - '#Property App\\Models\\Signature::\$ip_address_location_estimate \(array\|null\) does not accept mixed\.#'
     - '#Property Spatie\\Permission\\Contracts\\(Permission|Role)::\$name \(string\) does not accept mixed\.#'
+    - '#Property Spatie\\Permission\\Models\\Permission::\$name \(string\) does not accept mixed\.#'
+    - '#Property Spatie\\Permission\\Models\\Role::\$name \(string\) does not accept mixed\.#'
     - '#Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.#'
     - '#Strict comparison using !== between string and null will always evaluate to true\.#'
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Database\\Eloquent\\Collection<int,App\\Models\\[a-zA-Z]+>::mapWithKeys\(\)#'
