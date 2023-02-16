@@ -42,10 +42,6 @@
                 "versioning": "loose"
             },
             {
-                "matchPackageNames": ["php"],
-                "rangeStrategy": "replace"
-            },
-            {
               "matchDepTypes": ["require-dev"],
               "prPriority": -2
             },
