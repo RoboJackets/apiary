@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d0cee88cd3c81fa3b7632f0e31b7faf6",
+    "content-hash": "cb9fca811fc2478ee1fcc662e0e2d3dd",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3535,16 +3535,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v11.6.1",
+            "version": "v11.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "d8cc34766635da552a9ddff80248c5505f19bd04"
+                "reference": "5b57dbc9fc5e350d70b5c612fd53c65dd0bbebb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/d8cc34766635da552a9ddff80248c5505f19bd04",
-                "reference": "d8cc34766635da552a9ddff80248c5505f19bd04",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/5b57dbc9fc5e350d70b5c612fd53c65dd0bbebb2",
+                "reference": "5b57dbc9fc5e350d70b5c612fd53c65dd0bbebb2",
                 "shasum": ""
             },
             "require": {
@@ -3608,7 +3608,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2023-02-03T15:45:23+00:00"
+            "time": "2023-02-08T17:24:40+00:00"
         },
         {
             "name": "laravel/scout",
