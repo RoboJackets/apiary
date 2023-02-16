@@ -1023,6 +1023,7 @@ class User extends Authenticatable
     public function getCurrentTravelAssignmentAttribute(): ?TravelAssignment
     {
         $needPayment = $this->assignments()
+            ->select("travel_assignments.*")
             ->unpaid()
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
@@ -1033,6 +1034,7 @@ class User extends Authenticatable
         }
 
         $needDocuSign = $this->assignments()
+            ->select("travel_assignments.*")
             ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->needDocuSign()
             ->oldest('travel.departure_date')
@@ -1045,6 +1047,7 @@ class User extends Authenticatable
 
         // this might be null, but that's fine
         return $this->assignments()
+            ->select("travel_assignments.*")
             ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')

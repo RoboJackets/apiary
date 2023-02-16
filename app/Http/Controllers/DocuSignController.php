@@ -25,6 +25,7 @@ class DocuSignController extends Controller
 
         if (! $assignment->needs_docusign) {
             $any_assignment_needs_docusign = $user->assignments()
+                ->select("travel_assignments.*")
                 ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
                 ->needDocuSign()
                 ->oldest('travel.departure_date')
