@@ -45,8 +45,6 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
 
     /**
      * The unique ID of the job.
-     *
-     * @return string
      */
     public function uniqueId(): string
     {
