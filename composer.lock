@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f97633a201da449c208c1c06a901197",
+    "content-hash": "73a24f17042051af74491ac187d8fbd2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -73,27 +73,27 @@
         },
         {
             "name": "adldap2/adldap2-laravel",
-            "version": "v6.1.6",
+            "version": "v6.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2-Laravel.git",
-                "reference": "e67f845db08389acdf7326fd596fda10b3560d25"
+                "reference": "d587c4dea4ffefbbbea7601958c125216ea43452"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/e67f845db08389acdf7326fd596fda10b3560d25",
-                "reference": "e67f845db08389acdf7326fd596fda10b3560d25",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/d587c4dea4ffefbbbea7601958c125216ea43452",
+                "reference": "d587c4dea4ffefbbbea7601958c125216ea43452",
                 "shasum": ""
             },
             "require": {
                 "adldap2/adldap2": "^10.1",
-                "illuminate/support": "~5.5|~6.0|~7.0|~8.0|~9.0",
+                "illuminate/support": "~5.5|~6.0|~7.0|~8.0|~9.0|^10.0",
                 "php": ">=7.1"
             },
             "require-dev": {
                 "mockery/mockery": "~1.0",
-                "orchestra/testbench": "~3.7|~4.0",
-                "phpunit/phpunit": "~7.0|~8.0"
+                "orchestra/testbench": "~3.7|~4.0|^8.0",
+                "phpunit/phpunit": "~7.0|~8.0|^9.5.10"
             },
             "type": "project",
             "extra": {
@@ -125,9 +125,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Adldap2/Adldap2-Laravel/issues",
-                "source": "https://github.com/Adldap2/Adldap2-Laravel/tree/v6.1.6"
+                "source": "https://github.com/Adldap2/Adldap2-Laravel/tree/v6.1.7"
             },
-            "time": "2022-02-09T13:04:53+00:00"
+            "time": "2023-02-15T14:51:44+00:00"
         },
         {
             "name": "ans-group/laravel-health-check",
