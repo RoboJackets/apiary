@@ -17,7 +17,7 @@ class TravelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string,string|int|\DateTime>
+     * @return array<string,string|int|\DateTime|bool>
      */
     public function definition()
     {
