@@ -29,6 +29,7 @@ class TravelFactory extends Factory
             'return_date' => $this->faker->dateTimeBetween('1 week', '2 weeks'),
             'fee_amount' => (string) $this->faker->randomFloat(2, 0, 1000),
             'included_with_fee' => $this->faker->paragraph(),
+            'is_international' => $this->faker->boolean(),
         ];
     }
 }
