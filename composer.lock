@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "599f3e48873b5a240ee3a488748a0e37",
+    "content-hash": "0aa9dbe65f10aec0b497cef5eef387ee",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -131,34 +131,34 @@
         },
         {
             "name": "ans-group/laravel-health-check",
-            "version": "v1.13.5",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ans-group/laravel-health-check.git",
-                "reference": "836b9322a9e18b45ccef86c09c716ca2adf0c545"
+                "reference": "fb3bca48166703894588aa78e0631d4a4227aab2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/836b9322a9e18b45ccef86c09c716ca2adf0c545",
-                "reference": "836b9322a9e18b45ccef86c09c716ca2adf0c545",
+                "url": "https://api.github.com/repos/ans-group/laravel-health-check/zipball/fb3bca48166703894588aa78e0631d4a4227aab2",
+                "reference": "fb3bca48166703894588aa78e0631d4a4227aab2",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/console": "^5.4|^6.0|^7.0|^8.0|^9.0",
-                "illuminate/http": "^5.4|^6.0|^7.0|^8.0|^9.0",
-                "illuminate/support": "^5.4|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/console": "^5.4|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/http": "^5.4|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/support": "^5.4|^6.0|^7.0|^8.0|^9.0|^10.0",
                 "nesbot/carbon": "^1.26.3|^2.0",
                 "php": ">=5.6"
             },
             "require-dev": {
                 "guzzlehttp/guzzle": ">=5.6.3",
-                "illuminate/database": "^5.4|^6.0|^7.0|^8.0|^9.0",
-                "illuminate/log": "^5.4|^6.0|^7.0|^8.0|^9.0",
-                "illuminate/redis": "^5.4|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/database": "^5.4|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/log": "^5.4|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/redis": "^5.4|^6.0|^7.0|^8.0|^9.0|^10.0",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^3.0|^4.0|^5.0|^6.0",
-                "phpunit/phpunit": ">=5.0"
+                "orchestra/testbench": "^3.0|^4.0|^5.0|^6.0|^8.0",
+                "phpunit/phpunit": ">=5.0 <10"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Allows the http health check to function.",
@@ -213,7 +213,7 @@
                 "issues": "https://github.com/ukfast/laravel-health-check/issues",
                 "source": "https://github.com/ukfast/laravel-health-check/tree/master"
             },
-            "time": "2023-01-04T09:20:05+00:00"
+            "time": "2023-02-20T14:47:21+00:00"
         },
         {
             "name": "apereo/phpcas",
