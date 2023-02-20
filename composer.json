@@ -25,7 +25,7 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "adldap2/adldap2-laravel": "6.1.7",
-        "ans-group/laravel-health-check": "1.13.5",
+        "ans-group/laravel-health-check": "1.14.0",
         "apereo/phpcas": "1.6.1",
         "arcanedev/laravel-markdown": "6.0.0",
         "ashallendesign/laravel-config-validator": "2.4.0",
