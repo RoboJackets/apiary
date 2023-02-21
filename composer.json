@@ -44,7 +44,7 @@
         "laravel/scout": "9.8.1",
         "laravel/slack-notification-channel": "2.5.0",
         "laravel/socialite": "5.6.1",
-        "laravel/tinker": "2.8.0",
+        "laravel/tinker": "2.8.1",
         "maatwebsite/excel": "3.1.47",
         "madewithlove/laravel-nova-uuid-support": "1.4",
         "meilisearch/meilisearch-php": "0.27.0",
