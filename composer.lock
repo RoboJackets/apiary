@@ -13423,23 +13423,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.22.0",
+            "version": "v7.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "4e16b1adde9d13aff6e4221c841bb82dcd4416f0"
+                "reference": "987f5383f597a54f8d9868f98411899398348c02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/4e16b1adde9d13aff6e4221c841bb82dcd4416f0",
-                "reference": "4e16b1adde9d13aff6e4221c841bb82dcd4416f0",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/987f5383f597a54f8d9868f98411899398348c02",
+                "reference": "987f5383f597a54f8d9868f98411899398348c02",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.21",
-                "laravel/framework": "^9.50.2",
+                "laravel/framework": "^9.52.4",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^7.22",
+                "orchestra/testbench-core": "^7.22.1",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -13476,22 +13476,22 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.22.0"
+                "source": "https://github.com/orchestral/testbench/tree/v7.22.1"
             },
-            "time": "2023-02-08T02:31:25+00:00"
+            "time": "2023-02-24T01:07:22+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.22.0",
+            "version": "v7.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "a6e4240149ffc1bb3068a68fe4261a5b59753079"
+                "reference": "75b42f9130e7903ffa0ef8dbb466962ca6635261"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/a6e4240149ffc1bb3068a68fe4261a5b59753079",
-                "reference": "a6e4240149ffc1bb3068a68fe4261a5b59753079",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/75b42f9130e7903ffa0ef8dbb466962ca6635261",
+                "reference": "75b42f9130e7903ffa0ef8dbb466962ca6635261",
                 "shasum": ""
             },
             "require": {
@@ -13499,7 +13499,7 @@
             },
             "require-dev": {
                 "fakerphp/faker": "^1.21",
-                "laravel/framework": "^9.50.2",
+                "laravel/framework": "^9.52.4",
                 "laravel/pint": "^1.4",
                 "mockery/mockery": "^1.5.1",
                 "orchestra/canvas": "^7.0",
@@ -13513,7 +13513,7 @@
             "suggest": {
                 "brianium/paratest": "Allow using parallel tresting (^6.4).",
                 "fakerphp/faker": "Allow using Faker for testing (^1.21).",
-                "laravel/framework": "Required for testing (^9.50.2).",
+                "laravel/framework": "Required for testing (^9.52.4).",
                 "mockery/mockery": "Allow using Mockery for testing (^1.5.1).",
                 "nunomaduro/collision": "Allow using Laravel style tests output and parallel testing (^6.2).",
                 "orchestra/testbench-browser-kit": "Allow using legacy Laravel BrowserKit for testing (^7.0).",
@@ -13564,7 +13564,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2023-02-08T02:19:30+00:00"
+            "time": "2023-02-23T12:15:23+00:00"
         },
         {
             "name": "phan/phan",
