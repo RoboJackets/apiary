@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "416213da8359f0fcf384a5a529cd87ef",
+    "content-hash": "3ea9dfbe327184aacb0a1d145b4783da",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3428,17 +3428,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.22.0",
+            "version": "4.22.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "eb105414c6dedc3fda8e9ca62bdbe99dec80cd31"
+                "reference": "3daa3889d1bc6687f71282d8079ba174bc2283fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-eb105414c6dedc3fda8e9ca62bdbe99dec80cd31-zip-668949.zip",
-                "reference": "eb105414c6dedc3fda8e9ca62bdbe99dec80cd31",
-                "shasum": "2557303a3883136630a205c5ad858a7950515333"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-3daa3889d1bc6687f71282d8079ba174bc2283fe-zip-6b73aa.zip",
+                "reference": "3daa3889d1bc6687f71282d8079ba174bc2283fe",
+                "shasum": "6ae486d53c6aa00d16ef36395e1688b0e2e93b67"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3457,7 +3457,6 @@
                 "symfony/process": "^5.4|^6.0"
             },
             "require-dev": {
-                "laravel/framework": "10.x-dev",
                 "laravel/nova-dusk-suite": "8.4.x-dev|9.4.x-dev|10.4.x-dev",
                 "laravel/pint": "^1.4",
                 "laravel/scout": "^9.8",
@@ -3532,9 +3531,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.22.0"
+                "source": "https://github.com/laravel/nova/tree/v4.22.1"
             },
-            "time": "2023-02-08T20:59:46+00:00"
+            "time": "2023-02-23T23:50:42+00:00"
         },
         {
             "name": "laravel/passport",
