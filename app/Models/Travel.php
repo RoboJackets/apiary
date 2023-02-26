@@ -38,7 +38,6 @@ use Laravel\Scout\Searchable;
  * @property int|null $tar_registration
  * @property string|null $tar_project_number
  * @property string|null $tar_account_code
- * @property bool $completion_email_sent
  * @property-read int|null $assignments_count
  * @property-read \App\Models\User $primaryContact
  *
@@ -47,7 +46,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel newQuery()
  * @method static \Illuminate\Database\Query\Builder|Travel onlyTrashed()
  * @method static Builder|Travel query()
- * @method static Builder|Travel whereCompletionEmailSent($value)
  * @method static Builder|Travel whereCreatedAt($value)
  * @method static Builder|Travel whereDeletedAt($value)
  * @method static Builder|Travel whereDepartureDate($value)
@@ -96,6 +94,11 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereExportControlledTechnologyDescription($value)
  * @method static Builder|Travel whereInternationalTravelJustification($value)
  * @method static Builder|Travel whereIsInternational($value)
+ * @method static Builder|Travel whereFormCompletionEmailSent($value)
+ * @method static Builder|Travel wherePaymentCompletionEmailSent($value)
+ *
+ * @property bool $payment_completion_email_sent
+ * @property bool $form_completion_email_sent
  */
 class Travel extends Model
 {
@@ -125,7 +128,8 @@ class Travel extends Model
         'return_date' => 'date',
         'tar_transportation_mode' => 'array',
         'tar_required' => 'boolean',
-        'completion_email_sent' => 'boolean',
+        'payment_completion_email_sent' => 'boolean',
+        'form_completion_email_sent' => 'boolean',
         'is_international' => 'boolean',
         'export_controlled_technology' => 'boolean',
         'embargoed_destination' => 'boolean',

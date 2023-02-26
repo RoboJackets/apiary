@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\Travel;
-use App\Models\TravelAssignment;
 use App\Notifications\Travel\AllTravelAssignmentsComplete;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -39,15 +38,18 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
         $travel = $this->travel;
         Cache::lock('send_completion_email_'.$travel->id, 5 /* seconds */)->get(
             static function () use ($travel): void {
-                if (! $travel->completion_email_sent &&
-                    $travel->assignments->reduce(
-                        static fn (bool $carry, TravelAssignment $each): bool => $carry && $each->is_complete,
-                        true
-                    )
-                ) {
-                    $travel->completion_email_sent = true;
+                if (! $travel->payment_completion_email_sent && $travel->assignments()->unpaid()->doesntExist()) {
+                    $travel->payment_completion_email_sent = true;
+                    $travel->form_completion_email_sent = $travel->assignments()->needDocuSign()->doesntExist();
                     $travel->save();
-
+                    $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
+                } elseif ($travel->tar_required &&
+                    ! $travel->form_completion_email_sent &&
+                    $travel->assignments()->needDocuSign()->doesntExist()
+                ) {
+                    $travel->payment_completion_email_sent = $travel->assignments()->unpaid()->doesntExist();
+                    $travel->form_completion_email_sent = true;
+                    $travel->save();
                     $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
                 }
             }

@@ -77,6 +77,7 @@ parameters:
     - '#Method Database\\Factories\\[a-zA-Z]+::definition\(\) should return array<string, .+> but returns array<string, mixed>\.#'
     - '#Offset ''[A-Za-z]+'' does not exist on array\|null\.#'
     - '#Offset ''revenue'' does not exist on App\\Models\\Payment\|null\.#'
+    - '#Only booleans are allowed in &&, bool\|null given on the left side\.#'
     - '#Only booleans are allowed in &&, Illuminate\\Support\\Carbon\|null given on the (right|left) side\.#'
     - '#Only booleans are allowed in a negated boolean, bool\|null given\.#'
     - '#Only booleans are allowed in a negated boolean, Illuminate\\Support\\Carbon\|null given\.#'
