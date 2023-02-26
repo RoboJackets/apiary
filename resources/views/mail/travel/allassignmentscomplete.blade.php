@@ -1,5 +1,4 @@
 Hi {{ $travel->primaryContact->preferred_first_name }},
-
 {{-- all assignments paid and documented --}}
 @if($travel->assignments()->unpaid()->doesntExist() && $travel->assignments()->needDocuSign()->doesntExist())
 All travelers have paid the travel fee{{ $travel->tar_required ? ' and submitted travel forms' : '' }} for {{ $travel->name }}. Contact the treasurer to book travel.
@@ -26,8 +25,8 @@ All travelers have paid the travel fee for {{ $travel->name }}.
 @else
 {{ $travel->assignments()->needDocuSign()->count() }} travelers still need to submit forms.
 @endif
-@endif
 
+@endif
 ----
 
 To stop receiving emails from {{ config('app.name') }}, visit @{{{ pm:unsubscribe }}}.
