@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Mail\Travel;
 
 use App\Models\Travel;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -31,12 +32,35 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
                     ->to($this->travel->primaryContact->gt_email, $this->travel->primaryContact->name)
                     ->cc(config('services.treasurer_email'))
-                    ->subject('All travel assignments completed for '.$this->travel->name)
+                    ->subject($this->renderSubjectLine())
                     ->text('mail.travel.allassignmentscomplete')
                     ->withSymfonyMessage(static function (Email $email): void {
                         $email->replyTo(config('services.treasurer_email'));
                     })
                     ->tag('travel-assignments-complete')
                     ->metadata('travel-id', strval($this->travel->id));
+    }
+
+    private function renderSubjectLine(): string
+    {
+        if (
+            $this->travel->assignments()->unpaid()->doesntExist() &&
+            $this->travel->assignments()->needDocuSign()->doesntExist() &&
+            $this->travel->tar_required
+        ) {
+            return 'All travel assignments completed for '.$this->travel->name;
+        } elseif (
+            $this->travel->assignments()->unpaid()->exists() &&
+            $this->travel->assignments()->needDocuSign()->doesntExist()
+        ) {
+            return 'All forms received for '.$this->travel->name;
+        } elseif (
+            $this->travel->assignments()->unpaid()->doesntExist() &&
+            ($this->travel->assignments()->needDocuSign()->exists() || ! $this->travel->tar_required)
+        ) {
+            return 'All travel fees paid for '.$this->travel->name;
+        } else {
+            throw new Exception('Unexpected state');
+        }
     }
 }
