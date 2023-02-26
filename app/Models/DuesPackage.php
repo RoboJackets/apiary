@@ -199,7 +199,8 @@ class DuesPackage extends Model
                 'dues_transactions as dues_transactions_ucp',
                 static function (JoinClause $join) use ($user): void {
                     $join->on('dues_packages.conflicts_with_package_id', '=', 'dues_transactions_ucp.dues_package_id')
-                         ->where('dues_transactions_ucp.user_id', $user->id);
+                         ->where('dues_transactions_ucp.user_id', $user->id)
+                         ->whereNull('dues_transactions_ucp.deleted_at');
                 }
             )
             ->leftJoin('payments as payments_ucp', static function (JoinClause $join): void {
