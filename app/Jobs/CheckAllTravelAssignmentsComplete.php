@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\Travel;
+use App\Models\TravelAssignment;
 use App\Notifications\Travel\AllTravelAssignmentsComplete;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -43,6 +44,12 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
                     $travel->form_completion_email_sent = $travel->assignments()->needDocuSign()->doesntExist();
                     $travel->save();
                     $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
+
+                    $travel->assignments()->needDocuSign()->get()->each(
+                        static function (TravelAssignment $assignment): void {
+                            SendTravelAssignmentReminder::dispatch($assignment);
+                        }
+                    );
                 } elseif ($travel->tar_required &&
                     ! $travel->form_completion_email_sent &&
                     $travel->assignments()->needDocuSign()->doesntExist()
@@ -51,6 +58,12 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
                     $travel->form_completion_email_sent = true;
                     $travel->save();
                     $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
+
+                    $travel->assignments()->unpaid()->get()->each(
+                        static function (TravelAssignment $assignment): void {
+                            SendTravelAssignmentReminder::dispatch($assignment);
+                        }
+                    );
                 }
             }
         );
