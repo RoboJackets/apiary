@@ -133,7 +133,9 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/ResolvedMail.php",
+            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/ResolvedMail.php"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
