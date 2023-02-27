@@ -43,18 +43,20 @@ class AllTravelAssignmentsCompleteEmailTest extends TestCase
         ]);
         $travel->save();
 
-        TravelAssignment::create([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-            'tar_received' => true,
-        ]);
+        TravelAssignment::withoutEvents(static function () use ($travel, $user): void {
+            TravelAssignment::create([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+                'tar_received' => true,
+            ]);
+        });
 
         $mailable = new AllTravelAssignmentsComplete($travel);
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('submitted travel forms for');
-        $mailable->assertSeeInText('1 traveler still needs to pay the travel fee.');
+        $mailable->assertSeeInText(". 1 traveler still needs to pay the travel fee.\n\n");
         $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/travel/');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
@@ -72,24 +74,28 @@ class AllTravelAssignmentsCompleteEmailTest extends TestCase
         ]);
         $travel->save();
 
-        TravelAssignment::create([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-            'tar_received' => true,
-        ]);
+        TravelAssignment::withoutEvents(static function () use ($travel, $user): void {
+            TravelAssignment::create([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+                'tar_received' => true,
+            ]);
+        });
 
-        TravelAssignment::create([
-            'travel_id' => $travel->id,
-            'user_id' => $otherUser->id,
-            'tar_received' => true,
-        ]);
+        TravelAssignment::withoutEvents(static function () use ($travel, $otherUser): void {
+            TravelAssignment::create([
+                'travel_id' => $travel->id,
+                'user_id' => $otherUser->id,
+                'tar_received' => true,
+            ]);
+        });
 
         $mailable = new AllTravelAssignmentsComplete($travel);
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('submitted travel forms for');
-        $mailable->assertSeeInText('2 travelers still need to pay the travel fee.');
+        $mailable->assertSeeInText(". 2 travelers still need to pay the travel fee.\n\n");
         $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/travel/');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
@@ -111,12 +117,14 @@ class AllTravelAssignmentsCompleteEmailTest extends TestCase
             'tar_received' => false,
         ]);
 
-        Payment::create([
-            'payable_type' => $assignment->getMorphClass(),
-            'payable_id' => $assignment->id,
-            'amount' => $travel->fee_amount,
-            'method' => 'waiver',
-        ]);
+        Payment::withoutEvents(static function () use ($assignment): void {
+            Payment::create([
+                'payable_type' => $assignment->getMorphClass(),
+                'payable_id' => $assignment->id,
+                'amount' => $assignment->travel->fee_amount,
+                'method' => 'waiver',
+            ]);
+        });
 
         $mailable = new AllTravelAssignmentsComplete($travel);
 
@@ -159,12 +167,14 @@ class AllTravelAssignmentsCompleteEmailTest extends TestCase
             'method' => 'waiver',
         ]);
 
-        Payment::create([
-            'payable_type' => $secondAssignment->getMorphClass(),
-            'payable_id' => $secondAssignment->id,
-            'amount' => $travel->fee_amount,
-            'method' => 'waiver',
-        ]);
+        Payment::withoutEvents(static function () use ($secondAssignment): void {
+            Payment::create([
+                'payable_type' => $secondAssignment->getMorphClass(),
+                'payable_id' => $secondAssignment->id,
+                'amount' => $secondAssignment->travel->fee_amount,
+                'method' => 'waiver',
+            ]);
+        });
 
         $mailable = new AllTravelAssignmentsComplete($travel);
 

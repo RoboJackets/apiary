@@ -60,7 +60,8 @@
         "square/square": "25.1.0.20230119",
         "subfission/cas": "4.3.0",
         "symfony/http-client": "6.2.7",
-        "symfony/postmark-mailer": "6.2.7"
+        "symfony/postmark-mailer": "6.2.7",
+        "xammie/mailbook": "^1.6"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "dev-master as 2.12.4",
