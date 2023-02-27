@@ -284,6 +284,7 @@ EOF
           socket = "/var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock"
           firewall-rules = jsonencode(["internet"])
           referrer-policy = "same-origin"
+          x-frame-options = "SAMEORIGIN"
         }
       }
 
