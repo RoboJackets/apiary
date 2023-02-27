@@ -33,6 +33,7 @@
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "3.6.0",
         "enlightn/enlightn": "2.1.0",
+        "fakerphp/faker": "^1.21",
         "guzzlehttp/guzzle": "7.5.0",
         "htmlmin/htmlmin": "9.0.1",
         "http-interop/http-factory-guzzle": "1.2.0",
@@ -66,7 +67,6 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "dev-master as 2.12.4",
         "beyondcode/laravel-dump-server": "1.9.0",
-        "fakerphp/faker": "1.21.0",
         "filp/whoops": "2.14.6",
         "laravel/pint": "1.6.0",
         "mockery/mockery": "1.5.1",
