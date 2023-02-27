@@ -32,7 +32,7 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         ]);
         $assignment->save();
 
-        $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+        Payment::withoutEvents(static function () use ($assignment): Payment {
             $payment = new Payment();
             $payment->payable_type = TravelAssignment::getMorphClassStatic();
             $payment->payable_id = $assignment->id;
