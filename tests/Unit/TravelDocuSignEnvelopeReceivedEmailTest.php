@@ -32,13 +32,17 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         ]);
         $assignment->save();
 
-        $payment = new Payment();
-        $payment->payable_type = TravelAssignment::getMorphClassStatic();
-        $payment->payable_id = $assignment->id;
-        $payment->amount = 10;
-        $payment->method = 'square';
-        $payment->receipt_url = 'https://example.com';
-        $payment->save();
+        $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+            $payment = new Payment();
+            $payment->payable_type = TravelAssignment::getMorphClassStatic();
+            $payment->payable_id = $assignment->id;
+            $payment->amount = 10;
+            $payment->method = 'square';
+            $payment->receipt_url = 'https://example.com';
+            $payment->save();
+
+            return $payment;
+        });
 
         $envelope = new DocuSignEnvelope();
         $envelope->signable_type = $assignment->getMorphClass();

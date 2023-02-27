@@ -122,20 +122,28 @@ class PaymentReceiptEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-            'tar_received' => true,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+                'tar_received' => true,
+            ]);
+            $assignment->save();
 
-        $payment = new Payment();
-        $payment->payable_type = TravelAssignment::getMorphClassStatic();
-        $payment->payable_id = $assignment->id;
-        $payment->amount = 103.30;
-        $payment->method = 'square';
-        $payment->receipt_url = 'https://example.com';
-        $payment->save();
+            return $assignment;
+        });
+
+        $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+            $payment = new Payment();
+            $payment->payable_type = TravelAssignment::getMorphClassStatic();
+            $payment->payable_id = $assignment->id;
+            $payment->amount = 103.30;
+            $payment->method = 'square';
+            $payment->receipt_url = 'https://example.com';
+            $payment->save();
+
+            return $payment;
+        });
 
         $mailable = new PaymentReceipt($payment);
 
