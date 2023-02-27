@@ -49,10 +49,7 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
             $this->travel->tar_required
         ) {
             return 'All travel assignments completed for '.$this->travel->name;
-        } elseif (
-            $this->travel->assignments_need_payment &&
-            ! $this->travel->assignments_need_forms
-        ) {
+        } elseif ($this->travel->assignments_need_payment && ! $this->travel->assignments_need_forms) {
             return 'All forms received for '.$this->travel->name;
         } elseif (
             ! $this->travel->assignments_need_payment &&
