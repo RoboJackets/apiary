@@ -44,19 +44,19 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
     private function renderSubjectLine(): string
     {
         if (
-            $this->travel->assignments()->unpaid()->doesntExist() &&
-            $this->travel->assignments()->needDocuSign()->doesntExist() &&
+            ! $this->travel->assignments_need_payment &&
+            ! $this->travel->assignments_need_forms &&
             $this->travel->tar_required
         ) {
             return 'All travel assignments completed for '.$this->travel->name;
         } elseif (
-            $this->travel->assignments()->unpaid()->exists() &&
-            $this->travel->assignments()->needDocuSign()->doesntExist()
+            $this->travel->assignments_need_payment &&
+            ! $this->travel->assignments_need_forms
         ) {
             return 'All forms received for '.$this->travel->name;
         } elseif (
-            $this->travel->assignments()->unpaid()->doesntExist() &&
-            ($this->travel->assignments()->needDocuSign()->exists() || ! $this->travel->tar_required)
+            ! $this->travel->assignments_need_payment &&
+            ($this->travel->assignments_need_forms || ! $this->travel->tar_required)
         ) {
             return 'All travel fees paid for '.$this->travel->name;
         } else {

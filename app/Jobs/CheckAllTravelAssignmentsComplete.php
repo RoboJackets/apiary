@@ -39,9 +39,9 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
         $travel = $this->travel;
         Cache::lock('send_completion_email_'.$travel->id, 5 /* seconds */)->get(
             static function () use ($travel): void {
-                if (! $travel->payment_completion_email_sent && $travel->assignments()->unpaid()->doesntExist()) {
+                if (! $travel->payment_completion_email_sent && ! $travel->assignments_need_payment) {
                     $travel->payment_completion_email_sent = true;
-                    $travel->form_completion_email_sent = $travel->assignments()->needDocuSign()->doesntExist();
+                    $travel->form_completion_email_sent = ! $travel->assignments_need_forms;
                     $travel->save();
                     $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
 
@@ -52,9 +52,9 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
                     );
                 } elseif ($travel->tar_required &&
                     ! $travel->form_completion_email_sent &&
-                    $travel->assignments()->needDocuSign()->doesntExist()
+                    ! $travel->assignments_need_forms
                 ) {
-                    $travel->payment_completion_email_sent = $travel->assignments()->unpaid()->doesntExist();
+                    $travel->payment_completion_email_sent = ! $travel->assignments_need_payment;
                     $travel->form_completion_email_sent = true;
                     $travel->save();
                     $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));

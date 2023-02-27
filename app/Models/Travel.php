@@ -99,6 +99,8 @@ use Laravel\Scout\Searchable;
  *
  * @property bool $payment_completion_email_sent
  * @property bool $form_completion_email_sent
+ * @property-read bool $assignments_need_forms
+ * @property-read bool $assignments_need_payment
  */
 class Travel extends Model
 {
@@ -164,6 +166,16 @@ class Travel extends Model
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
+    }
+
+    public function getAssignmentsNeedPaymentAttribute(): bool
+    {
+        return $this->assignments()->unpaid()->exists();
+    }
+
+    public function getAssignmentsNeedFormsAttribute(): bool
+    {
+        return $this->assignments()->needDocuSign()->exists();
     }
 
     /**
