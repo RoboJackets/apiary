@@ -116,8 +116,10 @@ class Travel extends Resource
                     .' that violates United States or local laws.'
                 ),
 
-            Boolean::make('Completion Email Sent')
-                ->onlyOnDetail()
+            Boolean::make('Payment Completion Email Sent')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
+            Boolean::make('Form Completion Email Sent')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             new Panel(

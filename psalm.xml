@@ -161,6 +161,7 @@
         <InvalidPropertyAssignmentValue>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <file name="routes/mailbook.php"/>
             </errorLevel>
         </InvalidPropertyAssignmentValue>
         <TooManyTemplateParams>
@@ -292,5 +293,15 @@
                 <file name="app/Http/Middleware/Sentry.php"/>
             </errorLevel>
         </UnusedClosureParam>
+        <InvalidReturnStatement>
+            <errorLevel type="suppress">
+                <file name="routes/mailbook.php"/>
+                <file name="app/Models/Attendance.php"/>
+                <file name="app/Models/Team.php"/>
+                <file name="app/Models/Travel.php"/>
+                <file name="app/Models/User.php"/>
+                <file name="app/Models/DuesTransaction.php"/>
+            </errorLevel>
+        </InvalidReturnStatement>
     </issueHandlers>
 </psalm>

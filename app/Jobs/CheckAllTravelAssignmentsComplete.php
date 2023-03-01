@@ -39,16 +39,31 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
         $travel = $this->travel;
         Cache::lock('send_completion_email_'.$travel->id, 5 /* seconds */)->get(
             static function () use ($travel): void {
-                if (! $travel->completion_email_sent &&
-                    $travel->assignments->reduce(
-                        static fn (bool $carry, TravelAssignment $each): bool => $carry && $each->is_complete,
-                        true
-                    )
-                ) {
-                    $travel->completion_email_sent = true;
+                if (! $travel->payment_completion_email_sent && ! $travel->assignments_need_payment) {
+                    $travel->payment_completion_email_sent = true;
+                    $travel->form_completion_email_sent = ! $travel->assignments_need_forms;
                     $travel->save();
-
                     $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
+
+                    $travel->assignments()->needDocuSign()->get()->each(
+                        static function (TravelAssignment $assignment): void {
+                            SendTravelAssignmentReminder::dispatch($assignment);
+                        }
+                    );
+                } elseif ($travel->tar_required &&
+                    ! $travel->form_completion_email_sent &&
+                    ! $travel->assignments_need_forms
+                ) {
+                    $travel->payment_completion_email_sent = ! $travel->assignments_need_payment;
+                    $travel->form_completion_email_sent = true;
+                    $travel->save();
+                    $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
+
+                    $travel->assignments()->unpaid()->get()->each(
+                        static function (TravelAssignment $assignment): void {
+                            SendTravelAssignmentReminder::dispatch($assignment);
+                        }
+                    );
                 }
             }
         );
