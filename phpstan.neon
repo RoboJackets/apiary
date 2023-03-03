@@ -168,7 +168,6 @@ parameters:
     - '#Parameter \#1 \$user of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\DuesPackage>::userCanPurchase\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$user of static method App\\Http\\Controllers\\DocuSignController::generateAgreementPowerFormUrl\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$user of static method App\\Nova\\Payment::[a-zA-Z]+\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
-    - '#Parameter \#1 \$userId of method Laravel\\Passport\\ClientRepository::createPersonalAccessClient\(\) expects int, null given\.#'
     - '#Parameter \#1 \$username of method Illuminate\\Notifications\\Messages\\SlackMessage::from\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$value of method Carbon\\Carbon::subDays\(\) expects int, mixed given\.#'
     - '#Parameter \#1 \$value of method Laravel\\Nova\\Metrics\\Partition::result\(\) expects array<string, float\|int>, array given\.#'
