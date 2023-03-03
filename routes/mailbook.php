@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// @phan-file-suppress PhanTypeMismatchArgumentProbablyReal
 // @phan-file-suppress PhanTypeMismatchPropertyProbablyReal
 
 use App\Models\DocuSignEnvelope;
