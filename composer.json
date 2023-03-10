@@ -32,7 +32,7 @@
         "barryvdh/laravel-dompdf": "2.0.1",
         "chelout/laravel-relationship-events": "1.5.0",
         "doctrine/dbal": "3.6.1",
-        "enlightn/enlightn": "2.1.0",
+        "enlightn/enlightn": "2.3.0",
         "fakerphp/faker": "1.21.0",
         "guzzlehttp/guzzle": "7.5.0",
         "htmlmin/htmlmin": "9.0.1",
