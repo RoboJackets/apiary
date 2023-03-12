@@ -82,7 +82,6 @@ parameters:
     - '#Only booleans are allowed in &&, Illuminate\\Support\\Carbon\|null given on the (right|left) side\.#'
     - '#Only booleans are allowed in a negated boolean, bool\|null given\.#'
     - '#Only booleans are allowed in a negated boolean, Illuminate\\Support\\Carbon\|null given\.#'
-    - '#Only booleans are allowed in a ternary operator condition, bool\|null given\.#'
     - '#Only booleans are allowed in a ternary operator condition, Illuminate\\Support\\Carbon\|null given\.#'
     - '#Only booleans are allowed in an if condition, bool\|null given\.#'
     - '#Parameter \#1 ...\$addresses of method Symfony\\Component\\Mime\\Email::replyTo\(\) expects string\|Symfony\\Component\\Mime\\Address, mixed given\.#'

@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\GetMorphClassStatic;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -212,7 +213,9 @@ class TravelAssignment extends Model
 
     public function getIsCompleteAttribute(): bool
     {
-        return $this->is_paid && ($this->tar_received || ! $this->travel->tar_required);
+        return $this->is_paid &&
+            ($this->tar_received || ! $this->travel->tar_required) &&
+            ($this->user->has_emergency_contact_information || $this->travel->return_date < Carbon::now());
     }
 
     public function getTravelAuthorityRequestUrlAttribute(): string

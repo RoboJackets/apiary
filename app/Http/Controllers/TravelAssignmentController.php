@@ -44,6 +44,7 @@ class TravelAssignmentController extends Controller
                 'travel' => $assignment->travel,
                 'tar_received' => $assignment->tar_received,
                 'paid' => $assignment->is_paid,
+                'has_emergency_contact' => $user->has_emergency_contact_information,
             ]
         );
     }

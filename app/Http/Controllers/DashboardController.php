@@ -135,6 +135,7 @@ class DashboardController extends Controller
                 'signedAnyAgreement' => $signedAnyAgreement,
                 'agreementExists' => $agreementExists,
                 'travelAssignment' => $travelAssignment,
+                'hasEmergencyContactInformation' => $user->has_emergency_contact_information,
             ]
         );
     }

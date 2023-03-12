@@ -11,6 +11,10 @@ You have been assigned to {{ $assignment->travel->name }}. Please pay the ${{ in
 @endif
 
 If you would prefer to pay by cash or check, make arrangements with {{ $assignment->travel->primaryContact->full_name }}. Write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
+@if(!$assignment->user->has_emergency_contact_information)
+
+You also need to add emergency contact information to your {{ config('app.name') }} profile at {{ route ('profile') }}.
+@endif
 
 For more information, visit {{ route('travel.index') }}. If you have any questions, please contact {{ $assignment->travel->primaryContact->full_name }}.
 

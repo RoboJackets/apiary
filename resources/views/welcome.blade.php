@@ -170,7 +170,7 @@
                 </div>
             </div>
         @endif
-        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid)))
+        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid) || (!$hasEmergencyContactInformation)))
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -195,6 +195,9 @@
                             @endif
                             @if(!$travelAssignment->is_paid)
                             <li><a href="{{ route('pay.travel') }}">Pay the travel fee</a></li>
+                            @endif
+                            @if(!$hasEmergencyContactInformation)
+                            <li><a href="{{ route('profile') }}">Submit emergency contact information</a></li>
                             @endif
                         </ul>
                         <a href="{{ route('travel.index') }}">View Travel</a>

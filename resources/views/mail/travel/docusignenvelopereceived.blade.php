@@ -10,6 +10,10 @@ You still need to make a ${{ intval($envelope->signable->travel->fee_amount) }} 
 If you would prefer to pay by cash or check, make arrangements with {{ $envelope->signable->travel->primaryContact->full_name }}. Write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
 
 @endif
+@if(!$envelope->signedBy->has_emergency_contact_information)
+You {{ (! $envelope->signable->is_paid) ? "also" : "still" }} need to add emergency contact information to your {{ config('app.name') }} profile at {{ route ('profile') }}.
+
+@endif
 For more information, visit {{ route('travel.index') }}. If you have any questions, please contact {{ $envelope->signable->travel->primaryContact->full_name }}.
 
 ----
