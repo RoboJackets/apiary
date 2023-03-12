@@ -99,7 +99,7 @@
             </div>
           </div>
 
-          <h3>Emergency Contacts</h3>
+          <h3>Emergency Contact</h3>
 
           <div class="form-group row">
             <label for="user-emergencyname" class="col-sm-2 col-form-label">Contact Name</label>

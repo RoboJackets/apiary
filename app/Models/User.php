@@ -128,6 +128,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\User|null $manager
+ * @property-read bool $has_emergency_contact_information
  *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
@@ -1072,5 +1073,12 @@ class User extends Authenticatable
             ->toArray();
 
         return count($teams) === 0 ? null : Team::whereId($teams[0])->sole()->projectManager;
+    }
+
+    public function getHasEmergencyContactInformationAttribute(): bool
+    {
+        return $this->emergency_contact_name !== null &&
+            $this->emergency_contact_phone !== null &&
+            $this->phone !== $this->emergency_contact_phone;
     }
 }

@@ -38,7 +38,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
 
     Route::get('sums', [SUMSController::class, 'index']);
 
-    Route::get('profile', [UserController::class, 'showProfile']);
+    Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
 
     Route::prefix('dues')->group(static function (): void {
         Route::get('/', [DuesTransactionController::class, 'showDuesFlow'])->name('showDuesFlow');
