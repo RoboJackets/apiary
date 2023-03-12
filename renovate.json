@@ -67,6 +67,9 @@
               "prPriority": -5
             }
         ],
+        "ignoreDeps": [
+            "sweetalert2"
+        ]
     },
     "docker": {
         "enabled": false
