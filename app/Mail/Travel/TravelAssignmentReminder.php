@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Mail\Travel;
 
 use App\Models\TravelAssignment;
-use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -54,14 +53,20 @@ class TravelAssignmentReminder extends Mailable implements ShouldQueue
             $this->assignment->user->has_emergency_contact_information
         ) {
             return 'documents';
-        } elseif ($this->assignment->needs_docusign) {
-            return 'action';
-        } elseif (! $this->assignment->user->has_emergency_contact_information) {
+        } elseif (
+            ! $this->assignment->needs_docusign &&
+            $this->assignment->is_paid &&
+            ! $this->assignment->user->has_emergency_contact_information
+        ) {
             return 'emergency contact information';
-        } elseif (! $this->assignment->is_paid) {
+        } elseif (
+            ! $this->assignment->needs_docusign &&
+            ! $this->assignment->is_paid &&
+            $this->assignment->user->has_emergency_contact_information
+        ) {
             return 'payment';
         } else {
-            throw new Exception('Unexpected state');
+            return 'action';
         }
     }
 }

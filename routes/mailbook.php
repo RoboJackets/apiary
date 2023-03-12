@@ -1118,6 +1118,57 @@ Mailbook::to($user)
         });
 
         return new TravelAssignmentReminder($assignment);
+    })
+    ->variant('Need Emergency Contact And Payment', static function (): TravelAssignmentReminder {
+        $user = User::withoutEvents(static function (): User {
+            $user = User::factory()->make([
+                'first_name' => 'George',
+                'preferred_name' => null,
+                'last_name' => 'Burdell',
+                'gt_email' => 'george.burdell@gatech.edu',
+                'primary_affiliation' => 'student',
+            ]);
+            $user->save();
+
+            return $user;
+        });
+
+        $officer = User::withoutEvents(static function (): User {
+            $officer = User::factory()->make([
+                'first_name' => 'Robo',
+                'preferred_name' => null,
+                'last_name' => 'Buzz',
+                'gt_email' => 'robo.buzz@gatech.edu',
+            ]);
+            $officer->save();
+
+            return $officer;
+        });
+
+        $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+            'name' => 'Motorama 2022',
+        ], [
+            'destination' => 'mailbook',
+            'departure_date' => '2022-02-18',
+            'return_date' => Carbon::now()->addDay(),
+            'fee_amount' => 20,
+            'tar_required' => false,
+            'primary_contact_user_id' => $officer->id,
+            'included_with_fee' => 'mailbook',
+            'is_international' => false,
+        ]));
+
+        $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'user_id' => $user->id,
+                'travel_id' => $travel->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
+
+        return new TravelAssignmentReminder($assignment);
     });
 
 Mailbook::to($user)
