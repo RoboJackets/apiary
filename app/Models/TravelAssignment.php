@@ -221,9 +221,9 @@ class TravelAssignment extends Model
     public function getTravelAuthorityRequestUrlAttribute(): string
     {
         if (
-            (($this->travel->tar_transportation_mode ?? [
+            ($this->travel->tar_transportation_mode ?? [
                 'state_contract_airline' => false,
-            ])['state_contract_airline']) === true ||
+            ])['state_contract_airline'] === true ||
             true === ($this->travel->tar_transportation_mode ?? [
                 'non_contract_airline' => false,
             ])['non_contract_airline']
