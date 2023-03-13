@@ -434,7 +434,7 @@ class User extends Resource
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
             (new ResumesSubmitted())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-resume')),
-            (new CreateReasonBreakdown()),
+            new CreateReasonBreakdown(),
         ];
     }
 

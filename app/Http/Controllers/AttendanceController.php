@@ -196,12 +196,12 @@ class AttendanceController extends Controller
                 ];
             });
 
-        $averageWeeklyAttendance = (Attendance::whereBetween('created_at', [$startDay, $endDay])
+        $averageWeeklyAttendance = Attendance::whereBetween('created_at', [$startDay, $endDay])
             ->where('attendable_type', Team::getMorphClassStatic())
             ->selectRaw('date_format(created_at, \'%Y %U\') as week, count(distinct gtid) as aggregate')
             ->groupBy('week')
             ->get()
-            ->sum('aggregate')) / $numberOfWeeks;
+            ->sum('aggregate') / $numberOfWeeks;
 
         // Get the attendance by (ISO) week for the teams, for all time so historical graphs can be generated
         $attendanceByTeam = Attendance::selectRaw(
