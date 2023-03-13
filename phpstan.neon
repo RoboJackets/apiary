@@ -135,7 +135,7 @@ parameters:
     - '#Parameter \#1 \$path of method Illuminate\\Routing\\Redirector::away\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$payment of class App\\Notifications\\PaymentReceipt constructor expects App\\Models\\Payment, mixed given\.#'
     - '#Parameter \#1 \$permission of method Spatie\\Permission\\Contracts\\Role::givePermissionTo\(\) expects string, mixed given\.#'
-    - '#Parameter \#1 \$permissions of method Spatie\\Permission\\Contracts\\Role::syncPermissions\(\) expects iterable<string>, mixed given\.#'
+    - '#Parameter \#1 \$permissions of method Spatie\\Permission\\Contracts\\Role::syncPermissions\(\) expects Iterable<string>, mixed given\.#'
     - '#Parameter \#1 \$query of static method App\\Models\\User::search\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$resolveCallback of method Laravel\\Nova\\Fields\\Field::resolveUsing\(\) expects callable\(mixed, mixed, string\|null\): mixed, Closure\(bool\): ''Electronic''\|''Paper'' given\.#'
     - '#Parameter \#1 \$resolveCallback of method Laravel\\Nova\\Fields\\Field::resolveUsing\(\) expects callable\(mixed, mixed, string\|null\): mixed, Closure\(Carbon\\Carbon\): Carbon\\Carbon\|null given\.#'
