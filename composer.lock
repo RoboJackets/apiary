@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44f6970aaf56902384f18120f4691df6",
+    "content-hash": "91b5ce684180638b84dc43f6ac8a2fa1",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -13250,20 +13250,20 @@
         },
         {
             "name": "mxl/laravel-job",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mxl/laravel-job.git",
-                "reference": "0e91fb54e0d395a3c0a52129166cb43d6c686f20"
+                "reference": "abb62d49612b284a7fbc7fa9dd678ec512c8155d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mxl/laravel-job/zipball/0e91fb54e0d395a3c0a52129166cb43d6c686f20",
-                "reference": "0e91fb54e0d395a3c0a52129166cb43d6c686f20",
+                "url": "https://api.github.com/repos/mxl/laravel-job/zipball/abb62d49612b284a7fbc7fa9dd678ec512c8155d",
+                "reference": "abb62d49612b284a7fbc7fa9dd678ec512c8155d",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0",
+                "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
                 "php": ">=7.0"
             },
             "require-dev": {
@@ -13305,7 +13305,7 @@
                 "issues": "https://github.com/mxl/laravel-job/issues",
                 "source": "https://github.com/mxl/laravel-job"
             },
-            "time": "2022-03-03T12:16:34+00:00"
+            "time": "2023-02-05T04:09:23+00:00"
         },
         {
             "name": "myclabs/deep-copy",
