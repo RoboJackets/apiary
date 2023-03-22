@@ -288,16 +288,16 @@
         },
         {
             "name": "apimatic/core",
-            "version": "0.2.3",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/core-lib-php.git",
-                "reference": "411a2e507bd2cab109d51ebd1c7d4ff4911c90a7"
+                "reference": "4634be2262d4946e2bac45707b35f46c226617f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/411a2e507bd2cab109d51ebd1c7d4ff4911c90a7",
-                "reference": "411a2e507bd2cab109d51ebd1c7d4ff4911c90a7",
+                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/4634be2262d4946e2bac45707b35f46c226617f8",
+                "reference": "4634be2262d4946e2bac45707b35f46c226617f8",
                 "shasum": ""
             },
             "require": {
@@ -335,9 +335,9 @@
             ],
             "support": {
                 "issues": "https://github.com/apimatic/core-lib-php/issues",
-                "source": "https://github.com/apimatic/core-lib-php/tree/0.2.3"
+                "source": "https://github.com/apimatic/core-lib-php/tree/0.2.4"
             },
-            "time": "2023-03-03T04:19:56+00:00"
+            "time": "2023-03-21T12:01:54+00:00"
         },
         {
             "name": "apimatic/core-interfaces",
@@ -4681,16 +4681,16 @@
         },
         {
             "name": "league/oauth2-server",
-            "version": "8.4.0",
+            "version": "8.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-server.git",
-                "reference": "539f4340c14eca8d44578fd118f6bdc0ad16d1ce"
+                "reference": "eed31d86d8cc8e6e9c9f58fbb2113494f8b41e24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/539f4340c14eca8d44578fd118f6bdc0ad16d1ce",
-                "reference": "539f4340c14eca8d44578fd118f6bdc0ad16d1ce",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/eed31d86d8cc8e6e9c9f58fbb2113494f8b41e24",
+                "reference": "eed31d86d8cc8e6e9c9f58fbb2113494f8b41e24",
                 "shasum": ""
             },
             "require": {
@@ -4757,7 +4757,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-server/issues",
-                "source": "https://github.com/thephpleague/oauth2-server/tree/8.4.0"
+                "source": "https://github.com/thephpleague/oauth2-server/tree/8.4.1"
             },
             "funding": [
                 {
@@ -4765,7 +4765,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-15T16:08:35+00:00"
+            "time": "2023-03-22T11:47:53+00:00"
         },
         {
             "name": "league/uri",
