@@ -535,11 +535,11 @@ class User extends Resource
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->is('nova-api/dues-transactions/*')) {
-            return $query->inactive();
+            return $query->inactive()->orWhere('users.id', '=', $request->viaResourceId);
         }
 
         if ($request->is('nova-api/travel-assignments/*')) {
-            return $query->accessActive();
+            return $query->accessActive()->orWhere('users.id', '=', $request->viaResourceId);
         }
 
         return $query;
