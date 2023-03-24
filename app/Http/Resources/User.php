@@ -74,7 +74,7 @@ class User extends JsonResource
             ]),
             'manager' => $this->when(
                 Auth::user()->can('read-users') && $this->withManager,
-                fn (): ?self => $this->manager === null ? null : new self($this->manager)
+                fn (): ?Manager => $this->manager === null ? null : new Manager($this->manager)
             ),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
