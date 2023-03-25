@@ -182,11 +182,11 @@ class DuesTransaction extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'user' => 'users',
-            'package' => 'dues-packages',
-            'payment' => 'payments',
-            'user.teams' => 'teams-membership',
-            'merchandise' => 'merchandise',
+            'user' => 'read-users',
+            'package' => 'read-dues-packages',
+            'payment' => 'read-payments',
+            'user.teams' => 'read-teams-membership',
+            'merchandise' => 'read-merchandise',
         ];
     }
 

@@ -151,8 +151,8 @@ class Attendance extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'attendee' => 'users',
-            'recorded' => 'users',
+            'attendee' => 'read-users',
+            'recorded' => 'read-users',
         ];
     }
 

@@ -189,8 +189,8 @@ class Team extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'members' => 'teams-membership',
-            'attendance' => 'attendance',
+            'members' => 'read-teams-membership',
+            'attendance' => 'read-attendance',
         ];
     }
 

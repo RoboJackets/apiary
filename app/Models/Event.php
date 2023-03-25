@@ -148,9 +148,9 @@ class Event extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'organizer' => 'users',
-            'rsvps' => 'rsvps',
-            'attendance' => 'attendance',
+            'organizer' => 'read-users',
+            'rsvps' => 'read-rsvps',
+            'attendance' => 'read-attendance',
         ];
     }
 

@@ -276,8 +276,8 @@ class DuesPackage extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'transactions' => 'dues-transactions',
-            'merchandise' => 'merchandise',
+            'transactions' => 'read-dues-transactions',
+            'merchandise' => 'read-merchandise',
         ];
     }
 }
