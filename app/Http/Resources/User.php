@@ -94,6 +94,7 @@ class User extends JsonResource
                     $this->resource->relationLoaded('roles') ? $this->getAllPermissions()->pluck('name') : [],
                 ]
             ),
+            'travel' => TravelAssignment::collection($this->whenLoaded('assignments')),
         ];
     }
 

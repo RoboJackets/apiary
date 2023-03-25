@@ -562,12 +562,13 @@ class User extends Authenticatable
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'teams' => 'teams-membership',
-            'dues' => 'dues-transactions',
-            'events' => 'events',
-            'rsvps' => 'rsvps',
-            'roles' => 'roles-and-permissions',
-            'permissions' => 'roles-and-permissions',
+            'teams' => 'read-teams-membership',
+            'dues' => 'read-dues-transactions',
+            'events' => 'read-events',
+            'rsvps' => 'read-rsvps',
+            'roles' => 'read-roles-and-permissions',
+            'permissions' => 'read-roles-and-permissions',
+            'assignments.travel' => 'manage-travel',
         ];
     }
 

@@ -171,8 +171,8 @@ class Payment extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'user' => 'users',
-            'payable' => 'dues-transactions',
+            'user' => 'read-users',
+            'payable' => 'read-dues-transactions',
         ];
     }
 
