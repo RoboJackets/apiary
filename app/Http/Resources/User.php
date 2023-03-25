@@ -11,6 +11,7 @@ use App\Http\Resources\Permission as PermissionResource;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -93,6 +94,11 @@ class User extends JsonResource
                     'allPermissions' => $this->resource->relationLoaded('permissions') &&
                     $this->resource->relationLoaded('roles') ? $this->getAllPermissions()->pluck('name') : [],
                 ]
+            ),
+            'travel' => $this->when(
+                ($this->requestingSelf($request) || Auth::user()->can('manage-travel')) &&
+                $this->resource->relationLoaded('assignments'),
+                fn (): AnonymousResourceCollection => TravelAssignment::collection($this->assignments)
             ),
         ];
     }

@@ -568,6 +568,7 @@ class User extends Authenticatable
             'rsvps' => 'rsvps',
             'roles' => 'roles-and-permissions',
             'permissions' => 'roles-and-permissions',
+            'assignments.travel' => 'users',
         ];
     }
 
