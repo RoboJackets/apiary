@@ -61,7 +61,8 @@ class SendReminders implements ShouldQueue, ShouldBeUnique
             DuesPackage::userCanPurchase($this->user)->exists() &&
             DuesPackage::whereDate('effective_end', '<', Carbon::now())
                 ->whereDate('access_end', '>', Carbon::now())
-                ->doesntExist()
+                ->doesntExist() &&
+            $this->user->attendance()->exists()
         ) {
             SendDuesTransactionReminder::dispatch($this->user);
 
