@@ -44,7 +44,6 @@ parameters:
     - '#Cannot call method [a-zA-Z]+\(\) on App\\Models\\[a-zA-Z]+\|null\.#'
     - '#Cannot call method [a-zA-Z_]+\(\) on mixed\.#'
     - '#Cannot call method getMorphClass\(\) on App\\Models\\Event|App\\Models\\Team\|null\.#'
-    - '#Cannot call method getTimestamp\(\) on Illuminate\\Support\\Carbon\|null\.#'
     - '#Cannot call method members\(\) on App\\Models\\[a-zA-Z]+|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\[a-zA-Z]+>\|null\.#'
     - '#Cannot call method notify\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.#'
     - '#Cannot call method pluck\(\) on Adldap\\Query\\Collection\|array\.#'
