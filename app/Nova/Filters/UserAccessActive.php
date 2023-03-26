@@ -25,7 +25,7 @@ class UserAccessActive extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public function apply(NovaRequest $request, $query, $value): Builder
+    public function apply(NovaRequest $request, Builder $query, string $value): Builder
     {
         return $value === 'yes' ? $query->accessActive() : $query->accessInactive();
     }

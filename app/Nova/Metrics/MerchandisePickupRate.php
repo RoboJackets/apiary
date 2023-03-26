@@ -65,7 +65,7 @@ class MerchandisePickupRate extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'pickup-rate';
     }

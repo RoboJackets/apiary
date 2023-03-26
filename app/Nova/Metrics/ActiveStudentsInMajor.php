@@ -33,7 +33,7 @@ class ActiveStudentsInMajor extends Value
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'active-students-in-major';
     }

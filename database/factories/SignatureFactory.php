@@ -20,7 +20,7 @@ class SignatureFactory extends Factory
      *
      * @return array<string, int|bool>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'membership_agreement_template_id' => MembershipAgreementTemplate::all()->random()->id,

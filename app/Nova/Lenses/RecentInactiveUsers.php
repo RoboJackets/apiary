@@ -32,7 +32,7 @@ class RecentInactiveUsers extends Lens
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
-    public static function query(LensRequest $request, $query): Builder
+    public static function query(LensRequest $request, Builder $query): Builder
     {
         return $request->withOrdering(
             $request->withFilters(

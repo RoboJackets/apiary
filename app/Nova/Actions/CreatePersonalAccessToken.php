@@ -56,7 +56,7 @@ class CreatePersonalAccessToken extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Heading::make(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 use App\Http\Resources\Payment as PaymentResource;
 use App\Http\Resources\User as UserResource;
@@ -17,7 +18,7 @@ class DuesTransaction extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array<string,mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,

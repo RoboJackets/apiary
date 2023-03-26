@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use App\Http\Resources\Attendance as AttendanceResource;
 use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,7 +17,7 @@ class Team extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array<string,mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             // Attributes

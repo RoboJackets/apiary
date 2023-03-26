@@ -42,7 +42,7 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->resourceId === -1 ? 'TAR Received' : 'TAR Received for '.Travel::where(
             'id',
@@ -81,7 +81,7 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return $this->resourceId === -1 ? 'tar-received' : 'tar-received-'.$this->resourceId;
     }

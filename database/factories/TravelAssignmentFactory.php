@@ -20,7 +20,7 @@ class TravelAssignmentFactory extends Factory
      *
      * @return array<string, int>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'travel_id' => Travel::all()->random()->id,

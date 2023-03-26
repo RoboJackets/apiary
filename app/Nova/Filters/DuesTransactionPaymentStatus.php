@@ -27,7 +27,7 @@ class DuesTransactionPaymentStatus extends BooleanFilter
      *
      * @phan-suppress PhanTypeMismatchDeclaredReturn
      */
-    public function apply(NovaRequest $request, $query, $value): Builder
+    public function apply(NovaRequest $request, Builder $query, array $value): Builder
     {
         return $value['pending'] === true ? $query->pending() : $query;
     }

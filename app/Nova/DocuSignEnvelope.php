@@ -92,7 +92,7 @@ class DocuSignEnvelope extends Resource
      *
      * @return array
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             ID::make()->sortable(),

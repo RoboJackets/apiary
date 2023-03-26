@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Http\Requests\MembershipAgreementCompleteRequest;
 use App\Http\Requests\MembershipAgreementRedirectRequest;
 use App\Jobs\RetrieveIpAddressGeoLocationForSignature;
@@ -55,7 +56,7 @@ class SignatureController extends Controller
     /**
      * Render the agreement in the browser.
      */
-    public function render(Request $request)
+    public function render(Request $request): View
     {
         $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();

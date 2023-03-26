@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Middleware\Authenticate as AuthenticateMiddleware;
 
@@ -17,7 +18,7 @@ class Authenticate extends AuthenticateMiddleware
      *
      * @throws AuthorizationException
      */
-    protected function redirectTo($request)
+    protected function redirectTo(Request $request): ?string
     {
         if (! $request->expectsJson()) {
             if ($request->is('oauth/*')) {

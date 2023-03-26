@@ -27,7 +27,7 @@ class UserActive extends Filter
      *
      * @phan-suppress PhanTypeMismatchDeclaredReturn
      */
-    public function apply(NovaRequest $request, $query, $value): Builder
+    public function apply(NovaRequest $request, Builder $query, string $value): Builder
     {
         return $value === 'yes' ? $query->active() : $query->inactive();
     }

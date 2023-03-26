@@ -16,7 +16,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testIsStudent()
+    public function testIsStudent(): void
     {
         $user = $this->getTestUser(['member']);
 

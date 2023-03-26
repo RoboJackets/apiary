@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 use Closure;
 use Sentry\Event;
 use Sentry\EventHint;
@@ -16,7 +18,7 @@ class Sentry
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         if (app()->bound('sentry')) {
             \Sentry\configureScope(static function (Scope $scope): void {

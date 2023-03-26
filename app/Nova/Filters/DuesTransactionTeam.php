@@ -35,7 +35,7 @@ class DuesTransactionTeam extends Filter
      *
      * @phan-suppress PhanTypeMismatchDeclaredReturn
      */
-    public function apply(NovaRequest $request, $query, $value): Builder
+    public function apply(NovaRequest $request, Builder $query, int $value): Builder
     {
         return $query
             ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')

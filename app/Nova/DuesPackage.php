@@ -195,7 +195,7 @@ class DuesPackage extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
-    public static function relatableQuery(NovaRequest $request, $query): Builder
+    public static function relatableQuery(NovaRequest $request, Builder $query): Builder
     {
         if ($request->is('nova-api/dues-transactions/*')) {
             return $query->availableForPurchase();

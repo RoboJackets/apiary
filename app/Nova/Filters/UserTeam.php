@@ -33,7 +33,7 @@ class UserTeam extends Filter
      * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public function apply(NovaRequest $request, $query, $value): Builder
+    public function apply(NovaRequest $request, Builder $query, string $value): Builder
     {
         return $query->whereHas('teams', static function (Builder $query) use ($value): void {
             $query->where('teams.id', '=', $value);

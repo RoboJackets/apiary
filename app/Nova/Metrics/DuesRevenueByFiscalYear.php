@@ -61,7 +61,7 @@ class DuesRevenueByFiscalYear extends Trend
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'dues-revenue-by-fiscal-year';
     }

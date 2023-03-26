@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -241,7 +242,7 @@ class UserController extends Controller
         );
     }
 
-    public function showProfile(Request $request)
+    public function showProfile(Request $request): View
     {
         return view('users/userprofile', ['id' => $request->user()->id]);
     }

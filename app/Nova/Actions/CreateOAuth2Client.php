@@ -46,7 +46,7 @@ class CreateOAuth2Client extends Action
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields, Collection $models): array
     {
         if (1 < count($models)) {
             return Action::danger('This action can only be run on one model at a time.');
@@ -89,7 +89,7 @@ class CreateOAuth2Client extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client."</p>')

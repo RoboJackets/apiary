@@ -76,7 +76,7 @@ class MerchandiseSelections extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'merchandise-selections';
     }

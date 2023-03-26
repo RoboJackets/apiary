@@ -19,7 +19,7 @@ class DateTo extends DateFilter
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $value
      */
-    public function apply(NovaRequest $request, $query, $value): Builder
+    public function apply(NovaRequest $request, Builder $query, string $value): Builder
     {
         return $query->whereDate('created_at', '<=', Carbon::parse($value));
     }

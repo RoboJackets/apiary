@@ -39,7 +39,7 @@ class ShirtSizeBreakdown extends Partition
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return Str::ucfirst($this->type).' Size Breakdown';
     }
@@ -113,7 +113,7 @@ class ShirtSizeBreakdown extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'shirt-size-breakdown';
     }

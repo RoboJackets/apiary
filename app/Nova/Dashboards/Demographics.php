@@ -57,7 +57,7 @@ class Demographics extends Dashboard
      *
      * @return string
      */
-    public function label()
+    public function label(): string
     {
         return 'Demographics';
     }

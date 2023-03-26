@@ -532,7 +532,7 @@ class User extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public static function relatableQuery(NovaRequest $request, $query): Builder
+    public static function relatableQuery(NovaRequest $request, Builder $query): Builder
     {
         if ($request->is('nova-api/dues-transactions/*')) {
             return $query->inactive()->orWhere('users.id', '=', $request->viaResourceId);

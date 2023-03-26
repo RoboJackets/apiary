@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
@@ -250,7 +251,7 @@ class DuesTransactionController extends Controller
         );
     }
 
-    public function showDuesFlow(Request $request)
+    public function showDuesFlow(Request $request): View
     {
         if ($request->user()->is_active) {
             return view('dues.alreadypaid');

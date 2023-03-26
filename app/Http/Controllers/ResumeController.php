@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Http\Requests\StoreResumeRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -228,7 +229,7 @@ class ResumeController extends Controller
         );
     }
 
-    public function showUploadPage(Request $request)
+    public function showUploadPage(Request $request): View
     {
         return view('users/resumeupload', ['id' => $request->user()->id]);
     }

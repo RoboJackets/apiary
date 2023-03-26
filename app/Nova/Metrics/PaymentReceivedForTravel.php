@@ -31,7 +31,7 @@ class PaymentReceivedForTravel extends Partition
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->resourceId === -1 ? 'Payment Received' : 'Payment Received for '.Travel::where(
             'id',
@@ -74,7 +74,7 @@ class PaymentReceivedForTravel extends Partition
      *
      * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return $this->resourceId === -1 ? 'payment-received' : 'payment-received-'.$this->resourceId;
     }
