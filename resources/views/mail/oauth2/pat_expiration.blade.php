@@ -1,4 +1,4 @@
-Hi {{ $token->user->preferred_first_name }},
+Hi {!! $token->user->preferred_first_name !!},
 
 @if($already_expired)
 Your {{ config('app.name') }} personal access token called "{{ $token->name }}" expired on {{ $token->expires_at }} and is no longer valid.

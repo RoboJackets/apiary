@@ -1,4 +1,4 @@
-Hi {{ $envelope->signedBy->preferred_first_name }},
+Hi {!! $envelope->signedBy->preferred_first_name !!},
 
 We received your electronically signed membership agreement from IP address {{ $envelope->signer_ip_address }}.
 
