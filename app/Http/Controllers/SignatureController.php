@@ -16,7 +16,6 @@ use DOMDocument;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
 
 class SignatureController extends Controller
 {
@@ -56,7 +55,7 @@ class SignatureController extends Controller
     /**
      * Render the agreement in the browser.
      */
-    public function render(Request $request): View
+    public function render(Request $request)
     {
         $user = $request->user();
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();

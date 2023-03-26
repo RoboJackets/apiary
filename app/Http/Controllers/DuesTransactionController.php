@@ -16,7 +16,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\View\View;
 
 class DuesTransactionController extends Controller
 {
@@ -251,7 +250,7 @@ class DuesTransactionController extends Controller
         );
     }
 
-    public function showDuesFlow(Request $request): View
+    public function showDuesFlow(Request $request)
     {
         if ($request->user()->is_active) {
             return view('dues.alreadypaid');

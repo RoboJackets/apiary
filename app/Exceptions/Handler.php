@@ -12,7 +12,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of exceptions with their corresponding custom log levels.
      *
-     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
+     * @var array<class-string<\Throwable>, 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning'>
      */
     protected $levels = [
     ];

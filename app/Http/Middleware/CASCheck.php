@@ -10,7 +10,6 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpCAS;
-use Symfony\Component\HttpFoundation\Response;
 
 class CASCheck
 {
@@ -39,7 +38,7 @@ class CASCheck
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         phpCAS::checkAuthentication();
         if ($request->user() === null) {

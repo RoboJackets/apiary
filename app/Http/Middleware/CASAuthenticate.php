@@ -10,7 +10,6 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 
 class CASAuthenticate
 {
@@ -60,7 +59,7 @@ class CASAuthenticate
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         //Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {

@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class ResumeController extends Controller
@@ -229,7 +228,7 @@ class ResumeController extends Controller
         );
     }
 
-    public function showUploadPage(Request $request): View
+    public function showUploadPage(Request $request)
     {
         return view('users/resumeupload', ['id' => $request->user()->id]);
     }

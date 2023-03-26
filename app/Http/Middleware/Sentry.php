@@ -9,14 +9,13 @@ use Illuminate\Http\Request;
 use Sentry\Event;
 use Sentry\EventHint;
 use Sentry\State\Scope;
-use Symfony\Component\HttpFoundation\Response;
 
 class Sentry
 {
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         if (app()->bound('sentry')) {
             \Sentry\configureScope(static function (Scope $scope): void {
