@@ -1,4 +1,4 @@
-Hi {{ $travel->primaryContact->preferred_first_name }},
+Hi {!! $travel->primaryContact->preferred_first_name !!},
 {{-- all assignments paid and documented --}}
 @if(! $travel->assignments_need_payment && ! $travel->assignments_need_forms)
 All travelers have paid the travel fee{{ $travel->tar_required ? ' and submitted travel forms' : '' }} for {{ $travel->name }}. Contact the treasurer to book travel.

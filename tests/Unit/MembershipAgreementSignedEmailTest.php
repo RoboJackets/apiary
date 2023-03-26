@@ -10,7 +10,7 @@ use App\Models\Signature;
 use App\Models\User;
 use Tests\TestCase;
 
-class MembershipAgreementSignedEmailTest extends TestCase
+final class MembershipAgreementSignedEmailTest extends TestCase
 {
     protected function setUp(): void
     {

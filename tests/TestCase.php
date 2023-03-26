@@ -38,6 +38,7 @@ abstract class TestCase extends BaseTestCase
         }
 
         $user->syncRoles($roles);
+        $user->refresh();
 
         return $user;
     }

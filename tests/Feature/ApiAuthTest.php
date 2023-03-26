@@ -10,7 +10,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class ApiAuthTest extends TestCase
+final class ApiAuthTest extends TestCase
 {
     /**
      * Test API auth.

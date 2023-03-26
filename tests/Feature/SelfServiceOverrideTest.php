@@ -20,7 +20,7 @@ use Database\Seeders\TeamsSeeder;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class SelfServiceOverrideTest extends TestCase
+final class SelfServiceOverrideTest extends TestCase
 {
     /**
      * Shortcut to create a dummy dues package.

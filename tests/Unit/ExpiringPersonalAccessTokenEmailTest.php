@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 use Laravel\Passport\ClientRepository;
 use Tests\TestCase;
 
-class ExpiringPersonalAccessTokenEmailTest extends TestCase
+final class ExpiringPersonalAccessTokenEmailTest extends TestCase
 {
     protected function setUp(): void
     {

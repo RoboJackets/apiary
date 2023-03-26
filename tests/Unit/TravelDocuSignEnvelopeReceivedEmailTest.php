@@ -12,7 +12,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
+final class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
 {
     public function testPaid(): void
     {
