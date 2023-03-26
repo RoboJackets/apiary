@@ -29,11 +29,11 @@ class DuesTransactionTeam extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>|\Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
-     *
-     * @phan-suppress PhanTypeMismatchDeclaredReturn
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
+     * @param  string  $value
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
-    public function apply(NovaRequest $request, Builder $query, int $value): Builder
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $query
             ->join('team_user', 'dues_transactions.user_id', 'team_user.user_id')

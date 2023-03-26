@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\MembershipAgreementTemplate;
@@ -18,10 +17,8 @@ class DashboardController extends Controller
 {
     /**
      * Returns view with data for the user dashboard.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         //User needs a transaction if they don't have one for an active dues package
         $user = $request->user();

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +16,8 @@ class AuthController extends Controller
      * signed in (using CAS) and then redirect them back to the original page they were going to. This function
      * largely exists as a workaround to not being able to specify what middleware is applied to Laravel Passport's
      * routes.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function forceCasAuth(Request $request): RedirectResponse
+    public function forceCasAuth(Request $request)
     {
         return redirect($request->query('next', route('home')));
     }
@@ -31,7 +28,7 @@ class AuthController extends Controller
         cas()->logout(config('app.url'));
     }
 
-    public function stopImpersonating(Request $request, ImpersonatesUsers $impersonator): RedirectResponse
+    public function stopImpersonating(Request $request, ImpersonatesUsers $impersonator)
     {
         if ($impersonator->impersonating($request)) {
             $impersonator->stopImpersonating($request, Auth::guard(), User::class);

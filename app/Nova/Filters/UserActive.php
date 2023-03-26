@@ -21,11 +21,11 @@ class UserActive extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>|\Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User>
-     *
-     * @phan-suppress PhanTypeMismatchDeclaredReturn
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
+     * @param  string  $value
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public function apply(NovaRequest $request, Builder $query, string $value): Builder
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $value === 'yes' ? $query->active() : $query->inactive();
     }

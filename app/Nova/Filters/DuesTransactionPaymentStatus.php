@@ -21,12 +21,11 @@ class DuesTransactionPaymentStatus extends BooleanFilter
     /**
      * Apply the filter to the given query.
      *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @param  array<string,bool>  $value
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>|\Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
-     *
-     * @phan-suppress PhanTypeMismatchDeclaredReturn
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
-    public function apply(NovaRequest $request, Builder $query, array $value): Builder
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $value['pending'] === true ? $query->pending() : $query;
     }

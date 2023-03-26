@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateMembersTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
@@ -43,10 +42,8 @@ class TeamController extends Controller
 
     /**
      * Displays the teams page for users.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function indexWeb(Request $request): View
+    public function indexWeb(Request $request)
     {
         $teams = Team::visible()->orderBy('visible_on_kiosk', 'desc')->orderBy('name')->get();
 

@@ -367,7 +367,7 @@ class Travel extends Resource
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>
      */
-    public static function relatableQuery(NovaRequest $request, Builder $query): Builder
+    public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->current !== null) {
             return $query->where('id', '=', $request->current);

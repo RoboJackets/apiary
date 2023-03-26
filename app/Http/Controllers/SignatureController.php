@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Http\Requests\MembershipAgreementCompleteRequest;
 use App\Http\Requests\MembershipAgreementRedirectRequest;
 use App\Jobs\RetrieveIpAddressGeoLocationForSignature;
@@ -17,6 +16,7 @@ use DOMDocument;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class SignatureController extends Controller
 {

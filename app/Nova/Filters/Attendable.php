@@ -38,9 +38,11 @@ class Attendable extends Filter
     /**
      * Apply the filter to the given query.
      *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
+     * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
-    public function apply(NovaRequest $request, Builder $query, string $value): Builder
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         $parts = explode(',', $value);
         $attendableType = $parts[0];

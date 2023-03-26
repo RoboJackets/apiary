@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Http\Requests\StoreDuesTransactionRequest;
 use App\Http\Requests\UpdateDuesTransactionRequest;
 use App\Http\Resources\DuesTransaction as DuesTransactionResource;
@@ -17,6 +16,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class DuesTransactionController extends Controller
 {

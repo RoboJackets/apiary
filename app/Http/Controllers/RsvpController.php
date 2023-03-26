@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\Rsvp as RsvpResource;
 use App\Models\Event;
@@ -59,12 +58,8 @@ class RsvpController extends Controller
 
     /**
      * Stores a user-submitted RSVP resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     *
-     * @throws \Throwable
      */
-    public function storeUser(Event $event, Request $request): View
+    public function storeUser(Event $event, Request $request)
     {
         // Get the user to store, if present
         // If not present and required, redirect to CAS
