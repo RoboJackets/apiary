@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropDocsRequiredFromTravel extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -35,4 +35,4 @@ class DropDocsRequiredFromTravel extends Migration
             $table->boolean('documents_received');
         });
     }
-}
+};
