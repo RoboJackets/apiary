@@ -58,8 +58,6 @@ class TransactionsByDuesPackage extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

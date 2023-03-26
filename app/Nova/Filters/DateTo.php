@@ -15,9 +15,6 @@ class DateTo extends DateFilter
 {
     /**
      * Apply the filter to the given query.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $value
      */
     public function apply(NovaRequest $request, Builder $query, string $value): Builder
     {

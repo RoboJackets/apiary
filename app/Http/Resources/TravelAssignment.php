@@ -12,7 +12,6 @@ class TravelAssignment extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array<string, int|JsonResource>
      */
     public function toArray(Request $request): array

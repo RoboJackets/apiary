@@ -89,8 +89,6 @@ class DocuSignEnvelope extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @return array
      */
     public function fields(NovaRequest $request): array
     {

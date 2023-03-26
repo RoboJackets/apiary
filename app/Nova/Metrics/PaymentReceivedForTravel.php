@@ -28,8 +28,6 @@ class PaymentReceivedForTravel extends Partition
 
     /**
      * Get the displayable name of the metric.
-     *
-     * @return string
      */
     public function name(): string
     {
@@ -71,8 +69,6 @@ class PaymentReceivedForTravel extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
     public function uriKey(): string
     {

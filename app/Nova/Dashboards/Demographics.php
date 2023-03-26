@@ -54,8 +54,6 @@ class Demographics extends Dashboard
 
     /**
      * Get the displayable name of the dashboard.
-     *
-     * @return string
      */
     public function label(): string
     {

@@ -13,8 +13,6 @@ class UserTest extends TestCase
 {
     /**
      * Test the is_student attribute.
-     *
-     * @return void
      */
     public function testIsStudent(): void
     {
