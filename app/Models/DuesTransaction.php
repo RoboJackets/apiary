@@ -309,7 +309,7 @@ class DuesTransaction extends Model
 
         $array['user_id'] = $this->user->id;
 
-        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+        $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
         $array['merchandise_id'] = $this->merchandise->modelKeys();
 

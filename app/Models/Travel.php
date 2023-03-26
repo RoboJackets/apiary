@@ -202,9 +202,9 @@ class Travel extends Model
             $array['primary_contact'] = $this->primaryContact->toArray();
         }
 
-        $array['departure_date_unix'] = $this->departure_date->getTimestamp();
+        $array['departure_date_unix'] = $this->departure_date?->getTimestamp();
 
-        $array['return_date_unix'] = $this->return_date->getTimestamp();
+        $array['return_date_unix'] = $this->return_date?->getTimestamp();
 
         return $array;
     }

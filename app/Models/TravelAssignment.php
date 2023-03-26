@@ -206,7 +206,7 @@ class TravelAssignment extends Model
 
         $array['payable_type'] = $this->getMorphClass();
 
-        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+        $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
         return $array;
     }
