@@ -17,8 +17,6 @@ class DashboardController extends Controller
 {
     /**
      * Returns view with data for the user dashboard.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request)
     {

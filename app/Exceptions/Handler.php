@@ -10,6 +10,14 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     /**
+     * A list of exceptions with their corresponding custom log levels.
+     *
+     * @var array<class-string<\Throwable>, 'alert'|'critical'|'debug'|'emergency'|'error'|'info'|'notice'|'warning'>
+     */
+    protected $levels = [
+    ];
+
+    /**
      * A list of the exception types that are not reported.
      *
      * @var array<int, class-string<\Throwable>>
@@ -33,7 +41,7 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->reportable(function (Throwable $e): void {
             if ($this->shouldReport($e) && app()->bound('sentry')) {

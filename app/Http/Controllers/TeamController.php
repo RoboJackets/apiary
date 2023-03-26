@@ -42,8 +42,6 @@ class TeamController extends Controller
 
     /**
      * Displays the teams page for users.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function indexWeb(Request $request)
     {

@@ -67,7 +67,7 @@ class RevokeOAuth2Tokens extends DestructiveAction
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal '.

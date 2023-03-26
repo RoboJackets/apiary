@@ -76,8 +76,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerPolicies();
-
         Passport::useClientModel(OAuth2Client::class);
         Passport::useTokenModel(OAuth2AccessToken::class);
         Passport::hashClientSecrets();

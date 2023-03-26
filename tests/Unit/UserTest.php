@@ -13,10 +13,8 @@ class UserTest extends TestCase
 {
     /**
      * Test the is_student attribute.
-     *
-     * @return void
      */
-    public function testIsStudent()
+    public function testIsStudent(): void
     {
         $user = $this->getTestUser(['member']);
 

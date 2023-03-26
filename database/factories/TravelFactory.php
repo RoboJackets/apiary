@@ -19,7 +19,7 @@ class TravelFactory extends Factory
      *
      * @return array<string,string|int|\DateTime|bool>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->word(),

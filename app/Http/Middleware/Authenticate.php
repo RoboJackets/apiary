@@ -6,18 +6,16 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Middleware\Authenticate as AuthenticateMiddleware;
+use Illuminate\Http\Request;
 
 class Authenticate extends AuthenticateMiddleware
 {
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
-     *
      * @throws AuthorizationException
      */
-    protected function redirectTo($request)
+    protected function redirectTo(Request $request)
     {
         if (! $request->expectsJson()) {
             if ($request->is('oauth/*')) {

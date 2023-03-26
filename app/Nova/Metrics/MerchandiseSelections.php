@@ -73,10 +73,8 @@ class MerchandiseSelections extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'merchandise-selections';
     }

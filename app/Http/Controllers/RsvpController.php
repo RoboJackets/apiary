@@ -58,10 +58,6 @@ class RsvpController extends Controller
 
     /**
      * Stores a user-submitted RSVP resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     *
-     * @throws \Throwable
      */
     public function storeUser(Event $event, Request $request)
     {

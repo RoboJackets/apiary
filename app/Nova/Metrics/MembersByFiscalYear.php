@@ -54,10 +54,8 @@ class MembersByFiscalYear extends Trend
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'members-by-fiscal-year';
     }
