@@ -7,7 +7,7 @@ namespace Tests\Feature;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class SimpleRequestsTest extends TestCase
+final class SimpleRequestsTest extends TestCase
 {
     /**
      * Test simple, non-CAS requests load without any authentication.

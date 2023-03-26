@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ResumeTest extends TestCase
+final class ResumeTest extends TestCase
 {
     /**
      * Test the validation of resume book uploads.

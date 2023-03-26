@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class PermissionsAndRolesTest extends TestCase
+final class PermissionsAndRolesTest extends TestCase
 {
     public function testPermissionsLoadedInDatabase(): void
     {

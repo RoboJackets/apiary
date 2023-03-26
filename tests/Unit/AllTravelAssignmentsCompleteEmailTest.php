@@ -11,7 +11,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class AllTravelAssignmentsCompleteEmailTest extends TestCase
+final class AllTravelAssignmentsCompleteEmailTest extends TestCase
 {
     public function testTarRequired(): void
     {

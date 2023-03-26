@@ -10,7 +10,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class TravelAssignmentReminderEmailTest extends TestCase
+final class TravelAssignmentReminderEmailTest extends TestCase
 {
     public function testTarRequiredAndNotCompletedAndNotPaid(): void
     {

@@ -10,7 +10,7 @@ use App\Models\Payment;
 use App\Models\User;
 use Tests\TestCase;
 
-class DuesTransactionReminderEmailTest extends TestCase
+final class DuesTransactionReminderEmailTest extends TestCase
 {
     public function testGenerateEmailNoOtherPackageAvailable(): void
     {

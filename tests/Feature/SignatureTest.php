@@ -11,7 +11,7 @@ use Database\Seeders\MembershipAgreementTemplateSeeder;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class SignatureTest extends TestCase
+final class SignatureTest extends TestCase
 {
     /**
      * Test the notification for uploaded scans.

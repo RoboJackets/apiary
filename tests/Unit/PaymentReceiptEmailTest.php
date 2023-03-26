@@ -13,7 +13,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class PaymentReceiptEmailTest extends TestCase
+final class PaymentReceiptEmailTest extends TestCase
 {
     public function testGenerateEmailForOnlineDuesPayment(): void
     {

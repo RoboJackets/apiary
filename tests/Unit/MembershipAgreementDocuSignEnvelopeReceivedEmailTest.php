@@ -11,7 +11,7 @@ use App\Models\Signature;
 use App\Models\User;
 use Tests\TestCase;
 
-class MembershipAgreementDocuSignEnvelopeReceivedEmailTest extends TestCase
+final class MembershipAgreementDocuSignEnvelopeReceivedEmailTest extends TestCase
 {
     protected function setUp(): void
     {
