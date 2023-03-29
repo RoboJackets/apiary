@@ -128,7 +128,9 @@
 
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
-    <rule ref="SlevomatCodingStandard.Arrays"/>
+    <rule ref="SlevomatCodingStandard.Arrays">
+        <exclude name="SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys"/>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
