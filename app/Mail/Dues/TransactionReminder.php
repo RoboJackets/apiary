@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
+
 namespace App\Mail\Dues;
 
 use App\Models\DuesPackage;
@@ -29,9 +31,9 @@ class TransactionReminder extends Mailable implements ShouldQueue
      */
     public function build(): self
     {
-        $package_name = DuesPackage::userCanPurchase($this->user)->count() === 1 ?
-            DuesPackage::userCanPurchase($this->user)->sole()->name.' ' :
-            '';
+        $package_name = DuesPackage::userCanPurchase($this->user)->count() === 1
+            ? DuesPackage::userCanPurchase($this->user)->sole()->name.' '
+            : '';
 
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
             ->to($this->user->gt_email, $this->user->name)
