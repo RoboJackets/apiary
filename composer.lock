@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3807d753d9ec9fd84fa91481f6b8e75",
+    "content-hash": "0490cc129933fa429084d7bb679459cc",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5132,16 +5132,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "11f12a2e36a6c616ffa5c6ed32272f8c870aaf69"
+                "reference": "950d587995bbd72f5eb794a1f3e88eceb34f6245"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/11f12a2e36a6c616ffa5c6ed32272f8c870aaf69",
-                "reference": "11f12a2e36a6c616ffa5c6ed32272f8c870aaf69",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/950d587995bbd72f5eb794a1f3e88eceb34f6245",
+                "reference": "950d587995bbd72f5eb794a1f3e88eceb34f6245",
                 "shasum": ""
             },
             "require": {
@@ -5156,7 +5156,7 @@
                 "guzzlehttp/guzzle": "^7.1",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "1.9.14",
+                "phpstan/phpstan": "1.10.8",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -5194,9 +5194,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v1.0.0"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v1.1.1"
             },
-            "time": "2023-02-06T13:25:35+00:00"
+            "time": "2023-04-03T10:05:59+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6420,16 +6420,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.15.2",
+            "version": "1.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "5cc428320191ac1d0b6520034c2dc0698628ced5"
+                "reference": "3ccd28dd9fb34b52db946abea1b538568e34eae8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/5cc428320191ac1d0b6520034c2dc0698628ced5",
-                "reference": "5cc428320191ac1d0b6520034c2dc0698628ced5",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/3ccd28dd9fb34b52db946abea1b538568e34eae8",
+                "reference": "3ccd28dd9fb34b52db946abea1b538568e34eae8",
                 "shasum": ""
             },
             "require": {
@@ -6488,9 +6488,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.15.2"
+                "source": "https://github.com/php-http/discovery/tree/1.15.3"
             },
-            "time": "2023-02-11T08:28:41+00:00"
+            "time": "2023-03-31T14:40:37+00:00"
         },
         {
             "name": "php-http/httplug",
