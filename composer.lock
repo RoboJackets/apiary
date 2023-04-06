@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db6fb6a9b499ea450695222c537de82c",
+    "content-hash": "82a417b2ed69825d449fd9b0b8bbd316",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -288,16 +288,16 @@
         },
         {
             "name": "apimatic/core",
-            "version": "0.2.4",
+            "version": "0.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/core-lib-php.git",
-                "reference": "4634be2262d4946e2bac45707b35f46c226617f8"
+                "reference": "dc631f4c0760959a476c6dec54d9079cadb5f6f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/4634be2262d4946e2bac45707b35f46c226617f8",
-                "reference": "4634be2262d4946e2bac45707b35f46c226617f8",
+                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/dc631f4c0760959a476c6dec54d9079cadb5f6f6",
+                "reference": "dc631f4c0760959a476c6dec54d9079cadb5f6f6",
                 "shasum": ""
             },
             "require": {
@@ -307,11 +307,11 @@
                 "ext-dom": "*",
                 "ext-json": "*",
                 "ext-libxml": "*",
-                "php": ">=7.2 <8.2",
+                "php": "^7.2 || ^8.0",
                 "php-jsonpointer/php-jsonpointer": "^3.0.2"
             },
             "require-dev": {
-                "phan/phan": "5.3.1",
+                "phan/phan": "5.4.2",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
                 "squizlabs/php_codesniffer": "^3.5"
             },
@@ -335,26 +335,26 @@
             ],
             "support": {
                 "issues": "https://github.com/apimatic/core-lib-php/issues",
-                "source": "https://github.com/apimatic/core-lib-php/tree/0.2.4"
+                "source": "https://github.com/apimatic/core-lib-php/tree/0.2.6"
             },
-            "time": "2023-03-21T12:01:54+00:00"
+            "time": "2023-04-06T11:23:15+00:00"
         },
         {
             "name": "apimatic/core-interfaces",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/core-interfaces-php.git",
-                "reference": "bb98a2f0674be8eb8fdc375ad8e92b162f7a64b3"
+                "reference": "183214195a79784c382a446795c46ca8c1f43cc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/core-interfaces-php/zipball/bb98a2f0674be8eb8fdc375ad8e92b162f7a64b3",
-                "reference": "bb98a2f0674be8eb8fdc375ad8e92b162f7a64b3",
+                "url": "https://api.github.com/repos/apimatic/core-interfaces-php/zipball/183214195a79784c382a446795c46ca8c1f43cc1",
+                "reference": "183214195a79784c382a446795c46ca8c1f43cc1",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2 <8.2"
+                "php": "^7.2 || ^8.0"
             },
             "type": "library",
             "autoload": {
@@ -378,26 +378,27 @@
             ],
             "support": {
                 "issues": "https://github.com/apimatic/core-interfaces-php/issues",
-                "source": "https://github.com/apimatic/core-interfaces-php/tree/0.1.1"
+                "source": "https://github.com/apimatic/core-interfaces-php/tree/0.1.2"
             },
-            "time": "2023-02-16T10:44:56+00:00"
+            "time": "2023-04-04T06:40:52+00:00"
         },
         {
             "name": "apimatic/jsonmapper",
-            "version": "3.0.6",
+            "version": "3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/jsonmapper.git",
-                "reference": "b74416e750a3cdf979ffaed2b91eafa1c56589e9"
+                "reference": "c877632b29155c5a1efc9a417888e77d51393294"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/b74416e750a3cdf979ffaed2b91eafa1c56589e9",
-                "reference": "b74416e750a3cdf979ffaed2b91eafa1c56589e9",
+                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/c877632b29155c5a1efc9a417888e77d51393294",
+                "reference": "c877632b29155c5a1efc9a417888e77d51393294",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*"
+                "ext-json": "*",
+                "php": "^5.6 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
@@ -431,32 +432,32 @@
             "support": {
                 "email": "mehdi.jaffery@apimatic.io",
                 "issues": "https://github.com/apimatic/jsonmapper/issues",
-                "source": "https://github.com/apimatic/jsonmapper/tree/3.0.6"
+                "source": "https://github.com/apimatic/jsonmapper/tree/3.0.7"
             },
-            "time": "2023-02-16T10:49:45+00:00"
+            "time": "2023-04-04T06:44:42+00:00"
         },
         {
             "name": "apimatic/unirest-php",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/unirest-php.git",
-                "reference": "81eacc48cf9c9c98ed8634b42505cbd29a1d575c"
+                "reference": "119c4354d1f66a2ed6e91791574a69af93ad985e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/81eacc48cf9c9c98ed8634b42505cbd29a1d575c",
-                "reference": "81eacc48cf9c9c98ed8634b42505cbd29a1d575c",
+                "url": "https://api.github.com/repos/apimatic/unirest-php/zipball/119c4354d1f66a2ed6e91791574a69af93ad985e",
+                "reference": "119c4354d1f66a2ed6e91791574a69af93ad985e",
                 "shasum": ""
             },
             "require": {
                 "apimatic/core-interfaces": "^0.1.0",
                 "ext-curl": "*",
                 "ext-json": "*",
-                "php": ">=7.2 <8.2"
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "phan/phan": "5.3.1",
+                "phan/phan": "5.4.2",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
                 "squizlabs/php_codesniffer": "^3.5"
             },
@@ -496,9 +497,9 @@
             "support": {
                 "email": "opensource@apimatic.io",
                 "issues": "https://github.com/apimatic/unirest-php/issues",
-                "source": "https://github.com/apimatic/unirest-php/tree/4.0.2"
+                "source": "https://github.com/apimatic/unirest-php/tree/4.0.3"
             },
-            "time": "2023-02-16T10:47:42+00:00"
+            "time": "2023-04-04T08:00:33+00:00"
         },
         {
             "name": "ashallendesign/laravel-config-validator",
@@ -3028,16 +3029,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.5.1",
+            "version": "v10.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "485f22333e8c1dff5bae0fe0421c1e2e139713de"
+                "reference": "13dc93889617427352f72b6aa8b195b252af1197"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/485f22333e8c1dff5bae0fe0421c1e2e139713de",
-                "reference": "485f22333e8c1dff5bae0fe0421c1e2e139713de",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/13dc93889617427352f72b6aa8b195b252af1197",
+                "reference": "13dc93889617427352f72b6aa8b195b252af1197",
                 "shasum": ""
             },
             "require": {
@@ -3136,7 +3137,7 @@
                 "league/flysystem-read-only": "^3.3",
                 "league/flysystem-sftp-v3": "^3.0",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^8.1",
+                "orchestra/testbench-core": "^8.4",
                 "pda/pheanstalk": "^4.0",
                 "phpstan/phpdoc-parser": "^1.15",
                 "phpstan/phpstan": "^1.4.7",
@@ -3224,7 +3225,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-03-29T15:09:16+00:00"
+            "time": "2023-04-05T15:28:17+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -3888,21 +3889,21 @@
         },
         {
             "name": "lcobucci/clock",
-            "version": "2.3.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/clock.git",
-                "reference": "c7aadcd6fd97ed9e199114269c0be3f335e38876"
+                "reference": "039ef98c6b57b101d10bd11d8fdfda12cbd996dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/clock/zipball/c7aadcd6fd97ed9e199114269c0be3f335e38876",
-                "reference": "c7aadcd6fd97ed9e199114269c0be3f335e38876",
+                "url": "https://api.github.com/repos/lcobucci/clock/zipball/039ef98c6b57b101d10bd11d8fdfda12cbd996dc",
+                "reference": "039ef98c6b57b101d10bd11d8fdfda12cbd996dc",
                 "shasum": ""
             },
             "require": {
                 "php": "~8.1.0 || ~8.2.0",
-                "stella-maris/clock": "^0.1.7"
+                "psr/clock": "^1.0"
             },
             "provide": {
                 "psr/clock-implementation": "1.0"
@@ -3936,7 +3937,7 @@
             "description": "Yet another clock abstraction",
             "support": {
                 "issues": "https://github.com/lcobucci/clock/issues",
-                "source": "https://github.com/lcobucci/clock/tree/2.3.0"
+                "source": "https://github.com/lcobucci/clock/tree/3.0.0"
             },
             "funding": [
                 {
@@ -3948,7 +3949,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-12-19T14:38:11+00:00"
+            "time": "2022-12-19T15:00:24+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -4491,27 +4492,27 @@
         },
         {
             "name": "league/oauth2-server",
-            "version": "8.5.0",
+            "version": "8.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-server.git",
-                "reference": "8170913a2aeadebbba17b46df4dc18d17c891516"
+                "reference": "43cd4d406906c6be5c8de2cee9bd3ad3753544ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/8170913a2aeadebbba17b46df4dc18d17c891516",
-                "reference": "8170913a2aeadebbba17b46df4dc18d17c891516",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/43cd4d406906c6be5c8de2cee9bd3ad3753544ef",
+                "reference": "43cd4d406906c6be5c8de2cee9bd3ad3753544ef",
                 "shasum": ""
             },
             "require": {
-                "defuse/php-encryption": "^2.3.0",
+                "defuse/php-encryption": "^2.3",
                 "ext-json": "*",
                 "ext-openssl": "*",
-                "lcobucci/clock": "^2.2.0 || ^3.1.0",
-                "lcobucci/jwt": "^4.3.0 || ^5.0.0",
+                "lcobucci/clock": "^2.2 || ^3.0",
+                "lcobucci/jwt": "^4.3 || ^5.0",
                 "league/event": "^2.2",
                 "league/uri": "^6.7",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+                "php": "^8.0",
                 "psr/http-message": "^1.0.1"
             },
             "replace": {
@@ -4568,7 +4569,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-server/issues",
-                "source": "https://github.com/thephpleague/oauth2-server/tree/8.5.0"
+                "source": "https://github.com/thephpleague/oauth2-server/tree/8.5.1"
             },
             "funding": [
                 {
@@ -4576,7 +4577,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-03T14:54:34+00:00"
+            "time": "2023-04-04T10:20:16+00:00"
         },
         {
             "name": "league/uri",
@@ -7544,25 +7545,25 @@
         },
         {
             "name": "psr/http-message",
-            "version": "1.0.1",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+                "reference": "cb6ce4845ce34a8ad9e68117c10ee90a29919eba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/cb6ce4845ce34a8ad9e68117c10ee90a29919eba",
+                "reference": "cb6ce4845ce34a8ad9e68117c10ee90a29919eba",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": "^7.2 || ^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -7591,9 +7592,9 @@
                 "response"
             ],
             "support": {
-                "source": "https://github.com/php-fig/http-message/tree/master"
+                "source": "https://github.com/php-fig/http-message/tree/1.1"
             },
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2023-04-04T09:50:52+00:00"
         },
         {
             "name": "psr/log",
@@ -9004,53 +9005,6 @@
                 "source": "https://github.com/square/square-php-sdk/tree/25.2.0.20230315"
             },
             "time": "2023-03-14T22:24:30+00:00"
-        },
-        {
-            "name": "stella-maris/clock",
-            "version": "0.1.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stella-maris-solutions/clock.git",
-                "reference": "fa23ce16019289a18bb3446fdecd45befcdd94f8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stella-maris-solutions/clock/zipball/fa23ce16019289a18bb3446fdecd45befcdd94f8",
-                "reference": "fa23ce16019289a18bb3446fdecd45befcdd94f8",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0|^8.0",
-                "psr/clock": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "StellaMaris\\Clock\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andreas Heigl",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "A pre-release of the proposed PSR-20 Clock-Interface",
-            "homepage": "https://gitlab.com/stella-maris/clock",
-            "keywords": [
-                "clock",
-                "datetime",
-                "point in time",
-                "psr20"
-            ],
-            "support": {
-                "source": "https://github.com/stella-maris-solutions/clock/tree/0.1.7"
-            },
-            "time": "2022-11-25T16:15:06+00:00"
         },
         {
             "name": "subfission/cas",
@@ -13052,24 +13006,24 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v8.2.1",
+            "version": "v8.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "4daed4bbfef0d37ea01dc3980ebcba2a10c76f4a"
+                "reference": "8caa43318a0a4a0f525eb3edec08627565a3410c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/4daed4bbfef0d37ea01dc3980ebcba2a10c76f4a",
-                "reference": "4daed4bbfef0d37ea01dc3980ebcba2a10c76f4a",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/8caa43318a0a4a0f525eb3edec08627565a3410c",
+                "reference": "8caa43318a0a4a0f525eb3edec08627565a3410c",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2",
                 "fakerphp/faker": "^1.21",
-                "laravel/framework": ">=10.4.1 <10.6.0",
+                "laravel/framework": ">=10.6.1 <10.7.0",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": ">=8.3.1 <8.4.0",
+                "orchestra/testbench-core": ">=8.4.0 <8.5.0",
                 "php": "^8.1",
                 "phpunit/phpunit": "^9.6 || ^10.0.7",
                 "spatie/laravel-ray": "^1.32.4",
@@ -13094,29 +13048,29 @@
             "keywords": [
                 "BDD",
                 "TDD",
+                "dev",
                 "laravel",
-                "orchestra-platform",
-                "orchestral",
+                "laravel-packages",
                 "testing"
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v8.2.1"
+                "source": "https://github.com/orchestral/testbench/tree/v8.3.0"
             },
-            "time": "2023-04-03T01:28:17+00:00"
+            "time": "2023-04-05T00:11:08+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v8.3.1",
+            "version": "v8.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "1b785c2a1a619d5c6751360a1960b8d716d69234"
+                "reference": "545d10a6d5e59c4831ff7301c470dc12f58723aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/1b785c2a1a619d5c6751360a1960b8d716d69234",
-                "reference": "1b785c2a1a619d5c6751360a1960b8d716d69234",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/545d10a6d5e59c4831ff7301c470dc12f58723aa",
+                "reference": "545d10a6d5e59c4831ff7301c470dc12f58723aa",
                 "shasum": ""
             },
             "require": {
@@ -13125,7 +13079,7 @@
             },
             "require-dev": {
                 "fakerphp/faker": "^1.21",
-                "laravel/framework": "^10.4",
+                "laravel/framework": "^10.6.1",
                 "laravel/pint": "^1.6",
                 "mockery/mockery": "^1.5.1",
                 "orchestra/canvas": "^8.1",
@@ -13139,7 +13093,7 @@
             "suggest": {
                 "brianium/paratest": "Allow using parallel tresting (^6.4 || ^7.0).",
                 "fakerphp/faker": "Allow using Faker for testing (^1.21).",
-                "laravel/framework": "Required for testing (^10.4).",
+                "laravel/framework": "Required for testing (^10.6.1).",
                 "mockery/mockery": "Allow using Mockery for testing (^1.5.1).",
                 "nunomaduro/collision": "Allow using Laravel style tests output and parallel testing (^6.4 || ^7.0).",
                 "orchestra/testbench-browser-kit": "Allow using legacy Laravel BrowserKit for testing (^8.0).",
@@ -13190,7 +13144,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2023-04-02T16:49:31+00:00"
+            "time": "2023-04-04T23:51:20+00:00"
         },
         {
             "name": "phan/phan",
