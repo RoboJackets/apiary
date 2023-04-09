@@ -334,7 +334,7 @@ class SquareCheckoutController extends Controller
             $payment->notes = 'Checkout flow completed';
             $payment->save();
 
-            alert()->success("We've received your payment", 'Success!');
+            alert()->success('Success!', 'We processed your payment!');
 
             return redirect('/');
         }

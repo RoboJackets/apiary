@@ -186,6 +186,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static QueryBuilder|User withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property string|null $docusign_access_token
+ * @property Carbon|null $docusign_access_token_expires_at
+ * @property string|null $docusign_refresh_token
+ * @property Carbon|null $docusign_refresh_token_expires_at
+ *
+ * @method static Builder|User whereDocusignAccessToken($value)
+ * @method static Builder|User whereDocusignAccessTokenExpiresAt($value)
+ * @method static Builder|User whereDocusignRefreshToken($value)
+ * @method static Builder|User whereDocusignRefreshTokenExpiresAt($value)
  */
 class User extends Authenticatable
 {
@@ -287,6 +297,8 @@ class User extends Authenticatable
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
         'buzzcard_access_opt_out' => 'boolean',
+        'docusign_access_token_expires_at' => 'datetime',
+        'docusign_refresh_token_expires_at' => 'datetime',
     ];
 
     /**
@@ -829,13 +841,9 @@ class User extends Authenticatable
                         ->orderByDesc('updated_at')
                         ->limit(1);
                 }
-            );
-
-        if (config('features.docusign-membership-agreement') === true) {
-            $query->whereHas('envelope', static function (Builder $query): void {
+            )->whereHas('envelope', static function (Builder $query): void {
                 $query->where('complete', true);
             });
-        }
 
         return $query->exists();
     }

@@ -51,7 +51,7 @@ return [
     // @see: https://docs.sentry.io/platforms/php/configuration/options/#send-default-pii
     'send_default_pii' => false,
 
-    'traces_sampler' => [\App\Sentry\Helpers::class, 'tracesSampler'],
+    'traces_sampler' => [\App\Util\Sentry::class, 'tracesSampler'],
 
     'controllers_base_namespace' => env('SENTRY_CONTROLLERS_BASE_NAMESPACE', 'App\\Http\\Controllers'),
 ];

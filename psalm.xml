@@ -26,6 +26,10 @@
             <errorLevel type="suppress">
                 <directory name="database" />
                 <directory name="routes" />
+                <file name="app/Http/Controllers/DocuSignController.php"/>
+                <file name="app/Util/DocuSign.php"/>
+                <file name="app/Exceptions/Handler.php"/>
+                <file name="app/Providers/NovaServiceProvider.php"/>
             </errorLevel>
         </UndefinedClass>
         <PropertyNotSetInConstructor>
@@ -46,6 +50,7 @@
         <InvalidReturnStatement>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <file name="routes/mailbook.php"/>
             </errorLevel>
         </InvalidReturnStatement>
         <TooManyArguments>
@@ -62,12 +67,6 @@
                 <directory name="app/Http/Middleware" />
             </errorLevel>
         </MissingReturnType>
-        <UndefinedClass>
-            <errorLevel type="suppress">
-                <file name="app/Exceptions/Handler.php" />
-                <file name="app/Providers/NovaServiceProvider.php" />
-            </errorLevel>
-        </UndefinedClass>
         <UnresolvableInclude>
             <errorLevel type="suppress">
                 <file name="app/Console/Kernel.php" />
@@ -293,15 +292,5 @@
                 <file name="app/Http/Middleware/Sentry.php"/>
             </errorLevel>
         </UnusedClosureParam>
-        <InvalidReturnStatement>
-            <errorLevel type="suppress">
-                <file name="routes/mailbook.php"/>
-                <file name="app/Models/Attendance.php"/>
-                <file name="app/Models/Team.php"/>
-                <file name="app/Models/Travel.php"/>
-                <file name="app/Models/User.php"/>
-                <file name="app/Models/DuesTransaction.php"/>
-            </errorLevel>
-        </InvalidReturnStatement>
     </issueHandlers>
 </psalm>

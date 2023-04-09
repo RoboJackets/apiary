@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -68,6 +70,10 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property bool $acknowledgement_sent
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereAcknowledgementSent($value)
  */
 class DocuSignEnvelope extends Model
 {
@@ -91,6 +97,7 @@ class DocuSignEnvelope extends Model
         'viewed_at' => 'datetime',
         'signed_at' => 'datetime',
         'completed_at' => 'datetime',
+        'acknowledgement_sent' => 'boolean',
     ];
 
     /**
@@ -129,13 +136,17 @@ class DocuSignEnvelope extends Model
             return null;
         }
 
-        return Str::lower(
-            'https://app.docusign.com/documents/details/'.
+        if (Str::contains($this->envelope_id, '-')) {
+            return 'https://app.docusign.com/documents/details/'.$this->envelope_id;
+        } else {
+            return Str::lower(
+                'https://app.docusign.com/documents/details/'.
                 Str::substr($this->envelope_id, 0, 8).'-'.
                 Str::substr($this->envelope_id, 8, 4).'-'.
                 Str::substr($this->envelope_id, 12, 4).'-'.
                 Str::substr($this->envelope_id, 16, 4).'-'.
                 Str::substr($this->envelope_id, 20, 12)
-        );
+            );
+        }
     }
 }

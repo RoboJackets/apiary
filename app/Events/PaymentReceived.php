@@ -9,24 +9,16 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PaymentSuccess
+class PaymentReceived
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
     /**
-     * The payment of interest.
-     *
-     * @var \App\Models\Payment
-     */
-    public $payment;
-
-    /**
      * Create a new event instance.
      */
-    public function __construct(Payment $payment)
+    public function __construct(public readonly Payment $payment)
     {
-        $this->payment = $payment;
     }
 }

@@ -48,6 +48,7 @@ class CASAuthenticate
         'authnContextClass',
         'eduPersonPrimaryAffiliation',
         'eduPersonScopedAffiliation',
+        'authenticationDate',
     ];
 
     public function __construct(Guard $auth)
@@ -86,6 +87,8 @@ class CASAuthenticate
                 Auth::login($user);
 
                 SendReminders::dispatch($user);
+
+                $request->session()->put('authenticationInstant', $this->cas->getAttribute('authenticationDate'));
             }
 
             if ($this->cas->isAuthenticated() && $request->user() !== null) {

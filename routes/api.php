@@ -78,6 +78,9 @@ Route::webhooks('/v1/postmark/outbound', 'postmark-outbound');
 
 Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
 
+Route::webhooks('/v1/docusign', 'docusign')
+    ->middleware(['signed']);
+
 Route::get('/v1/info', [InfoController::class, 'show']);
 
 Route::get('/v1/nova/export/{file}', [NovaExportController::class, 'export'])->name('api.v1.nova.export')

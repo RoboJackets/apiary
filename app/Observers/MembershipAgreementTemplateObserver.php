@@ -16,10 +16,11 @@ class MembershipAgreementTemplateObserver
             return;
         }
 
-        $previousTemplate = MembershipAgreementTemplate::orderByDesc('updated_at')->limit(2)->get()[1];
+        $previousTemplate = MembershipAgreementTemplate::orderByDesc('updated_at')->first();
 
-        $signatures = Signature::where('membership_agreement_template_id', $previousTemplate->id)
+        $signatures = Signature::where('membership_agreement_template_id', '<', $previousTemplate->id)
             ->where('complete', true)
+            ->with('user')
             ->get();
 
         foreach ($signatures as $signature) {

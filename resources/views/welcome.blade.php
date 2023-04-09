@@ -52,11 +52,7 @@
                                 The RoboJackets membership agreement has changed since the last time you signed it.  Please review and sign the updated version to continue your membership.
                             </p>
                         @endif
-                        @if(config('features.docusign-membership-agreement'))
-                            <a href="{{ route('docusign.agreement') }}">Sign Electronically</a>
-                        @else
-                            <a href="{{ route('agreement.render') }}">Sign Electronically</a> or <a href="{{ route('agreement.print') }}">Print</a>
-                        @endif
+                        <a href="{{ route('docusign.agreement') }}">Sign Electronically</a>
                     </div>
                 </div>
             </div>
@@ -182,7 +178,7 @@
                         </p>
                         <ul>
                             @if(!$signedLatestAgreement)
-                            <li><a href="{{ config('features.docusign-membership-agreement') ? route('docusign.agreement') : route('agreement.render') }}">Sign the latest membership agreement</a></li>
+                            <li><a href="{{ route('docusign.agreement') }}">Sign the latest membership agreement</a></li>
                             @endif
                             @if(!$status && $needsTransaction)
                             <li><a href="{{ route('showDuesFlow') }}">Pay dues</a></li>

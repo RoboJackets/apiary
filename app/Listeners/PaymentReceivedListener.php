@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace App\Listeners;
 
-use App\Events\PaymentSuccess;
+use App\Events\PaymentReceived;
 use App\Models\DuesTransaction;
 use App\Models\TravelAssignment;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
-class PaymentSuccessListener
+/**
+ * Handles role assignments once payment is received.
+ *
+ * @phan-suppress PhanUnreferencedClass
+ */
+class PaymentReceivedListener implements ShouldQueue
 {
     /**
      * Handle the event.
      */
-    public function handle(PaymentSuccess $event): void
+    public function handle(PaymentReceived $event): void
     {
         $payment = $event->payment;
         $payable = $payment->payable;

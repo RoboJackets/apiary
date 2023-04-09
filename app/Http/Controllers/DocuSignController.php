@@ -2,14 +2,33 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Commenting.DocComment.MissingShort
+// phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments.DisallowedNamedArgument
+// phpcs:disable SlevomatCodingStandard.PHP.RequireExplicitAssertion.RequiredExplicitAssertion
+
 namespace App\Http\Controllers;
 
-use App\Jobs\RetrieveIpAddressGeoLocationForSignature;
 use App\Models\DocuSignEnvelope;
+use App\Models\DocuSignToken;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
-use App\Models\User;
+use App\Util\DocuSign;
+use Carbon\Carbon;
+use DocuSign\eSign\Api\EnvelopesApi;
+use DocuSign\eSign\Client\ApiClient;
+use DocuSign\eSign\Model\ConnectEventData;
+use DocuSign\eSign\Model\EmailSettings;
+use DocuSign\eSign\Model\EnvelopeDefinition;
+use DocuSign\eSign\Model\EventNotification;
+use DocuSign\eSign\Model\Expirations;
+use DocuSign\eSign\Model\Notification;
+use DocuSign\eSign\Model\RecipientEmailNotification;
+use DocuSign\eSign\Model\RecipientViewRequest;
+use DocuSign\eSign\Model\Reminders;
+use DocuSign\eSign\Model\TemplateRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class DocuSignController extends Controller
 {
@@ -78,6 +97,11 @@ class DocuSignController extends Controller
         return redirect(config('docusign.single_sign_on_url'));
     }
 
+    /**
+     * Redirect to a DocuSign signing session for the membership agreement.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
     public function signAgreement(Request $request)
     {
         $user = $request->user();
@@ -88,7 +112,28 @@ class DocuSignController extends Controller
 
         $template = MembershipAgreementTemplate::orderByDesc('updated_at')->firstOrFail();
 
-        $signature = Signature::firstOrNew(
+        $recipientApiClient = DocuSign::getApiClientForUser($user);
+
+        if ($recipientApiClient === null) {
+            $state = DocuSign::getState();
+
+            $docusign = DocuSign::getApiClient(withAccessToken: false);
+
+            $authorization_uri = $docusign->getAuthorizationURI(
+                client_id: config('docusign.client_id'),
+                scopes: [ApiClient::$SCOPE_SIGNATURE],
+                redirect_uri: route('docusign.auth.complete'),
+                response_type: 'code',
+                state: $state
+            ).'&prompt=login&login_hint='.$user->uid.'@gatech.edu';
+
+            $request->session()->put('state', $state);
+            $request->session()->put('next', 'signAgreement');
+
+            return redirect($authorization_uri);
+        }
+
+        $signature = Signature::firstOrCreate(
             [
                 'membership_agreement_template_id' => $template->id,
                 'user_id' => $user->id,
@@ -97,71 +142,269 @@ class DocuSignController extends Controller
             ]
         );
 
-        $ip = $request->ip();
+        $envelopesApi = new EnvelopesApi(DocuSign::getApiClient());
 
-        if ($ip === null) { // I have no idea what could possibly cause this, but that's what the contract says
-            return view(
-                'agreement.error',
-                [
-                    'message' => 'We could not detect your IP address.',
-                ]
-            );
-        }
-
-        $signature->ip_address = $ip;
-        $signature->user_agent = $request->header('User-Agent');
-        $signature->save();
-
-        RetrieveIpAddressGeoLocationForSignature::dispatch($signature);
-
-        if ($signature->envelope()->count() === 0) {
+        if ($signature->envelope()->whereNotNull('envelope_id')->count() === 0) {
             $envelope = new DocuSignEnvelope();
             $envelope->signed_by = $user->id;
             $envelope->signable_type = $signature->getMorphClass();
             $envelope->signable_id = $signature->id;
             $envelope->save();
 
-            return redirect(self::generateAgreementPowerFormUrl($user));
+            $envelopeResponse = $envelopesApi->createEnvelope(
+                account_id: config('docusign.account_id'),
+                envelope_definition: (new EnvelopeDefinition())
+                    ->setStatus('sent')
+                    ->setTemplateId(config('docusign.membership_agreement_template_id'))
+                    ->setTemplateRoles(
+                        [
+                            (new TemplateRole())
+                                ->setEmail($user->uid.'@gatech.edu')
+                                ->setName($user->full_name)
+                                ->setRoleName('Member')
+                                ->setEmailNotification(
+                                    (new RecipientEmailNotification())
+                                        ->setEmailSubject('RoboJackets Membership Agreement')
+                                        ->setEmailBody(
+                                            trim(view('mail.agreement.docusignenvelopenotification')->render())
+                                        )
+                                        ->setSupportedLanguage('en')
+                                ),
+                        ]
+                    )
+                    ->setEmailSubject('RoboJackets Membership Agreement')
+                    ->setEmailBlurb(trim(view('mail.agreement.docusignenvelopenotification')->render()))
+                    ->setEmailSettings(
+                        (new EmailSettings())
+                            ->setReplyEmailAddressOverride('support@robojackets.org')
+                            ->setReplyEmailNameOverride('RoboJackets')
+                    )->setNotification(
+                        (new Notification())
+                            ->setUseAccountDefaults(false)
+                            ->setReminders(
+                                (new Reminders())
+                                    ->setReminderEnabled(true)
+                                    ->setReminderDelay(2)
+                                    ->setReminderFrequency(2)
+                            )
+                            ->setExpirations(
+                                (new Expirations())
+                                    ->setExpireEnabled(true)
+                                    ->setExpireWarn(10)
+                                    ->setExpireAfter(60)
+                            )
+                    )
+                    ->setAllowComments(false)
+                    ->setAllowMarkup(false)
+                    ->setAllowReassign(false)
+                    ->setAllowRecipientRecursion(false)
+                    ->setAllowViewHistory(true)
+                    ->setAutoNavigation(false)
+                    ->setEnableWetSign(true)
+                    ->setEnvelopeIdStamping(true)
+                    ->setEventNotification(
+                        (new EventNotification())
+                            ->setEventData(
+                                (new ConnectEventData())
+                                    ->setVersion('restv2.1')
+                            )
+                            ->setDeliveryMode('SIM')
+                            ->setEvents(
+                                [
+                                    'envelope-created',
+                                    'envelope-sent',
+                                    'envelope-resent',
+                                    'envelope-delivered',
+                                    'envelope-completed',
+                                    'envelope-declined',
+                                    'envelope-voided',
+                                    'recipient-authenticationfailed',
+                                    'recipient-autoresponded',
+                                    'recipient-declined',
+                                    'recipient-delivered',
+                                    'recipient-completed',
+                                    'recipient-sent',
+                                    'recipient-resent',
+                                    'template-created',
+                                    'template-modified',
+                                    'template-deleted',
+                                    'envelope-corrected',
+                                    'envelope-purge',
+                                    'envelope-deleted',
+                                    'envelope-discard',
+                                    'recipient-reassign',
+                                    'recipient-delegate',
+                                    'recipient-finish-later',
+                                    'click-agreed',
+                                    'click-declined',
+                                ]
+                            )
+                            ->setIncludeEnvelopeVoidReason(false)
+                            ->setLoggingEnabled(true)
+                            ->setRequireAcknowledgment(true)
+                            ->setUrl(
+                                URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
+                            )
+                    )
+                    ->setUseDisclosure(true)
+            );
+
+            $envelope->envelope_id = $envelopeResponse->getEnvelopeId();
+            $envelope->save();
+        } else {
+            $envelope = $signature->envelope()->whereNotNull('envelope_id')->sole();
         }
 
-        $maybe_url = $signature->envelope()->sole()->url;
+        $recipientViewResponse = (new EnvelopesApi($recipientApiClient))->createRecipientView(
+            account_id: config('docusign.account_id'),
+            envelope_id: $envelope->envelope_id,
+            recipient_view_request: (new RecipientViewRequest())
+                ->setAuthenticationInstant($request->session()->get('authenticationInstant'))
+                ->setAuthenticationMethod('SingleSignOn_Other')
+                ->setEmail($user->uid.'@gatech.edu')
+                ->setUserName($user->full_name)
+                ->setReturnUrl(
+                    URL::signedRoute(
+                        'docusign.complete',
+                        [
+                            'envelope_id' => $envelope->envelope_id,
+                        ]
+                    )
+                )
+                ->setSecurityDomain(config('cas.cas_hostname'))
+                ->setXFrameOptions('deny')
+        );
 
-        if ($maybe_url !== null) {
-            return redirect($maybe_url);
-        }
-
-        // user can find envelope in "action required" section, theoretically, maybe
-        return redirect(config('docusign.single_sign_on_url'));
+        return redirect($recipientViewResponse->getUrl());
     }
 
-    private static function generateAgreementPowerFormUrl(User $user): string
+    public function redirectToProvider(Request $request)
     {
-        return config('docusign.membership_agreement.powerform_url').'&'.http_build_query(
-            [
-                config(
-                    'docusign.membership_agreement.member_name'
-                ).'_UserName' => $user->full_name,
+        $state = DocuSign::getState();
 
-                config(
-                    'docusign.membership_agreement.member_name'
-                ).'_Email' => $user->uid.'@gatech.edu',
+        $docusign = DocuSign::getApiClient(withAccessToken: false);
 
-                config(
-                    'docusign.membership_agreement.ingest_mailbox_name'
-                ).'_UserName' => config('app.name'),
+        $authorization_uri = $docusign->getAuthorizationURI(
+            client_id: config('docusign.client_id'),
+            scopes: [ApiClient::$SCOPE_SIGNATURE, ApiClient::$SCOPE_EXTENDED],
+            redirect_uri: route('docusign.auth.complete'),
+            response_type: 'code',
+            state: $state
+        ).'&prompt=login';
 
-                config(
-                    'docusign.membership_agreement.ingest_mailbox_name'
-                ).'_Email' => config('docusign.ingest_mailbox'),
+        $request->session()->put('state', $state);
+        $request->session()->put('next', 'storeGlobalTokens');
 
-                config(
-                    'docusign.membership_agreement.archive_mailbox_name'
-                ).'_UserName' => 'Membership Agreement Archives',
+        return redirect($authorization_uri);
+    }
 
-                config(
-                    'docusign.membership_agreement.archive_mailbox_name'
-                ).'_Email' => config('services.membership_agreement_archive_email'),
-            ]
-        );
+    /**
+     * Handle the OAuth consent response from DocuSign.
+     *
+     * @phan-suppress PhanPluginInconsistentReturnMethod
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    public function handleProviderCallback(Request $request)
+    {
+        if (
+            ! $request->has('code') ||
+            ! $request->has('state') ||
+            $request->session()->get('state') !== $request->state
+        ) {
+            abort(500);
+        }
+
+        $docusign = DocuSign::getApiClient(withAccessToken: false);
+
+        /** @var \DocuSign\eSign\Client\Auth\OAuthToken $tokens */
+        $tokens = $docusign->generateAccessToken(
+            client_id: config('docusign.client_id'),
+            client_secret: config('docusign.client_secret'),
+            code: $request->code
+        )[0];
+
+        /** @var \DocuSign\eSign\Client\Auth\UserInfo $userinfo */
+        $userinfo = $docusign->getUserInfo($tokens->getAccessToken())[0];
+
+        $userInSameAccount = false;
+
+        /** @var \DocuSign\eSign\Client\Auth\Account $account */
+        foreach ($userinfo->getAccounts() as $account) {
+            if ($account->getAccountId() === config('docusign.account_id')) {
+                $userInSameAccount = true;
+            }
+        }
+
+        if (! $userInSameAccount) {
+            $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
+
+            Log::info($userinfo_serialized);
+
+            abort(401);
+        }
+
+        switch ($request->session()->get('next')) {
+            case 'storeGlobalTokens':
+                DocuSignToken::storeTokens($tokens);
+
+                $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
+
+                Log::info($userinfo_serialized);
+
+                return response()->json($userinfo_serialized);
+            case 'signAgreement':
+                /** @var \App\Models\User $user */
+                $user = $request->user();
+
+                if ($userinfo->getEmail() !== $user->uid.'@gatech.edu') {
+                    $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
+
+                    Log::info($userinfo_serialized);
+
+                    abort(401);
+                }
+
+                $user->docusign_access_token = $tokens->getAccessToken();
+                $user->docusign_access_token_expires_at = Carbon::now()->addSeconds($tokens->getExpiresIn() - 60);
+                $user->docusign_refresh_token = $tokens->getRefreshToken();
+                $user->docusign_refresh_token_expires_at = Carbon::now()->addDays(29);
+                $user->save();
+
+                return $this->signAgreement($request);
+        }
+    }
+
+    public function complete(Request $request)
+    {
+        if (! $request->hasValidSignatureWhileIgnoring(['event'])) {
+            abort(500);
+        }
+
+        $envelope = DocuSignEnvelope::where('signed_by', $request->user()->id)
+            ->where('envelope_id', $request->envelope_id)
+            ->withTrashed()
+            ->sole();
+
+        switch ($request->event) {
+            case 'decline':
+                if (! $envelope->complete) {
+                    $envelope->delete();
+                } else {
+                    abort(500);
+                }
+
+                break;
+            case 'signing_complete':
+                $envelope->complete = true;
+                $envelope->save();
+
+                if ($envelope->signable_type === Signature::getMorphClassStatic()) {
+                    alert()->success('Success!', 'We processed your membership agreement!');
+                }
+
+                break;
+        }
+
+        return redirect('/');
     }
 }

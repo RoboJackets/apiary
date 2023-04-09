@@ -31,6 +31,7 @@
         "barryvdh/laravel-dompdf": "2.0.1",
         "chelout/laravel-relationship-events": "2.0.0",
         "doctrine/dbal": "3.6.2",
+        "docusign/esign-client": "^6.12",
         "enlightn/enlightn": "2.3.0",
         "fakerphp/faker": "1.21.0",
         "guzzlehttp/guzzle": "7.5.1",

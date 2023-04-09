@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06e689c2f687d7b7a9bdd03604c7ff84",
+    "content-hash": "e0e06aa52a52dad6c9621c17a6a91881",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1623,6 +1623,65 @@
                 }
             ],
             "time": "2022-12-15T16:57:16+00:00"
+        },
+        {
+            "name": "docusign/esign-client",
+            "version": "v6.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/docusign/docusign-esign-php-client.git",
+                "reference": "af5b6dd18416ea0a1960fefe9e89e5f5cf0f3660"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/af5b6dd18416ea0a1960fefe9e89e5f5cf0f3660",
+                "reference": "af5b6dd18416ea0a1960fefe9e89e5f5cf0f3660",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "firebase/php-jwt": "^5.0 || ^6.0",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "*",
+                "phpunit/phpunit": "~4.8",
+                "satooshi/php-coveralls": "~1.0",
+                "squizlabs/php_codesniffer": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DocuSign\\eSign\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "DocuSign",
+                    "homepage": "https://developers.docusign.com"
+                }
+            ],
+            "description": "The DocuSign PHP library makes integrating DocuSign into your websites a super fast and painless process. The library is open sourced on GitHub, look for the docusign-php-client repository. Join the eSign revolution!",
+            "homepage": "https://developers.docusign.com",
+            "keywords": [
+                "agreement",
+                "api",
+                "docusign",
+                "eSignature",
+                "php",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v6.12.0"
+            },
+            "time": "2022-12-05T16:30:36+00:00"
         },
         {
             "name": "dompdf/dompdf",
@@ -13534,16 +13593,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.20.0",
+            "version": "1.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "10553ab3f0337ff1a71433c3417d7eb2a3eec1fd"
+                "reference": "57f6787f0bb6431905a18aa7caea25dcd2bd59e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/10553ab3f0337ff1a71433c3417d7eb2a3eec1fd",
-                "reference": "10553ab3f0337ff1a71433c3417d7eb2a3eec1fd",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/57f6787f0bb6431905a18aa7caea25dcd2bd59e0",
+                "reference": "57f6787f0bb6431905a18aa7caea25dcd2bd59e0",
                 "shasum": ""
             },
             "require": {
@@ -13573,9 +13632,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.20.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.20.1"
             },
-            "time": "2023-04-20T11:18:07+00:00"
+            "time": "2023-04-22T09:05:52+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
