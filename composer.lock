@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9746db1b6fa1d0d125839897c83d0cde",
+    "content-hash": "75d55c230ecbc63c0f88a35f8c3405ce",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5135,7 +5135,7 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
