@@ -306,6 +306,10 @@ class DocuSignController extends Controller
      */
     public function handleProviderCallback(Request $request)
     {
+        if ($request->error === 'access_denied') {
+            return redirect('/');
+        }
+
         if (
             ! $request->has('code') ||
             ! $request->has('state') ||
