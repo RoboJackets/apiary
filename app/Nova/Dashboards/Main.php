@@ -96,7 +96,6 @@ class Main extends Dashboard
         }
 
         if (request()->is('nova-api/metrics/*-received-*')) {
-            // @phan-suppress-next-line PhanTypeMismatchArgument
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $type = $parts->first();
             $id = intval($parts->last());
