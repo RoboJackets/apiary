@@ -51,7 +51,7 @@
         "mrclay/jsmin-php": "2.4.3",
         "oitnetworkservices/buzzapiclient": "0.1.4",
         "realrashid/sweet-alert": "6.0.0",
-        "sentry/sentry-laravel": "3.3.2",
+        "sentry/sentry-laravel": "3.3.3",
         "smalot/pdfparser": "2.4.0",
         "spatie/laravel-csp": "2.8.3",
         "spatie/laravel-failed-job-monitor": "4.2.1",
