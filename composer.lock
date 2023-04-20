@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1441f2691beb5d1f1ebd2cb4626271ce",
+    "content-hash": "8094c088c9a8cf68704c42590080768e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8931,16 +8931,16 @@
         },
         {
             "name": "square/square",
-            "version": "25.2.0.20230315",
+            "version": "26.0.0.20230419",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "a665cac55fbc9913585cd29145330d42115cfdf8"
+                "reference": "9d983983377028225188619040c2a9965b2ca76e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/a665cac55fbc9913585cd29145330d42115cfdf8",
-                "reference": "a665cac55fbc9913585cd29145330d42115cfdf8",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/9d983983377028225188619040c2a9965b2ca76e",
+                "reference": "9d983983377028225188619040c2a9965b2ca76e",
                 "shasum": ""
             },
             "require": {
@@ -8948,10 +8948,10 @@
                 "apimatic/core-interfaces": "~0.1.0",
                 "apimatic/unirest-php": "^4.0.0",
                 "ext-json": "*",
-                "php": ">=7.2 <8.2"
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "phan/phan": "5.3.1",
+                "phan/phan": "5.4.2",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
                 "squizlabs/php_codesniffer": "^3.5"
             },
@@ -8981,9 +8981,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/25.2.0.20230315"
+                "source": "https://github.com/square/square-php-sdk/tree/26.0.0.20230419"
             },
-            "time": "2023-03-14T22:24:30+00:00"
+            "time": "2023-04-18T19:56:30+00:00"
         },
         {
             "name": "subfission/cas",
