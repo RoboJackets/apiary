@@ -35,9 +35,9 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
         if ($this->user->dues()->pending()->count() > 0 &&
             $this->user->hasPermissionTo('access-nova') &&
             $this->user->novaNotifications()
-                             ->where('type', DuesPaymentDue::class)
-                             ->where('created_at', '>', now()->subMonths(3))
-                             ->count() === 0
+                ->where('type', DuesPaymentDue::class)
+                ->where('created_at', '>', now()->subMonths(3))
+                ->count() === 0
         ) {
             $this->user->notify(new DuesPaymentDue());
         }

@@ -904,19 +904,19 @@ class User extends Authenticatable
             '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'
         )->leftJoin('dues_transactions', static function (JoinClause $join): void {
             $join->on('dues_transactions.id', '=', 'payable_id')
-                 ->where('payments.amount', '>', 0)
-                 ->where('payments.method', '!=', 'waiver')
-                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                 ->whereNull('payments.deleted_at');
+                ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'waiver')
+                ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                ->whereNull('payments.deleted_at');
         })->leftJoin('travel_assignments', static function (JoinClause $join): void {
             $join->on('travel_assignments.id', '=', 'payable_id')
-                 ->where('payments.amount', '>', 0)
-                 ->where('payments.method', '!=', 'waiver')
-                 ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                 ->whereNull('payments.deleted_at');
+                ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'waiver')
+                ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                ->whereNull('payments.deleted_at');
         })->where('travel_assignments.user_id', '=', $this->id)
-        ->orWhere('dues_transactions.user_id', '=', $this->id)
-        ->get()[0]['revenue']);
+            ->orWhere('dues_transactions.user_id', '=', $this->id)
+            ->get()[0]['revenue']);
 
         if (! array_key_exists('attendance_count', $array)) {
             $array['attendance_count'] = $this->attendance()->count();

@@ -141,8 +141,8 @@ class TravelAssignment extends Model
     {
         return $query->select('travel_assignments.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'travel_assignments.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->groupBy('travel_assignments.id', 'travel_assignments.travel_id', 'travel.fee_amount')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= travel.fee_amount');
@@ -158,8 +158,8 @@ class TravelAssignment extends Model
     {
         return $query->select('travel_assignments.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'travel_assignments.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->groupBy('travel_assignments.id', 'travel_assignments.travel_id', 'travel.fee_amount')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) < travel.fee_amount');
@@ -176,7 +176,7 @@ class TravelAssignment extends Model
         return $query->whereHas('travel', static function (Builder $q): void {
             $q->where('tar_required', true);
         })
-        ->where('tar_received', false);
+            ->where('tar_received', false);
     }
 
     public function getNeedsDocusignAttribute(): bool

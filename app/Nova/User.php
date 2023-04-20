@@ -581,17 +581,17 @@ class User extends Resource
             'dues_packages.effective_start',
             'dues_packages.effective_end'
         )
-        ->leftJoin('payments', static function (JoinClause $join): void {
-            $join->on('dues_transactions.id', '=', 'payable_id')
-                 ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
-                 ->where('payments.amount', '>', 0);
-        })
-        ->leftJoin('dues_packages', 'dues_transactions.dues_package_id', '=', 'dues_packages.id')
-        ->where('user_id', $this->id)
-        ->whereNotNull('payments.id')
-        ->orderBy('dues_packages.effective_start')
-        ->orderBy('dues_packages.effective_end')
-        ->get();
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('dues_transactions.id', '=', 'payable_id')
+                    ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
+                    ->where('payments.amount', '>', 0);
+            })
+            ->leftJoin('dues_packages', 'dues_transactions.dues_package_id', '=', 'dues_packages.id')
+            ->where('user_id', $this->id)
+            ->whereNotNull('payments.id')
+            ->orderBy('dues_packages.effective_start')
+            ->orderBy('dues_packages.effective_end')
+            ->get();
 
         $firstPaidTransact = $paidTransactions->first();
         $lastPaidTransact = $paidTransactions->last();

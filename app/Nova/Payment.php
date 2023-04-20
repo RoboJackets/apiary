@@ -157,10 +157,10 @@ class Payment extends Resource
                         'environment' => config('square.environment'),
                     ]
                 ))->getOrdersApi()
-                ->retrieveOrder($this->order_id)
-                ->getResult()
-                ->getOrder()
-                ->getState();
+                    ->retrieveOrder($this->order_id)
+                    ->getResult()
+                    ->getOrder()
+                    ->getState();
             })
                 ->onlyOnDetail(),
 
@@ -252,10 +252,10 @@ class Payment extends Resource
                     'environment' => config('square.environment'),
                 ]
             ))->getOrdersApi()
-            ->retrieveOrder($order_id)
-            ->getResult()
-            ->getOrder()
-            ->getState() === OrderState::COMPLETED
+                ->retrieveOrder($order_id)
+                ->getResult()
+                ->getOrder()
+                ->getState() === OrderState::COMPLETED
         ) {
             return false;
         }
@@ -286,10 +286,10 @@ class Payment extends Resource
                     'environment' => config('square.environment'),
                 ]
             ))->getOrdersApi()
-            ->retrieveOrder($order_id)
-            ->getResult()
-            ->getOrder()
-            ->getState() !== OrderState::COMPLETED
+                ->retrieveOrder($order_id)
+                ->getResult()
+                ->getOrder()
+                ->getState() !== OrderState::COMPLETED
         ) {
             return false;
         }

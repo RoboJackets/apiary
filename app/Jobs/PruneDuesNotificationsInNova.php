@@ -35,14 +35,14 @@ class PruneDuesNotificationsInNova implements ShouldQueue, ShouldBeUnique
     {
         if ($this->user->dues()->pending()->count() > 0 || $this->user->is_active) {
             $this->user->novaNotifications()
-                       ->where('type', DuesAreLive::class)
-                       ->delete();
+                ->where('type', DuesAreLive::class)
+                ->delete();
         }
 
         if ($this->user->is_active) {
             $this->user->novaNotifications()
-                       ->where('type', DuesPaymentDue::class)
-                       ->delete();
+                ->where('type', DuesPaymentDue::class)
+                ->delete();
         }
     }
 
