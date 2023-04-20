@@ -29,13 +29,13 @@ class PaymentReminder extends Mailable implements ShouldQueue
     public function build(): self
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->to($this->transaction->user->gt_email, $this->transaction->user->name)
-                    ->subject('Reminder: payment required for '.$this->transaction->package->name.' dues')
-                    ->text('mail.dues.paymentreminder')
-                    ->withSymfonyMessage(static function (Email $email): void {
-                        $email->replyTo('RoboJackets <treasurer@robojackets.org>');
-                    })
-                    ->tag('dues-payment-reminder')
-                    ->metadata('transaction-id', strval($this->transaction->id));
+            ->to($this->transaction->user->gt_email, $this->transaction->user->name)
+            ->subject('Reminder: payment required for '.$this->transaction->package->name.' dues')
+            ->text('mail.dues.paymentreminder')
+            ->withSymfonyMessage(static function (Email $email): void {
+                $email->replyTo('RoboJackets <treasurer@robojackets.org>');
+            })
+            ->tag('dues-payment-reminder')
+            ->metadata('transaction-id', strval($this->transaction->id));
     }
 }

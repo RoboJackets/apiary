@@ -77,8 +77,8 @@ class TravelAssignment extends Resource
                         '>=',
                         Carbon::now()
                     )
-                            ->orderBy('departure_date')
-                            ->first()
+                        ->orderBy('departure_date')
+                        ->first()
                             ?->id
                 ),
 

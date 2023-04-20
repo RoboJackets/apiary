@@ -55,22 +55,22 @@ class DistributeMerchandise extends Action
             'dues_transaction_merchandise.id',
             'dues_transaction_merchandise.provided_at'
         )
-        ->leftJoin(
-            'dues_transactions',
-            static function (JoinClause $join) use ($provided_to): void {
-                $join->on('dues_transactions.id', '=', 'dues_transaction_id')
-                     ->where('user_id', '=', $provided_to->id);
-            }
-        )
-        ->leftJoin('payments', static function (JoinClause $join): void {
-            $join->on('dues_transactions.id', '=', 'payable_id')
-                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                 ->where('payments.amount', '>', 0);
-        })
-        ->whereNotNull('payments.id')
-        ->where('merchandise_id', $merchandise->id)
-        ->where('user_id', $provided_to->id)
-        ->first();
+            ->leftJoin(
+                'dues_transactions',
+                static function (JoinClause $join) use ($provided_to): void {
+                    $join->on('dues_transactions.id', '=', 'dues_transaction_id')
+                        ->where('user_id', '=', $provided_to->id);
+                }
+            )
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('dues_transactions.id', '=', 'payable_id')
+                    ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                    ->where('payments.amount', '>', 0);
+            })
+            ->whereNotNull('payments.id')
+            ->where('merchandise_id', $merchandise->id)
+            ->where('user_id', $provided_to->id)
+            ->first();
 
         if ($dtm === null) {
             return Action::danger('This user is not eligible for this merchandise.');
@@ -113,12 +113,12 @@ class DistributeMerchandise extends Action
                                             $query->where('merchandise.id', $resource->id);
                                         }
                                     )
-                                    ->whereNull('dues_transaction_merchandise.provided_at');
+                                        ->whereNull('dues_transaction_merchandise.provided_at');
                                 }
                             )
-                            ->whereHas('payment', static function (Builder $query): void {
-                                $query->where('amount', '>', 0);
-                            });
+                                ->whereHas('payment', static function (Builder $query): void {
+                                    $query->where('amount', '>', 0);
+                                });
                         }
                     )
                         ->get()

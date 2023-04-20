@@ -46,12 +46,12 @@ final class SimpleRequestsTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'success')
-                 ->has('info', static function (AssertableJson $json): void {
-                     $json->where('appName', 'TESTING Apiary')
-                          ->where('appEnv', 'testing')
-                          ->where('allocId', 'asdf')
-                          ->where('release', 'jkl');
-                 });
+                ->has('info', static function (AssertableJson $json): void {
+                    $json->where('appName', 'TESTING Apiary')
+                        ->where('appEnv', 'testing')
+                        ->where('allocId', 'asdf')
+                        ->where('release', 'jkl');
+                });
         });
     }
 }

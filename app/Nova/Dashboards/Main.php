@@ -69,9 +69,9 @@ class Main extends Dashboard
                 if (
                     $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
                         $join->on('travel_assignments.id', '=', 'payable_id')
-                             ->where('payments.amount', '>', 0)
-                             ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                             ->whereNull('payments.deleted_at');
+                            ->where('payments.amount', '>', 0)
+                            ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                            ->whereNull('payments.deleted_at');
                     })->whereNull(
                         'payments.id'
                     )->exists()

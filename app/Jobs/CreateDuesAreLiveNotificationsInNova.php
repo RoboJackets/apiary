@@ -29,7 +29,7 @@ class CreateDuesAreLiveNotificationsInNova implements ShouldQueue, ShouldBeUniqu
             ->inactive()
             ->whereDoesntHave('novaNotifications', static function (Builder $query): void {
                 $query->where('type', DuesAreLive::class)
-                      ->where('created_at', '>', now()->subMonths(3));
+                    ->where('created_at', '>', now()->subMonths(3));
             })
             ->get()
             ->each(static function (User $user): void {

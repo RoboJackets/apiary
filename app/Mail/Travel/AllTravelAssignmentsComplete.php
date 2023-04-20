@@ -30,15 +30,15 @@ class AllTravelAssignmentsComplete extends Mailable implements ShouldQueue
     public function build(): self
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->to($this->travel->primaryContact->gt_email, $this->travel->primaryContact->name)
-                    ->cc(config('services.treasurer_email'))
-                    ->subject($this->renderSubjectLine())
-                    ->text('mail.travel.allassignmentscomplete')
-                    ->withSymfonyMessage(static function (Email $email): void {
-                        $email->replyTo(config('services.treasurer_email'));
-                    })
-                    ->tag('travel-assignments-complete')
-                    ->metadata('travel-id', strval($this->travel->id));
+            ->to($this->travel->primaryContact->gt_email, $this->travel->primaryContact->name)
+            ->cc(config('services.treasurer_email'))
+            ->subject($this->renderSubjectLine())
+            ->text('mail.travel.allassignmentscomplete')
+            ->withSymfonyMessage(static function (Email $email): void {
+                $email->replyTo(config('services.treasurer_email'));
+            })
+            ->tag('travel-assignments-complete')
+            ->metadata('travel-id', strval($this->travel->id));
     }
 
     private function renderSubjectLine(): string

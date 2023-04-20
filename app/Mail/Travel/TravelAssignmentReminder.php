@@ -29,20 +29,20 @@ class TravelAssignmentReminder extends Mailable implements ShouldQueue
     public function build(): self
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->to($this->assignment->user->gt_email, $this->assignment->user->name)
-                    ->subject(
-                        'Reminder: '.$this->subjectLineCallToAction()
-                        .' required for '.$this->assignment->travel->name.' travel'
-                    )
-                    ->text('mail.travel.assignmentreminder')
-                    ->withSymfonyMessage(function (Email $email): void {
-                        $email->replyTo(
-                            $this->assignment->travel->primaryContact->name.
-                            ' <'.$this->assignment->travel->primaryContact->gt_email.'>'
-                        );
-                    })
-                    ->tag('travel-assignment-reminder')
-                    ->metadata('assignment-id', strval($this->assignment->id));
+            ->to($this->assignment->user->gt_email, $this->assignment->user->name)
+            ->subject(
+                'Reminder: '.$this->subjectLineCallToAction()
+                .' required for '.$this->assignment->travel->name.' travel'
+            )
+            ->text('mail.travel.assignmentreminder')
+            ->withSymfonyMessage(function (Email $email): void {
+                $email->replyTo(
+                    $this->assignment->travel->primaryContact->name.
+                    ' <'.$this->assignment->travel->primaryContact->gt_email.'>'
+                );
+            })
+            ->tag('travel-assignment-reminder')
+            ->metadata('assignment-id', strval($this->assignment->id));
     }
 
     private function subjectLineCallToAction(): string

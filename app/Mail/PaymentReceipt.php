@@ -31,19 +31,19 @@ class PaymentReceipt extends Mailable implements ShouldQueue
     public function build(): self
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->to($this->payment->payable->user->gt_email, $this->payment->payable->user->name)
-                    ->subject('Receipt for your '.$this->getPayableDisplayName().' payment')
-                    ->text(
-                        'mail.paymentreceipt',
-                        [
-                            'payable_name' => $this->getPayableDisplayName(),
-                        ]
-                    )
-                    ->withSymfonyMessage(static function (Email $email): void {
-                        $email->replyTo('RoboJackets <treasurer@robojackets.org>');
-                    })
-                    ->tag('payment-receipt')
-                    ->metadata('payment-id', strval($this->payment->id));
+            ->to($this->payment->payable->user->gt_email, $this->payment->payable->user->name)
+            ->subject('Receipt for your '.$this->getPayableDisplayName().' payment')
+            ->text(
+                'mail.paymentreceipt',
+                [
+                    'payable_name' => $this->getPayableDisplayName(),
+                ]
+            )
+            ->withSymfonyMessage(static function (Email $email): void {
+                $email->replyTo('RoboJackets <treasurer@robojackets.org>');
+            })
+            ->tag('payment-receipt')
+            ->metadata('payment-id', strval($this->payment->id));
     }
 
     /**
