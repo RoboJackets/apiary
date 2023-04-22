@@ -171,7 +171,7 @@ class DocuSignController extends Controller
                                 ),
                         ]
                     )
-                    ->setEmailSubject('RoboJackets Membership Agreement')
+                    ->setEmailSubject('RoboJackets Membership Agreement for '.$user->full_name)
                     ->setEmailBlurb(trim(view('mail.agreement.docusignenvelopenotification')->render()))
                     ->setEmailSettings(
                         (new EmailSettings())
