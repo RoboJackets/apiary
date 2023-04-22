@@ -136,11 +136,17 @@ class DocuSignEnvelope extends Model
             return null;
         }
 
+        if (config('docusign.api_base_path') === 'https://demo.docusign.net/restapi') {
+            $hostname = 'https://appdemo.docusign.com';
+        } else {
+            $hostname = 'https://app.docusign.com';
+        }
+
         if (Str::contains($this->envelope_id, '-')) {
-            return 'https://app.docusign.com/documents/details/'.$this->envelope_id;
+            return $hostname.'/documents/details/'.$this->envelope_id;
         } else {
             return Str::lower(
-                'https://app.docusign.com/documents/details/'.
+                $hostname.'/documents/details/'.
                 Str::substr($this->envelope_id, 0, 8).'-'.
                 Str::substr($this->envelope_id, 8, 4).'-'.
                 Str::substr($this->envelope_id, 12, 4).'-'.
