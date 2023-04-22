@@ -293,12 +293,7 @@ class DocuSignController extends Controller
                 ->setEmail($user->uid.'@gatech.edu')
                 ->setUserName($user->full_name)
                 ->setReturnUrl(
-                    URL::signedRoute(
-                        'docusign.complete',
-                        [
-                            'envelope_id' => $envelope->envelope_id,
-                        ]
-                    )
+                    URL::signedRoute('docusign.complete', ['envelope_id' => $envelope->envelope_id])
                 )
                 ->setSecurityDomain(config('cas.cas_hostname'))
                 ->setXFrameOptions('deny')
