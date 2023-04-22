@@ -11,6 +11,7 @@ namespace App\Jobs;
 
 use App\Models\DocuSignEnvelope;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\MultipleRecordsFoundException;
@@ -61,7 +62,8 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
 
         if (array_key_exists('envelopeSummary', $data)) {
             if (array_key_exists('completedDateTime', $data['envelopeSummary'])) {
-                $envelope->completed_at = $data['envelopeSummary']['completedDateTime'];
+                $envelope->completed_at = Carbon::parse($data['envelopeSummary']['completedDateTime'])
+                    ->setTimezone(config('app.timezone'));
             }
 
             if (
@@ -89,15 +91,18 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
                 $recipient = $data['envelopeSummary']['recipients']['signers'][0];
 
                 if (array_key_exists('sentDateTime', $recipient)) {
-                    $envelope->sent_at = $recipient['sentDateTime'];
+                    $envelope->sent_at = Carbon::parse($recipient['sentDateTime'])
+                        ->setTimezone(config('app.timezone'));
                 }
 
                 if (array_key_exists('deliveredDateTime', $recipient)) {
-                    $envelope->viewed_at = $recipient['deliveredDateTime'];
+                    $envelope->viewed_at = Carbon::parse($recipient['deliveredDateTime'])
+                        ->setTimezone(config('app.timezone'));
                 }
 
                 if (array_key_exists('signedDateTime', $recipient)) {
-                    $envelope->signed_at = $recipient['signedDateTime'];
+                    $envelope->signed_at = Carbon::parse($recipient['signedDateTime'])
+                        ->setTimezone(config('app.timezone'));
                 }
             }
 
@@ -126,7 +131,7 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
                 case 'voided':
                     $envelope->save();
 
-                    if ($envelope->deleted_at !== null) {
+                    if ($envelope->deleted_at === null) {
                         $envelope->delete();
                     }
 
