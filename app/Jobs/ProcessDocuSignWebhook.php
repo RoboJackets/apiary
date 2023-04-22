@@ -2,9 +2,19 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.PHP.NoSilencedErrors.Discouraged
+// phpcs:disable Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore
+
 namespace App\Jobs;
 
 use App\Models\DocuSignEnvelope;
+use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\MultipleRecordsFoundException;
+use Illuminate\Support\Facades\Storage;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessDocuSignWebhook extends ProcessWebhookJob
@@ -27,6 +37,7 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
      * Execute the job.
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
+     * @phan-suppress PhanPossiblyFalseTypeArgument
      */
     public function handle(): void
     {
@@ -46,26 +57,89 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
             $envelope->save();
         }
 
-        $event = $this->webhookCall->payload['event'];
+        $data = $this->webhookCall->payload['data'];
 
-        switch ($event) {
-            case 'recipient-completed':
-            case 'envelope-completed':
-                if (! $envelope->complete) {
+        if (array_key_exists('envelopeSummary', $data)) {
+            if (array_key_exists('completedDateTime', $data['envelopeSummary'])) {
+                $envelope->completed_at = $data['envelopeSummary']['completedDateTime'];
+            }
+
+            if (
+                array_key_exists('sender', $data['envelopeSummary']) &&
+                array_key_exists('email', $data['envelopeSummary']['sender'])
+            ) {
+                $sender_email = $data['envelopeSummary']['sender']['email'];
+
+                $sender_email_parts = explode('@', @$sender_email);
+
+                try {
+                    $user = User::where('uid', '=', $sender_email_parts[0])->sole();
+
+                    $envelope->sent_by = $user->id;
+                } catch (ModelNotFoundException|MultipleRecordsFoundException) {
+                    // do nothing
+                }
+            }
+
+            if (
+                array_key_exists('recipients', $data['envelopeSummary']) &&
+                array_key_exists('signers', $data['envelopeSummary']['recipients']) &&
+                count($data['envelopeSummary']['recipients']['signers']) === 1
+            ) {
+                $recipient = $data['envelopeSummary']['recipients']['signers'][0];
+
+                if (array_key_exists('sentDateTime', $recipient)) {
+                    $envelope->sent_at = $recipient['sentDateTime'];
+                }
+
+                if (array_key_exists('deliveredDateTime', $recipient)) {
+                    $envelope->viewed_at = $recipient['deliveredDateTime'];
+                }
+
+                if (array_key_exists('signedDateTime', $recipient)) {
+                    $envelope->signed_at = $recipient['signedDateTime'];
+                }
+            }
+
+            if (array_key_exists('envelopeDocuments', $data['envelopeSummary'])) {
+                foreach ($data['envelopeSummary']['envelopeDocuments'] as $document) {
+                    $disk_path = 'docusign/'.$docusignEnvelopeId.'/'.$document['name'].'.pdf';
+
+                    Storage::disk('local')->put($disk_path, base64_decode($document['PDFBytes'], true));
+
+                    if ($document['type'] === 'summary') {
+                        $envelope->summary_filename = $disk_path;
+                    }
+                }
+            }
+        }
+
+        if (array_key_exists('status', $data['envelopeSummary'])) {
+            switch ($data['envelopeSummary']['status']) {
+                case 'signed':
+                case 'completed':
                     $envelope->complete = true;
                     $envelope->save();
-                }
 
-                break;
-            case 'recipient-declined':
-            case 'envelope-declined':
-            case 'envelope-voided':
-            case 'envelope-deleted':
-                if ($envelope->deleted_at !== null) {
-                    $envelope->delete();
-                }
+                    break;
+                case 'declined':
+                case 'voided':
+                    $envelope->save();
 
-                break;
+                    if ($envelope->deleted_at !== null) {
+                        $envelope->delete();
+                    }
+
+                    break;
+                case 'created':
+                case 'delivered':
+                case 'sent':
+                    $envelope->save();
+
+                    break;
+                default:
+                    throw new Exception('Unrecognized event status');
+            }
         }
     }
 }

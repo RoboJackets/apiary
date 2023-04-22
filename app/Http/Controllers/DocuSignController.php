@@ -201,49 +201,79 @@ class DocuSignController extends Controller
                     ->setAutoNavigation(false)
                     ->setEnableWetSign(true)
                     ->setEnvelopeIdStamping(true)
-                    ->setEventNotification(
-                        (new EventNotification())
-                            ->setEventData(
-                                (new ConnectEventData())
-                                    ->setVersion('restv2.1')
-                            )
-                            ->setDeliveryMode('SIM')
-                            ->setEvents(
-                                [
-                                    'envelope-created',
-                                    'envelope-sent',
-                                    'envelope-resent',
-                                    'envelope-delivered',
-                                    'envelope-completed',
-                                    'envelope-declined',
-                                    'envelope-voided',
-                                    'recipient-authenticationfailed',
-                                    'recipient-autoresponded',
-                                    'recipient-declined',
-                                    'recipient-delivered',
-                                    'recipient-completed',
-                                    'recipient-sent',
-                                    'recipient-resent',
-                                    'template-created',
-                                    'template-modified',
-                                    'template-deleted',
-                                    'envelope-corrected',
-                                    'envelope-purge',
-                                    'envelope-deleted',
-                                    'envelope-discard',
-                                    'recipient-reassign',
-                                    'recipient-delegate',
-                                    'recipient-finish-later',
-                                    'click-agreed',
-                                    'click-declined',
-                                ]
-                            )
-                            ->setIncludeEnvelopeVoidReason(false)
-                            ->setLoggingEnabled(true)
-                            ->setRequireAcknowledgment(true)
-                            ->setUrl(
-                                URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
-                            )
+                    ->setEventNotifications(
+                        [
+                            (new EventNotification())
+                                ->setEventData(
+                                    (new ConnectEventData())
+                                        ->setVersion('restv2.1')
+                                        ->setIncludeData(
+                                            [
+                                                'recipients',
+                                            ]
+                                        )
+                                )
+                                ->setDeliveryMode('SIM')
+                                ->setEvents(
+                                    [
+                                        'envelope-created',
+                                        'envelope-sent',
+                                        'envelope-resent',
+                                        'envelope-delivered',
+                                        'envelope-completed',
+                                        'envelope-declined',
+                                        'envelope-voided',
+                                        'recipient-authenticationfailed',
+                                        'recipient-autoresponded',
+                                        'recipient-declined',
+                                        'recipient-delivered',
+                                        'recipient-completed',
+                                        'recipient-sent',
+                                        'recipient-resent',
+                                        'template-created',
+                                        'template-modified',
+                                        'template-deleted',
+                                        'envelope-corrected',
+                                        'envelope-purge',
+                                        'envelope-deleted',
+                                        'envelope-discard',
+                                        'recipient-reassign',
+                                        'recipient-delegate',
+                                        'recipient-finish-later',
+                                        'click-agreed',
+                                        'click-declined',
+                                    ]
+                                )
+                                ->setIncludeEnvelopeVoidReason(false)
+                                ->setLoggingEnabled(true)
+                                ->setRequireAcknowledgment(true)
+                                ->setUrl(
+                                    URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
+                                ),
+                            (new EventNotification())
+                                ->setEventData(
+                                    (new ConnectEventData())
+                                        ->setVersion('restv2.1')
+                                        ->setIncludeData(
+                                            [
+                                                'recipients',
+                                                'documents',
+                                            ]
+                                        )
+                                )
+                                ->setDeliveryMode('SIM')
+                                ->setEvents(
+                                    [
+                                        'envelope-completed',
+                                    ]
+                                )
+                                ->setIncludeEnvelopeVoidReason(false)
+                                ->setLoggingEnabled(true)
+                                ->setRequireAcknowledgment(true)
+                                ->setUrl(
+                                    URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
+                                ),
+                        ]
                     )
                     ->setUseDisclosure(true)
             );
