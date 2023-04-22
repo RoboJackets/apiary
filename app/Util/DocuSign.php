@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\Util;
 
-use App\Models\DocuSignToken;
 use App\Models\User;
 use Carbon\Carbon;
 use DocuSign\eSign\Client\ApiClient;
@@ -17,9 +16,12 @@ use DocuSign\eSign\Client\ApiException;
 use DocuSign\eSign\Client\Auth\OAuth;
 use DocuSign\eSign\Client\Auth\UserInfo;
 use DocuSign\eSign\Configuration;
+use Illuminate\Support\Facades\Cache;
 
 class DocuSign
 {
+    private const CACHE_KEY = 'docusign_access_token';
+
     private static function getConfiguration(bool $withAccessToken): Configuration
     {
         $config = new Configuration([
@@ -31,7 +33,7 @@ class DocuSign
         ]);
 
         if ($withAccessToken) {
-            $config->setAccessToken(DocuSignToken::accessToken());
+            $config->setAccessToken(self::getAccessToken());
         }
 
         return $config;
@@ -132,5 +134,31 @@ class DocuSign
     public static function getState(): string
     {
         return bin2hex(openssl_random_pseudo_bytes(128));
+    }
+
+    private static function getAccessToken(): string
+    {
+        $access_token = Cache::get(self::CACHE_KEY);
+
+        if ($access_token === null) {
+            $docusign = self::getApiClient(withAccessToken: false);
+
+            /** @var \DocuSign\eSign\Client\Auth\OAuthToken $tokens */
+            $tokens = $docusign->requestJWTUserToken(
+                client_id: config('docusign.client_id'),
+                user_id: config('docusign.impersonate_user_id'),
+                rsa_private_key: config('docusign.private_key')
+            )[0];
+
+            Cache::put(
+                key: self::CACHE_KEY,
+                value: $tokens->getAccessToken(),
+                ttl: $tokens->getExpiresIn() - 60
+            );
+
+            return $tokens->getAccessToken();
+        } else {
+            return $access_token;
+        }
     }
 }

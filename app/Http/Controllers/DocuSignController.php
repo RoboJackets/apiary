@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\DocuSignEnvelope;
-use App\Models\DocuSignToken;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
 use App\Util\DocuSign;
@@ -286,14 +285,14 @@ class DocuSignController extends Controller
 
         $authorization_uri = $docusign->getAuthorizationURI(
             client_id: config('docusign.client_id'),
-            scopes: [ApiClient::$SCOPE_SIGNATURE, ApiClient::$SCOPE_EXTENDED],
+            scopes: [ApiClient::$SCOPE_SIGNATURE, ApiClient::$SCOPE_IMPERSONATION],
             redirect_uri: route('docusign.auth.complete'),
             response_type: 'code',
             state: $state
         ).'&prompt=login';
 
         $request->session()->put('state', $state);
-        $request->session()->put('next', 'storeGlobalTokens');
+        $request->session()->put('next', 'getGlobalToken');
 
         return redirect($authorization_uri);
     }
@@ -348,12 +347,12 @@ class DocuSignController extends Controller
         }
 
         switch ($request->session()->get('next')) {
-            case 'storeGlobalTokens':
-                DocuSignToken::storeTokens($tokens);
-
+            case 'getGlobalToken':
                 $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
 
                 Log::info($userinfo_serialized);
+
+                DocuSign::getApiClient();
 
                 return response()->json($userinfo_serialized);
             case 'signAgreement':
@@ -375,6 +374,8 @@ class DocuSignController extends Controller
                 $user->save();
 
                 return $this->signAgreement($request);
+            default:
+                abort(500);
         }
     }
 
