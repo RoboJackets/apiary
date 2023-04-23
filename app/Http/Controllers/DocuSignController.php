@@ -130,6 +130,9 @@ class DocuSignController extends Controller
             $request->session()->put('next', 'signAgreement');
 
             return redirect($authorization_uri);
+
+            // When the user returns to Apiary, their DocuSign credentials will be stored in handleProviderCallback,
+            // then this method (signAgreement) will be called recursively to continue the signing flow
         }
 
         $signature = Signature::firstOrCreate(
@@ -302,6 +305,11 @@ class DocuSignController extends Controller
         return redirect($recipientViewResponse->getUrl());
     }
 
+    /**
+     * This route is ONLY used as a convenience to set up the globally-shared DocuSign credentials.
+     *
+     * Redirects for standard users are handled as part of signAgreement.
+     */
     public function redirectToProvider(Request $request)
     {
         $state = DocuSign::getState();
@@ -373,6 +381,10 @@ class DocuSignController extends Controller
 
         switch ($request->session()->get('next')) {
             case 'getGlobalToken':
+                // In this case, we just need to output the user ID so that it can be stored in the environment.
+                // This doesn't do anything interesting in DocuSign, it's just confirmation that the app has access to
+                // impersonate a user at this point.
+
                 $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
 
                 Log::info($userinfo_serialized);
@@ -381,6 +393,9 @@ class DocuSignController extends Controller
 
                 return response()->json($userinfo_serialized);
             case 'signAgreement':
+                // In this case, a user has just authenticated with DocuSign after starting the signing flow.
+                // We need to store the credentials in their user model, then continue with signing.
+
                 /** @var \App\Models\User $user */
                 $user = $request->user();
 
