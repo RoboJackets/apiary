@@ -183,6 +183,7 @@ return [
     'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName', null),
     'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null),
     'cas_masquerade_authnContextClass' => env('CAS_MASQUERADE_authnContextClass', null),
+    'cas_masquerade_authenticationDate' => env('CAS_MASQUERADE_authenticationDate', null),
     'cas_masquerade_eduPersonScopedAffiliation' => [env('CAS_MASQUERADE_eduPersonScopedAffiliation', null)],
 
     /*

@@ -13,17 +13,13 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<class-string,array<int,class-string>>
      */
-    protected $listen = [
-        \App\Events\PaymentSuccess::class => [
-            \App\Listeners\PaymentSuccessListener::class,
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * Determine if events and listeners should be automatically discovered.
      */
     public function shouldDiscoverEvents(): bool
     {
-        return false;
+        return true;
     }
 }

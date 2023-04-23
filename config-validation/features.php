@@ -17,12 +17,6 @@ return [
             'boolean',
         ]),
 
-    Rule::make('docusign-membership-agreement')
-        ->rules([
-            'required',
-            'boolean',
-        ]),
-
     Rule::make('demo-mode')
         ->rules([
             'nullable',

@@ -36,6 +36,7 @@ trait CreateOrUpdateCASUser
             'sn',
             'eduPersonPrimaryAffiliation',
             'eduPersonScopedAffiliation',
+            'authenticationDate',
         ];
         if ($this->cas->isMasquerading()) {
             $masq_attrs = [];

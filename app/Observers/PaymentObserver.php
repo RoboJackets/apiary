@@ -10,6 +10,7 @@ use App\Jobs\PruneTravelAssignmentNotificationsInNova;
 use App\Jobs\PushToJedi;
 use App\Jobs\SendDuesPaymentReminder;
 use App\Jobs\SendPaymentReceipt;
+use App\Jobs\SendReminders;
 use App\Jobs\SendTravelAssignmentReminder;
 use App\Models\DuesTransaction;
 use App\Models\Payment;
@@ -20,6 +21,7 @@ class PaymentObserver
 {
     public function saved(Payment $payment): void
     {
+        SendReminders::dispatch($payment->payable->user);
         PushToJedi::dispatch($payment->payable->user, Payment::class, $payment->id, 'saved');
 
         $payment->payable->user->searchable();

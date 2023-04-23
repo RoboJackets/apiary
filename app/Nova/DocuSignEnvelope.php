@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -108,19 +107,19 @@ class DocuSignEnvelope extends Resource
             Text::make('DocuSign Envelope ID', 'envelope_id')
                 ->onlyOnDetail(),
 
-            URL::make('View in DocuSign', 'url')
-                ->displayUsing(static fn () => 'Signer View')
-                ->onlyOnDetail()
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
-
             URL::make('View in DocuSign', 'sender_view_url')
                 ->displayUsing(static fn () => 'Sender View')
                 ->onlyOnDetail(),
 
-            BelongsTo::make('Sent By', 'sentBy', User::class),
+            ...($this->sent_by === null ? [] : [
+                BelongsTo::make('Sent By', 'sentBy', User::class)
+                    ->onlyOnDetail(),
+            ]),
 
-            Text::make('IP Address', 'signer_ip_address')
-                ->onlyOnDetail(),
+            ...($this->signer_ip_address === null ? [] : [
+                Text::make('IP Address', 'signer_ip_address')
+                    ->onlyOnDetail(),
+            ]),
 
             Panel::make('Documents', [
                 ...($this->membership_agreement_filename === null ? [] : [
@@ -146,23 +145,33 @@ class DocuSignEnvelope extends Resource
                 DateTime::make('Created', 'created_at')
                     ->onlyOnDetail(),
 
-                DateTime::make('Sent', 'sent_at')
-                    ->onlyOnDetail(),
+                ...($this->sent_at === null ? [] : [
+                    DateTime::make('Sent', 'sent_at')
+                        ->onlyOnDetail(),
+                ]),
 
-                DateTime::make('Viewed', 'viewed_at')
-                    ->onlyOnDetail(),
+                ...($this->viewed_at === null ? [] : [
+                    DateTime::make('Viewed', 'viewed_at')
+                        ->onlyOnDetail(),
+                ]),
 
-                DateTime::make('Signed', 'signed_at')
-                    ->onlyOnDetail(),
+                ...($this->signed_at === null ? [] : [
+                    DateTime::make('Signed', 'signed_at')
+                        ->onlyOnDetail(),
+                ]),
 
-                DateTime::make('Completed', 'completed_at')
-                    ->onlyOnDetail(),
+                ...($this->completed_at === null ? [] : [
+                    DateTime::make('Completed', 'completed_at')
+                        ->onlyOnDetail(),
+                ]),
 
                 DateTime::make('Updated', 'updated_at')
                     ->onlyOnDetail(),
 
-                DateTime::make('Deleted', 'deleted_at')
-                    ->onlyOnDetail(),
+                ...($this->deleted_at === null ? [] : [
+                    DateTime::make('Deleted', 'deleted_at')
+                        ->onlyOnDetail(),
+                ]),
             ]),
         ];
     }

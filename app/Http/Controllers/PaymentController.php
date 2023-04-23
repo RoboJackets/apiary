@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Events\PaymentSuccess;
+use App\Events\PaymentReceived;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Models\Payment;
@@ -50,7 +50,7 @@ class PaymentController extends Controller
 
         $dbPayment = Payment::findOrFail($payment->id);
 
-        event(new PaymentSuccess($dbPayment));
+        event(new PaymentReceived($dbPayment));
 
         return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
     }

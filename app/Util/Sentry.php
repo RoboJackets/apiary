@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Sentry;
+namespace App\Util;
 
 use Illuminate\Support\Str;
 use Sentry\Tracing\SamplingContext;
 
-class Helpers
+class Sentry
 {
     /**
      * URLs that should be ignored for performance tracing.

@@ -31,6 +31,7 @@ final class PermissionsAndRolesTest extends TestCase
         $permissions = Role::where('name', 'admin')->first()->permissions;
         $allPermissions = Permission::where('name', '!=', 'refund-payments')
             ->where('name', '!=', 'impersonate-users')
+            ->where('name', '!=', 'authenticate-with-docusign')
             ->get();
         $this->assertCount(0, $permissions->diff($allPermissions));
         $this->assertCount(0, $allPermissions->diff($permissions));

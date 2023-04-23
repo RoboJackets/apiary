@@ -118,14 +118,25 @@ return [
         ],
     ],
 
-    'membership_agreement' => [
-        'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=dd7151a0-bef9-4c5c-859d-5826fad304cf&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',
-        'member_name' => 'Member',
-        'ingest_mailbox_name' => 'Ingest Mailbox',
-        'archive_mailbox_name' => 'Agreement Archive Mailbox',
-    ],
-
     'ingest_mailbox' => env('DOCUSIGN_INGEST_MAILBOX'),
 
     'single_sign_on_url' => 'https://account.docusign.com/organizations/7097b206-c4cf-4e3c-8e62-2219e510c3c3/saml2/login/sp/4564d62e-c67b-46f2-b1d7-f8ccc628a269',
+
+    'client_id' => env('DOCUSIGN_CLIENT_ID'),
+
+    'client_secret' => env('DOCUSIGN_CLIENT_SECRET'),
+
+    'connect_timeout' => env('DOCUSIGN_CONNECT_TIMEOUT'),
+
+    'read_timeout' => env('DOCUSIGN_READ_TIMEOUT'),
+
+    'api_base_path' => env('DOCUSIGN_API_BASE_PATH'),
+
+    'account_id' => env('DOCUSIGN_ACCOUNT_ID'),
+
+    'membership_agreement_template_id' => env('DOCUSIGN_MEMBERSHIP_AGREEMENT_TEMPLATE_ID'),
+
+    'impersonate_user_id' => env('DOCUSIGN_IMPERSONATE_USER_ID'),
+
+    'private_key' => env('DOCUSIGN_PRIVATE_KEY'),
 ];
