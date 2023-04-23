@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0e06aa52a52dad6c9621c17a6a91881",
+    "content-hash": "abaa62c5aa0f623cf0677cbf7b69ee77",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8108,21 +8108,21 @@
         },
         {
             "name": "realrashid/sweet-alert",
-            "version": "v6.0.0",
+            "version": "v7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "efe53185ddd48ef1cc22399bfdae55e83fe36bf2"
+                "reference": "81eb61745002b7fbe2276cbb64214f678584df5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/efe53185ddd48ef1cc22399bfdae55e83fe36bf2",
-                "reference": "efe53185ddd48ef1cc22399bfdae55e83fe36bf2",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/81eb61745002b7fbe2276cbb64214f678584df5c",
+                "reference": "81eb61745002b7fbe2276cbb64214f678584df5c",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^5.6|^6.0|^7.0|^8.0|^9.0|^9.11|9.14.*|^10.0",
-                "php": "^7.2|^8.0"
+                "php": "^7.2|^8.0|^8.1"
             },
             "require-dev": {
                 "symfony/thanks": "^1.0"
@@ -8158,7 +8158,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "A BEAUTIFUL, RESPONSIVE, CUSTOMIZABLE, ACCESSIBLE (WAI-ARIA) REPLACEMENT FOR JAVASCRIPT'S POPUP BOXES FOR LARAVEL BY RASHID ALI",
+            "description": "Laravel Sweet Alert Is A Package For Laravel Provides An Easy Way To Display Alert Messages Using The SweetAlert2 Library.",
             "homepage": "https://github.com/realrashid/sweet-alert",
             "keywords": [
                 "alert",
@@ -8194,7 +8194,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-15T07:13:11+00:00"
+            "time": "2023-04-20T01:23:24+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -13593,16 +13593,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.20.1",
+            "version": "1.20.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "57f6787f0bb6431905a18aa7caea25dcd2bd59e0"
+                "reference": "90490bd8fd8530a272043c4950c180b6d0cf5f81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/57f6787f0bb6431905a18aa7caea25dcd2bd59e0",
-                "reference": "57f6787f0bb6431905a18aa7caea25dcd2bd59e0",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/90490bd8fd8530a272043c4950c180b6d0cf5f81",
+                "reference": "90490bd8fd8530a272043c4950c180b6d0cf5f81",
                 "shasum": ""
             },
             "require": {
@@ -13632,9 +13632,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.20.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.20.2"
             },
-            "time": "2023-04-22T09:05:52+00:00"
+            "time": "2023-04-22T12:59:35+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
