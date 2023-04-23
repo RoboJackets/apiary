@@ -25,6 +25,7 @@ use DocuSign\eSign\Model\RecipientEmailNotification;
 use DocuSign\eSign\Model\RecipientViewRequest;
 use DocuSign\eSign\Model\Reminders;
 use DocuSign\eSign\Model\TemplateRole;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
@@ -333,7 +334,6 @@ class DocuSignController extends Controller
     /**
      * Handle the OAuth consent response from DocuSign.
      *
-     * @phan-suppress PhanPluginInconsistentReturnMethod
      * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     public function handleProviderCallback(Request $request)
@@ -347,7 +347,7 @@ class DocuSignController extends Controller
             ! $request->has('state') ||
             $request->session()->get('state') !== $request->state
         ) {
-            abort(500);
+            throw new Exception('Missing required request parameters or state does not match');
         }
 
         $docusign = DocuSign::getApiClient(withAccessToken: false);
@@ -415,14 +415,14 @@ class DocuSignController extends Controller
 
                 return $this->signAgreement($request);
             default:
-                abort(500);
+                throw new Exception('Unexpected next action "'.$request->session()->get('next').'"');
         }
     }
 
     public function complete(Request $request)
     {
         if (! $request->hasValidSignatureWhileIgnoring(['event'])) {
-            abort(500);
+            throw new Exception('Invalid signature');
         }
 
         $envelope = DocuSignEnvelope::where('signed_by', $request->user()->id)
@@ -435,16 +435,20 @@ class DocuSignController extends Controller
                 if (! $envelope->complete) {
                     $envelope->delete();
                 } else {
-                    abort(500);
+                    throw new Exception('Attempted to decline a completed envelope');
                 }
 
                 break;
             case 'signing_complete':
+                if ($envelope->deleted_at !== null) {
+                    throw new Exception('Attempted to complete a deleted envelope');
+                }
+
                 $envelope->complete = true;
                 $envelope->save();
 
                 if ($envelope->signable_type === Signature::getMorphClassStatic()) {
-                    alert()->success('Success!', 'We processed your membership agreement!');
+                    alert()->success('Success!', 'We processed your membership agreement.');
                 }
 
                 break;
