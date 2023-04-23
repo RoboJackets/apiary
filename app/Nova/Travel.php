@@ -167,7 +167,7 @@ class Travel extends Resource
                         ->required()
                         ->rules('required_if:tar_required,1', 'nullable', 'integer')
                         ->min(0)
-                        ->max(1000)
+                        ->max(10000)
                         ->help(
                             'Enter the estimated airfare cost per person in this field.'
                             .' If you are not traveling by air, enter 0.'
