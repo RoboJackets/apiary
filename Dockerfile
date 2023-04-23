@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-ARG base_image="ubuntu:jammy"
+ARG base_image="debian:bookworm-slim"
 
 FROM scratch as frontend-source
 
@@ -48,21 +48,21 @@ RUN set -eux && \
     apt-get update && \
     apt-get upgrade -qq --assume-yes && \
     apt-get install -qq --assume-yes \
-        php8.1-fpm php8.1-mysql php8.1-gd php8.1-xml php8.1-mbstring php8.1-zip php8.1-curl php8.1-intl \
-        php8.1-opcache php8.1-bcmath php8.1-ldap php8.1-uuid php8.1-sqlite sqlite3 exiftool ghostscript \
-        unzip libfcgi-bin default-mysql-client zopfli php8.1-redis file && \
+        php8.2-fpm php8.2-mysql php8.2-gd php8.2-xml php8.2-mbstring php8.2-zip php8.2-curl php8.2-intl \
+        php8.2-opcache php8.2-bcmath php8.2-ldap php8.2-uuid php8.2-sqlite sqlite3 exiftool ghostscript \
+        unzip libfcgi-bin default-mysql-client zopfli php8.2-redis file && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
-    sed -i '/pid/c\\' /etc/php/8.1/fpm/php-fpm.conf && \
-    sed -i '/systemd_interval/c\systemd_interval = 0' /etc/php/8.1/fpm/php-fpm.conf && \
-    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.1/fpm/php-fpm.conf && \
-    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/fpm/php.ini && \
-    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.1/cli/php.ini && \
-    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.1/fpm/php.ini && \
-    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.1/cli/php.ini && \
-    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.1/fpm/php.ini && \
-    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.1/cli/php.ini
+    sed -i '/pid/c\\' /etc/php/8.2/fpm/php-fpm.conf && \
+    sed -i '/systemd_interval/c\systemd_interval = 0' /etc/php/8.2/fpm/php-fpm.conf && \
+    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.2/fpm/php-fpm.conf && \
+    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.2/fpm/php.ini && \
+    sed -i '/expose_php/c\expose_php = Off' /etc/php/8.2/cli/php.ini && \
+    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.2/fpm/php.ini && \
+    sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.2/cli/php.ini && \
+    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.2/fpm/php.ini && \
+    sed -i '/allow_url_include/c\allow_url_include = Off' /etc/php/8.2/cli/php.ini
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 
