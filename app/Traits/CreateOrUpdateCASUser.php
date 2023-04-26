@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Traits;
 
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
@@ -88,7 +90,11 @@ trait CreateOrUpdateCASUser
         if (! $this->cas->hasAttribute('gtCurriculum') || $this->cas->getAttribute('gtCurriculum') === null) {
             $user->syncMajorsFromGtCurriculum([]);
         } else {
-            $major_count = $user->syncMajorsFromGtCurriculum($this->cas->getAttribute('gtCurriculum'));
+            if (is_array($this->cas->getAttribute('gtCurriculum'))) {
+                $major_count = $user->syncMajorsFromGtCurriculum($this->cas->getAttribute('gtCurriculum'));
+            } else {
+                $major_count = $user->syncMajorsFromGtCurriculum([$this->cas->getAttribute('gtCurriculum')]);
+            }
 
             if ($user->primary_affiliation === 'student' && $major_count !== 1) {
                 Log::warning(
