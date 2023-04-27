@@ -10,7 +10,7 @@
     "production": "mix --production"
   },
   "devDependencies": {
-    "@sentry/webpack-plugin": "1.20.0",
+    "@sentry/webpack-plugin": "1.20.1",
     "bootstrap": "4.6.2",
     "cross-env": "5.2.1",
     "laravel-mix": "6.0.49",
