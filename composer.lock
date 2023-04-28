@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bc40b6ab6d271d809a22fb219680e02",
+    "content-hash": "7df5f170c6c56cb504ca364b7e4cd914",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -9642,16 +9642,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v6.2.9",
+            "version": "v6.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "7daf5d24c21a683164688b95bb73b7a4bd3b32fc"
+                "reference": "3f5545a91c8e79dedd1a06c4b04e1682c80c42f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/7daf5d24c21a683164688b95bb73b7a4bd3b32fc",
-                "reference": "7daf5d24c21a683164688b95bb73b7a4bd3b32fc",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/3f5545a91c8e79dedd1a06c4b04e1682c80c42f9",
+                "reference": "3f5545a91c8e79dedd1a06c4b04e1682c80c42f9",
                 "shasum": ""
             },
             "require": {
@@ -9710,7 +9710,7 @@
                 "http"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v6.2.9"
+                "source": "https://github.com/symfony/http-client/tree/v6.2.10"
             },
             "funding": [
                 {
@@ -9726,7 +9726,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-11T16:03:19+00:00"
+            "time": "2023-04-20T13:12:48+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -10316,16 +10316,16 @@
         },
         {
             "name": "symfony/postmark-mailer",
-            "version": "v6.2.7",
+            "version": "v6.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/postmark-mailer.git",
-                "reference": "c486fb0a4d503c7af58e2aee516aeee43d91e7fc"
+                "reference": "34a5aad8ad77074067e06b19edc8605410c73906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/c486fb0a4d503c7af58e2aee516aeee43d91e7fc",
-                "reference": "c486fb0a4d503c7af58e2aee516aeee43d91e7fc",
+                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/34a5aad8ad77074067e06b19edc8605410c73906",
+                "reference": "34a5aad8ad77074067e06b19edc8605410c73906",
                 "shasum": ""
             },
             "require": {
@@ -10362,7 +10362,7 @@
             "description": "Symfony Postmark Mailer Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/postmark-mailer/tree/v6.2.7"
+                "source": "https://github.com/symfony/postmark-mailer/tree/v6.2.10"
             },
             "funding": [
                 {
@@ -10378,7 +10378,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-21T10:35:38+00:00"
+            "time": "2023-04-14T16:23:31+00:00"
         },
         {
             "name": "symfony/process",
