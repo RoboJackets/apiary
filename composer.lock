@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "20ccfd30848f2ca8984bf0ecb93734dc",
+    "content-hash": "4bc40b6ab6d271d809a22fb219680e02",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3471,16 +3471,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v11.8.6",
+            "version": "v11.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "a75f0a92136a6cf91e5c6755374f77bf4b30c411"
+                "reference": "48a03ffbfce7217b7ceba2c8e685ae8caa68db10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/a75f0a92136a6cf91e5c6755374f77bf4b30c411",
-                "reference": "a75f0a92136a6cf91e5c6755374f77bf4b30c411",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/48a03ffbfce7217b7ceba2c8e685ae8caa68db10",
+                "reference": "48a03ffbfce7217b7ceba2c8e685ae8caa68db10",
                 "shasum": ""
             },
             "require": {
@@ -3545,7 +3545,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2023-04-24T20:05:58+00:00"
+            "time": "2023-04-28T10:08:34+00:00"
         },
         {
             "name": "laravel/scout",
@@ -9811,16 +9811,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v6.2.8",
+            "version": "v6.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "511a524affeefc191939348823ac75e9921c2112"
+                "reference": "49adbb92bcb4e3c2943719d2756271e8b9602acc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/511a524affeefc191939348823ac75e9921c2112",
-                "reference": "511a524affeefc191939348823ac75e9921c2112",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/49adbb92bcb4e3c2943719d2756271e8b9602acc",
+                "reference": "49adbb92bcb4e3c2943719d2756271e8b9602acc",
                 "shasum": ""
             },
             "require": {
@@ -9869,7 +9869,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v6.2.8"
+                "source": "https://github.com/symfony/http-foundation/tree/v6.2.10"
             },
             "funding": [
                 {
@@ -9885,7 +9885,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-29T21:42:15+00:00"
+            "time": "2023-04-18T13:46:08+00:00"
         },
         {
             "name": "symfony/http-kernel",
@@ -10079,16 +10079,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v6.2.7",
+            "version": "v6.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "62e341f80699badb0ad70b31149c8df89a2d778e"
+                "reference": "b6c137fc53a9f7c4c951cd3f362b3734c7a97723"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/62e341f80699badb0ad70b31149c8df89a2d778e",
-                "reference": "62e341f80699badb0ad70b31149c8df89a2d778e",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/b6c137fc53a9f7c4c951cd3f362b3734c7a97723",
+                "reference": "b6c137fc53a9f7c4c951cd3f362b3734c7a97723",
                 "shasum": ""
             },
             "require": {
@@ -10142,7 +10142,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v6.2.7"
+                "source": "https://github.com/symfony/mime/tree/v6.2.10"
             },
             "funding": [
                 {
@@ -10158,7 +10158,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-24T10:42:00+00:00"
+            "time": "2023-04-19T09:54:16+00:00"
         },
         {
             "name": "symfony/options-resolver",
