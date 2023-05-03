@@ -384,16 +384,16 @@
         },
         {
             "name": "apimatic/jsonmapper",
-            "version": "3.0.7",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/jsonmapper.git",
-                "reference": "c877632b29155c5a1efc9a417888e77d51393294"
+                "reference": "aa5542f35efebde36c1c1c81d97d7df24678c7e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/c877632b29155c5a1efc9a417888e77d51393294",
-                "reference": "c877632b29155c5a1efc9a417888e77d51393294",
+                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/aa5542f35efebde36c1c1c81d97d7df24678c7e4",
+                "reference": "aa5542f35efebde36c1c1c81d97d7df24678c7e4",
                 "shasum": ""
             },
             "require": {
@@ -432,9 +432,9 @@
             "support": {
                 "email": "mehdi.jaffery@apimatic.io",
                 "issues": "https://github.com/apimatic/jsonmapper/issues",
-                "source": "https://github.com/apimatic/jsonmapper/tree/3.0.7"
+                "source": "https://github.com/apimatic/jsonmapper/tree/3.1.0"
             },
-            "time": "2023-04-04T06:44:42+00:00"
+            "time": "2023-05-03T09:50:17+00:00"
         },
         {
             "name": "apimatic/unirest-php",
@@ -8310,16 +8310,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.17.0",
+            "version": "3.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "95d2e932383cf684f77acff0d2a5aef5ad2f1933"
+                "reference": "2041f2ed3f82a55eaca31079e106c8b17c89dbda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/95d2e932383cf684f77acff0d2a5aef5ad2f1933",
-                "reference": "95d2e932383cf684f77acff0d2a5aef5ad2f1933",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/2041f2ed3f82a55eaca31079e106c8b17c89dbda",
+                "reference": "2041f2ed3f82a55eaca31079e106c8b17c89dbda",
                 "shasum": ""
             },
             "require": {
@@ -8398,7 +8398,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.17.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.18.0"
             },
             "funding": [
                 {
@@ -8410,7 +8410,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-03-26T21:54:06+00:00"
+            "time": "2023-05-03T10:21:22+00:00"
         },
         {
             "name": "sentry/sentry-laravel",
