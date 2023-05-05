@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06125370eb59fd86be2873aae8dc2e21",
+    "content-hash": "53b767fd511c718b0c653885191b1c9b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3362,17 +3362,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.23.0",
+            "version": "4.24.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "6a14d83663f0484889a7f73ffaed7262bba7a26a"
+                "reference": "e7e314906c1eb78db237fe41e88501bdb493c391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-6a14d83663f0484889a7f73ffaed7262bba7a26a-zip-1df780.zip",
-                "reference": "6a14d83663f0484889a7f73ffaed7262bba7a26a",
-                "shasum": "fd7c3f363f0a6f28c7aaac5cf5ea06193d8be9aa"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-e7e314906c1eb78db237fe41e88501bdb493c391-zip-8ca479.zip",
+                "reference": "e7e314906c1eb78db237fe41e88501bdb493c391",
+                "shasum": "0b5d908eb9ae6be049b625060ab459ec933342da"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3397,7 +3397,7 @@
                 "mockery/mockery": "^1.4.4",
                 "nunomaduro/larastan": "^1.0.1|^2.5.1",
                 "orchestra/testbench-dusk": "^6.24|^7.21|^8.0",
-                "phpunit/phpunit": "^9.6|^10.0",
+                "phpunit/phpunit": "^9.6|^10.1",
                 "predis/predis": "^1.1.9|^2.0"
             },
             "suggest": {
@@ -3465,9 +3465,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.23.0"
+                "source": "https://github.com/laravel/nova/tree/v4.24.1"
             },
-            "time": "2023-04-07T18:14:13+00:00"
+            "time": "2023-05-05T14:09:37+00:00"
         },
         {
             "name": "laravel/passport",
