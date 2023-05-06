@@ -7,6 +7,7 @@ namespace App\Nova\Actions;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Select;
@@ -42,11 +43,10 @@ class CreateOAuth2Client extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string, string>
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models): ActionResponse
     {
         if (1 < count($models)) {
             return Action::danger('This action can only be run on one model at a time.');
