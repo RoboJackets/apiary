@@ -7,6 +7,7 @@ namespace App\Nova\Actions;
 use App\Models\Payment;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -24,9 +25,8 @@ class ResetIdempotencyKey extends DestructiveAction
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models): ActionResponse
     {
         if (count($models) > 1) {
             return Action::danger('This action can only be run on one payment at a time.');

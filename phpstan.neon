@@ -70,7 +70,7 @@ parameters:
     - '#Method App\\Notifiables\\[a-zA-Z]+::[a-zA-Z]+\(\) should return string\|null but returns mixed\.#'
     - '#Method App\\Nova\\[a-zA-Z0-9]+::__invoke\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
-    - '#Method App\\Nova\\Actions\\CreateRemoteAttendanceLink::handle\(\) should return array<string, array<string, string>> but returns array<string, array<string, mixed>>\.#'
+    - '#Method App\\Nova\\Actions\\[a-zA-Z0-9]+::handle\(\) should return Laravel\\Nova\\Actions\\ActionResponse but returns Laravel\\Nova\\Actions\\Action\|Laravel\\Nova\\Actions\\ActionResponse\.#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types: TModelClass#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types: TModelClass#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::options\(\) should return array<string, string> but returns array\.#'

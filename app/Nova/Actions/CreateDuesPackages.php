@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -27,11 +28,10 @@ class CreateDuesPackages extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\FiscalYear>  $models
-     * @return array<string,string>
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models): ActionResponse
     {
         if (count($models) !== 1) {
             return Action::danger('This action can only be run on a single fiscal year at a time.');

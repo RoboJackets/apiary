@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -29,11 +30,10 @@ class CreateRemoteAttendanceLink extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Team|\App\Models\Event>  $models
-     * @return array<string,array<string,string>>
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models): ActionResponse
     {
         // Four hours is longer than most meetings, but not too much longer than that.
         $expiration = Carbon::now()->addHours(4);

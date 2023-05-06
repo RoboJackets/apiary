@@ -8,6 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
@@ -32,9 +33,8 @@ class RevokeOAuth2Tokens extends DestructiveAction
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string, string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models): ActionResponse
     {
         $tokenRepository = app(TokenRepository::class);
         $refreshTokenRepository = app(RefreshTokenRepository::class);
