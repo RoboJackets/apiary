@@ -134,9 +134,15 @@ return [
 
     'account_id' => env('DOCUSIGN_ACCOUNT_ID'),
 
-    'membership_agreement_template_id' => env('DOCUSIGN_MEMBERSHIP_AGREEMENT_TEMPLATE_ID'),
-
     'impersonate_user_id' => env('DOCUSIGN_IMPERSONATE_USER_ID'),
 
     'private_key' => env('DOCUSIGN_PRIVATE_KEY'),
+
+    'templates' => [
+        'membership_agreement_member_only' => env('DOCUSIGN_MEMBERSHIP_AGREEMENT_MEMBER_ONLY_TEMPLATE_ID'),
+
+        'membership_agreement_member_and_guardian' => env(
+            'DOCUSIGN_MEMBERSHIP_AGREEMENT_MEMBER_AND_GUARDIAN_TEMPLATE_ID'
+        ),
+    ],
 ];

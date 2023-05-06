@@ -6,9 +6,11 @@ declare(strict_types=1);
 // phpcs:disable Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps
 // phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments.DisallowedNamedArgument
 // phpcs:disable SlevomatCodingStandard.PHP.RequireExplicitAssertion.RequiredExplicitAssertion
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
 namespace App\Util;
 
+use App\Models\DocuSignEnvelope;
 use App\Models\User;
 use Carbon\Carbon;
 use DocuSign\eSign\Client\ApiClient;
@@ -16,7 +18,17 @@ use DocuSign\eSign\Client\ApiException;
 use DocuSign\eSign\Client\Auth\OAuth;
 use DocuSign\eSign\Client\Auth\UserInfo;
 use DocuSign\eSign\Configuration;
+use DocuSign\eSign\Model\ConnectEventData;
+use DocuSign\eSign\Model\EmailSettings;
+use DocuSign\eSign\Model\EnvelopeDefinition;
+use DocuSign\eSign\Model\EventNotification;
+use DocuSign\eSign\Model\Expirations;
+use DocuSign\eSign\Model\Notification;
+use DocuSign\eSign\Model\RecipientEmailNotification;
+use DocuSign\eSign\Model\Reminders;
+use DocuSign\eSign\Model\TemplateRole;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
 
 class DocuSign
 {
@@ -159,6 +171,234 @@ class DocuSign
             return $tokens->getAccessToken();
         } else {
             return $access_token;
+        }
+    }
+
+    private static function membershipAgreementTemplateRoleForMember(User $user): TemplateRole
+    {
+        return (new TemplateRole())
+            ->setEmail($user->uid.'@gatech.edu')
+            ->setName($user->full_name)
+            ->setRoleName('Member')
+            ->setEmailNotification(
+                (new RecipientEmailNotification())
+                    ->setEmailSubject('RoboJackets Membership Agreement')
+                    ->setEmailBody(
+                        trim(view('mail.agreement.notificationformember')->render())
+                    )
+                    ->setSupportedLanguage('en')
+            );
+    }
+
+    private static function membershipAgreementTemplateRoleForParentOrGuardian(User $user): TemplateRole
+    {
+        return (new TemplateRole())
+            ->setEmail($user->parent_guardian_email)
+            ->setName($user->parent_guardian_name)
+            ->setRoleName('Parent or Guardian')
+            ->setEmailNotification(
+                (new RecipientEmailNotification())
+                    ->setEmailSubject('RoboJackets Membership Agreement for '.$user->full_name)
+                    ->setEmailBody(
+                        trim(view('mail.agreement.notificationforparentorguardian', [
+                            'user' => $user,
+                        ])->render())
+                    )
+                    ->setSupportedLanguage('en')
+            );
+    }
+
+    /**
+     * Build the EventNotifications objects needed to get events back from DocuSign.
+     *
+     * @return array<\DocuSign\eSign\Model\EventNotification>
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    private static function eventNotifications(DocuSignEnvelope $envelope): array
+    {
+        return [
+            (new EventNotification())
+                ->setEventData(
+                    (new ConnectEventData())
+                        ->setVersion('restv2.1')
+                        ->setIncludeData(
+                            [
+                                'recipients',
+                            ]
+                        )
+                )
+                ->setDeliveryMode('SIM')
+                ->setEvents(
+                    [
+                        'envelope-created',
+                        'envelope-sent',
+                        'envelope-resent',
+                        'envelope-delivered',
+                        'envelope-completed',
+                        'envelope-declined',
+                        'envelope-voided',
+                        'recipient-authenticationfailed',
+                        'recipient-autoresponded',
+                        'recipient-declined',
+                        'recipient-delivered',
+                        'recipient-completed',
+                        'recipient-sent',
+                        'recipient-resent',
+                        'template-created',
+                        'template-modified',
+                        'template-deleted',
+                        'envelope-corrected',
+                        'envelope-purge',
+                        'envelope-deleted',
+                        'envelope-discard',
+                        'recipient-reassign',
+                        'recipient-delegate',
+                        'recipient-finish-later',
+                        'click-agreed',
+                        'click-declined',
+                    ]
+                )
+                ->setIncludeEnvelopeVoidReason(false)
+                ->setLoggingEnabled(true)
+                ->setRequireAcknowledgment(true)
+                ->setUrl(
+                    URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
+                ),
+            (new EventNotification())
+                ->setEventData(
+                    (new ConnectEventData())
+                        ->setVersion('restv2.1')
+                        ->setIncludeData(
+                            [
+                                'recipients',
+                                'documents',
+                            ]
+                        )
+                )
+                ->setDeliveryMode('SIM')
+                ->setEvents(
+                    [
+                        'envelope-completed',
+                    ]
+                )
+                ->setIncludeEnvelopeVoidReason(false)
+                ->setLoggingEnabled(true)
+                ->setRequireAcknowledgment(true)
+                ->setUrl(
+                    URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
+                ),
+        ];
+    }
+
+    /**
+     * Build an EnvelopeDefinition for a membership agreement where only the member needs to sign.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    private static function membershipAgreementEnvelopeDefinitionForMemberOnly(
+        DocuSignEnvelope $envelope
+    ): EnvelopeDefinition {
+        return (new EnvelopeDefinition())
+            ->setStatus('sent')
+            ->setTemplateId(config('docusign.templates.membership_agreement_member_only'))
+            ->setTemplateRoles(
+                [
+                    self::membershipAgreementTemplateRoleForMember($envelope->signedBy),
+                ]
+            )
+            ->setEmailSubject('RoboJackets Membership Agreement for '.$envelope->signedBy->full_name)
+            ->setEmailBlurb(trim(view('mail.agreement.notificationformember')->render()))
+            ->setEmailSettings(
+                (new EmailSettings())
+                    ->setReplyEmailAddressOverride('support@robojackets.org')
+                    ->setReplyEmailNameOverride('RoboJackets')
+            )->setNotification(
+                (new Notification())
+                    ->setUseAccountDefaults(false)
+                    ->setReminders(
+                        (new Reminders())
+                            ->setReminderEnabled(true)
+                            ->setReminderDelay(2)
+                            ->setReminderFrequency(2)
+                    )
+                    ->setExpirations(
+                        (new Expirations())
+                            ->setExpireEnabled(true)
+                            ->setExpireWarn(10)
+                            ->setExpireAfter(60)
+                    )
+            )
+            ->setAllowComments(false)
+            ->setAllowMarkup(false)
+            ->setAllowReassign(false)
+            ->setAllowRecipientRecursion(false)
+            ->setAllowViewHistory(true)
+            ->setAutoNavigation(false)
+            ->setEnableWetSign(true)
+            ->setEnvelopeIdStamping(true)
+            ->setEventNotifications(self::eventNotifications($envelope))
+            ->setUseDisclosure(true);
+    }
+
+    /**
+     * Build an EnvelopeDefinition for a membership agreement where the member and their parent or guardian both need
+     * to sign.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    private static function membershipAgreementEnvelopeDefinitionForMemberAndParentOrGuardian(
+        DocuSignEnvelope $envelope
+    ): EnvelopeDefinition {
+        return (new EnvelopeDefinition())
+            ->setStatus('sent')
+            ->setTemplateId(config('docusign.templates.membership_agreement_member_and_guardian'))
+            ->setTemplateRoles(
+                [
+                    self::membershipAgreementTemplateRoleForMember($envelope->signedBy),
+                    self::membershipAgreementTemplateRoleForParentOrGuardian($envelope->signedBy),
+                ]
+            )
+            ->setEmailSubject('RoboJackets Membership Agreement for '.$envelope->signedBy->full_name)
+            ->setEmailBlurb(trim(view('mail.agreement.notificationformember')->render()))
+            ->setEmailSettings(
+                (new EmailSettings())
+                    ->setReplyEmailAddressOverride('support@robojackets.org')
+                    ->setReplyEmailNameOverride('RoboJackets')
+            )->setNotification(
+                (new Notification())
+                    ->setUseAccountDefaults(false)
+                    ->setReminders(
+                        (new Reminders())
+                            ->setReminderEnabled(true)
+                            ->setReminderDelay(2)
+                            ->setReminderFrequency(2)
+                    )
+                    ->setExpirations(
+                        (new Expirations())
+                            ->setExpireEnabled(true)
+                            ->setExpireWarn(10)
+                            ->setExpireAfter(60)
+                    )
+            )
+            ->setAllowComments(false)
+            ->setAllowMarkup(false)
+            ->setAllowReassign(false)
+            ->setAllowRecipientRecursion(false)
+            ->setAllowViewHistory(true)
+            ->setAutoNavigation(false)
+            ->setEnableWetSign(true)
+            ->setEnvelopeIdStamping(true)
+            ->setEventNotifications(self::eventNotifications($envelope))
+            ->setUseDisclosure(true);
+    }
+
+    public static function membershipAgreementEnvelopeDefinition(DocuSignEnvelope $envelope): EnvelopeDefinition
+    {
+        if ($envelope->signedBy->needs_parent_or_guardian_signature) {
+            return self::membershipAgreementEnvelopeDefinitionForMemberAndParentOrGuardian($envelope);
+        } else {
+            return self::membershipAgreementEnvelopeDefinitionForMemberOnly($envelope);
         }
     }
 }

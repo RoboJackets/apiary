@@ -15,16 +15,7 @@ use App\Util\DocuSign;
 use Carbon\Carbon;
 use DocuSign\eSign\Api\EnvelopesApi;
 use DocuSign\eSign\Client\ApiClient;
-use DocuSign\eSign\Model\ConnectEventData;
-use DocuSign\eSign\Model\EmailSettings;
-use DocuSign\eSign\Model\EnvelopeDefinition;
-use DocuSign\eSign\Model\EventNotification;
-use DocuSign\eSign\Model\Expirations;
-use DocuSign\eSign\Model\Notification;
-use DocuSign\eSign\Model\RecipientEmailNotification;
 use DocuSign\eSign\Model\RecipientViewRequest;
-use DocuSign\eSign\Model\Reminders;
-use DocuSign\eSign\Model\TemplateRole;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -99,8 +90,6 @@ class DocuSignController extends Controller
 
     /**
      * Redirect to a DocuSign signing session for the membership agreement.
-     *
-     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     public function signAgreement(Request $request)
     {
@@ -156,130 +145,7 @@ class DocuSignController extends Controller
 
             $envelopeResponse = $envelopesApi->createEnvelope(
                 account_id: config('docusign.account_id'),
-                envelope_definition: (new EnvelopeDefinition())
-                    ->setStatus('sent')
-                    ->setTemplateId(config('docusign.membership_agreement_template_id'))
-                    ->setTemplateRoles(
-                        [
-                            (new TemplateRole())
-                                ->setEmail($user->uid.'@gatech.edu')
-                                ->setName($user->full_name)
-                                ->setRoleName('Member')
-                                ->setEmailNotification(
-                                    (new RecipientEmailNotification())
-                                        ->setEmailSubject('RoboJackets Membership Agreement')
-                                        ->setEmailBody(
-                                            trim(view('mail.agreement.docusignenvelopenotification')->render())
-                                        )
-                                        ->setSupportedLanguage('en')
-                                ),
-                        ]
-                    )
-                    ->setEmailSubject('RoboJackets Membership Agreement for '.$user->full_name)
-                    ->setEmailBlurb(trim(view('mail.agreement.docusignenvelopenotification')->render()))
-                    ->setEmailSettings(
-                        (new EmailSettings())
-                            ->setReplyEmailAddressOverride('support@robojackets.org')
-                            ->setReplyEmailNameOverride('RoboJackets')
-                    )->setNotification(
-                        (new Notification())
-                            ->setUseAccountDefaults(false)
-                            ->setReminders(
-                                (new Reminders())
-                                    ->setReminderEnabled(true)
-                                    ->setReminderDelay(2)
-                                    ->setReminderFrequency(2)
-                            )
-                            ->setExpirations(
-                                (new Expirations())
-                                    ->setExpireEnabled(true)
-                                    ->setExpireWarn(10)
-                                    ->setExpireAfter(60)
-                            )
-                    )
-                    ->setAllowComments(false)
-                    ->setAllowMarkup(false)
-                    ->setAllowReassign(false)
-                    ->setAllowRecipientRecursion(false)
-                    ->setAllowViewHistory(true)
-                    ->setAutoNavigation(false)
-                    ->setEnableWetSign(true)
-                    ->setEnvelopeIdStamping(true)
-                    ->setEventNotifications(
-                        [
-                            (new EventNotification())
-                                ->setEventData(
-                                    (new ConnectEventData())
-                                        ->setVersion('restv2.1')
-                                        ->setIncludeData(
-                                            [
-                                                'recipients',
-                                            ]
-                                        )
-                                )
-                                ->setDeliveryMode('SIM')
-                                ->setEvents(
-                                    [
-                                        'envelope-created',
-                                        'envelope-sent',
-                                        'envelope-resent',
-                                        'envelope-delivered',
-                                        'envelope-completed',
-                                        'envelope-declined',
-                                        'envelope-voided',
-                                        'recipient-authenticationfailed',
-                                        'recipient-autoresponded',
-                                        'recipient-declined',
-                                        'recipient-delivered',
-                                        'recipient-completed',
-                                        'recipient-sent',
-                                        'recipient-resent',
-                                        'template-created',
-                                        'template-modified',
-                                        'template-deleted',
-                                        'envelope-corrected',
-                                        'envelope-purge',
-                                        'envelope-deleted',
-                                        'envelope-discard',
-                                        'recipient-reassign',
-                                        'recipient-delegate',
-                                        'recipient-finish-later',
-                                        'click-agreed',
-                                        'click-declined',
-                                    ]
-                                )
-                                ->setIncludeEnvelopeVoidReason(false)
-                                ->setLoggingEnabled(true)
-                                ->setRequireAcknowledgment(true)
-                                ->setUrl(
-                                    URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
-                                ),
-                            (new EventNotification())
-                                ->setEventData(
-                                    (new ConnectEventData())
-                                        ->setVersion('restv2.1')
-                                        ->setIncludeData(
-                                            [
-                                                'recipients',
-                                                'documents',
-                                            ]
-                                        )
-                                )
-                                ->setDeliveryMode('SIM')
-                                ->setEvents(
-                                    [
-                                        'envelope-completed',
-                                    ]
-                                )
-                                ->setIncludeEnvelopeVoidReason(false)
-                                ->setLoggingEnabled(true)
-                                ->setRequireAcknowledgment(true)
-                                ->setUrl(
-                                    URL::signedRoute('webhook-client-docusign', ['internalEnvelopeId' => $envelope->id])
-                                ),
-                        ]
-                    )
-                    ->setUseDisclosure(true)
+                envelope_definition: DocuSign::membershipAgreementEnvelopeDefinition($envelope)
             );
 
             $envelope->envelope_id = $envelopeResponse->getEnvelopeId();
@@ -444,11 +310,18 @@ class DocuSignController extends Controller
                     throw new Exception('Attempted to complete a deleted envelope');
                 }
 
-                $envelope->complete = true;
-                $envelope->save();
-
                 if ($envelope->signable_type === Signature::getMorphClassStatic()) {
-                    alert()->success('Success!', 'We processed your membership agreement.');
+                    if ($request->user()->needs_parent_or_guardian_signature) {
+                        alert()->success(
+                            'Success!',
+                            'Your membership agreement has been sent to your parent or guardian for signature.'
+                        );
+                    } else {
+                        $envelope->complete = true;
+                        $envelope->save();
+
+                        alert()->success('Success!', 'We processed your membership agreement.');
+                    }
                 }
 
                 break;
