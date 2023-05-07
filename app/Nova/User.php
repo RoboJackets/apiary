@@ -156,7 +156,7 @@ class User extends Resource
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                     Text::make('Parent or Guardian Email', 'parent_guardian_email')
-                        ->rules('required_with:parent_guardian_name', 'email')
+                        ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
                 ]
             ),
