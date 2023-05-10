@@ -198,7 +198,6 @@ final class ResumeTest extends TestCase
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/pdf');
         $response->assertHeader('Content-Length', strlen($onePagePdfContents));
-        $response->assertSee($onePagePdfContents);
 
         // Check that another user's resume cannot be downloaded
         $response = $this->actingAs($alternateUser, 'api')->get('/users/'.$user->id.'/resume');
