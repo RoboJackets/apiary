@@ -149,6 +149,19 @@ class User extends Resource
             HasMany::make('Signatures'),
 
             new Panel(
+                'Parent or Guardian Signature',
+                [
+                    Text::make('Parent or Guardian Name', 'parent_guardian_name')
+                        ->rules('required_with:parent_guardian_email')
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
+                    Text::make('Parent or Guardian Email', 'parent_guardian_email')
+                        ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof')
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ]
+            ),
+
+            new Panel(
                 'System Access',
                 [
                     Boolean::make('Active', 'is_access_active')

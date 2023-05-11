@@ -196,6 +196,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereDocusignAccessTokenExpiresAt($value)
  * @method static Builder|User whereDocusignRefreshToken($value)
  * @method static Builder|User whereDocusignRefreshTokenExpiresAt($value)
+ *
+ * @property string|null $parent_guardian_name
+ * @property string|null $parent_guardian_email
+ * @property-read bool $needs_parent_or_guardian_signature
  */
 class User extends Authenticatable
 {
@@ -1089,5 +1093,10 @@ class User extends Authenticatable
         return $this->emergency_contact_name !== null &&
             $this->emergency_contact_phone !== null &&
             $this->phone !== $this->emergency_contact_phone;
+    }
+
+    public function getNeedsParentOrGuardianSignatureAttribute(): bool
+    {
+        return $this->parent_guardian_name !== null && $this->parent_guardian_email !== null;
     }
 }
