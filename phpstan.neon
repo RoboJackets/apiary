@@ -203,6 +203,7 @@ parameters:
     - '#Parameter \#7 \$tz of static method Carbon\\Carbon::create\(\) expects DateTimeZone\|string\|null, mixed given\.#'
     - '#Parameter \$[a-z_]+ of method DocuSign\\eSign\\Client\\ApiClient::generateAccessToken\(\) expects string\|null, mixed given\.#'
     - '#Parameter \$account_id of method DocuSign\\eSign\\Api\\EnvelopesApi::create[a-zA-Z]+\(\) expects string\|null, mixed given\.#'
+    - '#Parameter \$account_id of method DocuSign\\eSign\\Api\\EnvelopesApi::update\(\) expects string\|null, mixed given\.#'
     - '#Parameter \$client_id of method DocuSign\\eSign\\Client\\ApiClient::getAuthorizationURI\(\) expects string, mixed given\.#'
     - '#Parameter \$client_id of method DocuSign\\eSign\\Client\\ApiClient::refreshAccessToken\(\) expects string\|null, mixed given\.#'
     - '#Parameter \$client_id of method DocuSign\\eSign\\Client\\ApiClient::requestJWTUserToken\(\) expects string, mixed given\.#'

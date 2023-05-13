@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\VoidDocuSignEnvelope;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -173,6 +175,34 @@ class DocuSignEnvelope extends Resource
                         ->onlyOnDetail(),
                 ]),
             ]),
+        ];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    public function actions(NovaRequest $request): array
+    {
+        return [
+            VoidDocuSignEnvelope::make()
+                ->canSee(
+                    static function (Request $request): bool {
+                        $envelope = \App\Models\DocuSignEnvelope::whereId($request->resourceId ?? $request->resources)
+                            ->withTrashed()
+                            ->sole();
+
+                        return $request->user()->hasRole('admin') &&
+                            ! $envelope->complete &&
+                            $envelope->envelope_id !== null;
+                    }
+                )
+                ->canRun(
+                    static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
+                        ->user()
+                        ->hasRole('admin')
+                ),
         ];
     }
 }
