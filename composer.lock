@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce05b7dae65a0f9da5170c45d461d00f",
+    "content-hash": "378acb0025f8e68990b76273df71affe",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -288,21 +288,21 @@
         },
         {
             "name": "apimatic/core",
-            "version": "0.2.8",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/core-lib-php.git",
-                "reference": "60c2f2f21db2d0b386ef0e36d728babd1dc9b3f4"
+                "reference": "55cc76f589a62661673ebd5fdf98614d907bf276"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/60c2f2f21db2d0b386ef0e36d728babd1dc9b3f4",
-                "reference": "60c2f2f21db2d0b386ef0e36d728babd1dc9b3f4",
+                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/55cc76f589a62661673ebd5fdf98614d907bf276",
+                "reference": "55cc76f589a62661673ebd5fdf98614d907bf276",
                 "shasum": ""
             },
             "require": {
-                "apimatic/core-interfaces": "^0.1.0",
-                "apimatic/jsonmapper": "^3.0.4",
+                "apimatic/core-interfaces": "~0.1.0",
+                "apimatic/jsonmapper": "^3.1.1",
                 "ext-curl": "*",
                 "ext-dom": "*",
                 "ext-json": "*",
@@ -335,9 +335,9 @@
             ],
             "support": {
                 "issues": "https://github.com/apimatic/core-lib-php/issues",
-                "source": "https://github.com/apimatic/core-lib-php/tree/0.2.8"
+                "source": "https://github.com/apimatic/core-lib-php/tree/0.3.0"
             },
-            "time": "2023-04-25T14:20:17+00:00"
+            "time": "2023-05-08T06:49:21+00:00"
         },
         {
             "name": "apimatic/core-interfaces",
@@ -9289,20 +9289,20 @@
         },
         {
             "name": "square/square",
-            "version": "26.0.0.20230419",
+            "version": "27.0.0.20230517",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "9d983983377028225188619040c2a9965b2ca76e"
+                "reference": "f6af260249a52807fc801fbc476b72a144a886fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/9d983983377028225188619040c2a9965b2ca76e",
-                "reference": "9d983983377028225188619040c2a9965b2ca76e",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/f6af260249a52807fc801fbc476b72a144a886fa",
+                "reference": "f6af260249a52807fc801fbc476b72a144a886fa",
                 "shasum": ""
             },
             "require": {
-                "apimatic/core": "~0.2.0",
+                "apimatic/core": "~0.3.0",
                 "apimatic/core-interfaces": "~0.1.0",
                 "apimatic/unirest-php": "^4.0.0",
                 "ext-json": "*",
@@ -9339,9 +9339,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/26.0.0.20230419"
+                "source": "https://github.com/square/square-php-sdk/tree/27.0.0.20230517"
             },
-            "time": "2023-04-18T19:56:30+00:00"
+            "time": "2023-05-16T16:11:26+00:00"
         },
         {
             "name": "subfission/cas",
