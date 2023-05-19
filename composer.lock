@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51a59690ef1165c0535fc9d23760ab71",
+    "content-hash": "05d85a23661a74a2c490b2b61df7bf38",
     "packages": [
         {
             "name": "adldap2/adldap2",
