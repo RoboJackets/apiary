@@ -18,6 +18,7 @@ use DocuSign\eSign\Client\ApiClient;
 use DocuSign\eSign\Model\RecipientViewRequest;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
@@ -125,51 +126,58 @@ class DocuSignController extends Controller
             // then this method (signAgreement) will be called recursively to continue the signing flow
         }
 
-        $signature = Signature::firstOrCreate(
-            [
-                'membership_agreement_template_id' => $template->id,
-                'user_id' => $user->id,
-                'electronic' => true,
-                'complete' => false,
-            ]
+        $authenticationInstant = $request->session()->get('authenticationInstant');
+
+        return Cache::lock(name: $user->username.'_docusign', seconds: 120)->block(
+            seconds: 60,
+            callback: static function () use ($template, $user, $recipientApiClient, $authenticationInstant) {
+                $signature = Signature::firstOrCreate(
+                    [
+                        'membership_agreement_template_id' => $template->id,
+                        'user_id' => $user->id,
+                        'electronic' => true,
+                        'complete' => false,
+                    ]
+                );
+
+                $envelopesApi = new EnvelopesApi(DocuSign::getApiClient());
+
+                if ($signature->envelope()->whereNotNull('envelope_id')->count() === 0) {
+                    $envelope = new DocuSignEnvelope();
+                    $envelope->signed_by = $user->id;
+                    $envelope->signable_type = $signature->getMorphClass();
+                    $envelope->signable_id = $signature->id;
+                    $envelope->save();
+
+                    $envelopeResponse = $envelopesApi->createEnvelope(
+                        account_id: config('docusign.account_id'),
+                        envelope_definition: DocuSign::membershipAgreementEnvelopeDefinition($envelope)
+                    );
+
+                    $envelope->envelope_id = $envelopeResponse->getEnvelopeId();
+                    $envelope->save();
+                } else {
+                    $envelope = $signature->envelope()->whereNotNull('envelope_id')->sole();
+                }
+
+                $recipientViewResponse = (new EnvelopesApi($recipientApiClient))->createRecipientView(
+                    account_id: config('docusign.account_id'),
+                    envelope_id: $envelope->envelope_id,
+                    recipient_view_request: (new RecipientViewRequest())
+                        ->setAuthenticationInstant($authenticationInstant)
+                        ->setAuthenticationMethod('SingleSignOn_Other')
+                        ->setEmail($user->uid.'@gatech.edu')
+                        ->setUserName($user->full_name)
+                        ->setReturnUrl(
+                            URL::signedRoute('docusign.complete', ['envelope_id' => $envelope->envelope_id])
+                        )
+                        ->setSecurityDomain(config('cas.cas_hostname'))
+                        ->setXFrameOptions('deny')
+                );
+
+                return redirect($recipientViewResponse->getUrl());
+            }
         );
-
-        $envelopesApi = new EnvelopesApi(DocuSign::getApiClient());
-
-        if ($signature->envelope()->whereNotNull('envelope_id')->count() === 0) {
-            $envelope = new DocuSignEnvelope();
-            $envelope->signed_by = $user->id;
-            $envelope->signable_type = $signature->getMorphClass();
-            $envelope->signable_id = $signature->id;
-            $envelope->save();
-
-            $envelopeResponse = $envelopesApi->createEnvelope(
-                account_id: config('docusign.account_id'),
-                envelope_definition: DocuSign::membershipAgreementEnvelopeDefinition($envelope)
-            );
-
-            $envelope->envelope_id = $envelopeResponse->getEnvelopeId();
-            $envelope->save();
-        } else {
-            $envelope = $signature->envelope()->whereNotNull('envelope_id')->sole();
-        }
-
-        $recipientViewResponse = (new EnvelopesApi($recipientApiClient))->createRecipientView(
-            account_id: config('docusign.account_id'),
-            envelope_id: $envelope->envelope_id,
-            recipient_view_request: (new RecipientViewRequest())
-                ->setAuthenticationInstant($request->session()->get('authenticationInstant'))
-                ->setAuthenticationMethod('SingleSignOn_Other')
-                ->setEmail($user->uid.'@gatech.edu')
-                ->setUserName($user->full_name)
-                ->setReturnUrl(
-                    URL::signedRoute('docusign.complete', ['envelope_id' => $envelope->envelope_id])
-                )
-                ->setSecurityDomain(config('cas.cas_hostname'))
-                ->setXFrameOptions('deny')
-        );
-
-        return redirect($recipientViewResponse->getUrl());
     }
 
     /**

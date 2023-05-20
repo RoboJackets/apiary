@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments
+
 namespace App\Observers;
 
 use App\Jobs\PushToJedi;
@@ -70,8 +72,9 @@ class DocuSignEnvelopeObserver
         SendReminders::dispatch($envelope->signedBy);
         PushToJedi::dispatch($envelope->signedBy, DocuSignEnvelope::class, $envelope->id, 'saved');
 
-        Cache::lock('send_acknowledgement_'.$envelope->id, 5 /* seconds */)->get(
-            static function () use ($envelope): void {
+        Cache::lock(name: 'send_acknowledgement_'.$envelope->id, seconds: 120)->block(
+            seconds: 60,
+            callback: static function () use ($envelope): void {
                 if (
                     $envelope->complete &&
                     $envelope->envelope_id !== null &&
