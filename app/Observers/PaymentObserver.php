@@ -48,7 +48,10 @@ class PaymentObserver
             Cache::lock(name: 'send_payment_receipt_'.$payment->id, seconds: 120)->block(
                 seconds: 60,
                 callback: static function () use ($payment): void {
-                    if (intval($payment->amount) > 0 &&
+                    // double-check that a receipt was not sent in a different thread
+                    $payment->refresh();
+                    if (! $payment->receipt_sent && // @phpstan-ignore-line
+                        intval($payment->amount) > 0 &&
                         $payment->method !== 'waiver' &&
                         (
                             $payment->method !== 'square' ||
