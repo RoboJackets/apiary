@@ -59,4 +59,24 @@ class DuesTransactionMerchandise extends Pivot
     {
         return $this->belongsTo(User::class, 'provided_by');
     }
+
+    /**
+     * Relationship for dues transaction.
+     *
+     * @return BelongsTo<DuesTransaction, DuesTransactionMerchandise>
+     */
+    public function transaction(): BelongsTo
+    {
+        return $this->belongsTo(DuesTransaction::class, 'dues_transaction_id');
+    }
+
+    /**
+     * Relationship for merchandise.
+     *
+     * @return BelongsTo<Merchandise, DuesTransactionMerchandise>
+     */
+    public function merchandise(): BelongsTo
+    {
+        return $this->belongsTo(Merchandise::class);
+    }
 }
