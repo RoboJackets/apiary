@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments
+
 namespace App\Jobs;
 
 use App\Models\Travel;
@@ -37,8 +39,9 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
     public function handle(): void
     {
         $travel = $this->travel;
-        Cache::lock('send_completion_email_'.$travel->id, 5 /* seconds */)->get(
-            static function () use ($travel): void {
+        Cache::lock(name: 'send_completion_email_'.$travel->id, seconds: 120)->block(
+            seconds: 60,
+            callback: static function () use ($travel): void {
                 if (! $travel->payment_completion_email_sent && ! $travel->assignments_need_payment) {
                     $travel->payment_completion_email_sent = true;
                     $travel->form_completion_email_sent = ! $travel->assignments_need_forms;

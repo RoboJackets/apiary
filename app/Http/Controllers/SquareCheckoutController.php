@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.Formatting.SpaceBeforeCast.NoSpace
+// phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments
 
 namespace App\Http\Controllers;
 
@@ -13,6 +14,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Sentry\SentrySdk;
@@ -42,55 +44,60 @@ class SquareCheckoutController extends Controller
             return view('dues.alreadypaid');
         }
 
-        $transactionWithNoPayment = DuesTransaction::doesntHave('payment')
-            ->current()
-            ->whereHas('package', static function (Builder $query) use ($user): void {
-                $query->userCanPurchase($user);
-            })
-            ->where('user_id', $user->id)
-            ->latest('updated_at')
-            ->first();
+        return Cache::lock(name: $user->uid.'_payment', seconds: 120)->block(
+            seconds: 60,
+            callback: static function () use ($user) {
+                $transactionWithNoPayment = DuesTransaction::doesntHave('payment')
+                    ->current()
+                    ->whereHas('package', static function (Builder $query) use ($user): void {
+                        $query->userCanPurchase($user);
+                    })
+                    ->where('user_id', $user->id)
+                    ->latest('updated_at')
+                    ->first();
 
-        $transactionWithIncompletePayment = DuesTransaction::where('user_id', $user->id)
-            ->current()
-            ->whereHas('package', static function (Builder $query) use ($user): void {
-                $query->userCanPurchase($user);
-            })
-            ->whereHas('payment', static function (Builder $q): void {
-                $q->where('amount', 0);
-                $q->where('method', 'square');
-            })
-            ->latest('updated_at')
-            ->first();
+                $transactionWithIncompletePayment = DuesTransaction::where('user_id', $user->id)
+                    ->current()
+                    ->whereHas('package', static function (Builder $query) use ($user): void {
+                        $query->userCanPurchase($user);
+                    })
+                    ->whereHas('payment', static function (Builder $q): void {
+                        $q->where('amount', 0);
+                        $q->where('method', 'square');
+                    })
+                    ->latest('updated_at')
+                    ->first();
 
-        if ($transactionWithIncompletePayment !== null) {
-            $transaction = $transactionWithIncompletePayment;
+                if ($transactionWithIncompletePayment !== null) {
+                    $transaction = $transactionWithIncompletePayment;
 
-            $payment = $transaction->payment[0];
-        } elseif ($transactionWithNoPayment !== null) {
-            $transaction = $transactionWithNoPayment;
+                    $payment = $transaction->payment[0];
+                } elseif ($transactionWithNoPayment !== null) {
+                    $transaction = $transactionWithNoPayment;
 
-            $payment = new Payment();
-            // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
-            $payment->amount = 0.00;
-            $payment->method = 'square';
-            $payment->recorded_by = $user->id;
-            $payment->unique_id = Payment::generateUniqueId();
-            $payment->notes = 'Checkout flow started';
+                    $payment = new Payment();
+                    // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
+                    $payment->amount = 0.00;
+                    $payment->method = 'square';
+                    $payment->recorded_by = $user->id;
+                    $payment->unique_id = Payment::generateUniqueId();
+                    $payment->notes = 'Checkout flow started';
 
-            $transaction->payment()->save($payment);
-        } else {
-            return view(
-                'square.error',
-                [
-                    'message' => 'We could not find a transaction ready for payment.',
-                ]
-            );
-        }
+                    $transaction->payment()->save($payment);
+                } else {
+                    return view(
+                        'square.error',
+                        [
+                            'message' => 'We could not find a transaction ready for payment.',
+                        ]
+                    );
+                }
 
-        $amount = (int) ($transaction->package->cost * 100);
+                $amount = (int) ($transaction->package->cost * 100);
 
-        return self::redirect($amount, $payment, $user, 'Dues', $transaction->package->name);
+                return self::redirect($amount, $payment, $user, 'Dues', $transaction->package->name);
+            }
+        );
     }
 
     public function payTravel(Request $request)
@@ -103,61 +110,66 @@ class SquareCheckoutController extends Controller
             return view('travel.noassignment');
         }
 
-        if ($assignment->is_paid) {
-            $any_assignment_needs_payment = $user->assignments()
-                ->unpaid()
-                ->oldest('travel.departure_date')
-                ->oldest('travel.return_date')
-                ->first();
+        return Cache::lock(name: $user->uid.'_payment', seconds: 120)->block(
+            seconds: 60,
+            callback: static function () use ($user, $assignment) {
+                if ($assignment->is_paid) {
+                    $any_assignment_needs_payment = $user->assignments()
+                        ->unpaid()
+                        ->oldest('travel.departure_date')
+                        ->oldest('travel.return_date')
+                        ->first();
 
-            if ($any_assignment_needs_payment === null) {
-                return view('travel.alreadypaid');
+                    if ($any_assignment_needs_payment === null) {
+                        return view('travel.alreadypaid');
+                    }
+
+                    $assignment = $any_assignment_needs_payment;
+                }
+
+                if (! $user->is_active) {
+                    return view(
+                        'travel.actionrequired',
+                        [
+                            'name' => $assignment->travel->name,
+                            'action' => 'pay dues',
+                        ]
+                    );
+                }
+
+                if (! $user->signed_latest_agreement) {
+                    return view(
+                        'travel.actionrequired',
+                        [
+                            'name' => $assignment->travel->name,
+                            'action' => 'sign the latest membership agreement',
+                        ]
+                    );
+                }
+
+                if ($assignment->payment()->count() === 0) {
+                    $payment = new Payment();
+                    // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
+                    $payment->amount = 0;
+                    $payment->method = 'square';
+                    $payment->recorded_by = $user->id;
+                    $payment->unique_id = Payment::generateUniqueId();
+                    $payment->notes = 'Checkout flow started';
+
+                    $assignment->payment()->save($payment);
+                } else {
+                    $payment = $assignment->payment()->sole();
+                }
+
+                $amount = $assignment->travel->fee_amount * 100;
+
+                if ($payment->url !== null) {
+                    return redirect($payment->url);
+                }
+
+                return self::redirect($amount, $payment, $user, 'Travel Fee', $assignment->travel->name);
             }
-
-            $assignment = $any_assignment_needs_payment;
-        }
-
-        if (! $user->is_active) {
-            return view(
-                'travel.actionrequired',
-                [
-                    'name' => $assignment->travel->name,
-                    'action' => 'pay dues',
-                ]
-            );
-        }
-
-        if (! $user->signed_latest_agreement) {
-            return view(
-                'travel.actionrequired',
-                [
-                    'name' => $assignment->travel->name,
-                    'action' => 'sign the latest membership agreement',
-                ]
-            );
-        }
-
-        if ($assignment->payment()->count() === 0) {
-            $payment = new Payment();
-            // @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
-            $payment->amount = 0;
-            $payment->method = 'square';
-            $payment->recorded_by = $user->id;
-            $payment->unique_id = Payment::generateUniqueId();
-            $payment->notes = 'Checkout flow started';
-
-            $assignment->payment()->save($payment);
-        } else {
-            $payment = $assignment->payment()->sole();
-        }
-
-        $amount = $assignment->travel->fee_amount * 100;
-
-        if ($payment->url !== null) {
-            return redirect($payment->url);
-        }
-
-        return self::redirect($amount, $payment, $user, 'Travel Fee', $assignment->travel->name);
+        );
     }
 
     private static function redirect(int $amount, Payment $payment, User $user, string $name, string $variation_name)
@@ -262,7 +274,7 @@ class SquareCheckoutController extends Controller
 
         $payment->order_id = $paymentLinkResponse->getResult()->getPaymentLink()->getOrderId();
         $payment->checkout_id = $paymentLink->getId();
-        $payment->url = $paymentLink->getUrl();
+        $payment->url = $paymentLink->getLongUrl();
         $payment->save();
 
         return redirect($payment->url);
