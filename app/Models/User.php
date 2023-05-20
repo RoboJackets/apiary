@@ -586,6 +586,7 @@ class User extends Authenticatable
             'permissions' => 'read-roles-and-permissions',
             'assignments.travel' => 'manage-travel',
             'merchandise.merchandise' => 'read-merchandise',
+            'merchandise.providedBy' => 'read-users',
         ];
     }
 
