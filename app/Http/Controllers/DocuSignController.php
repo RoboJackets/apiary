@@ -128,7 +128,7 @@ class DocuSignController extends Controller
 
         $authenticationInstant = $request->session()->get('authenticationInstant');
 
-        return Cache::lock(name: $user->username.'_docusign', seconds: 120)->block(
+        return Cache::lock(name: $user->uid.'_docusign', seconds: 120)->block(
             seconds: 60,
             callback: static function () use ($template, $user, $recipientApiClient, $authenticationInstant) {
                 $signature = Signature::firstOrCreate(

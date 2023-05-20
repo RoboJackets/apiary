@@ -44,7 +44,7 @@ class SquareCheckoutController extends Controller
             return view('dues.alreadypaid');
         }
 
-        return Cache::lock(name: $user->username.'_payment', seconds: 120)->block(
+        return Cache::lock(name: $user->uid.'_payment', seconds: 120)->block(
             seconds: 60,
             callback: static function () use ($user) {
                 $transactionWithNoPayment = DuesTransaction::doesntHave('payment')
@@ -110,7 +110,7 @@ class SquareCheckoutController extends Controller
             return view('travel.noassignment');
         }
 
-        return Cache::lock(name: $user->username.'_payment', seconds: 120)->block(
+        return Cache::lock(name: $user->uid.'_payment', seconds: 120)->block(
             seconds: 60,
             callback: static function () use ($user, $assignment) {
                 if ($assignment->is_paid) {
