@@ -44,7 +44,7 @@ class PaymentObserver
         // from ~four save events
         // this will wait up to 60 seconds to acquire a lock, and hold it for the duration of the closure
         // if the lock cannot be acquired an exception will be thrown, i don't think it will be an issue in prod
-        if (!$payment->receipt_sent) {
+        if (! $payment->receipt_sent) {
             Cache::lock(name: 'send_payment_receipt_'.$payment->id, seconds: 120)->block(
                 seconds: 60,
                 callback: static function () use ($payment): void {
