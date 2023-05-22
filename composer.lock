@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05d85a23661a74a2c490b2b61df7bf38",
+    "content-hash": "294d05009a770683b456012ed87ae481",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -11882,16 +11882,16 @@
         },
         {
             "name": "xammie/mailbook",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Xammie/mailbook.git",
-                "reference": "524ca11d0ae7c5f20f80ec9486b0c7eb7cfc4bf1"
+                "reference": "c7d4d15f72c4138cf107eff8aa2ccb69181bce53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/524ca11d0ae7c5f20f80ec9486b0c7eb7cfc4bf1",
-                "reference": "524ca11d0ae7c5f20f80ec9486b0c7eb7cfc4bf1",
+                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/c7d4d15f72c4138cf107eff8aa2ccb69181bce53",
+                "reference": "c7d4d15f72c4138cf107eff8aa2ccb69181bce53",
                 "shasum": ""
             },
             "require": {
@@ -11906,14 +11906,14 @@
                 "nunomaduro/larastan": "^2.2",
                 "nunomaduro/phpinsights": "^2.6",
                 "orchestra/testbench": "^7.0|^8.0",
-                "pestphp/pest": "^1.21|^2.0",
+                "pestphp/pest": "^1.22|^2.0",
                 "pestphp/pest-plugin-laravel": "^1.1|^2.0",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.5|^10.0",
                 "rector/rector": "^0.15.1",
-                "spatie/invade": "^1.1"
+                "spatie/invade": "^1.1",
+                "tomasvotruba/bladestan": "^0.1.0"
             },
             "type": "library",
             "extra": {
@@ -11951,7 +11951,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Xammie/mailbook/issues",
-                "source": "https://github.com/Xammie/mailbook/tree/1.6.1"
+                "source": "https://github.com/Xammie/mailbook/tree/1.6.2"
             },
             "funding": [
                 {
@@ -11959,7 +11959,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-14T18:10:31+00:00"
+            "time": "2023-05-18T11:30:05+00:00"
         }
     ],
     "packages-dev": [
