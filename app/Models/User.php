@@ -585,6 +585,8 @@ class User extends Authenticatable
             'roles' => 'read-roles-and-permissions',
             'permissions' => 'read-roles-and-permissions',
             'assignments.travel' => 'manage-travel',
+            'merchandise.merchandise' => 'read-merchandise',
+            'merchandise.providedBy' => 'read-users',
         ];
     }
 
@@ -1098,5 +1100,22 @@ class User extends Authenticatable
     public function getNeedsParentOrGuardianSignatureAttribute(): bool
     {
         return $this->parent_guardian_name !== null && $this->parent_guardian_email !== null;
+    }
+
+    /**
+     * Get the DuesTransactionMerchandise objects for this user.
+     *
+     * @return HasManyThrough<DuesTransactionMerchandise>
+     */
+    public function merchandise(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            DuesTransactionMerchandise::class,
+            DuesTransaction::class,
+            'user_id',
+            'dues_transaction_id',
+            'id',
+            'id'
+        );
     }
 }

@@ -14,12 +14,13 @@ use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {
     public function __construct(
-        \App\Models\User|\Illuminate\Http\Resources\MissingValue|null $resource,
+        \App\Models\User|MissingValue|null $resource,
         private readonly bool $withManager = false
     ) {
         parent::__construct($resource);
@@ -96,6 +97,7 @@ class User extends JsonResource
                 ]
             ),
             'travel' => TravelAssignment::collection($this->whenLoaded('assignments')),
+            'merchandise' => DuesTransactionMerchandise::collection($this->whenLoaded('merchandise')),
         ];
     }
 

@@ -253,6 +253,7 @@
         <DocblockTypeContradiction>
             <errorLevel type="suppress">
                 <file name="app/Nova/Metrics/EthnicityBreakdown.php" />
+                <file name="app/Http/Controllers/MerchandiseController.php"/>
                 <directory name="app/Policies" />
             </errorLevel>
         </DocblockTypeContradiction>
