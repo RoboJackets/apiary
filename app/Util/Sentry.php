@@ -61,6 +61,7 @@ class Sentry
     {
         return in_array($url, self::$ignoreUrls, true) ||
             Str::startsWith($url, '/horizon/') ||
+            Str::startsWith($url, '/apiv3/') ||
             Str::startsWith($url, '/mailbook');
     }
 }
