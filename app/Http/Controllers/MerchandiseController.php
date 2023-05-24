@@ -20,6 +20,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MerchandiseController extends Controller
 {
+    private const NOT_DISTRIBUTABLE = 'This item cannot be distributed.';
+
+    private const NO_DTM = 'This person doesn\'t have a paid transaction for this item.';
+
+    private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person.';
+
     public function __construct()
     {
         $this->middleware('permission:read-merchandise|distribute-swag', ['only' => ['index']]);
@@ -49,7 +55,7 @@ class MerchandiseController extends Controller
             return response()->json(
                 data: [
                     'status' => 'error',
-                    'message' => 'item is not distributable',
+                    'message' => self::NOT_DISTRIBUTABLE,
                 ],
                 status: 400
             );
@@ -61,7 +67,7 @@ class MerchandiseController extends Controller
             return response()->json(
                 data: [
                     'status' => 'error',
-                    'message' => 'user does not have a paid transaction with this item',
+                    'message' => self::NO_DTM,
                 ],
                 status: 400
             );
@@ -84,7 +90,7 @@ class MerchandiseController extends Controller
             return response()->json(
                 data: [
                     'status' => 'error',
-                    'message' => 'item is not distributable',
+                    'message' => self::NOT_DISTRIBUTABLE,
                 ],
                 status: 400
             );
@@ -96,7 +102,7 @@ class MerchandiseController extends Controller
             return response()->json(
                 data: [
                     'status' => 'error',
-                    'message' => 'user does not have a paid transaction with this item',
+                    'message' => self::NO_DTM,
                 ],
                 status: 400
             );
@@ -106,7 +112,7 @@ class MerchandiseController extends Controller
             return response()->json(
                 data: [
                     'status' => 'error',
-                    'message' => 'item was already distributed',
+                    'message' => self::ALREADY_DISTRIBUTED,
                 ],
                 status: 400
             );
