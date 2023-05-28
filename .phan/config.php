@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'target_php_version' => '8.1',
+    'target_php_version' => '8.2',
 
     'directory_list' => [
         '.',
