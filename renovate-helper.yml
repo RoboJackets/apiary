@@ -109,6 +109,7 @@ jobs:
           aws_secret_access_key: ((aws/sts/ecr.secret_key))
           aws_session_token: ((aws/sts/ecr.security_token))
           repository: robojackets/php8-build
+          tag: latest
 
       params:
         COMPOSER_AUTH: ((composer-auth))
@@ -131,6 +132,7 @@ jobs:
         - --no-progress
         - --optimize-autoloader
         - --classmap-authoritative
+        - --with-all-dependencies
 
   - task: commit-lock-file
     config:
@@ -144,6 +146,7 @@ jobs:
           aws_secret_access_key: ((aws/sts/ecr.secret_key))
           aws_session_token: ((aws/sts/ecr.security_token))
           repository: robojackets/php8-build
+          tag: latest
 
       params:
         GIT_AUTHOR_NAME: robojackets-concourse[bot]
