@@ -173,5 +173,6 @@ jobs:
             && git commit -m "Run composer update"
 
   - put: pull-request-branch
+    no_get: true
     params:
       repository: pull-request-branch
