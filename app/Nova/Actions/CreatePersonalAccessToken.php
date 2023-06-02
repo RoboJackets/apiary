@@ -9,7 +9,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Text;
@@ -27,7 +26,7 @@ class CreatePersonalAccessToken extends Action
      *
      * @phan-suppress PhanNonClassMethodCall,PhanTypeExpectedObjectPropAccess
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) > 1) {
             return Action::danger('This action can only be run on one model at a time.');

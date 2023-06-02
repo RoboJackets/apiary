@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
@@ -31,7 +30,7 @@ class ExportResumes extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         // Check this here because canSee was removed from App\Nova\User as this is a standalone action.
         if (! Auth::user()->can('read-users-resume')) {

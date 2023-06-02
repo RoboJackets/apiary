@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 
 class ExportAttendance extends Action
@@ -47,7 +46,7 @@ class ExportAttendance extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         $hash = hash('sha256', random_bytes(64));
 

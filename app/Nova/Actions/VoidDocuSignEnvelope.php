@@ -12,7 +12,6 @@ use App\Util\DocuSign;
 use DocuSign\eSign\Api\EnvelopesApi;
 use DocuSign\eSign\Model\Envelope;
 use Illuminate\Support\Collection;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Text;
@@ -53,7 +52,7 @@ class VoidDocuSignEnvelope extends DestructiveAction
      *
      * @param  Collection<int,\App\Models\DocuSignEnvelope>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         $envelope = $models->sole();
 

@@ -66,6 +66,9 @@
             <errorLevel type="suppress">
                 <directory name="app/Http/Middleware" />
             </errorLevel>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/Actions" />
+            </errorLevel>
         </MissingReturnType>
         <UnresolvableInclude>
             <errorLevel type="suppress">

@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -37,7 +36,7 @@ class ExportUsersBuzzCardAccess extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         $population = $fields->population;
         $users = User::select('gtid', 'first_name', 'last_name')->buzzCardAccessEligible()

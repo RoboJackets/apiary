@@ -273,6 +273,7 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
         <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
         <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
+        <exclude-pattern>/app/Nova/Actions/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 

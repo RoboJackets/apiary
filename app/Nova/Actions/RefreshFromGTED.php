@@ -24,7 +24,7 @@ class RefreshFromGTED extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): void
+    public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $user) {
             if ($user->is_service_account) {

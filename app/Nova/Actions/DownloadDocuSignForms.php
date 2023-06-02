@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use ZipArchive;
 
@@ -42,7 +41,7 @@ class DownloadDocuSignForms extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Travel>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         $travel = $models->first()->load('assignments.envelope.signable.user');
 

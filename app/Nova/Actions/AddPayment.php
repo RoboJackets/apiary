@@ -10,7 +10,6 @@ use App\Models\TravelAssignment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
@@ -29,7 +28,7 @@ class AddPayment extends Action
      * @phan-suppress PhanTypeSuspiciousStringExpression
      * @phan-suppress PhanTypeMismatchArgumentNullable
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) > 1) {
             return Action::danger(

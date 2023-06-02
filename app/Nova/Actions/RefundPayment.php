@@ -7,7 +7,6 @@ namespace App\Nova\Actions;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Actions\DestructiveAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Text;
@@ -33,7 +32,7 @@ class RefundPayment extends DestructiveAction
      * @phan-suppress PhanTypeMismatchPropertyProbablyReal
      * @phan-suppress PhanTypeSuspiciousStringExpression
      */
-    public function handle(ActionFields $fields, Collection $models): ActionResponse
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) > 1) {
             return Action::danger('This action can only be run on one payment at a time.');
