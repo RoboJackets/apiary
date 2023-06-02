@@ -37,6 +37,7 @@ parameters:
     - '#Call to an undefined method App\\Http\\Resources\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
     - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::envelopes\(\)\.#'
     - '#Call to an undefined method Illuminate\\Http\\Request::model\(\)\.#'
+    - '#Call to deprecated method download\(\) of class Laravel\\Nova\\Actions\\Action#'
     - '#Cannot access offset ''[a-z_]+'' on mixed\.#'
     - '#Cannot access offset [0-9]+ on mixed\.#'
     - '#Cannot access property \$[a-z_]+ on array<string, int\|string>\|object\.#'
