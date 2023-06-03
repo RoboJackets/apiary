@@ -152,10 +152,12 @@ class User extends Resource
                 'Parent or Guardian Signature',
                 [
                     Text::make('Parent or Guardian Name', 'parent_guardian_name')
+                        ->hideFromIndex()
                         ->rules('required_with:parent_guardian_email', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                     Text::make('Parent or Guardian Email', 'parent_guardian_email')
+                        ->hideFromIndex()
                         ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
                 ]
