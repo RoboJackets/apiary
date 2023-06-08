@@ -59,7 +59,7 @@
         "spatie/laravel-permission": "5.10.1",
         "spatie/laravel-webhook-client": "3.1.8",
         "spatie/once": "3.1.0",
-        "square/square": "27.0.0.20230517",
+        "square/square": "28.0.0.20230608",
         "subfission/cas": "4.4.0",
         "symfony/http-client": "6.3.0",
         "symfony/postmark-mailer": "6.3.0",
