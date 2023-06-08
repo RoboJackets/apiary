@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b8de15056f654b23191f84995cb6be1",
+    "content-hash": "5abd4ff25f12c4e49b2e4862dc0a3db4",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5369,16 +5369,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "e48fc6cb39a43614d2042bfbfff56540107016bc"
+                "reference": "c153714aaa947fb36779384999b65f6164247ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/e48fc6cb39a43614d2042bfbfff56540107016bc",
-                "reference": "e48fc6cb39a43614d2042bfbfff56540107016bc",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/c153714aaa947fb36779384999b65f6164247ed6",
+                "reference": "c153714aaa947fb36779384999b65f6164247ed6",
                 "shasum": ""
             },
             "require": {
@@ -5393,7 +5393,7 @@
                 "guzzlehttp/guzzle": "^7.1",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "1.10.15",
+                "phpstan/phpstan": "1.10.16",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -5431,9 +5431,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v1.2.0"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v1.2.1"
             },
-            "time": "2023-06-05T11:33:30+00:00"
+            "time": "2023-06-06T20:48:12+00:00"
         },
         {
             "name": "monolog/monolog",
