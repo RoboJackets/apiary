@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5abd4ff25f12c4e49b2e4862dc0a3db4",
+    "content-hash": "5b7be79df241d41c5a4483b085d958ab",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -384,16 +384,16 @@
         },
         {
             "name": "apimatic/jsonmapper",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/jsonmapper.git",
-                "reference": "646a3088386a3aa6baeae5a6620517b6959ef193"
+                "reference": "6673a946c21f2ceeec0cb60d17541c11a22bc79d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/646a3088386a3aa6baeae5a6620517b6959ef193",
-                "reference": "646a3088386a3aa6baeae5a6620517b6959ef193",
+                "url": "https://api.github.com/repos/apimatic/jsonmapper/zipball/6673a946c21f2ceeec0cb60d17541c11a22bc79d",
+                "reference": "6673a946c21f2ceeec0cb60d17541c11a22bc79d",
                 "shasum": ""
             },
             "require": {
@@ -432,9 +432,9 @@
             "support": {
                 "email": "mehdi.jaffery@apimatic.io",
                 "issues": "https://github.com/apimatic/jsonmapper/issues",
-                "source": "https://github.com/apimatic/jsonmapper/tree/3.1.1"
+                "source": "https://github.com/apimatic/jsonmapper/tree/3.1.2"
             },
-            "time": "2023-05-08T06:20:23+00:00"
+            "time": "2023-06-08T04:27:10+00:00"
         },
         {
             "name": "apimatic/unirest-php",
@@ -9299,16 +9299,16 @@
         },
         {
             "name": "square/square",
-            "version": "27.0.0.20230517",
+            "version": "28.0.0.20230608",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "f6af260249a52807fc801fbc476b72a144a886fa"
+                "reference": "8798fd07af0c4d65dd5a924b46b4e6b232cca69e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/f6af260249a52807fc801fbc476b72a144a886fa",
-                "reference": "f6af260249a52807fc801fbc476b72a144a886fa",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/8798fd07af0c4d65dd5a924b46b4e6b232cca69e",
+                "reference": "8798fd07af0c4d65dd5a924b46b4e6b232cca69e",
                 "shasum": ""
             },
             "require": {
@@ -9349,9 +9349,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/27.0.0.20230517"
+                "source": "https://github.com/square/square-php-sdk/tree/28.0.0.20230608"
             },
-            "time": "2023-05-16T16:11:26+00:00"
+            "time": "2023-06-07T17:32:41+00:00"
         },
         {
             "name": "subfission/cas",
