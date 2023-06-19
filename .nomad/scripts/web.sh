@@ -1,4 +1,4 @@
-if [ ${APP_ENV} = "google-play-review" ]
+if [ ${APP_ENV} = "sandbox" ]
 then
     php artisan passport:keys --no-interaction --verbose
     export APP_KEY=$(php artisan key:generate --show --verbose)

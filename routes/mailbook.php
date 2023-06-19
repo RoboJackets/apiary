@@ -31,7 +31,7 @@ use Laravel\Passport\ClientRepository;
 use Xammie\Mailbook\Facades\Mailbook;
 
 Config::set('app.name', 'MyRoboJackets');
-Config::set('features.demo-mode', true);
+Config::set('features.sandbox-mode', true);
 Config::set('database.default', 'sqlite');
 Config::set('passport.storage.database.connection', 'sqlite');
 Config::set('database.connections.sqlite.database', ':memory:');

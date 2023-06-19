@@ -17,15 +17,28 @@ return [
             'boolean',
         ]),
 
-    Rule::make('demo-mode')
+    Rule::make('sandbox-mode')
         ->rules([
-            'nullable',
-            'string',
+            'required',
+            'boolean',
         ]),
 
-    Rule::make('demo-mode')
+    Rule::make('sandbox-mode')
         ->rules([
-            'nullable',
+            'required',
+            'boolean',
+            'declined',
+        ])
+        ->environments([Rule::ENV_PRODUCTION]),
+
+    Rule::make('sandbox-users')
+        ->rules([
+            'array',
+        ]),
+
+    Rule::make('sandbox-users')
+        ->rules([
+            'array',
             'prohibited',
         ])
         ->environments([Rule::ENV_PRODUCTION]),

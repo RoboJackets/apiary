@@ -42,5 +42,5 @@ return [
             'alpha_dash',
             'starts_with:__Host-',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 ];

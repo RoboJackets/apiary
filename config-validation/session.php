@@ -20,7 +20,7 @@ return [
             'alpha_dash',
             'starts_with:__Host-',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('domain')
         ->rules([
@@ -34,7 +34,7 @@ return [
             'boolean',
             'accepted',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('http_only')
         ->rules([
@@ -42,7 +42,7 @@ return [
             'boolean',
             'accepted',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('same_site')
         ->rules([

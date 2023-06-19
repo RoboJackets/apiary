@@ -8,6 +8,11 @@ variable "persist_resumes" {
   description = "Whether to store resumes on a host volume, or just inside the container"
 }
 
+variable "persist_docusign" {
+  type = bool
+  description = "Whether to store resumes on a host volume, or just inside the container"
+}
+
 variable "run_background_containers" {
   type = bool
   description = "Whether to start containers for horizon and scheduled tasks, or only the web task"
@@ -101,9 +106,15 @@ job "apiary" {
       }
     }
 
-    volume "docusign" {
-      type = "host"
-      source = "apiary_${var.environment_name}_docusign"
+    dynamic "volume" {
+      for_each = var.persist_docusign ? ["docusign"] : []
+
+      labels = ["docusign"]
+
+      content {
+        type = "host"
+        source = "apiary_${var.environment_name}_docusign"
+      }
     }
 
     task "prestart" {
@@ -212,9 +223,13 @@ EOF
         }
       }
 
-      volume_mount {
-        volume = "docusign"
-        destination = "/app/storage/app/docusign/"
+      dynamic "volume_mount" {
+        for_each = var.persist_docusign ? ["docusign"] : []
+
+        content {
+          volume = "docusign"
+          destination = "/app/storage/app/docusign/"
+        }
       }
 
       template {
@@ -328,9 +343,13 @@ EOF
           destination = "/var/opt/nomad/run/"
         }
 
-        volume_mount {
-          volume = "docusign"
-          destination = "/app/storage/app/docusign/"
+        dynamic "volume_mount" {
+          for_each = var.persist_docusign ? ["docusign"] : []
+
+          content {
+            volume = "docusign"
+            destination = "/app/storage/app/docusign/"
+          }
         }
 
         template {
