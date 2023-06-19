@@ -223,9 +223,13 @@ EOF
         }
       }
 
-      volume_mount {
-        volume = "docusign"
-        destination = "/app/storage/app/docusign/"
+      dynamic "volume_mount" {
+        for_each = var.persist_docusign ? ["docusign"] : []
+
+        content {
+          volume = "docusign"
+          destination = "/app/storage/app/docusign/"
+        }
       }
 
       template {
@@ -339,9 +343,13 @@ EOF
           destination = "/var/opt/nomad/run/"
         }
 
-        volume_mount {
-          volume = "docusign"
-          destination = "/app/storage/app/docusign/"
+        dynamic "volume_mount" {
+          for_each = var.persist_docusign ? ["docusign"] : []
+
+          content {
+            volume = "docusign"
+            destination = "/app/storage/app/docusign/"
+          }
         }
 
         template {
