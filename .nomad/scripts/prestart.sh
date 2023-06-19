@@ -1,4 +1,4 @@
-if [ ${APP_ENV} = "google-play-review" ]
+if [ ${APP_ENV} = "sandbox" ]
 then
     php artisan passport:keys --no-interaction --verbose
     export APP_KEY=$(php artisan key:generate --show --verbose)
@@ -18,7 +18,7 @@ then
     export SKIP_DEPENDENCY_ANALYZER=true
 fi
 
-if [ ${APP_ENV} != "google-play-review" ]
+if [ ${APP_ENV} != "sandbox" ]
 then
     export SKIP_PHPSTAN_CHECKS=true
     if ! php artisan ping --no-interaction --verbose

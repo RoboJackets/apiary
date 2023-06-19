@@ -101,9 +101,15 @@ job "apiary" {
       }
     }
 
-    volume "docusign" {
-      type = "host"
-      source = "apiary_${var.environment_name}_docusign"
+    dynamic "volume" {
+      for_each = var.persist_docusign ? ["docusign"] : []
+
+      labels = ["docusign"]
+
+      content {
+        type = "host"
+        source = "apiary_${var.environment_name}_docusign"
+      }
     }
 
     task "prestart" {

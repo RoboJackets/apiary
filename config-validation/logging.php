@@ -11,5 +11,5 @@ return [
             'string',
             'in:stderr',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 ];

@@ -17,7 +17,6 @@ services:
       CACHE_DRIVER: array
       SESSION_DRIVER: file
       QUEUE_DRIVER: sync
-      DEMO_MODE_USER: atesting3
       CAS_MASQUERADE: atesting3
       CAS_MASQUERADE_gtGTID: 901234567
       CAS_MASQUERADE_email_primary: developers@robojackets.org
@@ -37,11 +36,13 @@ services:
       PASSPORT_PRIVATE_KEY: /app/storage/oauth-private.key
       SCOUT_DRIVER: collection
       MAIL_MAILER: log
-      BUZZAPI_HOST: apiary-google-play-review.robojackets.org
+      BUZZAPI_HOST: apiary-sandbox.robojackets.org
       BUZZAPI_APP_ID: mock
       BUZZAPI_APP_PASSWORD: mock
       FEATURE_DOCUSIGN_MEMBERSHIP_AGREEMENT: false
       FEATURE_ENABLE_WHITEPAGES: false
+      FEATURE_SANDBOX_MODE: true
+      SANDBOX_USERS: atesting3
     command: >-
       /bin/sh -euxc "export APP_KEY=$$(php artisan key:generate --show --verbose) &&
       php artisan config:validate --no-interaction &&

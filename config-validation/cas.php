@@ -41,7 +41,7 @@ return [
             'alpha_dash',
             'starts_with:__Host-',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_control_session')
         ->rules([
@@ -70,7 +70,7 @@ return [
             'numeric',
             'in:443',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_uri')
         ->rules([
@@ -84,7 +84,7 @@ return [
             'string',
             'in:/cas',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_client_service')
         ->rules([
@@ -99,14 +99,14 @@ return [
             'string',
             'in:ca',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_cert')
         ->rules([
             'required',
             'string',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_validate_cn')
         ->rules([
@@ -114,32 +114,32 @@ return [
             'boolean',
             'accepted',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_login_url')
         ->rules([
             'prohibited',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_logout_url')
         ->rules([
             'required',
             'active_url',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_logout_redirect')
         ->rules([
             'prohibited',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_redirect_path')
         ->rules([
             'prohibited',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_enable_saml')
         ->rules([
@@ -153,7 +153,7 @@ return [
             'required',
             'in:3.0',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_debug')
         ->rules([
@@ -176,14 +176,14 @@ return [
             'nullable',
             'prohibited',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_session_domain')
         ->rules([
             'nullable',
             'prohibited',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('cas_session_secure')
         ->rules([
@@ -191,5 +191,5 @@ return [
             'boolean',
             'accepted',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 ];
