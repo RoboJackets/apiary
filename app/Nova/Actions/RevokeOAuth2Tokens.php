@@ -31,11 +31,9 @@ class RevokeOAuth2Tokens extends DestructiveAction
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string, string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $tokenRepository = app(TokenRepository::class);
         $refreshTokenRepository = app(RefreshTokenRepository::class);
@@ -68,7 +66,7 @@ class RevokeOAuth2Tokens extends DestructiveAction
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal '.

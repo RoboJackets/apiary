@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed.DisallowedPartiallyKeyed
+
 namespace App\Http\Resources;
 
 use App\Http\Resources\Attendance as AttendanceResource;
@@ -12,12 +14,13 @@ use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {
     public function __construct(
-        \App\Models\User|\Illuminate\Http\Resources\MissingValue|null $resource,
+        \App\Models\User|MissingValue|null $resource,
         private readonly bool $withManager = false
     ) {
         parent::__construct($resource);
@@ -26,10 +29,9 @@ class User extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array<int|string,mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             // Attributes
@@ -74,7 +76,7 @@ class User extends JsonResource
             ]),
             'manager' => $this->when(
                 Auth::user()->can('read-users') && $this->withManager,
-                fn (): ?self => $this->manager === null ? null : new self($this->manager)
+                fn (): ?Manager => $this->manager === null ? null : new Manager($this->manager)
             ),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -94,6 +96,8 @@ class User extends JsonResource
                     $this->resource->relationLoaded('roles') ? $this->getAllPermissions()->pluck('name') : [],
                 ]
             ),
+            'travel' => TravelAssignment::collection($this->whenLoaded('assignments')),
+            'merchandise' => DuesTransactionMerchandise::collection($this->whenLoaded('merchandise')),
         ];
     }
 

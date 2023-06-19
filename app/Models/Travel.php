@@ -38,7 +38,6 @@ use Laravel\Scout\Searchable;
  * @property int|null $tar_registration
  * @property string|null $tar_project_number
  * @property string|null $tar_account_code
- * @property bool $completion_email_sent
  * @property-read int|null $assignments_count
  * @property-read \App\Models\User $primaryContact
  *
@@ -47,7 +46,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel newQuery()
  * @method static \Illuminate\Database\Query\Builder|Travel onlyTrashed()
  * @method static Builder|Travel query()
- * @method static Builder|Travel whereCompletionEmailSent($value)
  * @method static Builder|Travel whereCreatedAt($value)
  * @method static Builder|Travel whereDeletedAt($value)
  * @method static Builder|Travel whereDepartureDate($value)
@@ -74,6 +72,35 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property bool $is_international
+ * @property bool $export_controlled_technology
+ * @property string $export_controlled_technology_description
+ * @property bool $embargoed_destination
+ * @property string $embargoed_countries
+ * @property bool $biological_materials
+ * @property string $biological_materials_description
+ * @property bool $equipment
+ * @property string $equipment_description
+ * @property string $international_travel_justification
+ *
+ * @method static Builder|Travel whereBiologicalMaterials($value)
+ * @method static Builder|Travel whereBiologicalMaterialsDescription($value)
+ * @method static Builder|Travel whereEmbargoedCountries($value)
+ * @method static Builder|Travel whereEmbargoedDestination($value)
+ * @method static Builder|Travel whereEquipment($value)
+ * @method static Builder|Travel whereEquipmentDescription($value)
+ * @method static Builder|Travel whereExportControlledTechnology($value)
+ * @method static Builder|Travel whereExportControlledTechnologyDescription($value)
+ * @method static Builder|Travel whereInternationalTravelJustification($value)
+ * @method static Builder|Travel whereIsInternational($value)
+ * @method static Builder|Travel whereFormCompletionEmailSent($value)
+ * @method static Builder|Travel wherePaymentCompletionEmailSent($value)
+ *
+ * @property bool $payment_completion_email_sent
+ * @property bool $form_completion_email_sent
+ * @property-read bool $assignments_need_forms
+ * @property-read bool $assignments_need_payment
  */
 class Travel extends Model
 {
@@ -103,7 +130,13 @@ class Travel extends Model
         'return_date' => 'date',
         'tar_transportation_mode' => 'array',
         'tar_required' => 'boolean',
-        'completion_email_sent' => 'boolean',
+        'payment_completion_email_sent' => 'boolean',
+        'form_completion_email_sent' => 'boolean',
+        'is_international' => 'boolean',
+        'export_controlled_technology' => 'boolean',
+        'embargoed_destination' => 'boolean',
+        'biological_materials' => 'boolean',
+        'equipment' => 'boolean',
     ];
 
     /**
@@ -133,6 +166,16 @@ class Travel extends Model
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
+    }
+
+    public function getAssignmentsNeedPaymentAttribute(): bool
+    {
+        return $this->assignments()->unpaid()->exists();
+    }
+
+    public function getAssignmentsNeedFormsAttribute(): bool
+    {
+        return $this->assignments()->needDocuSign()->exists();
     }
 
     /**

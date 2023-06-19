@@ -69,9 +69,9 @@ class Main extends Dashboard
                 if (
                     $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
                         $join->on('travel_assignments.id', '=', 'payable_id')
-                             ->where('payments.amount', '>', 0)
-                             ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                             ->whereNull('payments.deleted_at');
+                            ->where('payments.amount', '>', 0)
+                            ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                            ->whereNull('payments.deleted_at');
                     })->whereNull(
                         'payments.id'
                     )->exists()
@@ -96,7 +96,6 @@ class Main extends Dashboard
         }
 
         if (request()->is('nova-api/metrics/*-received-*')) {
-            // @phan-suppress-next-line PhanTypeMismatchArgument
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $type = $parts->first();
             $id = intval($parts->last());

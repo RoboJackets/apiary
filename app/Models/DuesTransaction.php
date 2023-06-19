@@ -182,11 +182,11 @@ class DuesTransaction extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'user' => 'users',
-            'package' => 'dues-packages',
-            'payment' => 'payments',
-            'user.teams' => 'teams-membership',
-            'merchandise' => 'merchandise',
+            'user' => 'read-users',
+            'package' => 'read-dues-packages',
+            'payment' => 'read-payments',
+            'user.teams' => 'read-teams-membership',
+            'merchandise' => 'read-merchandise',
         ];
     }
 
@@ -214,8 +214,8 @@ class DuesTransaction extends Model
     {
         return $query->select('dues_transactions.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
@@ -240,8 +240,8 @@ class DuesTransaction extends Model
     {
         return $query->select('dues_transactions.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) < dues_packages.cost');
@@ -309,7 +309,7 @@ class DuesTransaction extends Model
 
         $array['user_id'] = $this->user->id;
 
-        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+        $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
         $array['merchandise_id'] = $this->merchandise->modelKeys();
 

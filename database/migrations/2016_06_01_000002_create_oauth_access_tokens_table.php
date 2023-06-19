@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOauthAccessTokensTable extends Migration
+return new class extends Migration
 {
     /**
      * The database schema.
@@ -55,4 +55,4 @@ class CreateOauthAccessTokensTable extends Migration
     {
         return config('passport.storage.database.connection');
     }
-}
+};

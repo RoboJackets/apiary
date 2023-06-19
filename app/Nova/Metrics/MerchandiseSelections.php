@@ -24,9 +24,9 @@ class MerchandiseSelections extends Partition
                 ->selectRaw('count(distinct dues_transactions.user_id) as count')
                 ->leftJoin('payments', static function (JoinClause $join): void {
                     $join->on('dues_transactions.id', '=', 'payable_id')
-                         ->where('payments.amount', '>', 0)
-                         ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                         ->whereNull('payments.deleted_at');
+                        ->where('payments.amount', '>', 0)
+                        ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                        ->whereNull('payments.deleted_at');
                 })
                 ->leftJoin(
                     'dues_transaction_merchandise',
@@ -73,10 +73,8 @@ class MerchandiseSelections extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'merchandise-selections';
     }

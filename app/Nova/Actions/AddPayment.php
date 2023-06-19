@@ -21,7 +21,6 @@ class AddPayment extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\DuesTransaction>  $models
-     * @return array<string,string>
      *
      * @phan-suppress PhanPossiblyNullTypeArgumentInternal
      * @phan-suppress PhanTypeMismatchArgumentInternal
@@ -29,7 +28,7 @@ class AddPayment extends Action
      * @phan-suppress PhanTypeSuspiciousStringExpression
      * @phan-suppress PhanTypeMismatchArgumentNullable
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) > 1) {
             return Action::danger(

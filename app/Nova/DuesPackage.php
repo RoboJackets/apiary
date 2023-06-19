@@ -101,16 +101,16 @@ class DuesPackage extends Resource
 
             // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
             Number::make('Paid Transactions', fn (): int => DB::table('dues_transactions')
-                    ->selectRaw('count(distinct dues_transactions.id) as count')
-                    ->leftJoin('payments', static function (JoinClause $join): void {
-                        $join->on('dues_transactions.id', '=', 'payable_id')
-                             ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
-                             ->where('payments.amount', '>', 0);
-                    })
-                    ->whereNotNull('payments.id')
-                    ->whereNull('payments.deleted_at')
-                    ->whereNull('dues_transactions.deleted_at')
-                    ->where('dues_package_id', $this->id)->get()[0]->count)
+                ->selectRaw('count(distinct dues_transactions.id) as count')
+                ->leftJoin('payments', static function (JoinClause $join): void {
+                    $join->on('dues_transactions.id', '=', 'payable_id')
+                        ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
+                        ->where('payments.amount', '>', 0);
+                })
+                ->whereNotNull('payments.id')
+                ->whereNull('payments.deleted_at')
+                ->whereNull('dues_transactions.deleted_at')
+                ->where('dues_package_id', $this->id)->get()[0]->count)
                 ->onlyOnIndex(),
 
             Boolean::make('Active', 'is_active')

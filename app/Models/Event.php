@@ -148,9 +148,9 @@ class Event extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'organizer' => 'users',
-            'rsvps' => 'rsvps',
-            'attendance' => 'attendance',
+            'organizer' => 'read-users',
+            'rsvps' => 'read-rsvps',
+            'attendance' => 'read-attendance',
         ];
     }
 
@@ -163,13 +163,8 @@ class Event extends Model
     {
         $array = $this->toArray();
 
-        if ($this->start_time !== null) {
-            $array['start_time_unix'] = $this->start_time->getTimestamp();
-        }
-
-        if ($this->end_time !== null) {
-            $array['end_time_unix'] = $this->end_time->getTimestamp();
-        }
+        $array['start_time_unix'] = $this->start_time?->getTimestamp();
+        $array['end_time_unix'] = $this->end_time?->getTimestamp();
 
         return $array;
     }

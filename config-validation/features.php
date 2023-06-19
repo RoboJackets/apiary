@@ -17,21 +17,28 @@ return [
             'boolean',
         ]),
 
-    Rule::make('docusign-membership-agreement')
+    Rule::make('sandbox-mode')
         ->rules([
             'required',
             'boolean',
         ]),
 
-    Rule::make('demo-mode')
+    Rule::make('sandbox-mode')
         ->rules([
-            'nullable',
-            'string',
+            'required',
+            'boolean',
+            'declined',
+        ])
+        ->environments([Rule::ENV_PRODUCTION]),
+
+    Rule::make('sandbox-users')
+        ->rules([
+            'array',
         ]),
 
-    Rule::make('demo-mode')
+    Rule::make('sandbox-users')
         ->rules([
-            'nullable',
+            'array',
             'prohibited',
         ])
         ->environments([Rule::ENV_PRODUCTION]),

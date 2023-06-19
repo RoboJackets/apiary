@@ -17,9 +17,9 @@ class TravelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string,string|int|\DateTime>
+     * @return array<string,string|int|\DateTime|bool>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->word(),
@@ -29,6 +29,11 @@ class TravelFactory extends Factory
             'return_date' => $this->faker->dateTimeBetween('1 week', '2 weeks'),
             'fee_amount' => (string) $this->faker->randomFloat(2, 0, 1000),
             'included_with_fee' => $this->faker->paragraph(),
+            'is_international' => $this->faker->boolean(),
+            'export_controlled_technology' => $this->faker->boolean(),
+            'embargoed_destination' => $this->faker->boolean(),
+            'biological_materials' => $this->faker->boolean(),
+            'equipment' => $this->faker->boolean(),
         ];
     }
 }

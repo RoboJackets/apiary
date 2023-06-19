@@ -6,6 +6,7 @@ namespace App\Http\Resources;
 
 use App\Http\Resources\Travel as TravelResource;
 use App\Http\Resources\User as UserResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TravelAssignment extends JsonResource
@@ -13,10 +14,9 @@ class TravelAssignment extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array<string,mixed>
+     * @return array<string, int|JsonResource>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
@@ -28,7 +28,7 @@ class TravelAssignment extends JsonResource
             'deleted_at' => $this->deleted_at,
 
             // relationships
-            'travel' => new TravelResource($this->whenLoaded('travel')),
+            'travel' => Travel::make($this->travel),
             'user' => new UserResource($this->whenLoaded('user')),
         ];
     }

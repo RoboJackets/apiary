@@ -11,14 +11,14 @@ return [
             'string',
             'active_url',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('release')
         ->rules([
             'required',
             'string',
         ])
-        ->environments(['test', 'google-play-review', Rule::ENV_PRODUCTION]),
+        ->environments(['test', 'sandbox', Rule::ENV_PRODUCTION]),
 
     Rule::make('environment')
         ->rules([

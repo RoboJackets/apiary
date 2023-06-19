@@ -39,11 +39,11 @@ class DownloadDocuSignForms extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\Travel>  $models
-     * @return array<string,string>
+     *
+     * @phan-suppress PhanDeprecatedFunction
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $travel = $models->first()->load('assignments.envelope.signable.user');
 

@@ -1,4 +1,4 @@
-Hi {{ $user->preferred_first_name }},
+Hi {!! $user->preferred_first_name !!},
 
 @if(\App\Models\DuesPackage::userCanPurchase($user)->count() > 1)
 You still need to pay dues for this semester. Please visit {{ route('home') }} to begin the process.

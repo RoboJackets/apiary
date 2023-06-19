@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Sentry;
+namespace App\Util;
 
 use Illuminate\Support\Str;
 use Sentry\Tracing\SamplingContext;
 
-class Helpers
+class Sentry
 {
     /**
      * URLs that should be ignored for performance tracing.
@@ -24,18 +24,6 @@ class Helpers
         '/privacy',
     ];
 
-    /**
-     * Methods that should be ignored for performance tracing.
-     *
-     * @phan-read-only
-     *
-     * @var array<string>
-     */
-    private static array $ignoreMethods = [
-        'GET',
-        'HEAD',
-    ];
-
     public static function tracesSampler(SamplingContext $context): float
     {
         if ($context->getParentSampled() === true) {
@@ -47,8 +35,6 @@ class Helpers
         if (
             $transactionData !== null &&
             array_key_exists('url', $transactionData) &&
-            array_key_exists('method', $transactionData) &&
-            in_array($transactionData['method'], self::$ignoreMethods, true) &&
             self::shouldIgnoreUrl($transactionData['url'])
         ) {
             return 0;
@@ -59,6 +45,9 @@ class Helpers
 
     public static function shouldIgnoreUrl(string $url): bool
     {
-        return in_array($url, self::$ignoreUrls, true) || Str::startsWith($url, '/horizon/');
+        return in_array($url, self::$ignoreUrls, true) ||
+            Str::startsWith($url, '/horizon/') ||
+            Str::startsWith($url, '/apiv3/') ||
+            Str::startsWith($url, '/mailbook');
     }
 }

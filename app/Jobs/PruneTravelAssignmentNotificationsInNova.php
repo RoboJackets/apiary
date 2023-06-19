@@ -40,8 +40,8 @@ class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeU
             true
         )) {
             $this->user->novaNotifications()
-                       ->where('type', TravelAssignmentCreated::class)
-                       ->delete();
+                ->where('type', TravelAssignmentCreated::class)
+                ->delete();
         }
     }
 

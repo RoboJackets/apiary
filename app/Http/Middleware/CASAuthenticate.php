@@ -48,6 +48,7 @@ class CASAuthenticate
         'authnContextClass',
         'eduPersonPrimaryAffiliation',
         'eduPersonScopedAffiliation',
+        'authenticationDate',
     ];
 
     public function __construct(Guard $auth)
@@ -73,19 +74,27 @@ class CASAuthenticate
                     $this->cas->setAttributes($masq_attrs);
                 }
 
-                if (config('features.demo-mode') !== null && $this->cas->user() !== config('features.demo-mode')) {
+                if (
+                    config('features.sandbox-mode') === true &&
+                    ! in_array($this->cas->user(), config('features.sandbox-users'), true)
+                ) {
                     abort(403);
                 }
 
                 $user = $this->createOrUpdateCASUser();
 
-                if ($this->cas->user() === config('features.demo-mode')) {
+                if (
+                    config('features.sandbox-mode') === true &&
+                    in_array($this->cas->user(), config('features.sandbox-users'), true)
+                ) {
                     $user->syncRoles(['admin']);
                 }
 
                 Auth::login($user);
 
                 SendReminders::dispatch($user);
+
+                $request->session()->put('authenticationInstant', $this->cas->getAttribute('authenticationDate'));
             }
 
             if ($this->cas->isAuthenticated() && $request->user() !== null) {

@@ -56,6 +56,7 @@ class ContentSecurityPolicy extends Policy
             Keyword::SELF,
             Keyword::UNSAFE_INLINE,
             Keyword::REPORT_SAMPLE,
+            'https://unpkg.com',
         ]);
         $this->addDirective(Directive::IMG, [
             Keyword::SELF,
@@ -63,8 +64,8 @@ class ContentSecurityPolicy extends Policy
         ]);
         $this->addDirective(Directive::OBJECT, Keyword::NONE);
         $this->addDirective(Directive::WORKER, Keyword::NONE);
-        $this->addDirective(Directive::FRAME_ANCESTORS, Keyword::NONE);
-        $this->addDirective(Directive::FRAME, Keyword::NONE);
+        $this->addDirective(Directive::FRAME_ANCESTORS, Keyword::SELF);
+        $this->addDirective(Directive::FRAME, Keyword::SELF);
         $this->addDirective(Directive::CHILD, Keyword::NONE);
         if (config('sentry.dsn') !== '' && config('sentry.dsn') !== null) {
             $this->addDirective(Directive::CONNECT, [

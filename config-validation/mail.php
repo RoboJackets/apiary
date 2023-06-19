@@ -19,5 +19,5 @@ return [
             'string',
             'in:log',
         ])
-        ->environments(['google-play-review']),
+        ->environments(['sandbox']),
 ];

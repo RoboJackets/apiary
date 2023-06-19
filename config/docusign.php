@@ -66,6 +66,48 @@ return [
         ],
     ],
 
+    'international_travel_authority_request_with_airfare' => [
+        'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=7b39f0ec-5bcb-4a53-8d55-196583af290e&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',
+        'traveler_name' => 'Traveler',
+        'ingest_mailbox_name' => 'Ingest Mailbox',
+        'fields' => [
+            'state_contract_airline' => 'state_contract_airline',
+            'non_contract_airline' => 'non_contract_airline',
+            'personal_automobile' => 'personal_automobile',
+            'rental_vehicle' => 'rental_vehicle',
+            'other' => 'other',
+            'itinerary' => 'itinerary',
+            'purpose' => 'purpose',
+            'airfare_cost' => 'airfare_cost',
+            'other_cost' => 'other_cost',
+            'lodging_cost' => 'lodging_cost',
+            'registration_cost' => 'registration_cost',
+            'total_cost' => 'total_cost',
+            'departure_date' => 'departure_date',
+            'return_date' => 'return_date',
+            'employee_id' => 'employee_id',
+            'home_department' => 'home_department',
+            'driver_worktag' => 'driver_worktag',
+            'account_code' => 'account_code',
+            'export_control' => 'export_control',
+            'export_control_description' => 'export_control_description',
+            'embargoed_destination' => 'embargoed_destination',
+            'embargoed_countries' => 'embargoed_countries',
+            'biological_materials' => 'biological_materials',
+            'biological_materials_description' => 'biological_materials_description',
+            'equipment' => 'equipment',
+            'equipment_description' => 'equipment_description',
+            'phone' => 'phone',
+            'dates' => 'dates',
+            'non_employee' => 'non_employee',
+            'employee' => 'employee',
+            'non_employee_account' => 'non_employee_account',
+            'employee_account' => 'employee_account',
+            'destination' => 'destination',
+            'international_travel_justification' => 'international_travel_justification',
+        ],
+    ],
+
     'covid_risk_acknowledgement' => [
         'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=96d129ad-3097-4842-a6db-d8b68df351cd&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',
         'traveler_name' => 'Traveler',
@@ -76,14 +118,31 @@ return [
         ],
     ],
 
-    'membership_agreement' => [
-        'powerform_url' => 'https://na3.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=dd7151a0-bef9-4c5c-859d-5826fad304cf&env=na3&acct=7554587e-5afc-4247-8977-071ef5c80e3b&v=2',
-        'member_name' => 'Member',
-        'ingest_mailbox_name' => 'Ingest Mailbox',
-        'archive_mailbox_name' => 'Agreement Archive Mailbox',
-    ],
-
     'ingest_mailbox' => env('DOCUSIGN_INGEST_MAILBOX'),
 
     'single_sign_on_url' => 'https://account.docusign.com/organizations/7097b206-c4cf-4e3c-8e62-2219e510c3c3/saml2/login/sp/4564d62e-c67b-46f2-b1d7-f8ccc628a269',
+
+    'client_id' => env('DOCUSIGN_CLIENT_ID'),
+
+    'client_secret' => env('DOCUSIGN_CLIENT_SECRET'),
+
+    'connect_timeout' => env('DOCUSIGN_CONNECT_TIMEOUT'),
+
+    'read_timeout' => env('DOCUSIGN_READ_TIMEOUT'),
+
+    'api_base_path' => env('DOCUSIGN_API_BASE_PATH'),
+
+    'account_id' => env('DOCUSIGN_ACCOUNT_ID'),
+
+    'impersonate_user_id' => env('DOCUSIGN_IMPERSONATE_USER_ID'),
+
+    'private_key' => env('DOCUSIGN_PRIVATE_KEY'),
+
+    'templates' => [
+        'membership_agreement_member_only' => env('DOCUSIGN_MEMBERSHIP_AGREEMENT_MEMBER_ONLY_TEMPLATE_ID'),
+
+        'membership_agreement_member_and_guardian' => env(
+            'DOCUSIGN_MEMBERSHIP_AGREEMENT_MEMBER_AND_GUARDIAN_TEMPLATE_ID'
+        ),
+    ],
 ];

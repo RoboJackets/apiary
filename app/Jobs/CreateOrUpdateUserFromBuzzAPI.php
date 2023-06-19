@@ -105,8 +105,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             'gtCurriculum'
         )->from(Resources::GTED_ACCOUNTS)
         // @phan-suppress-next-line PhanTypeMismatchArgument
-        ->where([$this->identifier => $searchValue])
-        ->get();
+            ->where([$this->identifier => $searchValue])
+            ->get();
 
         if (! $accountsResponse->isSuccessful()) {
             throw new Exception('GTED accounts search failed with message '.$accountsResponse->errorInfo()->message);

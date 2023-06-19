@@ -8,6 +8,11 @@ variable "persist_resumes" {
   description = "Whether to store resumes on a host volume, or just inside the container"
 }
 
+variable "persist_docusign" {
+  type = bool
+  description = "Whether to store resumes on a host volume, or just inside the container"
+}
+
 variable "run_background_containers" {
   type = bool
   description = "Whether to start containers for horizon and scheduled tasks, or only the web task"
@@ -101,9 +106,15 @@ job "apiary" {
       }
     }
 
-    volume "docusign" {
-      type = "host"
-      source = "apiary_${var.environment_name}_docusign"
+    dynamic "volume" {
+      for_each = var.persist_docusign ? ["docusign"] : []
+
+      labels = ["docusign"]
+
+      content {
+        type = "host"
+        source = "apiary_${var.environment_name}_docusign"
+      }
     }
 
     task "prestart" {
@@ -115,8 +126,6 @@ job "apiary" {
 
       config {
         image = var.image
-
-        force_pull = true
 
         network_mode = "host"
 
@@ -177,14 +186,12 @@ EOF
       config {
         image = var.image
 
-        force_pull = true
-
         network_mode = "host"
 
         mount {
           type   = "bind"
           source = "local/fpm/"
-          target = "/etc/php/8.1/fpm/pool.d/"
+          target = "/etc/php/8.2/fpm/pool.d/"
         }
 
         entrypoint = [
@@ -216,9 +223,13 @@ EOF
         }
       }
 
-      volume_mount {
-        volume = "docusign"
-        destination = "/app/storage/app/docusign/"
+      dynamic "volume_mount" {
+        for_each = var.persist_docusign ? ["docusign"] : []
+
+        content {
+          volume = "docusign"
+          destination = "/app/storage/app/docusign/"
+        }
       }
 
       template {
@@ -284,6 +295,7 @@ EOF
           socket = "/var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock"
           firewall-rules = jsonencode(["internet"])
           referrer-policy = "same-origin"
+          x-frame-options = "SAMEORIGIN"
         }
       }
 
@@ -309,8 +321,6 @@ EOF
         config {
           image = var.image
 
-          force_pull = true
-
           network_mode = "host"
 
           entrypoint = [
@@ -333,9 +343,13 @@ EOF
           destination = "/var/opt/nomad/run/"
         }
 
-        volume_mount {
-          volume = "docusign"
-          destination = "/app/storage/app/docusign/"
+        dynamic "volume_mount" {
+          for_each = var.persist_docusign ? ["docusign"] : []
+
+          content {
+            volume = "docusign"
+            destination = "/app/storage/app/docusign/"
+          }
         }
 
         template {
@@ -359,31 +373,6 @@ EOF
 
           change_mode = "noop"
         }
-      }
-    }
-
-    task "set-restart-policy" {
-      driver = "raw_exec"
-
-      config {
-        command = "/usr/bin/bash"
-        args    = [
-          "-xue",
-          "-o",
-          "pipefail",
-          "-c",
-          join("; ", [for task in var.run_background_containers ? ["web", "scheduler", "worker"] : ["web"] : "docker update --restart=always ${task}-${NOMAD_ALLOC_ID}"])
-        ]
-      }
-
-      resources {
-        cpu = 100
-        memory = 128
-        memory_max = 2048
-      }
-
-      lifecycle {
-        hook = "poststart"
       }
     }
   }

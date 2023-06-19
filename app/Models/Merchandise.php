@@ -126,8 +126,8 @@ class Merchandise extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'packages' => 'dues-packages',
-            'transactions' => 'dues-transactions',
+            'packages' => 'read-dues-packages',
+            'transactions' => 'read-dues-transactions',
         ];
     }
 

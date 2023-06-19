@@ -29,16 +29,16 @@ class DocuSignEnvelopeReceived extends Mailable implements ShouldQueue
     public function build(): self
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->to($this->envelope->signedBy->gt_email, $this->envelope->signedBy->name)
-                    ->subject('Received travel documents for '.$this->envelope->signable->travel->name)
-                    ->text('mail.travel.docusignenvelopereceived')
-                    ->withSymfonyMessage(function (Email $email): void {
-                        $email->replyTo(
-                            $this->envelope->signable->travel->primaryContact->name.
-                            ' <'.$this->envelope->signable->travel->primaryContact->gt_email.'>'
-                        );
-                    })
-                    ->tag('travel-docusign-received')
-                    ->metadata('envelope-id', strval($this->envelope->id));
+            ->to($this->envelope->signedBy->gt_email, $this->envelope->signedBy->name)
+            ->subject('Received travel documents for '.$this->envelope->signable->travel->name)
+            ->text('mail.travel.docusignenvelopereceived')
+            ->withSymfonyMessage(function (Email $email): void {
+                $email->replyTo(
+                    $this->envelope->signable->travel->primaryContact->name.
+                    ' <'.$this->envelope->signable->travel->primaryContact->gt_email.'>'
+                );
+            })
+            ->tag('travel-docusign-received')
+            ->metadata('envelope-id', strval($this->envelope->id));
     }
 }

@@ -40,6 +40,7 @@
                 <li>Identifiers, such as username or email, of your linked Github, Google, ClickUp, and Autodesk accounts</li>
                 <li>Transaction identifiers for credit/debit card transactions completed by RoboJackets' payments processor, Square; RoboJackets does not process or store billing data, including credit/debit card numbers.</li>
                 <li>A history of events and team meetings attended</li>
+                <li>Your parent or legal guardian's name and email address</li>
             </ul>
 
             <h2>How will RoboJackets use your data?</h2>
@@ -68,8 +69,7 @@
                 <li>Information regarding an individual payment, including your Georgia Tech email address and phone number, will be shared with Square, RoboJackets' designated payments processor, for the purposes of completing a credit/debit card transaction. You can opt-out of this sharing by using another payment method.
                 <li>Your Georgia Tech username and information about your device, as reported by your web browser or RoboJackets Android application, may be shared with Sentry, a product of Functional Software, Inc, to help us troubleshoot issues you may experience while using RoboJackets services.</li>
                 <li>Your name and Georgia Tech email address may be shared with Postmark, a product of ActiveCampaign, LLC, to deliver emails, including, but not limited to, reminders and payment receipts.</li>
-                <li>Your name, Georgia Tech email address, Georgia Tech employee ID, Georgia Tech employment home department, and phone number may be shared with DocuSign, a product of DocuSign, Inc, to enable you to sign documents electronically.</li>
-                <li>Your IP address may be shared with ipstack, a product of APILayer, to determine your approximate geographical location when signing documents.</li>
+                <li>Your name, Georgia Tech email address, Georgia Tech employee ID, Georgia Tech employment home department, phone number, parent or legal guardian name, and parent or legal guardian email address may be shared with DocuSign, a product of DocuSign, Inc, to enable you to sign documents electronically.</li>
                 <li>All other information will be released only to RoboJackets officers and officer-designated RoboJackets members in the course of conducting business.</li>
             </ul>
             <p>RoboJackets does not sell any of the information collected. However, sponsors who provide financial support to RoboJackets will receive aggregated data as outlined above as a benefit of their support.</p>

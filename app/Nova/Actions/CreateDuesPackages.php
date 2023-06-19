@@ -27,11 +27,10 @@ class CreateDuesPackages extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\FiscalYear>  $models
-     * @return array<string,string>
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) !== 1) {
             return Action::danger('This action can only be run on a single fiscal year at a time.');

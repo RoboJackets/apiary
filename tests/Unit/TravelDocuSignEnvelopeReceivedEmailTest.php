@@ -12,7 +12,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
+final class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
 {
     public function testPaid(): void
     {
@@ -32,13 +32,17 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         ]);
         $assignment->save();
 
-        $payment = new Payment();
-        $payment->payable_type = TravelAssignment::getMorphClassStatic();
-        $payment->payable_id = $assignment->id;
-        $payment->amount = 10;
-        $payment->method = 'square';
-        $payment->receipt_url = 'https://example.com';
-        $payment->save();
+        Payment::withoutEvents(static function () use ($assignment): Payment {
+            $payment = new Payment();
+            $payment->payable_type = TravelAssignment::getMorphClassStatic();
+            $payment->payable_id = $assignment->id;
+            $payment->amount = 10;
+            $payment->method = 'square';
+            $payment->receipt_url = 'https://example.com';
+            $payment->save();
+
+            return $payment;
+        });
 
         $envelope = new DocuSignEnvelope();
         $envelope->signable_type = $assignment->getMorphClass();

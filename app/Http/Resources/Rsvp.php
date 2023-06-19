@@ -6,6 +6,7 @@ namespace App\Http\Resources;
 
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\User as UserResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Rsvp extends JsonResource
@@ -13,10 +14,9 @@ class Rsvp extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array<string,mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             // Attributes

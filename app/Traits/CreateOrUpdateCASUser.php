@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Traits;
 
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
@@ -36,6 +38,7 @@ trait CreateOrUpdateCASUser
             'sn',
             'eduPersonPrimaryAffiliation',
             'eduPersonScopedAffiliation',
+            'authenticationDate',
         ];
         if ($this->cas->isMasquerading()) {
             $masq_attrs = [];
@@ -45,7 +48,7 @@ trait CreateOrUpdateCASUser
             $this->cas->setAttributes($masq_attrs);
         }
 
-        if (config('features.demo-mode') === null) {
+        if (config('features.sandbox-mode') !== true) {
             foreach ($attrs as $attr) {
                 if (! $this->cas->hasAttribute($attr) || $this->cas->getAttribute($attr) === null) {
                     throw new Exception('Missing attribute '.$attr.' from CAS');
@@ -65,7 +68,11 @@ trait CreateOrUpdateCASUser
             abort(403);
         }
         $user->uid = $this->cas->user();
-        $user->gtid = config('features.demo-mode') === null ? $this->cas->getAttribute('gtGTID') : 999999999;
+        if (config('features.sandbox-mode') === true && $this->cas->getAttribute('gtGTID') === null) {
+            $user->gtid = 999999999;
+        } else {
+            $user->gtid = $this->cas->getAttribute('gtGTID');
+        }
         $user->gt_email = $this->cas->getAttribute('email_primary');
         $user->first_name = $this->cas->getAttribute('givenName');
         $user->last_name = $this->cas->getAttribute('sn');
@@ -87,7 +94,11 @@ trait CreateOrUpdateCASUser
         if (! $this->cas->hasAttribute('gtCurriculum') || $this->cas->getAttribute('gtCurriculum') === null) {
             $user->syncMajorsFromGtCurriculum([]);
         } else {
-            $major_count = $user->syncMajorsFromGtCurriculum($this->cas->getAttribute('gtCurriculum'));
+            if (is_array($this->cas->getAttribute('gtCurriculum'))) {
+                $major_count = $user->syncMajorsFromGtCurriculum($this->cas->getAttribute('gtCurriculum'));
+            } else {
+                $major_count = $user->syncMajorsFromGtCurriculum([$this->cas->getAttribute('gtCurriculum')]);
+            }
 
             if ($user->primary_affiliation === 'student' && $major_count !== 1) {
                 Log::warning(
@@ -119,7 +130,7 @@ trait CreateOrUpdateCASUser
             }
         }
 
-        if (config('features.demo-mode') === null) {
+        if (config('features.sandbox-mode') !== true && ! $this->cas->isMasquerading()) {
             CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, 'cas_login');
         }
 

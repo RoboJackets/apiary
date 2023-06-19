@@ -151,8 +151,8 @@ class Attendance extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'attendee' => 'users',
-            'recorded' => 'users',
+            'attendee' => 'read-users',
+            'recorded' => 'read-users',
         ];
     }
 
@@ -232,7 +232,7 @@ class Attendance extends Model
     /**
      * Get the indexable data array for the model.
      *
-     * @return array<string,int|string>
+     * @return array<string,int|string|null>
      */
     public function toSearchableArray(): array
     {
@@ -259,7 +259,7 @@ class Attendance extends Model
         unset($array['attendable']['organizer']);
         unset($array['attendable']['organizer_name']);
 
-        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+        $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
         return $array;
     }

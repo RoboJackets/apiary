@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Events\PaymentSuccess;
+use App\Events\PaymentReceived;
 use App\Models\Payment;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -112,7 +112,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             return;
         }
 
-        event(new PaymentSuccess($payment));
+        event(new PaymentReceived($payment));
 
         FulfillSquareOrder::dispatch($details['order_id']);
     }

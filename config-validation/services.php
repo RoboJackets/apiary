@@ -94,12 +94,4 @@ return [
             'active_url',
         ])
         ->environments([Rule::ENV_PRODUCTION]),
-
-    Rule::make('membership_agreement_archive_email')
-        ->rules([
-            'required_if:features.docusign-membership-agreement,true',
-            'string',
-            'email:rfc,strict,dns,spoof',
-        ])
-        ->environments([Rule::ENV_PRODUCTION]),
 ];

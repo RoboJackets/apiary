@@ -86,8 +86,8 @@ class Rsvp extends Model
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'user' => 'users',
-            'event' => 'events',
+            'user' => 'read-users',
+            'event' => 'read-events',
         ];
     }
 }

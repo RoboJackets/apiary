@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\GetMorphClassStatic;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -140,8 +141,8 @@ class TravelAssignment extends Model
     {
         return $query->select('travel_assignments.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'travel_assignments.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->groupBy('travel_assignments.id', 'travel_assignments.travel_id', 'travel.fee_amount')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= travel.fee_amount');
@@ -157,8 +158,8 @@ class TravelAssignment extends Model
     {
         return $query->select('travel_assignments.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'travel_assignments.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->groupBy('travel_assignments.id', 'travel_assignments.travel_id', 'travel.fee_amount')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) < travel.fee_amount');
@@ -175,7 +176,7 @@ class TravelAssignment extends Model
         return $query->whereHas('travel', static function (Builder $q): void {
             $q->where('tar_required', true);
         })
-        ->where('tar_received', false);
+            ->where('tar_received', false);
     }
 
     public function getNeedsDocusignAttribute(): bool
@@ -205,27 +206,33 @@ class TravelAssignment extends Model
 
         $array['payable_type'] = $this->getMorphClass();
 
-        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+        $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
         return $array;
     }
 
     public function getIsCompleteAttribute(): bool
     {
-        return $this->is_paid && ($this->tar_received || ! $this->travel->tar_required);
+        return $this->is_paid &&
+            ($this->tar_received || ! $this->travel->tar_required) &&
+            ($this->user->has_emergency_contact_information || $this->travel->return_date < Carbon::now());
     }
 
     public function getTravelAuthorityRequestUrlAttribute(): string
     {
         if (
-            (($this->travel->tar_transportation_mode ?? [
+            ($this->travel->tar_transportation_mode ?? [
                 'state_contract_airline' => false,
-            ])['state_contract_airline']) === true ||
+            ])['state_contract_airline'] === true ||
             true === ($this->travel->tar_transportation_mode ?? [
                 'non_contract_airline' => false,
             ])['non_contract_airline']
         ) {
-            return $this->getAirfarePowerFormUrl();
+            if ($this->travel->is_international) {
+                return $this->getInternationalAirfarePowerFormUrl();
+            }
+
+            return $this->getDomesticAirfarePowerFormUrl();
         }
 
         if (true === ($this->travel->tar_transportation_mode ?? ['rental_vehicle' => false])['rental_vehicle']) {
@@ -235,7 +242,7 @@ class TravelAssignment extends Model
         return $this->getCovidPowerFormUrl();
     }
 
-    private function getAirfarePowerFormUrl(): string
+    private function getDomesticAirfarePowerFormUrl(): string
     {
         return config('docusign.domestic_travel_authority_request_with_airfare.powerform_url').'&'.http_build_query(
             [
@@ -374,6 +381,181 @@ class TravelAssignment extends Model
 
                 config(
                     'docusign.domestic_travel_authority_request_with_airfare.ingest_mailbox_name'
+                ).'_Email' => config('docusign.ingest_mailbox'),
+            ]
+        );
+    }
+
+    private function getInternationalAirfarePowerFormUrl(): string
+    {
+        return config(
+            'docusign.international_travel_authority_request_with_airfare.powerform_url'
+        ).'&'.http_build_query(
+            [
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.state_contract_airline'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'state_contract_airline' => false,
+                ])['state_contract_airline'] ? 'x' : '',
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.non_contract_airline'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'non_contract_airline' => false,
+                ])['non_contract_airline'] ? 'x' : '',
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.personal_automobile'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'personal_automobile' => false,
+                ])['personal_automobile'] ? 'x' : '',
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.rental_vehicle'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'rental_vehicle' => false,
+                ])['rental_vehicle'] ? 'x' : '',
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.other'
+                ) => ($this->travel->tar_transportation_mode ?? [
+                    'other' => false,
+                ])['other'] ? 'x' : '',
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.itinerary'
+                ) => $this->travel->tar_itinerary,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.purpose'
+                ) => $this->travel->tar_purpose,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.airfare_cost'
+                ) => $this->travel->tar_airfare,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.other_cost'
+                ) => $this->travel->tar_other_trans,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.lodging_cost'
+                ) => $this->travel->tar_lodging,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.registration_cost'
+                ) => $this->travel->tar_registration,
+
+                config('docusign.international_travel_authority_request_with_airfare.fields.total_cost') => (
+                    ($this->travel->tar_airfare ?? 0) +
+                    ($this->travel->tar_other_trans ?? 0) +
+                    ($this->travel->tar_lodging ?? 0) +
+                    ($this->travel->tar_registration ?? 0)
+                ),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.driver_worktag'
+                ) => $this->travel->tar_project_number,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.account_code'
+                ) => $this->travel->tar_account_code,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.departure_date'
+                ) => $this->travel->departure_date->toDateString(),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.return_date'
+                ) => $this->travel->return_date->toDateString(),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.dates'
+                ) => $this->travel->departure_date->toDateString().' - '
+                    .$this->travel->return_date->toDateString(),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.destination'
+                ) => $this->travel->destination,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.home_department'
+                ) => $this->user->employee_home_department,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.employee_id'
+                ) => $this->user->employee_id,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.export_control'
+                ) => ($this->travel->export_controlled_technology === true ? 'yes' : 'no'),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.export_control_description'
+                ) => $this->travel->export_controlled_technology_description,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.embargoed_destination'
+                ) => ($this->travel->embargoed_destination === true ? 'yes' : 'no'),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.embargoed_countries'
+                ) => $this->travel->embargoed_countries,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.biological_materials'
+                ) => ($this->travel->biological_materials === true ? 'yes' : 'no'),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.biological_materials_description'
+                ) => $this->travel->biological_materials_description,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.equipment'
+                ) => ($this->travel->equipment === true ? 'yes' : 'no'),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.equipment_description'
+                ) => $this->travel->equipment_description,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.phone'
+                ) => $this->user->phone,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.non_employee'
+                ) => ($this->user->employee_home_department === null ? 'x' : ''),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.employee'
+                ) => ($this->user->employee_home_department === null ? '' : 'x'),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.non_employee_account'
+                ) => ($this->user->employee_home_department === null ? 'x' : ''),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.employee_account'
+                ) => ($this->user->employee_home_department === null ? '' : 'x'),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.fields.international_travel_justification'
+                ) => $this->travel->international_travel_justification,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.traveler_name'
+                ).'_UserName' => $this->user->full_name,
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.traveler_name'
+                ).'_Email' => $this->user->uid.'@gatech.edu',
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.ingest_mailbox_name'
+                ).'_UserName' => config('app.name'),
+
+                config(
+                    'docusign.international_travel_authority_request_with_airfare.ingest_mailbox_name'
                 ).'_Email' => config('docusign.ingest_mailbox'),
             ]
         );

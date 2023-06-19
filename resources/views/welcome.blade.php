@@ -52,11 +52,7 @@
                                 The RoboJackets membership agreement has changed since the last time you signed it.  Please review and sign the updated version to continue your membership.
                             </p>
                         @endif
-                        @if(config('features.docusign-membership-agreement'))
-                            <a href="{{ route('docusign.agreement') }}">Sign Electronically</a>
-                        @else
-                            <a href="{{ route('agreement.render') }}">Sign Electronically</a> or <a href="{{ route('agreement.print') }}">Print</a>
-                        @endif
+                        <a href="{{ route('docusign.agreement') }}">Sign Electronically</a>
                     </div>
                 </div>
             </div>
@@ -170,7 +166,7 @@
                 </div>
             </div>
         @endif
-        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid)))
+        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid) || (!$hasEmergencyContactInformation)))
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -182,7 +178,7 @@
                         </p>
                         <ul>
                             @if(!$signedLatestAgreement)
-                            <li><a href="{{ config('features.docusign-membership-agreement') ? route('docusign.agreement') : route('agreement.render') }}">Sign the latest membership agreement</a></li>
+                            <li><a href="{{ route('docusign.agreement') }}">Sign the latest membership agreement</a></li>
                             @endif
                             @if(!$status && $needsTransaction)
                             <li><a href="{{ route('showDuesFlow') }}">Pay dues</a></li>
@@ -195,6 +191,9 @@
                             @endif
                             @if(!$travelAssignment->is_paid)
                             <li><a href="{{ route('pay.travel') }}">Pay the travel fee</a></li>
+                            @endif
+                            @if(!$hasEmergencyContactInformation)
+                            <li><a href="{{ route('profile') }}">Submit emergency contact information</a></li>
                             @endif
                         </ul>
                         <a href="{{ route('travel.index') }}">View Travel</a>

@@ -22,13 +22,11 @@ class CreatePersonalAccessToken extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string, string>
      *
      * @phan-suppress PhanNonClassMethodCall,PhanTypeExpectedObjectPropAccess
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) > 1) {
             return Action::danger('This action can only be run on one model at a time.');
@@ -57,7 +55,7 @@ class CreatePersonalAccessToken extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Heading::make(

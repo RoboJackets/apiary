@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Jobs\SendReminders;
 use App\Traits\CreateOrUpdateCASUser;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -44,7 +45,12 @@ class CASCheck
         if ($request->user() === null) {
             if ($this->cas->isAuthenticated()) {
                 $user = $this->createOrUpdateCASUser();
+
                 Auth::login($user);
+
+                SendReminders::dispatch($user);
+
+                $request->session()->put('authenticationInstant', $this->cas->getAttribute('authenticationDate'));
             }
 
             if ($request->ajax() || $request->wantsJson()) {

@@ -29,9 +29,8 @@ class ExportResumes extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         // Check this here because canSee was removed from App\Nova\User as this is a standalone action.
         if (! Auth::user()->can('read-users-resume')) {
@@ -71,12 +70,12 @@ class ExportResumes extends Action
             })
             ->leftJoin('major_user', static function (JoinClause $join): void {
                 $join->on('users.id', '=', 'major_user.user_id')
-                     ->whereNull('major_user.deleted_at');
+                    ->whereNull('major_user.deleted_at');
             })
             ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
             ->leftJoin('class_standing_user', static function (JoinClause $join): void {
                 $join->on('users.id', '=', 'class_standing_user.user_id')
-                     ->whereNull('class_standing_user.deleted_at');
+                    ->whereNull('class_standing_user.deleted_at');
             })
             ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
             ->whereIn('majors.display_name', $majors)
@@ -145,7 +144,7 @@ class ExportResumes extends Action
         // Generate signed URL to pass to frontend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::download($url, $filename);
+        return Action::downloadURL($url, $filename);
     }
 
     /**
@@ -161,53 +160,53 @@ class ExportResumes extends Action
             'majors_with_resumes',
             30,
             static fn (): array => User::selectRaw('distinct(majors.display_name) as distinct_display_names')
-                    ->active()
-                    ->whereNotNull('resume_date')
-                    ->where('primary_affiliation', 'student')
-                    ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                        $q->where('restricted_to_students', false);
-                    })
-                    ->leftJoin('major_user', static function (JoinClause $join): void {
-                        $join->on('users.id', '=', 'major_user.user_id')
-                             ->whereNull('major_user.deleted_at');
-                    })
-                    ->leftJoin(
-                        'majors',
-                        'major_user.major_id',
-                        '=',
-                        'majors.id'
-                    )
-                    ->orderBy('distinct_display_names')
-                    ->pluck('distinct_display_names')
-                    ->mapWithKeys(
-                        static fn (?string $name): array => $name === null ? [] : [$name => $name]
-                    )
-                    ->toArray()
-        );
-
-        $classStandings = Cache::remember('class_standings_with_resumes', 30, static fn (): array => User::selectRaw(
-            'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
-        )
                 ->active()
                 ->whereNotNull('resume_date')
                 ->where('primary_affiliation', 'student')
                 ->whereDoesntHave('duesPackages', static function (Builder $q): void {
                     $q->where('restricted_to_students', false);
                 })
-                ->leftJoin('class_standing_user', static function (JoinClause $join): void {
-                    $join->on('users.id', '=', 'class_standing_user.user_id')
-                         ->whereNull('class_standing_user.deleted_at');
+                ->leftJoin('major_user', static function (JoinClause $join): void {
+                    $join->on('users.id', '=', 'major_user.user_id')
+                        ->whereNull('major_user.deleted_at');
                 })
                 ->leftJoin(
-                    'class_standings',
-                    'class_standing_user.class_standing_id',
+                    'majors',
+                    'major_user.major_id',
                     '=',
-                    'class_standings.id'
+                    'majors.id'
                 )
-                ->orderBy('class_standings.rank_order')
-                ->pluck('distinct_class_standings')
-                ->mapWithKeys(static fn (?string $name): array => $name === null ? [] : [$name => ucfirst($name)])
-                ->toArray());
+                ->orderBy('distinct_display_names')
+                ->pluck('distinct_display_names')
+                ->mapWithKeys(
+                    static fn (?string $name): array => $name === null ? [] : [$name => $name]
+                )
+                ->toArray()
+        );
+
+        $classStandings = Cache::remember('class_standings_with_resumes', 30, static fn (): array => User::selectRaw(
+            'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
+        )
+            ->active()
+            ->whereNotNull('resume_date')
+            ->where('primary_affiliation', 'student')
+            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                $q->where('restricted_to_students', false);
+            })
+            ->leftJoin('class_standing_user', static function (JoinClause $join): void {
+                $join->on('users.id', '=', 'class_standing_user.user_id')
+                    ->whereNull('class_standing_user.deleted_at');
+            })
+            ->leftJoin(
+                'class_standings',
+                'class_standing_user.class_standing_id',
+                '=',
+                'class_standings.id'
+            )
+            ->orderBy('class_standings.rank_order')
+            ->pluck('distinct_class_standings')
+            ->mapWithKeys(static fn (?string $name): array => $name === null ? [] : [$name => ucfirst($name)])
+            ->toArray());
 
         $now = Carbon::now();
         $year = $now->year;

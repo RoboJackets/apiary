@@ -9,14 +9,12 @@ use App\Models\DuesTransaction;
 use App\Models\Payment;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
     /**
      * Test the is_student attribute.
-     *
-     * @return void
      */
-    public function testIsStudent()
+    public function testIsStudent(): void
     {
         $user = $this->getTestUser(['member']);
 

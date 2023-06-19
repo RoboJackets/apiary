@@ -7,7 +7,7 @@ namespace Tests\Feature;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class SimpleRequestsTest extends TestCase
+final class SimpleRequestsTest extends TestCase
 {
     /**
      * Test simple, non-CAS requests load without any authentication.
@@ -46,12 +46,12 @@ class SimpleRequestsTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'success')
-                 ->has('info', static function (AssertableJson $json): void {
-                     $json->where('appName', 'TESTING Apiary')
-                          ->where('appEnv', 'testing')
-                          ->where('allocId', 'asdf')
-                          ->where('release', 'jkl');
-                 });
+                ->has('info', static function (AssertableJson $json): void {
+                    $json->where('appName', 'TESTING Apiary')
+                        ->where('appEnv', 'testing')
+                        ->where('allocId', 'asdf')
+                        ->where('release', 'jkl');
+                });
         });
     }
 }

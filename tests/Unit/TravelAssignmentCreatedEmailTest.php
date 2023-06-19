@@ -10,7 +10,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class TravelAssignmentCreatedEmailTest extends TestCase
+final class TravelAssignmentCreatedEmailTest extends TestCase
 {
     public function testTarRequired(): void
     {

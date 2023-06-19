@@ -26,6 +26,10 @@
             <errorLevel type="suppress">
                 <directory name="database" />
                 <directory name="routes" />
+                <file name="app/Http/Controllers/DocuSignController.php"/>
+                <file name="app/Util/DocuSign.php"/>
+                <file name="app/Exceptions/Handler.php"/>
+                <file name="app/Providers/NovaServiceProvider.php"/>
             </errorLevel>
         </UndefinedClass>
         <PropertyNotSetInConstructor>
@@ -46,6 +50,7 @@
         <InvalidReturnStatement>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <file name="routes/mailbook.php"/>
             </errorLevel>
         </InvalidReturnStatement>
         <TooManyArguments>
@@ -61,13 +66,10 @@
             <errorLevel type="suppress">
                 <directory name="app/Http/Middleware" />
             </errorLevel>
-        </MissingReturnType>
-        <UndefinedClass>
             <errorLevel type="suppress">
-                <file name="app/Exceptions/Handler.php" />
-                <file name="app/Providers/NovaServiceProvider.php" />
+                <directory name="app/Nova/Actions" />
             </errorLevel>
-        </UndefinedClass>
+        </MissingReturnType>
         <UnresolvableInclude>
             <errorLevel type="suppress">
                 <file name="app/Console/Kernel.php" />
@@ -161,6 +163,7 @@
         <InvalidPropertyAssignmentValue>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <file name="routes/mailbook.php"/>
             </errorLevel>
         </InvalidPropertyAssignmentValue>
         <TooManyTemplateParams>
@@ -253,6 +256,7 @@
         <DocblockTypeContradiction>
             <errorLevel type="suppress">
                 <file name="app/Nova/Metrics/EthnicityBreakdown.php" />
+                <file name="app/Http/Controllers/MerchandiseController.php"/>
                 <directory name="app/Policies" />
             </errorLevel>
         </DocblockTypeContradiction>

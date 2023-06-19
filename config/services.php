@@ -69,6 +69,4 @@ return [
 
     'core_officers_slack_webhook_url' => env('CORE_OFFICERS_SLACK_WEBHOOK_URL'),
 
-    'membership_agreement_archive_email' => env('MEMBERSHIP_AGREEMENT_ARCHIVE_EMAIL'),
-
 ];

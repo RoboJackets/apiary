@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -14,12 +15,13 @@ class RouteServiceProvider extends ServiceProvider
 {
     /**
      * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->configureRateLimiting();
+
+        // @phan-suppress-next-line PhanTypeMismatchReturn
+        Route::bind('gtid', static fn (string $value): User => User::whereGtid($value)->firstOrFail());
 
         $this->routes(static function (): void {
             Route::prefix('api')
@@ -33,10 +35,8 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Configure the rate limiters for the application.
-     *
-     * @return void
      */
-    protected function configureRateLimiting()
+    protected function configureRateLimiting(): void
     {
         RateLimiter::for(
             'api',

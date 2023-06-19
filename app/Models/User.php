@@ -128,6 +128,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\User|null $manager
+ * @property-read bool $has_emergency_contact_information
  *
  * @method static Builder|User accessActive()
  * @method static Builder|User accessInactive()
@@ -185,6 +186,20 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static QueryBuilder|User withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property string|null $docusign_access_token
+ * @property Carbon|null $docusign_access_token_expires_at
+ * @property string|null $docusign_refresh_token
+ * @property Carbon|null $docusign_refresh_token_expires_at
+ *
+ * @method static Builder|User whereDocusignAccessToken($value)
+ * @method static Builder|User whereDocusignAccessTokenExpiresAt($value)
+ * @method static Builder|User whereDocusignRefreshToken($value)
+ * @method static Builder|User whereDocusignRefreshTokenExpiresAt($value)
+ *
+ * @property string|null $parent_guardian_name
+ * @property string|null $parent_guardian_email
+ * @property-read bool $needs_parent_or_guardian_signature
  */
 class User extends Authenticatable
 {
@@ -286,6 +301,8 @@ class User extends Authenticatable
         'has_ever_logged_in' => 'boolean',
         'is_service_account' => 'boolean',
         'buzzcard_access_opt_out' => 'boolean',
+        'docusign_access_token_expires_at' => 'datetime',
+        'docusign_refresh_token_expires_at' => 'datetime',
     ];
 
     /**
@@ -561,12 +578,15 @@ class User extends Authenticatable
     public function getRelationshipPermissionMap(): array
     {
         return [
-            'teams' => 'teams-membership',
-            'dues' => 'dues-transactions',
-            'events' => 'events',
-            'rsvps' => 'rsvps',
-            'roles' => 'roles-and-permissions',
-            'permissions' => 'roles-and-permissions',
+            'teams' => 'read-teams-membership',
+            'dues' => 'read-dues-transactions',
+            'events' => 'read-events',
+            'rsvps' => 'read-rsvps',
+            'roles' => 'read-roles-and-permissions',
+            'permissions' => 'read-roles-and-permissions',
+            'assignments.travel' => 'manage-travel',
+            'merchandise.merchandise' => 'read-merchandise',
+            'merchandise.providedBy' => 'read-users',
         ];
     }
 
@@ -827,13 +847,9 @@ class User extends Authenticatable
                         ->orderByDesc('updated_at')
                         ->limit(1);
                 }
-            );
-
-        if (config('features.docusign-membership-agreement') === true) {
-            $query->whereHas('envelope', static function (Builder $query): void {
+            )->whereHas('envelope', static function (Builder $query): void {
                 $query->where('complete', true);
             });
-        }
 
         return $query->exists();
     }
@@ -902,19 +918,19 @@ class User extends Authenticatable
             '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'
         )->leftJoin('dues_transactions', static function (JoinClause $join): void {
             $join->on('dues_transactions.id', '=', 'payable_id')
-                 ->where('payments.amount', '>', 0)
-                 ->where('payments.method', '!=', 'waiver')
-                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                 ->whereNull('payments.deleted_at');
+                ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'waiver')
+                ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                ->whereNull('payments.deleted_at');
         })->leftJoin('travel_assignments', static function (JoinClause $join): void {
             $join->on('travel_assignments.id', '=', 'payable_id')
-                 ->where('payments.amount', '>', 0)
-                 ->where('payments.method', '!=', 'waiver')
-                 ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                 ->whereNull('payments.deleted_at');
+                ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'waiver')
+                ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                ->whereNull('payments.deleted_at');
         })->where('travel_assignments.user_id', '=', $this->id)
-        ->orWhere('dues_transactions.user_id', '=', $this->id)
-        ->get()[0]['revenue']);
+            ->orWhere('dues_transactions.user_id', '=', $this->id)
+            ->get()[0]['revenue']);
 
         if (! array_key_exists('attendance_count', $array)) {
             $array['attendance_count'] = $this->attendance()->count();
@@ -1023,6 +1039,7 @@ class User extends Authenticatable
     public function getCurrentTravelAssignmentAttribute(): ?TravelAssignment
     {
         $needPayment = $this->assignments()
+            ->select('travel_assignments.*')
             ->unpaid()
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
@@ -1033,6 +1050,7 @@ class User extends Authenticatable
         }
 
         $needDocuSign = $this->assignments()
+            ->select('travel_assignments.*')
             ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->needDocuSign()
             ->oldest('travel.departure_date')
@@ -1045,6 +1063,7 @@ class User extends Authenticatable
 
         // this might be null, but that's fine
         return $this->assignments()
+            ->select('travel_assignments.*')
             ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
@@ -1069,5 +1088,34 @@ class User extends Authenticatable
             ->toArray();
 
         return count($teams) === 0 ? null : Team::whereId($teams[0])->sole()->projectManager;
+    }
+
+    public function getHasEmergencyContactInformationAttribute(): bool
+    {
+        return $this->emergency_contact_name !== null &&
+            $this->emergency_contact_phone !== null &&
+            $this->phone !== $this->emergency_contact_phone;
+    }
+
+    public function getNeedsParentOrGuardianSignatureAttribute(): bool
+    {
+        return $this->parent_guardian_name !== null && $this->parent_guardian_email !== null;
+    }
+
+    /**
+     * Get the DuesTransactionMerchandise objects for this user.
+     *
+     * @return HasManyThrough<DuesTransactionMerchandise>
+     */
+    public function merchandise(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            DuesTransactionMerchandise::class,
+            DuesTransaction::class,
+            'user_id',
+            'dues_transaction_id',
+            'id',
+            'id'
+        );
     }
 }

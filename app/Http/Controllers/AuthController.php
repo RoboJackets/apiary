@@ -16,8 +16,6 @@ class AuthController extends Controller
      * signed in (using CAS) and then redirect them back to the original page they were going to. This function
      * largely exists as a workaround to not being able to specify what middleware is applied to Laravel Passport's
      * routes.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function forceCasAuth(Request $request)
     {

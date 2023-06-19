@@ -27,39 +27,39 @@ class PaymentMethodBreakdown extends Partition
     {
         return $this->result(
             Payment::where('payable_type', DuesTransaction::getMorphClassStatic())
-                    ->where('amount', '>', 0)
-                    ->where('method', '!=', 'waiver')
-                    ->whereIn('payable_id', static function (Builder $query) use ($request): void {
-                        $query->select('id')
-                            ->from('dues_transactions')
-                            ->when(
-                                $request->resource === 'fiscal-years',
-                                static function (Builder $query, bool $isFiscalYear) use ($request): void {
-                                    $query
-                                        ->whereIn(
-                                            'dues_package_id',
-                                            static function (Builder $query) use ($request): void {
-                                                $query->select('id')
-                                                    ->from('dues_packages')
-                                                    ->where('fiscal_year_id', $request->resourceId);
-                                            }
-                                        );
-                                },
-                                static function (Builder $query) use ($request): void {
-                                    $query->where('dues_package_id', $request->resourceId);
-                                }
-                            )
-                            ->whereNull('deleted_at');
-                    })
-                    ->whereNull('payments.deleted_at')
-                    ->select('method')
-                    ->selectRaw('count(payments.id) as count')
-                    ->groupBy('method')
-                    ->orderByDesc('count')
-                    ->get()
-                    ->mapWithKeys(
-                        static fn (object $row): array => [Payment::$methods[$row->method] => $row->count]
-                    )->toArray()
+                ->where('amount', '>', 0)
+                ->where('method', '!=', 'waiver')
+                ->whereIn('payable_id', static function (Builder $query) use ($request): void {
+                    $query->select('id')
+                        ->from('dues_transactions')
+                        ->when(
+                            $request->resource === 'fiscal-years',
+                            static function (Builder $query, bool $isFiscalYear) use ($request): void {
+                                $query
+                                    ->whereIn(
+                                        'dues_package_id',
+                                        static function (Builder $query) use ($request): void {
+                                            $query->select('id')
+                                                ->from('dues_packages')
+                                                ->where('fiscal_year_id', $request->resourceId);
+                                        }
+                                    );
+                            },
+                            static function (Builder $query) use ($request): void {
+                                $query->where('dues_package_id', $request->resourceId);
+                            }
+                        )
+                        ->whereNull('deleted_at');
+                })
+                ->whereNull('payments.deleted_at')
+                ->select('method')
+                ->selectRaw('count(payments.id) as count')
+                ->groupBy('method')
+                ->orderByDesc('count')
+                ->get()
+                ->mapWithKeys(
+                    static fn (object $row): array => [Payment::$methods[$row->method] => $row->count]
+                )->toArray()
         );
     }
 

@@ -41,9 +41,7 @@ class CreateOAuth2Client extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string, string>
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
@@ -90,7 +88,7 @@ class CreateOAuth2Client extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client."</p>')

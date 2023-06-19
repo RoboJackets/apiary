@@ -27,14 +27,12 @@ class RefundPayment extends DestructiveAction
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\Payment>  $models
-     * @return array<string,string>
      *
      * @phan-suppress PhanTypeMismatchPropertyProbablyReal
      * @phan-suppress PhanTypeSuspiciousStringExpression
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) > 1) {
             return Action::danger('This action can only be run on one payment at a time.');

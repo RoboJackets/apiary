@@ -7,6 +7,7 @@ use App\Http\Controllers\DuesPackageController;
 use App\Http\Controllers\DuesTransactionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\MerchandiseController;
 use App\Http\Controllers\NovaExportController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PermissionController;
@@ -70,6 +71,11 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         Route::get('teams/{id}/members', [TeamController::class, 'showMembers'])->name('teams.show.members');
         Route::post('teams/{id}/members', [TeamController::class, 'updateMembers'])->name('teams.update.members');
         Route::apiResource('teams', TeamController::class);
+
+        // Merchandise
+        Route::get('merchandise', [MerchandiseController::class, 'index']);
+        Route::get('merchandise/{merchandise}/distribute/{gtid}', [MerchandiseController::class, 'getDistribution']);
+        Route::post('merchandise/{merchandise}/distribute/{gtid}', [MerchandiseController::class, 'distribute']);
     }
 );
 
@@ -78,6 +84,9 @@ Route::webhooks('/v1/square', 'square');
 Route::webhooks('/v1/postmark/outbound', 'postmark-outbound');
 
 Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
+
+Route::webhooks('/v1/docusign', 'docusign')
+    ->middleware(['signed']);
 
 Route::get('/v1/info', [InfoController::class, 'show']);
 

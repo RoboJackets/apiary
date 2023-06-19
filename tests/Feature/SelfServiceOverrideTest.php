@@ -20,13 +20,12 @@ use Database\Seeders\TeamsSeeder;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class SelfServiceOverrideTest extends TestCase
+final class SelfServiceOverrideTest extends TestCase
 {
     /**
      * Shortcut to create a dummy dues package.
      *
      * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
-     * @return DuesPackage
      */
     private function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
     {
@@ -49,11 +48,6 @@ class SelfServiceOverrideTest extends TestCase
 
     /**
      * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
-     *
-     * @param  DuesPackage  $dues_package
-     * @param  User  $user
-     * @param  bool  $paid
-     * @return DuesTransaction
      */
     private function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
     {
@@ -76,10 +70,6 @@ class SelfServiceOverrideTest extends TestCase
 
     /**
      * Shortcut to create a (optionally signed/completed) membership agreement signature for a given test user.
-     *
-     * @param  User  $signer_user
-     * @param  bool  $completed
-     * @return Signature
      */
     private function createMembershipAgreementSignature(User $signer_user, bool $completed): Signature
     {

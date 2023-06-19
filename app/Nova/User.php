@@ -149,6 +149,21 @@ class User extends Resource
             HasMany::make('Signatures'),
 
             new Panel(
+                'Parent or Guardian Signature',
+                [
+                    Text::make('Parent or Guardian Name', 'parent_guardian_name')
+                        ->hideFromIndex()
+                        ->rules('required_with:parent_guardian_email', 'nullable')
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
+                    Text::make('Parent or Guardian Email', 'parent_guardian_email')
+                        ->hideFromIndex()
+                        ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof', 'nullable')
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ]
+            ),
+
+            new Panel(
                 'System Access',
                 [
                     Boolean::make('Active', 'is_access_active')
@@ -434,7 +449,7 @@ class User extends Resource
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
             (new ResumesSubmitted())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-resume')),
-            (new CreateReasonBreakdown()),
+            new CreateReasonBreakdown(),
         ];
     }
 
@@ -535,11 +550,11 @@ class User extends Resource
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->is('nova-api/dues-transactions/*')) {
-            return $query->inactive();
+            return $query->inactive()->orWhere('users.id', '=', $request->viaResourceId);
         }
 
         if ($request->is('nova-api/travel-assignments/*')) {
-            return $query->accessActive();
+            return $query->accessActive()->orWhere('users.id', '=', $request->viaResourceId);
         }
 
         return $query;
@@ -581,17 +596,17 @@ class User extends Resource
             'dues_packages.effective_start',
             'dues_packages.effective_end'
         )
-        ->leftJoin('payments', static function (JoinClause $join): void {
-            $join->on('dues_transactions.id', '=', 'payable_id')
-                 ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
-                 ->where('payments.amount', '>', 0);
-        })
-        ->leftJoin('dues_packages', 'dues_transactions.dues_package_id', '=', 'dues_packages.id')
-        ->where('user_id', $this->id)
-        ->whereNotNull('payments.id')
-        ->orderBy('dues_packages.effective_start')
-        ->orderBy('dues_packages.effective_end')
-        ->get();
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('dues_transactions.id', '=', 'payable_id')
+                    ->where('payments.payable_type', AppModelsDuesTransaction::getMorphClassStatic())
+                    ->where('payments.amount', '>', 0);
+            })
+            ->leftJoin('dues_packages', 'dues_transactions.dues_package_id', '=', 'dues_packages.id')
+            ->where('user_id', $this->id)
+            ->whereNotNull('payments.id')
+            ->orderBy('dues_packages.effective_start')
+            ->orderBy('dues_packages.effective_end')
+            ->get();
 
         $firstPaidTransact = $paidTransactions->first();
         $lastPaidTransact = $paidTransactions->last();

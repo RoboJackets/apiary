@@ -17,8 +17,6 @@ class DashboardController extends Controller
 {
     /**
      * Returns view with data for the user dashboard.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request)
     {
@@ -68,8 +66,8 @@ class DashboardController extends Controller
             $paidTransactions = DuesTransaction::select('dues_transactions.id', 'dues_transactions.dues_package_id')
                 ->leftJoin('payments', static function (JoinClause $join): void {
                     $join->on('dues_transactions.id', '=', 'payable_id')
-                         ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                         ->where('payments.amount', '>', 0);
+                        ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                        ->where('payments.amount', '>', 0);
                 })
                 ->where('user_id', $user->id)
                 ->whereNotNull('payments.id')
@@ -135,6 +133,7 @@ class DashboardController extends Controller
                 'signedAnyAgreement' => $signedAnyAgreement,
                 'agreementExists' => $agreementExists,
                 'travelAssignment' => $travelAssignment,
+                'hasEmergencyContactInformation' => $user->has_emergency_contact_information,
             ]
         );
     }

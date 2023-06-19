@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
     'resumes' => env('FEATURE_ENABLE_RESUMES', false),
     'card-present-payments' => env('FEATURE_ENABLE_CARD_PRESENT_PAYMENTS', false),
-    'docusign-membership-agreement' => env('FEATURE_DOCUSIGN_MEMBERSHIP_AGREEMENT', true),
-    'demo-mode' => env('DEMO_MODE_USER', null),
+    'sandbox-mode' => env('FEATURE_SANDBOX_MODE', false),
+    'sandbox-users' => explode(',', env('SANDBOX_USERS', '')),
     'whitepages' => env('FEATURE_ENABLE_WHITEPAGES', true),
 ];

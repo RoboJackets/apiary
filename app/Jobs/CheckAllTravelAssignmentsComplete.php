@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments
+
 namespace App\Jobs;
 
 use App\Models\Travel;
@@ -37,18 +39,34 @@ class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
     public function handle(): void
     {
         $travel = $this->travel;
-        Cache::lock('send_completion_email_'.$travel->id, 5 /* seconds */)->get(
-            static function () use ($travel): void {
-                if (! $travel->completion_email_sent &&
-                    $travel->assignments->reduce(
-                        static fn (bool $carry, TravelAssignment $each): bool => $carry && $each->is_complete,
-                        true
-                    )
-                ) {
-                    $travel->completion_email_sent = true;
+        Cache::lock(name: 'send_completion_email_'.$travel->id, seconds: 120)->block(
+            seconds: 60,
+            callback: static function () use ($travel): void {
+                if (! $travel->payment_completion_email_sent && ! $travel->assignments_need_payment) {
+                    $travel->payment_completion_email_sent = true;
+                    $travel->form_completion_email_sent = ! $travel->assignments_need_forms;
                     $travel->save();
-
                     $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
+
+                    $travel->assignments()->needDocuSign()->get()->each(
+                        static function (TravelAssignment $assignment): void {
+                            SendTravelAssignmentReminder::dispatch($assignment);
+                        }
+                    );
+                } elseif ($travel->tar_required &&
+                    ! $travel->form_completion_email_sent &&
+                    ! $travel->assignments_need_forms
+                ) {
+                    $travel->payment_completion_email_sent = ! $travel->assignments_need_payment;
+                    $travel->form_completion_email_sent = true;
+                    $travel->save();
+                    $travel->primaryContact->notify(new AllTravelAssignmentsComplete($travel));
+
+                    $travel->assignments()->unpaid()->get()->each(
+                        static function (TravelAssignment $assignment): void {
+                            SendTravelAssignmentReminder::dispatch($assignment);
+                        }
+                    );
                 }
             }
         );

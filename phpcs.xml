@@ -128,7 +128,9 @@
 
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
-    <rule ref="SlevomatCodingStandard.Arrays"/>
+    <rule ref="SlevomatCodingStandard.Arrays">
+        <exclude name="SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys"/>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
@@ -271,6 +273,7 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
         <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
         <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
+        <exclude-pattern>/app/Nova/Actions/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 

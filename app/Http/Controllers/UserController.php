@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\Manager;
 use App\Http\Resources\User as UserResource;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
@@ -48,7 +49,7 @@ class UserController extends Controller
             ->json(
                 [
                     'status' => 'success',
-                    'users' => UserResource::collection(
+                    'users' => Manager::collection(
                         User::whereHas('manages')
                             ->orWhereHas('roles', static function (Builder $query): void {
                                 $query->whereIn('name', ['project-manager', 'officer']);

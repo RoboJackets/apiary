@@ -6,7 +6,6 @@
     "labels": [
         "area / devOps",
         "priority / low",
-        "status / code review",
         "type / technical debt"
     ],
     "reviewers": [],
@@ -19,7 +18,6 @@
         "labels": [
             "area / devOps",
             "priority / high",
-            "status / code review",
             "type / technical debt"
         ]
     },
@@ -28,7 +26,8 @@
     "php": {
         "lockFileMaintenance": {
             "enabled": true,
-            "schedule": ["before 8am every weekday"]
+            "schedule": ["before 4pm every weekday except before 9am every weekday"],
+            "prPriority": -6
         },
         "packageRules": [
             {
@@ -41,12 +40,46 @@
                     "enabled": true
                 },
                 "versioning": "loose"
+            },
+            {
+              "matchDepTypes": ["require-dev"],
+              "prPriority": -2
+            },
+            {
+              "matchPackagePatterns": ["^phpstan/"],
+              "prPriority": -1
+            },
+            {
+              "matchPackagePatterns": ["^laravel/"],
+              "prPriority": 1
+            },
+            {
+              "matchPackageNames": ["laravel/framework"],
+              "prPriority": 2
             }
         ]
     },
+    "js": {
+        "prPriority": -4,
+        "packageRules": [
+            {
+              "matchDepTypes": ["devDependencies"],
+              "prPriority": -5
+            }
+        ],
+        "ignoreDeps": [
+            "sweetalert2"
+        ]
+    },
+    "docker": {
+        "enabled": false
+    },
+    "docker-compose": {
+        "enabled": false
+    },
     "rangeStrategy": "pin",
     "timezone": "America/New_York",
-    "schedule": ["before 4pm every weekday"],
+    "schedule": ["before 4pm every weekday except before 9am every weekday"],
     "hostRules": [
         {
             "hostName": "nova.laravel.com",
