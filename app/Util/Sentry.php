@@ -24,18 +24,6 @@ class Sentry
         '/privacy',
     ];
 
-    /**
-     * Methods that should be ignored for performance tracing.
-     *
-     * @phan-read-only
-     *
-     * @var array<string>
-     */
-    private static array $ignoreMethods = [
-        'GET',
-        'HEAD',
-    ];
-
     public static function tracesSampler(SamplingContext $context): float
     {
         if ($context->getParentSampled() === true) {
@@ -47,8 +35,6 @@ class Sentry
         if (
             $transactionData !== null &&
             array_key_exists('url', $transactionData) &&
-            array_key_exists('method', $transactionData) &&
-            in_array($transactionData['method'], self::$ignoreMethods, true) &&
             self::shouldIgnoreUrl($transactionData['url'])
         ) {
             return 0;
