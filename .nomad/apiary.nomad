@@ -8,6 +8,11 @@ variable "persist_resumes" {
   description = "Whether to store resumes on a host volume, or just inside the container"
 }
 
+variable "persist_docusign" {
+  type = bool
+  description = "Whether to store resumes on a host volume, or just inside the container"
+}
+
 variable "run_background_containers" {
   type = bool
   description = "Whether to start containers for horizon and scheduled tasks, or only the web task"
