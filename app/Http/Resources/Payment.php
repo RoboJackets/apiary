@@ -47,7 +47,7 @@ class Payment extends JsonResource
             'recorded_by_user' => Auth::user()->can('read-users') ?
                 new UserResource($this->whenLoaded('recordedBy')) :
                 $this->when($this->recordedBy, [
-                    'name' => $this->recordedBy->name,
+                    'name' => $this->recordedBy?->name,
                 ]),
             'dues_transaction' => new DuesTransactionResource($this->whenLoaded('duesTransaction')),
             'travel_assignment' => new TravelAssignmentResource($this->whenLoaded('travelAssignment')),
