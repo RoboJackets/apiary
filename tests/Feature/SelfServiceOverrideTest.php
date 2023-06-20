@@ -6,11 +6,7 @@ namespace Tests\Feature;
 
 use App\Models\Attendance;
 use App\Models\DocuSignEnvelope;
-use App\Models\DuesPackage;
-use App\Models\DuesTransaction;
-use App\Models\FiscalYear;
 use App\Models\MembershipAgreementTemplate;
-use App\Models\Payment;
 use App\Models\Signature;
 use App\Models\Team;
 use App\Models\User;
@@ -20,53 +16,9 @@ use Database\Seeders\TeamsSeeder;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
+
 final class SelfServiceOverrideTest extends TestCase
 {
-    /**
-     * Shortcut to create a dummy dues package.
-     *
-     * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
-     */
-    private function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
-    {
-        if ($base_date === null) {
-            $base_date = CarbonImmutable::now();
-        }
-
-        $fy = FiscalYear::firstOrCreate(['ending_year' => $base_date->year]);
-
-        return DuesPackage::factory()->create([
-            'fiscal_year_id' => $fy->id,
-            'effective_start' => $base_date->subMonth(),
-            'effective_end' => $base_date->addMonth(),
-            'access_start' => $base_date->subMonth(),
-            'access_end' => $base_date->addMonth(),
-            'available_for_purchase' => true,
-            'restricted_to_students' => false,
-        ]);
-    }
-
-    /**
-     * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
-     */
-    private function createDuesTransactionForUser(DuesPackage $dues_package, User $user, bool $paid): DuesTransaction
-    {
-        $dues_transaction = DuesTransaction::factory()->create([
-            'dues_package_id' => $dues_package->id,
-            'user_id' => $user->id,
-        ]);
-
-        if ($paid) {
-            Payment::factory()->create([
-                'payable_type' => DuesTransaction::getMorphClassStatic(),
-                'payable_id' => $dues_transaction->id,
-                'amount' => $dues_package->cost,
-                'notes' => '',
-            ]);
-        }
-
-        return $dues_transaction;
-    }
 
     /**
      * Shortcut to create a (optionally signed/completed) membership agreement signature for a given test user.
@@ -104,7 +56,7 @@ final class SelfServiceOverrideTest extends TestCase
         Notification::fake();
 
         $user = $this->getTestUser(['non-member']);
-        $this->createDuesPackage(CarbonImmutable::now());
+        TestCase::createDuesPackage(CarbonImmutable::now());
 
         $this->assertFalse(
             $user->self_service_override_eligibility->eligible,
@@ -187,7 +139,7 @@ final class SelfServiceOverrideTest extends TestCase
         Notification::fake();
 
         $user = $this->getTestUser(['non-member']);
-        $this->createDuesPackage(CarbonImmutable::now());
+        TestCase::createDuesPackage(CarbonImmutable::now());
 
         $this->assertFalse(
             $user->self_service_override_eligibility->eligible,
@@ -273,7 +225,7 @@ final class SelfServiceOverrideTest extends TestCase
         Notification::fake();
 
         $user = $this->getTestUser(['non-member']);
-        $this->createDuesPackage(CarbonImmutable::now());
+        TestCase::createDuesPackage(CarbonImmutable::now());
 
         $this->seed(TeamsSeeder::class);
         $team = Team::first();
@@ -312,8 +264,8 @@ final class SelfServiceOverrideTest extends TestCase
     public function testUserWithActivePaidDuesNotEligible(): void
     {
         $user = $this->getTestUser(['non-member']);
-        $dues_package = $this->createDuesPackage(CarbonImmutable::now());
-        $this->createDuesTransactionForUser($dues_package, $user, true);
+        $dues_package = TestCase::createDuesPackage(CarbonImmutable::now());
+        TestCase::createDuesTransactionForUser($dues_package, $user, true);
 
         $this->assertFalse(
             $user->self_service_override_eligibility->eligible,
@@ -358,7 +310,7 @@ final class SelfServiceOverrideTest extends TestCase
         );
 
         // Only dues packages in the past exist
-        $this->createDuesPackage(CarbonImmutable::now()->subYear());
+        TestCase::createDuesPackage(CarbonImmutable::now()->subYear());
 
         $this->assertFalse(
             $user->self_service_override_eligibility->eligible,
@@ -376,7 +328,7 @@ final class SelfServiceOverrideTest extends TestCase
 
         // A future dues package exists
         // Only dues packages in the past exist
-        $this->createDuesPackage(CarbonImmutable::now()->addYear());
+        TestCase::createDuesPackage(CarbonImmutable::now()->addYear());
         $this->assertNotContains(
             'Future dues package must exist',
             $user->self_service_override_eligibility->getUnmetConditions(),
