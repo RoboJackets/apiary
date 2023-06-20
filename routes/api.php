@@ -49,7 +49,7 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         Route::apiResource('events', EventController::class);
         Route::apiResource('rsvps', RsvpController::class);
         Route::apiResource('payments', PaymentController::class);
-        Route::get('payments/user/{id}', [PaymentController::class, 'indexForUser']);
+        Route::get('payments/user/{user}', [PaymentController::class, 'indexForUser']);
 
         // Dues Packages
         Route::get('dues/packages/active', [DuesPackageController::class, 'indexActive']);

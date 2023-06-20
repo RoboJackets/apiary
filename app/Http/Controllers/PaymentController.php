@@ -40,21 +40,13 @@ class PaymentController extends Controller
     /**
      * Display a list of payments for a given user.
      */
-    public function indexForUser(Request $request, int $id): JsonResponse
+    public function indexForUser(Request $request, User $user): JsonResponse
     {
-        $user = User::find($id);
         $requestingUser = $request->user();
 
-        if ($user === null) {
-            return response()->json(
-                [
-                    'status' => 'error', 'message' => 'User '.$id.' not found',
-                ],
-                404
-            );
-        }
+        $userId = $user->id;
 
-        if ($id !== $requestingUser->id && $requestingUser->cannot('read-payments')) {
+        if ($userId !== $requestingUser->id && $requestingUser->cannot('read-payments')) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -66,22 +58,30 @@ class PaymentController extends Controller
 
         $duesTransactions = Payment::wherePayableType(DuesTransaction::getMorphClassStatic())
             ->with('duesTransaction', 'duesTransaction.package', 'recordedBy')
-            ->whereHas('duesTransaction.user', static fn (Builder $q): Builder => $q->whereId($id))
-            ->where(static fn (Builder $q): Builder => $q->where('amount', '>', 0)
-                ->orWhereNotNull('card_brand'))
+            ->whereHas('duesTransaction.user', static function (Builder $q) use ($userId) {
+                $q->whereId($userId);
+            })
+            ->where(static function (Builder $q) {
+                $q->where('amount', '>', 0)
+                    ->orWhereNotNull('card_brand');
+            })
             ->orderBy('updated_at')
             ->get();
 
         $travelAssignments = Payment::wherePayableType(TravelAssignment::getMorphClassStatic())
             ->with('travelAssignment', 'travelAssignment.travel', 'recordedBy')
-            ->whereHas('travelAssignment.user', static fn (Builder $q): Builder => $q->whereId($id))
-            ->where(static fn ($q): Builder => $q->where('amount', '>', 0)
-                ->orWhereNotNull('card_brand'))
+            ->whereHas('travelAssignment.user', static function (Builder $q) use ($userId) {
+                $q->whereId($userId);
+            })
+            ->where(static function (Builder $q) {
+                $q->where('amount', '>', 0)
+                    ->orWhereNotNull('card_brand');
+            })
             ->orderBy('updated_at')
             ->get();
 
         // @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
-        $combined = $duesTransactions->concat($travelAssignments)->sortBy('updated_at');
+        $combined = $duesTransactions->concat($travelAssignments)->sortBy('updated_at', descending: true);
 
         return response()->json([
             'status' => 'success',
