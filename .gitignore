@@ -44,3 +44,5 @@ resume-monitoring.sh
 *.map
 
 .envault.json
+/.phpunit.result.cache
+/.phpunit.cache/test-results
