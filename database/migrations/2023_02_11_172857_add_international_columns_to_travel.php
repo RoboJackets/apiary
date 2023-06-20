@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('travel', static function (Blueprint $table): void {
-            $table->boolean('is_international');
+            $table->boolean('is_international')->default(false);
             $table->boolean('export_controlled_technology')->nullable();
             $table->text('export_controlled_technology_description')->nullable();
             $table->boolean('embargoed_destination')->nullable();
