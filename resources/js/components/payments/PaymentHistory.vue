@@ -8,7 +8,7 @@
     <div v-if="!loading && error" class="alert alert-danger" role="alert">
       {{ error }}. Check your internet connection or try refreshing the page.
     </div>
-    <table v-else-if="!loading" class="table table-responsive table-borderless table-striped">
+    <table v-else-if="!loading" class="table table-responsive table-borderless table-striped payments-table">
       <thead>
       <tr>
         <th scope="col">Date</th>
@@ -90,5 +90,7 @@ export default {
 </script>
 
 <style scoped>
-
+.payments-table td {
+  min-width: 140px;
+}
 </style>
