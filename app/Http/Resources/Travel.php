@@ -8,7 +8,6 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Laravel\Nova\Http\Resources\UserResource;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 
 class Travel extends JsonResource
@@ -31,7 +30,6 @@ class Travel extends JsonResource
             'included_with_fee' => $this->included_with_fee,
             'not_included_with_fee' => $this->not_included_with_fee,
             'tar_required' => $this->tar_required,
-            'completion_email_sent' => $this->completion_email_sent,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
