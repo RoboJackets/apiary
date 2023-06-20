@@ -16,10 +16,8 @@ use Database\Seeders\TeamsSeeder;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-
 final class SelfServiceOverrideTest extends TestCase
 {
-
     /**
      * Shortcut to create a (optionally signed/completed) membership agreement signature for a given test user.
      */

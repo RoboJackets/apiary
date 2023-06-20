@@ -21,18 +21,18 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
-     * @param DuesPackage $dues_package
-     * @param User $user
-     * @param bool $paid
+     *
+     * @param  DuesPackage  $dues_package
+     * @param  User  $user
+     * @param  bool  $paid
      * @return DuesTransaction
      */
-    public static function createDuesTransactionForUser(DuesPackage      $dues_package,
-                                                        User             $user,
-                                                        bool             $paid,
-                                                        array            $payment_attrs = [],
+    public static function createDuesTransactionForUser(DuesPackage $dues_package,
+                                                        User $user,
+                                                        bool $paid,
+                                                        array $payment_attrs = [],
                                                         ?CarbonImmutable $createdAt = null,
-    ): DuesTransaction
-    {
+    ): DuesTransaction {
         $now = CarbonImmutable::now();
         $dues_transaction = DuesTransaction::factory()->create([
             'dues_package_id' => $dues_package->id,
@@ -62,7 +62,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Shortcut to create a dummy dues package.
      *
-     * @param CarbonImmutable|null $base_date Date around which the dues package's validity periods will be defined
+     * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
      * @return DuesPackage
      */
     public static function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
