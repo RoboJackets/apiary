@@ -13,20 +13,19 @@ use Tests\TestCase;
 class PaymentTest extends TestCase
 {
     /**
-     * @param User $user
-     * @param DuesPackage $duesPackage
-     * @param string $expectedPaymentMethodPresentation
-     * @param bool $expectPrivilegedRecordedByUserInfo
-     * @param bool $allowUnexpectedProps
+     * @param  User  $user
+     * @param  DuesPackage  $duesPackage
+     * @param  string  $expectedPaymentMethodPresentation
+     * @param  bool  $expectPrivilegedRecordedByUserInfo
+     * @param  bool  $allowUnexpectedProps
      * @return Closure
      */
-    static function checkPaymentJson(User        $user,
+    public static function checkPaymentJson(User $user,
                                      DuesPackage $duesPackage,
-                                     string      $expectedPaymentMethodPresentation,
-                                     bool        $expectPrivilegedRecordedByUserInfo = false,
-                                     bool        $allowUnexpectedProps = true,
-    ): Closure
-    {
+                                     string $expectedPaymentMethodPresentation,
+                                     bool $expectPrivilegedRecordedByUserInfo = false,
+                                     bool $allowUnexpectedProps = true,
+    ): Closure {
         return static function (AssertableJson $json) use ($allowUnexpectedProps, $expectPrivilegedRecordedByUserInfo, $expectedPaymentMethodPresentation, $user, $duesPackage) {
             $base = $json->has('id')
                 ->where('amount', $duesPackage->cost)
@@ -56,7 +55,7 @@ class PaymentTest extends TestCase
      */
     public function testNewUserHasNoPayments(): void
     {
-        $user = $this->getTestUser(["non-member"]);
+        $user = $this->getTestUser(['non-member']);
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
         $response->assertStatus(200);
@@ -73,7 +72,7 @@ class PaymentTest extends TestCase
      */
     public function testNewUserHasNoPaymentsWithUnpaidDuesTransaction(): void
     {
-        $user = $this->getTestUser(["non-member"]);
+        $user = $this->getTestUser(['non-member']);
 
         $duesPackage = $this->createDuesPackage(CarbonImmutable::now());
         $this->createDuesTransactionForUser($duesPackage, $user, false);
@@ -93,7 +92,7 @@ class PaymentTest extends TestCase
      */
     public function testUserWith1DuesPayment(): void
     {
-        $user = $this->getTestUser(["non-member"]);
+        $user = $this->getTestUser(['non-member']);
 
         $duesPackage = $this->createDuesPackage(CarbonImmutable::now());
         $this->createDuesTransactionForUser($duesPackage, $user, true);
@@ -119,7 +118,7 @@ class PaymentTest extends TestCase
      */
     public function testUserWith1Paid1UnpaidDuesPayment(): void
     {
-        $user = $this->getTestUser(["non-member"]);
+        $user = $this->getTestUser(['non-member']);
 
         $duesPackageEarlier = $this->createDuesPackage(CarbonImmutable::now()->subYear());
         $this->createDuesTransactionForUser($duesPackageEarlier, $user, true, [], CarbonImmutable::now()->subYear());
@@ -129,7 +128,7 @@ class PaymentTest extends TestCase
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
         $response->assertStatus(200);
-        $response->assertJson(static function (AssertableJson $json) use ($duesPackageEarlier, $duesPackageNow, $response, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use ($duesPackageEarlier, $response, $user): void {
             $json->where('status', 'success')
                 ->has('payments', 1)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -147,7 +146,7 @@ class PaymentTest extends TestCase
      */
     public function testUserWith2PaidDuesTransactions(): void
     {
-        $user = $this->getTestUser(["non-member"]);
+        $user = $this->getTestUser(['non-member']);
 
         $duesPackageEarlier = $this->createDuesPackage(CarbonImmutable::now()->subYear());
         $this->createDuesTransactionForUser($duesPackageEarlier, $user, true, [], CarbonImmutable::now()->subYear());
