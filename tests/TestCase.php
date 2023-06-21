@@ -8,6 +8,8 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\FiscalYear;
 use App\Models\Payment;
+use App\Models\Travel;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Faker\Factory;
@@ -20,11 +22,38 @@ abstract class TestCase extends BaseTestCase
     use RefreshDatabase;
 
     /**
+     * Shortcut to create a dummy dues package.
+     *
+     * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
+     * @return DuesPackage
+     */
+    public static function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
+    {
+        if ($base_date === null) {
+            $base_date = CarbonImmutable::now();
+        }
+
+        $fy = FiscalYear::firstOrCreate(['ending_year' => $base_date->year]);
+
+        return DuesPackage::factory()->create([
+            'fiscal_year_id' => $fy->id,
+            'effective_start' => $base_date->subMonth(),
+            'effective_end' => $base_date->addMonth(),
+            'access_start' => $base_date->subMonth(),
+            'access_end' => $base_date->addMonth(),
+            'available_for_purchase' => true,
+            'restricted_to_students' => false,
+        ]);
+    }
+
+    /**
      * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
      *
-     * @param  DuesPackage  $dues_package
-     * @param  User  $user
-     * @param  bool  $paid
+     * @param DuesPackage $dues_package
+     * @param User $user
+     * @param bool $paid
+     * @param array $payment_attrs
+     * @param CarbonImmutable|null $createdAt
      * @return DuesTransaction
      */
     public static function createDuesTransactionForUser(DuesPackage $dues_package,
@@ -59,29 +88,49 @@ abstract class TestCase extends BaseTestCase
         return $dues_transaction;
     }
 
-    /**
-     * Shortcut to create a dummy dues package.
-     *
-     * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
-     * @return DuesPackage
-     */
-    public static function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
-    {
+    public static function createTravel(?CarbonImmutable $base_date, int $fee_amount = 0): Travel {
         if ($base_date === null) {
             $base_date = CarbonImmutable::now();
         }
 
-        $fy = FiscalYear::firstOrCreate(['ending_year' => $base_date->year]);
-
-        return DuesPackage::factory()->create([
-            'fiscal_year_id' => $fy->id,
-            'effective_start' => $base_date->subMonth(),
-            'effective_end' => $base_date->addMonth(),
-            'access_start' => $base_date->subMonth(),
-            'access_end' => $base_date->addMonth(),
-            'available_for_purchase' => true,
-            'restricted_to_students' => false,
+        return Travel::factory()->create([
+            'departure_date' => $base_date->subDays(3),
+            'return_date' => $base_date->addDays(3),
+            'fee_amount' => $fee_amount,
         ]);
+    }
+
+    public static function createTravelAssignment(Travel           $travel,
+                                                  User             $user,
+                                                  bool             $paid,
+                                                  array            $payment_attrs = [],
+                                                  ?CarbonImmutable $createdAt = null): TravelAssignment|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+    {
+        $now = CarbonImmutable::now();
+
+        $travel_assignment = TravelAssignment::factory()->create([
+            'travel_id' => $travel->id,
+            'user_id' => $user->id,
+            'created_at' => $createdAt,
+            'updated_at' => $createdAt,
+        ]);
+
+        if ($paid) {
+            $payment = Payment::factory()->create(array_merge([
+                'payable_type' => TravelAssignment::getMorphClassStatic(),
+                'payable_id' => $travel_assignment->id,
+                'amount' => $travel->fee_amount,
+                'notes' => '',
+                'created_at' => $createdAt ?? $now,
+                'updated_at' => $createdAt ?? $now,
+            ], $payment_attrs));
+
+            // This ensures that updated_at isn't set to the present time post-creation for some reason
+            $payment->updated_at = $createdAt;
+            $payment->save();
+        }
+
+        return $travel_assignment;
     }
 
     /**
