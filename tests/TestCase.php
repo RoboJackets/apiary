@@ -49,11 +49,11 @@ abstract class TestCase extends BaseTestCase
     /**
      * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
      *
-     * @param DuesPackage $dues_package
-     * @param User $user
-     * @param bool $paid
-     * @param array $payment_attrs
-     * @param CarbonImmutable|null $createdAt
+     * @param  DuesPackage  $dues_package
+     * @param  User  $user
+     * @param  bool  $paid
+     * @param  array  $payment_attrs
+     * @param  CarbonImmutable|null  $createdAt
      * @return DuesTransaction
      */
     public static function createDuesTransactionForUser(DuesPackage $dues_package,
@@ -88,7 +88,8 @@ abstract class TestCase extends BaseTestCase
         return $dues_transaction;
     }
 
-    public static function createTravel(?CarbonImmutable $base_date, int $fee_amount = 0): Travel {
+    public static function createTravel(?CarbonImmutable $base_date, int $fee_amount = 0): Travel
+    {
         if ($base_date === null) {
             $base_date = CarbonImmutable::now();
         }
@@ -100,10 +101,10 @@ abstract class TestCase extends BaseTestCase
         ]);
     }
 
-    public static function createTravelAssignment(Travel           $travel,
-                                                  User             $user,
-                                                  bool             $paid,
-                                                  array            $payment_attrs = [],
+    public static function createTravelAssignment(Travel $travel,
+                                                  User $user,
+                                                  bool $paid,
+                                                  array $payment_attrs = [],
                                                   ?CarbonImmutable $createdAt = null): TravelAssignment|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
     {
         $now = CarbonImmutable::now();

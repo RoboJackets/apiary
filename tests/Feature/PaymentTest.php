@@ -25,13 +25,13 @@ class PaymentTest extends TestCase
     }
 
     /**
-     * @param User $user
-     * @param string $payable_type
-     * @param string $expectedPayableName
-     * @param int|float $expectedPayableCost
-     * @param string $expectedPaymentMethodPresentation
-     * @param bool $expectPrivilegedRecordedByUserInfo
-     * @param bool $allowUnexpectedProps
+     * @param  User  $user
+     * @param  string  $payable_type
+     * @param  string  $expectedPayableName
+     * @param  int|float  $expectedPayableCost
+     * @param  string  $expectedPaymentMethodPresentation
+     * @param  bool  $expectPrivilegedRecordedByUserInfo
+     * @param  bool  $allowUnexpectedProps
      * @return Closure
      */
     public static function checkPaymentJson(User $user,
@@ -44,8 +44,7 @@ class PaymentTest extends TestCase
                                      bool $expectPrivilegedRecordedByUserInfo = false,
                                      bool $allowUnexpectedProps = true,
     ): Closure {
-        return static function (AssertableJson $json)
-        use (
+        return static function (AssertableJson $json) use (
             $isDuesTransactionPayable,
             $isTravelAssignmentPayable,
             $expectedPayableType,
@@ -54,8 +53,7 @@ class PaymentTest extends TestCase
             $allowUnexpectedProps,
             $expectPrivilegedRecordedByUserInfo,
             $expectedPaymentMethodPresentation,
-            $user)
-        {
+            $user) {
             $base = $json->has('id')
                 ->where('payable_type', $expectedPayableType)
                 ->where('amount', $expectedPayableCost)
@@ -231,7 +229,8 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith1UnpaidTravelAssignment(): void {
+    public function testUserWith1UnpaidTravelAssignment(): void
+    {
         // Note: A user must exist before creating a new Travel with TravelFactory
         $user = $this->getTestUser(['member']);
         $travel = $this->createTravel(null, 10);
@@ -240,13 +239,14 @@ class PaymentTest extends TestCase
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
         $response->assertStatus(200);
-        $response->assertJson(static function (AssertableJson $json) use ($response, $user): void {
+        $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'success')
                 ->has('payments', 0);
         });
     }
 
-    public function testUserWith1PaidTravelAssignment(): void {
+    public function testUserWith1PaidTravelAssignment(): void
+    {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
 
@@ -275,7 +275,8 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith1Unpaid1PaidTravelAssignment(): void {
+    public function testUserWith1Unpaid1PaidTravelAssignment(): void
+    {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
 
@@ -283,7 +284,7 @@ class PaymentTest extends TestCase
         $user = $this->getTestUser(['member']);
 
         $travelEarlier = $this->createTravel(CarbonImmutable::now()->subYear(), 10);
-        $this->createTravelAssignment($travelEarlier, $user, true , [], CarbonImmutable::now()->subYear());
+        $this->createTravelAssignment($travelEarlier, $user, true, [], CarbonImmutable::now()->subYear());
 
         $travelNow = $this->createTravel(null, 10);
         $this->createTravelAssignment($travelNow, $user, false, [], CarbonImmutable::now());
@@ -307,7 +308,8 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWith2PaidTravelAssignments(): void {
+    public function testUserWith2PaidTravelAssignments(): void
+    {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
 
@@ -315,7 +317,7 @@ class PaymentTest extends TestCase
         $user = $this->getTestUser(['member']);
 
         $travelEarlier = $this->createTravel(CarbonImmutable::now()->subYear(), 10);
-        $this->createTravelAssignment($travelEarlier, $user, true , [], CarbonImmutable::now()->subYear());
+        $this->createTravelAssignment($travelEarlier, $user, true, [], CarbonImmutable::now()->subYear());
 
         $travelNow = $this->createTravel(null, 10);
         $this->createTravelAssignment($travelNow, $user, true, [], CarbonImmutable::now());
@@ -348,7 +350,8 @@ class PaymentTest extends TestCase
         });
     }
 
-    public function testUserWithMixedDuesTransactionsAndTravelAssignments(): void {
+    public function testUserWithMixedDuesTransactionsAndTravelAssignments(): void
+    {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
 
@@ -364,7 +367,7 @@ class PaymentTest extends TestCase
         $this->createDuesTransactionForUser($duesPackageNow, $user, false, [], CarbonImmutable::now());
 
         $travelEarlier = $this->createTravel(CarbonImmutable::now()->subYear(), 10);
-        $this->createTravelAssignment($travelEarlier, $user, false , [], CarbonImmutable::now()->subYear());
+        $this->createTravelAssignment($travelEarlier, $user, false, [], CarbonImmutable::now()->subYear());
 
         $travelNow = $this->createTravel(CarbonImmutable::now()->subMinute(), 10);
         $this->createTravelAssignment($travelNow, $user, true, [], CarbonImmutable::now()->subMinute());
@@ -395,11 +398,11 @@ class PaymentTest extends TestCase
                     $duesPackageEarlier->cost,
                     Payment::$methods[$response->json('payments.1.method')],
                 ));
-
         });
     }
 
-    public function testUserWith4PaidDuesTransactionsAndTravelAssignments(): void {
+    public function testUserWith4PaidDuesTransactionsAndTravelAssignments(): void
+    {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
 
@@ -416,7 +419,7 @@ class PaymentTest extends TestCase
         $this->createDuesTransactionForUser($duesPackageEarlier, $user, true, [], CarbonImmutable::now()->subMonth());
 
         $travelEarlier = $this->createTravel(CarbonImmutable::now()->subYear(), 10);
-        $this->createTravelAssignment($travelEarlier, $user, true , [], CarbonImmutable::now()->subYear());
+        $this->createTravelAssignment($travelEarlier, $user, true, [], CarbonImmutable::now()->subYear());
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
         $response->assertStatus(200);
@@ -462,26 +465,27 @@ class PaymentTest extends TestCase
                     $travelEarlier->fee_amount,
                     Payment::$methods[$response->json('payments.3.method')],
                 ));
-
         });
     }
 
-    public function testSoftDeletedDuesPaymentHidden(): void {
+    public function testSoftDeletedDuesPaymentHidden(): void
+    {
         $user = $this->getTestUser(['non-member']);
 
         $duesPackage = $this->createDuesPackage(CarbonImmutable::now());
-        $this->createDuesTransactionForUser($duesPackage, $user, true, [ 'deleted_at' => CarbonImmutable::now() ]);
+        $this->createDuesTransactionForUser($duesPackage, $user, true, ['deleted_at' => CarbonImmutable::now()]);
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
         $response->assertStatus(200);
 
-        $response->assertJson(static function (AssertableJson $json) use ($response, $user, $duesPackage): void {
+        $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'success')
                 ->has('payments', 0);
         });
     }
 
-    public function testSoftDeletedTravelPaymentHidden(): void {
+    public function testSoftDeletedTravelPaymentHidden(): void
+    {
         Event::fake(); // Creating the travel assignment triggers an event that we don't care about / that causes
         // errors in this context
 
@@ -489,11 +493,11 @@ class PaymentTest extends TestCase
         $user = $this->getTestUser(['member']);
         $travel = $this->createTravel(null, 10);
 
-        $this->createTravelAssignment($travel, $user, true, [ 'deleted_at' => CarbonImmutable::now() ]);
+        $this->createTravelAssignment($travel, $user, true, ['deleted_at' => CarbonImmutable::now()]);
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
         $response->assertStatus(200);
-        $response->assertJson(static function (AssertableJson $json) use ($response, $user): void {
+        $response->assertJson(static function (AssertableJson $json): void {
             $json->where('status', 'success')
                 ->has('payments', 0);
         });
