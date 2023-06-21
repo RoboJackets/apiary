@@ -39,7 +39,7 @@
         "http-interop/http-factory-guzzle": "1.2.0",
         "kiritokatklian/nova-permission": "4.0.5",
         "laravel/framework": "10.13.5",
-        "laravel/horizon": "5.16.1",
+        "laravel/horizon": "5.17.0",
         "laravel/nova": "4.25.1",
         "laravel/passport": "11.8.7",
         "laravel/scout": "10.2.2",
