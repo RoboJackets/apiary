@@ -195,6 +195,18 @@ migrations again if the tests take too long, but simply dumping the schema is in
 If you try to run PHPUnit directly, you may get various "file not found" errors since the `composer run test` command
 runs extra steps before the tests are run.
 
+### Running style checks locally
+
+(If you're using Homestead, run these commands inside the VM in your `apiary` directory.)
+
+`vendor/bin/phpcs <file>`
+
+Run CodeSniffer style checks locally.
+
+`vendor/bin/pint <file>`
+
+Runs Pint style checks locally and applies fixes.
+
 ## Moving to Production
 
 ### `.env`
