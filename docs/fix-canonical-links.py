@@ -1,5 +1,8 @@
 #/bin/python3
 
+# workaround for a sphinx issue
+# https://github.com/sphinx-doc/sphinx/issues/9730
+
 from re import sub
 from sys import stdin
 
