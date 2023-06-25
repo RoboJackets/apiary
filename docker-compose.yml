@@ -47,5 +47,6 @@ services:
       /bin/sh -euxc "export APP_KEY=$$(php artisan key:generate --show --verbose) &&
       php artisan config:validate --no-interaction &&
       php artisan passport:keys --no-interaction --force &&
+      touch /app/database/database.sqlite &&
       php artisan migrate --no-interaction &&
       exec php artisan serve"
