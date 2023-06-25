@@ -16,7 +16,7 @@
     "laravel-mix": "6.0.49",
     "lodash": "4.17.21",
     "resolve-url-loader": "5.0.0",
-    "sass": "1.63.4",
+    "sass": "1.63.6",
     "sass-loader": "13.3.2",
     "vue-loader": "15.10.1"
   },
@@ -24,7 +24,7 @@
     "@sentry/tracing": "7.56.0",
     "@sentry/vue": "7.56.0",
     "axios": "0.27.2",
-    "caniuse-lite": "1.0.30001504",
+    "caniuse-lite": "1.0.30001506",
     "chartist": "0.11.4",
     "chartist-plugin-legend": "0.6.2",
     "chartist-plugin-pointlabels": "0.0.6",
