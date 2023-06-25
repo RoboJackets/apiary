@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div v-if="loading" class="spinner-border mb-4" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div v-else-if="error" class="alert alert-danger" role="alert">
+    <loading-spinner :active="loading" />
+    <div v-if="!loading && error" class="alert alert-danger" role="alert">
       {{ error }}
     </div>
-    <div v-else-if="!tokens.length">
+    <div v-else-if="!loading && !tokens.length">
       <p>You don't have any personal access tokens right now.</p>
     </div>
-    <div v-else>
+    <div v-else-if="!loading">
       <p>The following personal access tokens have access to your account.</p>
       <table class="table table-sm table-responsive table-borderless">
         <thead>

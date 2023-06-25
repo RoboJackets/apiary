@@ -37,10 +37,11 @@ resume-monitoring.sh
 .vapor/
 .env.production
 /storage/framework/laravel-excel/
-//.phpunit.cache
+/.phpunit.cache
 /storage/*.sqlite
 !/storage/db-clean.sqlite
 !/storage/quickstart.sqlite
 *.map
 
 .envault.json
+.phpunit.result.cache

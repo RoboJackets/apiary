@@ -83,6 +83,10 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property-read \App\Models\DuesTransaction|null $duesTransaction
+ * @property-read \App\Models\User|null $recordedBy
+ * @property-read \App\Models\TravelAssignment|null $travelAssignment
  */
 class Payment extends Model
 {
@@ -136,7 +140,7 @@ class Payment extends Model
     ];
 
     /**
-     * Get all of the owning payable models.
+     * Get all the owning payable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\DuesTransaction|\App\Models\TravelAssignment,\App\Models\Payment>
      */
@@ -146,7 +150,38 @@ class Payment extends Model
     }
 
     /**
+     * Get the owning payable model as a DuesTransaction.
+     *
+     * @return BelongsTo<DuesTransaction, Payment>
+     */
+    public function duesTransaction(): BelongsTo
+    {
+        return $this->belongsTo(DuesTransaction::class, 'payable_id', 'id');
+    }
+
+    /**
+     * Get the owning payable model as a TravelAssignment.
+     *
+     * @return BelongsTo<TravelAssignment, Payment>
+     */
+    public function travelAssignment(): BelongsTo
+    {
+        return $this->belongsTo(TravelAssignment::class, 'payable_id', 'id');
+    }
+
+    /**
      * Get the User associated with the Payment model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Payment>
+     */
+    public function recordedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'recorded_by');
+    }
+
+    /**
+     * Get the User associated with the Payment model. This is only used by Nova to show a list of Payments
+     * associated with a payable resource (DuesTransaction or Travel Assignment).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Payment>
      */
@@ -173,6 +208,8 @@ class Payment extends Model
         return [
             'user' => 'read-users',
             'payable' => 'read-dues-transactions',
+            'duesTransaction' => 'read-dues-transactions',
+            'travelAssignment' => 'read-travel-assignments',
         ];
     }
 

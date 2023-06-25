@@ -27,6 +27,7 @@
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>
         <exclude name="PSR12.ControlStructures.ControlStructureSpacing"/>
+
     </rule>
 
     <rule ref="Generic.Arrays.ArrayIndent"/>
@@ -162,6 +163,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowTrailingMultiLineTernaryOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
@@ -214,9 +216,11 @@
 
     <rule ref="SlevomatCodingStandard.Functions">
         <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
+        <exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments"/>
         <exclude name="SlevomatCodingStandard.Functions.FunctionLength"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+        <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
