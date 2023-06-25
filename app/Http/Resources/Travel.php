@@ -13,7 +13,8 @@ class Travel extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, int|string>
+     * @param Request $request
+     * @return array
      */
     public function toArray(Request $request): array
     {

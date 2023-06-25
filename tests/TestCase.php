@@ -13,6 +13,8 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Faker\Factory;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -25,7 +27,6 @@ abstract class TestCase extends BaseTestCase
      * Shortcut to create a dummy dues package.
      *
      * @param  CarbonImmutable|null  $base_date  Date around which the dues package's validity periods will be defined
-     * @return DuesPackage
      */
     public static function createDuesPackage(?CarbonImmutable $base_date): DuesPackage
     {
@@ -48,27 +49,23 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Shortcut to create a dummy dues transaction (and optionally, payment) for a given test user.
-     *
-     * @param  DuesPackage  $dues_package
-     * @param  User  $user
-     * @param  bool  $paid
-     * @param  array  $payment_attrs
-     * @param  CarbonImmutable|null  $createdAt
-     * @return DuesTransaction
      */
-    public static function createDuesTransactionForUser(DuesPackage $dues_package,
-                                                        User $user,
-                                                        bool $paid,
-                                                        array $payment_attrs = [],
-                                                        ?CarbonImmutable $createdAt = null,
+    public static function createDuesTransactionForUser(
+        DuesPackage $dues_package,
+        User $user,
+        bool $paid,
+        array $payment_attrs = [],
+        ?CarbonImmutable $createdAt = null
     ): DuesTransaction {
         $now = CarbonImmutable::now();
-        $dues_transaction = DuesTransaction::factory()->create([
-            'dues_package_id' => $dues_package->id,
-            'user_id' => $user->id,
-            'created_at' => $createdAt ?? $now,
-            'updated_at' => $createdAt ?? $now,
-        ]);
+        $dues_transaction = DuesTransaction::factory()->create(
+            [
+                'dues_package_id' => $dues_package->id,
+                'user_id' => $user->id,
+                'created_at' => $createdAt ?? $now,
+                'updated_at' => $createdAt ?? $now,
+            ]
+        );
 
         if ($paid) {
             $payment = Payment::factory()->create(array_merge([
@@ -88,7 +85,7 @@ abstract class TestCase extends BaseTestCase
         return $dues_transaction;
     }
 
-    public static function createTravel(?CarbonImmutable $base_date, int $fee_amount = 0): Travel
+    public static function createTravel(?CarbonImmutable $base_date, int|float $fee_amount = 0): Travel
     {
         if ($base_date === null) {
             $base_date = CarbonImmutable::now();
@@ -101,12 +98,13 @@ abstract class TestCase extends BaseTestCase
         ]);
     }
 
-    public static function createTravelAssignment(Travel $travel,
-                                                  User $user,
-                                                  bool $paid,
-                                                  array $payment_attrs = [],
-                                                  ?CarbonImmutable $createdAt = null): TravelAssignment|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
-    {
+    public static function createTravelAssignment(
+        Travel $travel,
+        User $user,
+        bool $paid,
+        array $payment_attrs = [],
+        ?CarbonImmutable $createdAt = null
+    ): TravelAssignment|Collection|Model {
         $now = CarbonImmutable::now();
 
         $travel_assignment = TravelAssignment::factory()->create([

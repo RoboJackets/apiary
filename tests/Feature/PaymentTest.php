@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\DuesTransaction;
@@ -15,6 +17,7 @@ use Tests\TestCase;
 class PaymentTest extends TestCase
 {
     private string $DUES_PAYMENT;
+
     private string $TRAVEL_ASSIGNMENT;
 
     public function setUp(): void
@@ -25,24 +28,20 @@ class PaymentTest extends TestCase
     }
 
     /**
-     * @param  User  $user
+     * Check a payment's JSON representation for accuracy.
+     *
      * @param  string  $payable_type
-     * @param  string  $expectedPayableName
-     * @param  int|float  $expectedPayableCost
-     * @param  string  $expectedPaymentMethodPresentation
-     * @param  bool  $expectPrivilegedRecordedByUserInfo
-     * @param  bool  $allowUnexpectedProps
-     * @return Closure
      */
-    public static function checkPaymentJson(User $user,
-                                     bool $isDuesTransactionPayable,
-                                     bool $isTravelAssignmentPayable,
-                                     string $expectedPayableType,
-                                     string $expectedPayableName,
-                                     int|float $expectedPayableCost,
-                                     string $expectedPaymentMethodPresentation,
-                                     bool $expectPrivilegedRecordedByUserInfo = false,
-                                     bool $allowUnexpectedProps = true,
+    public static function checkPaymentJson(
+        User $user,
+        bool $isDuesTransactionPayable,
+        bool $isTravelAssignmentPayable,
+        string $expectedPayableType,
+        string $expectedPayableName,
+        int|float $expectedPayableCost,
+        string $expectedPaymentMethodPresentation,
+        bool $expectPrivilegedRecordedByUserInfo = false,
+        bool $allowUnexpectedProps = true
     ): Closure {
         return static function (AssertableJson $json) use (
             $isDuesTransactionPayable,
@@ -53,18 +52,17 @@ class PaymentTest extends TestCase
             $allowUnexpectedProps,
             $expectPrivilegedRecordedByUserInfo,
             $expectedPaymentMethodPresentation,
-            $user) {
+            $user
+        ) {
             $base = $json->has('id')
                 ->where('payable_type', $expectedPayableType)
                 ->where('amount', $expectedPayableCost)
                 ->where('method_presentation', $expectedPaymentMethodPresentation)
-                ->where('recorded_by_user.name', static function (?string $name) {
-                    return $name !== null && strlen($name) > 0;
-                });
+                ->where('recorded_by_user.name', static fn (?string $name) => $name !== null && strlen($name) > 0);
 
             if ($isDuesTransactionPayable) {
                 $base->where('dues_transaction.package.name', $expectedPayableName)
-                     ->where('dues_transaction.user_id', $user->id);
+                    ->where('dues_transaction.user_id', $user->id);
             }
 
             if ($isTravelAssignmentPayable) {
@@ -86,8 +84,6 @@ class PaymentTest extends TestCase
 
     /**
      * A new user should have no payment history.
-     *
-     * @return void
      */
     public function testNewUserHasNoPayments(): void
     {
@@ -95,16 +91,16 @@ class PaymentTest extends TestCase
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
         $response->assertStatus(200);
-        $response->assertJson(static function (AssertableJson $json): void {
-            $json->where('status', 'success')
-                ->where('payments', []);
-        });
+        $response->assertJson(
+            static function (AssertableJson $json): void {
+                $json->where('status', 'success')
+                    ->where('payments', []);
+            }
+        );
     }
 
     /**
      * A new user should have no payment history, even if they have an unpaid dues transaction.
-     *
-     * @return void
      */
     public function testNewUserHasNoPaymentsWithUnpaidDuesTransaction(): void
     {
@@ -123,8 +119,6 @@ class PaymentTest extends TestCase
 
     /**
      * A user who paid dues should be able to view the associated payment.
-     *
-     * @return void
      */
     public function testUserWith1DuesPayment(): void
     {
@@ -137,25 +131,25 @@ class PaymentTest extends TestCase
         $response->assertStatus(200);
 
         $duesPayableType = $this->DUES_PAYMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($duesPayableType, $response, $user, $duesPackage): void {
-            $json->where('status', 'success')
-                ->has('payments', 1)
-                ->has('payments.0', PaymentTest::checkPaymentJson(
-                    $user,
-                    true,
-                    false,
-                    $duesPayableType,
-                    $duesPackage->name,
-                    $duesPackage->cost,
-                    Payment::$methods[$response->json('payments.0.method')],
-                ));
-        });
+        $response->assertJson(
+            static function (AssertableJson $json) use ($duesPayableType, $response, $user, $duesPackage): void {
+                $json->where('status', 'success')
+                    ->has('payments', 1)
+                    ->has('payments.0', PaymentTest::checkPaymentJson(
+                        $user,
+                        true,
+                        false,
+                        $duesPayableType,
+                        $duesPackage->name,
+                        $duesPackage->cost,
+                        Payment::$methods[$response->json('payments.0.method')]
+                    ));
+            }
+        );
     }
 
     /**
      * There should only be one payment for a user with 2 dues transactions where only 1 is paid.
-     *
-     * @return void
      */
     public function testUserWith1Paid1UnpaidDuesPayment(): void
     {
@@ -171,7 +165,12 @@ class PaymentTest extends TestCase
         $response->assertStatus(200);
 
         $duesPaymentType = $this->DUES_PAYMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($duesPaymentType, $duesPackageEarlier, $response, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use (
+            $duesPaymentType,
+            $duesPackageEarlier,
+            $response,
+            $user
+        ): void {
             $json->where('status', 'success')
                 ->has('payments', 1)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -181,15 +180,13 @@ class PaymentTest extends TestCase
                     $duesPaymentType,
                     $duesPackageEarlier->name,
                     $duesPackageEarlier->cost,
-                    Payment::$methods[$response->json('payments.0.method')],
+                    Payment::$methods[$response->json('payments.0.method')]
                 ));
         });
     }
 
     /**
      * A user who paid dues twice should be able to view the associated payments.
-     *
-     * @return void
      */
     public function testUserWith2PaidDuesTransactions(): void
     {
@@ -205,7 +202,13 @@ class PaymentTest extends TestCase
         $response->assertStatus(200);
 
         $duesPaymentType = $this->DUES_PAYMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($duesPaymentType, $duesPackageEarlier, $duesPackageNow, $response, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use (
+            $duesPaymentType,
+            $duesPackageEarlier,
+            $duesPackageNow,
+            $response,
+            $user
+        ): void {
             $json->where('status', 'success')
                 ->has('payments', 2)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -215,7 +218,7 @@ class PaymentTest extends TestCase
                     $duesPaymentType,
                     $duesPackageNow->name,
                     $duesPackageNow->cost,
-                    Payment::$methods[$response->json('payments.0.method')],
+                    Payment::$methods[$response->json('payments.0.method')]
                 ))
                 ->has('payments.1', PaymentTest::checkPaymentJson(
                     $user,
@@ -224,7 +227,7 @@ class PaymentTest extends TestCase
                     $duesPaymentType,
                     $duesPackageEarlier->name,
                     $duesPackageEarlier->cost,
-                    Payment::$methods[$response->json('payments.1.method')],
+                    Payment::$methods[$response->json('payments.1.method')]
                 ));
         });
     }
@@ -260,7 +263,12 @@ class PaymentTest extends TestCase
         $response->assertStatus(200);
 
         $travelAssignmentType = $this->TRAVEL_ASSIGNMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($travelAssignmentType, $travel, $response, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use (
+            $travelAssignmentType,
+            $travel,
+            $response,
+            $user
+        ): void {
             $json->where('status', 'success')
                 ->has('payments', 1)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -270,7 +278,7 @@ class PaymentTest extends TestCase
                     $travelAssignmentType,
                     $travel->name,
                     $travel->fee_amount,
-                    Payment::$methods[$response->json('payments.0.method')],
+                    Payment::$methods[$response->json('payments.0.method')]
                 ));
         });
     }
@@ -293,7 +301,12 @@ class PaymentTest extends TestCase
         $response->assertStatus(200);
 
         $travelAssignmentType = $this->TRAVEL_ASSIGNMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($travelEarlier, $travelAssignmentType, $response, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use (
+            $travelEarlier,
+            $travelAssignmentType,
+            $response,
+            $user
+        ): void {
             $json->where('status', 'success')
                 ->has('payments', 1)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -303,7 +316,7 @@ class PaymentTest extends TestCase
                     $travelAssignmentType,
                     $travelEarlier->name,
                     $travelEarlier->fee_amount,
-                    Payment::$methods[$response->json('payments.0.method')],
+                    Payment::$methods[$response->json('payments.0.method')]
                 ));
         });
     }
@@ -326,7 +339,13 @@ class PaymentTest extends TestCase
         $response->assertStatus(200);
 
         $travelAssignmentType = $this->TRAVEL_ASSIGNMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($travelNow, $travelEarlier, $travelAssignmentType, $response, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use (
+            $travelNow,
+            $travelEarlier,
+            $travelAssignmentType,
+            $response,
+            $user
+        ): void {
             $json->where('status', 'success')
                 ->has('payments', 2)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -336,7 +355,7 @@ class PaymentTest extends TestCase
                     $travelAssignmentType,
                     $travelNow->name,
                     $travelNow->fee_amount,
-                    Payment::$methods[$response->json('payments.0.method')],
+                    Payment::$methods[$response->json('payments.0.method')]
                 ))
                 ->has('payments.1', PaymentTest::checkPaymentJson(
                     $user,
@@ -345,7 +364,7 @@ class PaymentTest extends TestCase
                     $travelAssignmentType,
                     $travelEarlier->name,
                     $travelEarlier->fee_amount,
-                    Payment::$methods[$response->json('payments.1.method')],
+                    Payment::$methods[$response->json('payments.1.method')]
                 ));
         });
     }
@@ -361,15 +380,21 @@ class PaymentTest extends TestCase
         // duesPackageEarlier and travelNow are paid
 
         $duesPackageEarlier = $this->createDuesPackage(CarbonImmutable::now()->subMonth());
-        $this->createDuesTransactionForUser($duesPackageEarlier, $user, true, [], CarbonImmutable::now()->subMonth());
+        $this->createDuesTransactionForUser(
+            $duesPackageEarlier,
+            $user,
+            true,
+            [],
+            CarbonImmutable::now()->subMonth()
+        );
 
         $duesPackageNow = $this->createDuesPackage(CarbonImmutable::now());
         $this->createDuesTransactionForUser($duesPackageNow, $user, false, [], CarbonImmutable::now());
 
-        $travelEarlier = $this->createTravel(CarbonImmutable::now()->subYear(), 10);
+        $travelEarlier = $this->createTravel(CarbonImmutable::now()->subYear(), 10.25);
         $this->createTravelAssignment($travelEarlier, $user, false, [], CarbonImmutable::now()->subYear());
 
-        $travelNow = $this->createTravel(CarbonImmutable::now()->subMinute(), 10);
+        $travelNow = $this->createTravel(CarbonImmutable::now()->subMinute(), 10.25);
         $this->createTravelAssignment($travelNow, $user, true, [], CarbonImmutable::now()->subMinute());
 
         $response = $this->actingAs($user, 'api')->get('/api/v1/payments/user/'.$user->id);
@@ -377,7 +402,14 @@ class PaymentTest extends TestCase
 
         $duesPackageType = $this->DUES_PAYMENT;
         $travelAssignmentType = $this->TRAVEL_ASSIGNMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($duesPackageEarlier, $duesPackageType, $response, $travelNow, $travelAssignmentType, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use (
+            $duesPackageEarlier,
+            $duesPackageType,
+            $response,
+            $travelNow,
+            $travelAssignmentType,
+            $user
+        ): void {
             $json->where('status', 'success')
                 ->has('payments', 2)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -387,7 +419,7 @@ class PaymentTest extends TestCase
                     $travelAssignmentType,
                     $travelNow->name,
                     $travelNow->fee_amount,
-                    Payment::$methods[$response->json('payments.0.method')],
+                    Payment::$methods[$response->json('payments.0.method')]
                 ))
                 ->has('payments.1', PaymentTest::checkPaymentJson(
                     $user,
@@ -396,7 +428,7 @@ class PaymentTest extends TestCase
                     $duesPackageType,
                     $duesPackageEarlier->name,
                     $duesPackageEarlier->cost,
-                    Payment::$methods[$response->json('payments.1.method')],
+                    Payment::$methods[$response->json('payments.1.method')]
                 ));
         });
     }
@@ -416,7 +448,13 @@ class PaymentTest extends TestCase
         $this->createTravelAssignment($travelNow, $user, true, [], CarbonImmutable::now()->subMinute());
 
         $duesPackageEarlier = $this->createDuesPackage(CarbonImmutable::now()->subMonth());
-        $this->createDuesTransactionForUser($duesPackageEarlier, $user, true, [], CarbonImmutable::now()->subMonth());
+        $this->createDuesTransactionForUser(
+            $duesPackageEarlier,
+            $user,
+            true,
+            [],
+            CarbonImmutable::now()->subMonth()
+        );
 
         $travelEarlier = $this->createTravel(CarbonImmutable::now()->subYear(), 10);
         $this->createTravelAssignment($travelEarlier, $user, true, [], CarbonImmutable::now()->subYear());
@@ -426,7 +464,16 @@ class PaymentTest extends TestCase
 
         $duesPackageType = $this->DUES_PAYMENT;
         $travelAssignmentType = $this->TRAVEL_ASSIGNMENT;
-        $response->assertJson(static function (AssertableJson $json) use ($travelEarlier, $duesPackageNow, $duesPackageEarlier, $duesPackageType, $response, $travelNow, $travelAssignmentType, $user): void {
+        $response->assertJson(static function (AssertableJson $json) use (
+            $travelEarlier,
+            $duesPackageNow,
+            $duesPackageEarlier,
+            $duesPackageType,
+            $response,
+            $travelNow,
+            $travelAssignmentType,
+            $user
+        ): void {
             $json->where('status', 'success')
                 ->has('payments', 4)
                 ->has('payments.0', PaymentTest::checkPaymentJson(
@@ -436,7 +483,7 @@ class PaymentTest extends TestCase
                     $duesPackageType,
                     $duesPackageNow->name,
                     $duesPackageNow->cost,
-                    Payment::$methods[$response->json('payments.0.method')],
+                    Payment::$methods[$response->json('payments.0.method')]
                 ))
                 ->has('payments.1', PaymentTest::checkPaymentJson(
                     $user,
@@ -445,7 +492,7 @@ class PaymentTest extends TestCase
                     $travelAssignmentType,
                     $travelNow->name,
                     $travelNow->fee_amount,
-                    Payment::$methods[$response->json('payments.1.method')],
+                    Payment::$methods[$response->json('payments.1.method')]
                 ))
                 ->has('payments.2', PaymentTest::checkPaymentJson(
                     $user,
@@ -454,7 +501,7 @@ class PaymentTest extends TestCase
                     $duesPackageType,
                     $duesPackageEarlier->name,
                     $duesPackageEarlier->cost,
-                    Payment::$methods[$response->json('payments.2.method')],
+                    Payment::$methods[$response->json('payments.2.method')]
                 ))
                 ->has('payments.3', PaymentTest::checkPaymentJson(
                     $user,
@@ -463,7 +510,7 @@ class PaymentTest extends TestCase
                     $travelAssignmentType,
                     $travelEarlier->name,
                     $travelEarlier->fee_amount,
-                    Payment::$methods[$response->json('payments.3.method')],
+                    Payment::$methods[$response->json('payments.3.method')]
                 ));
         });
     }
