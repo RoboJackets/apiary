@@ -29,8 +29,6 @@ class PaymentTest extends TestCase
 
     /**
      * Check a payment's JSON representation for accuracy.
-     *
-     * @param  string  $payable_type
      */
     public static function checkPaymentJson(
         User $user,
@@ -38,7 +36,7 @@ class PaymentTest extends TestCase
         bool $isTravelAssignmentPayable,
         string $expectedPayableType,
         string $expectedPayableName,
-        int|float $expectedPayableCost,
+        float $expectedPayableCost,
         string $expectedPaymentMethodPresentation,
         bool $expectPrivilegedRecordedByUserInfo = false,
         bool $allowUnexpectedProps = true
@@ -56,7 +54,7 @@ class PaymentTest extends TestCase
         ) {
             $base = $json->has('id')
                 ->where('payable_type', $expectedPayableType)
-                ->where('amount', $expectedPayableCost)
+                ->where('amount', static fn (string $amount) => (float) $amount === $expectedPayableCost)
                 ->where('method_presentation', $expectedPaymentMethodPresentation)
                 ->where('recorded_by_user.name', static fn (?string $name) => $name !== null && strlen($name) > 0);
 
