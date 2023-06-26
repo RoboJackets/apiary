@@ -61,7 +61,7 @@
         "spatie/once": "3.1.0",
         "square/square": "28.0.1.20230608",
         "subfission/cas": "4.4.0",
-        "symfony/http-client": "6.3.0",
+        "symfony/http-client": "6.3.1",
         "symfony/postmark-mailer": "6.3.0",
         "xammie/mailbook": "1.6.2"
     },
