@@ -31,7 +31,7 @@ Create Dues Packages
         </li>
         <li>
             <p>
-                A confirmation popup will appear with an option to create a non-student package. This package costs $200 and is only shown to non-students (i.e., employees, alumni, etc.) In general, you should leave this option enabled, but you can disable it if you wish. Note that non-students will not be able to purchase student packages, and vice versa.
+                A confirmation popup will appear with an option to create a non-student package. In general, you should leave this option enabled, but you can disable it if you wish.
             </p>
         </li>
         <li>
@@ -41,15 +41,16 @@ Create Dues Packages
         </li>
     </ol>
 
-Your new fiscal year will now have dues packages and merchandise set up and linked, with reasonable defaults.
+.. note::
+   Only students can view or purchase student packages, and only non-students can view or purchase non-student packages.
 
-Adjust Dues Packages
---------------------------
+Your new fiscal year will now have default dues packages and merchandise set up and linked appropriately.
 
-If you reviewed the :doc:`data-model`, you may have noticed there is no dues deadline represented explicitly.
-In Apiary, dues deadlines are represented using the **Access End Date** field.
-You will need to update *older* dues packages so that their access end date is set to the dues deadline.
+Set Dues Deadlines
+------------------
+
+If you reviewed the :doc:`data-model`, you may have noticed there is no explicit dues deadline.
+In Apiary, dues deadlines are modeled using the **Access End Date** field.
+You will need to update *older* dues packages, so that their access end date is set to the dues deadline.
 
 In general, the access end date for **spring** and **full-year** packages should be set to the **fall** dues deadline, and the access end date for the **fall** package should be set to the **spring** dues deadline.
-
-Dues packages may be updated as frequently as needed.

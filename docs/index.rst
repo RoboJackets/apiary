@@ -15,5 +15,3 @@ Apiary Documentation
    :caption: For Officers
 
    officers/dues/index
-   officers/travel
-   officers/payments
