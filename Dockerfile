@@ -26,7 +26,7 @@ COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
 RUN set -eux && \
     npm install -g npm@latest && \
-    npx html-minifier --input-dir /docs/ --output-dir /docs/ --file-ext html --collapse-whitespace --collapse-inline-tag-whitespace --minify-css --minify-js --minify-urls ROOT_PATH_RELATIVE --remove-comments --remove-empty-attributes --remove-empty-elements --conservative-collapse
+    npx html-minifier --input-dir /docs/ --output-dir /docs/ --file-ext html --collapse-whitespace --collapse-inline-tag-whitespace --minify-css --minify-js --minify-urls ROOT_PATH_RELATIVE --remove-comments --remove-empty-attributes --conservative-collapse
 
 FROM scratch as frontend-source
 
