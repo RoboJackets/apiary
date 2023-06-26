@@ -8,7 +8,7 @@
 
 project = 'Apiary'
 copyright = '2023 RoboJackets, Inc.'
-author = 'Kristaps Berzinch, Evan Strat, Joshua Oldenburg'
+author = 'Kristaps Berzinch, Evan Strat, Josh Oldenburg'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
