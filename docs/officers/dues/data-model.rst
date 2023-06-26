@@ -46,4 +46,4 @@ It may include `Merchandise`_ selections, if there are options associated with t
 A transaction may have one or more :doc:`../payments` associated.
 
 .. attention::
-   Transactions should not be created manually by officers -- they are created automatically through the member-facing interface when a member begins the dues workflow.
+   Transactions should **not** be created manually by officers -- they are created automatically through the member-facing interface when a member begins the dues workflow.

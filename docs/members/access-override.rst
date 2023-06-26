@@ -15,9 +15,7 @@ In general, you may request a self-service access override if you have:
 
 Once you have completed all required tasks, click **Request Access** on the **New Member Access** card.
 
-If you run into any issues, please ask in `#it-helpdesk`_.
+If you run into any issues, please ask in :slack:`it-helpdesk`.
 
 .. note::
-   If you're not eligible for a self-service access override, the card will not appear on your dashboard. Please ask in `#it-helpdesk`_ for assistance.
-
-.. _#it-helpdesk: slack://channel?team=T033JPZLT&id=C29Q3D8K0
+   If you're not eligible for a self-service access override, the card will not appear on your dashboard. Please ask in :slack:`it-helpdesk` for assistance.

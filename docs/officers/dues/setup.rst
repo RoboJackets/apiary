@@ -4,7 +4,7 @@ Setting Up Dues
 While dues collection itself is largely automated, there are a few steps that need to be performed manually by the treasurer or another officer to start the process.
 
 .. hint::
-   If you're not able to see the options described here, you may need additional access. Ask in `#it-helpdesk`_!
+   If you're not able to see the options described here, you may need additional access. Ask in :slack:`it-helpdesk`!
 
 Create a Fiscal Year
 --------------------
@@ -53,5 +53,3 @@ You will need to update *older* dues packages so that their access end date is s
 In general, the access end date for **spring** and **full-year** packages should be set to the **fall** dues deadline, and the access end date for the **fall** package should be set to the **spring** dues deadline.
 
 Dues packages may be updated as frequently as needed.
-
-.. _#it-helpdesk: slack://channel?team=T033JPZLT&id=C29Q3D8K0

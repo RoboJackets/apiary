@@ -13,7 +13,7 @@ author = 'Kristaps Berzinch, Evan Strat, Joshua Oldenburg'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.todo"]
+extensions = ["sphinx.ext.todo", "sphinx.ext.extlinks"]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -21,6 +21,11 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 todo_include_todos = True
 
 nitpicky = True
+
+extlinks = {
+    'slack': ('https://robojackets.slack.com/app_redirect?channel=%s', '#%s')
+}
+extlinks_detect_hardcoded_links = True
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
