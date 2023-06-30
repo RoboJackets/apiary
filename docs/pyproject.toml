@@ -11,6 +11,7 @@ python = "^3.10"
 sphinx = "^7.0.1"
 furo = "^2023.5.20"
 sphinx-autobuild = "^2021.3.14"
+sphinxext-opengraph = "^0.8.2"
 
 [tool.poetry.group.dev.dependencies]
 

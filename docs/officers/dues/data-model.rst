@@ -1,3 +1,5 @@
+:og:description: Dues are tracked in Apiary using several related objects.
+
 Data Model
 ==========
 

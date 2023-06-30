@@ -1,3 +1,5 @@
+:og:description: While dues collection itself is largely automated, there are a few steps that need to be performed manually by the treasurer or another officer to start the process.
+
 Setting Up Dues
 ===============
 
