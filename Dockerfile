@@ -18,8 +18,7 @@ RUN set -euxo pipefail && \
         filename=$(basename -- "$file"); \
         extension="${filename##*.}"; \
         if [ "$extension" = "html" ]; then \
-            cat "$file"; \
-            cat "$file" | python3 /docs/fix-canonical-links.py | tee "$file" > /dev/null; \
+            python3 /docs/fix-canonical-links.py "$file"; \
         fi; \
     done;
 
