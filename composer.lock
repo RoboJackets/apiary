@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfa18c1ccc8b5194ccf5570f64031a56",
+    "content-hash": "d475c0e5d0614862ff2380df30f57e0f",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -15901,16 +15901,16 @@
         },
         {
             "name": "spatie/laravel-ignition",
-            "version": "2.1.3",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ignition.git",
-                "reference": "35711943d4725aa80f8033e4f1cb3a6775530b25"
+                "reference": "dd15fbe82ef5392798941efae93c49395a87d943"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/35711943d4725aa80f8033e4f1cb3a6775530b25",
-                "reference": "35711943d4725aa80f8033e4f1cb3a6775530b25",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/dd15fbe82ef5392798941efae93c49395a87d943",
+                "reference": "dd15fbe82ef5392798941efae93c49395a87d943",
                 "shasum": ""
             },
             "require": {
@@ -15920,7 +15920,7 @@
                 "illuminate/support": "^10.0",
                 "php": "^8.1",
                 "spatie/flare-client-php": "^1.3.5",
-                "spatie/ignition": "^1.5.0",
+                "spatie/ignition": "^1.9",
                 "symfony/console": "^6.2.3",
                 "symfony/var-dumper": "^6.2.3"
             },
@@ -15989,7 +15989,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-25T11:30:27+00:00"
+            "time": "2023-06-28T13:51:52+00:00"
         },
         {
             "name": "spatie/laravel-ray",
