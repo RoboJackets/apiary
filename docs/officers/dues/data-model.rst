@@ -20,10 +20,14 @@ In the member-facing interface, packages are labeled as "Dues Terms."
 There are a few key attributes:
 
 - The **cost** of the package
-- The **membership start date**, when someone is considered to be an active member if they purchase this package
-- The **membership end date**, when someone is no longer considered to be an active member unless/until they purchase another package
-- The **access start date**, when someone will gain access to RoboJackets systems if they purchase this package
-- The **access end date**, when someone will lose access to RoboJackets systems unless/until they purchase another package
+- The **membership start date**, when someone is considered to be an active member if they purchase this package.
+  Generally, this is August 1st for fall and full year dues, and January 1st for spring dues.
+- The **membership end date**, when someone is no longer considered to be an active member unless/until they purchase another package.
+  Generally, this is August 1st for spring or full year dues, and January 1st for fall dues.
+- The **access start date**, when someone will gain access to RoboJackets systems if they purchase this package.
+  Generally, this matches the membership start date.
+- The **access end date**, when someone will lose access to RoboJackets systems unless/until they purchase another package.
+  Generally, this is the dues deadline for the following semester.
 
 Additional attributes are used to determine whether a package may be offered to a specific person, based on their affiliation with Georgia Tech and prior purchase history.
 
@@ -35,6 +39,10 @@ _`Merchandise`
 
 A **Merchandise** object represents a branded item that is included with a `Dues Package`_.
 This typically includes t-shirts and polos, but other options may be available at the discretion of the officer team.
+
+.. important::
+   Merchandise should be fully configured for a dues package **before** making it available for purchase.
+   If new options are added later, prior transactions cannot be updated by members directly, and must be updated by an admin.
 
 -------------------
 _`Dues Transaction`

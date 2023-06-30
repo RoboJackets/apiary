@@ -1,7 +1,7 @@
 Access Override
 ===============
 
-As a new RoboJackets member, you can request temporary access to RoboJackets services without paying dues.
+As a new RoboJackets member, you can request temporary access to RoboJackets services, such as GitHub and Google Drive, before paying dues.
 
 If you're eligible for a self-service access override, you'll see a card on your MyRoboJackets dashboard labeled **New Member Access**.
 This card explains how the override works and what you need to do to request the override.
