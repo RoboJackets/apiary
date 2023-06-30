@@ -66,7 +66,7 @@ class CreateDuesPackages extends Action
         $nonStudentFullYear = 'Full Year ('.$startingYear.'-'.$endingYear.') - Non-Student';
 
         $fallEffectiveStart = Carbon::create($startingYear, 8, 1, 12, 0, 0, config('app.timezone'));
-        $fallEffectiveEnd = Carbon::create($startingYear, 12, 31, 12, 0, 0, config('app.timezone'));
+        $fallEffectiveEnd = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
         $fallAccessStart = Carbon::create($startingYear, 8, 1, 12, 0, 0, config('app.timezone'));
         $fallAccessEnd = Carbon::create($endingYear, 1, 31, 12, 0, 0, config('app.timezone'));
         $springEffectiveStart = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
