@@ -8,7 +8,9 @@ COPY --link docs/ /docs/
 
 WORKDIR /docs/
 
-RUN set -eux && \
+SHELL ["/bin/bash", "-c"]
+
+RUN set -euxo pipefail && \
     curl -sSL https://install.python-poetry.org | python3 - && \
     /root/.local/bin/poetry install --no-interaction && \
     /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build" && \
