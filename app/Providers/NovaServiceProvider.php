@@ -39,6 +39,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/apiary">Made with ♥ by RoboJackets</a>
     <span class="px-1">&middot;</span>
     <a class="text-primary dim no-underline" class="text-muted" href="/privacy">Privacy Policy</a>
+    <span class="px-1">&middot;</span>
+    <a class="text-primary dim no-underline" class="text-muted" href="/docs/">Documentation</a>
 </p>
 ');
 
