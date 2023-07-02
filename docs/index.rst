@@ -13,3 +13,8 @@ Apiary Documentation
    :caption: For Officers
 
    officers/dues/index
+
+.. toctree::
+   :caption: For Administrators
+
+   admins/access-override

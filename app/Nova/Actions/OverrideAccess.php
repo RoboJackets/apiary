@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Jobs\PushToJedi;
 use App\Models\MembershipAgreementTemplate;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -43,6 +44,13 @@ class OverrideAccess extends Action
             $user->access_override_until = $date;
             $user->access_override_by_id = Auth::user()->id;
             $user->save();
+
+            PushToJedi::dispatchSync(
+                $user,
+                self::class,
+                request()->user()->id,
+                count($users) === 1 ? 'manual' : 'manual_batch'
+            );
         }
 
         return Action::message('The access override'.(count($users) === 1 ? ' was' : 's were').' saved!');
