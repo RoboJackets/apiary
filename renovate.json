@@ -27,7 +27,7 @@
         "lockFileMaintenance": {
             "enabled": true,
             "schedule": ["before 4pm every weekday except before 9am every weekday"],
-            "prPriority": -6
+            "prPriority": -7
         },
         "packageRules": [
             {
@@ -61,6 +61,11 @@
     },
     "js": {
         "prPriority": -4,
+        "lockFileMaintenance": {
+            "enabled": true,
+            "schedule": ["before 4pm every weekday except before 9am every weekday"],
+            "prPriority": -6
+        },
         "packageRules": [
             {
               "matchDepTypes": ["devDependencies"],
@@ -71,8 +76,13 @@
             "sweetalert2"
         ]
     },
-    "docker": {
-        "enabled": false
+    "python": {
+        "prPriority": -8,
+        "lockFileMaintenance": {
+            "enabled": true,
+            "schedule": ["before 4pm every weekday except before 9am every weekday"],
+            "prPriority": -9
+        }
     },
     "docker-compose": {
         "enabled": false
