@@ -67,4 +67,9 @@ class PermissionPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, Permission $permission): bool
+    {
+        return false;
+    }
 }

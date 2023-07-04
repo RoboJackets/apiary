@@ -67,4 +67,9 @@ class FiscalYearPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, FiscalYear $fiscalYear): bool
+    {
+        return false;
+    }
 }

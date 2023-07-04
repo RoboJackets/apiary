@@ -41,7 +41,7 @@ class SignaturePolicy
      */
     public function update(User $user, Signature $signature): bool
     {
-        return $user->can('upload-signatures') && ! $signature->complete;
+        return false;
     }
 
     /**
@@ -64,6 +64,11 @@ class SignaturePolicy
      * Determine whether the user can permanently delete the model.
      */
     public function forceDelete(User $user, Signature $signature): bool
+    {
+        return false;
+    }
+
+    public function replicate(User $user, Signature $signature): bool
     {
         return false;
     }

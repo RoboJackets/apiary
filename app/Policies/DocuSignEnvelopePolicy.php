@@ -73,4 +73,9 @@ class DocuSignEnvelopePolicy
     {
         return false;
     }
+
+    public function replicate(User $user, DocuSignEnvelope $docuSignEnvelope): bool
+    {
+        return false;
+    }
 }

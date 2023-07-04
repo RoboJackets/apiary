@@ -23,7 +23,7 @@ class MembershipAgreementTemplatePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, MembershipAgreementTemplate $membershipAgreementTemplate): bool
+    public function view(User $user, MembershipAgreementTemplate $template): bool
     {
         return true;
     }
@@ -39,25 +39,25 @@ class MembershipAgreementTemplatePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, MembershipAgreementTemplate $membershipAgreementTemplate): bool
+    public function update(User $user, MembershipAgreementTemplate $template): bool
     {
         return $user->can('update-membership-agreement-templates')
-            && $membershipAgreementTemplate->signatures()->count() === 0;
+            && $template->signatures()->count() === 0;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, MembershipAgreementTemplate $membershipAgreementTemplate): bool
+    public function delete(User $user, MembershipAgreementTemplate $template): bool
     {
         return $user->can('update-membership-agreement-templates')
-            && $membershipAgreementTemplate->signatures()->count() === 0;
+            && $template->signatures()->count() === 0;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, MembershipAgreementTemplate $membershipAgreementTemplate): bool
+    public function restore(User $user, MembershipAgreementTemplate $template): bool
     {
         return $user->can('update-membership-agreement-templates');
     }
@@ -65,7 +65,12 @@ class MembershipAgreementTemplatePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, MembershipAgreementTemplate $membershipAgreementTemplate): bool
+    public function forceDelete(User $user, MembershipAgreementTemplate $template): bool
+    {
+        return false;
+    }
+
+    public function replicate(User $user, MembershipAgreementTemplate $template): bool
     {
         return false;
     }

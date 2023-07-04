@@ -23,7 +23,7 @@ class TravelAssignmentPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, TravelAssignment $travel_assignment): bool
+    public function view(User $user, TravelAssignment $assignment): bool
     {
         return true;
     }
@@ -39,7 +39,7 @@ class TravelAssignmentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, TravelAssignment $travel_assignment): bool
+    public function update(User $user, TravelAssignment $assignment): bool
     {
         return false;
     }
@@ -47,23 +47,28 @@ class TravelAssignmentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, TravelAssignment $travel_assignment): bool
+    public function delete(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $travel_assignment->travel->primaryContact === $user;
+        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, TravelAssignment $travel_assignment): bool
+    public function restore(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $travel_assignment->travel->primaryContact === $user;
+        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, TravelAssignment $travel_assignment): bool
+    public function forceDelete(User $user, TravelAssignment $assignment): bool
+    {
+        return false;
+    }
+
+    public function replicate(User $user, TravelAssignment $assignment): bool
     {
         return false;
     }

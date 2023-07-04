@@ -91,4 +91,9 @@ class MajorPolicy
     {
         return $user->hasRole('admin');
     }
+
+    public function replicate(User $user, Major $major): bool
+    {
+        return false;
+    }
 }

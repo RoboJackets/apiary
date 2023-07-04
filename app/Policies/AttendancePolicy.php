@@ -68,4 +68,9 @@ class AttendancePolicy
     {
         return false;
     }
+
+    public function replicate(User $user, Attendance $attendance): bool
+    {
+        return false;
+    }
 }

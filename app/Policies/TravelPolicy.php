@@ -67,4 +67,9 @@ class TravelPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, Travel $travel): bool
+    {
+        return false;
+    }
 }

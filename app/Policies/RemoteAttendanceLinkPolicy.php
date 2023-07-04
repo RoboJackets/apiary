@@ -16,13 +16,13 @@ class RemoteAttendanceLinkPolicy
     /**
      * Determine whether the user can view the remote attendance link.
      */
-    public function view(User $user, RemoteAttendanceLink $attendance): bool
+    public function view(User $user, RemoteAttendanceLink $link): bool
     {
         if (! $user->can('read-remote-attendance-links')) {
             return false;
         }
 
-        if (is_a($attendance->attendable, Team::class) && ! $attendance->attendable->visible) {
+        if (is_a($link->attendable, Team::class) && ! $link->attendable->visible) {
             return $user->can('read-teams-hidden');
         }
 
@@ -49,7 +49,7 @@ class RemoteAttendanceLinkPolicy
     /**
      * Determine whether the user can update the remote attendance link.
      */
-    public function update(User $user, RemoteAttendanceLink $attendance): bool
+    public function update(User $user, RemoteAttendanceLink $link): bool
     {
         return $user->can('update-remote-attendance-links');
     }
@@ -57,7 +57,7 @@ class RemoteAttendanceLinkPolicy
     /**
      * Determine whether the user can delete the remote attendance link.
      */
-    public function delete(User $user, RemoteAttendanceLink $attendance): bool
+    public function delete(User $user, RemoteAttendanceLink $link): bool
     {
         return $user->can('delete-remote-attendance-links');
     }
@@ -65,7 +65,7 @@ class RemoteAttendanceLinkPolicy
     /**
      * Determine whether the user can restore the remote attendance link.
      */
-    public function restore(User $user, RemoteAttendanceLink $attendance): bool
+    public function restore(User $user, RemoteAttendanceLink $link): bool
     {
         return $user->hasRole('admin');
     }
@@ -73,7 +73,12 @@ class RemoteAttendanceLinkPolicy
     /**
      * Determine whether the user can permanently delete the remote attendance link.
      */
-    public function forceDelete(User $user, RemoteAttendanceLink $attendance): bool
+    public function forceDelete(User $user, RemoteAttendanceLink $link): bool
+    {
+        return false;
+    }
+
+    public function replicate(User $user, RemoteAttendanceLink $link): bool
     {
         return false;
     }

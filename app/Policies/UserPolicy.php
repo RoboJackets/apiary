@@ -173,4 +173,9 @@ class UserPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, User $userResource): bool
+    {
+        return false;
+    }
 }

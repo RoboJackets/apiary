@@ -138,4 +138,9 @@ class TeamPolicy
 
         return $user->can('update-teams-membership');
     }
+
+    public function replicate(User $user, Team $team): bool
+    {
+        return false;
+    }
 }
