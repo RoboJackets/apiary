@@ -22,7 +22,7 @@ class TravelFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => bin2hex(openssl_random_pseudo_bytes(16)),
             'primary_contact_user_id' => User::all()->random()->id,
             'destination' => $this->faker->word(),
             'departure_date' => $this->faker->dateTimeBetween('now', '1 week'),
