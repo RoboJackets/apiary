@@ -91,7 +91,8 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'max:127')
                 ->creationRules('unique:users,uid')
-                ->updateRules('unique:users,uid,{{resourceId}}'),
+                ->updateRules('unique:users,uid,{{resourceId}}')
+                ->copyable(),
 
             Text::make('Preferred First Name')
                 ->rules('nullable', 'max:127'),
@@ -196,7 +197,8 @@ class User extends Resource
                         ->hideFromIndex()
                         ->rules('nullable', 'max:39')
                         ->creationRules('unique:users,github_username')
-                        ->updateRules('unique:users,github_username,{{resourceId}}'),
+                        ->updateRules('unique:users,github_username,{{resourceId}}')
+                        ->copyable(),
 
                     Boolean::make('GitHub Invite Pending')
                         ->hideFromIndex()

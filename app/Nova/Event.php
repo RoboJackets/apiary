@@ -86,7 +86,9 @@ class Event extends Resource
             Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
                 ->hideFromIndex(),
 
-            Text::make('RSVP URL', fn (): string => route('events.rsvp', ['event' => $this->id]))->onlyOnDetail(),
+            Text::make('RSVP URL', fn (): string => route('events.rsvp', ['event' => $this->id]))
+                ->onlyOnDetail()
+                ->copyable(),
 
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-remote-attendance-links')),
