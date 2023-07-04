@@ -34,7 +34,7 @@ Additional attributes are used to determine whether a package may be offered to 
 A :guilabel:`Dues Package` may also have links to one or more :ref:`Merchandise` objects, which may be selected by members when choosing that package.
 
 .. attention::
-   Packages generally should not be created manually by officers; there is a :ref:`action on Fiscal Years<Create Dues Packages>` that sets up default packages.
+   Packages generally should not be created manually by officers; there is an :ref:`action on Fiscal Years<Create Dues Packages>` that sets up default packages.
 
 Merchandise
 -----------
