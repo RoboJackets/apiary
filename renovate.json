@@ -92,7 +92,6 @@
     "schedule": ["before 4pm every weekday except before 9am every weekday"],
     "hostRules": [
         {
-            "hostName": "nova.laravel.com",
             "matchHost": "nova.laravel.com",
             "hostType": "packagist",
             "username": "developers@robojackets.org",
