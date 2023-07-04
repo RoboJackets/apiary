@@ -183,21 +183,24 @@
             "url": "https://nova.laravel.com",
             "only": [
                 "laravel/nova"
-            ]
+            ],
+            "name": "laravel/nova"
         },
         {
             "type": "composer",
             "url": "https://composer.robojackets.org",
             "only": [
                 "oitnetworkservices/buzzapiclient"
-            ]
+            ],
+            "name": "oitnetworkservices/buzzapiclient"
         },
         {
             "type": "vcs",
             "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git",
             "only": [
                 "madewithlove/laravel-nova-uuid-support"
-            ]
+            ],
+            "name": "madewithlove/laravel-nova-uuid-support"
         }
     ]
 }

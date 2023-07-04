@@ -93,6 +93,7 @@
     "hostRules": [
         {
             "hostName": "nova.laravel.com",
+            "matchHost": "nova.laravel.com",
             "hostType": "packagist",
             "username": "developers@robojackets.org",
             "encrypted": {
