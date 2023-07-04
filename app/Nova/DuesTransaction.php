@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
@@ -71,6 +72,15 @@ class DuesTransaction extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
+            Heading::make(
+                '<strong>In general, dues transactions should not be created manually.</strong> '.
+                'Dues transactions are created as part of the dues workflow in the member-facing UI.'
+            )
+                ->asHtml()
+                ->showOnCreating(true)
+                ->showOnUpdating(false)
+                ->showOnDetail(false),
+
             ID::make(),
 
             BelongsTo::make('Paid By', 'user', User::class)
@@ -170,7 +180,7 @@ class DuesTransaction extends Resource
     // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
-        return $request->user()->can('update-dues-transactions') && $request->viaResource !== 'merchandise';
+        return false;
     }
 
     /**
