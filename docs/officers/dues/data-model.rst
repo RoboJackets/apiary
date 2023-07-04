@@ -12,7 +12,6 @@ A **Fiscal Year** groups together several :ref:`Dues Package` and :ref:`Merchand
 Fiscal years are primarily used for reporting and do not affect any functionality.
 They need to be created manually once a year to group the objects for that year.
 
-------------
 Dues Package
 ------------
 
