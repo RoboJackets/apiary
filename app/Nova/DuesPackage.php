@@ -18,6 +18,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -90,6 +91,16 @@ class DuesPackage extends Resource
     public function fields(Request $request): array
     {
         return [
+            Heading::make(
+                '<strong>In general, dues packages should not be created manually.</strong> '.
+                'Use the <strong>Create Dues Packages</strong> action on a Fiscal Year to create default packages, '.
+                'then update as needed.'
+            )
+                ->asHtml()
+                ->showOnCreating(true)
+                ->showOnUpdating(false)
+                ->showOnDetail(false),
+
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255')
