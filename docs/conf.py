@@ -13,7 +13,12 @@ author = 'Kristaps Berzinch, Evan Strat, Josh Oldenburg'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.todo", "sphinx.ext.extlinks", "sphinxext.opengraph"]
+extensions = [
+    "sphinx.ext.todo",
+    "sphinx.ext.extlinks",
+    "sphinx.ext.autosectionlabel",
+    "sphinxext.opengraph",
+]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -47,3 +52,9 @@ html_theme_options = {
     "source_branch": "main",
     "source_directory": "docs/",
 }
+
+rst_prolog = """
+.. |actionsmenu| raw:: html
+
+   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 20 20" fill="currentColor" width="20" height="20" class="inline" role="presentation"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 0 14 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+"""
