@@ -18,7 +18,7 @@ A user's eligibility for a self-service override is visible on their details pag
 
 Self-service overrides can last between 7 and 60 days.
 The longest duration will occur if the next (earliest) future :doc:`dues package<../officers/dues/data-model>` access end date is 60 or more days in the future.
-The shortest duration will occur if the next future access end date is 7 or less days away.
+The shortest duration will occur if the next future access end date is 7 or fewer days away.
 
 Self-service override criteria are divided into 2 categories: conditions and tasks.
 A condition is a system- or user-level property that cannot be rectified by the user alone (see list below). However, tasks can be completed by users.
@@ -80,5 +80,5 @@ To manually grant an access override:
         </li>
     </ol>
 
-This will add a card to the user's dashboard showing their override expiration date, and sync their access to other systems.
+This will add a card to the user's dashboard showing their override expiration date and sync their access to other systems.
 Note that access sync is an asynchronous process and it may take several seconds to fully propagate changes.
