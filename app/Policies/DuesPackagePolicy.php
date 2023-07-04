@@ -34,7 +34,7 @@ class DuesPackagePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-dues-packages');
+        return $user->can('create-dues-packages-manually');
     }
 
     /**

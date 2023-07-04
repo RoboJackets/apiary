@@ -17,10 +17,10 @@ return new class extends Migration
 
         $officer = Role::where('name', '=', 'officer')->first();
 
-        $create_dues_packages = Permission::where('name', '=', 'create-dues-packages')->first();
+        $update_fiscal_years = Permission::where('name', '=', 'update-fiscal-years')->first();
 
         if ($create_dues_packages !== null && $officer !== null) {
-            $officer->revokePermissionTo($create_dues_packages);
+            $officer->revokePermissionTo($update_fiscal_years);
         }
     }
 
@@ -31,8 +31,8 @@ return new class extends Migration
     {
         app()['cache']->forget('spatie.permission.cache');
 
-        $create_dues_packages = Permission::firstOrCreate(['name' => 'create-dues-packages']);
+        $update_fiscal_years = Permission::firstOrCreate(['name' => 'update-fiscal-years']);
 
-        Role::firstOrCreate(['name' => 'officer'])->givePermissionTo($create_dues_packages);
+        Role::firstOrCreate(['name' => 'officer'])->givePermissionTo($update_fiscal_years);
     }
 };
