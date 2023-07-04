@@ -22,6 +22,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphToMany;
@@ -110,8 +111,8 @@ class User extends Resource
                 ->rules('required')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
-            Text::make('Georgia Tech Email', 'gt_email')
-                ->rules('required', 'email')
+            Email::make('Georgia Tech Email', 'gt_email')
+                ->rules('required', 'email:rfc,strict,dns,spoof')
                 ->creationRules('unique:users,gt_email')
                 ->updateRules('unique:users,gt_email,{{resourceId}}'),
 
@@ -156,7 +157,7 @@ class User extends Resource
                         ->rules('required_with:parent_guardian_email', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
-                    Text::make('Parent or Guardian Email', 'parent_guardian_email')
+                    Email::make('Parent or Guardian Email', 'parent_guardian_email')
                         ->hideFromIndex()
                         ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
@@ -202,15 +203,15 @@ class User extends Resource
                         ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
                             .' This controls whether a card is displayed but not the user\'s actual access.'),
 
-                    Text::make('Google', 'gmail_address')
+                    Email::make('Google', 'gmail_address')
                         ->hideFromIndex()
-                        ->rules('nullable', 'max:255', 'email')
+                        ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,gmail_address')
                         ->updateRules('unique:users,gmail_address,{{resourceId}}'),
 
-                    Text::make('ClickUp', 'clickup_email')
+                    Email::make('ClickUp', 'clickup_email')
                         ->hideFromIndex()
-                        ->rules('nullable', 'max:255', 'email')
+                        ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,clickup_email')
                         ->updateRules('unique:users,clickup_email,{{resourceId}}'),
 

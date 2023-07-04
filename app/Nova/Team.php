@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
@@ -97,8 +98,7 @@ class Team extends Resource
                     ) && $request->user()->can(
                         'read-users'
                     )
-                )
-                ->required(true),
+                ),
 
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static function (Request $request): bool {
@@ -144,10 +144,10 @@ class Team extends Resource
                 ->hideFromIndex()
                 ->rules('max:255'),
 
-            Text::make('Google Group')
+            Email::make('Google Group')
                 ->hideFromIndex()
                 ->help('The full email address for the Google Group.')
-                ->rules('max:255', 'nullable')
+                ->rules('max:255', 'nullable', 'email:rfc,strict,dns,spoof')
                 ->creationRules('unique:teams,google_group')
                 ->updateRules('unique:teams,google_group,{{resourceId}}'),
         ];
