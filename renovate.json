@@ -42,6 +42,14 @@
                 "versioning": "loose"
             },
             {
+                "matchPackageNames": ["oitnetworkservices/buzzapiclient"],
+                "registryUrls": ["https://composer.robojackets.org"]
+            },
+            {
+                "matchPackageNames": ["laravel/nova"],
+                "registryUrls": ["https://nova.laravel.com"]
+            },
+            {
               "matchDepTypes": ["require-dev"],
               "prPriority": -2
             },
