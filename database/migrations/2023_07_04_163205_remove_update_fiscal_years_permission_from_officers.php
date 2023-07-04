@@ -19,7 +19,7 @@ return new class extends Migration
 
         $update_fiscal_years = Permission::where('name', '=', 'update-fiscal-years')->first();
 
-        if ($create_dues_packages !== null && $officer !== null) {
+        if ($update_fiscal_years !== null && $officer !== null) {
             $officer->revokePermissionTo($update_fiscal_years);
         }
     }
