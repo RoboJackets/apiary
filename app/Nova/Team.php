@@ -147,7 +147,7 @@ class Team extends Resource
                 ->rules('max:255')
                 ->copyable(),
 
-            Email::make('Google Group')
+            Email::make('Google Group', 'google_group')
                 ->hideFromIndex()
                 ->help('The full email address for the Google Group.')
                 ->rules('max:255', 'nullable', 'email:rfc,strict,dns,spoof')
