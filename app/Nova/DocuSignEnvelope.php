@@ -107,7 +107,8 @@ class DocuSignEnvelope extends Resource
             Boolean::make('Complete'),
 
             Text::make('DocuSign Envelope ID', 'envelope_id')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->copyable(),
 
             URL::make('View in DocuSign', 'sender_view_url')
                 ->displayUsing(static fn () => 'Sender View')

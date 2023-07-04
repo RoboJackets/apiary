@@ -115,7 +115,8 @@ class User extends Resource
             Email::make('Georgia Tech Email', 'gt_email')
                 ->rules('required', 'email:rfc,strict,dns,spoof')
                 ->creationRules('unique:users,gt_email')
-                ->updateRules('unique:users,gt_email,{{resourceId}}'),
+                ->updateRules('unique:users,gt_email,{{resourceId}}')
+                ->copyable(),
 
             Text::make('Email Suppression Reason')
                 ->onlyOnDetail(),
@@ -125,11 +126,13 @@ class User extends Resource
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-gtid'))
                 ->rules('required', 'integer', 'min:900000000', 'max:999999999')
                 ->creationRules('unique:users,gtid')
-                ->updateRules('unique:users,gtid,{{resourceId}}'),
+                ->updateRules('unique:users,gtid,{{resourceId}}')
+                ->copyable(),
 
             Text::make('Phone Number', 'phone')
                 ->hideFromIndex()
-                ->rules('nullable', 'max:15'),
+                ->rules('nullable', 'max:15')
+                ->copyable(),
 
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
@@ -161,7 +164,8 @@ class User extends Resource
                     Email::make('Parent or Guardian Email', 'parent_guardian_email')
                         ->hideFromIndex()
                         ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof', 'nullable')
-                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                        ->copyable(),
                 ]
             ),
 
@@ -209,13 +213,15 @@ class User extends Resource
                         ->hideFromIndex()
                         ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,gmail_address')
-                        ->updateRules('unique:users,gmail_address,{{resourceId}}'),
+                        ->updateRules('unique:users,gmail_address,{{resourceId}}')
+                        ->copyable(),
 
                     Email::make('ClickUp', 'clickup_email')
                         ->hideFromIndex()
                         ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,clickup_email')
-                        ->updateRules('unique:users,clickup_email,{{resourceId}}'),
+                        ->updateRules('unique:users,clickup_email,{{resourceId}}')
+                        ->copyable(),
 
                     Boolean::make('ClickUp Invite Pending', 'clickup_invite_pending')
                         ->hideFromIndex()
@@ -378,7 +384,8 @@ class User extends Resource
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
                 ->hideFromIndex()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact')),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact'))
+                ->copyable(),
         ];
     }
 
@@ -429,7 +436,8 @@ class User extends Resource
                 ->rules('required'),
 
             Text::make('gtDirGUID', 'gtDirGUID')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->copyable(),
 
             MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class)
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),

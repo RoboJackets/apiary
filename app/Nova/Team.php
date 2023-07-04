@@ -134,22 +134,26 @@ class Team extends Resource
 
             Text::make('Slack Channel Name')
                 ->hideFromIndex()
-                ->rules('max:255'),
+                ->rules('max:255')
+                ->copyable(),
 
             Text::make('Slack Channel ID')
                 ->hideFromIndex()
-                ->rules('max:255'),
+                ->rules('max:255')
+                ->copyable(),
 
             Text::make('Slack Private Channel ID')
                 ->hideFromIndex()
-                ->rules('max:255'),
+                ->rules('max:255')
+                ->copyable(),
 
             Email::make('Google Group')
                 ->hideFromIndex()
                 ->help('The full email address for the Google Group.')
                 ->rules('max:255', 'nullable', 'email:rfc,strict,dns,spoof')
                 ->creationRules('unique:teams,google_group')
-                ->updateRules('unique:teams,google_group,{{resourceId}}'),
+                ->updateRules('unique:teams,google_group,{{resourceId}}')
+                ->copyable(),
         ];
     }
 

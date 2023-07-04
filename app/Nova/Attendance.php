@@ -99,7 +99,8 @@ class Attendance extends Resource
                 ->hideFromIndex()
                 ->rules('required', 'max:255')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->resolveUsing(fn (string $gtid): string => $this->attendee !== null ? '—' : $gtid),
+                ->resolveUsing(fn (string $gtid): ?string => $this->attendee !== null ? null : $gtid)
+                ->copyable(),
 
             BelongsTo::make('User', 'attendee')
                 ->searchable(),
