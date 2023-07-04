@@ -5,20 +5,18 @@ Data Model
 
 Dues are tracked in Apiary using several related objects.
 
------------
 Fiscal Year
 -----------
 
-A **Fiscal Year** groups together several `Dues Package`_ and `Merchandise`_ objects.
+A **Fiscal Year** groups together several :ref:`Dues Package` and :ref:`Merchandise` objects.
 Fiscal years are primarily used for reporting and do not affect any functionality.
 They need to be created manually once a year to group the objects for that year.
 
----------------
-_`Dues Package`
----------------
+Dues Package
+------------
 
-A **Dues Package** represents an option for paying dues.
-In the member-facing interface, packages are labeled as "Dues Terms."
+A :guilabel:`Dues Package` represents an option for paying dues.
+In the member-facing interface, packages are labeled as :guilabel:`Dues Terms`.
 There are a few key attributes:
 
 - The **cost** of the package
@@ -33,25 +31,23 @@ There are a few key attributes:
 
 Additional attributes are used to determine whether a package may be offered to a specific person, based on their affiliation with Georgia Tech and prior purchase history.
 
-A **Dues Package** may also have links to one or more `Merchandise`_ objects, which may be selected when choosing that package.
+A :guilabel:`Dues Package` may also have links to one or more :ref:`Merchandise` objects, which may be selected by members when choosing that package.
 
---------------
-_`Merchandise`
---------------
+Merchandise
+-----------
 
-A **Merchandise** object represents a branded item that is included with a `Dues Package`_.
+A :guilabel:`Merchandise` object represents a branded item that is included with a :ref:`Dues Package`.
 This typically includes t-shirts and polos, but other options may be available at the discretion of the officer team.
 
 .. important::
    Merchandise should be fully configured for a dues package **before** making it available for purchase.
    If new options are added later, prior transactions cannot be updated by members directly, and must be updated by an admin.
 
--------------------
-_`Dues Transaction`
--------------------
+Dues Transaction
+----------------
 
-A **Dues Transaction** represents a request from a member to purchase a specific `Dues Package`_.
-It may include `Merchandise`_ selections, if there are options associated with the package.
+A :guilabel:`Dues Transaction` represents a request from a member to purchase a specific :ref:`Dues Package`.
+It may include :ref:`Merchandise` selections, if there are options associated with the package.
 
 A transaction may have one or more payments associated.
 

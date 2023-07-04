@@ -13,8 +13,6 @@ furo = "2023.5.20"
 sphinx-autobuild = "2021.3.14"
 sphinxext-opengraph = "0.8.2"
 
-[tool.poetry.group.dev.dependencies]
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\File;
@@ -181,13 +182,19 @@ class User extends Resource
                     BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
                         ->onlyOnDetail(),
 
-                    Text::make('Self-Service Override', static function (AppModelsUser $user) {
-                        if ($user->has_active_override && $user->access_override_by_id === $user->id) {
-                            return 'Active';
-                        }
+                    BooleanGroup::make('Self-Service Override Criteria', static function (AppModelsUser $user): array {
+                        $eligibility = $user->self_service_override_eligibility;
 
-                        return (string) $user->self_service_override_eligibility;
-                    })->hideFromIndex(),
+                        return array_merge($eligibility->required_conditions, $eligibility->required_tasks);
+                    })->options([
+                        'Access must not be active' => 'Access must not be active',
+                        'Must have no prior dues payments' => 'Must have no prior dues payments',
+                        'Must have no previous access override' => 'Must have no previous access override',
+                        'Future dues package must exist' => 'Future dues package must exist',
+                        'Sign the membership agreement' => 'Sign the membership agreement',
+                        'Attend a team meeting' => 'Attend a team meeting',
+                    ])
+                        ->onlyOnDetail(),
 
                     Boolean::make('BuzzCard Access Opt-Out', 'buzzcard_access_opt_out')
                         ->hideFromIndex(),
