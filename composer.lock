@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6579082a4af26464764e20196dafe15c",
+    "content-hash": "2d9b2ee8de9aa641ba6ef0da58d9006e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3425,17 +3425,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.25.1",
+            "version": "4.26.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "b7537f667ef4ee6a1c9581995d438a6fe214625b"
+                "reference": "4a4f4a548a9abe04934414212e484b27cf9860ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-b7537f667ef4ee6a1c9581995d438a6fe214625b-zip-ae794f.zip",
-                "reference": "b7537f667ef4ee6a1c9581995d438a6fe214625b",
-                "shasum": "29a7eccd46fd5933fffa7ae45a5e6495b46f702f"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-4a4f4a548a9abe04934414212e484b27cf9860ec-zip-4c1a82.zip",
+                "reference": "4a4f4a548a9abe04934414212e484b27cf9860ec",
+                "shasum": "837efb43c116f89da00ab5df40d5a6a571477a58"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3511,8 +3511,8 @@
                 ],
                 "test:local": [
                     "./vendor/bin/testbench-dusk package:dusk-purge",
-                    "./vendor/bin/phpunit -c phpunit.xml --group local-time,external-network --testdox",
-                    "./vendor/bin/phpunit -c phpunit.dusk.xml --group local-time,external-network --testdox"
+                    "./vendor/bin/phpunit -c phpunit.xml --group date-field,datetime-field,external-network --testdox",
+                    "./vendor/bin/phpunit -c phpunit.dusk.xml --group date-field,datetime-field,external-network --testdox"
                 ],
                 "dusk:filter": [
                     "./vendor/bin/testbench-dusk package:dusk-purge && ./vendor/bin/phpunit -c phpunit.dusk.xml --filter"
@@ -3533,9 +3533,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.25.1"
+                "source": "https://github.com/laravel/nova/tree/v4.26.3"
             },
-            "time": "2023-06-06T18:29:19+00:00"
+            "time": "2023-06-30T04:49:39+00:00"
         },
         {
             "name": "laravel/passport",
