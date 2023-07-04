@@ -153,4 +153,9 @@ class RemoteAttendanceLink extends Resource
             self::metadataPanel(),
         ];
     }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }

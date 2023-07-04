@@ -106,4 +106,9 @@ class OAuth2AccessToken extends Resource
             ),
         ];
     }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }

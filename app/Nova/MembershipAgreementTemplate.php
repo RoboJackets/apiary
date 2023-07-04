@@ -92,4 +92,9 @@ class MembershipAgreementTemplate extends Resource
             HasMany::make('Signatures'),
         ];
     }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }

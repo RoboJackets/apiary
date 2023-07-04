@@ -110,4 +110,9 @@ class OAuth2Client extends Resource
             self::metadataPanel(),
         ];
     }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }

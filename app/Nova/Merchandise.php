@@ -189,9 +189,6 @@ class Merchandise extends Resource
         return $defaults;
     }
 
-    /**
-     * Not really useful on detail pages.
-     */
     public static function searchable(): bool
     {
         return false;

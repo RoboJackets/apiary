@@ -206,4 +206,9 @@ class DocuSignEnvelope extends Resource
                 ),
         ];
     }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
 }
