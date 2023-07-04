@@ -575,7 +575,7 @@ class User extends Resource
                 return 'President';
             }
 
-            if ($team_name === 'Alumni Leadership') {
+            if ($team_name === 'Corporate') {
                 return 'Corporation President';
             }
 
