@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Models\TravelAssignment as AppModelsTravelAssignment;
+use App\Nova\Actions\Payments\RecordPaymentActions;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
@@ -20,6 +19,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 class TravelAssignment extends Resource
 {
+    use RecordPaymentActions;
+
     /**
      * The model the resource corresponds to.
      *
@@ -103,48 +104,13 @@ class TravelAssignment extends Resource
             Boolean::make('Paid', 'is_paid')
                 ->onlyOnIndex(),
 
-            MorphMany::make('Payments', 'payment', Payment::class)
-                ->onlyOnDetail(),
-
             MorphMany::make('DocuSign Envelopes', 'envelope', DocuSignEnvelope::class)
                 ->onlyOnDetail(),
 
+            MorphMany::make('Payments', 'payment', Payment::class)
+                ->onlyOnDetail(),
+
             self::metadataPanel(),
-        ];
-    }
-
-    /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
-     */
-    public function actions(NovaRequest $request): array
-    {
-        return [
-            (new Actions\AddPayment())->canSee(static function (Request $request): bool {
-                $assignment = AppModelsTravelAssignment::find($request->resourceId);
-
-                if ($assignment !== null && is_a($assignment, AppModelsTravelAssignment::class)) {
-                    if ($assignment->user->id === $request->user()->id) {
-                        return false;
-                    }
-
-                    if ($assignment->is_paid) {
-                        return false;
-                    }
-
-                    if (! $assignment->user->signed_latest_agreement) {
-                        return false;
-                    }
-                }
-
-                return $request->user()->can('create-payments');
-            })->canRun(
-                static fn (NovaRequest $request, AppModelsTravelAssignment $assignment): bool => $request->user()->can(
-                    'create-payments'
-                )
-                        && ($assignment->user()->first()->id !== $request->user()->id)
-            )->confirmButtonText('Add Payment'),
         ];
     }
 

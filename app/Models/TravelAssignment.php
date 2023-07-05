@@ -32,6 +32,7 @@ use Laravel\Scout\Searchable;
  * @property-read bool $is_complete
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Payment> $payment
  * @property-read bool $is_paid
+ * @property-read int $payable_amount
  * @property-read bool $needs_docusign
  * @property-read string $travel_authority_request_url
  * @property-read int|null $payment_count
@@ -58,7 +59,7 @@ use Laravel\Scout\Searchable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
-class TravelAssignment extends Model
+class TravelAssignment extends Model implements Payable
 {
     use SoftDeletes;
     use GetMorphClassStatic;
@@ -129,6 +130,11 @@ class TravelAssignment extends Model
     public function getIsPaidAttribute(): bool
     {
         return self::where('travel_assignments.id', $this->id)->paid()->count() !== 0;
+    }
+
+    public function getPayableAmountAttribute(): int
+    {
+        return $this->travel->fee_amount;
     }
 
     /**
