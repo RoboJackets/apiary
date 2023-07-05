@@ -12,6 +12,7 @@ Apiary Documentation
 .. toctree::
    :caption: For Officers
 
+   officers/attendance
    officers/dues/index
 
 .. toctree::
