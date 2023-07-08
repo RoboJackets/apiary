@@ -165,11 +165,11 @@ class Team extends Resource
     protected function controlFields(): array
     {
         return [
-            Boolean::make('Visible')
+            Boolean::make('Visible to Members', 'visible')
                 ->sortable(),
 
-            Boolean::make('Visible On Kiosk')
-                ->hideFromIndex(),
+            Boolean::make('Visible on Kiosk', 'visible_on_kiosk')
+                ->sortable(),
 
             Boolean::make('Attendable')
                 ->sortable(),
@@ -178,7 +178,7 @@ class Team extends Resource
                 ->sortable(),
 
             Boolean::make('Self-Service Override Eligible', 'self_service_override_eligible')
-                ->hideFromIndex(),
+                ->sortable(),
         ];
     }
 
