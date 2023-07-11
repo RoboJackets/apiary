@@ -22,7 +22,7 @@ RUN set -euxo pipefail && \
         fi; \
     done;
 
-FROM node:19 as docs-minification
+FROM node:20 as docs-minification
 
 COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
@@ -38,7 +38,7 @@ COPY --link package.json package-lock.json webpack.mix.js artisan /app/
 COPY --link resources/ /app/resources/
 COPY --link public/ /app/public/
 
-FROM node:19 as frontend
+FROM node:20 as frontend
 
 COPY --link --from=frontend-source /app/ /app/
 
