@@ -9,8 +9,7 @@
         "type / technical debt"
     ],
     "reviewers": [],
-    "ignoreDeps": [
-    ],
+    "ignoreDeps": [],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
     "rebaseStalePrs": true,
@@ -26,44 +25,66 @@
     "php": {
         "lockFileMaintenance": {
             "enabled": true,
-            "schedule": ["before 4pm every weekday except before 9am every weekday"],
+            "schedule": [
+                "before 4pm every weekday except before 9am every weekday"
+            ],
             "prPriority": -7
         },
         "packageRules": [
             {
-                "matchPackageNames": ["php"],
+                "matchPackageNames": [
+                    "php"
+                ],
                 "rangeStrategy": "replace"
             },
             {
-                "matchPackageNames": ["square/square"],
+                "matchPackageNames": [
+                    "square/square"
+                ],
                 "major": {
                     "enabled": true
                 },
                 "versioning": "loose"
             },
             {
-                "matchPackageNames": ["oitnetworkservices/buzzapiclient"],
-                "registryUrls": ["https://composer.robojackets.org"]
+                "matchPackageNames": [
+                    "oitnetworkservices/buzzapiclient"
+                ],
+                "registryUrls": [
+                    "https://composer.robojackets.org"
+                ]
             },
             {
-                "matchPackageNames": ["laravel/nova"],
-                "registryUrls": ["https://nova.laravel.com"]
+                "matchPackageNames": [
+                    "laravel/nova"
+                ],
+                "registryUrls": [
+                    "https://nova.laravel.com"
+                ]
             },
             {
-              "matchDepTypes": ["require-dev"],
-              "prPriority": -2
+                "matchDepTypes": [
+                    "require-dev"
+                ],
+                "prPriority": -2
             },
             {
-              "matchPackagePatterns": ["^phpstan/"],
-              "prPriority": -1
+                "matchPackagePatterns": [
+                    "^phpstan/"
+                ],
+                "prPriority": -1
             },
             {
-              "matchPackagePatterns": ["^laravel/"],
-              "prPriority": 1
+                "matchPackagePatterns": [
+                    "^laravel/"
+                ],
+                "prPriority": 1
             },
             {
-              "matchPackageNames": ["laravel/framework"],
-              "prPriority": 2
+                "matchPackageNames": [
+                    "laravel/framework"
+                ],
+                "prPriority": 2
             }
         ]
     },
@@ -71,13 +92,17 @@
         "prPriority": -4,
         "lockFileMaintenance": {
             "enabled": true,
-            "schedule": ["before 4pm every weekday except before 9am every weekday"],
+            "schedule": [
+                "before 4pm every weekday except before 9am every weekday"
+            ],
             "prPriority": -6
         },
         "packageRules": [
             {
-              "matchDepTypes": ["devDependencies"],
-              "prPriority": -5
+                "matchDepTypes": [
+                    "devDependencies"
+                ],
+                "prPriority": -5
             }
         ],
         "ignoreDeps": [
@@ -88,16 +113,25 @@
         "prPriority": -8,
         "lockFileMaintenance": {
             "enabled": true,
-            "schedule": ["before 4pm every weekday except before 9am every weekday"],
+            "schedule": [
+                "before 4pm every weekday except before 9am every weekday"
+            ],
             "prPriority": -9
         }
     },
     "docker-compose": {
         "enabled": false
     },
+    "docker": {
+        "major": {
+            "enabled": true
+        }
+    },
     "rangeStrategy": "pin",
     "timezone": "America/New_York",
-    "schedule": ["before 4pm every weekday except before 9am every weekday"],
+    "schedule": [
+        "before 4pm every weekday except before 9am every weekday"
+    ],
     "hostRules": [
         {
             "matchHost": "nova.laravel.com",
