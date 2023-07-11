@@ -44,7 +44,7 @@
         "laravel/passport": "11.8.8",
         "laravel/scout": "10.2.3",
         "laravel/slack-notification-channel": "2.5.0",
-        "laravel/socialite": "5.6.3",
+        "laravel/socialite": "5.7.0",
         "laravel/tinker": "2.8.1",
         "maatwebsite/excel": "3.1.48",
         "madewithlove/laravel-nova-uuid-support": "dev-l10-compatibility",
