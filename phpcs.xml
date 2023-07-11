@@ -292,6 +292,7 @@
 
     <rule ref="SlevomatCodingStandard.TypeHints">
         <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
