@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06dcc5197ec25ccd02c7479d1845aa93",
+    "content-hash": "b02f75f2d9d60f55e1acff0935b8ed8d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -288,16 +288,16 @@
         },
         {
             "name": "apimatic/core",
-            "version": "0.3.1",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/core-lib-php.git",
-                "reference": "8e7154a40a1c14f34294357f3a8e03541ddf4714"
+                "reference": "32238fb83ce9a3ebef38c726b497c0f218d6e6c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/8e7154a40a1c14f34294357f3a8e03541ddf4714",
-                "reference": "8e7154a40a1c14f34294357f3a8e03541ddf4714",
+                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/32238fb83ce9a3ebef38c726b497c0f218d6e6c9",
+                "reference": "32238fb83ce9a3ebef38c726b497c0f218d6e6c9",
                 "shasum": ""
             },
             "require": {
@@ -335,9 +335,9 @@
             ],
             "support": {
                 "issues": "https://github.com/apimatic/core-lib-php/issues",
-                "source": "https://github.com/apimatic/core-lib-php/tree/0.3.1"
+                "source": "https://github.com/apimatic/core-lib-php/tree/0.3.2"
             },
-            "time": "2023-06-14T07:32:12+00:00"
+            "time": "2023-07-11T09:30:32+00:00"
         },
         {
             "name": "apimatic/core-interfaces",
@@ -3147,16 +3147,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.14.1",
+            "version": "v10.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "6f89a2b74b232d8bf2e1d9ed87e311841263dfcb"
+                "reference": "c7599dc92e04532824bafbd226c2936ce6a905b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/6f89a2b74b232d8bf2e1d9ed87e311841263dfcb",
-                "reference": "6f89a2b74b232d8bf2e1d9ed87e311841263dfcb",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c7599dc92e04532824bafbd226c2936ce6a905b8",
+                "reference": "c7599dc92e04532824bafbd226c2936ce6a905b8",
                 "shasum": ""
             },
             "require": {
@@ -3343,7 +3343,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-06-28T14:25:16+00:00"
+            "time": "2023-07-11T13:43:52+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -6663,16 +6663,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.19.0",
+            "version": "1.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "1856a119a0b0ba8da8b5c33c080aa7af8fac25b4"
+                "reference": "57f3de01d32085fea20865f9b16fb0e69347c39e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/1856a119a0b0ba8da8b5c33c080aa7af8fac25b4",
-                "reference": "1856a119a0b0ba8da8b5c33c080aa7af8fac25b4",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/57f3de01d32085fea20865f9b16fb0e69347c39e",
+                "reference": "57f3de01d32085fea20865f9b16fb0e69347c39e",
                 "shasum": ""
             },
             "require": {
@@ -6735,9 +6735,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.19.0"
+                "source": "https://github.com/php-http/discovery/tree/1.19.1"
             },
-            "time": "2023-06-19T08:45:36+00:00"
+            "time": "2023-07-11T07:02:26+00:00"
         },
         {
             "name": "php-http/httplug",
@@ -7302,16 +7302,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.20",
+            "version": "3.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67"
+                "reference": "4580645d3fc05c189024eb3b834c6c1e4f0f30a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67",
-                "reference": "543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/4580645d3fc05c189024eb3b834c6c1e4f0f30a1",
+                "reference": "4580645d3fc05c189024eb3b834c6c1e4f0f30a1",
                 "shasum": ""
             },
             "require": {
@@ -7392,7 +7392,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.20"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.21"
             },
             "funding": [
                 {
@@ -7408,7 +7408,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-13T06:30:34+00:00"
+            "time": "2023-07-09T15:24:48+00:00"
         },
         {
             "name": "phpstan/phpstan",
@@ -13406,22 +13406,22 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v8.5.9",
+            "version": "v8.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "c669d2cb6dc869f98d299c5dbf600051ba6deb3e"
+                "reference": "6878b8119f74bfc77779554dc81f4d9ede3dbe49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/c669d2cb6dc869f98d299c5dbf600051ba6deb3e",
-                "reference": "c669d2cb6dc869f98d299c5dbf600051ba6deb3e",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/6878b8119f74bfc77779554dc81f4d9ede3dbe49",
+                "reference": "6878b8119f74bfc77779554dc81f4d9ede3dbe49",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2",
                 "fakerphp/faker": "^1.21",
-                "laravel/framework": ">=10.14.0 <10.15.0",
+                "laravel/framework": ">=10.14.0 <10.16.0",
                 "mockery/mockery": "^1.5.1",
                 "orchestra/testbench-core": ">=8.5.7 <8.6.0",
                 "php": "^8.1",
@@ -13455,9 +13455,9 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v8.5.9"
+                "source": "https://github.com/orchestral/testbench/tree/v8.5.10"
             },
-            "time": "2023-06-27T13:42:07+00:00"
+            "time": "2023-07-11T13:52:30+00:00"
         },
         {
             "name": "orchestra/testbench-core",
