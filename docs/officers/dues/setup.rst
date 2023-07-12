@@ -6,7 +6,8 @@ Setting Up Dues
 While dues collection itself is largely automated, there are a few steps that need to be performed manually by the treasurer or another officer to start the process.
 
 .. hint::
-   If you're not able to see the options described here, you may need additional access. Ask in :slack:`it-helpdesk`!
+   These functions are restricted to core officers.
+   If you need access, ask in :slack:`it-helpdesk`.
 
 Create a Fiscal Year
 --------------------
