@@ -52,7 +52,7 @@ Dues Transaction
 A :guilabel:`Dues Transaction` represents a request from a member to purchase a specific :ref:`Dues Package`.
 It may include :ref:`Merchandise` selections, if there are options associated with the package.
 
-A transaction may have one or more payments associated.
+A transaction may have zero or more :ref:`Payments` associated.
 
 .. attention::
    Transactions should **not** be created manually by officers; they are created automatically through the member-facing interface when a member begins the dues workflow.
