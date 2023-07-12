@@ -14,6 +14,7 @@ use App\Nova\Dashboards\Main;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Actions\ActionResource;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Menu\Menu;
 use Laravel\Nova\Menu\MenuItem;
@@ -74,6 +75,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             return $menu;
         });
+
+        ActionResource::$polling = false;
     }
 
     /**
