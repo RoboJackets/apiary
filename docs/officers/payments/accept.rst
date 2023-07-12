@@ -1,3 +1,5 @@
+:og:description: While most members choose to pay online, cash and checks need to be recorded in Apiary manually by an officer or project manager. Treasurers also have the ability to apply waivers.
+
 Accepting Payments
 ==================
 
