@@ -102,9 +102,9 @@ abstract class RecordPayment extends Action
             return intval(DuesTransaction::whereId($resourceId)->sole()->package->cost);
         } elseif ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
             return intval(TravelAssignment::whereId($resourceId)->sole()->travel->fee_amount);
-        } else {
-            throw new Exception('Unexpected resourceType '.$resourceType);
         }
+
+        throw new Exception('Unexpected resourceType '.$resourceType);
     }
 
     private static function prettyPayableName(Payable $payable): string
@@ -113,9 +113,9 @@ abstract class RecordPayment extends Action
             return 'dues transaction';
         } elseif (is_a($payable, TravelAssignment::class)) {
             return 'travel assignment';
-        } else {
-            throw new Exception('Unexpected payable type');
         }
+
+        throw new Exception('Unexpected payable type');
     }
 
     /**
