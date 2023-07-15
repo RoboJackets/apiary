@@ -7,21 +7,21 @@ While most members choose to pay online, cash and checks need to be recorded in 
 Treasurers also have the ability to apply waivers.
 
 .. hint::
-   To record cash or check payments, you must have a project manager or officer role.
-   To apply waivers, you need a separate permission.
+   To record cash or check payments, you must have a ``project-manager`` or ``officer`` role.
+   To apply waivers, you must have the ``officer`` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
 Online-Only Payment Methods
 ---------------------------
 
-The following payment methods are only accepted online, and incur an additional surcharge depending on the amount of the transaction.
+The following payment methods are only accepted online and incur an additional surcharge depending on the amount of the transaction.
 
 - Credit and debit cards
 - Google Pay
 - Apple Pay
 - Cash App
 
-We do **not** accept payments via PayPal, Venmo, or Zelle, as they're more complicated and expensive to process.
+We do **not** accept payments via PayPal, Venmo, or Zelle (they're more complicated and expensive to process.)
 
 Recording an Offline Payment
 ----------------------------
