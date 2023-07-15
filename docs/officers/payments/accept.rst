@@ -43,4 +43,4 @@ To record a cash payment, check, or waiver, follow the steps below.
 #. Depending on the payment method, you will see a popup to provide additional information about the payment.
 #. When you're done, click the blue button at the bottom of the popup to record the payment.
 #. For cash and check payments, a receipt will be sent to the member's Georgia Tech email address.
-   Waivers do not receive receipts, as no funds change hands.
+   Waivers do not trigger receipts, as they are not actual payments.
