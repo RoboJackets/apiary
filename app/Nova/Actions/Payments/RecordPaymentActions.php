@@ -60,7 +60,7 @@ trait RecordPaymentActions
         $actions = [];
 
         foreach (self::OFFLINE_PAYMENT_METHODS as $method => $class) {
-            if ($user->can('create-payments') && $user->can('create-payments-'.$method)) {
+            if ($user->can('create-payments-'.$method)) {
                 if ($payable->user->id === $user->id) {
                     $actions[] = self::selfTransactionNotAllowed($method, $resourceType);
                 } elseif (! $payable->user->signed_latest_agreement) {
@@ -68,10 +68,12 @@ trait RecordPaymentActions
                 } else {
                     $actions[] = call_user_func([$class, 'make'])
                         ->canRun(
-                            static fn (NovaRequest $r, Payable $p): bool => $r->user()->can('create-payments') &&
-                                $r->user()->can('create-payments-'.$method) &&
-                                $r->user()->id !== $p->user->id &&
-                                $p->user->signed_latest_agreement
+                            static fn (
+                                NovaRequest $request,
+                                Payable $payable
+                            ): bool => $request->user()->can('create-payments-'.$method) &&
+                                $request->user()->id !== $payable->user->id &&
+                                $payable->user->signed_latest_agreement
                         );
                 }
             }

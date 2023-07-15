@@ -62,7 +62,7 @@ abstract class RecordPayment extends Action
             return self::danger('The package associated with this transaction is inactive.');
         }
 
-        if (Auth::user()->cant('create-payments') || Auth::user()->cant('create-payments-'.static::METHOD)) {
+        if (Auth::user()->cant('create-payments-'.static::METHOD)) {
             return self::danger('You do not have access to record '.static::METHOD.' payments.');
         }
 
