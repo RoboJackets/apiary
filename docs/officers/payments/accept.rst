@@ -21,7 +21,7 @@ The following payment methods are only accepted online and incur an additional s
 - Apple Pay
 - Cash App
 
-We do **not** accept payments via PayPal, Venmo, or Zelle (they're more complicated and expensive to process.)
+We do **not** accept payments via PayPal, Venmo, or Zelle (they're more complicated and expensive to process).
 
 Recording an Offline Payment
 ----------------------------
