@@ -68,7 +68,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "dev-master as 2.12.4",
         "beyondcode/laravel-dump-server": "1.9.0",
-        "filp/whoops": "2.15.2",
+        "filp/whoops": "2.15.3",
         "laravel/pint": "1.10.5",
         "mockery/mockery": "1.6.2",
         "mxl/laravel-job": "1.4.0",
