@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
-use Illuminate\Http\Request;
+use App\Nova\Actions\Payments\RecordPaymentActions;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
@@ -22,6 +22,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 class DuesTransaction extends Resource
 {
+    use RecordPaymentActions;
+
     /**
      * The model the resource corresponds to.
      *
@@ -140,44 +142,8 @@ class DuesTransaction extends Resource
     }
 
     /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
+     * Hide the edit button from indexes, in particular on merchandise pivots.
      */
-    public function actions(NovaRequest $request): array
-    {
-        return [
-            (new Actions\AddPayment())->canSee(static function (Request $request): bool {
-                $transaction = AppModelsDuesTransaction::find($request->resourceId);
-
-                if ($transaction !== null && is_a($transaction, AppModelsDuesTransaction::class)) {
-                    if ($transaction->user->id === $request->user()->id) {
-                        return false;
-                    }
-
-                    if ($transaction->is_paid) {
-                        return false;
-                    }
-
-                    if (! $transaction->package->is_active) {
-                        return false;
-                    }
-
-                    if (! $transaction->user->signed_latest_agreement) {
-                        return false;
-                    }
-                }
-
-                return $request->user()->can('create-payments');
-            })->canRun(
-                static fn (NovaRequest $r, AppModelsDuesTransaction $t): bool => $r->user()->can(
-                    'create-payments'
-                ) && ($t->user()->first()->id !== $r->user()->id)
-            )->confirmButtonText('Add Payment'),
-        ];
-    }
-
-    // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
         return false;

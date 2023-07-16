@@ -201,20 +201,6 @@ class Payment extends Resource
     public function actions(NovaRequest $request): array
     {
         return [
-            (new Actions\ResetIdempotencyKey())->canSee(static function (Request $request): bool {
-                $payment = AppModelsPayment::find($request->resourceId);
-
-                if ($payment !== null && is_a($payment, AppModelsPayment::class)) {
-                    return self::canResetKey($request->user(), $payment);
-                }
-
-                return $request->user()->can('delete-payments');
-            })->canRun(
-                static fn (NovaRequest $r, AppModelsPayment $p): bool => self::canResetKey($r->user(), $p)
-            )->confirmText(
-                'Are you sure you want to reset the idempotency key for this payment? This can result in duplicate'
-                .'payments and should only be used if you are sure that the associated Square order is canceled.'
-            )->confirmButtonText('Reset Idempotency Key'),
             (new Actions\RefundPayment())->canSee(static function (Request $request): bool {
                 $payment = AppModelsPayment::find($request->resourceId);
 
@@ -227,40 +213,6 @@ class Payment extends Resource
                 static fn (NovaRequest $r, AppModelsPayment $p): bool => self::canRefundPayment($r->user(), $p)
             )->confirmButtonText('Refund Payment'),
         ];
-    }
-
-    private static function canResetKey(AppModelsUser $user, AppModelsPayment $payment): bool
-    {
-        if ($payment->amount > 0) {
-            return false;
-        }
-
-        if ($payment->unique_id === null) {
-            return false;
-        }
-
-        $order_id = $payment->order_id;
-
-        if ($order_id === null) {
-            return false;
-        }
-
-        if (
-            (new SquareClient(
-                [
-                    'accessToken' => config('square.access_token'),
-                    'environment' => config('square.environment'),
-                ]
-            ))->getOrdersApi()
-                ->retrieveOrder($order_id)
-                ->getResult()
-                ->getOrder()
-                ->getState() === OrderState::COMPLETED
-        ) {
-            return false;
-        }
-
-        return $user->can('delete-payments');
     }
 
     private static function canRefundPayment(AppModelsUser $user, AppModelsPayment $payment): bool

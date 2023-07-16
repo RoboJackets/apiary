@@ -296,5 +296,10 @@
                 <file name="app/Http/Middleware/Sentry.php"/>
             </errorLevel>
         </UnusedClosureParam>
+        <UndefinedConstant>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Actions/Payments/RecordPayment.php"/>
+            </errorLevel>
+        </UndefinedConstant>
     </issueHandlers>
 </psalm>

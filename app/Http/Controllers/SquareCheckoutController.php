@@ -209,6 +209,8 @@ class SquareCheckoutController extends Controller
         $checkoutOptions->setMerchantSupportEmail(config('services.treasurer_email'));
         $checkoutOptions->setAskForShippingAddress(false);
         $checkoutOptions->setAcceptedPaymentMethods($acceptedPaymentMethods);
+        $checkoutOptions->setEnableCoupon(false);
+        $checkoutOptions->setEnableLoyalty(false);
 
         $prePopulatedData = new PrePopulatedData();
         $prePopulatedData->setBuyerEmail($user->gt_email);

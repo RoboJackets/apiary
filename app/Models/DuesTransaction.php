@@ -26,6 +26,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\DuesPackage $for
  * @property-read bool $is_paid
+ * @property-read int $payable_amount
  * @property-read string $status
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
  * @property-read int|null $merchandise_count
@@ -59,7 +60,7 @@ use Laravel\Scout\Searchable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
-class DuesTransaction extends Model
+class DuesTransaction extends Model implements Payable
 {
     use GetMorphClassStatic;
     use HasFactory;
@@ -166,7 +167,7 @@ class DuesTransaction extends Model
         }
 
         if ($this->payment->count() === 0
-            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())
+            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmountAttribute())
         ) {
             return 'pending';
         }
@@ -278,9 +279,9 @@ class DuesTransaction extends Model
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount(): float
+    public function getPayableAmountAttribute(): int
     {
-        return $this->package->cost;
+        return intval($this->package->cost);
     }
 
     /**

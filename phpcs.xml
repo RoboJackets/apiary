@@ -83,13 +83,10 @@
     <rule ref="Generic.Functions.CallTimePassByReference"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
 
-    <rule ref="Generic.NamingConventions.InterfaceNameSuffix.Missing">
-        <exclude-pattern>/stubs/</exclude-pattern>
-    </rule>
-
     <rule ref="Generic.NamingConventions">
         <exclude name="Generic.NamingConventions.TraitNameSuffix.Missing"/>
         <exclude name="Generic.NamingConventions.AbstractClassNamePrefix.Missing"/>
+        <exclude name="Generic.NamingConventions.InterfaceNameSuffix.Missing"/>
     </rule>
 
     <rule ref="Generic.PHP.BacktickOperator"/>
