@@ -60,6 +60,7 @@ class BuzzApiMockController extends Controller
                     'mail' => $user->gt_email,
                     'sn' => $user->last_name,
                     'uid' => $user->uid,
+                    'eduPersonScopedAffiliation' => [],
                 ];
             } else {
                 $results[] = [
@@ -72,6 +73,7 @@ class BuzzApiMockController extends Controller
                     'mail' => 'gburdell'.substr(strval($gtid), -6).'@gatech.edu',
                     'sn' => 'Burdell',
                     'uid' => 'gburdell'.substr(strval($gtid), -6),
+                    'eduPersonScopedAffiliation' => [],
                 ];
             }
         } elseif ($uid !== null && User::where('uid', '=', $uid)->exists()) {
@@ -87,6 +89,7 @@ class BuzzApiMockController extends Controller
                 'mail' => $user->gt_email,
                 'sn' => $user->last_name,
                 'uid' => $user->uid,
+                'eduPersonScopedAffiliation' => [],
             ];
         }
 
