@@ -110,7 +110,9 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::view('privacy', 'privacy');
 
-Route::post('apiv3/{resource}/{action}', [BuzzApiMockController::class, 'anything']);
+if (config('features.sandbox-mode') === true) {
+    Route::post('apiv3/{resource}/{action}', [BuzzApiMockController::class, 'anything']);
+}
 
 Route::get('oauth/authorize', [AuthorizationController::class, 'authorize'])
     ->name('passport.authorizations.authorize')
