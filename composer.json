@@ -32,7 +32,7 @@
         "chelout/laravel-relationship-events": "2.0.0",
         "doctrine/dbal": "3.6.4",
         "docusign/esign-client": "6.16.0",
-        "enlightn/enlightn": "2.3.0",
+        "enlightn/enlightn": "2.4.0",
         "fakerphp/faker": "1.23.0",
         "guzzlehttp/guzzle": "7.7.0",
         "htmlmin/htmlmin": "dev-master",
