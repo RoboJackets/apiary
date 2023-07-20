@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49c346e160a084b69e31f1d34877079e",
+    "content-hash": "10fb3aaa0b5ecd5b1d3b6290ab7c1d3f",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1880,16 +1880,16 @@
         },
         {
             "name": "enlightn/enlightn",
-            "version": "v2.3.0",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/enlightn/enlightn.git",
-                "reference": "0f2d18da7987367c82a184b7d6cc5037f1b13264"
+                "reference": "47c1ad96c4433478adb5c126f00a3e21a0def22e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/0f2d18da7987367c82a184b7d6cc5037f1b13264",
-                "reference": "0f2d18da7987367c82a184b7d6cc5037f1b13264",
+                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/47c1ad96c4433478adb5c126f00a3e21a0def22e",
+                "reference": "47c1ad96c4433478adb5c126f00a3e21a0def22e",
                 "shasum": ""
             },
             "require": {
@@ -1900,7 +1900,7 @@
                 "nikic/php-parser": "^4.0",
                 "nunomaduro/larastan": "^2.0",
                 "php": "^8.0",
-                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan": ">=1.10.11",
                 "symfony/finder": "^4.0|^5.0|^6.0"
             },
             "require-dev": {
@@ -1960,9 +1960,9 @@
             "support": {
                 "docs": "https://www.laravel-enlightn.com/docs/",
                 "issues": "https://github.com/enlightn/enlightn/issues",
-                "source": "https://github.com/enlightn/enlightn/tree/v2.3.0"
+                "source": "https://github.com/enlightn/enlightn/tree/v2.4.0"
             },
-            "time": "2023-03-02T15:00:19+00:00"
+            "time": "2023-07-20T08:33:52+00:00"
         },
         {
             "name": "enlightn/security-checker",
