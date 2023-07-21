@@ -7,6 +7,7 @@ namespace App\Nova;
 use App\Models\Payment as AppModelsPayment;
 use App\Nova\Actions\Payments\RefundOfflinePayment;
 use App\Nova\Actions\Payments\RefundSquarePayment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -144,7 +145,8 @@ class Payment extends Resource
             Text::make('Order ID')
                 ->onlyOnDetail(),
 
-            Text::make('Order State (retrieved from Square)', fn (): ?string => $this->getSquareOrderState()),
+            Text::make('Order State (retrieved from Square)', fn (): ?string => $this->getSquareOrderState())
+                ->onlyOnDetail(),
 
             Text::make('Card Brand')
                 ->onlyOnDetail(),
@@ -214,6 +216,8 @@ class Payment extends Resource
         if ($payment->method === 'square' &&
             $payment->unique_id !== null &&
             $payment->order_id !== null &&
+            $payment->created_at !== null &&
+            Carbon::now()->subYear()->lessThanOrEqualTo($payment->created_at) &&
             $payment->getSquareOrderState() === OrderState::COMPLETED
         ) {
             return [

@@ -116,7 +116,7 @@ class RefundSquarePayment extends Action
         if (! $refundPaymentResponse->isSuccess()) {
             Log::error(self::class.' Error refunding payment - '.json_encode($refundPaymentResponse->getErrors()));
 
-            return self::danger('Error refunding payment');
+            return self::danger('Error refunding payment.');
         }
 
         $status = $refundPaymentResponse->getResult()->getRefund()->getStatus();
