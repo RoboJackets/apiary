@@ -184,11 +184,10 @@ class Payment extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        $resourceType = $request->resource;
         $resourceId = $request->resourceId ?? $request->resources;
         $user = $request->user();
 
-        if ($resourceType === null || $resourceId === null || $user === null) {
+        if ($resourceId === null || $user === null) {
             return [];
         }
 
