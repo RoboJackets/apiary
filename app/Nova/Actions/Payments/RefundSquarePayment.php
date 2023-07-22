@@ -64,20 +64,27 @@ class RefundSquarePayment extends Action
      *
      * @phan-suppress PhanTypeMismatchPropertyProbablyReal
      * @phan-suppress PhanTypeSuspiciousStringExpression
+     * @phan-suppress PhanPossiblyFalseTypeArgument
      */
     public function handle(ActionFields $fields, Collection $models)
     {
         $payment = $models->sole();
 
         if ($payment->method !== 'square') {
+            $this->markAsFailed($payment, Str::title($payment->method).' payments may not be refunded.');
+
             return self::danger(Str::title($payment->method).' payments may not be refunded.');
         }
 
         if (floatval($payment->amount) === 0.0) {
+            $this->markAsFailed($payment, 'This payment was already refunded.');
+
             return self::danger('This payment was already refunded.');
         }
 
         if (Auth::user()->cant('refund-payments')) {
+            $this->markAsFailed($payment, 'You do not have access to refund payments.');
+
             return self::danger('You do not have access to refund payments.');
         }
 
@@ -91,10 +98,14 @@ class RefundSquarePayment extends Action
         if (! $retrieveOrderResponse->isSuccess()) {
             Log::error(self::class.' Error retrieving order - '.json_encode($retrieveOrderResponse->getErrors()));
 
+            $this->markAsFailed($payment, json_encode($retrieveOrderResponse->getErrors()));
+
             return self::danger('Error retrieving order information from Square.');
         }
 
         if ($retrieveOrderResponse->getResult()->getOrder()->getState() !== OrderState::COMPLETED) {
+            $this->markAsFailed($payment, 'This order is not complete.');
+
             return self::danger('This order is not complete.');
         }
 
@@ -116,6 +127,8 @@ class RefundSquarePayment extends Action
         if (! $refundPaymentResponse->isSuccess()) {
             Log::error(self::class.' Error refunding payment - '.json_encode($refundPaymentResponse->getErrors()));
 
+            $this->markAsFailed($payment, json_encode($refundPaymentResponse->getErrors()));
+
             return self::danger('Error refunding payment.');
         }
 
@@ -123,6 +136,8 @@ class RefundSquarePayment extends Action
 
         if (! in_array($status, ['PENDING', 'COMPLETED'], true)) {
             Log::error(self::class.' Error refunding payment - refund status is '.$status);
+
+            $this->markAsFailed($payment, 'Refund status is '.$status);
 
             return self::danger('Refund status is '.$status);
         }

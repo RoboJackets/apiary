@@ -69,14 +69,20 @@ class RefundOfflinePayment extends Action
         $payment = $models->sole();
 
         if (! in_array($payment->method, self::REFUNDABLE_OFFLINE_PAYMENT_METHODS, true)) {
+            $this->markAsFailed($payment, Str::title($payment->method).' payments may not be refunded.');
+
             return self::danger(Str::title($payment->method).' payments may not be refunded.');
         }
 
         if (floatval($payment->amount) === 0.0) {
+            $this->markAsFailed($payment, 'This payment was already refunded.');
+
             return self::danger('This payment was already refunded.');
         }
 
         if (Auth::user()->cant('refund-payments')) {
+            $this->markAsFailed($payment, 'You do not have access to refund payments.');
+
             return self::danger('You do not have access to refund payments.');
         }
 
