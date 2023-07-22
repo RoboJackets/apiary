@@ -8,3 +8,4 @@ Apiary supports several payment methods for both :doc:`../dues/index` and :doc:`
 
 .. toctree::
    accept
+   refund
