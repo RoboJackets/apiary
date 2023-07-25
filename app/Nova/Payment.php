@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition
-
 namespace App\Nova;
 
 use App\Models\Payment as AppModelsPayment;
-use App\Models\User as AppModelsUser;
+use App\Nova\Actions\Payments\DisallowedRefund;
+use App\Nova\Actions\Payments\RefundOfflinePayment;
+use App\Nova\Actions\Payments\RefundSquarePayment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
@@ -20,7 +22,6 @@ use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Square\Models\OrderState;
-use Square\SquareClient;
 
 /**
  * A Nova resource for payments.
@@ -146,22 +147,7 @@ class Payment extends Resource
             Text::make('Order ID')
                 ->onlyOnDetail(),
 
-            Text::make('Order State (retrieved from Square)', function (): ?string {
-                if ($this->order_id === null) {
-                    return null;
-                }
-
-                return (new SquareClient(
-                    [
-                        'accessToken' => config('square.access_token'),
-                        'environment' => config('square.environment'),
-                    ]
-                ))->getOrdersApi()
-                    ->retrieveOrder($this->order_id)
-                    ->getResult()
-                    ->getOrder()
-                    ->getState();
-            })
+            Text::make('Order State (retrieved from Square)', fn (): ?string => $this->getSquareOrderState())
                 ->onlyOnDetail(),
 
             Text::make('Card Brand')
@@ -200,53 +186,88 @@ class Payment extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [
-            (new Actions\RefundPayment())->canSee(static function (Request $request): bool {
-                $payment = AppModelsPayment::find($request->resourceId);
+        $resourceId = $request->resourceId ?? $request->resources;
+        $user = $request->user();
 
-                if ($payment !== null && is_a($payment, AppModelsPayment::class)) {
-                    return self::canRefundPayment($request->user(), $payment);
-                }
+        if ($resourceId === null || $user === null) {
+            return [];
+        }
 
-                return $request->user()->can('refund-payments');
-            })->canRun(
-                static fn (NovaRequest $r, AppModelsPayment $p): bool => self::canRefundPayment($r->user(), $p)
-            )->confirmButtonText('Refund Payment'),
-        ];
+        $payment = AppModelsPayment::find($resourceId);
+
+        if ($payment === null || floatval($payment->amount) === 0.0) {
+            return [];
+        }
+
+        if ($request->user()->cant('refund-payments')) {
+            return [];
+        }
+
+        if (in_array($payment->method, RefundOfflinePayment::REFUNDABLE_OFFLINE_PAYMENT_METHODS, true)) {
+            if ($payment->payable->user->id === $user->id) {
+                return [
+                    self::selfRefundNotAllowed(),
+                ];
+            }
+
+            return [
+                RefundOfflinePayment::make()
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('refund-payments'))
+                    ->canRun(static fn (
+                        NovaRequest $request,
+                        AppModelsPayment $payment
+                    ): bool => $request->user()->can('refund-payments')),
+            ];
+        }
+
+        if ($payment->method === 'square' &&
+            $payment->unique_id !== null &&
+            $payment->order_id !== null &&
+            $payment->created_at !== null &&
+            Carbon::now()->subYear()->lessThanOrEqualTo($payment->created_at) &&
+            $payment->getSquareOrderState() === OrderState::COMPLETED
+        ) {
+            if ($payment->payable->user->id === $user->id) {
+                return [
+                    self::selfRefundNotAllowed(),
+                ];
+            }
+
+            return [
+                RefundSquarePayment::make()
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('refund-payments'))
+                    ->canRun(static fn (
+                        NovaRequest $request,
+                        AppModelsPayment $payment
+                    ): bool => $request->user()->can('refund-payments')),
+            ];
+        }
+
+        if ($payment->method === 'square' &&
+            $payment->unique_id !== null &&
+            $payment->order_id !== null &&
+            $payment->created_at !== null &&
+            Carbon::now()->subYear()->greaterThan($payment->created_at) &&
+            $payment->getSquareOrderState() === OrderState::COMPLETED
+        ) {
+            return [
+                self::squareTransactionTooOld(),
+            ];
+        }
+
+        return [];
     }
 
-    private static function canRefundPayment(AppModelsUser $user, AppModelsPayment $payment): bool
+    private static function selfRefundNotAllowed(): Action
     {
-        if (intval($payment->amount) === 0) {
-            return false;
-        }
+        return DisallowedRefund::make('You may not refund your own payment.')
+            ->canRun(static fn (): bool => true);
+    }
 
-        if ($payment->unique_id === null) {
-            return false;
-        }
-
-        $order_id = $payment->order_id;
-
-        if ($order_id === null) {
-            return false;
-        }
-
-        if (
-            (new SquareClient(
-                [
-                    'accessToken' => config('square.access_token'),
-                    'environment' => config('square.environment'),
-                ]
-            ))->getOrdersApi()
-                ->retrieveOrder($order_id)
-                ->getResult()
-                ->getOrder()
-                ->getState() !== OrderState::COMPLETED
-        ) {
-            return false;
-        }
-
-        return $user->can('refund-payments');
+    private static function squareTransactionTooOld(): Action
+    {
+        return DisallowedRefund::make('Square transactions older than 1 year may not be refunded.')
+            ->canRun(static fn (): bool => true);
     }
 
     public static function searchable(): bool

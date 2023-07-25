@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
+use Square\SquareClient;
 
 /**
  * Represents a payment made from a member to RoboJackets against a Payable.
@@ -235,6 +237,28 @@ class Payment extends Model
             (($amount + self::PER_TRANSACTION_FEE) / ((100 - self::PERCENTAGE_FEE) / 100)) - $amount,
             0,
             PHP_ROUND_HALF_UP
+        );
+    }
+
+    public function getSquareOrderState(): ?string
+    {
+        if ($this->order_id === null) {
+            return null;
+        }
+
+        return Cache::remember(
+            'square_payment_status_'.$this->order_id,
+            10,
+            fn (): string => (new SquareClient(
+                [
+                    'accessToken' => config('square.access_token'),
+                    'environment' => config('square.environment'),
+                ]
+            ))->getOrdersApi()
+                ->retrieveOrder($this->order_id)
+                ->getResult()
+                ->getOrder()
+                ->getState()
         );
     }
 }
