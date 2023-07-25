@@ -140,8 +140,8 @@ job "apiary" {
 
       resources {
         cpu = 100
-        memory = 128
-        memory_max = 2048
+        memory = 2048
+        memory_max = 4096
       }
 
       volume_mount {
