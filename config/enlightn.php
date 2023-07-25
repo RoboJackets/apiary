@@ -31,6 +31,7 @@ return [
         ...(env('SKIP_PHPSTAN_CHECKS', false) === true ? [
             \Enlightn\Enlightn\Analyzers\Performance\CollectionCallAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\DeadCodeAnalyzer::class,
+            \Enlightn\Enlightn\Analyzers\Reliability\DeprecatedCodeAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\ForeachIterableAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidFunctionCallAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidImportAnalyzer::class,
@@ -39,13 +40,13 @@ return [
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidOffsetAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer::class,
+            \Enlightn\Enlightn\Analyzers\Reliability\MissingModelRelationAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\MissingReturnStatementAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\UndefinedConstantAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\UndefinedVariableAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\UnsetAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Security\FillableForeignKeyAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Security\MassAssignmentAnalyzer::class,
-            \Enlightn\Enlightn\Analyzers\Reliability\DeprecatedCodeAnalyzer::class,
         ] : []),
         ...(env('APP_ENV', 'local') === 'test' ? [] : [
             \Enlightn\Enlightn\Analyzers\Security\AppDebugAnalyzer::class,
