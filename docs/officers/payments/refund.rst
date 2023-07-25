@@ -11,7 +11,7 @@ Refunds can be recorded for cash, check, and Square payments at the discretion o
 
 Refunding :ref:`Online-Only Payment Methods` within Apiary will automatically trigger a refund to the original payment method, and will also refund the surcharge.
 
-Refunding cash or check payments within Apiary is only a record-keeping operation and does not move funds.
+Refunding a cash or check payment within Apiary is only a record-keeping operation and does not move funds.
 The treasurer will need to send a check or other payment to refund the member.
 
 In either case, the steps within Apiary are the same:
