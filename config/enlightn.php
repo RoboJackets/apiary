@@ -44,7 +44,8 @@ return [
             \Enlightn\Enlightn\Analyzers\Reliability\UndefinedVariableAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\UnsetAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Security\FillableForeignKeyAnalyzer::class,
-            \Enlightn\Enlightn\Analyzers\Security\MassAssignmentAnalyzer::class,
+            \Enlightn\Enlightn\Analyzers\Security\MassAssignmentAnalyzer::class
+            \Enlightn\Enlightn\Analyzers\Reliability\DeprecatedCodeAnalyzer::class,
         ] : []),
         ...(env('APP_ENV', 'local') === 'test' ? [] : [
             \Enlightn\Enlightn\Analyzers\Security\AppDebugAnalyzer::class,
