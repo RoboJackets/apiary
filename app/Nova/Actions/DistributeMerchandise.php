@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
@@ -20,15 +21,30 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class DistributeMerchandise extends Action
 {
     /**
-     * The Merchandise model that will be distributed. This is used to build the list of users.
+     * The text to be used for the action's confirm button.
      *
-     * @var ?\App\Models\Merchandise
+     * @var string
      */
-    private $resource;
+    public $confirmButtonText = 'Mark as Picked Up';
+
+    /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'Select the member to whom you are distributing merchandise. Only members that are '.
+        'currently eligible to pick up this item are shown in the list.';
+
+    /**
+     * The Merchandise model that will be distributed. This is used to build the list of users.
+     */
+    private readonly ?Merchandise $resource;
 
     public function __construct(?string $resourceId)
     {
         if ($resourceId === null) {
+            $this->resource = null;
+
             return;
         }
 
@@ -42,13 +58,9 @@ class DistributeMerchandise extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        if (count($models) !== 1) {
-            return Action::danger('This action requires exactly one model.');
-        }
-
-        $merchandise = $models->first();
-        $provided_by = User::where('id', $fields->provided_by)->sole();
-        $provided_to = User::where('id', $fields->provided_to)->sole();
+        $merchandise = $models->sole();
+        $provided_by = Auth::user();
+        $provided_to = User::where('id', $fields->member)->sole();
 
         $dtm = DuesTransactionMerchandise::select(
             'dues_transaction_merchandise.id',
@@ -90,15 +102,13 @@ class DistributeMerchandise extends Action
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
-     *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {
         $resource = $this->resource;
 
         return [
-            Select::make('Distributed To', 'provided_to')
+            Select::make('Member', 'member')
                 ->options(
                     static fn (): array => User::whereHas(
                         'duesTransactions',
@@ -127,14 +137,6 @@ class DistributeMerchandise extends Action
                 ->searchable()
                 ->required()
                 ->rules('required'),
-
-            Select::make('Distributed By', 'provided_by')
-                ->options([strval($request->user()->id) => $request->user()->name])
-                ->default(strval($request->user()->id))
-                ->required()
-                ->rules('required')
-                // If we use `readonly()`, then this field's value isn't passed to the action
-                ->withMeta(['extraAttributes' => ['readonly' => true]]),
         ];
     }
 }

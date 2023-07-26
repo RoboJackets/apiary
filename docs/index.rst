@@ -15,6 +15,7 @@ Apiary Documentation
    officers/attendance
    officers/dues/index
    officers/payments/index
+   officers/merchandise
 
 .. toctree::
    :caption: For Administrators
