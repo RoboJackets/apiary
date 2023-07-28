@@ -115,7 +115,7 @@ class DocuSignController extends Controller
                 redirect_uri: route('docusign.auth.complete'),
                 response_type: 'code',
                 state: $state
-            ).'&prompt=login&login_hint='.$user->uid.'@gatech.edu';
+            ).'&login_hint='.$user->uid.'@gatech.edu';
 
             $request->session()->put('state', $state);
             $request->session()->put('next', 'signAgreement');
