@@ -132,7 +132,7 @@ class Merchandise extends Resource
                     static fn (NovaRequest $request, AppModelsMerchandise $merchandise): bool => $request->user()->can(
                         'distribute-swag'
                     )
-                )->confirmButtonText('Mark as Picked Up')
+                )
                 ->onlyOnDetail(),
         ];
     }
