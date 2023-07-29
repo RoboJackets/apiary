@@ -4,7 +4,7 @@
 Payments
 ========
 
-Apiary supports several payment methods for both :doc:`../dues/index` and :doc:`travel`.
+Apiary supports several payment methods for both :doc:`/officers/dues/index` and :doc:`travel`.
 
 .. toctree::
    accept

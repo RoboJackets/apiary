@@ -18,6 +18,7 @@ extensions = [
     "sphinx.ext.extlinks",
     "sphinx.ext.autosectionlabel",
     "sphinxext.opengraph",
+    "sphinxcontrib.httpdomain",
 ]
 
 templates_path = ['_templates']
@@ -58,3 +59,5 @@ rst_prolog = """
 
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 20 20" fill="currentColor" width="20" height="20" class="inline" role="presentation"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 0 14 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
 """
+
+http_strict_mode = True

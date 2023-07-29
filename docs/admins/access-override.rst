@@ -9,7 +9,7 @@ Self-Service
 ------------
 
 .. seealso::
-   There is a :doc:`separate member-facing page for self-service overrides<../members/access-override>`.
+   There is a :doc:`separate member-facing page for self-service overrides</members/access-override>`.
 
 To prevent abuse, several criteria must be met before a user becomes eligible for a self-service override.
 Under normal circumstances, it should be very easy for a well-intentioned RoboJackets new member to receive a self-service override.

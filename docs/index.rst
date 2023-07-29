@@ -1,5 +1,6 @@
 :nosearch:
 :og:description: Product documentation for Apiary, a web application to support RoboJackets internal operations
+:hide-toc:
 
 Apiary Documentation
 ==================================
@@ -21,3 +22,5 @@ Apiary Documentation
    :caption: For Administrators
 
    admins/access-override
+   admins/api/index
+   admins/permissions-roles
