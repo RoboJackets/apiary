@@ -11,7 +11,9 @@ Role Descriptions
 -----------------
 
 Roles provide a quick and easy way to assign a group of permissions to a user.
-For system-to-system access to the :doc:`/admins/api/index`, assign specific permissions rather than a role.
+
+.. warning::
+   For service accounts using the :doc:`/admins/api/index`, assign specific permissions rather than a role.
 
 .. _admin:
 
