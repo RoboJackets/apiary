@@ -10,6 +10,9 @@ If creating a token for use by another application, rather than a human user, yo
 
 To create a new personal access token, navigate to a user's details page within Nova, then use the :guilabel:`Create Personal Access Token` action under the actions menu (three dots |actionsmenu|).
 
+.. note::
+   Users with access to Nova can create their own personal access tokens. Users with the :ref:`admin` role can additionally create tokens for **any** user.
+
 Access tokens are :abbr:`JWTs (JSON Web Token)` and expire one year after creation.
 It is not possible to extend the expiration of a token once it is created.
 

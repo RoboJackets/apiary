@@ -13,6 +13,8 @@ Role Descriptions
 Roles provide a quick and easy way to assign a group of permissions to a user.
 For system-to-system access to the :doc:`/admins/api/index`, assign specific permissions rather than a role.
 
+.. _admin:
+
 ``admin``
 ~~~~~~~~~
 This role grants access to almost all functions and should only be assigned to system administrators, developers, and other technical users. Some functions check for an associated ``admin`` role rather than a specific permission.
