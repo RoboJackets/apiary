@@ -11,7 +11,7 @@ Role Descriptions
 -----------------
 
 Roles provide a quick and easy way to assign a group of permissions to a user.
-For system-to-system access to the :doc:`api/index`, assign specific permissions rather than a role.
+For system-to-system access to the :doc:`/admins/api/index`, assign specific permissions rather than a role.
 
 ``admin``
 ~~~~~~~~~
@@ -22,10 +22,10 @@ This role grants access to almost all functions and should only be assigned to s
 ``officer``
 ~~~~~~~~~~~
 
-- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments <../officers/payments/index>`
+- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
 - Create and update :ref:`dues packages <Dues Package>`
 - Create and update events
-- :doc:`Take attendance for any team or event <../officers/attendance>`
+- :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash, check, or waiver payments <Recording an Offline Payment>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
 - Manage travel
@@ -35,8 +35,8 @@ This role grants access to almost all functions and should only be assigned to s
 ``project-manager``
 ~~~~~~~~~~~~~~~~~~~
 
-- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments <../officers/payments/index>`
-- :doc:`Take attendance for any team or event <../officers/attendance>`
+- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
+- :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash or check payments <Recording an Offline Payment>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
 - Manage travel
@@ -46,8 +46,8 @@ This role grants access to almost all functions and should only be assigned to s
 ``team-lead``
 ~~~~~~~~~~~~~
 
-- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments <../officers/payments/index>`
-- :doc:`Take attendance for any team or event <../officers/attendance>`
+- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
+- :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
 
 .. _trainer:
@@ -56,7 +56,7 @@ This role grants access to almost all functions and should only be assigned to s
 ~~~~~~~~~~~
 
 - View users
-- :doc:`Take attendance for any team or event <../officers/attendance>`
+- :doc:`Take attendance for any team or event </officers/attendance>`
 
 ``member`` and ``non-member``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -72,7 +72,7 @@ The following permissions are not included with any roles, and must be manually 
 ``refund-payments``
 ~~~~~~~~~~~~~~~~~~~
 
-Most payments are considered non-refundable. If an exception is made, this permission should be attached to the treasurer or other financial officer. This enables the :doc:`Refund Payments action <../officers/payments/refund>`.
+Most payments are considered non-refundable. If an exception is made, this permission should be attached to the treasurer or other financial officer. This enables the :doc:`Refund Payments action </officers/payments/refund>`.
 
 ``impersonate-users``
 ~~~~~~~~~~~~~~~~~~~~~
