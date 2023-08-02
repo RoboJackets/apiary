@@ -7,8 +7,8 @@ While most members choose to pay online, cash and checks need to be recorded in 
 Treasurers also have the ability to apply waivers.
 
 .. hint::
-   To record cash or check payments, you must have a ``project-manager`` or ``officer`` role.
-   To apply waivers, you must have the ``officer`` role.
+   To record cash or check payments, you must have a :ref:`officer` or :ref:`project-manager` role.
+   To apply waivers, you must have the :ref:`officer` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
 Online-Only Payment Methods

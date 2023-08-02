@@ -11,7 +11,7 @@ When you physically give someone merchandise, you must record it in Apiary.
 When a student pays for a dues package that is restricted to students (rather than a non-student package), they are offered a choice of merchandise attached to the package.
 
 .. hint::
-   To reccord distribution or view transactions, you must have a ``team-lead``, ``project-manager``, or ``officer`` role.
+   To reccord distribution or view transactions, you must have an :ref:`officer`, :ref:`project-manager`, or :ref:`team-lead` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
 Confirming Merchandise Selections

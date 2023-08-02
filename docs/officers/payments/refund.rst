@@ -6,7 +6,7 @@ Refunding Payments
 Refunds can be recorded for cash, check, and Square payments at the discretion of the treasurer.
 
 .. hint::
-   To refund payments, you must have the ``refund-payments`` permission, which is not included with any roles.
+   To refund payments, you must have the :ref:`refund-payments` permission, which is not included with any roles.
    If you need access, ask in :slack:`it-helpdesk`.
 
 Refunding :ref:`Online-Only Payment Methods` within Apiary will automatically trigger a refund to the original payment method, and will also refund the surcharge.
