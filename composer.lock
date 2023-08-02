@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2f010023eb497e25f5d8db0cedd4ef8",
+    "content-hash": "0078c89b773cff588ec29fc95927744e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8756,16 +8756,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "3.6.1",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "eb94a52b88794d0c108dc46ca1a680531c3a8bad"
+                "reference": "37e5817f22091356457ee2368d7ac4888f1aaeca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/eb94a52b88794d0c108dc46ca1a680531c3a8bad",
-                "reference": "eb94a52b88794d0c108dc46ca1a680531c3a8bad",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/37e5817f22091356457ee2368d7ac4888f1aaeca",
+                "reference": "37e5817f22091356457ee2368d7ac4888f1aaeca",
                 "shasum": ""
             },
             "require": {
@@ -8773,7 +8773,7 @@
                 "nyholm/psr7": "^1.0",
                 "php": "^7.2 | ^8.0",
                 "sentry/sdk": "^3.4",
-                "sentry/sentry": "^3.20",
+                "sentry/sentry": "^3.20.1",
                 "symfony/psr-http-message-bridge": "^1.0 | ^2.0"
             },
             "require-dev": {
@@ -8830,7 +8830,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/3.6.1"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/3.7.2"
             },
             "funding": [
                 {
@@ -8842,7 +8842,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-07-04T10:30:42+00:00"
+            "time": "2023-08-02T12:25:07+00:00"
         },
         {
             "name": "smalot/pdfparser",
