@@ -18,7 +18,7 @@ Create a Fiscal Year
 #. Enter the :guilabel:`Ending Year`. For example, for the fiscal year ending in June 2023, enter 2023.
 #. Click the blue :guilabel:`Create Fiscal Year` button below the bottom-right of the form.
 
-Your newly-created fiscal year won't have any packages or merchandise associated with it yet.
+Your newly created fiscal year won't have any packages or merchandise associated with it yet.
 Use the :guilabel:`Create Dues Packages` action to create default packages and merchandise, then adjust as needed.
 
 Create Dues Packages
