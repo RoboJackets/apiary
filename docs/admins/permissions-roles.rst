@@ -7,6 +7,8 @@ Apiary supports granular access control to limit access to the software.
 Most actions require a specific permission, and permissions are grouped into roles.
 Users can be assigned any combination of roles and permissions, and their effective access is cumulative across all assigned roles and permissions.
 
+To attach or detach a role or permission, open a user's detail page, then scroll to the :guilabel:`Roles` or :guilabel:`Permissions` section.
+
 Role Descriptions
 -----------------
 
