@@ -12,7 +12,7 @@ To attach or detach a role or permission, open a user's detail page, then scroll
 Role Descriptions
 -----------------
 
-Roles provide a quick and easy way to assign a group of permissions to a user.
+Roles provide a quick way to assign a group of permissions to a user.
 
 .. warning::
    For service accounts using the :doc:`/admins/api/index`, assign specific permissions rather than a role.
@@ -68,8 +68,8 @@ This role grants access to almost all functions and should only be assigned to s
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 These are identical roles that provide baseline access to end users. They are assigned automatically based on user behavior and should not be manually attached or detached.
 
-Special Permissions
--------------------
+Restricted Permissions
+----------------------
 
 The following permissions are not included with any roles, and must be manually assigned to a user if necessary.
 
