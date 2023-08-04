@@ -50,7 +50,8 @@ Apiary can create unique, time-limited links to record attendance for online mee
 
 To create a new link:
 
-#. Go to the `Teams <https://my.robojackets.org/nova/resources/teams>`_ or `Events <https://my.robojackets.org/nova/resources/events>`_ list in Nova.
+#. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
+#. Under the :guilabel:`Meetings` header in the left sidebar, click :guilabel:`Teams` or :`guilabel:`Events`.
 #. Select the team or event for which you want to create a link.
 #. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Team Details` or :guilabel:`Event Details` header, then choose the :guilabel:`Create Remote Attendance Link` option.
    A popup will appear.

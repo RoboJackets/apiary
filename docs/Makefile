@@ -21,3 +21,9 @@ help:
 
 autobuild:
 	poetry run sphinx-autobuild . _build/html -b=dirhtml
+
+proselint:
+	poetry run sphinx-build -b text . _build/text/ && poetry run proselint _build/text/
+
+alex:
+	poetry run sphinx-build -b text . _build/text/ && ../node_modules/.bin/alex --text _build/text/
