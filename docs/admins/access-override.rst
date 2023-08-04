@@ -12,7 +12,7 @@ Self-Service
    There is a :doc:`separate member-facing page for self-service overrides</members/access-override>`.
 
 To prevent abuse, several criteria must be met before a user becomes eligible for a self-service override.
-Under normal circumstances, it should be very easy for a well-intentioned RoboJackets new member to receive a self-service override.
+Under normal circumstances, it should be easy for a well-intentioned RoboJackets new member to receive a self-service override.
 
 A user's eligibility for a self-service override is visible on their details page in Nova, in the System Access panel.
 
