@@ -28,7 +28,20 @@ COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
 RUN set -eux && \
     npm install -g npm@latest && \
-    npx html-minifier --input-dir /docs/ --output-dir /docs/ --file-ext html --collapse-whitespace --collapse-inline-tag-whitespace --minify-css --minify-js --minify-urls ROOT_PATH_RELATIVE --remove-comments --remove-empty-attributes --conservative-collapse
+    npx html-minifier --input-dir /docs/ --output-dir /docs/ --file-ext html --collapse-whitespace --collapse-inline-tag-whitespace --minify-css --minify-js --minify-urls ROOT_PATH_RELATIVE --remove-comments --remove-empty-attributes --conservative-collapse && \
+    find /docs/ -type f -size +0 | while read file; do \
+        filename=$(basename -- "$file"); \
+        extension="${filename##*.}"; \
+        if [ "$extension" = "js" ]; then \
+            npx terser "$file" --compress --output "$file"; \
+        fi; \
+        if [ "$extension" = "css" ]; then \
+            npx clean-css-cli "$file" -O2 --output "$file"; \
+        fi; \
+        if [ "$extension" = "map" ]; then \
+            rm -f "$file"; \
+        fi; \
+    done;
 
 FROM scratch as frontend-source
 
