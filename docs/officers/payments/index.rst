@@ -1,5 +1,5 @@
-:nosearch:
 :og:description: Apiary supports several payment methods for both dues and travel.
+:nosearch:
 
 Payments
 ========

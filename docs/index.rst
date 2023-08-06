@@ -1,9 +1,9 @@
 :nosearch:
-:og:description: Product documentation for Apiary, a web application to support RoboJackets internal operations
+:og:description: Product documentation for Apiary, a web app to support RoboJackets internal operations
 :hide-toc:
 
-Apiary Documentation
-==================================
+Apiary
+======
 
 .. toctree::
    :caption: For Members

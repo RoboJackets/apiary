@@ -1,10 +1,12 @@
 :nosearch:
-:og:description: RoboJackets tracks dues collection within Apiary to ensure that transactions are fully documented, and reduce or eliminate touchpoints from officers.
+:og:description: RoboJackets tracks dues collection within Apiary to reduce touchpoints from officers and ensure that transactions are fully documented.
 
 Dues
 ====
 
-RoboJackets tracks dues collection within Apiary to ensure that transactions are fully documented, and reduce or eliminate touchpoints from officers.
+.. vale write-good.E-Prime = NO
+
+RoboJackets tracks dues collection within Apiary to reduce touchpoints from officers and ensure that transactions are fully documented.
 
 .. seealso::
    To record a dues payment, see :doc:`/officers/payments/accept`.

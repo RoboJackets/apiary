@@ -1,7 +1,12 @@
 :og:description: Apiary supports granular access control to different functions of the software.
 
-Permissions and Roles
+Permissions and roles
 =====================
+
+.. vale Google.Passive = NO
+.. vale write-good.E-Prime = NO
+.. vale write-good.Passive = NO
+.. vale write-good.Weasel = NO
 
 Apiary supports granular access control to limit access to the software.
 Most actions require a specific permission, and permissions are grouped into roles.
@@ -9,7 +14,7 @@ Users can be assigned any combination of roles and permissions, and their effect
 
 To attach or detach a role or permission, open a user's detail page, then scroll to the :guilabel:`Roles` or :guilabel:`Permissions` section.
 
-Role Descriptions
+Role descriptions
 -----------------
 
 Roles provide a quick way to assign a group of permissions to a user.
@@ -66,12 +71,12 @@ This role grants access to almost all functions and should only be assigned to s
 
 ``member`` and ``non-member``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-These are identical roles that provide baseline access to end users. They are assigned automatically based on user behavior and should not be manually attached or detached.
+These are identical roles that provide baseline access to end users. They're assigned automatically based on user behavior and shouldn't be manually attached or detached.
 
-Restricted Permissions
+Restricted permissions
 ----------------------
 
-The following permissions are not included with any roles, and must be manually assigned to a user if necessary.
+The following permissions aren't included with any roles, and must be manually assigned to a user if necessary.
 
 .. _refund-payments:
 
@@ -87,5 +92,7 @@ This permission enables `impersonation within Laravel Nova <https://nova.laravel
 
 ``authenticate-with-docusign``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. vale Google.Parens = NO
 
 This permission enables a convenience URL (``/sign/auth``) to configure `DocuSign impersonation <https://developers.docusign.com/platform/auth/jwt/>`__. It should only be attached to system administrators that are configuring DocuSign.

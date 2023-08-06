@@ -1,18 +1,21 @@
-:og:description: Refunds can be recorded for cash, check, and Square payments at the discretion of the treasurer.
+:og:description: Officers can record refunds for cash, check, and Square payments, at the discretion of the treasurer.
 
-Refunding Payments
+Refunding payments
 ==================
 
-Refunds can be recorded for cash, check, and Square payments at the discretion of the treasurer.
+Officers can record refunds for cash, check, and Square payments, at the discretion of the treasurer.
+
+.. vale write-good.E-Prime = NO
+.. vale write-good.Weasel = NO
 
 .. hint::
-   To refund payments, you must have the :ref:`refund-payments` permission, which is not included with any roles.
+   To refund payments, you must have the :ref:`refund-payments` permission, which isn't included with any roles.
    If you need access, ask in :slack:`it-helpdesk`.
 
-Refunding :ref:`Online-Only Payment Methods` within Apiary will automatically trigger a refund to the original payment method, and will also refund the surcharge.
+Refunding :ref:`online payment methods <Online payment methods>` within Apiary automatically triggers a refund to the original payment method, including the surcharge.
 
-Refunding a cash or check payment within Apiary is only a record-keeping operation and does not move funds.
-The treasurer will need to send a check or other payment to refund the member.
+Refunding a cash or check payment within Apiary is only a record-keeping operation and doesn't move funds.
+The treasurer must send a check or other payment to refund the member.
 
 In either case, the steps within Apiary are the same:
 
@@ -26,6 +29,6 @@ In either case, the steps within Apiary are the same:
 #. Select the payment from the list.
 #. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Payment Details` header.
 #. Select :guilabel:`Refund Payment`.
-#. You are required to provide a reason for the refund.
-   If refunding an online payment, this reason will be visible to the member on the updated Square receipt.
+#. You must provide a reason for the refund.
+   If refunding an online payment, this reason is visible to the member on the updated Square receipt.
 #. When you're done, click the red :guilabel:`Refund Payment` button.

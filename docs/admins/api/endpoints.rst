@@ -3,8 +3,10 @@
 Endpoints
 =========
 
-This list includes the endpoints that are most heavily used and maintained, but is not comprehensive.
-If you are looking for an endpoint to perform a specific operation not listed here, ask in :slack:`apiary`.
+.. vale write-good.E-Prime = NO
+
+This list includes the endpoints that are most heavily used and maintained, but isn't comprehensive.
+If you're looking for an endpoint to perform a specific operation not listed here, ask in :slack:`apiary`.
 
 All endpoints require an ``Authorization`` header with an OAuth access token, and an ``Accept`` header set to ``application/json``.
 
