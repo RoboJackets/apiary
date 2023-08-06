@@ -9,7 +9,6 @@ Accepting payments
 .. vale write-good.Passive = NO
 
 While most members choose to pay online, cash and checks must be recorded in Apiary manually by an officer or project manager.
-
 Officers also have the ability to apply waivers.
 
 .. hint::
