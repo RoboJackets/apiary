@@ -28,7 +28,7 @@ The following payment methods are only accepted online and incur a surcharge dep
 - Apple Pay
 - Cash App
 
-Apiary **doesn't** support payments via PayPal, Venmo, or Zelle.
+RoboJackets **doesn't** accept payments via PayPal, Venmo, or Zelle.
 
 Recording an offline payment
 ----------------------------
