@@ -1,0 +1,16 @@
+check
+Venmo
+Zelle
+touchpoint
+\(three dots |actionsmenu|\)
+purchase
+polo
+Competition
+NFC
+GTID
+Tinker
+Laravel
+REST
+OAuth
+expiration
+JWT
