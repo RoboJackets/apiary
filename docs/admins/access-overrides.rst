@@ -59,7 +59,7 @@ Manual overrides have two requirements:
 - The user receiving the override must have signed the latest membership agreement
 
 .. tip::
-   Administrators with access to either Nomad or the production server itself may apply overrides without meeting those requirements, either with Tinker or in the database.
+   Administrators with access to either Nomad or the server itself may apply overrides without meeting those requirements, either with Tinker or in the database.
 
 To manually grant an access override:
 
