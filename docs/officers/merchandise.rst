@@ -19,7 +19,7 @@ When a member pays for a dues package, they can select from the merchandise atta
 Confirming merchandise selections
 ---------------------------------
 
-To confirm which merchandise a member selected when they pay dues, follow these steps.
+To confirm which merchandise a member selected when they paid dues, follow these steps.
 
 #. From the Apiary homepage, click the :guilabel:`Admin` link in the top navigation bar.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.

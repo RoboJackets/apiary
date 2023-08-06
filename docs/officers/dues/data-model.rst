@@ -14,9 +14,9 @@ The treasurer or another officer must manually create each one to group the obje
 Dues package
 ------------
 
-.. vale write-good.Passive = NO
 .. vale Google.Passive = NO
 .. vale write-good.E-Prime = NO
+.. vale write-good.Passive = NO
 .. vale write-good.Weasel = NO
 
 A **dues package** represents an option for paying dues.

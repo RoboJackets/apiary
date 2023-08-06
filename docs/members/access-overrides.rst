@@ -7,10 +7,9 @@ As a new RoboJackets member, you can request temporary access to RoboJackets ser
 
 .. vale write-good.E-Prime = NO
 
-If you are eligible for a self-service access override, you'll see a card on your Apiary dashboard labeled :guilabel:`New Member Access`.
+If you're eligible for a self-service access override, you'll see a card on your Apiary dashboard labeled :guilabel:`New Member Access`.
 This card explains how the override works and what you need to do to request the override.
 
-.. vale write-good.E-Prime = YES
 .. vale write-good.TooWordy = NO
 .. vale write-good.Weasel = NO
 
@@ -21,14 +20,9 @@ In general, you may request a self-service access override if you have:
 - Signed the RoboJackets membership agreement
 - Attended a RoboJackets team meeting, and an officer recorded your attendance within Apiary
 
-.. vale write-good.TooWordy = YES
-.. vale write-good.Weasel = YES
-
 Once you have completed all required tasks, click :guilabel:`Request Access` on the :guilabel:`New Member Access` card.
 
 If you run into any issues, please ask in :slack:`it-helpdesk`.
 
-.. vale write-good.E-Prime = NO
-
 .. note::
-   If you aren't eligible for a self-service access override, the card won't appear on your dashboard. Please ask in :slack:`it-helpdesk` if you need help.
+   If you aren't eligible for a self-service access override, the card won't appear on your dashboard. Please ask in :slack:`it-helpdesk` for a manual override.

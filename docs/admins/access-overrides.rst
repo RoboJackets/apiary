@@ -4,12 +4,12 @@ Access overrides
 ================
 
 .. vale Google.Parens = NO
-.. vale write-good.Weasel = NO
-.. vale write-good.E-Prime = NO
 .. vale Google.Passive = NO
 .. vale Google.Will = NO
+.. vale write-good.E-Prime = NO
 .. vale write-good.Passive = NO
 .. vale write-good.TooWordy = NO
+.. vale write-good.Weasel = NO
 
 An access override allows someone access to (mostly electronic) RoboJackets services before they pay dues for the current semester.
 Typically, access overrides are provided on a case-by-case basis upon request.
@@ -20,7 +20,7 @@ Self-service
 .. seealso::
    There is a :doc:`separate member-facing page for self-service overrides</members/access-override>`.
 
-To prevent misuse, a member must meet several criteria before they become eligible for a self-service override.
+To prevent misuse, a user must meet several criteria before they become eligible for a self-service override.
 A user's eligibility for a self-service override is visible on their details page in Nova, in the System Access panel.
 
 Self-service overrides can last between 7 and 60 days.
@@ -28,11 +28,11 @@ The longest duration will occur if the earliest future :ref:`dues package <Dues 
 The shortest duration will occur if the earliest future :guilabel:`Access End Date` is 7 or fewer days away.
 
 Self-service override criteria are divided into 2 categories: conditions and tasks.
-A condition is a system- or user-level property that a member can't rectify alone.
-A task must be completed by the member themselves.
+A condition is a system- or user-level property that a user can't rectify alone.
+A task must be completed by the user themselves.
 
 Required conditions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 - User access must not be already active
 - User must have no prior dues payments
@@ -51,7 +51,7 @@ Required tasks
 Manual grant
 ------------
 
-Administrators can generally grant manual access overrides to members, even if they're not eligible for a self-service access override.
+Administrators can generally grant manual access overrides to users, even if they're not eligible for a self-service access override.
 
 Manual overrides have two requirements:
 

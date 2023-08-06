@@ -4,8 +4,8 @@ Authentication
 ==============
 
 .. vale Google.Passive = NO
-.. vale write-good.Passive = NO
 .. vale write-good.E-Prime = NO
+.. vale write-good.Passive = NO
 
 To authenticate to the REST API, clients must provide an OAuth access token in the ``Authorization`` header, prefixed with ``Bearer``.
 

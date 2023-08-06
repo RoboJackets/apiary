@@ -23,9 +23,9 @@ Your phone must support NFC and run Android 7 (Nougat) or newer.
 To record attendance using the app:
 
 .. vale Google.Passive = NO
-.. vale write-good.Passive = NO
-.. vale write-good.E-Prime = NO
 .. vale Google.Will = NO
+.. vale write-good.E-Prime = NO
+.. vale write-good.Passive = NO
 
 #. Download the app from the `Google Play Store <https://play.google.com/store/apps/details?id=org.robojackets.apiary>`_.
 #. Open the app and follow the prompts to sign in.

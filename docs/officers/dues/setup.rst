@@ -8,8 +8,8 @@ Setting up dues
 
 While dues collection itself is largely automated, there are a few steps that the treasurer or another officer needs to perform to start the process.
 
-.. vale write-good.Passive = NO
 .. vale Google.Passive = NO
+.. vale write-good.Passive = NO
 
 .. hint::
    These functions are restricted to core officers.
