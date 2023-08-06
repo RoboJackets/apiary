@@ -44,7 +44,7 @@ Required tasks
 
 - Sign the membership agreement
 - Attend a team meeting
-   - An officer must record attendance in Apiary for it to count.
+   - Attendance must be recorded in Apiary for it to count, either via kiosk, Android app, or a remote attendance link
    - Only teams in Apiary that have the :guilabel:`Self-Service Override Eligible` property set to true in Nova count toward this requirement.
      This means that event attendance, training attendance, and Core or discipline Core attendance won't meet this requirement.
 
