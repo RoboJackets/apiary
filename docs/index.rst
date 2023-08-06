@@ -8,7 +8,7 @@ Apiary
 .. toctree::
    :caption: For Members
 
-   members/access-override
+   members/access-overrides
 
 .. toctree::
    :caption: For Officers
@@ -21,6 +21,6 @@ Apiary
 .. toctree::
    :caption: For Administrators
 
-   admins/access-override
+   admins/access-overrides
    admins/api/index
    admins/permissions-roles
