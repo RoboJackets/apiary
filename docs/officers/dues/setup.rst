@@ -47,7 +47,7 @@ Your new fiscal year now has default dues packages and merchandise set up and li
 Set dues deadlines
 ------------------
 
-If you reviewed the :doc:`/officers/dues/data-model`, you may have noticed there is no explicit dues deadline.
+If you reviewed the :doc:`data model </officers/dues/data-model>`, you may have noticed there is no explicit dues deadline.
 In Apiary, dues deadlines are modeled using the :guilabel:`Access End Date` field.
 You must update *older* dues packages, so that their access end date is set to the dues deadline.
 
