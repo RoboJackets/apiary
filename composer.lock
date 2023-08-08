@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5188c11eac8d1be4f11c95af8dc0da97",
+    "content-hash": "d79404eefffc817565575852d2c58fcb",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8456,16 +8456,16 @@
         },
         {
             "name": "realrashid/sweet-alert",
-            "version": "v7.0.0",
+            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "81eb61745002b7fbe2276cbb64214f678584df5c"
+                "reference": "769f951053cd3363fd7fb7a1dd30f9828b619b44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/81eb61745002b7fbe2276cbb64214f678584df5c",
-                "reference": "81eb61745002b7fbe2276cbb64214f678584df5c",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/769f951053cd3363fd7fb7a1dd30f9828b619b44",
+                "reference": "769f951053cd3363fd7fb7a1dd30f9828b619b44",
                 "shasum": ""
             },
             "require": {
@@ -8542,7 +8542,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-20T01:23:24+00:00"
+            "time": "2023-08-07T19:23:17+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
