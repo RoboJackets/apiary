@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "615cc88ec069424c289b0934fe840f10",
+    "content-hash": "22ef7c7bd079c71e4e27c9b4b183a7ea",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3426,17 +3426,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.27.8",
+            "version": "4.27.10",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "0c3b0bf5b7a4654135a03d5265d3c573ea0788eb"
+                "reference": "1f1bc023213e9defc0b4fb4e5cf244ec63b216ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-0c3b0bf5b7a4654135a03d5265d3c573ea0788eb-zip-07b160.zip",
-                "reference": "0c3b0bf5b7a4654135a03d5265d3c573ea0788eb",
-                "shasum": "7cf0578e4d9456b20bd1bef0c4250a50e6b7d1a4"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-1f1bc023213e9defc0b4fb4e5cf244ec63b216ea-zip-e0b4db.zip",
+                "reference": "1f1bc023213e9defc0b4fb4e5cf244ec63b216ea",
+                "shasum": "83a0ff14a3eec76c638a77f5c05de3ae83ab872d"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3534,9 +3534,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.27.8"
+                "source": "https://github.com/laravel/nova/tree/v4.27.10"
             },
-            "time": "2023-08-10T21:44:28+00:00"
+            "time": "2023-08-11T04:57:43+00:00"
         },
         {
             "name": "laravel/passport",
@@ -6393,16 +6393,16 @@
         },
         {
             "name": "openspout/openspout",
-            "version": "v4.15.0",
+            "version": "v4.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openspout/openspout.git",
-                "reference": "907a2ff042741b1f25b6e636d18ce9d7fc4c8333"
+                "reference": "ef5396bfd44b3dfa092e78458966d25c7a2c931a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openspout/openspout/zipball/907a2ff042741b1f25b6e636d18ce9d7fc4c8333",
-                "reference": "907a2ff042741b1f25b6e636d18ce9d7fc4c8333",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/ef5396bfd44b3dfa092e78458966d25c7a2c931a",
+                "reference": "ef5396bfd44b3dfa092e78458966d25c7a2c931a",
                 "shasum": ""
             },
             "require": {
@@ -6470,7 +6470,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openspout/openspout/issues",
-                "source": "https://github.com/openspout/openspout/tree/v4.15.0"
+                "source": "https://github.com/openspout/openspout/tree/v4.15.1"
             },
             "funding": [
                 {
@@ -6482,7 +6482,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-19T07:48:22+00:00"
+            "time": "2023-08-11T08:32:26+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
