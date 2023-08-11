@@ -13565,16 +13565,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v8.6.2",
+            "version": "v8.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "b401efab5a5223a41d355daf7efc83a7615c9632"
+                "reference": "2d4230edd4a45da956c7ea49295ca0ceeff6ea07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/b401efab5a5223a41d355daf7efc83a7615c9632",
-                "reference": "b401efab5a5223a41d355daf7efc83a7615c9632",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/2d4230edd4a45da956c7ea49295ca0ceeff6ea07",
+                "reference": "2d4230edd4a45da956c7ea49295ca0ceeff6ea07",
                 "shasum": ""
             },
             "require": {
@@ -13642,7 +13642,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2023-08-10T02:24:10+00:00"
+            "time": "2023-08-11T08:24:35+00:00"
         },
         {
             "name": "phan/phan",
