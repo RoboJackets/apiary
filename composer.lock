@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40956be48a24f0646640cde3a9968097",
+    "content-hash": "4064f9bcfdf1a09d7249df5537e0ef2c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -9055,16 +9055,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.15.0",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "efab1844b8826443135201c4443690f032c3d533"
+                "reference": "38fe533e93f86a1b2fb1000bf7df09c4748e6458"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/efab1844b8826443135201c4443690f032c3d533",
-                "reference": "efab1844b8826443135201c4443690f032c3d533",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/38fe533e93f86a1b2fb1000bf7df09c4748e6458",
+                "reference": "38fe533e93f86a1b2fb1000bf7df09c4748e6458",
                 "shasum": ""
             },
             "require": {
@@ -9103,7 +9103,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.15.0"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.0"
             },
             "funding": [
                 {
@@ -9111,7 +9111,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-27T08:09:01+00:00"
+            "time": "2023-08-09T14:08:04+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -9197,16 +9197,16 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "3.1.8",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "b7b83f2a19f320308939609430317ec4f6392939"
+                "reference": "e2e5e0d9567183ca0fb99e0ca22fe386467e360b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/b7b83f2a19f320308939609430317ec4f6392939",
-                "reference": "b7b83f2a19f320308939609430317ec4f6392939",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/e2e5e0d9567183ca0fb99e0ca22fe386467e360b",
+                "reference": "e2e5e0d9567183ca0fb99e0ca22fe386467e360b",
                 "shasum": ""
             },
             "require": {
@@ -9258,7 +9258,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.1.8"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.2.0"
             },
             "funding": [
                 {
@@ -9266,7 +9266,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-05-02T18:21:49+00:00"
+            "time": "2023-08-09T07:09:15+00:00"
         },
         {
             "name": "spatie/once",
