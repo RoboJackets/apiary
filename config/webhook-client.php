@@ -20,7 +20,7 @@ return [
             /*
              * The name of the header containing the signature.
              */
-            'signature_header_name' => 'X-Square-Signature',
+            'signature_header_name' => 'X-Square-HmacSha256-Signature',
 
             /*
              *  This class will verify that the content of the signature header is valid.
