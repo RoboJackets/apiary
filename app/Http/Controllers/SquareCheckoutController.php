@@ -95,6 +95,10 @@ class SquareCheckoutController extends Controller
 
                 $amount = (int) ($transaction->package->cost * 100);
 
+                if ($payment->url !== null) {
+                    return redirect($payment->url);
+                }
+
                 return self::redirect($amount, $payment, $user, 'Dues', $transaction->package->name);
             }
         );
