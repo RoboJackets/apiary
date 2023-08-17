@@ -12,7 +12,7 @@ While dues collection itself is largely automated, there are a few steps that th
 .. vale write-good.Passive = NO
 
 .. hint::
-   These functions are restricted to core officers.
+   To use these features, you must have the :ref:`officer` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
 Create a fiscal year
