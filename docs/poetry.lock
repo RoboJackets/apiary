@@ -122,7 +122,7 @@ woff = ["brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)"]
 
 [[package]]
 name = "furo"
-version = "2023.7.26"
+version = "2023.8.17"
 description = "A clean customisable Sphinx documentation theme."
 category = "main"
 optional = false
@@ -579,7 +579,7 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "885b6c4daaf8975ddc64b90f6482ffc922e0c2002770958fc4c23add7268f40c"
+content-hash = "346582504aef06431778c97044f3b147c7898681ad5841436458ffce88987bec"
 
 [metadata.files]
 alabaster = [
@@ -769,8 +769,8 @@ fonttools = [
     {file = "fonttools-4.42.0.tar.gz", hash = "sha256:614b1283dca88effd20ee48160518e6de275ce9b5456a3134d5f235523fc5065"},
 ]
 furo = [
-    {file = "furo-2023.7.26-py3-none-any.whl", hash = "sha256:1c7936929ec57c5ddecc7c85f07fa8b2ce536b5c89137764cca508be90e11efd"},
-    {file = "furo-2023.7.26.tar.gz", hash = "sha256:257f63bab97aa85213a1fa24303837a3c3f30be92901ec732fea74290800f59e"},
+    {file = "furo-2023.8.17-py3-none-any.whl", hash = "sha256:baed406fc8f75a585caa330756b6841e6a1d4c844a3a355387e01ba9d1a4c6ee"},
+    {file = "furo-2023.8.17.tar.gz", hash = "sha256:56664be7290d1457a49d6c2c98cbf96537b9ee1cf05d28e05a5178e76abe5c55"},
 ]
 future = [
     {file = "future-0.18.3.tar.gz", hash = "sha256:34a17436ed1e96697a86f9de3d15a3b0be01d8bc8de9c1dffd59fb8234ed5307"},
