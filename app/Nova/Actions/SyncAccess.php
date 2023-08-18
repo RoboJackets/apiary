@@ -12,6 +12,13 @@ use Laravel\Nova\Fields\ActionFields;
 class SyncAccess extends Action
 {
     /**
+     * Determine where the action redirection should be without confirmation.
+     *
+     * @var bool
+     */
+    public $withoutConfirmation = true;
+
+    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
