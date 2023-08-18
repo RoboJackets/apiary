@@ -47,5 +47,5 @@ Note that if you turned off :guilabel:`Allow Anonymous RSVPs`, people must log i
 Collecting attendance
 ---------------------
 
-Event attendance works just like for teams.
+Event attendance works the same way as for teams.
 See :doc:`/officers/attendance` for more information.
