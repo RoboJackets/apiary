@@ -20,6 +20,8 @@ In-person meetings
 RoboJackets developed an Android app to read physical BuzzCards using :abbr:`NFC (near-field communication)` and upload the data to the Apiary server.
 Your phone must support NFC and run Android 7 (Nougat) or newer.
 
+.. vale Google.Parens = YES
+
 To record attendance using the app:
 
 .. vale Google.Passive = NO

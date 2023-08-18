@@ -35,7 +35,7 @@ This role grants access to almost all functions and should only be assigned to s
 
 - View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
 - Create and update :ref:`dues packages <Dues Package>`
-- Create and update events
+- Create and update :doc:`events </officers/events>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash, check, or waiver payments <Recording an Offline Payment>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`

@@ -76,7 +76,9 @@ class Team extends Resource
         return [
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->creationRules('unique:teams,name')
+                ->updateRules('unique:teams,name,{{resourceId}}'),
 
             Textarea::make('Description')
                 ->hideFromIndex()

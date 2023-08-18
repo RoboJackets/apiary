@@ -14,6 +14,7 @@ Apiary
    :caption: For Officers
 
    officers/attendance
+   officers/events
    officers/dues/index
    officers/payments/index
    officers/merchandise
