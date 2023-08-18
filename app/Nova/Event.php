@@ -89,8 +89,8 @@ class Event extends Resource
 
             Boolean::make('Allow Anonymous RSVPs', 'allow_anonymous_rsvp')
                 ->help(
-                    'Enabling this option allows members to RSVP to this event without logging in to '.
-                    config('app.name').'. Disabling it requires everyone to log in to record their RSVP.'
+                    'Selecting this option allows members to RSVP to this event without logging in to '.
+                    config('app.name').'. Deselecting it requires everyone to log in to record their RSVP.'
                 )
                 ->hideFromIndex(),
 
