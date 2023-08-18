@@ -87,7 +87,8 @@ class Team extends Resource
 
             BelongsTo::make('Project Manager', 'projectManager', User::class)
                 ->searchable()
-                ->nullable(),
+                ->nullable()
+                ->withoutTrashed(),
 
             new Panel('Communications', $this->commFields()),
 
