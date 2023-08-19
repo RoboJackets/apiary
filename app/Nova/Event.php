@@ -66,24 +66,32 @@ class Event extends Resource
         return [
             Text::make('Event Name', 'name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->creationRules('unique:events,name')
+                ->updateRules('unique:events,name,{{resourceId}}'),
 
             BelongsTo::make('Organizer', 'organizer', User::class)
                 ->searchable()
                 ->rules('required')
-                ->help('The organizer of the event'),
+                ->withoutTrashed(),
 
             DateTime::make('Start Time')
+                ->rules('nullable', 'date', 'before:end_time')
                 ->hideFromIndex(),
 
             DateTime::make('End Time')
+                ->rules('nullable', 'date', 'after:start_time')
                 ->hideFromIndex(),
 
             Text::make('Location')
                 ->hideFromIndex()
                 ->rules('max:255'),
 
-            Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
+            Boolean::make('Allow Anonymous RSVPs', 'allow_anonymous_rsvp')
+                ->help(
+                    'Selecting this option allows members to RSVP to this event without logging in to '.
+                    config('app.name').'. Deselecting it requires everyone to log in to record their RSVP.'
+                )
                 ->hideFromIndex(),
 
             Text::make('RSVP URL', fn (): string => route('events.rsvp', ['event' => $this->id]))
