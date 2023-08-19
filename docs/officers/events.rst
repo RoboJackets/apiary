@@ -30,6 +30,7 @@ Creating an event
    Optionally enter start and end times and a location for the event.
    Note that the event name, start time, and location are shown to people when they RSVP.
 #. If you want to allow people to RSVP to the event without logging in to Apiary, select :guilabel:`Allow Anonymous RSVPs`.
+   This may increase the response rate at the risk of increasing duplicate responses.
 
 .. vale Google.Headings = NO
 
