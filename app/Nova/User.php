@@ -96,6 +96,7 @@ class User extends Resource
                 ->copyable(),
 
             Text::make('Preferred First Name')
+                ->hideWhenCreating()
                 ->rules('nullable', 'max:127'),
 
             Text::make('Legal First Name', 'first_name')
@@ -107,6 +108,7 @@ class User extends Resource
                 ->rules('required', 'max:127'),
 
             Text::make('GTED Primary Affiliation', 'primary_affiliation')
+                ->hideWhenCreating()
                 ->displayUsing(
                     static fn (?string $a): ?string => $a === null || $a === 'member' ? null : ucfirst($a)
                 )
@@ -120,7 +122,8 @@ class User extends Resource
                 ->copyable(),
 
             Text::make('Email Suppression Reason')
-                ->onlyOnDetail(),
+                ->hideWhenCreating()
+                ->hideFromIndex(),
 
             Number::make('GTID')
                 ->hideFromIndex()
@@ -131,6 +134,7 @@ class User extends Resource
                 ->copyable(),
 
             Text::make('Phone Number', 'phone')
+                ->hideWhenCreating()
                 ->hideFromIndex()
                 ->rules('nullable', 'max:15')
                 ->copyable(),
@@ -158,11 +162,13 @@ class User extends Resource
                 'Parent or Guardian Signature',
                 [
                     Text::make('Parent or Guardian Name', 'parent_guardian_name')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->rules('required_with:parent_guardian_email', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                     Email::make('Parent or Guardian Email', 'parent_guardian_email')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
@@ -197,6 +203,7 @@ class User extends Resource
                         ->onlyOnDetail(),
 
                     Boolean::make('BuzzCard Access Opt-Out', 'buzzcard_access_opt_out')
+                        ->hideWhenCreating()
                         ->hideFromIndex(),
                 ]
             ),
@@ -205,6 +212,7 @@ class User extends Resource
                 'Linked Accounts',
                 [
                     Text::make('GitHub', 'github_username')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->rules('nullable', 'max:39')
                         ->creationRules('unique:users,github_username')
@@ -212,11 +220,13 @@ class User extends Resource
                         ->copyable(),
 
                     Boolean::make('GitHub Invite Pending')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
                             .' This controls whether a card is displayed but not the user\'s actual access.'),
 
                     Email::make('Google', 'gmail_address')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,gmail_address')
@@ -224,6 +234,7 @@ class User extends Resource
                         ->copyable(),
 
                     Email::make('ClickUp', 'clickup_email')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,clickup_email')
@@ -231,11 +242,13 @@ class User extends Resource
                         ->copyable(),
 
                     Boolean::make('ClickUp Invite Pending', 'clickup_invite_pending')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->help('This flag is set by JEDI but may be out of sync with ClickUp in some cases.'
                             .' It only controls UX elements.'),
 
                     Boolean::make('SUMS', 'exists_in_sums')
+                        ->hideWhenCreating()
                         ->hideFromIndex()
                         ->help(
                             'This flag is set by JEDI and should not be modified unless you know what you are doing.'
@@ -386,10 +399,12 @@ class User extends Resource
     {
         return [
             Text::make('Emergency Contact Name')
+                ->hideWhenCreating()
                 ->hideFromIndex()
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact')),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
+                ->hideWhenCreating()
                 ->hideFromIndex()
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact'))
                 ->copyable(),
@@ -405,11 +420,13 @@ class User extends Resource
     {
         return [
             Select::make('T-Shirt Size', 'shirt_size')
+                ->hideWhenCreating()
                 ->options(AppModelsUser::$shirt_sizes)
                 ->displayUsingLabels()
                 ->hideFromIndex(),
 
             Select::make('Polo Size')
+                ->hideWhenCreating()
                 ->options(AppModelsUser::$shirt_sizes)
                 ->displayUsingLabels()
                 ->hideFromIndex(),
@@ -431,18 +448,19 @@ class User extends Resource
                 ->onlyOnDetail(),
 
             Boolean::make('Has Ever Logged In')
-                ->hideFromIndex()
-                ->required(),
+                ->onlyOnDetail(),
 
             Boolean::make('Is Service Account')
                 ->hideFromIndex(),
 
             Text::make('Create Reason')
+                ->hideWhenUpdating()
                 ->hideFromIndex()
                 ->required()
                 ->rules('required'),
 
             Text::make('gtDirGUID', 'gtDirGUID')
+                ->hideWhenCreating()
                 ->hideFromIndex()
                 ->copyable(),
 
