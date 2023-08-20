@@ -13652,16 +13652,16 @@
         },
         {
             "name": "orchestra/workbench",
-            "version": "v0.1.6",
+            "version": "v0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/workbench.git",
-                "reference": "4dd369f654e43925fa051e2f5a50cdc1aa0f3686"
+                "reference": "b7d03cb05c8f59db1eca4aff4174f7330399bd60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/workbench/zipball/4dd369f654e43925fa051e2f5a50cdc1aa0f3686",
-                "reference": "4dd369f654e43925fa051e2f5a50cdc1aa0f3686",
+                "url": "https://api.github.com/repos/orchestral/workbench/zipball/b7d03cb05c8f59db1eca4aff4174f7330399bd60",
+                "reference": "b7d03cb05c8f59db1eca4aff4174f7330399bd60",
                 "shasum": ""
             },
             "require": {
@@ -13704,9 +13704,9 @@
             "description": "Workbench Companion for Laravel Packages Development",
             "support": {
                 "issues": "https://github.com/orchestral/workbench/issues",
-                "source": "https://github.com/orchestral/workbench/tree/v0.1.6"
+                "source": "https://github.com/orchestral/workbench/tree/v0.1.7"
             },
-            "time": "2023-08-19T02:10:56+00:00"
+            "time": "2023-08-20T13:44:25+00:00"
         },
         {
             "name": "phan/phan",
