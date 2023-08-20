@@ -101,13 +101,13 @@ class Event extends Resource
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-remote-attendance-links')),
 
-            self::metadataPanel(),
-
             HasMany::make('RSVPs')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-rsvps')),
 
             MorphMany::make('Attendance')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
+
+            self::metadataPanel(),
         ];
     }
 
