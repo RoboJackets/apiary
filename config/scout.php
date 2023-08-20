@@ -184,8 +184,8 @@ return [
                     'exactness',
                     'user_revenue_total:desc',
                     'user_attendance_count:desc',
+                    'user_envelopes_count:desc',
                     'user_signatures_count:desc',
-                    'user_gtid:desc',
                     'updated_at_unix:desc',
                 ],
                 'filterableAttributes' => [
@@ -269,8 +269,8 @@ return [
                     'exactness',
                     'user_revenue_total:desc',
                     'user_attendance_count:desc',
+                    'user_envelopes_count:desc',
                     'user_signatures_count:desc',
-                    'user_gtid:desc',
                     'updated_at_unix:desc',
                 ],
                 'filterableAttributes' => [
@@ -304,6 +304,7 @@ return [
                     'exactness',
                     'revenue_total:desc',
                     'attendance_count:desc',
+                    'envelopes_count:desc',
                     'signatures_count:desc',
                     'gtid:desc',
                 ],

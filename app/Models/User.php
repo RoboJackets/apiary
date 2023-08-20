@@ -897,6 +897,7 @@ class User extends Authenticatable
     {
         return $query
             ->withCount('attendance')
+            ->withCount('envelopes')
             ->withCount('signatures')
             ->with('classStanding')
             ->with('majors')
@@ -934,6 +935,10 @@ class User extends Authenticatable
 
         if (! array_key_exists('attendance_count', $array)) {
             $array['attendance_count'] = $this->attendance()->count();
+        }
+
+        if (! array_key_exists('envelopes_count', $array)) {
+            $array['envelopes_count'] = $this->envelopes()->count();
         }
 
         if (! array_key_exists('signatures_count', $array)) {
