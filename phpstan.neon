@@ -249,3 +249,4 @@ parameters:
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Support\\Collection<\(int\|string\),mixed>::mapWithKeys\(\)#'
     - '#Variable property access on App\\Models\\User\.#'
     - '#Variable property access on object\.#'
+    - '#Call to an undefined method Laravel\\Nova\\Actions\\ActionResponse\|static\(App\\Nova\\Actions\\[a-zA-Z0-9]+\)::withMessage\(\)\.#'

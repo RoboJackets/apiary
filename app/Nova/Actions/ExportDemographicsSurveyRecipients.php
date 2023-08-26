@@ -23,11 +23,33 @@ class ExportDemographicsSurveyRecipients extends Action
     public $withoutActionEvents = true;
 
     /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
+
+    /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = true;
+
+    /**
+     * Determine where the action redirection should be without confirmation.
+     *
+     * @var bool
+     */
+    public $withoutConfirmation = true;
+
+    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      *
      * @phan-suppress PhanTypeMismatchArgument
+     * @phan-suppress PhanDeprecatedFunction
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -36,7 +58,7 @@ class ExportDemographicsSurveyRecipients extends Action
             ->get();
 
         if (count($users) === 0) {
-            return Action::danger('No users match the provided criteria!');
+            return Action::danger('No users match the criteria!');
         }
 
         $output = $users->reduce(
@@ -51,7 +73,8 @@ class ExportDemographicsSurveyRecipients extends Action
         // Generate signed URL to pass to backend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::downloadURL($url, $filename);
+        return Action::download($url, $filename)
+            ->withMessage('The demographics survey recipient list was successfully exported!');
     }
 
     /**

@@ -4,29 +4,47 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
-use Laravel\Nova\Actions\DestructiveAction;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\TokenRepository;
 
-class RevokeOAuth2Tokens extends DestructiveAction
+class RevokeOAuth2Tokens extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-
     /**
      * The displayable name of the action.
      *
      * @var string
      */
-    public $name = 'Revoke All OAuth2 Tokens';
+    public $name = 'Revoke All Tokens';
+
+    /**
+     * The text to be used for the action's confirm button.
+     *
+     * @var string
+     */
+    public $confirmButtonText = 'Revoke All Tokens';
+
+    /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'This action will revoke all OAuth2 access, refresh, and optionally, personal '.
+        'access tokens associated with this user.';
+
+    /**
+     * The metadata for the element.
+     *
+     * @var array<string, bool>
+     */
+    public $meta = [
+        'destructive' => true,
+    ];
 
     /**
      * Perform the action on the given models.
@@ -56,9 +74,11 @@ class RevokeOAuth2Tokens extends DestructiveAction
                 $tokenRepository->revokeAccessToken($access_token->id);
                 $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($access_token->id);
             }
+
+            $this->markAsFinished($user);
         }
 
-        return DestructiveAction::message('Successfully deleted OAuth2 tokens');
+        return Action::message('Successfully revoked all tokens!');
     }
 
     /**
@@ -69,10 +89,8 @@ class RevokeOAuth2Tokens extends DestructiveAction
     public function fields(NovaRequest $request): array
     {
         return [
-            Heading::make('This action will revoke all OAuth2 access, refresh, and optionally, personal '.
-                'access tokens associated with this user.'),
-            Boolean::make('Include Personal Access Tokens')
-                ->help('Check this box if you\'d like to revoke all of this user\'s personal access tokens as well.'),
+            Boolean::make('Revoke Personal Access Tokens')
+                ->help('Check this box if you\'d like to revoke all of this user\'s personal access tokens.'),
         ];
     }
 }

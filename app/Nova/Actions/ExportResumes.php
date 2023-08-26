@@ -26,13 +26,49 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class ExportResumes extends Action
 {
     /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
+
+    /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = true;
+
+    /**
+     * The text to be used for the action's confirm button.
+     *
+     * @var string
+     */
+    public $confirmButtonText = 'Export';
+
+    /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'Note that any filters selected outside of this popup are ignored.';
+
+    /**
+     * Disables action log events for this action.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = true;
+
+    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
+     *
+     * @phan-suppress PhanDeprecatedFunction
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        // Check this here because canSee was removed from App\Nova\User as this is a standalone action.
         if (! Auth::user()->can('read-users-resume')) {
             return Action::danger('Sorry! You are not authorized to perform this action.');
         }
@@ -85,7 +121,7 @@ class ExportResumes extends Action
             ->pluck('uid');
 
         if ($users->count() === 0) {
-            return Action::danger('No resumes matched the criteria!');
+            return Action::danger('No resumes matched the provided criteria!');
         }
 
         $filenames = $users->uniqueStrict()->map(
@@ -144,7 +180,8 @@ class ExportResumes extends Action
         // Generate signed URL to pass to frontend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::downloadURL($url, $filename);
+        return Action::download($url, $filename)
+            ->withMessage('The resumes were successfully exported!');
     }
 
     /**
@@ -221,14 +258,12 @@ class ExportResumes extends Action
         return [
             BooleanGroup::make('Majors')
                 ->options($majors)
-                ->help('Only include resumes for these majors. Note that filters not selected in this dialog do not'.
-                    ' apply to the export.')
+                ->help('Only include resumes for these majors.')
                 ->required(),
 
             BooleanGroup::make('Class Standings')
                 ->options($classStandings)
-                ->help('Only include resumes for these class standings. Note that filters not selected in this dialog'.
-                    ' do not apply to the export.')
+                ->help('Only include resumes for these class standings.')
                 ->required(),
 
             // "before:yesterday" stops users from putting in a date that doesn't make sense that will generate an

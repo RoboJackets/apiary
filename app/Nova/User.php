@@ -2,14 +2,21 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Nova;
 
 use Adldap\Laravel\Facades\Adldap;
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
-use App\Nova\Actions\CreateOAuth2Client;
 use App\Nova\Actions\CreatePersonalAccessToken;
+use App\Nova\Actions\ExportDemographicsSurveyRecipients;
+use App\Nova\Actions\ExportResumes;
+use App\Nova\Actions\ExportUsersBuzzCardAccess;
+use App\Nova\Actions\OverrideAccess;
+use App\Nova\Actions\RefreshFromGTED;
 use App\Nova\Actions\RevokeOAuth2Tokens;
+use App\Nova\Actions\SyncAccess;
 use App\Nova\Metrics\CreateReasonBreakdown;
 use App\Nova\Metrics\ResumesSubmitted;
 use App\Nova\Metrics\TotalAttendance;
@@ -18,6 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
@@ -511,69 +519,137 @@ class User extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [
-            (new Actions\SyncAccess())
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
-                )->confirmButtonText('Sync Access'),
-            (new Actions\OverrideAccess())
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
-                )->confirmButtonText('Override Access'),
-            resolve(CreatePersonalAccessToken::class)
-                ->canSee(static fn (Request $request): bool => true)
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole(
-                        'admin'
-                    ) || ($request->user()->id === $user->id)
-                )->confirmButtonText('Create Access Token'),
-            resolve(CreateOAuth2Client::class)
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
-                )->confirmButtonText('Create Client'),
-            resolve(RevokeOAuth2Tokens::class)
-                ->canSee(static fn (Request $request): bool => true)
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole(
-                        'admin'
-                    ) || ($request->user()->id === $user->id)
-                )->confirmButtonText('Revoke Tokens'),
-            (new Actions\ExportResumes())
-                ->standalone()
-                ->onlyOnIndex()
-                ->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-users-resume')
-                )->confirmButtonText('Export Resumes'),
-            (new Actions\RefreshFromGTED())
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->hasRole('admin')
-                )->confirmButtonText('Refresh from GTED'),
-            (new Actions\ExportUsersBuzzCardAccess())
-                ->standalone()
-                ->onlyOnIndex()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-gtid'))
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can(
-                        'read-users-gtid'
+        $user = AppModelsUser::whereId($request->resourceId ?? $request->resources)->withTrashed()->first();
+
+        if (self::adminCanSee($request) && ($user === null || ! $user->is_service_account)) {
+            $overrideAccess = [
+                OverrideAccess::make()
+                    ->canSee(static fn (Request $r): bool => self::adminCanSee($r))
+                    ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminCanRun($r)),
+            ];
+
+            if ($user !== null && $user->id === $request->user()->id) {
+                $overrideAccess = [
+                    Action::danger(
+                        OverrideAccess::make()->name(),
+                        'You cannot override your own access.'
                     )
-                )->confirmButtonText('Export List'),
-            (new Actions\ExportUsernames())
-                ->onlyOnIndex()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users'))
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can('read-users')
-                ),
-            (new Actions\ExportDemographicsSurveyRecipients())
-                ->standalone()
-                ->onlyOnIndex()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('read-users'))
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsUser $user): bool => $request->user()->can('read-users')
-                ),
+                        ->withoutConfirmation()
+                        ->withoutActionEvents()
+                        ->canRun(static fn (): bool => true),
+                ];
+            } elseif ($user !== null && ! $user->signed_latest_agreement) {
+                $overrideAccess = [
+                    Action::danger(
+                        OverrideAccess::make()->name(),
+                        'This member has not signed the latest membership agreement.'
+                    )
+                        ->withoutConfirmation()
+                        ->withoutActionEvents()
+                        ->canRun(static fn (): bool => true),
+                ];
+            }
+        } else {
+            $overrideAccess = [];
+        }
+
+        if ($user === null || ! $user->is_service_account) {
+            $syncAccess = [
+                SyncAccess::make()
+                    ->canSee(static fn (Request $r): bool => self::adminOrSelfCanSee($r))
+                    ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminOrSelfCanRun($r, $u)),
+            ];
+        } else {
+            $syncAccess = [];
+        }
+
+        if ($user === null || ! $user->is_service_account) {
+            $refreshFromGted = [
+                RefreshFromGTED::make()
+                    ->canSee(static fn (Request $r): bool => self::adminCanSee($r))
+                    ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminCanRun($r)),
+            ];
+        } else {
+            $refreshFromGted = [];
+        }
+
+        if ($request->user()->can('read-users-resume')) {
+            $exportResumes = [
+                ExportResumes::make()
+                    ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-resume')),
+            ];
+        } else {
+            $exportResumes = [
+                Action::danger(
+                    ExportResumes::make()->name(),
+                    'You do not have access to export resumes.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->standalone()
+                    ->onlyOnIndex()
+                    ->canRun(static fn (): bool => true),
+            ];
+        }
+
+        if ($request->user()->can('read-users-gtid')) {
+            $exportBuzzCardList = [
+                ExportUsersBuzzCardAccess::make()
+                    ->canSee(static fn (Request $r): bool => $r->user()->can('read-users-gtid')),
+            ];
+        } else {
+            $exportBuzzCardList = [
+                Action::danger(
+                    ExportUsersBuzzCardAccess::make()->name(),
+                    'You do not have access to export BuzzCard access lists.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->standalone()
+                    ->onlyOnIndex()
+                    ->canRun(static fn (): bool => true),
+            ];
+        }
+
+        if ($request->user()->can('read-users')) {
+            $exportDemographicsSurveyList = [
+                ExportDemographicsSurveyRecipients::make()
+                    ->canSee(static fn (Request $r): bool => $r->user()->can('read-users')),
+            ];
+        } else {
+            $exportDemographicsSurveyList = [
+                Action::danger(
+                    ExportDemographicsSurveyRecipients::make()->name(),
+                    'You do not have access to export demographics survey recipients.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->standalone()
+                    ->onlyOnIndex()
+                    ->canRun(static fn (): bool => true),
+            ];
+        }
+
+        return [
+            ...$syncAccess,
+
+            ...$overrideAccess,
+
+            ...$refreshFromGted,
+
+            CreatePersonalAccessToken::make()
+                ->canSee(static fn (Request $r): bool => self::adminOrSelfCanSee($r))
+                ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminOrSelfCanRun($r, $u)),
+
+            RevokeOAuth2Tokens::make()
+                ->canSee(static fn (Request $r): bool => self::adminOrSelfCanSee($r))
+                ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminOrSelfCanRun($r, $u)),
+
+            ...$exportResumes,
+
+            ...$exportBuzzCardList,
+
+            ...$exportDemographicsSurveyList,
         ];
     }
 
@@ -663,5 +739,28 @@ class User extends Resource
         }
 
         return null;
+    }
+
+    private static function adminOrSelfCanSee(Request $request): bool
+    {
+        $targetUserId = $request->resourceId ?? $request->resources;
+        $requestingUser = $request->user();
+
+        return $requestingUser->hasRole('admin') || $requestingUser->id === $targetUserId;
+    }
+
+    private static function adminOrSelfCanRun(NovaRequest $request, AppModelsUser $user): bool
+    {
+        return $request->user()->hasRole('admin') || $request->user()->id === $user->id;
+    }
+
+    private static function adminCanSee(Request $request): bool
+    {
+        return $request->user()->hasRole('admin');
+    }
+
+    private static function adminCanRun(NovaRequest $request): bool
+    {
+        return $request->user()->hasRole('admin');
     }
 }

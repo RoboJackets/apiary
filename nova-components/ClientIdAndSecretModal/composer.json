@@ -1,0 +1,29 @@
+{
+    "name": "robojackets/client-id-and-secret-modal",
+    "description": "A Laravel Nova asset.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RoboJackets\\ClientIdAndSecretModal\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RoboJackets\\ClientIdAndSecretModal\\AssetServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

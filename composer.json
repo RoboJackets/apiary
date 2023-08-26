@@ -63,7 +63,9 @@
         "subfission/cas": "4.4.0",
         "symfony/http-client": "6.3.2",
         "symfony/postmark-mailer": "6.3.0",
-        "xammie/mailbook": "1.6.2"
+        "xammie/mailbook": "1.6.2",
+        "robojackets/personal-access-token-modal": "@dev",
+        "robojackets/client-id-and-secret-modal": "@dev"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "dev-master as 2.12.4",
@@ -198,6 +200,14 @@
             "only": [
                 "madewithlove/laravel-nova-uuid-support"
             ]
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/PersonalAccessTokenModal"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/ClientIdAndSecretModal"
         }
     ]
 }
