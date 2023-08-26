@@ -521,7 +521,7 @@ class User extends Resource
     {
         $user = AppModelsUser::whereId($request->resourceId ?? $request->resources)->withTrashed()->first();
 
-        if (self::adminCanSee($request) && ($user === null || ! $user->is_service_account)) {
+        if (self::adminCanSee($request) && $user !== null ! $user->is_service_account) {
             $overrideAccess = [
                 OverrideAccess::make()
                     ->canSee(static fn (Request $r): bool => self::adminCanSee($r))
@@ -553,7 +553,7 @@ class User extends Resource
             $overrideAccess = [];
         }
 
-        if ($user === null || ! $user->is_service_account) {
+        if ($user !== null && ! $user->is_service_account) {
             $syncAccess = [
                 SyncAccess::make()
                     ->canSee(static fn (Request $r): bool => self::adminOrSelfCanSee($r))
@@ -563,7 +563,7 @@ class User extends Resource
             $syncAccess = [];
         }
 
-        if ($user === null || ! $user->is_service_account) {
+        if ($user !== null && ! $user->is_service_account) {
             $refreshFromGted = [
                 RefreshFromGTED::make()
                     ->canSee(static fn (Request $r): bool => self::adminCanSee($r))
