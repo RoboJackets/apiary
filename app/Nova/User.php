@@ -521,14 +521,14 @@ class User extends Resource
     {
         $user = AppModelsUser::whereId($request->resourceId ?? $request->resources)->withTrashed()->first();
 
-        if (self::adminCanSee($request) && $user !== null ! $user->is_service_account) {
+        if (self::adminCanSee($request) && $user !== null && ! $user->is_service_account) {
             $overrideAccess = [
                 OverrideAccess::make()
                     ->canSee(static fn (Request $r): bool => self::adminCanSee($r))
                     ->canRun(static fn (NovaRequest $r, AppModelsUser $u): bool => self::adminCanRun($r)),
             ];
 
-            if ($user !== null && $user->id === $request->user()->id) {
+            if ($user->id === $request->user()->id) {
                 $overrideAccess = [
                     Action::danger(
                         OverrideAccess::make()->name(),
@@ -538,7 +538,7 @@ class User extends Resource
                         ->withoutActionEvents()
                         ->canRun(static fn (): bool => true),
                 ];
-            } elseif ($user !== null && ! $user->signed_latest_agreement) {
+            } elseif ($user->signed_latest_agreement !== true) {
                 $overrideAccess = [
                     Action::danger(
                         OverrideAccess::make()->name(),
