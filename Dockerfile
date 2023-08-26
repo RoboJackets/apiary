@@ -59,14 +59,14 @@ WORKDIR /nova-components/ClientIdAndSecretModal/
 
 RUN set -eux && \
     npm install -g npm@latest && \
-    npm ci --no-progress && \
+    npm install --no-progress && \
     npm run production --no-progress
 
 WORKDIR /nova-components/PersonalAccessTokenModal/
 
 RUN set -eux && \
     npm install -g npm@latest && \
-    npm ci --no-progress && \
+    npm install --no-progress && \
     npm run production --no-progress
 
 FROM node:20 as frontend
