@@ -62,6 +62,15 @@ class Travel extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'primaryContact',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array

@@ -52,6 +52,15 @@ class OAuth2Client extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'user',
+    ];
+
+    /**
      * Indicates if the resource should be globally searchable.
      *
      * @var bool

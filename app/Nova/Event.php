@@ -52,6 +52,15 @@ class Event extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'organizer',
+    ];
+
+    /**
      * The number of results to display in the global search.
      *
      * @var int

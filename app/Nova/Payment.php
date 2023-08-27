@@ -42,7 +42,10 @@ class Payment extends Resource
      *
      * @var array<string>
      */
-    public static $with = ['user'];
+    public static $with = [
+        'user',
+        'payable',
+    ];
 
     /**
      * Indicates if the resource should be displayed in the sidebar.

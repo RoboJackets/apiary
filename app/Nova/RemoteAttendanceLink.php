@@ -53,7 +53,9 @@ class RemoteAttendanceLink extends Resource
      *
      * @var array<string>
      */
-    public static $with = ['attendable'];
+    public static $with = [
+        'attendable',
+    ];
 
     /**
      * Indicates if the resource should be globally searchable.

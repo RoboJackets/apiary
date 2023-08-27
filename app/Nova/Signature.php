@@ -60,6 +60,15 @@ class Signature extends Resource
     public static $group = 'Agreements';
 
     /**
+     * Fields to eager load on index.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'user',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array
