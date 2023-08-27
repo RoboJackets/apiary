@@ -39,7 +39,9 @@ class ExportUsersBuzzCardAccess extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $population = $fields->population;
-        $users = User::select('gtid', 'first_name', 'last_name')->buzzCardAccessEligible()
+        $users = User::select('gtid', 'first_name', 'last_name')
+            ->buzzCardAccessEligible()
+            ->where('is_service_account', '=', false)
             ->when(
                 $population === 'core',
                 static function (Builder $q): void {

@@ -163,6 +163,7 @@ class ExportResumes extends Action
                 ->active()
                 ->whereNotNull('resume_date')
                 ->where('primary_affiliation', 'student')
+                ->where('is_service_account', '=', false)
                 ->whereDoesntHave('duesPackages', static function (Builder $q): void {
                     $q->where('restricted_to_students', false);
                 })
@@ -190,6 +191,7 @@ class ExportResumes extends Action
             ->active()
             ->whereNotNull('resume_date')
             ->where('primary_affiliation', 'student')
+            ->where('is_service_account', '=', false)
             ->whereDoesntHave('duesPackages', static function (Builder $q): void {
                 $q->where('restricted_to_students', false);
             })
@@ -232,7 +234,7 @@ class ExportResumes extends Action
                 ->required(),
 
             // "before:yesterday" stops users from putting in a date that doesn't make sense that will generate an
-            // empty output. "yesterday" is either 7PM or 8PM yesterdady, depending on timezones (EST vs EDT).
+            // empty output. "yesterday" is either 7PM or 8PM yesterday, depending on timezones (EST vs EDT).
             Date::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date. This should generally be the start date of the'.
                     ' fall semester. When users upload a resume, all older resumes are deleted.')

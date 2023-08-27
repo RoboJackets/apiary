@@ -14,10 +14,11 @@ Apiary
    :caption: For Officers
 
    officers/attendance
-   officers/events
    officers/dues/index
-   officers/payments/index
+   officers/events
    officers/merchandise
+   officers/payments/index
+   officers/users
 
 .. toctree::
    :caption: For Administrators
