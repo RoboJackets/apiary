@@ -75,7 +75,7 @@ class AppServiceProvider extends ServiceProvider
 
         if ($this->app->isProduction()) {
             Model::handleLazyLoadingViolationUsing(static function (Model $model, string $relation): void {
-                \Sentry\captureMessage('Attemped to lazy-load '.$relation.' on '.$model::class);
+                \Sentry\captureMessage('Attempted to lazy-load '.$relation.' on '.$model::class);
             });
         }
 
