@@ -20,12 +20,13 @@ Export resumes
 Apiary allows active members to upload a resume within the member-facing interface.
 Officers can then generate a resume book to send to sponsors.
 
-The resume book only includes active members.
-Any filters applied to the user list outside of the popup are ignored.
-
 .. hint::
    This export requires the ``read-users-resume`` permission, which is included in the :ref:`officer` and :ref:`admin` roles.
    If you need access, ask in :slack:`it-helpdesk`.
+
+
+The resume book only includes active members.
+Any filters applied to the user list outside of the popup are ignored.
 
 To export resumes:
 
@@ -47,7 +48,7 @@ Review the PDF before distributing it to sponsors.
 Export BuzzCard access list
 ---------------------------
 
-This function generates a :abbr:`CSV (comma-separated values)` file that Mechanical Engineering Facilities needs to grant BuzzCard access to the Student Competition Center and the RoboJackets shop.
+This export generates a :abbr:`CSV (comma-separated values)` file that Mechanical Engineering Facilities needs to grant BuzzCard access to the Student Competition Center and the RoboJackets shop.
 
 .. hint::
    This export requires the ``read-users-gtid`` permission, which is only included in the :ref:`admin` role.
@@ -74,14 +75,17 @@ To generate the list:
 Export demographics survey recipients
 -------------------------------------
 
-This function generates a CSV file of email addresses that can be imported to Qualtrics for the annual demographics survey.
+This export generates a CSV file of email addresses that can be imported to Qualtrics for the annual demographics survey.
 
-.. I'm not going to include an access hint here because it's restricted to read-users and that's included with all roles that have access to Nova.
+.. hint::
+   This export is available to everyone with access to the administrative interface.
+   If you need access, ask in :slack:`it-helpdesk`.
 
-The CSV file only includes active members without an email suppression. Any filters applied to the user list are ignored.
+The CSV file only includes active members without an email suppression.
+Any filters applied to the user list are ignored.
 
 .. note::
-   `Postmark <https://postmarkapp.com/>`_ applies an email suppression when an email address bounces, or if a user explicitly unsubscribes from Apiary emails.
+   Apiary automatically applies an email suppression when an email address bounces, or if a user explicitly unsubscribes from Apiary emails.
 
 To generate the list:
 
