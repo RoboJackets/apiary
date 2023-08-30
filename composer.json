@@ -41,7 +41,7 @@
         "laravel/framework": "10.21.0",
         "laravel/horizon": "5.19.2",
         "laravel/nova": "4.27.12",
-        "laravel/passport": "11.8.8",
+        "laravel/passport": "11.9.0",
         "laravel/scout": "10.2.4",
         "laravel/slack-notification-channel": "2.5.0",
         "laravel/socialite": "5.8.1",
