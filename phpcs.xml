@@ -8,10 +8,15 @@
 
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>*.mix.js</exclude-pattern>
     <exclude-pattern>/_ide_helper.php</exclude-pattern>
     <exclude-pattern>/bootstrap/cache/</exclude-pattern>
     <exclude-pattern>/docs/</exclude-pattern>
     <exclude-pattern>/node_modules/</exclude-pattern>
+    <exclude-pattern>/nova-components/ClientIdAndSecretModal/dist/</exclude-pattern>
+    <exclude-pattern>/nova-components/ClientIdAndSecretModal/resources/</exclude-pattern>
+    <exclude-pattern>/nova-components/PersonalAccessTokenModal/dist/</exclude-pattern>
+    <exclude-pattern>/nova-components/PersonalAccessTokenModal/resources/</exclude-pattern>
     <exclude-pattern>/public/</exclude-pattern>
     <exclude-pattern>/storage/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>

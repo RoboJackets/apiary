@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\CreateOAuth2Client;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * A Nova resource for OAuth clients.
@@ -114,5 +116,26 @@ class OAuth2Client extends Resource
     public static function searchable(): bool
     {
         return false;
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    public function actions(NovaRequest $request): array
+    {
+        return [
+            resolve(CreateOAuth2Client::class)
+                ->canSee(static fn (Request $r): bool => $request->user()->hasRole('admin')),
+        ];
+    }
+
+    /**
+     * Get the URI key for the resource.
+     */
+    public static function uriKey(): string
+    {
+        return 'oauth-clients';
     }
 }

@@ -76,12 +76,10 @@ class Event extends Resource
                 ->withoutTrashed(),
 
             DateTime::make('Start Time')
-                ->rules('nullable', 'date', 'before:end_time')
-                ->hideFromIndex(),
+                ->rules('nullable', 'date', 'before:end_time'),
 
             DateTime::make('End Time')
-                ->rules('nullable', 'date', 'after:start_time')
-                ->hideFromIndex(),
+                ->rules('nullable', 'date', 'after:start_time'),
 
             Text::make('Location')
                 ->hideFromIndex()

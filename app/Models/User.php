@@ -888,6 +888,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Determine if the user can be impersonated.
+     */
+    public function canBeImpersonated(): bool
+    {
+        return ! $this->is_service_account;
+    }
+
+    /**
      * Modify the query used to retrieve models when making all of the models searchable.
      *
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query

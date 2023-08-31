@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Nova\Actions;
 
+use App\Models\User;
+use App\Nova\OAuth2Client;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Session;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -17,11 +19,46 @@ use Laravel\Passport\ClientRepository;
 class CreateOAuth2Client extends Action
 {
     /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
+
+    /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = true;
+
+    /**
+     * The text to be used for the action's confirm button.
+     *
+     * @var string
+     */
+    public $confirmButtonText = 'Create';
+
+    /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = '';
+
+    /**
+     * Disables action log events for this action.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = true;
+
+    /**
      * The displayable name of the action.
      *
      * @var string
      */
-    public $name = 'Create OAuth2 Client';
+    public $name = 'Create Client';
 
     private const STANDARD_CLIENT = 'standard';
 
@@ -47,22 +84,15 @@ class CreateOAuth2Client extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        if (1 < count($models)) {
-            return Action::danger('This action can only be run on one model at a time.');
-        }
-
-        $user = $models[0];
-
-        $clientType = $fields->client_type;
+        $clientType = $fields->type;
         $personalAccessClient = false; // Deliberately unsupported - creating a personal access client only has
         // to be done once and the client ID/secret must be added as environment variables
         $passwordGrantClient = false; // We don't support this right now
         $confidential = $clientType !== self::PUBLIC_CLIENT; // Confidential means the client has a secret
 
         $client = $this->clientRepository->create(
-            // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
-            $user->id,
-            $fields->client_name,
+            $fields->user,
+            $fields->name,
             $fields->redirect_urls,
             null,
             $personalAccessClient,
@@ -70,17 +100,24 @@ class CreateOAuth2Client extends Action
             $confidential
         );
 
-        // Side note, in case anyone ever has to debug why it seems like these `flash` calls aren't working, it's
-        // probably not `flash` that's the issue. On the Nova user page where this action was originally implemented,
-        // Nova makes a lot of requests as it loads various data. Especially locally, this might take 30+ seconds.
-        // If you submit the action before all the Nova requests finish, one of them might consume the flashes
-        // before they can be shown in the Blade template. The solution? Be more patient, or change the code below
-        // to store values in the session rather than flashing.
-        Session::flash('client_id', $client->id);
-        Session::flash('client_confidential', $client->confidential());
-        Session::flash('client_plain_secret', $client->plain_secret);
-
-        return Action::redirect(route('oauth2.client.created'));
+        if ($client->confidential()) {
+            return Action::modal(
+                'client-id-and-secret-modal',
+                [
+                    'client_id' => $client->id,
+                    'client_secret' => $client->plain_secret,
+                ]
+            )->withMessage('The client was created successfully!');
+        } else {
+            return Action::visit(substr(route(
+                'nova.pages.detail',
+                [
+                    'resource' => OAuth2Client::uriKey(),
+                    'resourceId' => $client->id,
+                ],
+                false
+            ), 5))->withMessage('The client was created successfully!');
+        }
     }
 
     /**
@@ -91,24 +128,29 @@ class CreateOAuth2Client extends Action
     public function fields(NovaRequest $request): array
     {
         return [
-            Heading::make('<p>To avoid issues, let the outer page load fully before clicking "Create Client."</p>')
-                ->asHtml(),
-
-            Text::make('Client Name')
+            Text::make('Name')
                 ->rules('required'),
 
             Text::make('Redirect URLs')
                 ->rules('required')
-                ->help('Separate multiple values with commas. Example: https://example.com,https://invalid.url'),
+                ->help('Separate multiple values with commas.'),
 
-            Heading::make('<p>Read about client types <a href="https://oauth.net/2/client-types/">here</a>.')
-                ->asHtml(),
-
-            Select::make('Client Type')
+            Select::make('Type')
                 ->options([
                     self::STANDARD_CLIENT => 'Confidential',
                     self::PUBLIC_CLIENT => 'Public',
                 ])
+                ->rules('required'),
+
+            Select::make('User', 'user')
+                ->options(
+                    static fn (): array => User::accessActive()
+                        ->get()
+                        ->mapWithKeys(static fn (User $user): array => [strval($user->id) => $user->name])
+                        ->toArray()
+                )
+                ->searchable()
+                ->required()
                 ->rules('required'),
         ];
     }
