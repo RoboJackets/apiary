@@ -14,7 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PruneTravelAssignmentNotificationsInNova implements ShouldQueue, ShouldBeUnique
+class PruneTravelAssignmentNotificationsInNova implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

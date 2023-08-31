@@ -57,8 +57,8 @@ use Laravel\Scout\Searchable;
  */
 class Attendance extends Model
 {
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The name of the database table for this model.

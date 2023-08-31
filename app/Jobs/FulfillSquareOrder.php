@@ -19,7 +19,7 @@ use Square\Models\OrderState;
 use Square\Models\UpdateOrderRequest;
 use Square\SquareClient;
 
-class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
+class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

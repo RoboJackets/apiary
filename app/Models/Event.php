@@ -56,8 +56,8 @@ use Laravel\Scout\Searchable;
 class Event extends Model
 {
     use GetMorphClassStatic;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.

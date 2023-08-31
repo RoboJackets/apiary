@@ -57,6 +57,7 @@ class CASCheck
                 return response('Unauthorized', 401);
             }
         }
+
         //User is authenticated, no update needed or already updated
         return $next($request);
     }

@@ -17,7 +17,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 
-class CheckAllTravelAssignmentsComplete implements ShouldQueue, ShouldBeUnique
+class CheckAllTravelAssignmentsComplete implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

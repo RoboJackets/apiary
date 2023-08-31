@@ -61,10 +61,10 @@ use Laravel\Scout\Searchable;
  */
 class TravelAssignment extends Model implements Payable
 {
-    use SoftDeletes;
     use GetMorphClassStatic;
-    use Searchable;
     use HasFactory;
+    use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.
