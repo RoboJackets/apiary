@@ -178,13 +178,7 @@ class Attendance extends Resource
      */
     public function actions(Request $request): array
     {
-        return [
-            (new ExportAttendance())->canSee(
-                static fn (Request $request): bool => $request->user()->can('read-attendance')
-            )->canRun(
-                static fn (Request $request): bool => $request->user()->can('read-attendance')
-            )->confirmButtonText('Export Attendance'),
-        ];
+        return [];
     }
 
     /**
