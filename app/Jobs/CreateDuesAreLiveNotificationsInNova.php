@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 
-class CreateDuesAreLiveNotificationsInNova implements ShouldQueue, ShouldBeUnique
+class CreateDuesAreLiveNotificationsInNova implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

@@ -64,8 +64,8 @@ class DuesTransaction extends Model implements Payable
 {
     use GetMorphClassStatic;
     use HasFactory;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The accessors to append to the model's array form.

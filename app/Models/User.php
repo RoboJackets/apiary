@@ -204,16 +204,16 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use Actionable;
+    use HasApiTokens;
     use HasBelongsToManyEvents;
     use HasFactory;
+    use HasPermissions;
     use HasRelationshipObservables;
     use HasRoles;
-    use HasPermissions;
-    use Notifiable;
-    use SoftDeletes;
-    use HasApiTokens;
-    use Searchable;
     use Impersonatable;
+    use Notifiable;
+    use Searchable;
+    use SoftDeletes;
 
     private const MAJOR_REGEX = '/(?P<college>[A-Z])\/(?P<school>[A-Z0-9]+)\/(?P<major>[A-Z]+)/';
 

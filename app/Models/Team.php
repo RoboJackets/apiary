@@ -91,8 +91,8 @@ class Team extends Model
     use HasManyEvents;
     use HasRelationshipObservables;
     use Notifiable;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.

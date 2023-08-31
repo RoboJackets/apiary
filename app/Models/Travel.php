@@ -104,9 +104,9 @@ use Laravel\Scout\Searchable;
  */
 class Travel extends Model
 {
-    use SoftDeletes;
-    use Searchable;
     use HasFactory;
+    use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.
