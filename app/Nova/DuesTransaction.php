@@ -39,7 +39,7 @@ class DuesTransaction extends Resource
     public static $with = [
         'payment',
         'package',
-        'user'
+        'user',
     ];
 
     /**
