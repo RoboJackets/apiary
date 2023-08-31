@@ -33,6 +33,7 @@ class ExportDemographicsSurveyRecipients extends Action
     {
         $users = User::active()
             ->whereNull('email_suppression_reason')
+            ->where('is_service_account', '=', false)
             ->get();
 
         if (count($users) === 0) {

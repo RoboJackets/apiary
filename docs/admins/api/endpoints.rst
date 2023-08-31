@@ -8,7 +8,7 @@ Endpoints
 This list includes the endpoints that are most heavily used and maintained, but isn't comprehensive.
 If you're looking for an endpoint to perform a specific operation not listed here, ask in :slack:`apiary`.
 
-All endpoints require an ``Authorization`` header with an OAuth access token, and an ``Accept`` header set to ``application/json``.
+All endpoints require an ``Authorization`` header with an OAuth access token, and an ``Accept`` header set to ``application/json``. See :doc:`/admins/api/auth` for more information.
 
 .. http:get:: /api/v1/user
    :synopsis: Returns information about the authenticated user
@@ -38,6 +38,8 @@ All endpoints require an ``Authorization`` header with an OAuth access token, an
 .. http:put:: /api/v1/users/(str:identifier)
    :synopsis: Updates a specific user
 
+   :parameter string identifier: either a GTID, GT username, or Apiary ID
+
    :requestheader Authorization: an OAuth access token (see :ref:`Authentication`)
    :requestheader Accept: ``application/json``
 
@@ -64,7 +66,7 @@ All endpoints require an ``Authorization`` header with an OAuth access token, an
    :requestheader Authorization: an OAuth access token (see :ref:`Authentication`)
    :requestheader Accept: ``application/json``
 
-   :status 200: the update was successful and the new information is returned
+   :status 200: an array of user information is returned
    :status 401: the token was either not provided or invalid
    :status 403: the authenticated user does not have permission for this operation (``read-users``)
 

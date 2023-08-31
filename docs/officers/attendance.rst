@@ -6,7 +6,7 @@ Attendance
 Apiary supports recording attendance for both in-person and online meetings, using either BuzzCards or links.
 
 .. hint::
-   To use either method, you must have a :ref:`officer`, :ref:`project-manager`, :ref:`team-lead`, or :ref:`trainer` role.
+   To use either method, you must have an :ref:`officer`, :ref:`project-manager`, :ref:`team-lead`, or :ref:`trainer` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
 In-person meetings
