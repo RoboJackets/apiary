@@ -58,6 +58,16 @@ class OAuth2AccessToken extends Resource
     public static $globallySearchable = false;
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'user',
+        'client',
+    ];
+
+    /**
      * Get the displayable label of the resource.
      */
     public static function label(): string

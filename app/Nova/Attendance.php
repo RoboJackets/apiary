@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Actions\ExportAttendance;
 use App\Nova\Filters\Attendable;
 use App\Nova\Filters\DateFrom;
 use App\Nova\Filters\DateTo;
@@ -178,13 +177,7 @@ class Attendance extends Resource
      */
     public function actions(Request $request): array
     {
-        return [
-            (new ExportAttendance())->canSee(
-                static fn (Request $request): bool => $request->user()->can('read-attendance')
-            )->canRun(
-                static fn (Request $request): bool => $request->user()->can('read-attendance')
-            )->confirmButtonText('Export Attendance'),
-        ];
+        return [];
     }
 
     /**

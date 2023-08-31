@@ -59,6 +59,16 @@ class TravelAssignment extends Resource
     public static $globalSearchResults = 2;
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'travel',
+        'user',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array

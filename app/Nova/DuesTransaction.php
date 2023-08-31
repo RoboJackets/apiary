@@ -36,7 +36,11 @@ class DuesTransaction extends Resource
      *
      * @var array<string>
      */
-    public static $with = ['payment', 'package', 'user'];
+    public static $with = [
+        'payment',
+        'package',
+        'user',
+    ];
 
     /**
      * Get the displayable label of the resource.

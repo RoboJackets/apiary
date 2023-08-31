@@ -61,6 +61,15 @@ class Merchandise extends Resource
     public static $globallySearchable = false;
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'fiscalYear',
+    ];
+
+    /**
      * Get the displayable label of the resource.
      */
     public static function label(): string
