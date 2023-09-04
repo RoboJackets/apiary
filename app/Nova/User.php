@@ -135,6 +135,7 @@ class User extends Resource
 
             Number::make('GTID')
                 ->hideFromIndex()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-gtid'))
                 ->rules('required', 'integer', 'min:900000000', 'max:999999999')
                 ->creationRules('unique:users,gtid')
@@ -144,15 +145,18 @@ class User extends Resource
             Text::make('Phone Number', 'phone')
                 ->hideWhenCreating()
                 ->hideFromIndex()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                 ->rules('nullable', 'max:15')
                 ->copyable(),
 
             Boolean::make('Active', 'is_active')
                 ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->hideWhenUpdating()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Boolean::make('Latest Agreement Signed', 'signed_latest_agreement')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             URL::make('Manager', static fn (AppModelsUser $user): ?string => $user->manager === null ? null : route(
                 'nova.pages.detail',
@@ -162,9 +166,11 @@ class User extends Resource
                 ]
             ))
                 ->displayUsing(fn (): ?string => $this->manager?->name)
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            HasMany::make('Signatures'),
+            HasMany::make('Signatures')
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             new Panel(
                 'Parent or Guardian Signature',
@@ -172,12 +178,14 @@ class User extends Resource
                     Text::make('Parent or Guardian Name', 'parent_guardian_name')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->rules('required_with:parent_guardian_email', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                     Email::make('Parent or Guardian Email', 'parent_guardian_email')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->rules('required_with:parent_guardian_name', 'email:rfc,strict,dns,spoof', 'nullable')
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                         ->copyable(),
@@ -188,13 +196,16 @@ class User extends Resource
                 'System Access',
                 [
                     Boolean::make('Active', 'is_access_active')
-                        ->onlyOnDetail(),
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
                     DateTime::make('Override Expiration', 'access_override_until')
-                        ->onlyOnDetail(),
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
                     BelongsTo::make('Override Entered By', 'accessOverrideBy', self::class)
-                        ->onlyOnDetail(),
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
                     BooleanGroup::make('Self-Service Override Criteria', static function (AppModelsUser $user): array {
                         $eligibility = $user->self_service_override_eligibility;
@@ -208,11 +219,13 @@ class User extends Resource
                         'Sign the membership agreement' => 'Sign the membership agreement',
                         'Attend a team meeting' => 'Attend a team meeting',
                     ])
-                        ->onlyOnDetail(),
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
                     Boolean::make('BuzzCard Access Opt-Out', 'buzzcard_access_opt_out')
                         ->hideWhenCreating()
-                        ->hideFromIndex(),
+                        ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]
             ),
 
@@ -222,6 +235,7 @@ class User extends Resource
                     Text::make('GitHub', 'github_username')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->rules('nullable', 'max:39')
                         ->creationRules('unique:users,github_username')
                         ->updateRules('unique:users,github_username,{{resourceId}}')
@@ -230,12 +244,14 @@ class User extends Resource
                     Boolean::make('GitHub Invite Pending')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->help('Generally this is managed by Jedi, but can be manually overridden here if necessary.'
                             .' This controls whether a card is displayed but not the user\'s actual access.'),
 
                     Email::make('Google', 'gmail_address')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,gmail_address')
                         ->updateRules('unique:users,gmail_address,{{resourceId}}')
@@ -244,6 +260,7 @@ class User extends Resource
                     Email::make('ClickUp', 'clickup_email')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->rules('nullable', 'max:255', 'email:rfc,strict,dns,spoof')
                         ->creationRules('unique:users,clickup_email')
                         ->updateRules('unique:users,clickup_email,{{resourceId}}')
@@ -252,12 +269,14 @@ class User extends Resource
                     Boolean::make('ClickUp Invite Pending', 'clickup_invite_pending')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->help('This flag is set by JEDI but may be out of sync with ClickUp in some cases.'
                             .' It only controls UX elements.'),
 
                     Boolean::make('SUMS', 'exists_in_sums')
                         ->hideWhenCreating()
                         ->hideFromIndex()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->help(
                             'This flag is set by JEDI and should not be modified unless you know what you are doing.'
                             .' It only controls UX elements.'
@@ -277,6 +296,7 @@ class User extends Resource
                         ->disk('local')
                         ->deletable(false)
                         ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->canSee(static function (Request $request): bool {
                             if ($request->resourceId === $request->user()->id) {
                                 return true;
@@ -286,7 +306,8 @@ class User extends Resource
                         }),
 
                     DateTime::make('Resume Uploaded At', 'resume_date')
-                        ->onlyOnDetail(),
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
                 ]
             ),
 
@@ -301,11 +322,14 @@ class User extends Resource
                     }
 
                     return $request->user()->can('read-dues-transactions');
-                }),
+                })
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            HasMany::make('Travel Assignments', 'assignments', TravelAssignment::class),
+            HasMany::make('Travel Assignments', 'assignments', TravelAssignment::class)
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class),
+            HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class)
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             BelongsToMany::make('Teams')
                 ->canSee(static function (Request $request): bool {
@@ -314,7 +338,8 @@ class User extends Resource
                     }
 
                     return $request->user()->can('read-teams-membership');
-                }),
+                })
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
@@ -323,13 +348,16 @@ class User extends Resource
                     }
 
                     return $request->user()->can('read-attendance');
-                }),
+                })
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             BelongsToMany::make('Majors')
-                ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin')),
+                ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin'))
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             BelongsToMany::make('Class Standing', 'classStanding')
-                ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin')),
+                ->readonly(static fn (Request $request): bool => ! $request->user()->hasRole('admin'))
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('OAuth2 Clients', 'clients')
                 ->canSee(
@@ -348,10 +376,12 @@ class User extends Resource
             new Panel('Employment', [
                 Number::make('Employee ID (OneUSG)', 'employee_id')
                     ->onlyOnDetail()
+                    ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                     ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                 Text::make('Home Department (BuzzAPI)', 'employee_home_department')
                     ->onlyOnDetail()
+                    ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                     ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
                 ...(config('features.whitepages') === true ? [
@@ -390,6 +420,7 @@ class User extends Resource
                         );
                     })
                         ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
                 ] : []),
             ]),
@@ -409,11 +440,13 @@ class User extends Resource
             Text::make('Emergency Contact Name')
                 ->hideWhenCreating()
                 ->hideFromIndex()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact')),
 
             Text::make('Emergency Contact Phone Number', 'emergency_contact_phone')
                 ->hideWhenCreating()
                 ->hideFromIndex()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-emergency_contact'))
                 ->copyable(),
         ];
@@ -431,13 +464,15 @@ class User extends Resource
                 ->hideWhenCreating()
                 ->options(AppModelsUser::$shirt_sizes)
                 ->displayUsingLabels()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Select::make('Polo Size')
                 ->hideWhenCreating()
                 ->options(AppModelsUser::$shirt_sizes)
                 ->displayUsingLabels()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
         ];
     }
 
