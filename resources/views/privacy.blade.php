@@ -81,7 +81,7 @@
             <p>This application contains links and redirects to other websites. This privacy policy applies only to this website, as the other websites are governed by their own privacy policies.</p>
 
             <h2>Changes to this privacy policy</h2>
-            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on August 13th, 2022.</p>
+            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on May 10th, 2023.</p>
 
             <h2>How to contact us</h2>
             <p>If you have a question regarding any RoboJackets computing systems, including this website, contact RoboJackets IT by emailing <a href="support@robojackets.org">support@robojackets.org</a>.</p>
