@@ -24,6 +24,7 @@ return [
         '_ide_helper.php',
         'stubs/Permission.php',
         'stubs/Role.php',
+        'vendor/inertiajs/inertia-laravel/_ide_helpers.php',
     ],
 
     'suppress_issue_types' => [
