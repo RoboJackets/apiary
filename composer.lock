@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a0a20725cac1394427f5e1e4276c198",
+    "content-hash": "6e9bbf89b2066cfdf831ae26c9a6e6f3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3347,16 +3347,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.20.0",
+            "version": "v5.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "2fc2ba769a592e92d170d85e346a5631b3a90ed5"
+                "reference": "6eaf4efebbfc9955be7504b5b6f045d9d10e86af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/2fc2ba769a592e92d170d85e346a5631b3a90ed5",
-                "reference": "2fc2ba769a592e92d170d85e346a5631b3a90ed5",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/6eaf4efebbfc9955be7504b5b6f045d9d10e86af",
+                "reference": "6eaf4efebbfc9955be7504b5b6f045d9d10e86af",
                 "shasum": ""
             },
             "require": {
@@ -3419,9 +3419,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.20.0"
+                "source": "https://github.com/laravel/horizon/tree/v5.20.1"
             },
-            "time": "2023-08-30T14:04:11+00:00"
+            "time": "2023-09-12T11:21:57+00:00"
         },
         {
             "name": "laravel/nova",
@@ -8555,7 +8555,7 @@
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
-            "version": "dev-c8e23389bf58f4afb6ab1cd921737e0342a1e715",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ClientIdAndSecretModal",
@@ -8591,7 +8591,7 @@
         },
         {
             "name": "robojackets/personal-access-token-modal",
-            "version": "dev-c8e23389bf58f4afb6ab1cd921737e0342a1e715",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/PersonalAccessTokenModal",
