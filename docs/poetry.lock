@@ -369,7 +369,7 @@ python-versions = ">=3.8"
 
 [[package]]
 name = "sphinx"
-version = "7.2.5"
+version = "7.2.6"
 description = "Python documentation generator"
 category = "main"
 optional = false
@@ -579,7 +579,7 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "888010e1da501bc952791bde6fa77967262f11de1ba77e2973a2504a792984e7"
+content-hash = "9b8d862e9aafed362b80838b90b6fe9133b78dd183be6bb760fc837b7fb4ea29"
 
 [metadata.files]
 alabaster = [
@@ -1138,8 +1138,8 @@ soupsieve = [
     {file = "soupsieve-2.5.tar.gz", hash = "sha256:5663d5a7b3bfaeee0bc4372e7fc48f9cff4940b3eec54a6451cc5299f1097690"},
 ]
 sphinx = [
-    {file = "sphinx-7.2.5-py3-none-any.whl", hash = "sha256:9269f9ed2821c9ebd30e4204f5c2339f5d4980e377bc89cb2cb6f9b17409c20a"},
-    {file = "sphinx-7.2.5.tar.gz", hash = "sha256:1a9290001b75c497fd087e92b0334f1bbfa1a1ae7fddc084990c4b7bd1130b88"},
+    {file = "sphinx-7.2.6-py3-none-any.whl", hash = "sha256:1e09160a40b956dc623c910118fa636da93bd3ca0b9876a7b3df90f07d691560"},
+    {file = "sphinx-7.2.6.tar.gz", hash = "sha256:9a5160e1ea90688d5963ba09a2dcd8bdd526620edbb65c328728f1b2228d5ab5"},
 ]
 sphinx-autobuild = [
     {file = "sphinx-autobuild-2021.3.14.tar.gz", hash = "sha256:de1ca3b66e271d2b5b5140c35034c89e47f263f2cd5db302c9217065f7443f05"},
