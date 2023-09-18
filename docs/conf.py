@@ -89,6 +89,10 @@ rst_prolog = """
 .. |actionsmenu| raw:: html
 
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 20 20" fill="currentColor" width="20" height="20" class="inline" role="presentation"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 0 14 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+.. |editicon| raw:: html
+
+   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="3 -3 17 24" stroke="currentColor" width="20" height="18" class="inline-block" role="presentation"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
 """
 
 http_strict_mode = True
