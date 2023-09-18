@@ -23,10 +23,7 @@ class ContentSecurityPolicy extends Policy
         $this->addDirective(Directive::BASE, config('app.url'));
         $this->addDirective(Directive::BLOCK_ALL_MIXED_CONTENT, Value::NO_VALUE);
         $this->addDirective(Directive::DEFAULT, Keyword::SELF);
-        $this->addDirective(Directive::FORM_ACTION, [
-            config('app.url'),
-            'https://sso.gatech.edu',
-        ]);
+        $this->addDirective(Directive::FORM_ACTION, Keyword::SELF);
         $this->addDirective(Directive::STYLE_ELEM, [
             Keyword::SELF,
             Keyword::UNSAFE_INLINE,
