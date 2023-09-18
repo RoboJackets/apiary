@@ -11,6 +11,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\Manager;
 use App\Http\Resources\User as UserResource;
+use App\Jobs\PushToJedi;
 use App\Models\User;
 use App\Traits\AuthorizeInclude;
 use Illuminate\Database\Eloquent\Builder;
@@ -259,6 +260,8 @@ class UserController extends Controller
             $requestingUser->access_override_by_id = $request->user()->id;
             $requestingUser->save();
         }
+
+        PushToJedi::dispatch($requestingUser, $requestingUser::class, $requestingUser->id, 'self_service_override');
 
         return response()->json([
             'status' => 'success',
