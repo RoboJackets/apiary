@@ -111,6 +111,12 @@
     },
     "python": {
         "prPriority": -8,
+        "packageRules": [
+            {
+                "matchPackageNames": ["python"],
+                "rangeStrategy": "replace"
+            },
+        ],
         "lockFileMaintenance": {
             "enabled": true,
             "schedule": [
