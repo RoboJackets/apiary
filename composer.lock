@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93e331fdbdbad27b770121e2c09ce050",
+    "content-hash": "9fa07b289a2341d8d1f1bd25ac132dc2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3425,17 +3425,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.27.12",
+            "version": "4.27.13",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "6303d03443ed006a97df02b3e0e5cd35d388c27a"
+                "reference": "4cf69423af62a2e98329b5e1ea01c955230071ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-6303d03443ed006a97df02b3e0e5cd35d388c27a-zip-1ea826.zip",
-                "reference": "6303d03443ed006a97df02b3e0e5cd35d388c27a",
-                "shasum": "871cb7680ed8a0ef4dc89c2316740570b659d6a9"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-4cf69423af62a2e98329b5e1ea01c955230071ff-zip-492d5a.zip",
+                "reference": "4cf69423af62a2e98329b5e1ea01c955230071ff",
+                "shasum": "009dbb6d54ed08c4f56636bb1a7ed1c9e7b8671b"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3491,31 +3491,43 @@
                 }
             },
             "scripts": {
+                "post-autoload-dump": [
+                    "@clear",
+                    "@php vendor/bin/dusk-updater detect --auto-update --ansi",
+                    "@php vendor/bin/testbench-dusk package:discover --ansi"
+                ],
+                "clear": [
+                    "@php vendor/bin/testbench-dusk package:purge-skeleton --ansi",
+                    "@php vendor/bin/testbench-dusk package:dusk-purge --ansi"
+                ],
                 "dusk:prepare": [
-                    "./vendor/bin/dusk-updater detect --auto-update",
                     "@php -r \"file_exists('phpunit.dusk.xml') || copy('phpunit.dusk.xml.dist', 'phpunit.dusk.xml'); \"",
-                    "@php -r \"if (file_exists('.env.dusk')) { copy('.env.dusk', 'vendor/laravel/nova-dusk-suite/.env'); } else { copy('.env.dusk.example', 'vendor/laravel/nova-dusk-suite/.env'); }\"",
-                    "./vendor/bin/testbench-dusk package:discover"
+                    "@php -r \"if (file_exists('workbench/.env.dusk')) { copy('workbench/.env.dusk', 'vendor/laravel/nova-dusk-suite/.env'); } else { copy('workbench/.env.dusk.example', 'vendor/laravel/nova-dusk-suite/.env'); }\""
                 ],
                 "dusk:dev-assets": [
                     "TAILWIND_MODE=build npm run dev",
-                    "./vendor/bin/testbench-dusk nova:publish --force"
+                    "@php vendor/bin/testbench-dusk nova:publish --force --ansi"
                 ],
                 "dusk:assets": [
                     "TAILWIND_MODE=build npm run prod",
-                    "./vendor/bin/testbench-dusk nova:publish --force"
+                    "@php vendor/bin/testbench-dusk nova:publish --force --ansi"
                 ],
                 "dusk:test": [
-                    "./vendor/bin/testbench-dusk package:dusk-purge",
-                    "./vendor/bin/phpunit -c phpunit.dusk.xml"
-                ],
-                "test:local": [
-                    "./vendor/bin/testbench-dusk package:dusk-purge",
-                    "./vendor/bin/phpunit -c phpunit.xml --group date-field,datetime-field,external-network --testdox",
-                    "./vendor/bin/phpunit -c phpunit.dusk.xml --group date-field,datetime-field,external-network --testdox"
+                    "@php vendor/bin/testbench-dusk package:dusk-purge --ansi",
+                    "@php vendor/bin/phpunit -c phpunit.dusk.xml"
                 ],
                 "dusk:filter": [
-                    "./vendor/bin/testbench-dusk package:dusk-purge && ./vendor/bin/phpunit -c phpunit.dusk.xml --filter"
+                    "@php vendor/bin/testbench-dusk package:dusk-purge --ansi && ./vendor/bin/phpunit -c phpunit.dusk.xml --filter"
+                ],
+                "test:local": [
+                    "@php vendor/bin/phpunit -c phpunit.xml --group date-field,datetime-field,external-network --testdox",
+                    "@php vendor/bin/phpunit -c phpunit.dusk.xml --group date-field,datetime-field,external-network --testdox"
+                ],
+                "serve": [
+                    "@clear",
+                    "@php vendor/bin/testbench package:discover --ansi",
+                    "@php vendor/bin/testbench workbench:build --ansi",
+                    "@php vendor/bin/testbench serve"
                 ]
             },
             "license": [
@@ -3533,9 +3545,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.27.12"
+                "source": "https://github.com/laravel/nova/tree/v4.27.13"
             },
-            "time": "2023-08-13T04:33:30+00:00"
+            "time": "2023-09-19T17:29:43+00:00"
         },
         {
             "name": "laravel/passport",
@@ -8558,7 +8570,7 @@
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
-            "version": "dev-4d4640357b36b2460c61e4fb911b4e9e7ece7b47",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ClientIdAndSecretModal",
@@ -8594,7 +8606,7 @@
         },
         {
             "name": "robojackets/personal-access-token-modal",
-            "version": "dev-4d4640357b36b2460c61e4fb911b4e9e7ece7b47",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/PersonalAccessTokenModal",
