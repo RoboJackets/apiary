@@ -55,6 +55,10 @@ class SendReminders implements ShouldBeUnique, ShouldQueue
             return;
         }
 
+        if ($this->user->primary_affiliation !== 'student') {
+            return;
+        }
+
         // check if dues transaction reminder should be sent
         if (! $this->user->is_active &&
             $this->user->duesTransactions()->pending()->doesntExist() &&
