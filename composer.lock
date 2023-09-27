@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88b754c57431fb5068eab6bc5cf55dd2",
+    "content-hash": "743a6bfd86a18c3c0aa57211ee568bb1",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3686,16 +3686,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.3.0",
+            "version": "v10.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "b7972cffc879c8c7c255781b341a8867cb411076"
+                "reference": "cc46608b277c2922c53533995b8fe2b7bf72315a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/b7972cffc879c8c7c255781b341a8867cb411076",
-                "reference": "b7972cffc879c8c7c255781b341a8867cb411076",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/cc46608b277c2922c53533995b8fe2b7bf72315a",
+                "reference": "cc46608b277c2922c53533995b8fe2b7bf72315a",
                 "shasum": ""
             },
             "require": {
@@ -3712,7 +3712,7 @@
                 "algolia/algoliasearch-client-php": "^3.2",
                 "meilisearch/meilisearch-php": "^1.0",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^7.0|^8.0",
+                "orchestra/testbench": "^7.31|^8.11",
                 "php-http/guzzle7-adapter": "^1.0",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^9.3"
@@ -3757,7 +3757,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2023-09-05T15:47:47+00:00"
+            "time": "2023-09-26T16:36:29+00:00"
         },
         {
             "name": "laravel/serializable-closure",
