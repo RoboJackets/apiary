@@ -51,10 +51,24 @@ class UserController extends Controller
                 [
                     'status' => 'success',
                     'users' => Manager::collection(
-                        User::whereHas('manages')
-                            ->orWhereHas('roles', static function (Builder $query): void {
-                                $query->whereIn('name', ['project-manager', 'officer']);
+                        User::where(static function (Builder $query): void {
+                            $query->whereHas('manages')
+                                ->orWhereHas('roles', static function (Builder $query): void {
+                                    $query->whereIn('name', ['project-manager', 'officer']);
+                                });
+                        })
+                            ->whereHas('classStanding')
+                            ->whereHas('majors')
+                            ->whereHas('attendance')
+                            ->whereHas('teams')
+                            ->whereHas('paidDues')
+                            ->accessActive()
+                            ->whereDoesntHave('duesPackages', static function (Builder $query): void {
+                                $query->where('restricted_to_students', false);
                             })
+                            ->where('primary_affiliation', '=', 'student')
+                            ->where('has_ever_logged_in', '=', true)
+                            ->where('is_service_account', '=', false)
                             ->get()
                     ),
                 ]
