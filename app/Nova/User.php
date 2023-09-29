@@ -149,7 +149,7 @@ class User extends Resource
                 ->rules('nullable', 'max:15')
                 ->copyable(),
 
-            Boolean::make('Active', 'is_active')
+            Boolean::make('Membership Active', 'is_active')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
