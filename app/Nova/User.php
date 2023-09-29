@@ -131,7 +131,8 @@ class User extends Resource
 
             Text::make('Email Suppression Reason')
                 ->hideWhenCreating()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             Number::make('GTID')
                 ->hideFromIndex()
