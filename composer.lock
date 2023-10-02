@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c07af23d24ef01be0cd07deefea2249e",
+    "content-hash": "6ed265afc2c33eede0e492c56c74bc69",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -9438,16 +9438,16 @@
         },
         {
             "name": "square/square",
-            "version": "30.0.0.20230816",
+            "version": "31.0.0.20230925",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "fedfea8b6c6f16b6a90ef0d629743ae9ae25e13d"
+                "reference": "1190673ea3c271a652da7bfb3a5da00e7d8320c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/fedfea8b6c6f16b6a90ef0d629743ae9ae25e13d",
-                "reference": "fedfea8b6c6f16b6a90ef0d629743ae9ae25e13d",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/1190673ea3c271a652da7bfb3a5da00e7d8320c5",
+                "reference": "1190673ea3c271a652da7bfb3a5da00e7d8320c5",
                 "shasum": ""
             },
             "require": {
@@ -9488,9 +9488,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/30.0.0.20230816"
+                "source": "https://github.com/square/square-php-sdk/tree/31.0.0.20230925"
             },
-            "time": "2023-08-15T21:45:55+00:00"
+            "time": "2023-09-26T22:05:40+00:00"
         },
         {
             "name": "subfission/cas",
