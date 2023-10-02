@@ -73,7 +73,7 @@
         "filp/whoops": "2.15.3",
         "laravel/pint": "1.13.2",
         "mockery/mockery": "1.6.6",
-        "mxl/laravel-job": "1.4.0",
+        "mxl/laravel-job": "1.5.0",
         "nunomaduro/collision": "7.9.0",
         "nunomaduro/larastan": "2.6.4",
         "phan/phan": "5.4.2",
