@@ -51,7 +51,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 1;
+    public $tries = 2;
 
     /**
      * Create a new job instance.
