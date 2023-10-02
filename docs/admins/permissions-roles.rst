@@ -33,10 +33,7 @@ This role grants access to almost all functions and should only be assigned to s
 ``officer``
 ~~~~~~~~~~~
 
-.. vale Google.Parens = NO
-
 - View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
-- View and export :abbr:`GTIDs (Georgia Tech Identification Number)`
 - Create and update :ref:`dues packages <Dues Package>`
 - Create and update :doc:`events </officers/events>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
