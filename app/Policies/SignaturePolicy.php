@@ -17,7 +17,7 @@ class SignaturePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -25,7 +25,7 @@ class SignaturePolicy
      */
     public function view(User $user, Signature $signature): bool
     {
-        return true;
+        return $user->hasRole('admin');
     }
 
     /**

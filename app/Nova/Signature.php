@@ -31,6 +31,22 @@ class Signature extends Resource
     public static $model = \App\Models\Signature::class;
 
     /**
+     * Get the displayable label of the resource.
+     */
+    public static function label(): string
+    {
+        return 'Membership Agreements';
+    }
+
+    /**
+     * Get the displayable singular label of the resource.
+     */
+    public static function singularLabel(): string
+    {
+        return 'Membership Agreement';
+    }
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string

@@ -17,7 +17,7 @@ class MembershipAgreementTemplatePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -25,7 +25,7 @@ class MembershipAgreementTemplatePolicy
      */
     public function view(User $user, MembershipAgreementTemplate $template): bool
     {
-        return true;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -33,7 +33,7 @@ class MembershipAgreementTemplatePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-membership-agreement-templates');
+        return $user->hasRole('admin');
     }
 
     /**
@@ -41,7 +41,7 @@ class MembershipAgreementTemplatePolicy
      */
     public function update(User $user, MembershipAgreementTemplate $template): bool
     {
-        return $user->can('update-membership-agreement-templates')
+        return $user->hasRole('admin')
             && $template->signatures()->count() === 0;
     }
 
@@ -50,7 +50,7 @@ class MembershipAgreementTemplatePolicy
      */
     public function delete(User $user, MembershipAgreementTemplate $template): bool
     {
-        return $user->can('update-membership-agreement-templates')
+        return $user->hasRole('admin')
             && $template->signatures()->count() === 0;
     }
 
@@ -59,7 +59,7 @@ class MembershipAgreementTemplatePolicy
      */
     public function restore(User $user, MembershipAgreementTemplate $template): bool
     {
-        return $user->can('update-membership-agreement-templates');
+        return $user->hasRole('admin');
     }
 
     /**
