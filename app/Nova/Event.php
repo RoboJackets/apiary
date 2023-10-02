@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\RsvpSourceBreakdown;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -142,6 +143,10 @@ class Event extends Resource
      */
     public function actions(Request $request): array
     {
+        if ($this->end_time < Carbon::now()) {
+            return [];
+        }
+
         return [
             (new Actions\CreateRemoteAttendanceLink())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('create-remote-attendance-links'))
