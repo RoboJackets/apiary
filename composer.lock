@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87c157d1893c599025f34ef55ccab78b",
+    "content-hash": "40a27d9c6f65818ebb4bf3313f32b813",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -8579,7 +8579,7 @@
         },
         {
             "name": "robojackets/client-id-and-secret-modal",
-            "version": "dev-bbb6d50aaccf6d15821bf1b279d577872be3b8a4",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ClientIdAndSecretModal",
@@ -8615,7 +8615,7 @@
         },
         {
             "name": "robojackets/personal-access-token-modal",
-            "version": "dev-bbb6d50aaccf6d15821bf1b279d577872be3b8a4",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/PersonalAccessTokenModal",
@@ -8861,16 +8861,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "3.8.0",
+            "version": "3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "c7e7611553f9f90af10ed98dde1a680220f02e4d"
+                "reference": "b6142a80fa9360a10b786d2da032339602d0e362"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/c7e7611553f9f90af10ed98dde1a680220f02e4d",
-                "reference": "c7e7611553f9f90af10ed98dde1a680220f02e4d",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/b6142a80fa9360a10b786d2da032339602d0e362",
+                "reference": "b6142a80fa9360a10b786d2da032339602d0e362",
                 "shasum": ""
             },
             "require": {
@@ -8937,7 +8937,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/3.8.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/3.8.1"
             },
             "funding": [
                 {
@@ -8949,7 +8949,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-09-05T11:02:34+00:00"
+            "time": "2023-10-04T10:21:16+00:00"
         },
         {
             "name": "smalot/pdfparser",
