@@ -45,7 +45,6 @@ parameters:
     - '#Binary operation "\." between array<string>\|string and ''_id'' results in an error\.#'
     - '#Call to an undefined method App\\Http\\Resources\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
     - '#Call to an undefined method App\\Models\\Payment\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\Payment>::getSquareOrderState\(\)\.#'
-    - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::envelopes\(\)\.#'
     - '#Call to an undefined method Illuminate\\Http\\Request::model\(\)\.#'
     - '#Call to an undefined method Laravel\\Nova\\Actions\\Action\|Laravel\\Nova\\Actions\\ActionResponse::withoutConfirmation\(\)\.#'
     - '#Call to an undefined method Laravel\\Nova\\Actions\\ActionResponse\|static\(App\\Nova\\Actions\\[a-zA-Z0-9]+\)::withMessage\(\)\.#'

@@ -20,8 +20,6 @@ use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 {
-    private const SIGNER_INFO_REGEX = '/Using IP Address: (?P<ipAddress>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+(?>Signed using mobile)?\s+Sent: (?P<sentAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+(Resent: (?P<resentAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+)?Viewed: (?P<viewedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))\s+Signed: (?P<signedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/';
-
     /**
      * The queue this job will run on. This is fairly arbitrary since it only touches the local DB.
      *
@@ -77,32 +75,11 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 
             $envelope = $user->envelopes()->where('complete', false)->sole();
 
-            $envelope->sent_at = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'sentAt');
-
-            $envelope->viewed_at = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'viewedAt');
-
-            $envelope->signed_at = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'signedAt');
-
-            $envelope->completed_at = self::getValueWithRegex(
-                '/Completed\s+Security Checked\s+(?P<completedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/',
-                $text,
-                'completedAt'
-            );
-
-            $envelope->signer_ip_address = self::getValueWithRegex(self::SIGNER_INFO_REGEX, $text, 'ipAddress');
-
             $envelope->envelope_id = self::getValueWithRegex(
                 '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/',
                 $text,
                 'envelopeId'
             );
-
-            $envelope->url = Str::of(self::getValueWithRegex(
-                '/(?P<url>https:\/\/na3.docusign.net\/Member\/EmailStart.aspx.+)/',
-                $payload['TextBody'],
-                'url',
-                'email text'
-            ))->trim();
 
             Storage::makeDirectory('docusign/'.$envelope->envelope_id);
 
@@ -166,40 +143,6 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             } else {
                 throw new \Exception('Unrecognized signable_type '.$envelope->signable_type);
             }
-        } elseif (Str::contains($subject, ' viewed ')) {
-            $name = self::getValueWithRegex('/(Fw: )?(?P<name>[a-zA-Z ]+) viewed .+/', $subject, 'name', 'subject');
-
-            $user = User::search($name)->first();
-
-            $envelope = $user->envelopes()->where('complete', false)->sole();
-
-            $envelope->url = Str::of(self::getValueWithRegex(
-                // this is NOT the same regex as the other one that looks the same
-                '/(?P<url>https:\/\/na3.docusign.net\/Member\/EmailStart.aspx.+)>/',
-                $payload['TextBody'],
-                'url',
-                'email text'
-            ))->trim();
-
-            $envelope->viewed_at = self::getValueWithRegex(
-                '/(?P<viewedAt>\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}:\d{1,2} (AM|PM))/',
-                $payload['TextBody'],
-                'viewedAt',
-                'email text'
-            );
-
-            $sender_name = self::getValueWithRegex(
-                '/This message was sent to you by (?P<sender>.+) who is using the DocuSign Electronic Signature Service/',
-                $payload['TextBody'],
-                'sender',
-                'email text'
-            );
-
-            $sender_user = User::search($sender_name)->first();
-
-            $envelope->sent_by = $sender_user->id;
-
-            $envelope->save();
         } else {
             throw new \Exception('Unrecognized subject line');
         }
