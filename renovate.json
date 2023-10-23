@@ -115,7 +115,7 @@
             {
                 "matchPackageNames": ["python"],
                 "rangeStrategy": "replace"
-            },
+            }
         ],
         "lockFileMaintenance": {
             "enabled": true,
