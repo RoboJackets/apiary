@@ -23,7 +23,7 @@
         "resolve-url-loader": "5.0.0",
         "sass": "1.69.4",
         "sass-loader": "13.3.2",
-        "vue-loader": "15.10.2"
+        "vue-loader": "15.11.1"
     },
     "dependencies": {
         "@sentry/tracing": "7.74.1",
