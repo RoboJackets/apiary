@@ -18,10 +18,10 @@ REDIS_PORT="-1"
 REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
-{{- range service "meilisearch-v1-3" }}
+{{- range service "meilisearch-v1-4" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
-MEILISEARCH_KEY="{{- key "meilisearch/v1-3-admin-key" | trimSpace -}}"
+MEILISEARCH_KEY="{{- key "meilisearch/v1-4-admin-key" | trimSpace -}}"
 SESSION_SECURE_COOKIE="true"
 SESSION_COOKIE="__Host-apiary_session"
 {{ range $key, $value := (key (printf "apiary/%s" (slice (env "NOMAD_JOB_NAME") 7)) | parseJSON) -}}
