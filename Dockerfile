@@ -1,7 +1,5 @@
 # syntax = docker/dockerfile:1.4
 
-ARG base_image="debian:bookworm-slim"
-
 FROM python:3.11-bookworm as docs-source
 
 COPY --link docs/ /docs/
@@ -98,7 +96,7 @@ COPY --link --from=nova-components /nova-components/ClientIdAndSecretModal/dist/
 COPY --link --from=nova-components /nova-components/PersonalAccessTokenModal/dist/ /app/nova-components/PersonalAccessTokenModal/dist/
 COPY --link --from=docs-minification /docs/ /app/public/docs/
 
-FROM ${base_image} as backend-uncompressed
+FROM debian:bookworm-slim as backend-uncompressed
 
 LABEL maintainer="developers@robojackets.org"
 
