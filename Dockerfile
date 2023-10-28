@@ -128,7 +128,7 @@ RUN set -eux && \
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 
-COPY --link --from=backend-source --chown=www-data:www-data /app/ /app/
+COPY --link --from=backend-source --chown=33:33 /app/ /app/
 
 WORKDIR /app/
 
