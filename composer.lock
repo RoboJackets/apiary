@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b015147ba9f569ec2624d9e7ffa1cba9",
+    "content-hash": "6a1ae0c28112bd251c48bba1c7bd1de3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3285,17 +3285,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.28.0",
+            "version": "4.28.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "35853aa9d1092a47b7c79c98afcd1519a1a20f3f"
+                "reference": "91627a24be1f619d863b7dcb409a2305137edec7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-35853aa9d1092a47b7c79c98afcd1519a1a20f3f-zip-ef405b.zip",
-                "reference": "35853aa9d1092a47b7c79c98afcd1519a1a20f3f",
-                "shasum": "c98c9768fcffd5fc0919e97ed95efb76589791c6"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-91627a24be1f619d863b7dcb409a2305137edec7-zip-c06fbe.zip",
+                "reference": "91627a24be1f619d863b7dcb409a2305137edec7",
+                "shasum": "eccdd060bc6faecc818fd7673d1ddd9728658973"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3405,9 +3405,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.28.0"
+                "source": "https://github.com/laravel/nova/tree/v4.28.1"
             },
-            "time": "2023-10-24T20:43:10+00:00"
+            "time": "2023-10-30T18:31:36+00:00"
         },
         {
             "name": "laravel/passport",
@@ -10790,16 +10790,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v6.3.6",
+            "version": "v6.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "869b26c7a9d4b8a48afdd77ab36031909c87e3a2"
+                "reference": "30212e7c87dcb79c83f6362b00bde0e0b1213499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/869b26c7a9d4b8a48afdd77ab36031909c87e3a2",
-                "reference": "869b26c7a9d4b8a48afdd77ab36031909c87e3a2",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/30212e7c87dcb79c83f6362b00bde0e0b1213499",
+                "reference": "30212e7c87dcb79c83f6362b00bde0e0b1213499",
                 "shasum": ""
             },
             "require": {
@@ -10865,7 +10865,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v6.3.6"
+                "source": "https://github.com/symfony/translation/tree/v6.3.7"
             },
             "funding": [
                 {
@@ -10881,7 +10881,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-17T11:32:53+00:00"
+            "time": "2023-10-28T23:11:45+00:00"
         },
         {
             "name": "symfony/translation-contracts",
