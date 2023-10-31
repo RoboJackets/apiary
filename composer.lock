@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b0787f0996462f14a26d7f08504669e",
+    "content-hash": "fda2f8ccf45061a81d6cd17b85eb081f",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3285,17 +3285,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.28.1",
+            "version": "4.29.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "91627a24be1f619d863b7dcb409a2305137edec7"
+                "reference": "c01c7ad172189dd7a79f36f46937248f4a863c43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-91627a24be1f619d863b7dcb409a2305137edec7-zip-c06fbe.zip",
-                "reference": "91627a24be1f619d863b7dcb409a2305137edec7",
-                "shasum": "eccdd060bc6faecc818fd7673d1ddd9728658973"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-c01c7ad172189dd7a79f36f46937248f4a863c43-zip-7a780b.zip",
+                "reference": "c01c7ad172189dd7a79f36f46937248f4a863c43",
+                "shasum": "80b81162b2713805060ed8b09b96b371ba9ba87a"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3405,9 +3405,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.28.1"
+                "source": "https://github.com/laravel/nova/tree/v4.29.0"
             },
-            "time": "2023-10-30T18:31:36+00:00"
+            "time": "2023-10-31T17:12:52+00:00"
         },
         {
             "name": "laravel/passport",
