@@ -40,7 +40,7 @@
         "kiritokatklian/nova-permission": "4.0.5",
         "laravel/framework": "10.30.1",
         "laravel/horizon": "5.21.3",
-        "laravel/nova": "4.29.2",
+        "laravel/nova": "4.29.3",
         "laravel/passport": "11.9.2",
         "laravel/scout": "10.5.1",
         "laravel/slack-notification-channel": "2.5.0",
