@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "921c9f8ac6c9675b61d6618738721357",
+    "content-hash": "7e103865208c85974f79a8b86894b63c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2954,22 +2954,22 @@
         },
         {
             "name": "kiritokatklian/nova-permission",
-            "version": "v4.0.5",
+            "version": "v4.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kiritokatklian/nova-permission.git",
-                "reference": "b9a338484d67dc38016faf4d21f8a4d75b3103f9"
+                "reference": "02156bbbd67e959a2b4beef13a0a62b39bef83b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/b9a338484d67dc38016faf4d21f8a4d75b3103f9",
-                "reference": "b9a338484d67dc38016faf4d21f8a4d75b3103f9",
+                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/02156bbbd67e959a2b4beef13a0a62b39bef83b2",
+                "reference": "02156bbbd67e959a2b4beef13a0a62b39bef83b2",
                 "shasum": ""
             },
             "require": {
                 "laravel/nova": "^4.0",
                 "php": "^7.4|^8.0|^8.1",
-                "spatie/laravel-permission": "^3.0|^4.0|^5.0"
+                "spatie/laravel-permission": "^3.0|^4.0|^5.0|^6.0"
             },
             "type": "library",
             "extra": {
@@ -2999,9 +2999,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kiritokatklian/nova-permission/issues",
-                "source": "https://github.com/kiritokatklian/nova-permission/tree/v4.0.5"
+                "source": "https://github.com/kiritokatklian/nova-permission/tree/v4.0.6"
             },
-            "time": "2022-10-20T13:58:17+00:00"
+            "time": "2023-11-10T09:22:28+00:00"
         },
         {
             "name": "laravel/framework",
