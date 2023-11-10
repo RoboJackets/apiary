@@ -6,14 +6,13 @@ namespace App\Jobs;
 
 use App\Models\User;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use OITNetworkServices\BuzzAPI;
-use OITNetworkServices\BuzzAPI\Resources;
 use Spatie\Permission\Models\Role;
 
 class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
@@ -26,9 +25,6 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
     public const IDENTIFIER_GTID = 'gtid';
 
     public const IDENTIFIER_USERNAME = 'uid';
-
-    // @phan-suppress-next-line PhanUnreferencedPublicClassConstant
-    public const IDENTIFIER_MAIL = 'email';
 
     public const IDENTIFIER_USER = 'user';
 
@@ -91,35 +87,58 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             $searchValue = $this->value;
         }
 
-        $accountsResponse = BuzzAPI::select(
-            'gtGTID',
-            'mail',
-            'sn',
-            'givenName',
-            'eduPersonPrimaryAffiliation',
-            'gtPrimaryGTAccountUsername',
-            'uid',
-            'gtEmplId',
-            'gtEmployeeHomeDepartmentName',
-            'eduPersonScopedAffiliation',
-            'gtCurriculum'
-        )->from(Resources::GTED_ACCOUNTS)
-        // @phan-suppress-next-line PhanTypeMismatchArgument
-            ->where([$this->identifier => $searchValue])
-            ->get();
+        $client = new Client([
+            'base_uri' => 'https://'.config('buzzapi.host').'/apiv3/',
+            'allow_redirects' => false,
+            'connect_timeout' => config('buzzapi.connect_timeout'),
+            'timeout' => config('buzzapi.timeout'),
+        ]);
 
-        if (! $accountsResponse->isSuccessful()) {
-            throw new Exception('GTED accounts search failed with message '.$accountsResponse->errorInfo()->message);
+        $response = $client->post(
+            'central.iam.gted.accounts/search',
+            [
+                'json' => [
+                    'api_app_id' => config('buzzapi.app_id'),
+                    'api_app_password' => config('buzzapi.app_password'),
+                    'api_request_mode' => 'sync',
+                    'api_log_level' => config('buzzapi.default_log_level'),
+                    $this->identifier => $searchValue,
+                    'requested_attributes' => [
+                        'gtGTID',
+                        'mail',
+                        'sn',
+                        'givenName',
+                        'eduPersonPrimaryAffiliation',
+                        'gtPrimaryGTAccountUsername',
+                        'uid',
+                        'gtEmplId',
+                        'gtEmployeeHomeDepartmentName',
+                        'eduPersonScopedAffiliation',
+                        'gtCurriculum',
+                    ],
+                ],
+            ]
+        );
+
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception('BuzzAPI returned status code '.$response->getStatusCode());
         }
-        $numResults = count($accountsResponse->json->api_result_data);
+
+        $json = json_decode($response->getBody()->getContents());
+
+        if (! property_exists($json, 'api_result_data')) {
+            Log::warning(self::class.': '.$response->getBody()->getContents());
+            throw new Exception('BuzzAPI returned an eror');
+        }
+        $numResults = count($json->api_result_data);
         if ($numResults === 0) {
             throw new Exception('GTED accounts search was successful but gave no results for '.$searchValue);
         }
 
         // If there's multiple results, find the one for their primary GT account or of the User we're searching for.
         // If there's only one (we're searching by the uid of that account), just use that one.
-        $searchUid ??= $accountsResponse->first()->gtPrimaryGTAccountUsername;
-        $account = collect($accountsResponse->json->api_result_data)->firstWhere('uid', $searchUid);
+        $searchUid ??= $json->api_result_data[0]->gtPrimaryGTAccountUsername;
+        $account = collect($json->api_result_data)->firstWhere('uid', $searchUid);
 
         $user = User::where('uid', $account->uid)->first();
         $userIsNew = $user === null;
@@ -185,7 +204,8 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
             return;
         }
-        Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
+
+        Log::error(self::class.": Role 'non-member' not found for assignment to ".$user->uid);
     }
 
     /**
