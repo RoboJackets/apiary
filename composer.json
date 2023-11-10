@@ -37,7 +37,7 @@
         "guzzlehttp/guzzle": "7.8.0",
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.0",
-        "kiritokatklian/nova-permission": "4.0.5",
+        "kiritokatklian/nova-permission": "4.0.6",
         "laravel/framework": "10.31.0",
         "laravel/horizon": "5.21.3",
         "laravel/nova": "4.29.5",
