@@ -19,13 +19,6 @@ return [
         ])
         ->environments([Rule::ENV_PRODUCTION]),
 
-    Rule::make('version')
-        ->rules([
-            'required',
-            'integer',
-            'numeric',
-        ]),
-
     Rule::make('app_id')
         ->rules([
             'required',
