@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d277471c33287bc2b12068880bd68367",
+    "content-hash": "eb038e5bea60fc57ada0504db42c8bb1",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5954,63 +5954,6 @@
                 }
             ],
             "time": "2023-05-02T11:26:24+00:00"
-        },
-        {
-            "name": "oitnetworkservices/buzzapiclient",
-            "version": "0.1.4",
-            "source": {
-                "type": "git",
-                "url": "git@it.github.gatech.edu:OIT-NetworkServices/BuzzAPIClient.git",
-                "reference": "39a27f3b91ed0c8638ba3557d50dd91858920a90"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.robojackets.org/1670610637/oitnetworkservices/buzzapiclient/oitnetworkservices-buzzapiclient-39a27f3b91ed0c8638ba3557d50dd91858920a90-zip-527320.zip",
-                "reference": "39a27f3b91ed0c8638ba3557d50dd91858920a90",
-                "shasum": "1cec573fa4e35b1e28dfa01514b705846cb6f330"
-            },
-            "require": {
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.3|^7.2",
-                "php": "^7.1|^8.1"
-            },
-            "require-dev": {
-                "laravel/framework": "@stable",
-                "phpstan/phpstan": "^0.11.12",
-                "psy/psysh": "@stable",
-                "slevomat/coding-standard": "^5.0",
-                "squizlabs/php_codesniffer": "^3.4",
-                "ukfast/laravel-health-check": "^1.7"
-            },
-            "suggest": {
-                "ukfast/laravel-health-check": "For monitoring connectivity to BuzzAPI"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "OITNetworkServices\\BuzzAPI\\BuzzAPIServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OITNetworkServices\\": "src/"
-                }
-            },
-            "scripts": {
-                "post-update-cmd": [
-                    "rm composer.lock"
-                ]
-            },
-            "authors": [
-                {
-                    "name": "OIT-NS Dev Team",
-                    "email": "oit-ns-dev@lists.gatech.edu"
-                }
-            ],
-            "description": "BuzzAPI Client Library",
-            "time": "2022-05-26T23:22:51+00:00"
         },
         {
             "name": "openspout/openspout",

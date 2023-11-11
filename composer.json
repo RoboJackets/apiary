@@ -49,7 +49,6 @@
         "madewithlove/laravel-nova-uuid-support": "dev-l10-compatibility",
         "meilisearch/meilisearch-php": "1.4.1",
         "mrclay/jsmin-php": "2.4.3",
-        "oitnetworkservices/buzzapiclient": "0.1.4",
         "realrashid/sweet-alert": "7.1.0",
         "sentry/sentry-laravel": "3.8.2",
         "smalot/pdfparser": "2.7.0",
@@ -184,13 +183,6 @@
             "url": "https://nova.laravel.com",
             "only": [
                 "laravel/nova"
-            ]
-        },
-        {
-            "type": "composer",
-            "url": "https://composer.robojackets.org",
-            "only": [
-                "oitnetworkservices/buzzapiclient"
             ]
         },
         {
