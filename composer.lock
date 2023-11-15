@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3018c0e9633451189f38940a5eca81f3",
+    "content-hash": "68ae253a1495846908e28805cc73a87c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2954,16 +2954,16 @@
         },
         {
             "name": "kiritokatklian/nova-permission",
-            "version": "v4.0.6",
+            "version": "4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kiritokatklian/nova-permission.git",
-                "reference": "02156bbbd67e959a2b4beef13a0a62b39bef83b2"
+                "reference": "d2c8a5b78ed8cb591af1b70e6adebff7eb738846"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/02156bbbd67e959a2b4beef13a0a62b39bef83b2",
-                "reference": "02156bbbd67e959a2b4beef13a0a62b39bef83b2",
+                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/d2c8a5b78ed8cb591af1b70e6adebff7eb738846",
+                "reference": "d2c8a5b78ed8cb591af1b70e6adebff7eb738846",
                 "shasum": ""
             },
             "require": {
@@ -2999,9 +2999,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kiritokatklian/nova-permission/issues",
-                "source": "https://github.com/kiritokatklian/nova-permission/tree/v4.0.6"
+                "source": "https://github.com/kiritokatklian/nova-permission/tree/4.0.7"
             },
-            "time": "2023-11-10T09:22:28+00:00"
+            "time": "2023-11-15T16:30:29+00:00"
         },
         {
             "name": "laravel/framework",
