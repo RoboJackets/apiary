@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6fc4e4b7c76307737ef702a22b5a4a3",
+    "content-hash": "2b6f42424303ad0246aec0b6f01a9687",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1802,16 +1802,16 @@
         },
         {
             "name": "enlightn/enlightn",
-            "version": "v2.5.0",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/enlightn/enlightn.git",
-                "reference": "1b5aecf2869f54444404eb2df397618e6e2fc425"
+                "reference": "e82c09b2cd1c014897cf57a0905582800f69fd4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/1b5aecf2869f54444404eb2df397618e6e2fc425",
-                "reference": "1b5aecf2869f54444404eb2df397618e6e2fc425",
+                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/e82c09b2cd1c014897cf57a0905582800f69fd4d",
+                "reference": "e82c09b2cd1c014897cf57a0905582800f69fd4d",
                 "shasum": ""
             },
             "require": {
@@ -1883,32 +1883,32 @@
             "support": {
                 "docs": "https://www.laravel-enlightn.com/docs/",
                 "issues": "https://github.com/enlightn/enlightn/issues",
-                "source": "https://github.com/enlightn/enlightn/tree/v2.5.0"
+                "source": "https://github.com/enlightn/enlightn/tree/v2.6.0"
             },
-            "time": "2023-07-21T23:02:20+00:00"
+            "time": "2023-11-17T08:43:05+00:00"
         },
         {
             "name": "enlightn/security-checker",
-            "version": "v1.10.0",
+            "version": "v1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/enlightn/security-checker.git",
-                "reference": "196bacc76e7a72a63d0e1220926dbb190272db97"
+                "reference": "68df5c7256c84b428bf8fcff0d249de06ce362d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/enlightn/security-checker/zipball/196bacc76e7a72a63d0e1220926dbb190272db97",
-                "reference": "196bacc76e7a72a63d0e1220926dbb190272db97",
+                "url": "https://api.github.com/repos/enlightn/security-checker/zipball/68df5c7256c84b428bf8fcff0d249de06ce362d2",
+                "reference": "68df5c7256c84b428bf8fcff0d249de06ce362d2",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.3|^7.0",
                 "php": ">=5.6",
-                "symfony/console": "^3.4|^4|^5|^6",
-                "symfony/finder": "^3|^4|^5|^6",
-                "symfony/process": "^3.4|^4|^5|^6",
-                "symfony/yaml": "^3.4|^4|^5|^6"
+                "symfony/console": "^3.4|^4|^5|^6|^7",
+                "symfony/finder": "^3|^4|^5|^6|^7",
+                "symfony/process": "^3.4|^4|^5|^6|^7",
+                "symfony/yaml": "^3.4|^4|^5|^6|^7"
             },
             "require-dev": {
                 "ext-zip": "*",
@@ -1949,9 +1949,9 @@
             ],
             "support": {
                 "issues": "https://github.com/enlightn/security-checker/issues",
-                "source": "https://github.com/enlightn/security-checker/tree/v1.10.0"
+                "source": "https://github.com/enlightn/security-checker/tree/v1.11.0"
             },
-            "time": "2022-02-21T22:40:16+00:00"
+            "time": "2023-11-17T07:53:29+00:00"
         },
         {
             "name": "fakerphp/faker",
