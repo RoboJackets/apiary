@@ -5,7 +5,7 @@ You have been assigned to {{ $assignment->travel->name }}. Please complete the f
 
 Visit {{ route('docusign.travel') }} to submit a Travel Authority Request. Georgia Tech requires this form to be submitted for all official travel.
 
-Make a ${{ intval($assignment->travel->fee_amount) }} payment for the travel fee. You can pay online with a credit or debit card at {{ route('pay.travel') }}..
+Make a ${{ intval($assignment->travel->fee_amount) }} payment for the travel fee. You can pay online with a credit or debit card at {{ route('pay.travel') }}.
 @else
 You have been assigned to {{ $assignment->travel->name }}. Please pay the ${{ intval($assignment->travel->fee_amount) }} travel fee as soon as possible so that we can book travel for you. You can pay online with a credit or debit card at {{ route('pay.travel') }}. Note that we add an additional ${{ number_format(\App\Models\Payment::calculateSurcharge($assignment->travel->fee_amount * 100) / 100, 2) }} surcharge for online payments.
 @endif
