@@ -12,7 +12,7 @@ Officers can record refunds for cash, check, and Square payments, at the discret
    To refund payments, you must have the :ref:`refund-payments` permission, which isn't included with any roles.
    If you need access, ask in :slack:`it-helpdesk`.
 
-Refunding :ref:`online payment methods <Online payment methods>` within Apiary automatically triggers a refund to the original payment method, including the surcharge.
+Refunding :ref:`online payment methods <Online payment methods>` within Apiary automatically triggers a refund to the original payment method.
 
 Refunding a cash or check payment within Apiary is only a record-keeping operation and doesn't move funds.
 The treasurer must send a check or other payment to refund the member.
