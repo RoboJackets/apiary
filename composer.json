@@ -30,7 +30,7 @@
         "ashallendesign/laravel-config-validator": "2.4.0",
         "barryvdh/laravel-dompdf": "2.0.1",
         "chelout/laravel-relationship-events": "2.0.0",
-        "doctrine/dbal": "3.7.1",
+        "doctrine/dbal": "3.7.2",
         "docusign/esign-client": "6.17.0",
         "enlightn/enlightn": "2.6.0",
         "fakerphp/faker": "1.23.0",
