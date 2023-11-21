@@ -29,7 +29,6 @@ final class DuesPaymentReminderEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText(intval($package->cost));
         $mailable->assertSeeInText($package->name);
-        $mailable->assertSeeInText(number_format(Payment::calculateSurcharge(intval($package->cost * 100)) / 100, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText('If you would prefer to pay for');
         $mailable->assertDontSeeInText("\n\n\n");
@@ -59,9 +58,6 @@ final class DuesPaymentReminderEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText(intval($firstPackage->cost));
         $mailable->assertSeeInText($firstPackage->name);
-        $mailable->assertSeeInText(
-            number_format(Payment::calculateSurcharge(intval($firstPackage->cost * 100)) / 100, 2)
-        );
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertSeeInText('If you would prefer to pay for '.$secondPackage->name.' instead,');
         $mailable->assertDontSeeInText("\n\n\n");
