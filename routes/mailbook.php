@@ -1231,7 +1231,7 @@ Mailbook::to($user)
             $envelope->signable_id = $assignment->id;
             $envelope->signer_ip_address = '127.0.0.1';
             $envelope->signed_by = $assignment->user->id;
-            $envelope->envelope_id = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            $envelope->envelope_id = bin2hex(openssl_random_pseudo_bytes(16));
             $envelope->save();
 
             return $envelope;
@@ -1294,7 +1294,7 @@ Mailbook::to($user)
             $envelope->signable_id = $assignment->id;
             $envelope->signer_ip_address = '127.0.0.1';
             $envelope->signed_by = $assignment->user->id;
-            $envelope->envelope_id = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            $envelope->envelope_id = bin2hex(openssl_random_pseudo_bytes(16));
             $envelope->save();
 
             return $envelope;
@@ -1369,7 +1369,7 @@ Mailbook::to($user)
             $envelope->signable_id = $assignment->id;
             $envelope->signer_ip_address = '127.0.0.1';
             $envelope->signed_by = $assignment->user->id;
-            $envelope->envelope_id = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            $envelope->envelope_id = bin2hex(openssl_random_pseudo_bytes(16));
             $envelope->save();
 
             return $envelope;
@@ -1446,7 +1446,7 @@ Mailbook::to($user)
             $envelope->signable_id = $assignment->id;
             $envelope->signer_ip_address = '127.0.0.1';
             $envelope->signed_by = $assignment->user->id;
-            $envelope->envelope_id = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            $envelope->envelope_id = bin2hex(openssl_random_pseudo_bytes(16));
             $envelope->save();
 
             return $envelope;
