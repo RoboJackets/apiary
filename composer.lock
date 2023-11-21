@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "049d30d2c297a86e194241b0e524ae6c",
+    "content-hash": "d3c4486a3c1ad1459445779e1e0b83ce",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -16022,16 +16022,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.40.0",
+            "version": "1.40.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "d2477d80996416ac33066f4fef8c6bd6e393fedd"
+                "reference": "8e6547ff47aae2e4f615a5dcea1e5e4911b1dc9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/d2477d80996416ac33066f4fef8c6bd6e393fedd",
-                "reference": "d2477d80996416ac33066f4fef8c6bd6e393fedd",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/8e6547ff47aae2e4f615a5dcea1e5e4911b1dc9f",
+                "reference": "8e6547ff47aae2e4f615a5dcea1e5e4911b1dc9f",
                 "shasum": ""
             },
             "require": {
@@ -16082,7 +16082,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.40.0"
+                "source": "https://github.com/spatie/ray/tree/1.40.1"
             },
             "funding": [
                 {
@@ -16094,7 +16094,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-11-07T13:53:06+00:00"
+            "time": "2023-11-20T08:20:15+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
