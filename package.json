@@ -14,7 +14,7 @@
         "build-client-id-and-secret-modal-prod": "cd nova-components/ClientIdAndSecretModal && npm run prod"
     },
     "devDependencies": {
-        "@sentry/webpack-plugin": "1.20.1",
+        "@sentry/webpack-plugin": "1.21.0",
         "alex": "11.0.1",
         "bootstrap": "4.6.2",
         "cross-env": "5.2.1",
