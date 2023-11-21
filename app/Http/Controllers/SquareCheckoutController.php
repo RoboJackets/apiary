@@ -25,8 +25,6 @@ use Square\Models\CreatePaymentLinkRequest;
 use Square\Models\Money;
 use Square\Models\Order;
 use Square\Models\OrderLineItem;
-use Square\Models\OrderServiceCharge;
-use Square\Models\OrderServiceChargeCalculationPhase;
 use Square\Models\PrePopulatedData;
 use Square\SquareClient;
 

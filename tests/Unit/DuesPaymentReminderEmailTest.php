@@ -7,7 +7,6 @@ namespace Tests\Unit;
 use App\Mail\Dues\PaymentReminder;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
-use App\Models\Payment;
 use App\Models\User;
 use Tests\TestCase;
 
