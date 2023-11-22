@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32431e8244eff04da8c2eb0dc89e86c1",
+    "content-hash": "89e2f49d7f77fb51fd6b9b305339586c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1553,16 +1553,16 @@
         },
         {
             "name": "docusign/esign-client",
-            "version": "v6.17.0",
+            "version": "v6.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/docusign/docusign-esign-php-client.git",
-                "reference": "c44433fd25e2be79a78ea9994e1db1a1a72c4e71"
+                "reference": "f056cf2b7ebe671b95421e335de24b78d80a259a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/c44433fd25e2be79a78ea9994e1db1a1a72c4e71",
-                "reference": "c44433fd25e2be79a78ea9994e1db1a1a72c4e71",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/f056cf2b7ebe671b95421e335de24b78d80a259a",
+                "reference": "f056cf2b7ebe671b95421e335de24b78d80a259a",
                 "shasum": ""
             },
             "require": {
@@ -1606,9 +1606,9 @@
             ],
             "support": {
                 "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
-                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v6.17.0"
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v6.18.0"
             },
-            "time": "2023-09-05T16:09:45+00:00"
+            "time": "2023-11-22T17:42:56+00:00"
         },
         {
             "name": "dompdf/dompdf",
