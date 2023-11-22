@@ -21,7 +21,7 @@ Online payment methods
 
 .. vale write-good.Weasel = NO
 
-The following payment methods are only accepted online and incur a surcharge depending on the amount of the transaction.
+The following payment methods are only accepted online.
 
 - Credit and debit cards
 - Google Pay

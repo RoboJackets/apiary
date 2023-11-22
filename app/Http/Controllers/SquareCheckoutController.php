@@ -25,8 +25,6 @@ use Square\Models\CreatePaymentLinkRequest;
 use Square\Models\Money;
 use Square\Models\Order;
 use Square\Models\OrderLineItem;
-use Square\Models\OrderServiceCharge;
-use Square\Models\OrderServiceChargeCalculationPhase;
 use Square\Models\PrePopulatedData;
 use Square\SquareClient;
 
@@ -182,24 +180,14 @@ class SquareCheckoutController extends Controller
         $basePrice->setAmount($amount);
         $basePrice->setCurrency('USD');
 
-        $surcharge = new Money();
-        $surcharge->setAmount(Payment::calculateSurcharge($amount));
-        $surcharge->setCurrency('USD');
-
         $orderLineItem = new OrderLineItem('1');
         $orderLineItem->setName($name);
         $orderLineItem->setVariationName($variation_name);
         $orderLineItem->setBasePriceMoney($basePrice);
 
-        $orderServiceCharge = new OrderServiceCharge();
-        $orderServiceCharge->setName('Card Processing Surcharge');
-        $orderServiceCharge->setAmountMoney($surcharge);
-        $orderServiceCharge->setCalculationPhase(OrderServiceChargeCalculationPhase::TOTAL_PHASE);
-
         $order = new Order(config('square.location_id'));
         $order->setReferenceId((string) $payment->id);
         $order->setLineItems([$orderLineItem]);
-        $order->setServiceCharges([$orderServiceCharge]);
 
         $acceptedPaymentMethods = new AcceptedPaymentMethods();
         $acceptedPaymentMethods->setApplePay(true);

@@ -6,7 +6,6 @@ namespace Tests\Unit;
 
 use App\Mail\Dues\TransactionReminder;
 use App\Models\DuesPackage;
-use App\Models\Payment;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -29,7 +28,6 @@ final class DuesTransactionReminderEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText(intval($package->cost));
         $mailable->assertSeeInText($package->name);
-        $mailable->assertSeeInText(number_format(Payment::calculateSurcharge(intval($package->cost * 100)) / 100, 2));
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText('If you would prefer to pay for');
         $mailable->assertDontSeeInText("\n\n\n");

@@ -5,7 +5,7 @@ We received your Travel Authority Request for {{ $envelope->signable->travel->na
 You can view your completed form within DocuSign at {{ $envelope->sender_view_url }}, or attached to a separate email from DocuSign.
 
 @if(!$envelope->signable->is_paid)
-You still need to make a ${{ intval($envelope->signable->travel->fee_amount) }} payment for the travel fee. You can pay online with a credit or debit card at {{ route('pay.travel') }}. Note that we add an additional ${{ number_format(\App\Models\Payment::calculateSurcharge($envelope->signable->travel->fee_amount * 100) / 100, 2) }} surcharge for online payments.
+You still need to make a ${{ intval($envelope->signable->travel->fee_amount) }} payment for the travel fee. You can pay online with a credit or debit card at {{ route('pay.travel') }}.
 
 If you would prefer to pay by cash or check, make arrangements with {!! $envelope->signable->travel->primaryContact->full_name !!}. Write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
 

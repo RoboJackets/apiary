@@ -1,6 +1,6 @@
 Hi {!! $transaction->user->preferred_first_name !!},
 
-You still need to make a ${{ intval($transaction->package->cost) }} payment for {{ $transaction->package->name }} dues. You can pay online with a credit or debit card at {{ route('pay.dues') }}. Note that we add an additional ${{ number_format(\App\Models\Payment::calculateSurcharge($transaction->package->cost * 100) / 100, 2) }} surcharge for online payments.
+You still need to make a ${{ intval($transaction->package->cost) }} payment for {{ $transaction->package->name }} dues. You can pay online with a credit or debit card at {{ route('pay.dues') }}.
 
 If you would prefer to pay by cash or check, please bring it to an officer or project manager at the shop. Write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
 

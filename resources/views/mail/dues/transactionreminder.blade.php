@@ -5,11 +5,11 @@ You still need to pay dues for this semester. Please visit {{ route('home') }} t
 
 @php
 print(implode(" and ", \App\Models\DuesPackage::userCanPurchase($user)->orderByDesc('cost')->get()->map(static fn (\App\Models\DuesPackage $package, int $key): string => $package->name.' dues are $'.intval($package->cost) )->toArray()))
-@endphp. You may pay online with a credit or debit card. Note that we add an additional surcharge for online payments.
+@endphp. You may pay online with a credit or debit card.
 @else
 You still need to pay dues for {{ \App\Models\DuesPackage::userCanPurchase($user)->sole()->name }}. Please visit {{ route('home') }} to begin the process.
 
-Dues are ${{ intval(\App\Models\DuesPackage::userCanPurchase($user)->sole()->cost) }} and may be paid online with a credit or debit card for an additional ${{ number_format(\App\Models\Payment::calculateSurcharge(\App\Models\DuesPackage::userCanPurchase($user)->sole()->cost * 100) / 100, 2) }} surcharge.
+Dues are ${{ intval(\App\Models\DuesPackage::userCanPurchase($user)->sole()->cost) }} and may be paid online with a credit or debit card.
 @endif
 
 If you would prefer to pay by cash or check, please bring it to an officer or project manager at the shop. Write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
