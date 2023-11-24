@@ -61,7 +61,6 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             }
 
             $payment->amount = ($details['amount_money']['amount'] - $details['refunded_money']['amount']) / 100;
-            $payment->processing_fee = 0;
         } else {
             $payment->amount = $details['amount_money']['amount'] / 100;
 
