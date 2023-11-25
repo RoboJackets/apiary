@@ -152,7 +152,7 @@ class DuesPackage extends Resource
 
             Currency::make('Cost')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required', 'integer'),
 
             Boolean::make('Available for Purchase')
                 ->sortable(),
