@@ -33,7 +33,7 @@ This role grants access to almost all functions and should only be assigned to s
 ``officer``
 ~~~~~~~~~~~
 
-- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
+- View :doc:`users </officers/users>`, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
 - Create and update :ref:`dues packages <Dues Package>`
 - Create and update :doc:`events </officers/events>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
@@ -46,7 +46,7 @@ This role grants access to almost all functions and should only be assigned to s
 ``project-manager``
 ~~~~~~~~~~~~~~~~~~~
 
-- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
+- View :doc:`users </officers/users>`, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash or check payments <Recording an Offline Payment>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
@@ -57,7 +57,7 @@ This role grants access to almost all functions and should only be assigned to s
 ``team-lead``
 ~~~~~~~~~~~~~
 
-- View users, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
+- View :doc:`users </officers/users>`, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
 
@@ -66,7 +66,7 @@ This role grants access to almost all functions and should only be assigned to s
 ``trainer``
 ~~~~~~~~~~~
 
-- View users
+- View :doc:`users </officers/users>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 
 ``member`` and ``non-member``
