@@ -59,8 +59,8 @@
         "spatie/once": "3.1.0",
         "square/square": "33.0.0.20231115",
         "subfission/cas": "4.4.0",
-        "symfony/http-client": "6.3.8",
-        "symfony/postmark-mailer": "6.3.0",
+        "symfony/http-client": "6.4.0",
+        "symfony/postmark-mailer": "6.4.0",
         "xammie/mailbook": "1.6.2",
         "robojackets/personal-access-token-modal": "@dev",
         "robojackets/client-id-and-secret-modal": "@dev"
