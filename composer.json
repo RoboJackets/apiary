@@ -34,7 +34,7 @@
         "docusign/esign-client": "6.18.0",
         "enlightn/enlightn": "2.6.0",
         "fakerphp/faker": "1.23.0",
-        "guzzlehttp/guzzle": "7.8.0",
+        "guzzlehttp/guzzle": "7.8.1",
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.0",
         "kiritokatklian/nova-permission": "4.0.7",
