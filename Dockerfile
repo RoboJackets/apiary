@@ -20,7 +20,7 @@ RUN set -euxo pipefail && \
         fi; \
     done;
 
-FROM node:21 as docs-minification
+FROM node:21.3.0 as docs-minification
 
 COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
@@ -49,7 +49,7 @@ COPY --link package.json package-lock.json webpack.mix.js artisan /app/
 COPY --link resources/ /app/resources/
 COPY --link public/ /app/public/
 
-FROM node:21 as nova-components
+FROM node:21.3.0 as nova-components
 
 COPY --link /nova-components/ /nova-components/
 
@@ -67,7 +67,7 @@ RUN set -eux && \
     npm install --no-progress && \
     npm run production --no-progress
 
-FROM node:20 as frontend
+FROM node:20.10.0 as frontend
 
 COPY --link --from=frontend-source /app/ /app/
 
