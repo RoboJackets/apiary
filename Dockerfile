@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.6
 
-FROM python:3.11-bookworm as docs-source
+FROM python:3.12-bookworm as docs-source
 
 COPY --link docs/ /docs/
 
