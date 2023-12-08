@@ -15,7 +15,7 @@ trait AuthorizeInclude
      *
      * @return array<string> relationships to include
      */
-    public function authorizeInclude(string $class, string $requestedInclude = null): array
+    public function authorizeInclude(string $class, ?string $requestedInclude = null): array
     {
         // If the user doesn't request anything, we don't need to authorize anything
         if ($requestedInclude === null) {
