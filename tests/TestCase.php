@@ -55,7 +55,7 @@ abstract class TestCase extends BaseTestCase
         User $user,
         bool $paid,
         array $payment_attrs = [],
-        CarbonImmutable $createdAt = null
+        ?CarbonImmutable $createdAt = null
     ): DuesTransaction {
         $now = CarbonImmutable::now();
         $dues_transaction = DuesTransaction::factory()->create(
@@ -103,7 +103,7 @@ abstract class TestCase extends BaseTestCase
         User $user,
         bool $paid,
         array $payment_attrs = [],
-        CarbonImmutable $createdAt = null
+        ?CarbonImmutable $createdAt = null
     ): TravelAssignment|Collection|Model {
         $now = CarbonImmutable::now();
 
