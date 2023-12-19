@@ -16,3 +16,9 @@ expiration
 JWT
 RSVPs
 Qualtrics
+Ansible
+Meilisearch
+Dockerfile
+Nginx
+Hostname
+jobspec
