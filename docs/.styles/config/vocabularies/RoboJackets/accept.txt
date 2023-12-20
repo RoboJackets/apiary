@@ -22,3 +22,7 @@ Dockerfile
 Nginx
 Hostname
 jobspec
+failure
+failed
+execute
+executed

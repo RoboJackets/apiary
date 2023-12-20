@@ -26,6 +26,7 @@ Apiary
 
    admins/access-overrides
    admins/api/index
+   admins/backup-and-restore
    admins/deployment
    admins/membership-agreements
    admins/permissions-roles
