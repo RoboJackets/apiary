@@ -49,8 +49,12 @@ Push the image to a registry
    While this repository itself is open source, this project uses **confidential and proprietary** components which are packed into Docker images produced by this process.
    Images should **never** be pushed to a public registry.
 
+.. vale Google.Acronyms = NO
+
 The Ansible playbook includes a ``registry`` role to host a private `CNCF Distribution Registry <https://distribution.github.io/distribution/>`_ instance for storing images.
 The steps are similar for any other private registry.
+
+.. vale Google.Acronyms = YES
 
 .. code:: shell
 

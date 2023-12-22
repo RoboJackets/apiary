@@ -20,9 +20,17 @@ Ansible
 Meilisearch
 Dockerfile
 Nginx
+hostname
 Hostname
 jobspec
 failure
 failed
 execute
 executed
+Apereo
+CAS
+OIT
+USERTrust
+PEM
+DSN
+JEDI
