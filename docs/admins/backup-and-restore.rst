@@ -68,3 +68,4 @@ Restore from a backup
    **Note that if you backed up more than one database in a single invocation, the databases were combined into a single script, and you must trim the file to just the statements you want to execute.**
 5. Start the Nomad job.
 6. Run ``php artisan scout:import-all`` to index the data in Meilisearch.
+   If running in Docker, this command must be run inside of the Docker container.
