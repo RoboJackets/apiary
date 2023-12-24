@@ -18,7 +18,7 @@ class TravelAssignmentObserver
         if ($assignment->travel->tar_required === true || $assignment->travel->needs_airfare_form) {
             SendDocuSignEnvelopeForTravelAssignment::dispatch($assignment)
                 ->chain([
-                    SendTravelAssignmentCreatedNotification::dispatch($assignment),
+                    new SendTravelAssignmentCreatedNotification($assignment),
                 ]);
         }
 
