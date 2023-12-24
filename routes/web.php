@@ -68,6 +68,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
             ->name('docusign.auth.global');
 
         Route::get('/auth/user', [DocuSignController::class, 'redirectUserToProvider'])
+            ->middleware('can:access-nova')
             ->name('docusign.auth.user');
 
         Route::get('/auth/complete', [DocuSignController::class, 'handleProviderCallback'])
