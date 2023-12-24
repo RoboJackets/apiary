@@ -106,6 +106,9 @@ class DocuSignEnvelope extends Resource
 
             Boolean::make('Complete'),
 
+            Boolean::make('Acknowledgement Sent')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
             Text::make('DocuSign Envelope ID', 'envelope_id')
                 ->onlyOnDetail()
                 ->copyable(),

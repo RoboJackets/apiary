@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace App\Util;
 
 use App\Models\DocuSignEnvelope;
+use App\Models\Travel;
+use App\Models\TravelAssignment;
 use App\Models\User;
 use Carbon\Carbon;
 use DocuSign\eSign\Client\ApiClient;
@@ -19,16 +21,29 @@ use DocuSign\eSign\Client\Auth\OAuth;
 use DocuSign\eSign\Client\Auth\UserInfo;
 use DocuSign\eSign\Configuration;
 use DocuSign\eSign\Model\ConnectEventData;
+use DocuSign\eSign\Model\Document;
+use DocuSign\eSign\Model\EmailAddress;
 use DocuSign\eSign\Model\EmailSettings;
 use DocuSign\eSign\Model\EnvelopeDefinition;
 use DocuSign\eSign\Model\EventNotification;
 use DocuSign\eSign\Model\Expirations;
+use DocuSign\eSign\Model\FirstName;
+use DocuSign\eSign\Model\FullName;
+use DocuSign\eSign\Model\InitialHere;
+use DocuSign\eSign\Model\LastName;
 use DocuSign\eSign\Model\Notification;
+use DocuSign\eSign\Model\PrefillTabs;
 use DocuSign\eSign\Model\RecipientEmailNotification;
+use DocuSign\eSign\Model\Recipients;
 use DocuSign\eSign\Model\Reminders;
+use DocuSign\eSign\Model\Signer;
+use DocuSign\eSign\Model\Tabs;
 use DocuSign\eSign\Model\TemplateRole;
+use DocuSign\eSign\Model\Text;
+use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
+use Ramsey\Uuid\Uuid;
 
 class DocuSign
 {
@@ -365,5 +380,405 @@ class DocuSign
         } else {
             return self::membershipAgreementEnvelopeDefinitionForMemberOnly($envelope);
         }
+    }
+
+    private static function emailSubject(Travel $travel): string
+    {
+        if ($travel->tar_required && $travel->needs_airfare_form) {
+            return $travel->name.' Travel Forms';
+        } elseif ($travel->tar_required && ! $travel->needs_airfare_form) {
+            return $travel->name.' Travel Information Form';
+        } elseif (! $travel->tar_required && $travel->needs_airfare_form) {
+            return $travel->name.' Airfare Request Form';
+        } else {
+            throw new Exception('Unexpected trip configuration');
+        }
+    }
+
+    /**
+     * Build recipients for travel assignment envelope.
+     *
+     * @phan-suppress PhanPluginNonBoolBranch
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    private static function travelAssignmentRecipients(TravelAssignment $assignment): Recipients
+    {
+        $emailBody = 'Please carefully review and initial the included form as soon as possible. Georgia Tech requires'.
+            ' this form for all official travel.';
+
+        if ($assignment->travel->needs_airfare_form && $assignment->travel->tar_required) {
+            $emailBody = 'Please carefully review and complete the included forms as soon as possible so we can book '.
+                'airfare for you. Georgia Tech requires these forms for all official travel.';
+        }
+
+        if ($assignment->travel->needs_airfare_form && ! $assignment->travel->tar_required) {
+            $emailBody = 'Please carefully review and complete the included form as soon as possible so we can book '.
+                'airfare for you. Georgia Tech requires this form for all official travel.';
+        }
+
+        return (new Recipients())
+            ->setSigners([
+                (new Signer())
+                    ->setRecipientId(Uuid::uuid4()->toString())
+                    ->setAddAccessCodeToEmail(false)
+                    ->setAgentCanEditEmail(false)
+                    ->setAgentCanEditName(false)
+                    ->setAllowSystemOverrideForLockedRecipient(false)
+                    ->setAutoNavigation(false)
+                    ->setCanSignOffline(false)
+                    ->setEmail($assignment->user->uid.'@gatech.edu')
+                    ->setEmailNotification(
+                        (new RecipientEmailNotification())
+                            ->setEmailSubject(self::emailSubject($assignment->travel))
+                            ->setEmailBody($emailBody)
+                            ->setSupportedLanguage('en')
+                    )
+                    ->setFirstName($assignment->user->first_name)
+                    ->setLastName($assignment->user->last_name)
+                    ->setName($assignment->user->full_name)
+                    ->setRecipientSuppliesTabs(false)
+                    ->setRequireIdLookup(false)
+                    ->setRequireSignOnPaper(false)
+                    ->setRequireUploadSignature(false)
+                    ->setTabs(
+                        (new Tabs())
+                            ->setFullNameTabs([
+                                (new FullName())
+                                    ->setTabType('fullName')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(300)
+                                    ->setXPosition(115)
+                                    ->setYPosition(125),
+                            ])
+                            ->setInitialHereTabs([
+                                (new InitialHere())
+                                    ->setTabType('initialHere')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setHeight(200)
+                                    ->setWidth(200)
+                                    ->setScaleValue(1)
+                                    ->setTabOrder(100)
+                                    ->setXPosition(20)
+                                    ->setYPosition(735)
+                                    ->setOptional(false),
+                                (new InitialHere())
+                                    ->setTabType('initialHere')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setHeight(200)
+                                    ->setWidth(200)
+                                    ->setScaleValue(1)
+                                    ->setTabOrder(100)
+                                    ->setXPosition(20)
+                                    ->setYPosition(735)
+                                    ->setOptional(false),
+                            ])
+                            ->setLastNameTabs([
+                                (new LastName())
+                                    ->setTabType('lastName')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(150)
+                                    ->setXPosition(160)
+                                    ->setYPosition(185),
+                            ])
+                            ->setFirstNameTabs([
+                                (new FirstName())
+                                    ->setTabType('firstName')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(310)
+                                    ->setYPosition(185),
+                            ])
+                            ->setEmailAddressTabs([
+                                (new EmailAddress())
+                                    ->setTabType('emailAddress')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(370)
+                                    ->setYPosition(235),
+                            ])
+                            ->setTextTabs([
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(350)
+                                    ->setXPosition(160)
+                                    ->setYPosition(340)
+                                    ->setRequired(true)
+                                    ->setTooltip(
+                                        'Date of birth is required in this field. If you have a Known Traveler '.
+                                        'Number, PASS ID, Redress Control Number, SkyMiles number, or other identifier'.
+                                        ' relevant to air travel, enter it here as well.'
+                                    ),
+                            ])
+                    ),
+            ]);
+    }
+
+    /**
+     * Build the Document object for the Travel Information Form.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    private static function travelInformationFormDocument(TravelAssignment $assignment): Document
+    {
+        return (new Document())
+            ->setDocumentId(1)
+            ->setDisplay('inline')
+            ->setDocumentBase64(base64_encode(file_get_contents(resource_path('pdf/travel_information_form.pdf'))))
+            ->setIncludeInDownload(true)
+            ->setName('Travel Information Form')
+            ->setTabs(
+                (new Tabs())
+                    ->setPrefillTabs(
+                        (new PrefillTabs())
+                            ->setTextTabs([
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(500)
+                                    ->setXPosition(115)
+                                    ->setYPosition(160)
+                                    ->setValue($assignment->travel->destination),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(500)
+                                    ->setXPosition(115)
+                                    ->setYPosition(190)
+                                    ->setValue($assignment->travel->tar_purpose),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(90)
+                                    ->setYPosition(370)
+                                    ->setValue('$'.$assignment->travel->tar_lodging),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(150)
+                                    ->setXPosition(90)
+                                    ->setYPosition(470)
+                                    ->setValue($assignment->travel->tar_project_number),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(150)
+                                    ->setYPosition(510)
+                                    ->setValue($assignment->user->emergency_contact_phone),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(280)
+                                    ->setYPosition(310)
+                                    ->setValue('$'.$assignment->travel->tar_registration),
+                            ])
+                    )
+            );
+    }
+
+    /**
+     * Build the Document object for the Single Trip Direct Bill Airfare Request Form.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    private static function directBillAirfareFormDocument(TravelAssignment $assignment): Document
+    {
+        return (new Document())
+            ->setDocumentId(2)
+            ->setDisplay('inline')
+            ->setDocumentBase64(base64_encode(file_get_contents(resource_path('pdf/direct_bill_airfare_form.pdf'))))
+            ->setIncludeInDownload(true)
+            ->setName('Request for Single-Trip Direct Billing of Airfare')
+            ->setTabs(
+                (new Tabs())
+                    ->setPrefillTabs(
+                        (new PrefillTabs())
+                            ->setTextTabs([
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(160)
+                                    ->setYPosition(235)
+                                    ->setValue($assignment->user->phone),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(185)
+                                    ->setYPosition(260)
+                                    ->setValue($assignment->travel->tar_purpose),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(160)
+                                    ->setYPosition(370)
+                                    ->setValue($assignment->travel->tar_project_number),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(2)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(160)
+                                    ->setYPosition(435)
+                                    ->setValue($assignment->user->employee_id),
+                            ])
+                    )
+            );
+    }
+
+    /**
+     * Builds the array of documents for this travel assignment.
+     *
+     * @return array<\DocuSign\eSign\Model\Document>
+     */
+    private static function travelAssignmentDocuments(TravelAssignment $assignment): array
+    {
+        $documents = [];
+
+        if ($assignment->travel->tar_required === true) {
+            $documents[] = self::travelInformationFormDocument($assignment);
+        }
+
+        if ($assignment->travel->needs_airfare_form) {
+            $documents[] = self::directBillAirfareFormDocument($assignment);
+        }
+
+        return $documents;
+    }
+
+    private static function travelAssignmentEmailSettings(TravelAssignment $assignment): EmailSettings
+    {
+        return (new EmailSettings())
+            ->setReplyEmailAddressOverride($assignment->travel->primaryContact->gt_email)
+            ->setReplyEmailNameOverride($assignment->travel->primaryContact->full_name);
+    }
+
+    /**
+     * Build the EnvelopeDefinition for a travel assignment.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    public static function travelAssignmentEnvelopeDefinition(DocuSignEnvelope $envelope): EnvelopeDefinition
+    {
+        return (new EnvelopeDefinition())
+            ->setStatus('sent')
+            ->setRecipients(self::travelAssignmentRecipients($envelope->signable))
+            ->setRecipientsLock(true)
+            ->setDocuments(self::travelAssignmentDocuments($envelope->signable))
+            ->setEmailSubject(
+                self::emailSubject($envelope->signable->travel).' for '.$envelope->signedBy->full_name
+            )
+            ->setEmailBlurb(null)
+            ->setMessageLock(true)
+            ->setEmailSettings(self::travelAssignmentEmailSettings($envelope->signable))
+            ->setNotification(
+                (new Notification())
+                    ->setUseAccountDefaults(false)
+                    ->setReminders(
+                        (new Reminders())
+                            ->setReminderEnabled(true)
+                            ->setReminderDelay(1)
+                            ->setReminderFrequency(1)
+                    )
+                    ->setExpirations(
+                        (new Expirations())
+                            ->setExpireEnabled(true)
+                            ->setExpireWarn(10)
+                            ->setExpireAfter(60)
+                    )
+            )
+            ->setAllowComments(false)
+            ->setAllowMarkup(false)
+            ->setAllowReassign(false)
+            ->setAllowRecipientRecursion(false)
+            ->setAllowViewHistory(false)
+            ->setAutoNavigation(false)
+            ->setEnableWetSign(false)
+            ->setEnvelopeIdStamping(true)
+            ->setEventNotifications(self::eventNotifications($envelope))
+            ->setUseDisclosure(true)
+            ->setSignerCanSignOnMobile(true)
+            ->setSigningLocation('online');
     }
 }

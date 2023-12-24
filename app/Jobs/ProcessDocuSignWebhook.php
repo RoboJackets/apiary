@@ -112,6 +112,14 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
 
                     Storage::disk('local')->put($disk_path, base64_decode($document['PDFBytes'], true));
 
+                    if ($document['name'] === 'Travel Information Form') {
+                        $envelope->travel_authority_filename = $disk_path;
+                    }
+
+                    if (str_contains($document['name'], 'Airfare')) {
+                        $envelope->direct_bill_airfare_filename = $disk_path;
+                    }
+
                     if ($document['type'] === 'summary') {
                         $envelope->summary_filename = $disk_path;
                     }
@@ -143,7 +151,7 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
 
                     break;
                 default:
-                    throw new Exception('Unrecognized event status');
+                    throw new Exception('Unrecognized event status '.$data['envelopeSummary']['status']);
             }
         }
     }
