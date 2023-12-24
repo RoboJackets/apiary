@@ -3,10 +3,6 @@
 declare(strict_types=1);
 
 return [
-    'ingest_mailbox' => env('DOCUSIGN_INGEST_MAILBOX'),
-
-    'single_sign_on_url' => 'https://account.docusign.com/organizations/7097b206-c4cf-4e3c-8e62-2219e510c3c3/saml2/login/sp/4564d62e-c67b-46f2-b1d7-f8ccc628a269',
-
     'client_id' => env('DOCUSIGN_CLIENT_ID'),
 
     'client_secret' => env('DOCUSIGN_CLIENT_SECRET'),
