@@ -106,9 +106,7 @@ class DocuSignEnvelopeObserver
         if ($envelope->complete && $envelope->signable_type === Signature::getMorphClassStatic()) {
             $envelope->signable->complete = true;
             $envelope->signable->save();
-        }
-
-        if ($envelope->complete && $envelope->signable_type === TravelAssignment::getMorphClassStatic()) {
+        } elseif ($envelope->complete && $envelope->signable_type === TravelAssignment::getMorphClassStatic()) {
             $envelope->signable->tar_received = true;
             $envelope->signable->save();
         }
