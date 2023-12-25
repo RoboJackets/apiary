@@ -416,6 +416,107 @@ class DocuSign
                 'airfare for you. Georgia Tech requires this form for all official travel.';
         }
 
+        $fullNameTabs = [];
+        $initialHereTabs = [];
+        $lastNameTabs = [];
+        $firstNameTabs = [];
+        $emailAddressTabs = [];
+        $textTabs = [];
+
+        if ($assignment->travel->tar_required) {
+            $fullNameTabs[] = (new FullName())
+                ->setTabType('fullName')
+                ->setDocumentId(1)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(300)
+                ->setXPosition(115)
+                ->setYPosition(125);
+
+            $initialHereTabs[] = (new InitialHere())
+                ->setTabType('initialHere')
+                ->setDocumentId(1)
+                ->setPageNumber(1)
+                ->setHeight(200)
+                ->setWidth(200)
+                ->setScaleValue(1)
+                ->setTabOrder(100)
+                ->setXPosition(20)
+                ->setYPosition(735)
+                ->setOptional(false);
+        }
+
+        if ($assignment->travel->needs_airfare_form) {
+            $initialHereTabs[] = (new InitialHere())
+                ->setTabType('initialHere')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setHeight(200)
+                ->setWidth(200)
+                ->setScaleValue(1)
+                ->setTabOrder(100)
+                ->setXPosition(20)
+                ->setYPosition(735)
+                ->setOptional(false);
+
+            $lastNameTabs[] = (new LastName())
+                ->setTabType('lastName')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(150)
+                ->setXPosition(160)
+                ->setYPosition(185);
+
+            $firstNameTabs[] = (new FirstName())
+                ->setTabType('firstName')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(310)
+                ->setYPosition(185);
+
+            $emailAddressTabs[] = (new EmailAddress())
+                ->setTabType('emailAddress')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(370)
+                ->setYPosition(235);
+
+            $textTabs[] = (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(350)
+                ->setXPosition(160)
+                ->setYPosition(340)
+                ->setRequired(true)
+                ->setTooltip(
+                    'Date of birth is required in this field. If you have a Known Traveler '.
+                    'Number, PASS ID, Redress Control Number, SkyMiles number, or other identifier'.
+                    ' relevant to air travel, enter it here as well.'
+                );
+        }
+
         return (new Recipients())
             ->setSigners([
                 (new Signer())
@@ -442,101 +543,12 @@ class DocuSign
                     ->setRequireUploadSignature(false)
                     ->setTabs(
                         (new Tabs())
-                            ->setFullNameTabs([
-                                (new FullName())
-                                    ->setTabType('fullName')
-                                    ->setDocumentId(1)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(300)
-                                    ->setXPosition(115)
-                                    ->setYPosition(125),
-                            ])
-                            ->setInitialHereTabs([
-                                (new InitialHere())
-                                    ->setTabType('initialHere')
-                                    ->setDocumentId(1)
-                                    ->setPageNumber(1)
-                                    ->setHeight(200)
-                                    ->setWidth(200)
-                                    ->setScaleValue(1)
-                                    ->setTabOrder(100)
-                                    ->setXPosition(20)
-                                    ->setYPosition(735)
-                                    ->setOptional(false),
-                                (new InitialHere())
-                                    ->setTabType('initialHere')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setHeight(200)
-                                    ->setWidth(200)
-                                    ->setScaleValue(1)
-                                    ->setTabOrder(100)
-                                    ->setXPosition(20)
-                                    ->setYPosition(735)
-                                    ->setOptional(false),
-                            ])
-                            ->setLastNameTabs([
-                                (new LastName())
-                                    ->setTabType('lastName')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(150)
-                                    ->setXPosition(160)
-                                    ->setYPosition(185),
-                            ])
-                            ->setFirstNameTabs([
-                                (new FirstName())
-                                    ->setTabType('firstName')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(310)
-                                    ->setYPosition(185),
-                            ])
-                            ->setEmailAddressTabs([
-                                (new EmailAddress())
-                                    ->setTabType('emailAddress')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(370)
-                                    ->setYPosition(235),
-                            ])
-                            ->setTextTabs([
-                                (new Text())
-                                    ->setTabType('text')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(350)
-                                    ->setXPosition(160)
-                                    ->setYPosition(340)
-                                    ->setRequired(true)
-                                    ->setTooltip(
-                                        'Date of birth is required in this field. If you have a Known Traveler '.
-                                        'Number, PASS ID, Redress Control Number, SkyMiles number, or other identifier'.
-                                        ' relevant to air travel, enter it here as well.'
-                                    ),
-                            ])
+                            ->setFullNameTabs($fullNameTabs)
+                            ->setInitialHereTabs($initialHereTabs)
+                            ->setLastNameTabs($lastNameTabs)
+                            ->setFirstNameTabs($firstNameTabs)
+                            ->setEmailAddressTabs($emailAddressTabs)
+                            ->setTextTabs($textTabs)
                     ),
             ]);
     }
