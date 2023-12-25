@@ -643,6 +643,60 @@ class DocuSign
      */
     private static function directBillAirfareFormDocument(TravelAssignment $assignment): Document
     {
+        $textTabs = [
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(160)
+                ->setYPosition(235)
+                ->setValue($assignment->user->phone),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(185)
+                ->setYPosition(260)
+                ->setValue($assignment->travel->tar_purpose),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(160)
+                ->setYPosition(370)
+                ->setValue($assignment->travel->tar_project_number),
+        ];
+
+        if ($assignment->user->employee_id !== null) {
+            $textTabs[] = (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(160)
+                ->setYPosition(435)
+                ->setValue($assignment->user->employee_id);
+        }
+
         return (new Document())
             ->setDocumentId(2)
             ->setDisplay('inline')
@@ -653,56 +707,7 @@ class DocuSign
                 (new Tabs())
                     ->setPrefillTabs(
                         (new PrefillTabs())
-                            ->setTextTabs([
-                                (new Text())
-                                    ->setTabType('text')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(160)
-                                    ->setYPosition(235)
-                                    ->setValue($assignment->user->phone),
-                                (new Text())
-                                    ->setTabType('text')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(185)
-                                    ->setYPosition(260)
-                                    ->setValue($assignment->travel->tar_purpose),
-                                (new Text())
-                                    ->setTabType('text')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(160)
-                                    ->setYPosition(370)
-                                    ->setValue($assignment->travel->tar_project_number),
-                                (new Text())
-                                    ->setTabType('text')
-                                    ->setDocumentId(2)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(160)
-                                    ->setYPosition(435)
-                                    ->setValue($assignment->user->employee_id),
-                            ])
+                            ->setTextTabs($textTabs)
                     )
             );
     }
