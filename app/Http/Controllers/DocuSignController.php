@@ -12,6 +12,7 @@ use App\Jobs\SendDocuSignEnvelopeForTravelAssignment;
 use App\Models\DocuSignEnvelope;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
+use App\Models\TravelAssignment;
 use App\Util\DocuSign;
 use Carbon\Carbon;
 use DocuSign\eSign\Api\EnvelopesApi;
@@ -423,6 +424,11 @@ class DocuSignController extends Controller
 
                         alert()->success('Success!', 'We processed your membership agreement.');
                     }
+                } elseif ($envelope->signable_type === TravelAssignment::getMorphClassStatic()) {
+                    $envelope->complete = true;
+                    $envelope->save();
+
+                    alert()->success('Success!', 'We processed your travel forms.');
                 }
 
                 break;
