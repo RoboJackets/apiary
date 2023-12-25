@@ -200,7 +200,6 @@ parameters:
     - '#Parameter \#1 \$value of function strval expects bool\|float\|int\|resource\|string\|null, mixed given\.#'
     - '#Parameter \#1 \$value of method Carbon\\Carbon::setTimezone\(\) expects DateTimeZone\|string, mixed given\.#'
     - '#Parameter \#1 \$value of method Carbon\\Carbon::subDays\(\) expects int, mixed given\.#'
-    - '#Parameter \#1 \$value of method DocuSign\\eSign\\Model\\Text::setValue\(\) expects string\|null, int\|null given\.#'
     - '#Parameter \#1 \$value of method Laravel\\Nova\\Metrics\\Partition::result\(\) expects array<string, float\|int>, array given\.#'
     - '#Parameter \#1 \$year of static method Carbon\\Carbon::create\(\) expects DateTimeInterface\|int\|null, string given\.#'
     - '#Parameter \#2 \$array of function array_key_exists expects array, array\|null given\.#'
