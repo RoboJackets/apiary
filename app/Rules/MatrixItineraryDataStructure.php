@@ -23,7 +23,7 @@ class MatrixItineraryDataStructure implements ValidationRule
         'displayTotal' => [
             'required',
             'string',
-            'regex:/^USD[0-9]{1,4}\.[0-9]{2}$/',
+            'regex:/^USD[0-9]{1,5}\.[0-9]{2}$/',
         ],
         'itinerary' => [
             'required',
@@ -228,7 +228,7 @@ class MatrixItineraryDataStructure implements ValidationRule
         'pricings.*.displayPrice' => [
             'required',
             'string',
-            'regex:/^USD[0-9]{1,4}\.[0-9]{2}$/',
+            'regex:/^USD[0-9]{1,5}\.[0-9]{2}$/',
         ],
     ];
 
