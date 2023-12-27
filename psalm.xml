@@ -301,5 +301,11 @@
                 <file name="app/Nova/Actions/Payments/RecordPayment.php"/>
             </errorLevel>
         </UndefinedConstant>
+        <UnusedForeachValue>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Travel.php"/>
+                <file name="app/Rules/MatrixItineraryBusinessPolicy.php"/>
+            </errorLevel>
+        </UnusedForeachValue>
     </issueHandlers>
 </psalm>

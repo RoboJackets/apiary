@@ -102,6 +102,7 @@ use Laravel\Scout\Searchable;
  * @property bool $form_completion_email_sent
  * @property-read bool $assignments_need_forms
  * @property-read bool $assignments_need_payment
+ * @property array|null $airfare_policy
  */
 class Travel extends Model
 {
@@ -138,6 +139,7 @@ class Travel extends Model
         'embargoed_destination' => 'boolean',
         'biological_materials' => 'boolean',
         'equipment' => 'boolean',
+        'airfare_policy' => 'array',
     ];
 
     /**

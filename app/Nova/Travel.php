@@ -2,12 +2,17 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed.DisallowedPartiallyKeyed
+
 namespace App\Nova;
 
 use App\Models\Travel as AppModelsTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
+use App\Rules\MatrixItineraryBusinessPolicy;
+use App\Util\BusinessTravelPolicy;
 use Carbon\Carbon;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -130,6 +135,42 @@ class Travel extends Resource
 
             Boolean::make('Form Completion Email Sent')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
+            BooleanGroup::make('Airfare Policy')
+                ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
+                ->default(static function (): array {
+                    $default = [];
+
+                    // @phan-suppress-next-line PhanUnusedVariableValueOfForeachWithKey
+                    foreach (MatrixItineraryBusinessPolicy::POLICY_LABELS as $flag => $label) {
+                        $default[$flag] = true;
+                    }
+
+                    return $default;
+                })
+                ->readonly(static fn (NovaRequest $request): bool => $request->user()->can('update-airfare-policy'))
+                ->required()
+                ->rules('required', static function (string $attribute, string $value, Closure $fail): void {
+                    $decoded = json_decode($value, true);
+
+                    if (! is_array($decoded)) {
+                        $fail('Internal error validating policy');
+
+                        return;
+                    }
+
+                    if ($decoded['delta'] === false && $decoded['fare_class'] === true) {
+                        $fail('Fare class rule must also be disabled if marketing carrier rule is disabled');
+                    }
+                })
+                ->help(
+                    $request->user()->can('update-airfare-policy') ?
+                        null :
+                        'The airfare policy for this trip can be modified by an officer'.
+                        (str_contains($request->path(), 'update-fields') ? ' ' : ' after creating the trip ').
+                        'if needed.'
+                )
+                ->hideFromIndex(),
 
             new Panel(
                 'Travel Authority Request',
@@ -368,6 +409,31 @@ class Travel extends Resource
         }
 
         return $cards;
+    }
+
+    /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     */
+    protected static function afterValidation(NovaRequest $request, $validator): void
+    {
+        $totalCost = $request->tar_lodging + $request->tar_registration;
+
+        if ($totalCost === 0) {
+            return;
+        }
+
+        $feeAmount = $request->fee_amount;
+
+        if ($feeAmount / $totalCost < BusinessTravelPolicy::TRIP_FEE_COST_RATIO) {
+            $validator->errors()->add(
+                'fee_amount',
+                'Trip fee must be at least '.
+                (BusinessTravelPolicy::TRIP_FEE_COST_RATIO * 100).
+                '% of the per-person cost for this trip.'
+            );
+        }
     }
 
     /**

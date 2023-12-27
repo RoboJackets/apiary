@@ -2,14 +2,22 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
+
 namespace App\Nova;
 
 use App\Nova\Actions\Payments\RecordPaymentActions;
+use App\Rules\MatrixItineraryBusinessPolicy;
+use App\Rules\MatrixItineraryDataStructure;
+use App\Util\BusinessTravelPolicy;
+use App\Util\Matrix;
 use Carbon\Carbon;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
@@ -93,6 +101,36 @@ class TravelAssignment extends Resource
                             ?->id
                 ),
 
+            Code::make('Matrix Itinerary')
+                ->json()
+                ->rules('nullable', 'json', new MatrixItineraryDataStructure())
+                ->required()
+                ->help(
+                    'If this trip includes airfare, you must provide an itinerary in Matrix JSON format. Search '.
+                    'for flights at <a href="https://matrix.itasoftware.com">Matrix</a>, click <strong>Copy itineray '.
+                    'as JSON</strong>, then paste into the text box above.'
+                ),
+
+            Text::make(
+                'Matrix Itinerary',
+                static fn (\App\Models\TravelAssignment $assignment): string => view(
+                    'travel.matrixitinerarypreview',
+                    [
+                        'itinerary' => $assignment->matrix_itinerary,
+                    ]
+                )->render()
+            )
+                ->asHtml()
+                ->onlyOnDetail(),
+
+            Currency::make(
+                'Airfare Cost',
+                static fn (\App\Models\TravelAssignment $assignment): ?float => Matrix::getHighestDisplayPrice(
+                    // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+                    json_encode($assignment->matrix_itinerary)
+                )
+            ),
+
             Boolean::make('Travel Authority Request Received', 'tar_received')
                 ->sortable()
                 ->hideWhenCreating(),
@@ -122,6 +160,52 @@ class TravelAssignment extends Resource
 
             self::metadataPanel(),
         ];
+    }
+
+    /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     */
+    protected static function afterValidation(NovaRequest $request, $validator): void
+    {
+        if ($request->travel === null || $request->matrix_itinerary === null) {
+            return;
+        }
+
+        $trip = \App\Models\Travel::where('id', '=', $request->travel)->sole();
+
+        $businessPolicy = new MatrixItineraryBusinessPolicy($trip->airfare_policy);
+
+        $businessPolicyPassed = true;
+
+        $businessPolicy->validate(
+            'matrix_itinerary',
+            $request->matrix_itinerary,
+            static function (string $message) use ($validator, &$businessPolicyPassed): void {
+                $businessPolicyPassed = false;
+                $validator->errors()->add('matrix_itinerary', $message);
+            }
+        );
+
+        if ($businessPolicyPassed) {
+            $airfare_cost = Matrix::getHighestDisplayPrice($request->matrix_itinerary);
+
+            if ($airfare_cost === null) {
+                $validator->errors()->add('matrix_itinerary', 'Internal error determining price for itinerary');
+            }
+
+            $total_cost = $trip->tar_lodging + $trip->tar_registration + $airfare_cost;
+
+            if ($trip->fee_amount / $total_cost < BusinessTravelPolicy::TRIP_FEE_COST_RATIO) {
+                $validator->errors()->add(
+                    'matrix_itinerary',
+                    'Trip fee must be at least '.
+                    (BusinessTravelPolicy::TRIP_FEE_COST_RATIO * 100).
+                    '% of the per-person cost for this trip.'
+                );
+            }
+        }
     }
 
     /**
