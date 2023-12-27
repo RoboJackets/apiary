@@ -22,7 +22,7 @@
         "lodash": "4.17.21",
         "resolve-url-loader": "5.0.0",
         "sass": "1.69.5",
-        "sass-loader": "13.3.2",
+        "sass-loader": "13.3.3",
         "vue-loader": "15.11.1"
     },
     "dependencies": {
