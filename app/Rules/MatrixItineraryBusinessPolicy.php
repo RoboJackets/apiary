@@ -37,17 +37,12 @@ class MatrixItineraryBusinessPolicy implements ValidationRule
                 'integer',
                 'max:0',
             ],
-            'itinerary.slices.*.segments.*' => [
+            'itinerary.slices.*.segments' => [
                 'required',
                 'array',
                 'size:1',
             ],
             'itinerary.slices.*.segments.*.legs' => [
-                'required',
-                'array',
-                'size:1',
-            ],
-            'itinerary.slices.*.segments' => [
                 'required',
                 'array',
                 'size:1',
