@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class MatrixItineraryBusinessPolicy implements ValidationRule
 {
     public const POLICY_LABELS = [
-        'round_trip' => 'Itineraries must be round-trip',
+        'max_slices' => 'Itineraries must be one-way or round-trip',
         'nonstop' => 'Segments must be single direct non-stop flights',
         'origin_atlanta' => 'First flight must originate from Atlanta',
         'coach' => 'Fares must be in coach cabin',
@@ -28,7 +28,7 @@ class MatrixItineraryBusinessPolicy implements ValidationRule
             'itinerary.slices' => [
                 'required',
                 'array',
-                'size:2',
+                'max:2',
             ],
         ],
         'nonstop' => [
