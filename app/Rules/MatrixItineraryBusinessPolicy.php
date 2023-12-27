@@ -24,7 +24,7 @@ class MatrixItineraryBusinessPolicy implements ValidationRule
     ];
 
     private const POLICY_RULES = [
-        'round_trip' => [
+        'max_slices' => [
             'itinerary.slices' => [
                 'required',
                 'array',
