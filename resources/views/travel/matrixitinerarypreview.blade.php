@@ -8,7 +8,7 @@
         <div style="display: block; grid-column: 2/span 2;"><strong>{{ \Carbon\Carbon::parse($segment['departure'])->format('g:i A') }}</strong> to <strong>{{ \Carbon\Carbon::parse($segment['arrival'])->format('g:i A') }}</strong> ({{ \Carbon\Carbon::parse($segment['arrival'])->diffForHumans(\Carbon\Carbon::parse($segment['departure']), \Carbon\CarbonInterface::DIFF_ABSOLUTE, true, 2) }})</div>
         <div style="display: block;">{{ $segment['carrier']['shortName'] }} {{ $segment['flight']['number'] }}@if(array_key_exists('ext', $segment) && array_key_exists('operationalDisclosure', $segment['ext'])) ({{ $segment['ext']['operationalDisclosure'] }})@endif</div>
         <div style="display: block;">{{ $segment['legs'][0]['aircraft']['shortName'] }}</div>
-        <div style="display: block;">{{ collect($segment['bookingInfos'])->map(static fn (array $bookingInfo): string => ucfirst(strtolower($bookingInfo['cabin'])))->unique()->join(', ') }} ({{ collect($segment['bookingInfos'])->map(static fn (array $bookingInfo): string => ucfirst(strtolower($bookingInfo['bookingCode'])))->unique()->join(',') }})</div>
+        <div style="display: block;">{{ collect($segment['bookingInfos'])->map(static fn (array $bookingInfo): string => ucfirst(strtolower($bookingInfo['cabin'])))->unique()->join(', ') }} ({{ collect($segment['bookingInfos'])->map(static fn (array $bookingInfo): string => $bookingInfo['bookingCode'])->unique()->join(',') }})</div>
     </div>
 </div>
 @if($loop->count > 1 && ! $loop->last)
