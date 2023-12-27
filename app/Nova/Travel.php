@@ -148,7 +148,7 @@ class Travel extends Resource
 
                     return $default;
                 })
-                ->readonly(static fn (NovaRequest $request): bool => $request->user()->can('update-airfare-policy'))
+                ->readonly(static fn (NovaRequest $request): bool => $request->user()->cant('update-airfare-policy'))
                 ->required()
                 ->rules('required', static function (string $attribute, string $value, Closure $fail): void {
                     $decoded = json_decode($value, true);
