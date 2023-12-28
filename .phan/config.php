@@ -30,6 +30,7 @@ return [
     'suppress_issue_types' => [
         'PhanAbstractStaticMethodCall',
         'PhanAccessNonStaticToStatic',
+        'PhanCompatibleStandaloneType',
         'PhanInvalidFQSENInCallable',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',

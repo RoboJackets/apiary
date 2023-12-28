@@ -27,6 +27,7 @@ use App\Policies\DuesTransactionPolicy;
 use App\Policies\EventPolicy;
 use App\Policies\MajorPolicy;
 use App\Policies\MerchandisePolicy;
+use App\Policies\NovaNotificationPolicy;
 use App\Policies\OAuth2AccessTokenPolicy;
 use App\Policies\OAuth2ClientPolicy;
 use App\Policies\PaymentPolicy;
@@ -40,6 +41,7 @@ use App\Policies\TravelPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\WebhookCallPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -60,6 +62,7 @@ class AuthServiceProvider extends ServiceProvider
         Event::class => EventPolicy::class,
         Major::class => MajorPolicy::class,
         Merchandise::class => MerchandisePolicy::class,
+        Notification::class => NovaNotificationPolicy::class,
         OAuth2AccessToken::class => OAuth2AccessTokenPolicy::class,
         OAuth2Client::class => OAuth2ClientPolicy::class,
         Payment::class => PaymentPolicy::class,

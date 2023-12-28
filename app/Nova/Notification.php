@@ -7,26 +7,23 @@ namespace App\Nova;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for webhook calls.
+ * A Nova resource for Nova notifications.
  *
- * @extends \App\Nova\Resource<\Spatie\WebhookClient\Models\WebhookCall>
- *
- * @phan-suppress PhanUnreferencedClass
+ * @extends \App\Nova\Resource<\Laravel\Nova\Notifications\Notification>
  */
-class WebhookCall extends Resource
+class Notification extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \Spatie\WebhookClient\Models\WebhookCall::class;
+    public static $model = \Laravel\Nova\Notifications\Notification::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -53,32 +50,34 @@ class WebhookCall extends Resource
 
     /**
      * Get the fields displayed by the resource.
+     *
+     * @return array
      */
-    public function fields(NovaRequest $request): array
+    public function fields(NovaRequest $request)
     {
         return [
             ID::make(),
 
-            Text::make('Name'),
+            Text::make('Type')
+                ->sortable()
+                ->filterable(),
 
-            URL::make('URL'),
+            MorphTo::make('User', 'notifiable'),
 
-            Code::make('Payload')
+            Code::make('Data')
                 ->json(),
 
-            Text::make('Exception')
+            DateTime::make('Created At')
                 ->onlyOnDetail(),
 
-            new Panel(
-                'Timestamps',
-                [
-                    DateTime::make('Created', 'created_at')
-                        ->onlyOnDetail(),
+            DateTime::make('Updated At')
+                ->onlyOnDetail(),
 
-                    DateTime::make('Last Updated', 'updated_at')
-                        ->onlyOnDetail(),
-                ]
-            ),
+            DateTime::make('Read At')
+                ->onlyOnDetail(),
+
+            DateTime::make('Deleted At')
+                ->onlyOnDetail(),
         ];
     }
 
