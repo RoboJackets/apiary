@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -30,6 +31,13 @@ class Airport extends Resource
     public static $title = 'iata';
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Travel';
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
@@ -39,13 +47,6 @@ class Airport extends Resource
         'name',
         'city',
     ];
-
-    /**
-     * Indicates if the resource should be displayed in the sidebar.
-     *
-     * @var bool
-     */
-    public static $displayInNavigation = false;
 
     /**
      * Indicates if the resource should be globally searchable.
@@ -68,5 +69,13 @@ class Airport extends Resource
 
             Text::make('City'),
         ];
+    }
+
+    /**
+     * Determine if this resource is available for navigation.
+     */
+    public static function availableForNavigation(Request $request): bool
+    {
+        return $request->user()->hasRole('admin');
     }
 }
