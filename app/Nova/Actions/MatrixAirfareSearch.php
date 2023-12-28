@@ -6,8 +6,8 @@ namespace App\Nova\Actions;
 
 use App\Models\Travel;
 use App\Nova\Airport;
+use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
-use Closure;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\ActionResponse;
@@ -193,19 +193,7 @@ class MatrixAirfareSearch extends Action
             BooleanGroup::make('Policy Filters')
                 ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
                 ->default(static fn (): array => $trip->airfare_policy ?? [])
-                ->rules('required', static function (string $attribute, string $value, Closure $fail): void {
-                    $decoded = json_decode($value, true);
-
-                    if (! is_array($decoded)) {
-                        $fail('Internal error validating policy');
-
-                        return;
-                    }
-
-                    if ($decoded['delta'] === false && $decoded['fare_class'] === true) {
-                        $fail('Fare class rule must also be disabled if marketing carrier rule is disabled');
-                    }
-                })
+                ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
                 ->required()
                 ->help(
                     'Select policies to apply as search filters. <strong>Note that selected itineraries must still '.

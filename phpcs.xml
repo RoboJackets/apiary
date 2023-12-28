@@ -50,6 +50,7 @@
         <exclude-pattern>/app/Notifications/</exclude-pattern>
         <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Policies/</exclude-pattern>
+        <exclude-pattern>/app/Rules/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
@@ -208,6 +209,7 @@
         <exclude-pattern>/app/Notifications/</exclude-pattern>
         <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Policies/</exclude-pattern>
+        <exclude-pattern>/app/Rules/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 

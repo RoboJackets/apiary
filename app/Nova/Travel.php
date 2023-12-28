@@ -10,10 +10,10 @@ use App\Models\Travel as AppModelsTravel;
 use App\Nova\Actions\MatrixAirfareSearch;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
+use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Util\BusinessTravelPolicy;
 use Carbon\Carbon;
-use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -151,19 +151,7 @@ class Travel extends Resource
                 })
                 ->readonly(static fn (NovaRequest $request): bool => $request->user()->cant('update-airfare-policy'))
                 ->required()
-                ->rules('required', static function (string $attribute, string $value, Closure $fail): void {
-                    $decoded = json_decode($value, true);
-
-                    if (! is_array($decoded)) {
-                        $fail('Internal error validating policy');
-
-                        return;
-                    }
-
-                    if ($decoded['delta'] === false && $decoded['fare_class'] === true) {
-                        $fail('Fare class rule must also be disabled if marketing carrier rule is disabled');
-                    }
-                })
+                ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
                 ->help(
                     $request->user()->can('update-airfare-policy') ?
                         null :
