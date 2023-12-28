@@ -8,12 +8,16 @@ Nova.booting((Vue, router) => {
     var sentryRelease = document.head.querySelector('meta[name="sentry-release"]').content;
     var sentryUserId = document.head.querySelector('meta[name="sentry-user-id"]');
     var sentryUsername = document.head.querySelector('meta[name="sentry-username"]');
+    var sentryEmail = document.head.querySelector('meta[name="sentry-email"]');
+    var sentryName = document.head.querySelector('meta[name="sentry-name"]');
     if (sentryDsn !== null) {
         if (sentryUserId !== null) {
             var initialScope = {
                 user: {
                     id: sentryUserId.content,
                     username: sentryUsername.content,
+                    email: sentryEmail.content,
+                    fullName: sentryName.content,
                 }
             }
         } else {
@@ -27,7 +31,25 @@ Nova.booting((Vue, router) => {
             initialScope: initialScope,
             attachProps: true,
             logErrors: true,
-            integrations: [new Integrations.BrowserTracing()],
+            integrations: [
+                new Integrations.BrowserTracing(),
+                new Sentry.Feedback({
+                    colorScheme: "system",
+                    isNameRequired: true,
+                    isEmailRequired: true,
+                    useSentryUser: {
+                        email: 'email',
+                        name: 'fullName',
+                    },
+                    buttonLabel: 'Feedback',
+                    submitButtonLabel: 'Send Feedback',
+                    formTitle: 'Feedback',
+                    namePlaceholder: 'George Burdell',
+                    emailPlaceholder: 'george.burdell@robojackets.org',
+                    messagePlaceholder: 'Please describe what you were trying to do, what you expected, and what actually happened.',
+                    successMessageText: 'Thank you for your feedback!',
+                }),
+            ],
             tracesSampleRate: 1.0,
             tracingOptions: {
                 trackComponents: true,
