@@ -50,8 +50,12 @@ if (sentryDsn !== null) {
         initialScope: initialScope,
         attachProps: true,
         logErrors: true,
+        tracesSampleRate: 1.0,
+        tracingOptions: {
+            trackComponents: true,
+        },
         integrations: [
-            new Integrations.BrowserTracing(),
+            new Sentry.BrowserTracing(),
             new Sentry.Feedback({
                 colorScheme: "light",
                 isNameRequired: true,
@@ -69,10 +73,6 @@ if (sentryDsn !== null) {
                 successMessageText: 'Thank you for your feedback!',
             }),
         ],
-        tracesSampleRate: 1.0,
-        tracingOptions: {
-            trackComponents: true,
-        },
     });
     window.Sentry = Sentry;
 } else {
