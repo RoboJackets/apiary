@@ -96,3 +96,8 @@ This permission enables `impersonation within Laravel Nova <https://nova.laravel
 .. vale Google.Parens = NO
 
 This permission enables a convenience URL (``/sign/auth/global``) to configure `DocuSign impersonation <https://developers.docusign.com/platform/auth/jwt/>`__. It should only be attached to system administrators that are configuring DocuSign.
+
+``update-airfare-policy``
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This permission allows users to update the airfare policy on a trip.
