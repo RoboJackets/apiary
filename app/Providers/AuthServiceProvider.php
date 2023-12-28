@@ -38,10 +38,12 @@ use App\Policies\TeamPolicy;
 use App\Policies\TravelAssignmentPolicy;
 use App\Policies\TravelPolicy;
 use App\Policies\UserPolicy;
+use App\Policies\WebhookCallPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\WebhookClient\Models\WebhookCall;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -69,6 +71,7 @@ class AuthServiceProvider extends ServiceProvider
         Travel::class => TravelPolicy::class,
         TravelAssignment::class => TravelAssignmentPolicy::class,
         User::class => UserPolicy::class,
+        WebhookCall::class => WebhookCallPolicy::class,
     ];
 
     /**
