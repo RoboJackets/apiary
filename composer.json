@@ -200,10 +200,9 @@
             "package": {
                 "name": "mwgg/airports",
                 "version": "1.0",
-                "source": {
-                    "url": "https://github.com/mwgg/Airports",
-                    "reference": "master",
-                    "type": "git"
+                "dist": {
+                    "url": "https://codeload.github.com/mwgg/Airports/zip/refs/heads/master",
+                    "type": "zip"
                 }
             }
         }

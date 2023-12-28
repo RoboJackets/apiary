@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f2bf65c6faa1286b131c34566f7d92f",
+    "content-hash": "6ff4ba7cdf722502f42f9298b6303678",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5613,10 +5613,9 @@
         {
             "name": "mwgg/airports",
             "version": "1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mwgg/Airports",
-                "reference": "master"
+            "dist": {
+                "type": "zip",
+                "url": "https://codeload.github.com/mwgg/Airports/zip/refs/heads/master"
             },
             "type": "library"
         },
