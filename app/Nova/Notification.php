@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 /**
  * A Nova resource for Nova notifications.
@@ -67,17 +68,22 @@ class Notification extends Resource
             Code::make('Data')
                 ->json(),
 
-            DateTime::make('Created At')
-                ->onlyOnDetail(),
+            Panel::make(
+                'Timestamps',
+                [
+                    DateTime::make('Created At')
+                        ->onlyOnDetail(),
 
-            DateTime::make('Updated At')
-                ->onlyOnDetail(),
+                    DateTime::make('Updated At')
+                        ->onlyOnDetail(),
 
-            DateTime::make('Read At')
-                ->onlyOnDetail(),
+                    DateTime::make('Read At')
+                        ->onlyOnDetail(),
 
-            DateTime::make('Deleted At')
-                ->onlyOnDetail(),
+                    DateTime::make('Deleted At')
+                        ->onlyOnDetail(),
+                ]
+            ),
         ];
     }
 
