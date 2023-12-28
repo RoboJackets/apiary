@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Travel as AppModelsTravel;
+use App\Nova\Actions\MatrixAirfareSearch;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Rules\MatrixItineraryBusinessPolicy;
@@ -384,6 +385,8 @@ class Travel extends Resource
                     ) ||
                             $travel->primaryContact->id === $request->user()->id
                 ),
+
+            MatrixAirfareSearch::make(),
         ];
     }
 

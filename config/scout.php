@@ -137,6 +137,16 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY', null),
         'index-settings' => [
+            \App\Models\Airport::class => [
+                'displayedAttributes' => [
+                    'iata',
+                ],
+                'searchableAttributes' => [
+                    'iata',
+                    'name',
+                    'city',
+                ],
+            ],
             \App\Models\Attendance::class => [
                 'displayedAttributes' => [
                     'id',

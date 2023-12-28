@@ -31,6 +31,7 @@ return [
         'PhanAbstractStaticMethodCall',
         'PhanAccessNonStaticToStatic',
         'PhanCompatibleStandaloneType',
+        'PhanCompatibleTrueType',
         'PhanInvalidFQSENInCallable',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',
