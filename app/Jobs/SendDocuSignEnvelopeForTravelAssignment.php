@@ -76,6 +76,7 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
                     $envelope->signed_by = $assignment->user->id;
                     $envelope->signable_type = $assignment->getMorphClass();
                     $envelope->signable_id = $assignment->id;
+                    $envelope->sent_by = $assignment->travel->primaryContact->id;
                     $envelope->save();
 
                     $envelopeResponse = $envelopesApi->createEnvelope(
