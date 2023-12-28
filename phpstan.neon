@@ -89,7 +89,6 @@ parameters:
     - '#Method App\\Nova\\[a-zA-Z0-9]+::__invoke\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\Actions\\[a-zA-Z0-9]+::handle\(\) has no return type specified\.#'
-    - '#Method App\\Nova\\Actions\\MatrixAirfareSearch::handle\(\) should return Laravel\\Nova\\Actions\\ActionResponse but returns Laravel\\Nova\\Actions\\ActionResponse\|static\(App\\Nova\\Actions\\MatrixAirfareSearch\)\.#'
     - '#Method App\\Nova\\Actions\\Payments\\[a-zA-Z0-9]+::handle\(\) has no return type specified\.#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types: TModelClass#'
     - '#Method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types: TModelClass#'

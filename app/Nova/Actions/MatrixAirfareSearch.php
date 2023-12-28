@@ -130,7 +130,7 @@ class MatrixAirfareSearch extends Action
             }
         }
 
-        return self::openInNewTab(
+        return ActionResponse::openInNewTab(
             'https://matrix.itasoftware.com/search?search='.urlencode(base64_encode(json_encode($matrix_payload)))
         );
     }
