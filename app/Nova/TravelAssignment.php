@@ -112,7 +112,7 @@ class TravelAssignment extends Resource
                 ),
 
             Text::make(
-                'Matrix Itinerary',
+                'Matrix Itinerary Preview',
                 static fn (\App\Models\TravelAssignment $assignment): string => view(
                     'travel.matrixitinerarypreview',
                     [

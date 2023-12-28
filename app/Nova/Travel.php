@@ -13,6 +13,7 @@ use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Util\BusinessTravelPolicy;
+use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -110,8 +111,8 @@ class Travel extends Resource
             Currency::make('Fee', 'fee_amount')
                 ->sortable()
                 ->required()
-                ->rules('required', 'integer')
-                ->min(10)
+                ->rules('required', 'integer', 'min:20', 'max:1000')
+                ->min(20)
                 ->max(1000),
 
             Markdown::make('Included with Fee')
@@ -413,6 +414,29 @@ class Travel extends Resource
 
         if ($totalCost === 0) {
             return;
+        }
+
+        if ($request->resourceId !== null) {
+            $trip = \App\Models\Travel::where('id', '=', $request->resourceId)->sole();
+
+            $airfareCost = $trip->assignments->reduce(
+                static function (?float $carry, \App\Models\TravelAssignment $assignment): ?float {
+                    // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+                    $thisAirfareCost = Matrix::getHighestDisplayPrice(json_encode($assignment->matrix_itinerary));
+
+                    if ($thisAirfareCost !== null && $carry !== null && $thisAirfareCost > $carry) {
+                        return $thisAirfareCost;
+                    } elseif ($thisAirfareCost !== null && $carry === null) {
+                        return $thisAirfareCost;
+                    } else {
+                        return $carry;
+                    }
+                }
+            );
+
+            if ($airfareCost !== null && $airfareCost > 0) {
+                $totalCost += $airfareCost;
+            }
         }
 
         $feeAmount = $request->fee_amount;
