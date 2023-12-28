@@ -238,6 +238,7 @@ parameters:
     - '#Parameter \#2 \$values of method Spatie\\Csp\\Policies\\Policy::addDirective\(\) expects array\|bool\|string, mixed given\.#'
     - '#Parameter \#3 \$envelope of static method App\\Http\\Controllers\\DocuSignController::redirectToRecipientView\(\) expects App\\Models\\DocuSignEnvelope, Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#3 \$fail of method App\\Rules\\MatrixItineraryBusinessPolicy::validate\(\) expects Closure\(string\): Illuminate\\Translation\\PotentiallyTranslatedString, Closure\(string\): void given\.#'
+    - '#Parameter \#3 \$resolveCallback of static method Laravel\\Nova\\Fields\\Field::make\(\) expects \(callable\(\): mixed\)\|null, ''App\\\\Nova\\\\Airport'' given\.#'
     - '#Parameter \#3 \$user of static method App\\Http\\Controllers\\SquareCheckoutController::redirect\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Contracts\\Filter::apply\(\)#'
     - '#Parameter \#3 \$value \(.+\) of method App\\Nova\\Filters\\[a-zA-Z]+::apply\(\) should be contravariant with parameter \$value \(mixed\) of method Laravel\\Nova\\Filters\\Filter::apply\(\)#'
@@ -272,4 +273,3 @@ parameters:
     - '#Unable to resolve the template type TMapWithKeysValue in call to method Illuminate\\Support\\Collection<\(int\|string\),mixed>::mapWithKeys\(\)#'
     - '#Variable property access on App\\Models\\User\.#'
     - '#Variable property access on object\.#'
-    - '#Parameter \#3 \$resolveCallback of static method Laravel\\Nova\\Fields\\Field::make\(\) expects \(callable\(\): mixed\)\|null, ''App\\\\Nova\\\\Airport'' given\.#'
