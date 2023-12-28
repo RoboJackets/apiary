@@ -101,4 +101,12 @@ class Major extends Resource
             new MajorsMissingDisplayNames(),
         ];
     }
+
+    /**
+     * Determine if this resource is available for navigation.
+     */
+    public static function availableForNavigation(Request $request): bool
+    {
+        return $request->user()->hasRole('admin');
+    }
 }
