@@ -10,6 +10,7 @@ use App\Jobs\SendDocuSignEnvelopeForTravelAssignment;
 use App\Jobs\SendTravelAssignmentCreatedNotification;
 use App\Jobs\SendTravelAssignmentReminder;
 use App\Models\TravelAssignment;
+use App\Notifications\Travel\TravelAssignmentCreated;
 
 class TravelAssignmentObserver
 {
@@ -20,6 +21,8 @@ class TravelAssignmentObserver
                 ->chain([
                     new SendTravelAssignmentCreatedNotification($assignment),
                 ]);
+        } else {
+            $assignment->user->notify(new TravelAssignmentCreated($assignment));
         }
 
         SendTravelAssignmentReminder::dispatch($assignment);
