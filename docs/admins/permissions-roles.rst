@@ -100,4 +100,4 @@ This permission enables a convenience URL (``/sign/auth/global``) to configure `
 ``update-airfare-policy``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This permission allows users to update the airfare policy on a trip.
+This permission allows users to update the airfare policies on trips.
