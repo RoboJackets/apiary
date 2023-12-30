@@ -486,24 +486,30 @@ class User extends Resource
     {
         return [
             DateTime::make('Account Created', 'created_at')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->onlyOnDetail(),
 
             DateTime::make('Last Updated', 'updated_at')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->onlyOnDetail(),
 
             Boolean::make('Has Ever Logged In')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->onlyOnDetail(),
 
             Boolean::make('Is Service Account')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideFromIndex(),
 
             Text::make('Create Reason')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideWhenUpdating()
                 ->hideFromIndex()
                 ->required()
                 ->rules('required'),
 
             Text::make('gtDirGUID', 'gtDirGUID')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideWhenCreating()
                 ->hideFromIndex()
                 ->copyable(),
