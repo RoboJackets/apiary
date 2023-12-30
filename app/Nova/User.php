@@ -34,6 +34,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -373,6 +374,9 @@ class User extends Resource
                         'admin'
                     ) || $request->resourceId === $request->user()->id
                 ),
+
+            MorphMany::make('Notifications', 'novaNotifications', Notification::class)
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             new Panel('Employment', [
                 Number::make('Employee ID (OneUSG)', 'employee_id')
