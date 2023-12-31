@@ -67,7 +67,7 @@
                 <li>Attendance data will be shared in aggregate or with identifying information to Georgia Tech campus departments.</li>
                 <li>Demographic information will be shared in aggregate to current and potential sponsors.</li>
                 <li>Information regarding an individual payment, including your Georgia Tech email address and phone number, will be shared with Square, RoboJackets' designated payments processor, for the purposes of completing a credit/debit card transaction. You can opt-out of this sharing by using another payment method.
-                <li>Your Georgia Tech username, Georgia Tech email, full name, and information about your device, as reported by your web browser or RoboJackets Android application, may be shared with Sentry, a product of Functional Software, Inc, to help us troubleshoot issues you may experience while using RoboJackets services.</li>
+                <li>Your Georgia Tech username and information about your device, as reported by your web browser or RoboJackets Android application, may be shared with Sentry, a product of Functional Software, Inc, to help us troubleshoot issues you may experience while using RoboJackets services.</li>
                 <li>Your name and Georgia Tech email address may be shared with Postmark, a product of ActiveCampaign, LLC, to deliver emails, including, but not limited to, reminders and payment receipts.</li>
                 <li>Your name, Georgia Tech email address, Georgia Tech employee ID, Georgia Tech employment home department, phone number, parent or legal guardian name, and parent or legal guardian email address may be shared with DocuSign, a product of DocuSign, Inc, to enable you to sign documents electronically.</li>
                 <li>All other information will be released only to RoboJackets officers and officer-designated RoboJackets members in the course of conducting business.</li>
@@ -81,7 +81,7 @@
             <p>This application contains links and redirects to other websites. This privacy policy applies only to this website, as the other websites are governed by their own privacy policies.</p>
 
             <h2>Changes to this privacy policy</h2>
-            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on December 28th, 2023.</p>
+            <p>RoboJackets IT reviews this privacy policy regularly and places updates on this webpage. This document was last updated on May 10th, 2023.</p>
 
             <h2>How to contact us</h2>
             <p>If you have a question regarding any RoboJackets computing systems, including this website, contact RoboJackets IT by emailing <a href="support@robojackets.org">support@robojackets.org</a>.</p>
