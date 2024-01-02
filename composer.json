@@ -33,7 +33,7 @@
         "doctrine/dbal": "3.7.2",
         "docusign/esign-client": "6.18.0",
         "enlightn/enlightn": "2.7.0",
-        "fakerphp/faker": "1.23.0",
+        "fakerphp/faker": "1.23.1",
         "guzzlehttp/guzzle": "7.8.1",
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.0",
