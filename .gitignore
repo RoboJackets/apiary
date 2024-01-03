@@ -19,8 +19,6 @@ npm-debug.log
 /resources/views/vendor/nova/*
 !/resources/views/vendor/nova/partials
 /resources/views/vendor/nova/partials/*
-!/resources/views/vendor/nova/partials/user.blade.php
-!/resources/views/vendor/nova/partials/footer.blade.php
 !/resources/views/vendor/nova/partials/meta.blade.php
 /public/vendor/nova/
 /public/nova-assets
