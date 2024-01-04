@@ -27,7 +27,7 @@
     },
     "dependencies": {
         "@sentry/vue": "7.91.0",
-        "axios": "1.6.3",
+        "axios": "1.6.4",
         "caniuse-lite": "1.0.30001572",
         "chartist": "0.11.4",
         "chartist-plugin-legend": "0.6.2",
