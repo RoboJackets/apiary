@@ -46,7 +46,7 @@
         "laravel/slack-notification-channel": "2.5.0",
         "laravel/socialite": "5.11.0",
         "laravel/tinker": "2.8.2",
-        "madewithlove/laravel-nova-uuid-support": "dev-l10-compatibility",
+        "madewithlove/laravel-nova-uuid-support": "1.5",
         "meilisearch/meilisearch-php": "1.5.0",
         "mrclay/jsmin-php": "2.4.3",
         "realrashid/sweet-alert": "7.1.0",
@@ -183,13 +183,6 @@
             "url": "https://nova.laravel.com",
             "only": [
                 "laravel/nova"
-            ]
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git",
-            "only": [
-                "madewithlove/laravel-nova-uuid-support"
             ]
         },
         {
