@@ -334,8 +334,8 @@ class DocuSign
                     ->setReminders(
                         (new Reminders())
                             ->setReminderEnabled(true)
-                            ->setReminderDelay(2)
-                            ->setReminderFrequency(2)
+                            ->setReminderDelay(2 /* days */)
+                            ->setReminderFrequency(2 /* days */)
                     )
                     ->setExpirations(
                         (new Expirations())
@@ -775,8 +775,8 @@ class DocuSign
                     ->setReminders(
                         (new Reminders())
                             ->setReminderEnabled(true)
-                            ->setReminderDelay(1)
-                            ->setReminderFrequency(1)
+                            ->setReminderDelay(1 /* days */)
+                            ->setReminderFrequency(1 /* days */)
                     )
                     ->setExpirations(
                         (new Expirations())
