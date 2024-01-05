@@ -46,7 +46,7 @@ class Airport extends Model
         $rows = [];
 
         foreach ($raw as $details) {
-            if ($details['iata'] === '' || $details['iata'] === null) {
+            if (! is_string($details['iata']) || ! ctype_alpha($details['iata']) || strlen($details['iata']) !== 3) {
                 continue;
             }
 

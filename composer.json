@@ -12,6 +12,7 @@
     "require": {
         "php": "^8.2",
         "ext-bcmath": "*",
+        "ext-ctype": "*",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-intl": "*",
