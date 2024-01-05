@@ -390,9 +390,9 @@ class DocuSign
             return $travel->name.' Travel Information Form';
         } elseif (! $travel->tar_required && $travel->needs_airfare_form) {
             return $travel->name.' Airfare Request Form';
-        } else {
-            throw new Exception('Unexpected trip configuration');
         }
+
+        throw new Exception('Unexpected trip configuration');
     }
 
     /**
