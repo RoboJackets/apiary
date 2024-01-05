@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
+// phpcs:disable Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps
 // phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments.DisallowedNamedArgument
 // phpcs:disable SlevomatCodingStandard.PHP.RequireExplicitAssertion.RequiredExplicitAssertion
 
@@ -14,11 +15,14 @@ use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
 use App\Models\TravelAssignment;
 use App\Util\DocuSign;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use DocuSign\eSign\Api\EnvelopesApi;
 use DocuSign\eSign\Client\ApiClient;
+use DocuSign\eSign\Client\Auth\OAuthToken;
+use DocuSign\eSign\Client\Auth\UserInfo;
 use DocuSign\eSign\Model\RecipientViewRequest;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -74,22 +78,7 @@ class DocuSignController extends Controller
         $recipientApiClient = DocuSign::getApiClientForUser($user);
 
         if ($recipientApiClient === null) {
-            $state = DocuSign::getState();
-
-            $docusign = DocuSign::getApiClient(withAccessToken: false);
-
-            $authorization_uri = $docusign->getAuthorizationURI(
-                client_id: config('docusign.client_id'),
-                scopes: [ApiClient::$SCOPE_SIGNATURE],
-                redirect_uri: route('docusign.auth.complete'),
-                response_type: 'code',
-                state: $state
-            ).'&login_hint='.$user->uid.'@gatech.edu';
-
-            $request->session()->put('state', $state);
-            $request->session()->put('next', 'signTravel');
-
-            return redirect($authorization_uri);
+            return self::redirectToOAuthConsent(request: $request, next: 'signTravel', impersonation: false);
 
             // When the user returns to Apiary, their DocuSign credentials will be stored in handleProviderCallback,
             // then this method (signTravel) will be called recursively to continue the signing flow
@@ -97,26 +86,11 @@ class DocuSignController extends Controller
 
         SendDocuSignEnvelopeForTravelAssignment::dispatchSync($assignment);
 
-        $authenticationInstant = $request->session()->get('authenticationInstant');
-
-        $envelope = $assignment->envelope()->whereNotNull('envelope_id')->sole();
-
-        $recipientViewResponse = (new EnvelopesApi($recipientApiClient))->createRecipientView(
-            account_id: config('docusign.account_id'),
-            envelope_id: $envelope->envelope_id,
-            recipient_view_request: (new RecipientViewRequest())
-                ->setAuthenticationInstant($authenticationInstant)
-                ->setAuthenticationMethod('SingleSignOn_Other')
-                ->setEmail($user->uid.'@gatech.edu')
-                ->setUserName($user->full_name)
-                ->setReturnUrl(
-                    URL::signedRoute('docusign.complete', ['envelope_id' => $envelope->envelope_id])
-                )
-                ->setSecurityDomain(config('cas.cas_hostname'))
-                ->setXFrameOptions('deny')
+        return self::redirectToRecipientView(
+            $request,
+            $recipientApiClient,
+            $assignment->envelope()->whereNotNull('envelope_id')->sole()
         );
-
-        return redirect($recipientViewResponse->getUrl());
     }
 
     /**
@@ -135,32 +109,15 @@ class DocuSignController extends Controller
         $recipientApiClient = DocuSign::getApiClientForUser($user);
 
         if ($recipientApiClient === null) {
-            $state = DocuSign::getState();
-
-            $docusign = DocuSign::getApiClient(withAccessToken: false);
-
-            $authorization_uri = $docusign->getAuthorizationURI(
-                client_id: config('docusign.client_id'),
-                scopes: [ApiClient::$SCOPE_SIGNATURE],
-                redirect_uri: route('docusign.auth.complete'),
-                response_type: 'code',
-                state: $state
-            ).'&login_hint='.$user->uid.'@gatech.edu';
-
-            $request->session()->put('state', $state);
-            $request->session()->put('next', 'signAgreement');
-
-            return redirect($authorization_uri);
+            return self::redirectToOAuthConsent(request: $request, next: 'signAgreement', impersonation: false);
 
             // When the user returns to Apiary, their DocuSign credentials will be stored in handleProviderCallback,
             // then this method (signAgreement) will be called recursively to continue the signing flow
         }
 
-        $authenticationInstant = $request->session()->get('authenticationInstant');
-
         return Cache::lock(name: $user->uid.'_docusign', seconds: 120)->block(
             seconds: 60,
-            callback: static function () use ($template, $user, $recipientApiClient, $authenticationInstant) {
+            callback: static function () use ($template, $user, $recipientApiClient, $request) {
                 $signature = Signature::firstOrCreate(
                     [
                         'membership_agreement_template_id' => $template->id,
@@ -190,22 +147,7 @@ class DocuSignController extends Controller
                     $envelope = $signature->envelope()->whereNotNull('envelope_id')->sole();
                 }
 
-                $recipientViewResponse = (new EnvelopesApi($recipientApiClient))->createRecipientView(
-                    account_id: config('docusign.account_id'),
-                    envelope_id: $envelope->envelope_id,
-                    recipient_view_request: (new RecipientViewRequest())
-                        ->setAuthenticationInstant($authenticationInstant)
-                        ->setAuthenticationMethod('SingleSignOn_Other')
-                        ->setEmail($user->uid.'@gatech.edu')
-                        ->setUserName($user->full_name)
-                        ->setReturnUrl(
-                            URL::signedRoute('docusign.complete', ['envelope_id' => $envelope->envelope_id])
-                        )
-                        ->setSecurityDomain(config('cas.cas_hostname'))
-                        ->setXFrameOptions('deny')
-                );
-
-                return redirect($recipientViewResponse->getUrl());
+                return self::redirectToRecipientView($request, $recipientApiClient, $envelope);
             }
         );
     }
@@ -217,48 +159,16 @@ class DocuSignController extends Controller
      */
     public function redirectGlobalToProvider(Request $request)
     {
-        $state = DocuSign::getState();
-
-        $docusign = DocuSign::getApiClient(withAccessToken: false);
-
-        $authorization_uri = $docusign->getAuthorizationURI(
-            client_id: config('docusign.client_id'),
-            scopes: [ApiClient::$SCOPE_SIGNATURE, ApiClient::$SCOPE_IMPERSONATION],
-            redirect_uri: route('docusign.auth.complete'),
-            response_type: 'code',
-            state: $state
-        ).'&prompt=login';
-
-        $request->session()->put('state', $state);
-        $request->session()->put('next', 'getGlobalToken');
-
-        return redirect($authorization_uri);
+        return self::redirectToOAuthConsent(request: $request, next: 'getGlobalToken', impersonation: true);
     }
 
     public function redirectUserToProvider(Request $request)
     {
-        $state = DocuSign::getState();
-
-        $docusign = DocuSign::getApiClient(withAccessToken: false);
-
-        $authorization_uri = $docusign->getAuthorizationURI(
-            client_id: config('docusign.client_id'),
-            scopes: [ApiClient::$SCOPE_SIGNATURE],
-            redirect_uri: route('docusign.auth.complete'),
-            response_type: 'code',
-            state: $state
-        ).'&login_hint='.$request->user()->uid.'@gatech.edu';
-
-        $request->session()->put('state', $state);
-        $request->session()->put('next', 'getUserToken');
-
-        return redirect($authorization_uri);
+        return self::redirectToOAuthConsent(request: $request, next: 'getUserToken', impersonation: false);
     }
 
     /**
      * Handle the OAuth consent response from DocuSign.
-     *
-     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     public function handleProviderCallback(Request $request)
     {
@@ -298,34 +208,12 @@ class DocuSignController extends Controller
         if (! $userInSameAccount) {
             $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
 
-            Log::info($userinfo_serialized);
+            Log::error('DocuSign user is not in the configured account', $userinfo_serialized);
 
             abort(401);
         }
 
         switch ($request->session()->get('next')) {
-            case 'getUserToken':
-                // In this case, a user has just authenticated with DocuSign from the Nova menu option.
-                // We need to store the credentials in their user model, then send them back to Nova.
-
-                /** @var \App\Models\User $user */
-                $user = $request->user();
-
-                if ($userinfo->getEmail() !== $user->uid.'@gatech.edu') {
-                    $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
-
-                    Log::info($userinfo_serialized);
-
-                    abort(401);
-                }
-
-                $user->docusign_access_token = $tokens->getAccessToken();
-                $user->docusign_access_token_expires_at = Carbon::now()->addSeconds($tokens->getExpiresIn() - 60);
-                $user->docusign_refresh_token = $tokens->getRefreshToken();
-                $user->docusign_refresh_token_expires_at = Carbon::now()->addDays(29);
-                $user->save();
-
-                return redirect(route('nova.pages.dashboard.custom', ['name' => 'main']));
             case 'getGlobalToken':
                 // In this case, we just need to output the user ID so that it can be stored in the environment.
                 // This doesn't do anything interesting in DocuSign, it's just confirmation that the app has access to
@@ -333,53 +221,30 @@ class DocuSignController extends Controller
 
                 $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
 
-                Log::info($userinfo_serialized);
+                Log::info('Successfully authenticated with DocuSign', $userinfo_serialized);
 
                 DocuSign::getApiClient();
 
                 return response()->json($userinfo_serialized);
+            case 'getUserToken':
+                // In this case, a user has just authenticated with DocuSign from the Nova menu option.
+                // We need to store the credentials in their user model, then send them back to Nova.
+
+                self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
+
+                return redirect(route('nova.pages.dashboard.custom', ['name' => 'main']));
             case 'signAgreement':
                 // In this case, a user has just authenticated with DocuSign after starting the signing flow.
                 // We need to store the credentials in their user model, then continue with signing.
 
-                /** @var \App\Models\User $user */
-                $user = $request->user();
-
-                if ($userinfo->getEmail() !== $user->uid.'@gatech.edu') {
-                    $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
-
-                    Log::info($userinfo_serialized);
-
-                    abort(401);
-                }
-
-                $user->docusign_access_token = $tokens->getAccessToken();
-                $user->docusign_access_token_expires_at = Carbon::now()->addSeconds($tokens->getExpiresIn() - 60);
-                $user->docusign_refresh_token = $tokens->getRefreshToken();
-                $user->docusign_refresh_token_expires_at = Carbon::now()->addDays(29);
-                $user->save();
+                self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
 
                 return $this->signAgreement($request);
             case 'signTravel':
                 // In this case, a user has just authenticated with DocuSign after starting the signing flow.
                 // We need to store the credentials in their user model, then continue with signing.
 
-                /** @var \App\Models\User $user */
-                $user = $request->user();
-
-                if ($userinfo->getEmail() !== $user->uid.'@gatech.edu') {
-                    $userinfo_serialized = DocuSign::serializeUserInfo($userinfo);
-
-                    Log::info($userinfo_serialized);
-
-                    abort(401);
-                }
-
-                $user->docusign_access_token = $tokens->getAccessToken();
-                $user->docusign_access_token_expires_at = Carbon::now()->addSeconds($tokens->getExpiresIn() - 60);
-                $user->docusign_refresh_token = $tokens->getRefreshToken();
-                $user->docusign_refresh_token_expires_at = Carbon::now()->addDays(29);
-                $user->save();
+                self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
 
                 return $this->signTravel($request);
             default:
@@ -435,5 +300,74 @@ class DocuSignController extends Controller
         }
 
         return redirect('/');
+    }
+
+    private static function storeUserDocuSignCredentials(Request $request, UserInfo $userInfo, OAuthToken $tokens): void
+    {
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        if ($userInfo->getEmail() !== $user->uid.'@gatech.edu') {
+            $userinfo_serialized = DocuSign::serializeUserInfo($userInfo);
+
+            Log::error('User email from DocuSign does not match authenticated Apiary user', $userinfo_serialized);
+
+            abort(401);
+        }
+
+        $user->docusign_access_token = $tokens->getAccessToken();
+        $user->docusign_access_token_expires_at = CarbonImmutable::now()->addSeconds(
+            intval($tokens->getExpiresIn()) - 60
+        );
+        $user->docusign_refresh_token = $tokens->getRefreshToken();
+        $user->docusign_refresh_token_expires_at = CarbonImmutable::now()->addDays(29);
+        $user->save();
+    }
+
+    private static function redirectToOAuthConsent(
+        Request $request,
+        string $next,
+        bool $impersonation
+    ): RedirectResponse {
+        $state = DocuSign::getState();
+
+        $request->session()->put('state', $state);
+        $request->session()->put('next', $next);
+
+        return redirect(
+            DocuSign::getApiClient(withAccessToken: false)->getAuthorizationURI(
+                client_id: config('docusign.client_id'),
+                scopes: $impersonation ? [
+                    ApiClient::$SCOPE_SIGNATURE,
+                    ApiClient::$SCOPE_IMPERSONATION,
+                ] : [
+                    ApiClient::$SCOPE_SIGNATURE,
+                ],
+                redirect_uri: route('docusign.auth.complete'),
+                response_type: 'code',
+                state: $state
+            ).($impersonation ? '&prompt=login' : '&login_hint='.$request->user()->uid.'@gatech.edu')
+        );
+    }
+
+    private static function redirectToRecipientView(
+        Request $request,
+        ApiClient $recipientApiClient,
+        DocuSignEnvelope $envelope
+    ): RedirectResponse {
+        return redirect((new EnvelopesApi($recipientApiClient))->createRecipientView(
+            account_id: config('docusign.account_id'),
+            envelope_id: $envelope->envelope_id,
+            recipient_view_request: (new RecipientViewRequest())
+                ->setAuthenticationInstant($request->session()->get('authenticationInstant'))
+                ->setAuthenticationMethod('SingleSignOn_Other')
+                ->setEmail($request->user()->uid.'@gatech.edu')
+                ->setUserName($request->user()->full_name)
+                ->setReturnUrl(
+                    URL::signedRoute('docusign.complete', ['envelope_id' => $envelope->envelope_id])
+                )
+                ->setSecurityDomain(config('cas.cas_hostname'))
+                ->setXFrameOptions('deny')
+        )->getUrl());
     }
 }
