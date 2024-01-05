@@ -145,6 +145,7 @@ return [
                     'iata',
                     'name',
                     'city',
+                    'state',
                 ],
             ],
             \App\Models\Attendance::class => [

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -63,11 +64,20 @@ class Airport extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make('IATA', 'iata'),
+            ID::make('IATA Code', 'iata')
+                ->sortable(),
 
-            Text::make('Name'),
+            Text::make('Name')
+                ->sortable(),
 
-            Text::make('City'),
+            Text::make('City')
+                ->sortable(),
+
+            Text::make('State')
+                ->sortable(),
+
+            Country::make('Country')
+                ->sortable(),
         ];
     }
 

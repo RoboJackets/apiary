@@ -54,6 +54,8 @@ class Airport extends Model
                 'iata' => strtoupper($details['iata']),
                 'name' => $details['name'],
                 'city' => $details['city'],
+                'state' => $details['state'],
+                'country' => $details['country'],
             ];
         }
 
