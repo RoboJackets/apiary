@@ -185,7 +185,6 @@ parameters:
     - '#Parameter \#1 \$security_domain of method DocuSign\\eSign\\Model\\RecipientViewRequest::setSecurityDomain\(\) expects string\|null, mixed given\.#'
     - '#Parameter \#1 \$string of function base64_encode expects string, string\|false given\.#'
     - '#Parameter \#1 \$string of function strtolower expects string, string\|null given\.#'
-    - '#Parameter \#1 \$string of function strtoupper expects string, mixed given\.#'
     - '#Parameter \#1 \$string of function ucfirst expects string, mixed given\.#'
     - '#Parameter \#1 \$string of static method Illuminate\\Support\\Str::of\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$template_id of method DocuSign\\eSign\\Model\\EnvelopeDefinition::setTemplateId\(\) expects string\|null, mixed given\.#'
