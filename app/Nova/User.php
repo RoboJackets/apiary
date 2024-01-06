@@ -88,6 +88,7 @@ class User extends Resource
         'gt_email',
         'clickup_email',
         'gmail_address',
+        'graduation_semester',
     ];
 
     /**
@@ -168,6 +169,12 @@ class User extends Resource
             ))
                 ->displayUsing(fn (): ?string => $this->manager?->name)
                 ->onlyOnDetail()
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
+
+            Text::make('Graduation Semester', function () {
+                return User::parseGradSemester($this->graduation_semester);
+            })
+                ->showOnPreview()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('Signatures')
@@ -798,5 +805,28 @@ class User extends Resource
     private static function adminCanRun(NovaRequest $request): bool
     {
         return $request->user()->hasRole('admin');
+    }
+
+    //Helper method: Graduation semester is a 6-digit code by default.
+    //Prepares semester data for display
+    private static function parseGradSemester($sem): string
+    {
+        if ($sem == null) {
+            return 'nah';
+        }
+        $semcode = substr($sem, 4);
+        $output = '';
+        switch ($semcode) {
+            case '08':
+                $output = $output . 'Fall ';
+                break;
+            case '02':
+                $output = $output . 'Spring ';
+                break;
+            case '05':
+                $output = $output . 'Summer ';
+                break;
+        }
+        return ($output . substr($sem, 0, 4));
     }
 }
