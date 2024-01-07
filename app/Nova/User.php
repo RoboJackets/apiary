@@ -812,7 +812,11 @@ class User extends Resource
     private static function parseGradSemester($sem): string
     {
         if ($sem == null) {
-            return 'nah';
+            return '';
+        }
+        if (!preg_match('/^[0-9]{4}0[258]$/)', $sem))
+        {
+            throw new InvalidArgumentException('Invalid date code for field \'graduation_semester\'.');
         }
         $semcode = substr($sem, 4);
         $output = '';
