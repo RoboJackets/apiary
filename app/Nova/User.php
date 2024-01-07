@@ -830,6 +830,6 @@ class User extends Resource
                 $output .= 'Summer ';
                 break;
         }
-        return ($output.substr($sem, 0, 4));
+        return $output.substr($sem, 0, 4);
     }
 }
