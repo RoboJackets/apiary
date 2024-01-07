@@ -48,13 +48,6 @@ class Payment extends Resource
     ];
 
     /**
-     * Indicates if the resource should be displayed in the sidebar.
-     *
-     * @var bool
-     */
-    public static $displayInNavigation = false;
-
-    /**
      * Indicates if the resource should be globally searchable.
      *
      * @var bool
@@ -276,5 +269,13 @@ class Payment extends Resource
     public static function searchable(): bool
     {
         return false;
+    }
+
+    /**
+     * Determine if this resource is available for navigation.
+     */
+    public static function availableForNavigation(Request $request): bool
+    {
+        return $request->user()->hasRole('admin');
     }
 }

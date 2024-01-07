@@ -80,7 +80,6 @@ class PaymentController extends Controller
             ->orderBy('updated_at')
             ->get();
 
-        // @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
         $combined = $duesTransactions->concat($travelAssignments)->sortBy('updated_at', descending: true);
 
         return response()->json([

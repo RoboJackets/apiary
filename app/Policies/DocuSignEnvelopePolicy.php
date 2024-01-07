@@ -19,7 +19,9 @@ class DocuSignEnvelopePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-docusign-envelopes') || Travel::where('primary_contact_user_id', $user->id)->exists();
+        return $user->can('view-docusign-envelopes') ||
+            Travel::where('primary_contact_user_id', $user->id)->exists() ||
+            DocuSignEnvelope::where('sent_by', $user->id)->exists();
     }
 
     /**
@@ -28,6 +30,7 @@ class DocuSignEnvelopePolicy
     public function view(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
         return $user->can('view-docusign-envelopes') ||
+            $docuSignEnvelope->sent_by === $user->id ||
             (
                 $docuSignEnvelope->signable_type === TravelAssignment::getMorphClassStatic() &&
                 $docuSignEnvelope->signable->travel->primaryContact->id === $user->id

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 // @phan-file-suppress PhanTypeMismatchPropertyProbablyReal
 
+use App\Mail\DocuSign\Agreement\MemberNotification;
+use App\Mail\DocuSign\Agreement\ParentNotification;
 use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
@@ -1997,4 +1999,40 @@ Mailbook::to($user)
         $token->save();
 
         return new ExpiringPersonalAccessTokenNotification($token);
+    });
+
+Mailbook::to(null)
+    ->add(MemberNotification::class)
+    ->label('DocuSign Membership Agreement')
+    ->variant('Member Notification', static function (): MemberNotification {
+        $user = User::withoutEvents(static function (): User {
+            $user = User::factory()->make([
+                'first_name' => 'George',
+                'preferred_name' => null,
+                'last_name' => 'Burdell',
+                'uid' => 'gburdell3',
+                'gt_email' => 'george.burdell@gatech.edu',
+            ]);
+            $user->save();
+
+            return $user;
+        });
+
+        return new MemberNotification($user);
+    })
+    ->variant('Parent Notification', static function (): ParentNotification {
+        $user = User::withoutEvents(static function (): User {
+            $user = User::factory()->make([
+                'first_name' => 'George',
+                'preferred_name' => null,
+                'last_name' => 'Burdell',
+                'uid' => 'gburdell3',
+                'gt_email' => 'george.burdell@gatech.edu',
+            ]);
+            $user->save();
+
+            return $user;
+        });
+
+        return new ParentNotification($user);
     });
