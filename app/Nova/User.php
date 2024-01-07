@@ -811,26 +811,25 @@ class User extends Resource
     //Prepares semester data for display
     private static function parseGradSemester($sem): string
     {
-        if ($sem == null) {
+        if ($sem === null) {
             return '';
         }
-        if (!preg_match('/^[0-9]{4}0[258]$/)', $sem))
-        {
+        if (!preg_match('/^[0-9]{4}0[258]$/)', $sem)) {
             throw new InvalidArgumentException('Invalid date code for field \'graduation_semester\'.');
         }
         $semcode = substr($sem, 4);
         $output = '';
         switch ($semcode) {
             case '08':
-                $output = $output . 'Fall ';
+                $output .= 'Fall ';
                 break;
             case '02':
-                $output = $output . 'Spring ';
+                $output .= 'Spring ';
                 break;
             case '05':
-                $output = $output . 'Summer ';
+                $output .= 'Summer ';
                 break;
         }
-        return ($output . substr($sem, 0, 4));
+        return ($output.substr($sem, 0, 4));
     }
 }
