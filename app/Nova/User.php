@@ -814,7 +814,7 @@ class User extends Resource
         if ($sem === null) {
             return '';
         }
-        if (!preg_match('/^[0-9]{4}0[258]$/)', $sem)) {
+        if (! preg_match('/^[0-9]{4}0[258]$/)', $sem)) {
             throw new InvalidArgumentException('Invalid date code for field \'graduation_semester\'.');
         }
         $semcode = substr($sem, 4);
