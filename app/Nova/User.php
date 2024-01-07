@@ -172,7 +172,7 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            Text::make('Graduation Semester', fn (): ?string => User::parseGradSemester($this->graduation_semester))
+            Text::make('Graduation Semester', fn (): string => self::parseGradSemester($this->graduation_semester))
                 ->showOnPreview()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
@@ -808,7 +808,7 @@ class User extends Resource
 
     //Helper method: Graduation semester is a 6-digit code by default.
     //Prepares semester data for display
-    private static function parseGradSemester($sem): string
+    private static function parseGradSemester(?string $sem): string
     {
         if ($sem === null) {
             return '';
