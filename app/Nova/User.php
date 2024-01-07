@@ -43,6 +43,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
+use InvalidArgumentException;
 
 /**
  * A Nova resource for users.
@@ -171,9 +172,7 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            Text::make('Graduation Semester', function () {
-                return User::parseGradSemester($this->graduation_semester);
-            })
+            Text::make('Graduation Semester', fn (): ?string => User::parseGradSemester($this->graduation_semester))
                 ->showOnPreview()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
@@ -814,7 +813,7 @@ class User extends Resource
         if ($sem === null) {
             return '';
         }
-        if (! preg_match('/^[0-9]{4}0[258]$/)', $sem)) {
+        if (preg_match('/^[0-9]{4}0[258]$/', $sem) === false) {
             throw new InvalidArgumentException('Invalid date code for field \'graduation_semester\'.');
         }
         $semcode = substr($sem, 4);
