@@ -833,4 +833,5 @@ class User extends Resource
 
         return $output.substr($sem, 0, 4);
     }
+
 }
