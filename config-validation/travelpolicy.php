@@ -12,7 +12,7 @@ return [
             'min:1',
         ]),
 
-    Rule::make('key')
+    Rule::make('minimum_trip_fee_cost_ratio')
         ->rules([
             'required',
             'decimal:1,2',
