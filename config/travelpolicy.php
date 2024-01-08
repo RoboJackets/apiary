@@ -13,5 +13,5 @@ return [
      *
      * For example, a trip fee of $20 for a trip with a total per-person cost of $100 has a fee-to-cost ratio of 0.2.
      */
-    'minimum_trip_fee_cost_ratio' => floatval(env('TRAVEL_POLICY_MINIMUM_FEE_TO_COST_RATIO', 20)),
+    'minimum_trip_fee_cost_ratio' => floatval(env('TRAVEL_POLICY_MINIMUM_FEE_TO_COST_RATIO', 0.2)),
 ];
