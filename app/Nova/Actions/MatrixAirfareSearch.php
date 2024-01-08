@@ -198,18 +198,12 @@ class MatrixAirfareSearch extends Action
                 ->default(static fn (): array => $trip->airfare_policy ?? [])
                 ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
                 ->required()
-                ->help(
-                    'Select policies to apply as search filters. <strong>Note that selected itineraries must still '.
-                    'meet the policy configured for the trip.</strong>'
-                ),
+                ->help(view('nova.matrixpolicyhelp')->render()),
 
             Boolean::make('Advanced Controls Enabled')
                 ->rules('required', 'accepted')
                 ->required()
-                ->help(
-                    '<strong>You must enable advanced controls in <a href="https://matrix.itasoftware.com">Matrix'.
-                    '</a> before clicking Search below</strong>, otherwise policies will not be applied.'
-                ),
+                ->help(view('nova.matrixadvancedcontrolshelp')->render()),
         ];
     }
 }
