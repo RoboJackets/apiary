@@ -12,7 +12,6 @@ use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
-use App\Util\BusinessTravelPolicy;
 use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -112,8 +111,8 @@ class Travel extends Resource
             Currency::make('Fee', 'fee_amount')
                 ->sortable()
                 ->required()
-                ->rules('required', 'integer', 'min:20', 'max:1000')
-                ->min(20)
+                ->rules('required', 'integer', 'min:'.config('travelpolicy.minimum_trip_fee'), 'max:1000')
+                ->min(config('travelpolicy.minimum_trip_fee'))
                 ->max(1000),
 
             Markdown::make('Included with Fee')
@@ -442,11 +441,11 @@ class Travel extends Resource
 
         $feeAmount = $request->fee_amount;
 
-        if ($feeAmount / $totalCost < BusinessTravelPolicy::TRIP_FEE_COST_RATIO) {
+        if ($feeAmount / $totalCost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
             $validator->errors()->add(
                 'fee_amount',
                 'Trip fee must be at least '.
-                (BusinessTravelPolicy::TRIP_FEE_COST_RATIO * 100).
+                (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
                 '% of the per-person cost for this trip.'
             );
         }

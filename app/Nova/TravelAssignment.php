@@ -9,7 +9,6 @@ namespace App\Nova;
 use App\Nova\Actions\Payments\RecordPaymentActions;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Rules\MatrixItineraryDataStructure;
-use App\Util\BusinessTravelPolicy;
 use App\Util\Matrix;
 use Carbon\Carbon;
 use Laravel\Nova\Fields\BelongsTo;
@@ -197,11 +196,11 @@ class TravelAssignment extends Resource
 
             $total_cost = $trip->tar_lodging + $trip->tar_registration + $airfare_cost;
 
-            if ($trip->fee_amount / $total_cost < BusinessTravelPolicy::TRIP_FEE_COST_RATIO) {
+            if ($trip->fee_amount / $total_cost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
                 $validator->errors()->add(
                     'matrix_itinerary',
                     'Trip fee must be at least '.
-                    (BusinessTravelPolicy::TRIP_FEE_COST_RATIO * 100).
+                    (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
                     '% of the per-person cost for this trip.'
                 );
             }
