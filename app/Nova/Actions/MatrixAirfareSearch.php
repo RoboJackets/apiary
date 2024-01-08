@@ -68,6 +68,9 @@ class MatrixAirfareSearch extends Action
         }
 
         if ($fields->policy_filters['fare_class'] === true) {
+            // BC is short for Booking Code, also known as Fare Class
+            // Fare classes pulled from https://www.delta.com/us/en/skymiles/how-to-earn-miles/exception-fares
+            // This filters for any available fares in main cabin except for basic economy
             $extension_codes[] = 'F bc=Y|bc=B|bc=M|bc=W|bc=S|bc=H|bc=Q|bc=K|bc=L|bc=U|bc=T|bc=X|bc=V';
         }
 
