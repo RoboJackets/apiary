@@ -16,6 +16,7 @@ use App\Util\BusinessTravelPolicy;
 use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -476,5 +477,25 @@ class Travel extends Resource
     public function subtitle(): string
     {
         return $this->destination.' | '.$this->departure_date->format('F Y');
+    }
+
+    /**
+     * Register a callback to be called after the resource is created.
+     */
+    public static function afterCreate(NovaRequest $request, Model $model): void
+    {
+        if ($model->airfare_policy !== null) {
+            return;
+        }
+
+        $default = [];
+
+        // @phan-suppress-next-line PhanUnusedVariableValueOfForeachWithKey
+        foreach (MatrixItineraryBusinessPolicy::POLICY_LABELS as $flag => $label) {
+            $default[$flag] = true;
+        }
+
+        $model->airfare_policy = $default;
+        $model->save();
     }
 }
