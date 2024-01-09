@@ -210,7 +210,7 @@ parameters:
     - '#Parameter \#2 \$haystack of function in_array expects array, mixed given\.#'
     - '#Parameter \#2 \$model_class of job class App\\Jobs\\PushToJedi constructor expects string in App\\Jobs\\PushToJedi::dispatch\(\), class-string<App\\Models\\User>\|null given\.#'
     - '#Parameter \#2 \$name of method Illuminate\\Mail\\Mailable::replyTo\(\) expects string\|null, mixed given\.#'
-    - '#Parameter \#2 \$operator of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Attendance>::whereDate\(\) expects string, mixed given\.#'
+    - '#Parameter \#2 \$operator of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Attendance>::whereDate\(\) expects DateTimeInterface\|string\|null, mixed given\.#'
     - '#Parameter \#2 \$payment of static method App\\Http\\Controllers\\SquareCheckoutController::redirect\(\) expects App\\Models\\Payment, Illuminate\\Database\\Eloquent\\Model given\.#'
     - '#Parameter \#2 \$query \(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>\) of method App\\Nova\\[a-zA-Z]+::indexQuery\(\) should be contravariant with parameter \$query \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Resource<Illuminate\\Database\\Eloquent\\Model>::indexQuery\(\)#'
     - '#Parameter \#2 \$query \(Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>\) of method App\\Nova\\[a-zA-Z]+::relatableQuery\(\) should be contravariant with parameter \$query \(Illuminate\\Database\\Eloquent\\Builder\) of method Laravel\\Nova\\Resource<Illuminate\\Database\\Eloquent\\Model>::relatableQuery\(\)#'

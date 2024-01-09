@@ -24,11 +24,15 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $member->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $member): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $member->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $mailable = new TravelAssignmentReminder($assignment);
 
@@ -87,12 +91,16 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $member->id,
-            'tar_received' => false,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $member): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $member->id,
+                'tar_received' => false,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $mailable = new TravelAssignmentReminder($assignment);
 
