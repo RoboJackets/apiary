@@ -107,12 +107,14 @@ abstract class TestCase extends BaseTestCase
     ): TravelAssignment|Collection|Model {
         $now = CarbonImmutable::now();
 
-        $travel_assignment = TravelAssignment::factory()->create([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-            'created_at' => $createdAt,
-            'updated_at' => $createdAt,
-        ]);
+        $travel_assignment = TravelAssignment::withoutEvents(
+            static fn (): TravelAssignment => TravelAssignment::factory()->create([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
+            ])
+        );
 
         if ($paid) {
             $payment = Payment::factory()->create(array_merge([

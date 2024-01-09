@@ -87,11 +87,15 @@ final class PaymentReceiptEmailTest extends TestCase
         $travel->tar_required = true;
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
             $payment = new Payment();
@@ -167,11 +171,15 @@ final class PaymentReceiptEmailTest extends TestCase
 
         $travel = Travel::factory()->create();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
             $payment = new Payment();
@@ -205,11 +213,15 @@ final class PaymentReceiptEmailTest extends TestCase
 
         $travel = Travel::factory()->create();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $member->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $member): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $member->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $payment = Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
             $payment = new Payment();

@@ -26,11 +26,15 @@ final class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         Payment::withoutEvents(static function () use ($assignment): Payment {
             $payment = new Payment();
@@ -74,11 +78,15 @@ final class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $envelope = new DocuSignEnvelope();
         $envelope->signable_type = $assignment->getMorphClass();
