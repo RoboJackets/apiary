@@ -106,7 +106,7 @@ class TravelAssignment extends Resource
                 ->required()
                 ->help(
                     'If this trip includes airfare, you must provide an itinerary in Matrix JSON format. Search '.
-                    'for flights at <a href="https://matrix.itasoftware.com">Matrix</a>, click <strong>Copy itineray '.
+                    'for flights at <a href="https://matrix.itasoftware.com">Matrix</a>, click <strong>Copy itinerary '.
                     'as JSON</strong>, then paste into the text box above.'
                 ),
 
