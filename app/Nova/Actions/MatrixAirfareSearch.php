@@ -158,7 +158,7 @@ class MatrixAirfareSearch extends Action
         return [
             Date::make('Outbound Date')
                 ->default(static fn (): string => $trip->departure_date->format('Y-m-d'))
-                ->rules('required', 'date', 'after:tomorrow')
+                ->rules('required', 'date', 'after:tomorrow', 'before:+1 year')
                 ->required(),
 
             Select::make('Outbound Date Flexibility')
@@ -169,7 +169,7 @@ class MatrixAirfareSearch extends Action
 
             Date::make('Return Date')
                 ->default(static fn (): string => $trip->return_date->format('Y-m-d'))
-                ->rules('required', 'date', 'after:outbound_date')
+                ->rules('required', 'date', 'after:tomorrow', 'after:outbound_date', 'before:+1 year')
                 ->required(),
 
             Select::make('Return Date Flexibility')
