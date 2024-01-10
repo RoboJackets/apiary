@@ -12,8 +12,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        app()['cache']->forget('spatie.permission.cache');
-
         Permission::firstOrCreate(['name' => 'update-airfare-policy']);
     }
 
@@ -22,7 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        app()['cache']->forget('spatie.permission.cache');
         Permission::where('name', 'update-airfare-policy')->delete();
     }
 };
