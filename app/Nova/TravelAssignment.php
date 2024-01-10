@@ -106,7 +106,8 @@ class TravelAssignment extends Resource
                 ->required()
                 ->help(
                     'If this trip includes airfare, you must provide an itinerary in Matrix JSON format. Search '.
-                    'for flights at <a href="https://matrix.itasoftware.com">Matrix</a>, click <strong>Copy itinerary '.
+                    'for flights at <a href="https://matrix.itasoftware.com">Matrix</a>, select the flights from the '.
+                    'results, click <strong>Copy itinerary '.
                     'as JSON</strong>, then paste into the text box above.'
                 ),
 
@@ -199,9 +200,8 @@ class TravelAssignment extends Resource
             if ($trip->fee_amount / $total_cost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
                 $validator->errors()->add(
                     'matrix_itinerary',
-                    'Trip fee must be at least '.
-                    (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
-                    '% of the per-person cost for this trip.'
+                    'The airfare cost exceeds the amount allowed for this trip. Increase the trip fee to at '.
+                    'least 20% of the per-person total cost for this trip.'
                 );
             }
         }

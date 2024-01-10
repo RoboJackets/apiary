@@ -113,6 +113,11 @@ class Travel extends Resource
                 ->required()
                 ->rules('required', 'integer', 'min:'.config('travelpolicy.minimum_trip_fee'), 'max:1000')
                 ->min(config('travelpolicy.minimum_trip_fee'))
+                ->help(
+                    'The trip fee must be at least '.
+                    (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
+                    '% of the per-person total cost for this trip.'
+                )
                 ->max(1000),
 
             Markdown::make('Included with Fee')
