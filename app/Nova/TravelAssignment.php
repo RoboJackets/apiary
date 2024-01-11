@@ -201,7 +201,9 @@ class TravelAssignment extends Resource
                 $validator->errors()->add(
                     'matrix_itinerary',
                     'The airfare cost exceeds the amount allowed for this trip. Increase the trip fee to at '.
-                    'least 20% of the per-person total cost for this trip.'
+                    'least '.
+                    (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
+                    '% of the per-person total cost for this trip.'
                 );
             }
         }
