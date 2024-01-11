@@ -161,9 +161,7 @@ class Travel extends Resource
                 ->help(
                     $request->user()->can('update-airfare-policy') ?
                         null :
-                        'The airfare policy for this trip can be modified by an officer'.
-                        (str_contains($request->path(), 'update-fields') ? ' ' : ' after creating the trip ').
-                        'if needed.'
+                        'You do not have permission to change the airfare policy.'
                 )
                 ->hideFromIndex(),
 
