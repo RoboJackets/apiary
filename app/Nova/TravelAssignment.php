@@ -89,15 +89,11 @@ class TravelAssignment extends Resource
             BelongsTo::make('Travel', 'travel', Travel::class)
                 ->withoutTrashed()
                 ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user)
-                ->default(
-                    static fn (NovaRequest $request): ?int => \App\Models\Travel::whereDate(
-                        'departure_date',
-                        '>=',
-                        Carbon::now()
-                    )
-                        ->orderBy('departure_date')
-                        ->first()
-                            ?->id
+                ->help(
+                    $request->current === null && $request->viaResource !== Travel::uriKey() ?
+                    'Only upcoming trips are shown here. If you need to create an assignment for a past trip, go to '.
+                    'the trip details page and click <strong>Create Travel Assignment</strong> there.' :
+                    null
                 ),
 
             Code::make('Matrix Itinerary')

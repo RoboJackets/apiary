@@ -463,7 +463,7 @@ class Travel extends Resource
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->current !== null) {
-            return $query->where('id', '=', $request->current);
+            return $query->where('id', '=', $request->current)->orWhereDate('departure_date', '>=', Carbon::now());
         }
 
         if ($request->is('nova-api/travel-assignments/*')) {
