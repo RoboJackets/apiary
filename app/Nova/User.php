@@ -89,7 +89,6 @@ class User extends Resource
         'gt_email',
         'clickup_email',
         'gmail_address',
-        'graduation_semester',
     ];
 
     /**
@@ -173,7 +172,7 @@ class User extends Resource
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             Text::make('Graduation Semester', fn (): string => self::parseGradSemester($this->graduation_semester))
-                ->showOnPreview()
+                ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('Signatures')
@@ -806,15 +805,18 @@ class User extends Resource
         return $request->user()->hasRole('admin');
     }
 
-    //Helper method: Graduation semester is a 6-digit code by default.
-    //Prepares semester data for display
+    /**
+     * Helper method: Graduation semester is a 6-digit code by default.
+     * Prepares semester data for display, returning empty if no string/invalid
+     * string is entered.
+     */
     private static function parseGradSemester(?string $sem): string
     {
         if ($sem === null) {
             return '';
         }
-        if (preg_match('/^[0-9]{4}0[258]$/', $sem) === false) {
-            throw new InvalidArgumentException('Invalid date code for field \'graduation_semester\'.');
+        if (preg_match('/^[0-9]{4}0[258]$/', $sem) === 0 || preg_match('/^[0-9]{4}0[258]$/', $sem) === false) {
+            return '';
         }
         $semcode = substr($sem, 4);
         $output = '';
@@ -828,6 +830,8 @@ class User extends Resource
             case '05':
                 $output .= 'Summer ';
                 break;
+            default:
+                return '';
         }
 
         return $output.substr($sem, 0, 4);
