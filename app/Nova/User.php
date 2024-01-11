@@ -35,6 +35,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -379,6 +380,9 @@ class User extends Resource
                     ) || $request->resourceId === $request->user()->id
                 ),
 
+            MorphMany::make('Notifications', 'novaNotifications', Notification::class)
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
             new Panel('Employment', [
                 Number::make('Employee ID (OneUSG)', 'employee_id')
                     ->onlyOnDetail()
@@ -491,24 +495,30 @@ class User extends Resource
     {
         return [
             DateTime::make('Account Created', 'created_at')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->onlyOnDetail(),
 
             DateTime::make('Last Updated', 'updated_at')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->onlyOnDetail(),
 
             Boolean::make('Has Ever Logged In')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->onlyOnDetail(),
 
             Boolean::make('Is Service Account')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideFromIndex(),
 
             Text::make('Create Reason')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideWhenUpdating()
                 ->hideFromIndex()
                 ->required()
                 ->rules('required'),
 
             Text::make('gtDirGUID', 'gtDirGUID')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
                 ->hideWhenCreating()
                 ->hideFromIndex()
                 ->copyable(),

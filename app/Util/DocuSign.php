@@ -182,10 +182,8 @@ class DocuSign
             ->setRoleName('Member')
             ->setEmailNotification(
                 (new RecipientEmailNotification())
-                    ->setEmailSubject('RoboJackets Membership Agreement')
-                    ->setEmailBody(
-                        trim(view('mail.agreement.notificationformember')->render())
-                    )
+                    ->setEmailSubject(trim(view('mail.docusign.agreement.member.subject')->render()))
+                    ->setEmailBody(trim(view('mail.docusign.agreement.member.body')->render()))
                     ->setSupportedLanguage('en')
             );
     }
@@ -198,11 +196,11 @@ class DocuSign
             ->setRoleName('Parent or Guardian')
             ->setEmailNotification(
                 (new RecipientEmailNotification())
-                    ->setEmailSubject('RoboJackets Membership Agreement for '.$user->full_name)
+                    ->setEmailSubject(
+                        trim(view('mail.docusign.agreement.parent.subject', ['user' => $user])->render())
+                    )
                     ->setEmailBody(
-                        trim(view('mail.agreement.notificationforparentorguardian', [
-                            'user' => $user,
-                        ])->render())
+                        trim(view('mail.docusign.agreement.parent.body', ['user' => $user])->render())
                     )
                     ->setSupportedLanguage('en')
             );
@@ -307,12 +305,14 @@ class DocuSign
                     self::membershipAgreementTemplateRoleForMember($envelope->signedBy),
                 ]
             )
-            ->setEmailSubject('RoboJackets Membership Agreement for '.$envelope->signedBy->full_name)
-            ->setEmailBlurb(trim(view('mail.agreement.notificationformember')->render()))
+            ->setEmailSubject(
+                trim(view('mail.docusign.agreement.parent.subject', ['user' => $envelope->signedBy])->render())
+            )
+            ->setEmailBlurb(trim(view('mail.docusign.agreement.member.body')->render()))
             ->setEmailSettings(
                 (new EmailSettings())
-                    ->setReplyEmailAddressOverride('support@robojackets.org')
-                    ->setReplyEmailNameOverride('RoboJackets')
+                    ->setReplyEmailAddressOverride(config('docusign.service_account_reply_to.address'))
+                    ->setReplyEmailNameOverride(config('docusign.service_account_reply_to.name'))
             )->setNotification(
                 (new Notification())
                     ->setUseAccountDefaults(false)
