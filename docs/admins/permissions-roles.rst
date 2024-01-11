@@ -95,4 +95,4 @@ This permission enables `impersonation within Laravel Nova <https://nova.laravel
 
 .. vale Google.Parens = NO
 
-This permission enables a convenience URL (``/sign/auth``) to configure `DocuSign impersonation <https://developers.docusign.com/platform/auth/jwt/>`__. It should only be attached to system administrators that are configuring DocuSign.
+This permission enables a convenience URL (``/sign/auth/global``) to configure `DocuSign impersonation <https://developers.docusign.com/platform/auth/jwt/>`__. It should only be attached to system administrators that are configuring DocuSign.

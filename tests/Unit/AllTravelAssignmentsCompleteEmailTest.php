@@ -111,11 +111,11 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::create([
+        $assignment = TravelAssignment::withoutEvents(static fn (): TravelAssignment => TravelAssignment::create([
             'travel_id' => $travel->id,
             'user_id' => $user->id,
             'tar_received' => false,
-        ]);
+        ]));
 
         Payment::withoutEvents(static function () use ($assignment): void {
             Payment::create([
@@ -148,24 +148,28 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $firstAssignment = TravelAssignment::create([
+        $firstAssignment = TravelAssignment::withoutEvents(static fn (): TravelAssignment => TravelAssignment::create([
             'travel_id' => $travel->id,
             'user_id' => $user->id,
             'tar_received' => false,
-        ]);
+        ]));
 
-        $secondAssignment = TravelAssignment::create([
-            'travel_id' => $travel->id,
-            'user_id' => $otherUser->id,
-            'tar_received' => false,
-        ]);
+        $secondAssignment = TravelAssignment::withoutEvents(
+            static fn (): TravelAssignment => TravelAssignment::create([
+                'travel_id' => $travel->id,
+                'user_id' => $otherUser->id,
+                'tar_received' => false,
+            ])
+        );
 
-        Payment::create([
-            'payable_type' => $firstAssignment->getMorphClass(),
-            'payable_id' => $firstAssignment->id,
-            'amount' => $travel->fee_amount,
-            'method' => 'waiver',
-        ]);
+        Payment::withoutEvents(static function () use ($firstAssignment): void {
+            Payment::create([
+                'payable_type' => $firstAssignment->getMorphClass(),
+                'payable_id' => $firstAssignment->id,
+                'amount' => $firstAssignment->travel->fee_amount,
+                'method' => 'waiver',
+            ]);
+        });
 
         Payment::withoutEvents(static function () use ($secondAssignment): void {
             Payment::create([

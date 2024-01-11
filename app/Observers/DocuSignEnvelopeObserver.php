@@ -12,6 +12,7 @@ use App\Models\DocuSignEnvelope;
 use App\Models\Signature;
 use App\Models\TravelAssignment;
 use App\Notifications\MembershipAgreementDocuSignEnvelopeReceived;
+use App\Notifications\Travel\DocuSignEnvelopeReceived;
 use Illuminate\Support\Facades\Cache;
 
 class DocuSignEnvelopeObserver
@@ -87,6 +88,16 @@ class DocuSignEnvelopeObserver
                         $envelope->save();
 
                         $envelope->signedBy->notify(new MembershipAgreementDocuSignEnvelopeReceived($envelope));
+                    } elseif (
+                        $envelope->complete &&
+                        $envelope->envelope_id !== null &&
+                        $envelope->signable_type === TravelAssignment::getMorphClassStatic() &&
+                        ! $envelope->acknowledgement_sent // @phpstan-ignore-line
+                    ) {
+                        $envelope->acknowledgement_sent = true;
+                        $envelope->save();
+
+                        $envelope->signedBy->notify(new DocuSignEnvelopeReceived($envelope));
                     }
                 }
             );
@@ -94,6 +105,9 @@ class DocuSignEnvelopeObserver
 
         if ($envelope->complete && $envelope->signable_type === Signature::getMorphClassStatic()) {
             $envelope->signable->complete = true;
+            $envelope->signable->save();
+        } elseif ($envelope->complete && $envelope->signable_type === TravelAssignment::getMorphClassStatic()) {
+            $envelope->signable->tar_received = true;
             $envelope->signable->save();
         }
     }

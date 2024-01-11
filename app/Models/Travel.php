@@ -40,6 +40,7 @@ use Laravel\Scout\Searchable;
  * @property string|null $tar_account_code
  * @property-read int|null $assignments_count
  * @property-read \App\Models\User $primaryContact
+ * @property-read bool $needs_airfare_form
  *
  * @method static \Database\Factories\TravelFactory factory(...$parameters)
  * @method static Builder|Travel newModelQuery()
@@ -176,6 +177,16 @@ class Travel extends Model
     public function getAssignmentsNeedFormsAttribute(): bool
     {
         return $this->assignments()->needDocuSign()->exists();
+    }
+
+    public function getNeedsAirfareFormAttribute(): bool
+    {
+        return ($this->tar_transportation_mode ?? [
+            'state_contract_airline' => false,
+        ])['state_contract_airline'] === true ||
+            true === ($this->tar_transportation_mode ?? [
+                'non_contract_airline' => false,
+            ])['non_contract_airline'];
     }
 
     /**
