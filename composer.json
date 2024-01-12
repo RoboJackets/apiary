@@ -58,7 +58,7 @@
         "sentry/sentry-laravel": "4.1.1",
         "spatie/laravel-csp": "2.8.4",
         "spatie/laravel-failed-job-monitor": "4.2.1",
-        "spatie/laravel-permission": "5.11.1",
+        "spatie/laravel-permission": "6.3.0",
         "spatie/laravel-webhook-client": "3.2.0",
         "square/square": "33.1.0.20231213",
         "subfission/cas": "4.4.0",
