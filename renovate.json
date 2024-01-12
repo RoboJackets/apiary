@@ -10,7 +10,7 @@
     ],
     "reviewers": [],
     "ignoreDeps": [
-        "mwgg/airports",
+        "mwgg/airports"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
