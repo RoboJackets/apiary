@@ -9,7 +9,9 @@
         "type / technical debt"
     ],
     "reviewers": [],
-    "ignoreDeps": [],
+    "ignoreDeps": [
+        "mwgg/airports",
+    ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
     "rebaseStalePrs": true,
