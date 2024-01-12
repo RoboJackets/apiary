@@ -60,7 +60,6 @@
         "spatie/laravel-failed-job-monitor": "4.2.1",
         "spatie/laravel-permission": "5.11.1",
         "spatie/laravel-webhook-client": "3.2.0",
-        "spatie/once": "3.1.0",
         "square/square": "33.1.0.20231213",
         "subfission/cas": "4.4.0",
         "symfony/http-client": "6.4.2",
