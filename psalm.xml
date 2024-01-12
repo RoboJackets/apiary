@@ -307,5 +307,12 @@
                 <file name="app/Rules/MatrixItineraryBusinessPolicy.php"/>
             </errorLevel>
         </UnusedForeachValue>
+        <UndefinedMagicPropertyAssignment>
+            <errorLevel type="suppress">
+                <file name="app/Http/Controllers/PermissionController.php"/>
+                <file name="app/Http/Controllers/RoleController.php"/>
+                <file name="app/Observers/DocuSignEnvelopeObserver.php"/>
+            </errorLevel>
+        </UndefinedMagicPropertyAssignment>
     </issueHandlers>
 </psalm>
