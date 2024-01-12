@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Airport;
 use App\Models\Attendance;
 use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
@@ -20,6 +21,7 @@ use App\Models\Team;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use App\Policies\AirportPolicy;
 use App\Policies\AttendancePolicy;
 use App\Policies\DocuSignEnvelopePolicy;
 use App\Policies\DuesPackagePolicy;
@@ -55,6 +57,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string,class-string>
      */
     protected $policies = [
+        Airport::class => AirportPolicy::class,
         Attendance::class => AttendancePolicy::class,
         DocuSignEnvelope::class => DocuSignEnvelopePolicy::class,
         DuesPackage::class => DuesPackagePolicy::class,

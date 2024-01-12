@@ -208,6 +208,7 @@ return [
         'enlightn/enlightnpro',
         'oitnetworkservices/buzzapiclient',
         'phpmyadmin/sql-parser',
+        'mwgg/airports',
     ],
 
     'allowed_permissions' => [
