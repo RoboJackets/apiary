@@ -51,7 +51,7 @@
         "madewithlove/laravel-nova-uuid-support": "1.5",
         "meilisearch/meilisearch-php": "1.5.0",
         "mrclay/jsmin-php": "2.4.3",
-        "mwgg/airports": "^1.0",
+        "mwgg/airports": "1.0",
         "realrashid/sweet-alert": "7.1.0",
         "robojackets/client-id-and-secret-modal": "@dev",
         "robojackets/personal-access-token-modal": "@dev",
