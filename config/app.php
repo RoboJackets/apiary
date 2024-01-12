@@ -58,19 +58,6 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Development URL
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify the default application development URL for your
-    | project. It will be used in the default footer template to link back
-    | to the Apiary github project.
-    |
-    */
-
-    'dev_url' => env('APP_DEV_URL', 'https://github.com/RoboJackets/apiary'),
-
     'asset_url' => env('ASSET_URL', null),
 
     /*

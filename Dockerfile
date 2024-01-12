@@ -10,7 +10,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN set -euxo pipefail && \
     curl -sSL https://install.python-poetry.org | python3 - && \
-    /root/.local/bin/poetry install --no-interaction && \
+    /root/.local/bin/poetry install --no-interaction --no-root && \
     /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build" && \
     find /docs/_build/dirhtml/ -type f -size +0 | while read file; do \
         filename=$(basename -- "$file"); \
@@ -87,7 +87,6 @@ COPY --link config-validation/ /app/config-validation/
 COPY --link database/ /app/database/
 COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
-COPY --link storage/ /app/storage/
 COPY --link lang/ /app/lang/
 COPY --link artisan composer.json composer.lock /app/
 COPY --link --from=frontend /app/public/ /app/public/
@@ -115,8 +114,8 @@ RUN set -eux && \
     mkdir /app && \
     chown www-data:www-data /app && \
     sed -i '/pid/c\\' /etc/php/8.2/fpm/php-fpm.conf && \
+    sed -i '/error_log/c\error_log = /proc/self/fd/2' /etc/php/8.2/fpm/php-fpm.conf && \
     sed -i '/systemd_interval/c\systemd_interval = 0' /etc/php/8.2/fpm/php-fpm.conf && \
-    sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.2/fpm/php-fpm.conf && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.2/fpm/php.ini && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.2/cli/php.ini && \
     sed -i '/allow_url_fopen/c\allow_url_fopen = Off' /etc/php/8.2/fpm/php.ini && \
@@ -134,6 +133,7 @@ USER www-data
 
 RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,required=true \
     set -eux && \
+    mkdir --parents /app/storage/app/ /app/storage/framework/cache/ /app/storage/framework/sessions/ /app/storage/framework/testing/ /app/storage/framework/views/ /app/storage/logs/ && \
     composer check-platform-reqs --lock --no-dev && \
     composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \
