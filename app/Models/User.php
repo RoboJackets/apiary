@@ -582,7 +582,7 @@ class User extends Authenticatable
         $semester = $this->graduation_semester;
         if ($semester === null || preg_match('/^[0-9]{4}0[258]$/', $semester) === 0) {
             return '';
-        }
+        } //Testing
 
         $semcode = substr($semester, 4);
         $year = substr($semester, 0, 4);
