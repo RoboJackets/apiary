@@ -68,6 +68,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             $menu->append(
                 MenuItem::externalLink(
+                    'Link DocuSign Account',
+                    route('docusign.auth.user')
+                )
+            );
+
+            $menu->append(
+                MenuItem::externalLink(
                     'Logout',
                     route('logout')
                 )
