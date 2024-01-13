@@ -66,9 +66,9 @@
           </div>
         </div>
 
-        <h4>Information for Merchandise</h4>
+        <h4 v-if="needsSize">Information for Merchandise</h4>
 
-        <div class="form-group row">
+        <div class="form-group row" v-if="needsSize">
           <label class="col-sm-2 col-form-label">T-Shirt Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row" v-if="needsSize">
           <label class="col-sm-2 col-form-label">Polo Size</label>
           <div class="col-sm-10 col-lg-4">
             <custom-radio-buttons
@@ -274,7 +274,10 @@ export default {
       }
 
       return this.selectedPackage.restricted_to_students;
-    }
+    },
+    needsSize: function () {
+      return !this.selectedPackage || (this.merchGroupNames.length > 0) || this.$v.localUser.polo_size.$error || this.$v.localUser.shirt_size.$error;
+    },
   },
   watch: {
     duesPackageChoice: function (packageid, old) {
