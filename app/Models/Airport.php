@@ -8,6 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Sushi\Sushi;
 
+/**
+ * Airports with IATA codes.
+ *
+ * @property string|null $iata
+ * @property string|null $name
+ * @property string|null $city
+ * @property string|null $state
+ * @property string|null $country
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport whereIata($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Airport whereState($value)
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ */
 class Airport extends Model
 {
     use Searchable;
@@ -54,7 +74,7 @@ class Airport extends Model
                 'iata' => strtoupper($details['iata']),
                 'name' => $details['name'],
                 'city' => $details['city'],
-                'state' => $details['state'],
+                'state' => str_replace('-', ' ', $details['state']),
                 'country' => $details['country'],
             ];
         }

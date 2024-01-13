@@ -76,6 +76,13 @@ class DownloadDocuSignForms extends Action
                         $envelope->signable->user->full_name.' - Direct Bill Airfare Request.pdf'
                     );
                 }
+
+                if ($envelope->itinerary_request_filename !== null) {
+                    $zip->addFile(
+                        Storage::disk('local')->path($envelope->itinerary_request_filename),
+                        $envelope->signable->user->full_name.' - Itinerary Request.pdf'
+                    );
+                }
             });
         });
 

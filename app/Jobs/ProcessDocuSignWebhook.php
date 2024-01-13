@@ -118,6 +118,8 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
                         $envelope->travel_authority_filename = $disk_path;
                     } elseif (str_contains($document['name'], 'Airfare')) {
                         $envelope->direct_bill_airfare_filename = $disk_path;
+                    } elseif (str_contains($document['name'], 'Itinerary')) {
+                        $envelope->itinerary_request_filename = $disk_path;
                     }
                 }
             }
