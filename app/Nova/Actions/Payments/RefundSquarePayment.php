@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions\Payments;
 
+use App\Models\Payment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Square\Models\Builders\MoneyBuilder;
@@ -156,7 +158,15 @@ class RefundSquarePayment extends Action
      */
     public function fields(NovaRequest $request): array
     {
+        $payment = Payment::whereId($request->resourceId ?? $request->resources)->sole();
+
         return [
+            Currency::make('Refund Amount')
+                ->default(static fn (): string => $payment->amount)
+                ->required()
+                ->help('Partial refunds aren\'t supported.')
+                ->readonly(),
+
             Text::make('Reason')
                 ->required()
                 ->rules('required', 'max:192'),
