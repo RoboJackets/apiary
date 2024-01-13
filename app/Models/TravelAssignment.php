@@ -27,6 +27,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property bool $tar_received
+ * @property array|null $matrix_itinerary
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelope
  * @property-read int|null $envelope_count
  * @property-read bool $is_complete
@@ -84,6 +85,7 @@ class TravelAssignment extends Model implements Payable
      */
     protected $casts = [
         'tar_received' => 'boolean',
+        'matrix_itinerary' => 'array',
     ];
 
     /**
