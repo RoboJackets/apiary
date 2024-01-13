@@ -171,7 +171,8 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            Text::make('Graduation Semester', fn (): string => self::parseGradSemester($this->graduation_semester))
+            Text::make('Graduation Semester', fn (AppModelsUser $u): string =>
+                $u->getHumanReadableGradSemester())
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
@@ -812,37 +813,5 @@ class User extends Resource
     private static function adminCanRun(NovaRequest $request): bool
     {
         return $request->user()->hasRole('admin');
-    }
-
-    /**
-     * Helper method: Graduation semester is a 6-digit code by default.
-     * Prepares semester data for display, returning empty if no string/invalid
-     * string is entered.
-     */
-    private static function parseGradSemester(?string $sem): string
-    {
-        if ($sem === null) {
-            return '';
-        }
-        if (preg_match('/^[0-9]{4}0[258]$/', $sem) === 0 || preg_match('/^[0-9]{4}0[258]$/', $sem) === false) {
-            return '';
-        }
-        $semcode = substr($sem, 4);
-        $output = '';
-        switch ($semcode) {
-            case '08':
-                $output .= 'Fall ';
-                break;
-            case '02':
-                $output .= 'Spring ';
-                break;
-            case '05':
-                $output .= 'Summer ';
-                break;
-            default:
-                return '';
-        }
-
-        return $output.substr($sem, 0, 4);
     }
 }
