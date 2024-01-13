@@ -577,7 +577,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getHumanReadableGradSemester(): string
+    public function getHumanReadableSemester(): string
     {
         $semester = $this->graduation_semester;
         if ($semester === null || preg_match('/^[0-9]{4}0[258]$/', $semester) === 0) {
