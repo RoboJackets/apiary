@@ -11,28 +11,30 @@ declare(strict_types=1);
 namespace App\Util;
 
 use App\Models\DocuSignEnvelope;
-use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use DocuSign\eSign\Client\ApiClient;
 use DocuSign\eSign\Client\ApiException;
 use DocuSign\eSign\Client\Auth\OAuth;
 use DocuSign\eSign\Client\Auth\UserInfo;
 use DocuSign\eSign\Configuration;
+use DocuSign\eSign\Model\Checkbox;
 use DocuSign\eSign\Model\ConnectEventData;
+use DocuSign\eSign\Model\Date;
 use DocuSign\eSign\Model\Document;
 use DocuSign\eSign\Model\EmailAddress;
 use DocuSign\eSign\Model\EmailSettings;
 use DocuSign\eSign\Model\EnvelopeDefinition;
 use DocuSign\eSign\Model\EventNotification;
 use DocuSign\eSign\Model\Expirations;
-use DocuSign\eSign\Model\FirstName;
 use DocuSign\eSign\Model\FullName;
 use DocuSign\eSign\Model\InitialHere;
-use DocuSign\eSign\Model\LastName;
 use DocuSign\eSign\Model\Notification;
 use DocuSign\eSign\Model\PrefillTabs;
+use DocuSign\eSign\Model\Radio;
+use DocuSign\eSign\Model\RadioGroup;
 use DocuSign\eSign\Model\RecipientEmailNotification;
 use DocuSign\eSign\Model\Recipients;
 use DocuSign\eSign\Model\Reminders;
@@ -40,7 +42,6 @@ use DocuSign\eSign\Model\Signer;
 use DocuSign\eSign\Model\Tabs;
 use DocuSign\eSign\Model\TemplateRole;
 use DocuSign\eSign\Model\Text;
-use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Ramsey\Uuid\Uuid;
@@ -48,6 +49,40 @@ use Ramsey\Uuid\Uuid;
 class DocuSign
 {
     private const CACHE_KEY = 'docusign_access_token';
+
+    private const TIF_X_ALIGN_TOP = 110;
+
+    private const TIF_X_ALIGN_BOTTOM = 82;
+
+    private const TIF_X_ALIGN_FLIGHT_TIME = 228;
+
+    private const TIF_X_ALIGN_FLIGHT_NUMBER = 332;
+
+    private const TIF_X_ALIGN_TOTAL_COST = 296;
+
+    private const TIF_Y_ALIGN_DEPARTURE = 244;
+
+    private const TIF_Y_ALIGN_RETURN = 275;
+
+    private const TIF_Y_ALIGN_AIRFARE_REGISTRATION = 328;
+
+    private const DBA_X_ALIGN_TRAVELER_INFO = 150;
+
+    private const DBA_X_ALIGN_TRAVELER_TYPE = 56;
+
+    private const DBA_X_ALIGN_DOMESTIC = 294;
+
+    private const DBA_X_ALIGN_INTERNATIONAL = 450;
+
+    private const DBA_Y_ALIGN_NAME = 180;
+
+    private const DBA_Y_ALIGN_CONTACT = 236;
+
+    private const DBA_Y_ALIGN_NOTES_FOR_AGENT = 356;
+
+    private const DBA_Y_ALIGN_NON_EMPLOYEE = 423;
+
+    private const DBA_Y_ALIGN_EMPLOYEE = 446;
 
     private static function getConfiguration(bool $withAccessToken): Configuration
     {
@@ -382,19 +417,6 @@ class DocuSign
         }
     }
 
-    private static function emailSubject(Travel $travel): string
-    {
-        if ($travel->tar_required && $travel->needs_airfare_form) {
-            return $travel->name.' Travel Forms';
-        } elseif ($travel->tar_required && ! $travel->needs_airfare_form) {
-            return $travel->name.' Travel Information Form';
-        } elseif (! $travel->tar_required && $travel->needs_airfare_form) {
-            return $travel->name.' Airfare Request Form';
-        }
-
-        throw new Exception('Unexpected trip configuration');
-    }
-
     /**
      * Build recipients for travel assignment envelope.
      *
@@ -403,25 +425,11 @@ class DocuSign
      */
     private static function travelAssignmentRecipients(TravelAssignment $assignment): Recipients
     {
-        $emailBody = 'Please carefully review and initial the included form as soon as possible. Georgia Tech requires'.
-            ' this form for all official travel.';
-
-        if ($assignment->travel->needs_airfare_form && $assignment->travel->tar_required) {
-            $emailBody = 'Please carefully review and complete the included forms as soon as possible so we can book '.
-                'airfare for you. Georgia Tech requires these forms for all official travel.';
-        }
-
-        if ($assignment->travel->needs_airfare_form && ! $assignment->travel->tar_required) {
-            $emailBody = 'Please carefully review and complete the included form as soon as possible so we can book '.
-                'airfare for you. Georgia Tech requires this form for all official travel.';
-        }
-
         $fullNameTabs = [];
         $initialHereTabs = [];
-        $lastNameTabs = [];
-        $firstNameTabs = [];
         $emailAddressTabs = [];
         $textTabs = [];
+        $dateTabs = [];
 
         if ($assignment->travel->tar_required) {
             $fullNameTabs[] = (new FullName())
@@ -433,8 +441,8 @@ class DocuSign
                 ->setFontSize('Size12')
                 ->setHeight(20)
                 ->setWidth(300)
-                ->setXPosition(115)
-                ->setYPosition(125);
+                ->setXPosition(self::TIF_X_ALIGN_TOP)
+                ->setYPosition(131);
 
             $initialHereTabs[] = (new InitialHere())
                 ->setTabType('initialHere')
@@ -462,29 +470,17 @@ class DocuSign
                 ->setYPosition(735)
                 ->setOptional(false);
 
-            $lastNameTabs[] = (new LastName())
-                ->setTabType('lastName')
-                ->setDocumentId(2)
+            $initialHereTabs[] = (new InitialHere())
+                ->setTabType('initialHere')
+                ->setDocumentId(3)
                 ->setPageNumber(1)
-                ->setFont('CourierNew')
-                ->setFontColor('Black')
-                ->setFontSize('Size12')
-                ->setHeight(20)
-                ->setWidth(150)
-                ->setXPosition(160)
-                ->setYPosition(185);
-
-            $firstNameTabs[] = (new FirstName())
-                ->setTabType('firstName')
-                ->setDocumentId(2)
-                ->setPageNumber(1)
-                ->setFont('CourierNew')
-                ->setFontColor('Black')
-                ->setFontSize('Size12')
-                ->setHeight(20)
-                ->setWidth(100)
-                ->setXPosition(310)
-                ->setYPosition(185);
+                ->setHeight(200)
+                ->setWidth(200)
+                ->setScaleValue(1)
+                ->setTabOrder(100)
+                ->setXPosition(20)
+                ->setYPosition(735)
+                ->setOptional(false);
 
             $emailAddressTabs[] = (new EmailAddress())
                 ->setTabType('emailAddress')
@@ -495,8 +491,21 @@ class DocuSign
                 ->setFontSize('Size12')
                 ->setHeight(20)
                 ->setWidth(100)
-                ->setXPosition(370)
-                ->setYPosition(235);
+                ->setXPosition(382)
+                ->setYPosition(self::DBA_Y_ALIGN_CONTACT);
+
+            $dateTabs[] = (new Date())
+                ->setTabType('date')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontSize('Size8')
+                ->setHeight(20)
+                ->setWidth(60)
+                ->setXPosition(226)
+                ->setYPosition(self::DBA_Y_ALIGN_NOTES_FOR_AGENT)
+                ->setRequired(true)
+                ->setTooltip('The Transportation Security Administration requires date of birth for all travelers.');
 
             $textTabs[] = (new Text())
                 ->setTabType('text')
@@ -504,16 +513,16 @@ class DocuSign
                 ->setPageNumber(1)
                 ->setFont('CourierNew')
                 ->setFontColor('Black')
-                ->setFontSize('Size12')
+                ->setFontSize('Size8')
                 ->setHeight(20)
-                ->setWidth(350)
-                ->setXPosition(160)
-                ->setYPosition(340)
-                ->setRequired(true)
+                ->setWidth(325)
+                ->setXPosition(295)
+                ->setYPosition(self::DBA_Y_ALIGN_NOTES_FOR_AGENT)
+                ->setRequired(false)
                 ->setTooltip(
-                    'Date of birth is required in this field. If you have a Known Traveler '.
-                    'Number, PASS ID, Redress Control Number, SkyMiles number, or other identifier'.
-                    ' relevant to air travel, enter it here as well.'
+                    'If you have a Known Traveler '.
+                    'Number, PASS ID, Redress Control Number, SkyMiles number, or other identifier '.
+                    'relevant to air travel, enter it here.'
                 );
         }
 
@@ -530,8 +539,14 @@ class DocuSign
                     ->setEmail($assignment->user->uid.'@gatech.edu')
                     ->setEmailNotification(
                         (new RecipientEmailNotification())
-                            ->setEmailSubject(self::emailSubject($assignment->travel))
-                            ->setEmailBody($emailBody)
+                            ->setEmailSubject(trim(view(
+                                'mail.docusign.travel.subject',
+                                ['travel' => $assignment->travel]
+                            )->render()))
+                            ->setEmailBody(trim(view(
+                                'mail.docusign.travel.body',
+                                ['travel' => $assignment->travel]
+                            )->render()))
                             ->setSupportedLanguage('en')
                     )
                     ->setFirstName($assignment->user->first_name)
@@ -545,10 +560,9 @@ class DocuSign
                         (new Tabs())
                             ->setFullNameTabs($fullNameTabs)
                             ->setInitialHereTabs($initialHereTabs)
-                            ->setLastNameTabs($lastNameTabs)
-                            ->setFirstNameTabs($firstNameTabs)
                             ->setEmailAddressTabs($emailAddressTabs)
                             ->setTextTabs($textTabs)
+                            ->setDateTabs($dateTabs)
                     ),
             ]);
     }
@@ -560,6 +574,24 @@ class DocuSign
      */
     private static function travelInformationFormDocument(TravelAssignment $assignment): Document
     {
+        $departure_date = $assignment->travel->departure_date;
+        $return_date = $assignment->travel->return_date;
+
+        $departure_flight_number = null;
+        $return_flight_number = null;
+
+        if ($assignment->matrix_itinerary !== null) {
+            $departure_date = Matrix::getDepartureDateTime($assignment->matrix_itinerary);
+            $departure_flight_number = Matrix::getDepartureFlightNumber($assignment->matrix_itinerary);
+
+            $matrix_return_date = Matrix::getReturnDateTime($assignment->matrix_itinerary);
+            $return_flight_number = Matrix::getReturnFlightNumber($assignment->matrix_itinerary);
+
+            if ($matrix_return_date !== null) {
+                $return_date = $matrix_return_date;
+            }
+        }
+
         return (new Document())
             ->setDocumentId(1)
             ->setDisplay('inline')
@@ -579,9 +611,9 @@ class DocuSign
                                     ->setFontColor('Black')
                                     ->setFontSize('Size12')
                                     ->setHeight(20)
-                                    ->setWidth(500)
-                                    ->setXPosition(115)
-                                    ->setYPosition(160)
+                                    ->setWidth(530)
+                                    ->setXPosition(self::TIF_X_ALIGN_TOP)
+                                    ->setYPosition(170)
                                     ->setValue($assignment->travel->destination),
                                 (new Text())
                                     ->setTabType('text')
@@ -591,9 +623,9 @@ class DocuSign
                                     ->setFontColor('Black')
                                     ->setFontSize('Size12')
                                     ->setHeight(20)
-                                    ->setWidth(500)
-                                    ->setXPosition(115)
-                                    ->setYPosition(190)
+                                    ->setWidth(530)
+                                    ->setXPosition(self::TIF_X_ALIGN_TOP)
+                                    ->setYPosition(202)
                                     ->setValue($assignment->travel->tar_purpose),
                                 (new Text())
                                     ->setTabType('text')
@@ -604,9 +636,49 @@ class DocuSign
                                     ->setFontSize('Size12')
                                     ->setHeight(20)
                                     ->setWidth(100)
-                                    ->setXPosition(90)
-                                    ->setYPosition(370)
-                                    ->setValue('$'.$assignment->travel->tar_lodging),
+                                    ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                    ->setYPosition(self::TIF_Y_ALIGN_DEPARTURE)
+                                    ->setValue($departure_date->format('Y-m-d')),
+                                ...($departure_flight_number !== null ? [
+                                    (new Text())
+                                        ->setTabType('text')
+                                        ->setDocumentId(1)
+                                        ->setPageNumber(1)
+                                        ->setFont('CourierNew')
+                                        ->setFontColor('Black')
+                                        ->setFontSize('Size12')
+                                        ->setHeight(20)
+                                        ->setWidth(80)
+                                        ->setXPosition(self::TIF_X_ALIGN_FLIGHT_TIME)
+                                        ->setYPosition(self::TIF_Y_ALIGN_DEPARTURE)
+                                        ->setValue($departure_date->format('h:ia')),
+                                    (new Text())
+                                        ->setTabType('text')
+                                        ->setDocumentId(1)
+                                        ->setPageNumber(1)
+                                        ->setFont('CourierNew')
+                                        ->setFontColor('Black')
+                                        ->setFontSize('Size12')
+                                        ->setHeight(20)
+                                        ->setWidth(280)
+                                        ->setXPosition(self::TIF_X_ALIGN_FLIGHT_NUMBER)
+                                        ->setYPosition(self::TIF_Y_ALIGN_DEPARTURE)
+                                        ->setValue($departure_flight_number),
+                                ] : []),
+                                ...($assignment->matrix_itinerary !== null && $departure_flight_number === null ? [
+                                    (new Text())
+                                        ->setTabType('text')
+                                        ->setDocumentId(1)
+                                        ->setPageNumber(1)
+                                        ->setFont('CourierNew')
+                                        ->setFontColor('Black')
+                                        ->setFontSize('Size12')
+                                        ->setHeight(20)
+                                        ->setWidth(280)
+                                        ->setXPosition(self::TIF_X_ALIGN_FLIGHT_NUMBER)
+                                        ->setYPosition(self::TIF_Y_ALIGN_DEPARTURE)
+                                        ->setValue('See attached itinerary'),
+                                ] : []),
                                 (new Text())
                                     ->setTabType('text')
                                     ->setDocumentId(1)
@@ -615,9 +687,147 @@ class DocuSign
                                     ->setFontColor('Black')
                                     ->setFontSize('Size12')
                                     ->setHeight(20)
-                                    ->setWidth(150)
-                                    ->setXPosition(90)
-                                    ->setYPosition(470)
+                                    ->setWidth(100)
+                                    ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                    ->setYPosition(self::TIF_Y_ALIGN_RETURN)
+                                    ->setValue($return_date->format('Y-m-d')),
+                                ...($return_flight_number !== null ? [
+                                    (new Text())
+                                        ->setTabType('text')
+                                        ->setDocumentId(1)
+                                        ->setPageNumber(1)
+                                        ->setFont('CourierNew')
+                                        ->setFontColor('Black')
+                                        ->setFontSize('Size12')
+                                        ->setHeight(20)
+                                        ->setWidth(80)
+                                        ->setXPosition(self::TIF_X_ALIGN_FLIGHT_TIME)
+                                        ->setYPosition(self::TIF_Y_ALIGN_RETURN)
+                                        ->setValue($return_date->format('h:ia')),
+                                    (new Text())
+                                        ->setTabType('text')
+                                        ->setDocumentId(1)
+                                        ->setPageNumber(1)
+                                        ->setFont('CourierNew')
+                                        ->setFontColor('Black')
+                                        ->setFontSize('Size12')
+                                        ->setHeight(20)
+                                        ->setWidth(280)
+                                        ->setXPosition(self::TIF_X_ALIGN_FLIGHT_NUMBER)
+                                        ->setYPosition(self::TIF_Y_ALIGN_RETURN)
+                                        ->setValue($return_flight_number),
+                                ] : []),
+                                ...(
+                                    $assignment->matrix_itinerary !== null &&
+                                    Matrix::getSliceCount($assignment->matrix_itinerary) > 1 &&
+                                    $return_flight_number === null ?
+                                    [
+                                        (new Text())
+                                            ->setTabType('text')
+                                            ->setDocumentId(1)
+                                            ->setPageNumber(1)
+                                            ->setFont('CourierNew')
+                                            ->setFontColor('Black')
+                                            ->setFontSize('Size12')
+                                            ->setHeight(20)
+                                            ->setWidth(280)
+                                            ->setXPosition(self::TIF_X_ALIGN_FLIGHT_NUMBER)
+                                            ->setYPosition(self::TIF_Y_ALIGN_RETURN)
+                                            ->setValue('See attached itinerary'),
+                                    ] : []),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(100)
+                                    ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                    ->setYPosition(300)
+                                    ->setValue('$'.($assignment->travel->meal_per_diem ?? 0)),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(128)
+                                    ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                    ->setYPosition(self::TIF_Y_ALIGN_AIRFARE_REGISTRATION)
+                                    ->setValue(
+                                        '$'.(
+                                            $assignment->matrix_itinerary === null ?
+                                                0 :
+                                                intval(ceil(
+                                                    Matrix::getHighestDisplayPrice($assignment->matrix_itinerary) ?? 0
+                                                ))
+                                        )
+                                    ),
+                                ...($assignment->travel->hotel_name === null ? [] : [
+                                    (new Text())
+                                        ->setTabType('text')
+                                        ->setDocumentId(1)
+                                        ->setPageNumber(1)
+                                        ->setFont('CourierNew')
+                                        ->setFontColor('Black')
+                                        ->setFontSize('Size12')
+                                        ->setHeight(20)
+                                        ->setWidth(247)
+                                        ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                        ->setYPosition(359)
+                                        ->setValue($assignment->travel->hotel_name),
+                                ]),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(129)
+                                    ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                    ->setYPosition(390)
+                                    ->setValue('$'.($assignment->travel->tar_lodging ?? 0)),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(129)
+                                    ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                    ->setYPosition(432)
+                                    ->setValue('$'.($assignment->travel->car_rental_cost ?? 0)),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(350)
+                                    ->setXPosition(268)
+                                    ->setYPosition(self::TIF_Y_ALIGN_AIRFARE_REGISTRATION)
+                                    ->setValue('$'.($assignment->travel->tar_registration ?? 0)),
+                                (new Text())
+                                    ->setTabType('text')
+                                    ->setDocumentId(1)
+                                    ->setPageNumber(1)
+                                    ->setFont('CourierNew')
+                                    ->setFontColor('Black')
+                                    ->setFontSize('Size12')
+                                    ->setHeight(20)
+                                    ->setWidth(240)
+                                    ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                    ->setYPosition(497)
                                     ->setValue($assignment->travel->tar_project_number),
                                 (new Text())
                                     ->setTabType('text')
@@ -627,22 +837,49 @@ class DocuSign
                                     ->setFontColor('Black')
                                     ->setFontSize('Size12')
                                     ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(150)
-                                    ->setYPosition(510)
+                                    ->setWidth(200)
+                                    ->setXPosition(142)
+                                    ->setYPosition(539)
                                     ->setValue($assignment->user->emergency_contact_phone),
-                                (new Text())
-                                    ->setTabType('text')
-                                    ->setDocumentId(1)
-                                    ->setPageNumber(1)
-                                    ->setFont('CourierNew')
-                                    ->setFontColor('Black')
-                                    ->setFontSize('Size12')
-                                    ->setHeight(20)
-                                    ->setWidth(100)
-                                    ->setXPosition(280)
-                                    ->setYPosition(310)
-                                    ->setValue('$'.$assignment->travel->tar_registration),
+                            ])
+                            ->setRadioGroupTabs([
+                                ...(
+                                    $assignment->travel->tar_lodging !== null && $assignment->travel->tar_lodging > 0 ?
+                                        [
+                                            (new RadioGroup())
+                                                ->setTabType('radiogroup')
+                                                ->setGroupName('hotel_amount_total')
+                                                ->setDocumentId(1)
+                                                ->setRadios([
+                                                    (new Radio())
+                                                        ->setPageNumber(1)
+                                                        ->setValue('total')
+                                                        ->setXPosition(self::TIF_X_ALIGN_TOTAL_COST)
+                                                        ->setYPosition(397)
+                                                        ->setRequired(true)
+                                                        ->setSelected(true),
+                                                ]),
+                                        ] : []
+                                ),
+                                ...(
+                                    $assignment->travel->car_rental_cost !== null &&
+                                    $assignment->travel->car_rental_cost > 0 ?
+                                        [
+                                            (new RadioGroup())
+                                                ->setTabType('radiogroup')
+                                                ->setGroupName('car_rental_amount_total')
+                                                ->setDocumentId(1)
+                                                ->setRadios([
+                                                    (new Radio())
+                                                        ->setPageNumber(1)
+                                                        ->setValue('total')
+                                                        ->setXPosition(self::TIF_X_ALIGN_TOTAL_COST)
+                                                        ->setYPosition(439)
+                                                        ->setRequired(true)
+                                                        ->setSelected(true),
+                                                ]),
+                                        ] : []
+                                ),
                             ])
                     )
             );
@@ -655,6 +892,49 @@ class DocuSign
      */
     private static function directBillAirfareFormDocument(TravelAssignment $assignment): Document
     {
+        $departure_date = Matrix::getDepartureDateTime($assignment->matrix_itinerary);
+        $return_date = $assignment->travel->return_date;
+
+        $matrix_return_date = Matrix::getReturnDateTime($assignment->matrix_itinerary);
+
+        if ($matrix_return_date !== null) {
+            $return_date = $matrix_return_date;
+        }
+
+        $checkboxTabs = [];
+
+        if ($assignment->user->employee_id === null) {
+            $checkboxYAlign = self::DBA_Y_ALIGN_NON_EMPLOYEE;
+        } else {
+            $checkboxYAlign = self::DBA_Y_ALIGN_EMPLOYEE;
+        }
+
+        $checkboxTabs[] = (new Checkbox())
+            ->setTabType('checkbox')
+            ->setDocumentId(2)
+            ->setPageNumber(1)
+            ->setXPosition(self::DBA_X_ALIGN_TRAVELER_TYPE)
+            ->setYPosition($checkboxYAlign)
+            ->setSelected(true);
+
+        if (Matrix::hasStopOutsideUnitedStates($assignment->matrix_itinerary)) {
+            $checkboxTabs[] = (new Checkbox())
+                ->setTabType('checkbox')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setXPosition(self::DBA_X_ALIGN_INTERNATIONAL)
+                ->setYPosition($checkboxYAlign)
+                ->setSelected(true);
+        } else {
+            $checkboxTabs[] = (new Checkbox())
+                ->setTabType('checkbox')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setXPosition(self::DBA_X_ALIGN_DOMESTIC)
+                ->setYPosition($checkboxYAlign)
+                ->setSelected(true);
+        }
+
         $textTabs = [
             (new Text())
                 ->setTabType('text')
@@ -664,9 +944,45 @@ class DocuSign
                 ->setFontColor('Black')
                 ->setFontSize('Size12')
                 ->setHeight(20)
+                ->setWidth(35)
+                ->setXPosition(53)
+                ->setYPosition(89)
+                ->setValue($assignment->travel->department_number),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(150)
+                ->setXPosition(150)
+                ->setYPosition(self::DBA_Y_ALIGN_NAME)
+                ->setValue($assignment->user->last_name),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
                 ->setWidth(100)
-                ->setXPosition(160)
-                ->setYPosition(235)
+                ->setXPosition(377)
+                ->setYPosition(self::DBA_Y_ALIGN_NAME)
+                ->setValue($assignment->user->first_name),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(148)
+                ->setYPosition(self::DBA_Y_ALIGN_CONTACT)
                 ->setValue($assignment->user->phone),
             (new Text())
                 ->setTabType('text')
@@ -677,9 +993,45 @@ class DocuSign
                 ->setFontSize('Size12')
                 ->setHeight(20)
                 ->setWidth(100)
-                ->setXPosition(185)
-                ->setYPosition(260)
+                ->setXPosition(181)
+                ->setYPosition(263)
                 ->setValue($assignment->travel->tar_purpose),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size9')
+                ->setHeight(20)
+                ->setWidth(488)
+                ->setXPosition(self::DBA_X_ALIGN_TRAVELER_INFO)
+                ->setYPosition(305)
+                ->setValue(Matrix::getOriginDestinationString($assignment->matrix_itinerary)),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size9')
+                ->setHeight(20)
+                ->setWidth(200)
+                ->setXPosition(self::DBA_X_ALIGN_TRAVELER_INFO)
+                ->setYPosition(326)
+                ->setValue($departure_date->format('Y-m-d').' - '.$return_date->format('Y-m-d')),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size8')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(self::DBA_X_ALIGN_TRAVELER_INFO)
+                ->setYPosition(self::DBA_Y_ALIGN_NOTES_FOR_AGENT)
+                ->setValue('Date of Birth:'),
             (new Text())
                 ->setTabType('text')
                 ->setDocumentId(2)
@@ -688,9 +1040,9 @@ class DocuSign
                 ->setFontColor('Black')
                 ->setFontSize('Size12')
                 ->setHeight(20)
-                ->setWidth(100)
-                ->setXPosition(160)
-                ->setYPosition(370)
+                ->setWidth(163)
+                ->setXPosition(150)
+                ->setYPosition(386)
                 ->setValue($assignment->travel->tar_project_number),
         ];
 
@@ -703,9 +1055,9 @@ class DocuSign
                 ->setFontColor('Black')
                 ->setFontSize('Size12')
                 ->setHeight(20)
-                ->setWidth(100)
-                ->setXPosition(160)
-                ->setYPosition(435)
+                ->setWidth(165)
+                ->setXPosition(149)
+                ->setYPosition(465)
                 ->setValue($assignment->user->employee_id);
         }
 
@@ -720,8 +1072,28 @@ class DocuSign
                     ->setPrefillTabs(
                         (new PrefillTabs())
                             ->setTextTabs($textTabs)
+                            ->setCheckboxTabs($checkboxTabs)
                     )
             );
+    }
+
+    /**
+     * Build an airfare request document. This shows the entire detailed itinerary in a human-readable format.
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
+     */
+    private static function airfareRequestDocument(TravelAssignment $assignment): Document
+    {
+        return (new Document())
+            ->setDocumentId(3)
+            ->setDisplay('inline')
+            ->setDocumentBase64(
+                base64_encode(
+                    Pdf::loadView('travel.matrixitineraryprint', ['assignment' => $assignment])->output()
+                )
+            )
+            ->setIncludeInDownload(true)
+            ->setName('Itinerary Request');
     }
 
     /**
@@ -739,6 +1111,7 @@ class DocuSign
 
         if ($assignment->travel->needs_airfare_form) {
             $documents[] = self::directBillAirfareFormDocument($assignment);
+            $documents[] = self::airfareRequestDocument($assignment);
         }
 
         return $documents;
@@ -764,7 +1137,10 @@ class DocuSign
             ->setRecipientsLock(true)
             ->setDocuments(self::travelAssignmentDocuments($envelope->signable))
             ->setEmailSubject(
-                self::emailSubject($envelope->signable->travel).' for '.$envelope->signedBy->full_name
+                trim(view(
+                    'mail.docusign.travel.subject',
+                    ['travel' => $envelope->signable->travel]
+                )->render()).' for '.$envelope->signedBy->full_name
             )
             ->setEmailBlurb(null)
             ->setMessageLock(true)

@@ -19,6 +19,7 @@ use Laravel\Scout\Searchable;
  * @property string $name
  * @property string $destination
  * @property int $primary_contact_user_id
+ * @property-read \App\Models\User $primaryContact
  * @property \Illuminate\Support\Carbon $departure_date
  * @property \Illuminate\Support\Carbon $return_date
  * @property int $fee_amount
@@ -28,6 +29,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
+ * @property-read int|null $assignments_count
  * @property bool|null $tar_required
  * @property array|null $tar_transportation_mode
  * @property string|null $tar_itinerary
@@ -38,9 +40,26 @@ use Laravel\Scout\Searchable;
  * @property int|null $tar_registration
  * @property string|null $tar_project_number
  * @property string|null $tar_account_code
- * @property-read int|null $assignments_count
- * @property-read \App\Models\User $primaryContact
+ * @property bool $is_international
+ * @property bool $export_controlled_technology
+ * @property string $export_controlled_technology_description
+ * @property bool $embargoed_destination
+ * @property string $embargoed_countries
+ * @property bool $biological_materials
+ * @property string $biological_materials_description
+ * @property bool $equipment
+ * @property string $equipment_description
+ * @property string $international_travel_justification
+ * @property bool $payment_completion_email_sent
+ * @property bool $form_completion_email_sent
+ * @property array|null $airfare_policy
+ * @property int|null $meal_per_diem
+ * @property int|null $car_rental_cost
+ * @property string|null $hotel_name
+ * @property string|null $department_number
  * @property-read bool $needs_airfare_form
+ * @property-read bool $assignments_need_forms
+ * @property-read bool $assignments_need_payment
  *
  * @method static \Database\Factories\TravelFactory factory(...$parameters)
  * @method static Builder|Travel newModelQuery()
@@ -69,22 +88,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereTarRequired($value)
  * @method static Builder|Travel whereTarTransportationMode($value)
  * @method static Builder|Travel whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
- *
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
- *
- * @property bool $is_international
- * @property bool $export_controlled_technology
- * @property string $export_controlled_technology_description
- * @property bool $embargoed_destination
- * @property string $embargoed_countries
- * @property bool $biological_materials
- * @property string $biological_materials_description
- * @property bool $equipment
- * @property string $equipment_description
- * @property string $international_travel_justification
- *
  * @method static Builder|Travel whereBiologicalMaterials($value)
  * @method static Builder|Travel whereBiologicalMaterialsDescription($value)
  * @method static Builder|Travel whereEmbargoedCountries($value)
@@ -97,12 +100,10 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereIsInternational($value)
  * @method static Builder|Travel whereFormCompletionEmailSent($value)
  * @method static Builder|Travel wherePaymentCompletionEmailSent($value)
+ * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
  *
- * @property bool $payment_completion_email_sent
- * @property bool $form_completion_email_sent
- * @property-read bool $assignments_need_forms
- * @property-read bool $assignments_need_payment
- * @property array|null $airfare_policy
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Travel extends Model
 {

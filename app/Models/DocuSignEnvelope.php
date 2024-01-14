@@ -26,6 +26,7 @@ use Illuminate\Support\Str;
  * @property string|null $travel_authority_filename
  * @property string|null $direct_bill_airfare_filename
  * @property string|null $covid_risk_filename
+ * @property string|null $itinerary_request_filename
  * @property string|null $summary_filename
  * @property string|null $signer_ip_address
  * @property \Illuminate\Support\Carbon|null $sent_at
