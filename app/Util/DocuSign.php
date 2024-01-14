@@ -29,10 +29,8 @@ use DocuSign\eSign\Model\EmailSettings;
 use DocuSign\eSign\Model\EnvelopeDefinition;
 use DocuSign\eSign\Model\EventNotification;
 use DocuSign\eSign\Model\Expirations;
-use DocuSign\eSign\Model\FirstName;
 use DocuSign\eSign\Model\FullName;
 use DocuSign\eSign\Model\InitialHere;
-use DocuSign\eSign\Model\LastName;
 use DocuSign\eSign\Model\Notification;
 use DocuSign\eSign\Model\PrefillTabs;
 use DocuSign\eSign\Model\Radio;
@@ -76,7 +74,7 @@ class DocuSign
 
     private const DBA_X_ALIGN_INTERNATIONAL = 450;
 
-    private const DBA_Y_ALIGN_NAME = 182;
+    private const DBA_Y_ALIGN_NAME = 180;
 
     private const DBA_Y_ALIGN_CONTACT = 236;
 
@@ -429,8 +427,6 @@ class DocuSign
     {
         $fullNameTabs = [];
         $initialHereTabs = [];
-        $lastNameTabs = [];
-        $firstNameTabs = [];
         $emailAddressTabs = [];
         $textTabs = [];
         $dateTabs = [];
@@ -485,30 +481,6 @@ class DocuSign
                 ->setXPosition(20)
                 ->setYPosition(735)
                 ->setOptional(false);
-
-            $lastNameTabs[] = (new LastName())
-                ->setTabType('lastName')
-                ->setDocumentId(2)
-                ->setPageNumber(1)
-                ->setFont('CourierNew')
-                ->setFontColor('Black')
-                ->setFontSize('Size12')
-                ->setHeight(20)
-                ->setWidth(150)
-                ->setXPosition(150)
-                ->setYPosition(self::DBA_Y_ALIGN_NAME);
-
-            $firstNameTabs[] = (new FirstName())
-                ->setTabType('firstName')
-                ->setDocumentId(2)
-                ->setPageNumber(1)
-                ->setFont('CourierNew')
-                ->setFontColor('Black')
-                ->setFontSize('Size12')
-                ->setHeight(20)
-                ->setWidth(100)
-                ->setXPosition(377)
-                ->setYPosition(self::DBA_Y_ALIGN_NAME);
 
             $emailAddressTabs[] = (new EmailAddress())
                 ->setTabType('emailAddress')
@@ -588,8 +560,6 @@ class DocuSign
                         (new Tabs())
                             ->setFullNameTabs($fullNameTabs)
                             ->setInitialHereTabs($initialHereTabs)
-                            ->setLastNameTabs($lastNameTabs)
-                            ->setFirstNameTabs($firstNameTabs)
                             ->setEmailAddressTabs($emailAddressTabs)
                             ->setTextTabs($textTabs)
                             ->setDateTabs($dateTabs)
@@ -978,6 +948,30 @@ class DocuSign
                 ->setXPosition(53)
                 ->setYPosition(89)
                 ->setValue($assignment->travel->department_number),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(150)
+                ->setXPosition(150)
+                ->setYPosition(self::DBA_Y_ALIGN_NAME)
+                ->setValue($assignment->user->last_name),
+            (new Text())
+                ->setTabType('text')
+                ->setDocumentId(2)
+                ->setPageNumber(1)
+                ->setFont('CourierNew')
+                ->setFontColor('Black')
+                ->setFontSize('Size12')
+                ->setHeight(20)
+                ->setWidth(100)
+                ->setXPosition(377)
+                ->setYPosition(self::DBA_Y_ALIGN_NAME)
+                ->setValue($assignment->user->first_name),
             (new Text())
                 ->setTabType('text')
                 ->setDocumentId(2)
