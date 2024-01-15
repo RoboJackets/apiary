@@ -822,12 +822,12 @@ class User extends Resource
      */
     public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
     {
-        if ($request->resource === Travel::uriKey()) {
+        if ($request->resource === Travel::uriKey() || $request->resource === Team::uriKey()) {
             return $query->whereIn(
                 'role_id',
                 [
                     Role::where('name', '=', 'team-lead')->sole()->id,
-                    Role::where('name', '=', 'officer')->sole()->id,
+                    Role::where('name', '=', 'project-manager')->sole()->id,
                     Role::where('name', '=', 'officer')->sole()->id,
                 ]
             );
