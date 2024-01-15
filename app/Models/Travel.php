@@ -30,7 +30,6 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
- * @property array|null $tar_transportation_mode
  * @property string|null $tar_itinerary
  * @property string|null $tar_purpose
  * @property int|null $tar_airfare
@@ -87,7 +86,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereTarPurpose($value)
  * @method static Builder|Travel whereTarRegistration($value)
  * @method static Builder|Travel whereTarRequired($value)
- * @method static Builder|Travel whereTarTransportationMode($value)
  * @method static Builder|Travel whereUpdatedAt($value)
  * @method static Builder|Travel whereBiologicalMaterials($value)
  * @method static Builder|Travel whereBiologicalMaterialsDescription($value)
@@ -143,7 +141,6 @@ class Travel extends Model
     protected $casts = [
         'departure_date' => 'date',
         'return_date' => 'date',
-        'tar_transportation_mode' => 'array',
         'payment_completion_email_sent' => 'boolean',
         'form_completion_email_sent' => 'boolean',
         'is_international' => 'boolean',
