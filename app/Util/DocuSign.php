@@ -420,7 +420,6 @@ class DocuSign
     /**
      * Build recipients for travel assignment envelope.
      *
-     * @phan-suppress PhanPluginNonBoolBranch
      * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     private static function travelAssignmentRecipients(TravelAssignment $assignment): Recipients
