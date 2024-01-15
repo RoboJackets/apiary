@@ -113,6 +113,15 @@ class Travel extends Model
     use Searchable;
     use SoftDeletes;
 
+    public const TRAVEL_INFORMATION_FORM_KEY = 'travel_information';
+
+    public const AIRFARE_REQUEST_FORM_KEY = 'airfare_request';
+
+    public const FORM_LABELS = [
+        self::TRAVEL_INFORMATION_FORM_KEY => 'Travel Information Form',
+        self::AIRFARE_REQUEST_FORM_KEY => 'Airfare Request Form',
+    ];
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -143,6 +152,7 @@ class Travel extends Model
         'biological_materials' => 'boolean',
         'equipment' => 'boolean',
         'airfare_policy' => 'array',
+        'forms' => 'array',
     ];
 
     /**

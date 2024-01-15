@@ -44,6 +44,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
+use Spatie\Permission\Models\Role;
 
 /**
  * A Nova resource for users.
@@ -812,5 +813,26 @@ class User extends Resource
     private static function adminCanRun(NovaRequest $request): bool
     {
         return $request->user()->hasRole('admin');
+    }
+
+    /**
+     * Build a Scout search query for the given resource.
+     *
+     * @param  \Laravel\Scout\Builder  $query
+     */
+    public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
+    {
+        if ($request->resource === Travel::uriKey()) {
+            return $query->whereIn(
+                'role_id',
+                [
+                    Role::where('name', '=', 'team-lead')->sole()->id,
+                    Role::where('name', '=', 'officer')->sole()->id,
+                    Role::where('name', '=', 'officer')->sole()->id,
+                ]
+            );
+        }
+
+        return parent::scoutQuery($request, $query);
     }
 }

@@ -767,20 +767,23 @@ class DocuSign
                                                 ))
                                         )
                                     ),
-                                ...($assignment->travel->hotel_name === null ? [] : [
-                                    (new Text())
-                                        ->setTabType('text')
-                                        ->setDocumentId(1)
-                                        ->setPageNumber(1)
-                                        ->setFont('CourierNew')
-                                        ->setFontColor('Black')
-                                        ->setFontSize('Size12')
-                                        ->setHeight(20)
-                                        ->setWidth(247)
-                                        ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
-                                        ->setYPosition(359)
-                                        ->setValue($assignment->travel->hotel_name),
-                                ]),
+                                ...(
+                                    $assignment->travel->hotel_name === null ||
+                                    $assignment->travel->tar_lodging === null ||
+                                    $assignment->travel->tar_lodging === 0 ? [] : [
+                                        (new Text())
+                                            ->setTabType('text')
+                                            ->setDocumentId(1)
+                                            ->setPageNumber(1)
+                                            ->setFont('CourierNew')
+                                            ->setFontColor('Black')
+                                            ->setFontSize('Size12')
+                                            ->setHeight(20)
+                                            ->setWidth(247)
+                                            ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                            ->setYPosition(359)
+                                            ->setValue($assignment->travel->hotel_name),
+                                    ]),
                                 (new Text())
                                     ->setTabType('text')
                                     ->setDocumentId(1)

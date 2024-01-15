@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed.DisallowedPartiallyKeyed
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
 
 namespace App\Nova;
 
@@ -12,6 +12,7 @@ use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
+use App\Util\DepartmentNumbers;
 use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,9 +23,10 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Heading;
-use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -79,314 +81,386 @@ class Travel extends Resource
     ];
 
     /**
+     * Get the displayable label of the resource.
+     */
+    public static function label(): string
+    {
+        return 'Trips';
+    }
+
+    /**
+     * Get the URI key for the resource.
+     */
+    public static function uriKey(): string
+    {
+        return 'trips';
+    }
+
+    /**
      * Get the fields displayed by the resource.
+     *
+     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(Request $request): array
     {
         return [
-            Text::make('Event Name', 'name')
+            Text::make('Trip Name', 'name')
+                ->help(view('nova.help.travel.tripname')->render())
                 ->sortable()
-                ->help('This should typically be the name of the competition followed by the year.')
                 ->required()
-                ->rules('required', 'max:255')
+                ->rules('required', 'min:5', 'max:255')
                 ->creationRules('unique:travel,name')
                 ->updateRules('unique:travel,name,{{resourceId}}'),
 
             Text::make('Destination')
                 ->sortable()
                 ->required()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'min:3', 'max:60')
+                ->maxlength(60)
+                ->enforceMaxlength(),
 
             BelongsTo::make('Primary Contact', 'primaryContact', User::class)
-                ->withoutTrashed()
-                ->searchable(),
+                ->help(view('nova.help.travel.primarycontact')->render())
+                ->sortable()
+                ->required()
+                ->rules('required')
+                ->searchable()
+                ->withoutTrashed(),
 
             Date::make('Departure Date')
+                ->sortable()
                 ->required()
                 ->rules('required', 'date', 'before:return_date'),
 
             Date::make('Return Date')
+                ->sortable()
                 ->required()
                 ->rules('required', 'date', 'after:departure_date'),
 
-            Currency::make('Fee', 'fee_amount')
-                ->sortable()
-                ->required()
-                ->rules('required', 'integer', 'min:'.config('travelpolicy.minimum_trip_fee'), 'max:1000')
-                ->min(config('travelpolicy.minimum_trip_fee'))
-                ->help(
-                    'The trip fee must be at least '.
-                    (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
-                    '% of the per-person total cost for this trip.'
-                )
-                ->max(1000),
-
-            Markdown::make('Included with Fee')
-                ->required()
-                ->rules('required')
-                ->help(
-                    'Describe what costs will be covered by RoboJackets. Typically, this is limited to registration '
-                    .'fees, plane tickets, rental vehicles, and fuel. Ground transportation and lodging may be covered '
-                    .'at the discretion of the project manager, president, and treasurer.'
-                ),
-
-            Markdown::make('Not Included with Fee')
-                ->help(
-                    'Describe what costs are anticipated to be covered by members themselves. Typically, this '
-                    .'includes any meals not provided by the event, entertainment or leisure activities, lodging in '
-                    .'excess of the minimum for the event, visa or passport fees, personal luggage fees, and any item'
-                    .' that violates United States or local laws.'
-                ),
-
             Boolean::make('Payment Completion Email Sent')
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
 
             Boolean::make('Form Completion Email Sent')
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
 
-            BooleanGroup::make('Airfare Policy')
-                ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
-                ->default(static function (): array {
-                    $default = [];
+            Panel::make('Trip Fee', [
+                Currency::make('Fee Amount', 'fee_amount')
+                    ->help(view('nova.help.travel.feeamount')->render())
+                    ->sortable()
+                    ->required()
+                    ->rules(
+                        'required',
+                        'integer',
+                        'min:'.config('travelpolicy.minimum_trip_fee'),
+                        'max:'.config('travelpolicy.maximum_trip_fee')
+                    )
+                    ->min(config('travelpolicy.minimum_trip_fee'))
+                    ->max(config('travelpolicy.maximum_trip_fee')),
 
-                    // @phan-suppress-next-line PhanUnusedVariableValueOfForeachWithKey
-                    foreach (MatrixItineraryBusinessPolicy::POLICY_LABELS as $flag => $label) {
-                        $default[$flag] = true;
-                    }
+                Text::make('Costs Paid by RoboJackets', 'included_with_fee')
+                    ->required()
+                    ->rules('required')
+                    ->help(view('nova.help.travel.includedwithfee')->render())
+                    ->hideFromIndex(),
 
-                    return $default;
-                })
-                ->readonly(static fn (NovaRequest $request): bool => $request->user()->cant('update-airfare-policy'))
-                ->required()
-                ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
-                ->help(
-                    $request->user()->can('update-airfare-policy') ?
-                        null :
-                        'You do not have permission to change the airfare policy.'
-                )
-                ->hideFromIndex(),
+                Text::make('Costs Paid by Travelers', 'not_included_with_fee')
+                    ->required()
+                    ->rules('required')
+                    ->help(view('nova.help.travel.notincludedwithfee')->render())
+                    ->hideFromIndex(),
+            ]),
 
-            new Panel(
-                'Travel Authority Request',
-                [
-                    Boolean::make('TAR Required', 'tar_required')
-                        ->help(
-                            'Check this box if Travel Authority Requests need to be submitted to the Institute.'
-                            .' Each traveler will need to submit one individually, and they will be automatically'
-                            .' collected within MyRoboJackets.'
+            Panel::make('Forms', [
+                BooleanGroup::make('Collect Forms', 'forms')
+                    ->options(\App\Models\Travel::FORM_LABELS)
+                    ->required(false)
+                    ->rules('required', 'json')
+                    ->showOnDetail(fn (): bool => $this->forms !== null && in_array(true, $this->forms, true))
+                    ->hideFromIndex()
+                    ->help('If you\'re not sure which forms you need to collect, please check with the treasurer.'),
+
+                Text::make('Trip Purpose', 'tar_purpose')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Text $field, NovaRequest $request, FormData $formData): void {
+                            if (
+                                self::showFieldOnForms(
+                                    $formData,
+                                    \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY,
+                                    \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
+                                )
+                            ) {
+                                $field->show()
+                                    ->rules('required', 'min:20', 'max:60');
+                            }
+                        }
+                    )
+                    ->showOnDetail(
+                        fn (): bool => $this->showFieldOnDetail(
+                            \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY,
+                            \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
                         )
-                        ->hideFromIndex(),
+                    )
+                    ->required()
+                    ->hide()
+                    ->maxlength(60)
+                    ->enforceMaxlength()
+                    ->rules('sometimes')
+                    ->hideFromIndex(),
 
-                    BooleanGroup::make('Transportation Mode', 'tar_transportation_mode')
-                        ->options(
-                            [
-                                'state_contract_airline' => 'State Contract Airline',
-                                'non_contract_airline' => 'Non-Contract Airline',
-                                'personal_automobile' => 'Personal Automobile',
-                                'rental_vehicle' => 'Rental Vehicle',
-                                'other' => 'Other',
-                            ]
-                        )->help(
-                            'Select all transportation modes that will be used. This will be populated on TAR forms.'
-                        )
-                        ->hideFromIndex(),
+                Heading::make('Trip Costs')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Heading $field, NovaRequest $request, FormData $formData): void {
+                            if (self::showFieldOnForms($formData, \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)) {
+                                $field->show();
+                            }
+                        }
+                    )
+                    ->hide()
+                    ->showOnDetail(fn (): bool => $this->showFieldOnDetail(
+                        \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY
+                    )),
 
-                    Text::make('Itinerary', 'tar_itinerary')
-                        ->required()
-                        ->rules('required_if:tar_required,1', 'max:255')
-                        ->help(
-                            'This will be populated on TAR forms.'
-                        )
-                        ->hideFromIndex(),
+                Text::make('Hotel Name')
+                    ->required()
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Text $field, NovaRequest $request, FormData $formData): void {
+                            if (self::showFieldOnForms($formData, \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)) {
+                                $field->show()
+                                    ->required()
+                                    ->rules('max:30');
+                            }
+                        }
+                    )
+                    ->rules('sometimes')
+                    ->hide()
+                    ->showOnDetail(
+                        fn (): bool => $this->showFieldOnDetail(\App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)
+                    )
+                    ->help('If you are not staying overnight, leave this field blank.')
+                    ->maxlength(30)
+                    ->enforceMaxlength()
+                    ->hideFromIndex(),
 
-                    Text::make('Purpose', 'tar_purpose')
-                        ->required()
-                        ->rules('required_if:tar_required,1', 'max:255')
-                        ->help(
-                            'This will be populated on TAR forms.'
-                        )
-                        ->hideFromIndex(),
+                Currency::make('Hotel Cost Per Person', 'tar_lodging')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Currency $field, NovaRequest $request, FormData $formData): void {
+                            if (self::showFieldOnForms($formData, \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)) {
+                                $field->show()
+                                    // GSA FY2024 non-standard area max is $485 - guess where
+                                    ->rules('required', 'integer', 'min:0', 'max:500');
+                            }
+                        }
+                    )
+                    ->hide()
+                    ->showOnDetail(
+                        fn (): bool => $this->showFieldOnDetail(\App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)
+                    )
+                    ->required()
+                    ->rules('sometimes')
+                    ->min(0)
+                    ->max(500)
+                    ->help(
+                        'Enter the estimated hotel cost per person in this field.'
+                        .' If you are not staying overnight, enter 0.'
+                    )
+                    ->hideFromIndex(),
 
-                    Currency::make('Airfare Cost', 'tar_airfare')
-                        ->required()
-                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
-                        ->min(0)
-                        ->max(10000)
-                        ->help(
-                            'Enter the estimated airfare cost per person in this field.'
-                            .' If you are not traveling by air, enter 0.'
-                        )
-                        ->hideFromIndex(),
+                Currency::make('Registration Cost Per Person', 'tar_registration')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Currency $field, NovaRequest $request, FormData $formData): void {
+                            if (self::showFieldOnForms($formData, \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)) {
+                                $field->show()
+                                    ->rules('required', 'min:0', 'max:1000');
+                            }
+                        }
+                    )
+                    ->required()
+                    ->hide()
+                    ->showOnDetail(
+                        fn (): bool => $this->showFieldOnDetail(\App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)
+                    )
+                    ->rules('sometimes')
+                    ->min(0)
+                    ->max(1000)
+                    ->help(
+                        'Enter the estimated cost for registration per person in this field.'.
+                        ' If registration is free, enter 0.'
+                    )
+                    ->hideFromIndex(),
 
-                    Currency::make('Lodging Cost', 'tar_lodging')
-                        ->required()
-                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
-                        ->min(0)
-                        ->max(1000)
-                        ->help(
-                            'Enter the estimated lodging cost per person in this field.'
-                            .' If you are not staying overnight, enter 0.'
-                        )
-                        ->hideFromIndex(),
+                Currency::make('Car Rental Cost Per Person', 'car_rental_cost')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Currency $field, NovaRequest $request, FormData $formData): void {
+                            if (self::showFieldOnForms($formData, \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)) {
+                                $field->show()
+                                    ->rules('required', 'integer', 'min:0', 'max:1000');
+                            }
+                        }
+                    )
+                    ->hide()
+                    ->showOnDetail(
+                        fn (): bool => $this->showFieldOnDetail(\App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)
+                    )
+                    ->required()
+                    ->help(
+                        'Enter the estimated cost for car rental per person in this field. If you are not renting '.
+                        'cars, enter 0.'
+                    )
+                    ->rules('sometimes')
+                    ->min(0)
+                    ->max(1000)
+                    ->hideFromIndex(),
 
-                    Currency::make('Other Transportation Cost', 'tar_other_trans')
-                        ->required()
-                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
-                        ->min(0)
-                        ->max(1000)
-                        ->help(
-                            'Enter the estimated cost for other transportation per person in this field.'.
-                            ' If this is not applicable, enter 0.'
-                        )
-                        ->hideFromIndex(),
+                Currency::make('Meal Per Diem')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Currency $field, NovaRequest $request, FormData $formData): void {
+                            if (self::showFieldOnForms($formData, \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)) {
+                                $field->show()
+                                    // GSA FY2024 non-standard area max is $79
+                                    ->rules('required', 'integer', 'min:0', 'max:100');
+                            }
+                        }
+                    )
+                    ->hide()
+                    ->showOnDetail(
+                        fn (): bool => $this->showFieldOnDetail(\App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)
+                    )
+                    ->help('Enter the meal per diem allowance per person. This is generally $0.')
+                    ->required()
+                    ->rules('sometimes')
+                    ->min(0)
+                    ->max(100)
+                    ->hideFromIndex(),
 
-                    Currency::make('Registration Cost', 'tar_registration')
-                        ->required()
-                        ->rules('required_if:tar_required,1', 'nullable', 'integer')
-                        ->min(0)
-                        ->max(1000)
-                        ->help(
-                            'Enter the estimated cost for registration per person in this field.'.
-                            ' If this is not applicable, enter 0.'
-                        )
-                        ->hideFromIndex(),
+                Heading::make('Accounting Information')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Heading $field, NovaRequest $request, FormData $formData): void {
+                            if (
+                                self::showFieldOnForms(
+                                    $formData,
+                                    \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY,
+                                    \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
+                                )
+                            ) {
+                                $field->show();
+                            }
+                        }
+                    )
+                    ->hide()
+                    ->showOnDetail(fn (): bool => $this->showFieldOnDetail(
+                        \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY,
+                        \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
+                    )),
 
-                    Text::make('Workday Project Number', 'tar_project_number')
-                        ->required()
-                        ->rules(
-                            'required_if:tar_required,1',
-                            'nullable',
-                            'max:255',
-                            'in:CE0339,DE00007513,GTF250000211' // agency, SGA, ME GTF
-                        )
-                        ->help(
-                            'Ask the treasurer for the correct value for this field.'
-                        )
-                        ->hideFromIndex(),
+                Text::make('Workday Account Number', 'tar_project_number')
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Text $field, NovaRequest $request, FormData $formData): void {
+                            if (
+                                self::showFieldOnForms(
+                                    $formData,
+                                    \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY,
+                                    \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
+                                )
+                            ) {
+                                $field->show()
+                                    ->rules(
+                                        'required',
+                                        'max:255',
+                                        'in:CE0339,DE00007513,GTF250000211' // agency, SGA, ME GTF
+                                    );
+                            }
+                        }
+                    )
+                    ->showOnDetail(fn (): bool => $this->showFieldOnDetail(
+                        \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY,
+                        \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
+                    ))
+                    ->required()
+                    ->hide()
+                    ->rules('sometimes')
+                    ->help(
+                        'Ask the treasurer for the correct value for this field.'
+                    )
+                    ->hideFromIndex(),
 
-                    Text::make('Account Code', 'tar_account_code')
-                        ->required()
-                        ->rules('required_if:tar_required,1', 'nullable', 'digits:6')
-                        ->help(
-                            'Ask the treasurer for the correct value for this field.'
-                        )
-                        ->hideFromIndex(),
-                ]
-            ),
-
-            new Panel(
-                'International Travel',
-                [
-                    Boolean::make('Destination Outside United States', 'is_international')
-                        ->help(
-                            'Check this box if your destination is outside of the United States.'
-                        )
-                        ->hideFromIndex(),
-
-                    Text::make('Justification', 'international_travel_justification')
-                        ->required()
-                        ->rules('required_if:is_international,1', 'nullable')
-                        ->help(
-                            'Please explain how this travel meets essential travel criteria as defined by Georgia Tech.'
-                        )
-                        ->hideFromIndex(),
-
-                    Boolean::make('Export-Controlled Technology', 'export_controlled_technology')
-                        ->required()
-                        ->help(
-                            'Do you plan to take any information or technology that is controlled?'
-                        )
-                        ->hideFromIndex(),
-
-                    Text::make('Export-Controlled Technology Description', 'export_controlled_technology_description')
-                        ->required()
-                        ->rules('required_if:export_controlled_technology,1', 'nullable')
-                        ->help(
-                            'If yes, please describe the information or technology.'
-                        )
-                        ->hideFromIndex(),
-
-                    Boolean::make('Embargoed Destination', 'embargoed_destination')
-                        ->required()
-                        ->help(
-                            'Do you plan to travel to an embargoed destination?'
-                        )
-                        ->hideFromIndex(),
-
-                    Text::make('Embargoed Destination Description', 'embargoed_countries')
-                        ->required()
-                        ->rules('required_if:embargoed_destination,1', 'nullable')
-                        ->help(
-                            'If yes, please list the country or countries.'
-                        )
-                        ->hideFromIndex(),
-
-                    Boolean::make('Biological Materials', 'biological_materials')
-                        ->required()
-                        ->help(
-                            'Are you taking any biological materials?'
-                        )
-                        ->hideFromIndex(),
-
-                    Text::make('Biological Materials Description', 'biological_materials_description')
-                        ->required()
-                        ->rules('required_if:biological_materials,1', 'nullable')
-                        ->help(
-                            'If yes, please identify the material.'
-                        )
-                        ->hideFromIndex(),
-
-                    Boolean::make('Equipment', 'equipment')
-                        ->required()
-                        ->help(
-                            'Are you taking any equipment containing work involving foreign national restrictions,'.
-                            ' publication restrictions, technology control plans, proprietary information, or '.
-                            'specialized encryption software?'
-                        )
-                        ->hideFromIndex(),
-
-                    Text::make('Equipment Description', 'equipment_description')
-                        ->required()
-                        ->rules('required_if:equipment,1', 'nullable')
-                        ->help(
-                            'If yes, please list the equipment.'
-                        )
-                        ->hideFromIndex(),
-                ]
-            ),
+                Select::make('Department', 'department_number')
+                    ->options(DepartmentNumbers::DESCRIPTIONS)
+                    ->displayUsingLabels()
+                    ->searchable()
+                    ->dependsOn(
+                        ['forms'],
+                        static function (Select $field, NovaRequest $request, FormData $formData): void {
+                            if (self::showFieldOnForms($formData, \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY)) {
+                                $field->show()
+                                    ->required()
+                                    ->rules(
+                                        'required',
+                                        'size:3',
+                                        'in:'.implode(',', array_keys(DepartmentNumbers::DESCRIPTIONS))
+                                    );
+                            }
+                        }
+                    )
+                    ->showOnDetail(fn (): bool => $this->showFieldOnDetail(
+                        \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
+                    ))
+                    ->required()
+                    ->hide()
+                    ->hideFromIndex()
+                    ->help('Select the department responsible for <strong>airfare</strong> costs.'),
+            ]),
 
             Panel::make(
-                'Slow // Work Zone Ahead',
+                'Airfare',
                 [
-                    Heading::make(
-                        'Pardon our dust! We\'re making improvements to the trip setup experience in '.
-                        config('app.name').
-                        '. In the meantime, these fields are located down here, and required for all trips. If you '.
-                        'need help, please ask in #treasury-helpdesk.'
-                    )
-                        ->onlyOnForms(),
+                    BooleanGroup::make('Airfare Policy')
+                        ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
+                        ->dependsOn(
+                            ['forms'],
+                            static function (BooleanGroup $field, NovaRequest $request, FormData $formData): void {
+                                if (self::showFieldOnForms($formData, \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY)) {
+                                    $field->show()
+                                        ->required()
+                                        ->rules(
+                                            'required',
+                                            'json',
+                                            new FareClassPolicyRequiresMarketingCarrierPolicy()
+                                        );
+                                }
+                            }
+                        )
+                        ->showOnDetail(fn (): bool => $this->showFieldOnDetail(
+                            \App\Models\Travel::AIRFARE_REQUEST_FORM_KEY
+                        ))
+                        ->default(static function (): array {
+                            $default = [];
 
-                    Currency::make('Meal Per Diem')
-                        ->required()
-                        ->rules('required', 'integer', 'min:0', 'max:1000')
-                        ->min(0)
-                        ->max(1000),
+                            // @phan-suppress-next-line PhanUnusedVariableValueOfForeachWithKey
+                            foreach (MatrixItineraryBusinessPolicy::POLICY_LABELS as $flag => $label) {
+                                $default[$flag] = true;
+                            }
 
-                    Currency::make('Car Rental Cost')
-                        ->required()
-                        ->rules('required', 'integer', 'min:0', 'max:1000')
-                        ->min(0)
-                        ->max(1000),
-
-                    Text::make('Hotel Name')
-                        ->required()
-                        ->rules('required'),
-
-                    Text::make('Department Number')
-                        ->required()
-                        ->rules('required', 'numeric', 'digits:3')
-                        ->maxlength(3)
-                        ->enforceMaxlength(),
+                            return $default;
+                        })
+                        ->readonly(static fn (NovaRequest $request): bool => $request->user()->cant(
+                            'update-airfare-policy'
+                        ))
+                        ->hide()
+                        ->help(view('nova.help.travel.airfarepolicy')->render())
+                        ->hideFromIndex(),
                 ]
             ),
 
@@ -449,11 +523,49 @@ class Travel extends Resource
      */
     protected static function afterValidation(NovaRequest $request, $validator): void
     {
-        $totalCost = $request->tar_lodging + $request->tar_registration;
+        // require trip name to include the departure or return year
+        if ($request->name !== null && ($request->departure_date !== null || $request->return_date !== null)) {
+            $departure_year = null;
+            $return_year = null;
 
-        if ($totalCost === 0) {
-            return;
+            if ($request->departure_date !== null) {
+                $departure_year = substr($request->departure_date, 0, 4);
+            }
+
+            if ($request->return_date !== null) {
+                $return_year = substr($request->return_date, 0, 4);
+            }
+
+            if (
+                ! ($departure_year !== null && str_contains($request->name, $departure_year)) &&
+                ! ($return_year !== null && str_contains($request->name, $return_year))
+            ) {
+                $validator->errors()->add('name', 'The trip name must include the year of the event.');
+            }
         }
+
+        // require hotel name to be provided if hotel cost is >0
+        if ($request->tar_lodging > 0 && $request->hotel_name === null) {
+            $validator->errors()->add(
+                'hotel_name',
+                'The hotel name is required if the hotel cost per person is greater than $0.'
+            );
+        }
+
+        // validate account and department make sense
+        if ($request->tar_project_number !== null && $request->department_number !== null) {
+            if ($request->tar_project_number === 'GTF250000211' && $request->department_number !== '250') {
+                $validator->errors()->add(
+                    'department_number',
+                    'The selected department and Workday account numbers do not match.'
+                );
+            }
+        }
+
+        // deliberately not including meal per diem rate because that seems weird
+        $totalCost = intval($request->tar_lodging) +
+            intval($request->tar_registration) +
+            intval($request->car_rental_cost);
 
         if ($request->resourceId !== null) {
             $trip = \App\Models\Travel::where('id', '=', $request->resourceId)->sole();
@@ -477,14 +589,16 @@ class Travel extends Resource
             }
         }
 
-        $feeAmount = $request->fee_amount;
+        $feeAmount = intval($request->fee_amount);
+
+        if ($totalCost === 0) {
+            return;
+        }
 
         if ($feeAmount / $totalCost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
             $validator->errors()->add(
                 'fee_amount',
-                'Trip fee must be at least '.
-                (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
-                '% of the per-person cost for this trip.'
+                trim(view('nova.help.travel.feevalidation', ['totalCost' => $totalCost])->render())
             );
         }
     }
@@ -534,5 +648,37 @@ class Travel extends Resource
 
         $model->airfare_policy = $default;
         $model->save();
+    }
+
+    private static function showFieldOnForms(FormData $formData, string ...$fieldRequiredForForms): bool
+    {
+        $json = $formData->json('forms');
+
+        if (! is_array($json)) {
+            return false;
+        }
+
+        foreach ($fieldRequiredForForms as $form) {
+            if (array_key_exists($form, $json) && $json[$form] === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function showFieldOnDetail(string ...$fieldRequiredForForms): bool
+    {
+        if ($this->forms === null) {
+            return false;
+        }
+
+        foreach ($fieldRequiredForForms as $form) {
+            if (array_key_exists($form, $this->forms) && $this->forms[$form] === true) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
