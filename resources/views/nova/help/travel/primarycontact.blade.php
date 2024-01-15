@@ -1,1 +1,1 @@
-Travelers will be directed to this person for questions. If form collection is enabled, this person's DocuSign account will be used to send forms.
+Travelers will be directed to this person for questions and offline payments. Only team leads, project managers, and officers may be selected as primary contacts. If form collection is enabled, this person's DocuSign account will be used to send forms.
