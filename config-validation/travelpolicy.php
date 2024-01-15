@@ -12,6 +12,13 @@ return [
             'min:1',
         ]),
 
+    Rule::make('maximum_trip_fee')
+        ->rules([
+            'required',
+            'integer',
+            'min:1',
+        ]),
+
     Rule::make('minimum_trip_fee_cost_ratio')
         ->rules([
             'required',
