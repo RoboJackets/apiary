@@ -85,7 +85,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereTarProjectNumber($value)
  * @method static Builder|Travel whereTarPurpose($value)
  * @method static Builder|Travel whereTarRegistration($value)
- * @method static Builder|Travel whereTarRequired($value)
  * @method static Builder|Travel whereUpdatedAt($value)
  * @method static Builder|Travel whereBiologicalMaterials($value)
  * @method static Builder|Travel whereBiologicalMaterialsDescription($value)
