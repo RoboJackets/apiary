@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Util;
 
+/**
+ * Georgia Tech department list.
+ * Sourced from https://www.budgets.gatech.edu/mReference/RefDepTable.
+ */
 class DepartmentNumbers
 {
     public const DESCRIPTIONS = [
