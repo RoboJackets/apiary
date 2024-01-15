@@ -431,7 +431,7 @@ class DocuSign
         $textTabs = [];
         $dateTabs = [];
 
-        if ($assignment->travel->tar_required) {
+        if ($assignment->travel->needs_travel_information_form) {
             $fullNameTabs[] = (new FullName())
                 ->setTabType('fullName')
                 ->setDocumentId(1)
@@ -1108,7 +1108,7 @@ class DocuSign
     {
         $documents = [];
 
-        if ($assignment->travel->tar_required === true) {
+        if ($assignment->travel->needs_travel_information_form) {
             $documents[] = self::travelInformationFormDocument($assignment);
         }
 

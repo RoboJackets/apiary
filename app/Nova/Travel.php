@@ -507,7 +507,7 @@ class Travel extends Resource
             return [];
         }
 
-        $requires_tar = AppModelsTravel::where('id', $request->resourceId)->sole()->tar_required;
+        $requires_tar = AppModelsTravel::where('id', $request->resourceId)->sole()->needs_docusign;
 
         if ($requires_tar) {
             $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();

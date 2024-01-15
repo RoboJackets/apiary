@@ -30,7 +30,6 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
- * @property bool|null $tar_required
  * @property array|null $tar_transportation_mode
  * @property string|null $tar_itinerary
  * @property string|null $tar_purpose
@@ -58,6 +57,8 @@ use Laravel\Scout\Searchable;
  * @property string|null $hotel_name
  * @property string|null $department_number
  * @property-read bool $needs_airfare_form
+ * @property-read bool $needs_travel_information_form
+ * @property-read bool $needs_docusign
  * @property-read bool $assignments_need_forms
  * @property-read bool $assignments_need_payment
  *
@@ -143,7 +144,6 @@ class Travel extends Model
         'departure_date' => 'date',
         'return_date' => 'date',
         'tar_transportation_mode' => 'array',
-        'tar_required' => 'boolean',
         'payment_completion_email_sent' => 'boolean',
         'form_completion_email_sent' => 'boolean',
         'is_international' => 'boolean',
@@ -192,14 +192,24 @@ class Travel extends Model
         return $this->assignments()->needDocuSign()->exists();
     }
 
+    public function getNeedsDocusignAttribute(): bool
+    {
+        return $this->needs_travel_information_form || $this->needs_airfare_form;
+    }
+
+    public function getNeedsTravelInformationFormAttribute(): bool
+    {
+        return $this->getNeedsFormAttribute(self::TRAVEL_INFORMATION_FORM_KEY);
+    }
+
     public function getNeedsAirfareFormAttribute(): bool
     {
-        return ($this->tar_transportation_mode ?? [
-            'state_contract_airline' => false,
-        ])['state_contract_airline'] === true ||
-            true === ($this->tar_transportation_mode ?? [
-                'non_contract_airline' => false,
-            ])['non_contract_airline'];
+        return $this->getNeedsFormAttribute(self::AIRFARE_REQUEST_FORM_KEY);
+    }
+
+    private function getNeedsFormAttribute(string $form): bool
+    {
+        return $this->forms !== null && array_key_exists($form, $this->forms) && $this->forms[$form] === true;
     }
 
     /**

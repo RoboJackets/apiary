@@ -53,7 +53,7 @@ class CheckAllTravelAssignmentsComplete implements ShouldBeUnique, ShouldQueue
                             SendTravelAssignmentReminder::dispatch($assignment);
                         }
                     );
-                } elseif ($travel->tar_required &&
+                } elseif ($travel->needs_docusign &&
                     ! $travel->form_completion_email_sent &&
                     ! $travel->assignments_need_forms
                 ) {

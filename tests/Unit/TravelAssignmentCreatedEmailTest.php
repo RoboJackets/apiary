@@ -17,7 +17,9 @@ final class TravelAssignmentCreatedEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
         ]);
         $travel->save();
 
@@ -45,7 +47,6 @@ final class TravelAssignmentCreatedEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => false,
             'fee_amount' => 10,
         ]);
         $travel->save();

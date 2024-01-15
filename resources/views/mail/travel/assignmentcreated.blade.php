@@ -1,6 +1,6 @@
 Hi {!! $assignment->user->preferred_first_name !!},
 
-@if($assignment->travel->tar_required)
+@if($assignment->travel->needs_docusign)
 You have been assigned to {{ $assignment->travel->name }}. Please complete the following items as soon as possible so that we can book travel for you.
 
 Visit {{ route('docusign.travel') }} to submit a Travel Authority Request. Georgia Tech requires this form to be submitted for all official travel.

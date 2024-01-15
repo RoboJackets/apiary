@@ -84,7 +84,9 @@ final class PaymentReceiptEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->create();
-        $travel->tar_required = true;
+        $travel['forms'] = [
+            Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+        ];
         $travel->save();
 
         $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
@@ -126,7 +128,9 @@ final class PaymentReceiptEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
         ]);
         $travel->save();
 

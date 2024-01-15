@@ -18,7 +18,9 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'primary_contact_user_id' => $user->id,
         ]);
         $travel->save();
@@ -28,7 +30,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('fee and submitted travel forms for');
-        $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/travel/');
+        $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/trips/');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }
@@ -38,7 +40,9 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'primary_contact_user_id' => $user->id,
         ]);
         $travel->save();
@@ -57,7 +61,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('submitted travel forms for');
         $mailable->assertSeeInText(". 1 traveler still needs to pay the travel fee.\n\n");
-        $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/travel/');
+        $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/trips/');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }
@@ -69,7 +73,9 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $otherUser = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'primary_contact_user_id' => $user->id,
         ]);
         $travel->save();
@@ -96,7 +102,7 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText('submitted travel forms for');
         $mailable->assertSeeInText(". 2 travelers still need to pay the travel fee.\n\n");
-        $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/travel/');
+        $mailable->assertSeeInText('from TESTING Apiary at http://localhost:8080/nova/resources/trips/');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }
@@ -106,7 +112,9 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'primary_contact_user_id' => $user->id,
         ]);
         $travel->save();
@@ -143,7 +151,9 @@ final class AllTravelAssignmentsCompleteEmailTest extends TestCase
         $otherUser = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'primary_contact_user_id' => $user->id,
         ]);
         $travel->save();

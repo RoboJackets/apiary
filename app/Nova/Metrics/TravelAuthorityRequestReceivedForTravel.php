@@ -13,13 +13,6 @@ use Laravel\Nova\Metrics\PartitionResult;
 class TravelAuthorityRequestReceivedForTravel extends Partition
 {
     /**
-     * The travel model this is displaying (if not on a travel detail page).
-     *
-     * @var int
-     */
-    protected $resourceId;
-
-    /**
      * Labels for the tar_recieved field, conveniently indexed by the numeric value.
      *
      * @phan-read-only
@@ -31,10 +24,9 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
         'Received',
     ];
 
-    public function __construct(int $resourceId = -1)
+    public function __construct(private readonly int $resourceId = -1)
     {
         parent::__construct();
-        $this->resourceId = $resourceId;
     }
 
     /**
@@ -42,7 +34,7 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
      */
     public function name(): string
     {
-        return $this->resourceId === -1 ? 'TAR Received' : 'TAR Received for '.Travel::where(
+        return $this->resourceId === -1 ? 'Forms Received' : 'Forms Received for '.Travel::where(
             'id',
             $this->resourceId
         )->sole()->name;
@@ -79,6 +71,6 @@ class TravelAuthorityRequestReceivedForTravel extends Partition
      */
     public function uriKey(): string
     {
-        return $this->resourceId === -1 ? 'tar-received' : 'tar-received-'.$this->resourceId;
+        return $this->resourceId === -1 ? 'forms-received' : 'forms-received-'.$this->resourceId;
     }
 }
