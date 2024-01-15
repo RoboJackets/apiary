@@ -9,7 +9,7 @@ return [
     'minimum_trip_fee' => intval(env('TRAVEL_POLICY_MINIMUM_TRIP_FEE', 20)),
 
     /**
-     * The lowest trip fee that is permitted on a trip, in dollars.
+     * The highest trip fee that is permitted on a trip, in dollars.
      */
     'maximum_trip_fee' => intval(env('TRAVEL_POLICY_MAXIMUM_TRIP_FEE', 1000)),
 
