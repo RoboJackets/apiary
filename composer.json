@@ -55,7 +55,7 @@
         "realrashid/sweet-alert": "7.1.0",
         "robojackets/client-id-and-secret-modal": "@dev",
         "robojackets/personal-access-token-modal": "@dev",
-        "sentry/sentry-laravel": "4.1.1",
+        "sentry/sentry-laravel": "4.1.2",
         "spatie/laravel-csp": "2.8.4",
         "spatie/laravel-failed-job-monitor": "4.2.1",
         "spatie/laravel-permission": "6.3.0",
