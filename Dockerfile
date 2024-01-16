@@ -20,7 +20,7 @@ RUN set -euxo pipefail && \
         fi; \
     done;
 
-FROM node:21.5.0 as docs-minification
+FROM node:21.6.0 as docs-minification
 
 COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
@@ -49,7 +49,7 @@ COPY --link package.json package-lock.json webpack.mix.js artisan /app/
 COPY --link resources/ /app/resources/
 COPY --link public/ /app/public/
 
-FROM node:21.5.0 as nova-components
+FROM node:21.6.0 as nova-components
 
 COPY --link /nova-components/ /nova-components/
 
