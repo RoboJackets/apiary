@@ -312,7 +312,7 @@ class User extends Authenticatable
      */
     public const DO_NOT_FILTER_ON = [
         'dues_package_id',
-        'travel_id',
+        'trip_id',
         'merchandise_id',
         'user_id',
     ];
