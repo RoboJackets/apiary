@@ -12,6 +12,7 @@
     "require": {
         "php": "^8.2",
         "ext-bcmath": "*",
+        "ext-ctype": "*",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-intl": "*",
@@ -29,6 +30,7 @@
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.4.0",
         "barryvdh/laravel-dompdf": "2.0.1",
+        "calebporzio/sushi": "2.4.5",
         "chelout/laravel-relationship-events": "2.0.0",
         "doctrine/dbal": "3.7.2",
         "docusign/esign-client": "6.18.0",
@@ -43,27 +45,26 @@
         "laravel/nova": "4.32.11",
         "laravel/passport": "11.10.0",
         "laravel/scout": "10.7.0",
-        "laravel/slack-notification-channel": "2.5.0",
+        "laravel/slack-notification-channel": "3.1.1",
         "laravel/socialite": "5.11.0",
         "laravel/tinker": "2.9.0",
         "madewithlove/laravel-nova-uuid-support": "1.5",
         "meilisearch/meilisearch-php": "1.5.0",
         "mrclay/jsmin-php": "2.4.3",
+        "mwgg/airports": "1.0",
         "realrashid/sweet-alert": "7.1.0",
-        "sentry/sentry-laravel": "3.8.2",
-        "smalot/pdfparser": "2.7.0",
+        "robojackets/client-id-and-secret-modal": "@dev",
+        "robojackets/personal-access-token-modal": "@dev",
+        "sentry/sentry-laravel": "4.1.1",
         "spatie/laravel-csp": "2.8.4",
         "spatie/laravel-failed-job-monitor": "4.2.1",
-        "spatie/laravel-permission": "5.11.1",
+        "spatie/laravel-permission": "6.3.0",
         "spatie/laravel-webhook-client": "3.2.0",
-        "spatie/once": "3.1.0",
         "square/square": "33.1.0.20231213",
         "subfission/cas": "4.4.0",
         "symfony/http-client": "6.4.2",
         "symfony/postmark-mailer": "6.4.2",
-        "xammie/mailbook": "1.7.0",
-        "robojackets/personal-access-token-modal": "@dev",
-        "robojackets/client-id-and-secret-modal": "@dev"
+        "xammie/mailbook": "1.7.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.13.0",
@@ -82,10 +83,10 @@
         "phpunit/phpunit": "10.5.5",
         "psalm/plugin-laravel": "2.8.0",
         "slevomat/coding-standard": "8.14.1",
-        "spatie/laravel-ignition": "2.4.0",
+        "spatie/laravel-ignition": "2.4.1",
         "spatie/ray": "1.40.1",
-        "squizlabs/php_codesniffer": "3.8.0",
-        "vimeo/psalm": "5.18.0"
+        "squizlabs/php_codesniffer": "3.8.1",
+        "vimeo/psalm": "5.19.0"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
@@ -192,6 +193,17 @@
         {
             "type": "path",
             "url": "./nova-components/ClientIdAndSecretModal"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "mwgg/airports",
+                "version": "1.0",
+                "dist": {
+                    "url": "https://codeload.github.com/mwgg/Airports/zip/refs/heads/master",
+                    "type": "zip"
+                }
+            }
         }
     ]
 }

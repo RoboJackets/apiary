@@ -2,13 +2,20 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed.DisallowedPartiallyKeyed
+
 namespace App\Nova;
 
 use App\Models\Travel as AppModelsTravel;
+use App\Nova\Actions\MatrixAirfareSearch;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
+use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
+use App\Rules\MatrixItineraryBusinessPolicy;
+use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -104,8 +111,13 @@ class Travel extends Resource
             Currency::make('Fee', 'fee_amount')
                 ->sortable()
                 ->required()
-                ->rules('required', 'integer')
-                ->min(10)
+                ->rules('required', 'integer', 'min:'.config('travelpolicy.minimum_trip_fee'), 'max:1000')
+                ->min(config('travelpolicy.minimum_trip_fee'))
+                ->help(
+                    'The trip fee must be at least '.
+                    (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
+                    '% of the per-person total cost for this trip.'
+                )
                 ->max(1000),
 
             Markdown::make('Included with Fee')
@@ -130,6 +142,28 @@ class Travel extends Resource
 
             Boolean::make('Form Completion Email Sent')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
+            BooleanGroup::make('Airfare Policy')
+                ->options(MatrixItineraryBusinessPolicy::POLICY_LABELS)
+                ->default(static function (): array {
+                    $default = [];
+
+                    // @phan-suppress-next-line PhanUnusedVariableValueOfForeachWithKey
+                    foreach (MatrixItineraryBusinessPolicy::POLICY_LABELS as $flag => $label) {
+                        $default[$flag] = true;
+                    }
+
+                    return $default;
+                })
+                ->readonly(static fn (NovaRequest $request): bool => $request->user()->cant('update-airfare-policy'))
+                ->required()
+                ->rules('required', new FareClassPolicyRequiresMarketingCarrierPolicy())
+                ->help(
+                    $request->user()->can('update-airfare-policy') ?
+                        null :
+                        'You do not have permission to change the airfare policy.'
+                )
+                ->hideFromIndex(),
 
             new Panel(
                 'Travel Authority Request',
@@ -343,6 +377,8 @@ class Travel extends Resource
                     ) ||
                             $travel->primaryContact->id === $request->user()->id
                 ),
+
+            MatrixAirfareSearch::make(),
         ];
     }
 
@@ -371,6 +407,54 @@ class Travel extends Resource
     }
 
     /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     */
+    protected static function afterValidation(NovaRequest $request, $validator): void
+    {
+        $totalCost = $request->tar_lodging + $request->tar_registration;
+
+        if ($totalCost === 0) {
+            return;
+        }
+
+        if ($request->resourceId !== null) {
+            $trip = \App\Models\Travel::where('id', '=', $request->resourceId)->sole();
+
+            $airfareCost = $trip->assignments->reduce(
+                static function (?float $carry, \App\Models\TravelAssignment $assignment): ?float {
+                    // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+                    $thisAirfareCost = Matrix::getHighestDisplayPrice(json_encode($assignment->matrix_itinerary));
+
+                    if ($thisAirfareCost !== null && $carry !== null && $thisAirfareCost > $carry) {
+                        return $thisAirfareCost;
+                    } elseif ($thisAirfareCost !== null && $carry === null) {
+                        return $thisAirfareCost;
+                    } else {
+                        return $carry;
+                    }
+                }
+            );
+
+            if ($airfareCost !== null && $airfareCost > 0) {
+                $totalCost += $airfareCost;
+            }
+        }
+
+        $feeAmount = $request->fee_amount;
+
+        if ($feeAmount / $totalCost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
+            $validator->errors()->add(
+                'fee_amount',
+                'Trip fee must be at least '.
+                (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
+                '% of the per-person cost for this trip.'
+            );
+        }
+    }
+
+    /**
      * Only show travel scheduled for the future for relatable queries.
      *
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Travel>  $query
@@ -379,7 +463,7 @@ class Travel extends Resource
     public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if ($request->current !== null) {
-            return $query->where('id', '=', $request->current);
+            return $query->where('id', '=', $request->current)->orWhereDate('departure_date', '>=', Carbon::now());
         }
 
         if ($request->is('nova-api/travel-assignments/*')) {
@@ -395,5 +479,25 @@ class Travel extends Resource
     public function subtitle(): string
     {
         return $this->destination.' | '.$this->departure_date->format('F Y');
+    }
+
+    /**
+     * Register a callback to be called after the resource is created.
+     */
+    public static function afterCreate(NovaRequest $request, Model $model): void
+    {
+        if ($model->airfare_policy !== null) {
+            return;
+        }
+
+        $default = [];
+
+        // @phan-suppress-next-line PhanUnusedVariableValueOfForeachWithKey
+        foreach (MatrixItineraryBusinessPolicy::POLICY_LABELS as $flag => $label) {
+            $default[$flag] = true;
+        }
+
+        $model->airfare_policy = $default;
+        $model->save();
     }
 }
