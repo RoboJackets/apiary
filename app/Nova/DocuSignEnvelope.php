@@ -133,7 +133,7 @@ class DocuSignEnvelope extends Resource
                 ]),
 
                 ...($this->travel_authority_filename === null ? [] : [
-                    File::make('Travel Authority Request', 'travel_authority_filename')->disk('local'),
+                    File::make('Travel Information Form', 'travel_authority_filename')->disk('local'),
                 ]),
 
                 ...($this->covid_risk_filename === null ? [] : [
@@ -144,7 +144,13 @@ class DocuSignEnvelope extends Resource
                     File::make('Direct Bill Airfare Request', 'direct_bill_airfare_filename')->disk('local'),
                 ]),
 
-                File::make('Summary', 'summary_filename')->disk('local'),
+                ...($this->itinerary_request_filename === null ? [] : [
+                    File::make('Itinerary Request', 'itinerary_request_filename')->disk('local'),
+                ]),
+
+                ...($this->summary_filename === null ? [] : [
+                    File::make('Summary', 'summary_filename')->disk('local'),
+                ]),
             ]),
 
             Panel::make('Timestamps', [

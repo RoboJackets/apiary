@@ -108,12 +108,16 @@ class TravelAssignment extends Resource
 
             Text::make(
                 'Matrix Itinerary Preview',
-                static fn (\App\Models\TravelAssignment $assignment): string => view(
-                    'travel.matrixitinerarypreview',
-                    [
-                        'itinerary' => $assignment->matrix_itinerary,
-                    ]
-                )->render()
+                static fn (
+                    \App\Models\TravelAssignment $assignment
+                ): ?string => $assignment->matrix_itinerary === null ?
+                        null :
+                        view(
+                            'travel.matrixitinerarypreview',
+                            [
+                                'itinerary' => $assignment->matrix_itinerary,
+                            ]
+                        )->render()
             )
                 ->asHtml()
                 ->onlyOnDetail(),
@@ -121,8 +125,7 @@ class TravelAssignment extends Resource
             Currency::make(
                 'Airfare Cost',
                 static fn (\App\Models\TravelAssignment $assignment): ?float => Matrix::getHighestDisplayPrice(
-                    // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
-                    json_encode($assignment->matrix_itinerary)
+                    $assignment->matrix_itinerary
                 )
             ),
 

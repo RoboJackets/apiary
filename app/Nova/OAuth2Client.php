@@ -76,14 +76,6 @@ class OAuth2Client extends Resource
     }
 
     /**
-     * Get the displayable singular label of the resource.
-     */
-    public static function singularLabel(): string
-    {
-        return 'Client';
-    }
-
-    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array

@@ -23,6 +23,7 @@ use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -354,6 +355,41 @@ class Travel extends Resource
                 ]
             ),
 
+            Panel::make(
+                'Slow // Work Zone Ahead',
+                [
+                    Heading::make(
+                        'Pardon our dust! We\'re making improvements to the trip setup experience in '.
+                        config('app.name').
+                        '. In the meantime, these fields are located down here, and required for all trips. If you '.
+                        'need help, please ask in #treasury-helpdesk.'
+                    )
+                        ->onlyOnForms(),
+
+                    Currency::make('Meal Per Diem')
+                        ->required()
+                        ->rules('required', 'integer', 'min:0', 'max:1000')
+                        ->min(0)
+                        ->max(1000),
+
+                    Currency::make('Car Rental Cost')
+                        ->required()
+                        ->rules('required', 'integer', 'min:0', 'max:1000')
+                        ->min(0)
+                        ->max(1000),
+
+                    Text::make('Hotel Name')
+                        ->required()
+                        ->rules('required'),
+
+                    Text::make('Department Number')
+                        ->required()
+                        ->rules('required', 'numeric', 'digits:3')
+                        ->maxlength(3)
+                        ->enforceMaxlength(),
+                ]
+            ),
+
             HasMany::make('Assignments', 'assignments', TravelAssignment::class),
 
             self::metadataPanel(),
@@ -424,8 +460,7 @@ class Travel extends Resource
 
             $airfareCost = $trip->assignments->reduce(
                 static function (?float $carry, \App\Models\TravelAssignment $assignment): ?float {
-                    // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
-                    $thisAirfareCost = Matrix::getHighestDisplayPrice(json_encode($assignment->matrix_itinerary));
+                    $thisAirfareCost = Matrix::getHighestDisplayPrice($assignment->matrix_itinerary);
 
                     if ($thisAirfareCost !== null && $carry !== null && $thisAirfareCost > $carry) {
                         return $thisAirfareCost;
