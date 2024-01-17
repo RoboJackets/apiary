@@ -573,7 +573,7 @@ class User extends Authenticatable
     /**
      * Graduation Semester is a 6-digit code by default.
      * To retrieve a more readable form, this method obtains the
-     * code for this User and translates it to the format "[season] yyyy"
+     * code for this User and translates it to the format "[season] yyyy".
      */
     public function getHumanReadableSemesterAttribute(): string
     {
