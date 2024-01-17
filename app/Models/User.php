@@ -573,14 +573,14 @@ class User extends Authenticatable
     /**
      * Graduation Semester is a 6-digit code by default.
      * To retrieve a more readable form, this method obtains the
-     * code for this User and translates it to the format "Fall xxxx.
+     * code for this User and translates it to the format "[season] yyyy"
      */
-    public function getHumanReadableSemester(): string
+    public function getHumanReadableSemesterAttribute(): string
     {
         $semester = $this->graduation_semester;
         if ($semester === null || preg_match('/^[0-9]{4}0[258]$/', $semester) === 0) {
             return '';
-        } //Testing
+        }
 
         $semcode = substr($semester, 4);
         $year = substr($semester, 0, 4);
