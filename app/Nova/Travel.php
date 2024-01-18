@@ -564,9 +564,10 @@ class Travel extends Resource
                             ->doesntExist()
                     ) {
                         $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'your trip'));
+
+                        DB::commit();
                     }
 
-                    DB::commit();
 
                     $validator->errors()->add(
                         'primaryContact',
@@ -581,9 +582,9 @@ class Travel extends Resource
                             ->doesntExist()
                     ) {
                         $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'trips'));
-                    }
 
-                    DB::commit();
+                        DB::commit();
+                    }
 
                     $validator->errors()->add(
                         'primaryContact',
