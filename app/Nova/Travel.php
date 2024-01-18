@@ -568,7 +568,6 @@ class Travel extends Resource
                         DB::commit();
                     }
 
-
                     $validator->errors()->add(
                         'primaryContact',
                         'Your DocuSign account needs to be linked with '.config('app.name').
