@@ -562,7 +562,7 @@ class Travel extends Resource
                             ->where('type', '=', LinkDocuSignAccount::class)
                             ->doesntExist()
                     ) {
-                        $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'your trip'));
+                        $primary_contact_user->notify(new LinkDocuSignAccount($request->name ?? 'your trip'));
                     }
 
                     $validator->errors()->add(
@@ -577,7 +577,7 @@ class Travel extends Resource
                             ->where('type', '=', LinkDocuSignAccount::class)
                             ->doesntExist()
                     ) {
-                        $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'trips'));
+                        $primary_contact_user->notify(new LinkDocuSignAccount($request->name ?? 'trips'));
                     }
 
                     $validator->errors()->add(
