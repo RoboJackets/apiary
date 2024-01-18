@@ -58,7 +58,7 @@ class Main extends Dashboard
             foreach (Travel::all() as $travel) {
                 $should_include = false;
 
-                if ($travel->return_date > Carbon::now()) {
+                if ($travel->return_date > Carbon::now() && $travel->assignments()->exists()) {
                     $should_include = true;
                 }
 
