@@ -104,7 +104,7 @@ class Main extends Dashboard
             $id = intval($parts->last());
 
             switch ($type) {
-                case 'tar':
+                case 'forms':
                     return [new TravelAuthorityRequestReceivedForTravel($id)];
                 case 'payment':
                     return [
