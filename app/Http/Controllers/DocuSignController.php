@@ -14,6 +14,7 @@ use App\Models\DocuSignEnvelope;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
 use App\Models\TravelAssignment;
+use App\Notifications\Nova\LinkDocuSignAccount;
 use App\Util\DocuSign;
 use Carbon\CarbonImmutable;
 use DocuSign\eSign\Api\EnvelopesApi;
@@ -212,6 +213,12 @@ class DocuSignController extends Controller
 
             abort(401);
         }
+
+        $request
+            ->user()
+            ->novaNotifications()
+            ->where('type', LinkDocuSignAccount::class)
+            ->delete();
 
         switch ($request->session()->get('next')) {
             case 'getGlobalToken':

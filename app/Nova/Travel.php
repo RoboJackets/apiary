@@ -7,12 +7,14 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\Travel as AppModelsTravel;
+use App\Notifications\Nova\LinkDocuSignAccount;
 use App\Nova\Actions\MatrixAirfareSearch;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Util\DepartmentNumbers;
+use App\Util\DocuSign;
 use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -541,6 +543,51 @@ class Travel extends Resource
                 ! ($return_year !== null && str_contains($request->name, $return_year))
             ) {
                 $validator->errors()->add('name', 'The trip name must include the year of the event.');
+            }
+        }
+
+        // ensure primary contact has valid DocuSign credentials
+        if (
+            $request->primaryContact !== null &&
+            $request->forms !== null &&
+            in_array(true, json_decode($request->forms, true), true)
+        ) {
+            $primary_contact_user = \App\Models\User::where('id', '=', $request->primaryContact)->sole();
+
+            if (DocuSign::getApiClientForUser($primary_contact_user) === null) {
+                if (intval($request->primaryContact) === $request->user()->id) {
+                    if (
+                        $primary_contact_user
+                            ->novaNotifications()
+                            ->where('type', '=', LinkDocuSignAccount::class)
+                            ->doesntExist()
+                    ) {
+                        $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'your trip'));
+                    }
+
+                    $validator->errors()->add(
+                        'primaryContact',
+                        'Your DocuSign account needs to be linked with '.config('app.name').
+                        ' to send forms. Click the bell icon in the top-right for instructions.'
+                    );
+                } else {
+                    if (
+                        $primary_contact_user
+                            ->novaNotifications()
+                            ->where('type', '=', LinkDocuSignAccount::class)
+                            ->doesntExist()
+                    ) {
+                        $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'trips'));
+                    }
+
+                    $validator->errors()->add(
+                        'primaryContact',
+                        $primary_contact_user->preferred_first_name.'\'s DocuSign account needs to be linked with '.
+                        config('app.name').
+                        ' to send forms. Ask them to check their notifications here in the admin site '.
+                        '(bell icon in top right) for instructions.'
+                    );
+                }
             }
         }
 
