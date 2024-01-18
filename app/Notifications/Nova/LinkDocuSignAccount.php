@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Notifications\Nova;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Nova\Notifications\NovaNotification;
 use Laravel\Nova\URL;
 
@@ -14,10 +12,8 @@ use Laravel\Nova\URL;
  *
  * It is automatically deleted by \App\Util\DocuSign when they finish the flow.
  */
-class LinkDocuSignAccount extends NovaNotification implements ShouldQueue
+class LinkDocuSignAccount extends NovaNotification
 {
-    use Queueable;
-
     /**
      * The icon used for the notification.
      *
