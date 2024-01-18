@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BooleanGroup;
@@ -565,6 +566,8 @@ class Travel extends Resource
                         $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'your trip'));
                     }
 
+                    DB::commit();
+
                     $validator->errors()->add(
                         'primaryContact',
                         'Your DocuSign account needs to be linked with '.config('app.name').
@@ -579,6 +582,8 @@ class Travel extends Resource
                     ) {
                         $primary_contact_user->notifyNow(new LinkDocuSignAccount($request->name ?? 'trips'));
                     }
+
+                    DB::commit();
 
                     $validator->errors()->add(
                         'primaryContact',
