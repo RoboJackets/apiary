@@ -60,7 +60,7 @@
         "spatie/laravel-failed-job-monitor": "4.2.1",
         "spatie/laravel-permission": "6.3.0",
         "spatie/laravel-webhook-client": "3.2.0",
-        "square/square": "34.0.0.20240118",
+        "square/square": "34.0.1.20240118",
         "subfission/cas": "4.4.0",
         "symfony/http-client": "6.4.2",
         "symfony/postmark-mailer": "6.4.2",
@@ -86,7 +86,7 @@
         "spatie/laravel-ignition": "2.4.1",
         "spatie/ray": "1.40.1",
         "squizlabs/php_codesniffer": "3.8.1",
-        "vimeo/psalm": "5.19.0"
+        "vimeo/psalm": "5.20.0"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
