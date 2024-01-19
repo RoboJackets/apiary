@@ -30,6 +30,7 @@ use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -128,7 +129,34 @@ class Travel extends Resource
                 ->required()
                 ->rules('required')
                 ->searchable()
-                ->withoutTrashed(),
+                ->withoutTrashed()
+                ->onlyOnForms(),
+
+            Stack::make('Primary Contact', [
+                BelongsTo::make('Primary Contact', 'primaryContact', User::class)
+                    ->help(view('nova.help.travel.primarycontact')->render())
+                    ->sortable()
+                    ->required()
+                    ->rules('required')
+                    ->searchable()
+                    ->withoutTrashed(),
+
+                Text::make(
+                    'DocuSign Status',
+                    static fn (\App\Models\Travel $trip): string => view(
+                        'nova.partials.travel.docusignstatus',
+                        ['trip' => $trip]
+                    )->render()
+                )
+                    ->asHtml()
+                    ->onlyOnDetail()
+                    ->showOnDetail(
+                        static fn (
+                            NovaRequest $request,
+                            \App\Models\Travel $trip
+                        ): bool => $trip->assignments_need_forms
+                    ),
+            ]),
 
             Date::make('Departure Date')
                 ->sortable()
@@ -324,7 +352,7 @@ class Travel extends Resource
                     ->max(1000)
                     ->hideFromIndex(),
 
-                Currency::make('Meal Per Diem')
+                Currency::make('Meal Per Diem Per Person', 'meal_per_diem')
                     ->dependsOn(
                         ['forms'],
                         static function (Currency $field, NovaRequest $request, FormData $formData): void {

@@ -288,6 +288,16 @@ class User extends Resource
                             'This flag is set by JEDI and should not be modified unless you know what you are doing.'
                             .' It only controls UX elements.'
                         ),
+
+                    Text::make(
+                        'DocuSign',
+                        static fn (\App\Models\User $user): string => view(
+                            'nova.partials.user.docusignstatus',
+                            ['user' => $user]
+                        )->render()
+                    )
+                        ->onlyOnDetail()
+                        ->asHtml(),
                 ]
             ),
 

@@ -168,6 +168,16 @@ class DocuSignController extends Controller
         return self::redirectToOAuthConsent(request: $request, next: 'getUserToken', impersonation: false);
     }
 
+    public function redirectUserToProviderDeepLink(Request $request, string $resource, string $resourceId)
+    {
+        $request->session()->put('deepLinkResource', $resource);
+        $request->session()->put('deepLinkResourceId', $resourceId);
+
+        ray($request->session()->all());
+
+        return self::redirectToOAuthConsent(request: $request, next: 'getUserTokenDeepLink', impersonation: false);
+    }
+
     /**
      * Handle the OAuth consent response from DocuSign.
      */
@@ -240,6 +250,23 @@ class DocuSignController extends Controller
                 self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
 
                 return redirect(route('nova.pages.dashboard.custom', ['name' => 'main']));
+            case 'getUserTokenDeepLink':
+                // In this case, a user has just authenticated with DocuSign from a trip detail page.
+                // We need to store the credentials in their user model, then send them back to their trip detail page.
+
+                self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
+
+                ray($request->session()->all());
+
+                return redirect(
+                    route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => $request->session()->get('deepLinkResource'),
+                            'resourceId' => $request->session()->get('deepLinkResourceId'),
+                        ]
+                    )
+                );
             case 'signAgreement':
                 // In this case, a user has just authenticated with DocuSign after starting the signing flow.
                 // We need to store the credentials in their user model, then continue with signing.
