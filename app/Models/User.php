@@ -575,7 +575,7 @@ class User extends Authenticatable
      * To retrieve a more readable form, this method obtains the
      * code for this User and translates it to the format "[season] yyyy".
      */
-    public function getHumanReadableSemesterAttribute(): string
+    public function getHumanReadableGraduationSemesterAttribute(): string
     {
         $semester = $this->graduation_semester;
         if ($semester === null || preg_match('/^[0-9]{4}0[258]$/', $semester) === 0) {
