@@ -171,10 +171,7 @@ class User extends Resource
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            Text::make(
-                'Graduation Semester',
-                static fn (AppModelsUser $u): string => $u->getHumanReadableSemesterAttribute()
-            )
+            Text::make('Graduation Semester', 'human_readable_graduation_semester')
                 ->onlyOnDetail()
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
