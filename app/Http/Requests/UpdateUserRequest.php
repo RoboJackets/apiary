@@ -45,7 +45,8 @@ class UpdateUserRequest extends FormRequest
                 'nullable',
             ],
             'graduation_semester' => [
-                'max:6',
+                'regex:/^[0-9]{4}0[258]$/',
+                'nullable',
             ],
             'shirt_size' => [
                 'in:'.implode(',', array_keys(User::$shirt_sizes)),

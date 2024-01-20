@@ -571,6 +571,38 @@ class User extends Authenticatable
     }
 
     /**
+     * Graduation Semester is a 6-digit code by default.
+     * To retrieve a more readable form, this method obtains the
+     * code for this User and translates it to the format "[season] yyyy".
+     */
+    public function getHumanReadableGraduationSemesterAttribute(): string
+    {
+        $semester = $this->graduation_semester;
+        if ($semester === null || preg_match('/^[0-9]{4}0[258]$/', $semester) === 0) {
+            return '';
+        }
+
+        $semcode = substr($semester, 4);
+        $year = substr($semester, 0, 4);
+        $season = '';
+        switch ($semcode) {
+            case '08':
+                $season .= 'Fall ';
+                break;
+            case '02':
+                $season .= 'Spring ';
+                break;
+            case '05':
+                $season .= 'Summer ';
+                break;
+            default:
+                return '';
+        }
+
+        return $season.$year;
+    }
+
+    /**
      * Map of relationships to permissions for dynamic inclusion.
      *
      * @return array<string,string>
