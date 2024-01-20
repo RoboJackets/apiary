@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c898f4e9daf6e847c63d9e95df395c7",
+    "content-hash": "309c5df00161e430f0c261cc13de0fa2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -13244,16 +13244,16 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v8.20.0",
+            "version": "v8.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "533df85bd4a084b5f505ad9182cc9031b2f81a03"
+                "reference": "f2860d424e8ef7eb445b1081eab2a54d493e14b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/533df85bd4a084b5f505ad9182cc9031b2f81a03",
-                "reference": "533df85bd4a084b5f505ad9182cc9031b2f81a03",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/f2860d424e8ef7eb445b1081eab2a54d493e14b5",
+                "reference": "f2860d424e8ef7eb445b1081eab2a54d493e14b5",
                 "shasum": ""
             },
             "require": {
@@ -13261,7 +13261,7 @@
                 "fakerphp/faker": "^1.21",
                 "laravel/framework": "^10.40",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^8.20",
+                "orchestra/testbench-core": "^8.21",
                 "orchestra/workbench": "^1.2 || ^8.2",
                 "php": "^8.1",
                 "phpunit/phpunit": "^9.6 || ^10.1",
@@ -13293,22 +13293,22 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v8.20.0"
+                "source": "https://github.com/orchestral/testbench/tree/v8.21.0"
             },
-            "time": "2024-01-10T04:33:51+00:00"
+            "time": "2024-01-19T14:57:29+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v8.20.0",
+            "version": "v8.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "beb3af0737b0ac49c29b4bc26de548845f097abc"
+                "reference": "34038bbc26dfb2305297c664efad1d5be3918ee2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/beb3af0737b0ac49c29b4bc26de548845f097abc",
-                "reference": "beb3af0737b0ac49c29b4bc26de548845f097abc",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/34038bbc26dfb2305297c664efad1d5be3918ee2",
+                "reference": "34038bbc26dfb2305297c664efad1d5be3918ee2",
                 "shasum": ""
             },
             "require": {
@@ -13320,6 +13320,7 @@
                 "brianium/paratest": "<6.4.0 || >=7.0.0 <7.1.4 || >=8.0.0",
                 "laravel/framework": "<10.40 || >=11.0.0",
                 "nunomaduro/collision": "<6.4.0 || >=7.0.0 <7.4.0 || >=8.0.0",
+                "orchestra/testbench-dusk": "<8.21.0 || >=9.0.0",
                 "orchestra/workbench": "<1.0.0",
                 "phpunit/phpunit": "<9.6.0 || >=10.6.0"
             },
@@ -13386,7 +13387,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2024-01-10T03:05:52+00:00"
+            "time": "2024-01-19T14:40:27+00:00"
         },
         {
             "name": "orchestra/workbench",
@@ -14280,16 +14281,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.7",
+            "version": "10.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e5c5b397a95cb0db013270a985726fcae93e61b8"
+                "reference": "08f4fa74d5fbfff1ef22abffee47aaedcaea227e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e5c5b397a95cb0db013270a985726fcae93e61b8",
-                "reference": "e5c5b397a95cb0db013270a985726fcae93e61b8",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/08f4fa74d5fbfff1ef22abffee47aaedcaea227e",
+                "reference": "08f4fa74d5fbfff1ef22abffee47aaedcaea227e",
                 "shasum": ""
             },
             "require": {
@@ -14361,7 +14362,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.7"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.8"
             },
             "funding": [
                 {
@@ -14377,7 +14378,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-14T16:40:30+00:00"
+            "time": "2024-01-19T07:07:27+00:00"
         },
         {
             "name": "psalm/plugin-laravel",
