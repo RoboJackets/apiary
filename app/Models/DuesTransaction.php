@@ -59,6 +59,8 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class DuesTransaction extends Model implements Payable
 {
@@ -92,6 +94,14 @@ class DuesTransaction extends Model implements Payable
     protected $fillable = [
         'user_id',
         'dues_package_id',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'user' => 'read-users',
+        'package' => 'read-dues-packages',
+        'payment' => 'read-payments',
+        'user.teams' => 'read-teams-membership',
+        'merchandise' => 'read-merchandise',
     ];
 
     /**
@@ -173,22 +183,6 @@ class DuesTransaction extends Model implements Payable
         }
 
         return 'paid';
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'user' => 'read-users',
-            'package' => 'read-dues-packages',
-            'payment' => 'read-payments',
-            'user.teams' => 'read-teams-membership',
-            'merchandise' => 'read-merchandise',
-        ];
     }
 
     /**

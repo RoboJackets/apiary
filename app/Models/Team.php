@@ -82,6 +82,8 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Team extends Model
 {
@@ -116,6 +118,11 @@ class Team extends Model
         'self_serviceable' => 'boolean',
         'visible' => 'boolean',
         'self_service_override_eligible' => 'boolean',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'members' => 'read-teams-membership',
+        'attendance' => 'read-attendance',
     ];
 
     /**
@@ -179,19 +186,6 @@ class Team extends Model
     public function scopeSelfServiceable(Builder $query): Builder
     {
         return $query->where('self_serviceable', true);
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'members' => 'read-teams-membership',
-            'attendance' => 'read-attendance',
-        ];
     }
 
     /**

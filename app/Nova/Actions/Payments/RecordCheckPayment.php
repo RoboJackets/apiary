@@ -57,7 +57,7 @@ class RecordCheckPayment extends RecordPayment
 
         return [
             Date::make('Check Date')
-                ->rules('required', 'date', static function ($attribute, $value, $fail): void {
+                ->rules('required', 'date', static function (string $attribute, string $value, callable $fail): void {
                     // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
                     if (Carbon::now()->lessThanOrEqualTo(Carbon::createFromTimestamp(strtotime($value)))) {
                         $fail('The check must be dated today or earlier. We cannot accept future-dated checks.');
@@ -71,7 +71,7 @@ class RecordCheckPayment extends RecordPayment
                 ),
 
             Text::make('Pay to the Order Of')
-                ->rules('required', static function ($attribute, $value, $fail): void {
+                ->rules('required', static function (string $attribute, string $value, callable $fail): void {
                     if (! in_array(strtolower($value), self::ALLOWABLE_PAY_TO_NAMES, true)) {
                         $fail(
                             'Checks must be written to either RoboJackets, Georgia Institute of Technology, or '
@@ -81,11 +81,14 @@ class RecordCheckPayment extends RecordPayment
                 }),
 
             Currency::make('Amount')
-                ->rules('required', static function ($attribute, $value, $fail) use ($payable_amount): void {
-                    if (round(floatval($value), 2) !== floatval($payable_amount)) {
-                        $fail('The amount must be exactly $'.$payable_amount.'.00.');
+                ->rules(
+                    'required',
+                    static function (string $attribute, string $value, callable $fail) use ($payable_amount): void {
+                        if (round(floatval($value), 2) !== floatval($payable_amount)) {
+                            $fail('The amount must be exactly $'.$payable_amount.'.00.');
+                        }
                     }
-                }),
+                ),
 
             Boolean::make('Amounts Match')
                 ->help('Ensure the written and numeric amounts match.')

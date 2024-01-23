@@ -54,6 +54,8 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Attendance withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Attendance extends Model
 {
@@ -80,6 +82,11 @@ class Attendance extends Model
      * @var array<string>
      */
     protected $with = ['attendable'];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'attendee' => 'read-users',
+        'recorded' => 'read-users',
+    ];
 
     /**
      * Get all the owning attendable models.
@@ -141,19 +148,6 @@ class Attendance extends Model
     public function scopeEnd(Builder $query, string $date): Builder
     {
         return $query->whereDate('created_at', '<=', $date);
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string, string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'attendee' => 'read-users',
-            'recorded' => 'read-users',
-        ];
     }
 
     /**

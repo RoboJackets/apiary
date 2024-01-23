@@ -44,6 +44,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Merchandise withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Merchandise extends Model
 {
@@ -73,6 +75,11 @@ class Merchandise extends Model
     protected $fillable = [
         'name',
         'fiscal_year_id',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'packages' => 'read-dues-packages',
+        'transactions' => 'read-dues-transactions',
     ];
 
     /**
@@ -116,19 +123,6 @@ class Merchandise extends Model
     public function jankForNova(): BelongsToMany
     {
         return $this->transactions()->as('jankForNova');
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'packages' => 'read-dues-packages',
-            'transactions' => 'read-dues-transactions',
-        ];
     }
 
     /**

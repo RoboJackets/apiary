@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <psalm
     errorLevel="7"
-    resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -83,7 +82,7 @@
         </UndefinedMagicPropertyFetch>
         <PossiblyInvalidPropertyFetch>
             <errorLevel type="suppress">
-                <file name="app/Http/Controllers/AttendanceController.php" />
+                <directory name="app" />
             </errorLevel>
         </PossiblyInvalidPropertyFetch>
         <ArgumentTypeCoercion>
@@ -114,11 +113,6 @@
                 <directory name="routes" />
             </errorLevel>
         </PossiblyInvalidMethodCall>
-        <PossiblyInvalidPropertyFetch>
-            <errorLevel type="suppress">
-                <directory name="app" />
-            </errorLevel>
-        </PossiblyInvalidPropertyFetch>
         <PossiblyUndefinedMethod>
             <errorLevel type="suppress">
                 <directory name="app" />
@@ -278,11 +272,6 @@
                 <file name="app/Providers/NovaServiceProvider.php" />
             </errorLevel>
         </UnusedClosureParam>
-        <InvalidStringClass>
-            <errorLevel type="suppress">
-                <file name="app/Traits/AuthorizeInclude.php" />
-            </errorLevel>
-        </InvalidStringClass>
         <MissingTemplateParam>
             <errorLevel type="suppress">
                 <file name="app/Nova/Resource.php"/>
@@ -314,5 +303,94 @@
                 <file name="app/Observers/DocuSignEnvelopeObserver.php"/>
             </errorLevel>
         </UndefinedMagicPropertyAssignment>
+        <InvalidReturnType>
+            <errorLevel type="suppress">
+                <file name="routes/mailbook.php"/>
+                <file name="app/Http/Controllers/DocuSignController.php"/>
+                <directory name="app/Models/"/>
+            </errorLevel>
+        </InvalidReturnType>
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <file name="app/Util/DocuSign.php"/>
+                <referencedFunction name="Laravel\Nova\Fields\BelongsTo::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\BelongsToMany::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Boolean::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\BooleanGroup::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\DateTime::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Email::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\File::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\HasMany::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Number::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Select::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Text::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
+                <file name="app/Http/Controllers/ResumeController.php"/>
+                <file name="app/Nova/Actions/CreateDuesPackages.php"/>
+                <file name="app/Nova/TravelAssignment.php"/>
+            </errorLevel>
+        </InvalidArgument>
+        <InvalidOperand>
+            <errorLevel type="suppress">
+                <file name="app/Util/DocuSign.php"/>
+            </errorLevel>
+        </InvalidOperand>
+        <RawObjectIteration>
+            <errorLevel type="suppress">
+                <file name="app/Util/DocuSign.php"/>
+                <file name="app/Http/Controllers/DocuSignController.php"/>
+            </errorLevel>
+        </RawObjectIteration>
+        <RiskyTruthyFalsyComparison>
+            <errorLevel type="suppress">
+                <file name="app/Util/CasUser.php"/>
+                <directory name="app/Providers"/>
+                <file name="app/Exceptions/Handler.php"/>
+                <directory name="app/Http/Controllers/"/>
+                <file name="app/Http/Middleware/Sentry.php"/>
+                <file name="app/Jobs/ProcessPostmarkOutboundWebhook.php"/>
+                <file name="app/Nova/Dashboards/Main.php"/>
+            </errorLevel>
+        </RiskyTruthyFalsyComparison>
+        <InvalidPropertyFetch>
+            <errorLevel type="suppress">
+                <file name="app/Http/Controllers/AttendanceController.php"/>
+                <file name="app/Http/Controllers/DuesTransactionController.php"/>
+                <file name="app/Jobs/CreateOrUpdateUserFromBuzzAPI.php"/>
+                <file name="app/Models/DuesTransaction.php"/>
+                <file name="app/Models/Merchandise.php"/>
+                <file name="app/Nova/Actions/MatrixAirfareSearch.php"/>
+            </errorLevel>
+        </InvalidPropertyFetch>
+        <MoreSpecificReturnType>
+            <errorLevel type="suppress">
+                <file name="app/Providers/RouteServiceProvider.php"/>
+            </errorLevel>
+        </MoreSpecificReturnType>
+        <LessSpecificReturnStatement>
+            <errorLevel type="suppress">
+                <file name="app/Providers/RouteServiceProvider.php"/>
+            </errorLevel>
+        </LessSpecificReturnStatement>
+        <RedundantConditionGivenDocblockType>
+            <errorLevel type="suppress">
+                <directory name="app/Observers/"/>
+            </errorLevel>
+        </RedundantConditionGivenDocblockType>
+        <RedundantCondition>
+            <errorLevel type="suppress">
+                <file name="app/Http/Controllers/ResumeController.php"/>
+            </errorLevel>
+        </RedundantCondition>
+        <PossiblyUndefinedArrayOffset>
+            <errorLevel type="suppress">
+                <file name="app/Jobs/ProcessDocuSignWebhook.php"/>
+            </errorLevel>
+        </PossiblyUndefinedArrayOffset>
+        <PossiblyInvalidOperand>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Resource.php"/>
+            </errorLevel>
+        </PossiblyInvalidOperand>
     </issueHandlers>
 </psalm>

@@ -13,7 +13,7 @@ use App\Jobs\PushToJedi;
 use App\Models\Attendance;
 use App\Models\Team;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,8 +22,6 @@ use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware('permission:read-attendance', ['only' => ['index', 'search', 'statistics']]);
@@ -39,7 +37,7 @@ class AttendanceController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->get();
+        $att = Attendance::with(AuthorizeInclude::authorize(Attendance::class, $include))->get();
 
         return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
     }
@@ -83,7 +81,7 @@ class AttendanceController extends Controller
 
         // Yes this is kinda gross but it's the best that I could come up with
         // This is mainly to allow for requesting the attendee relationship for showing the name on swipes
-        $dbAtt = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($att->id);
+        $dbAtt = Attendance::with(AuthorizeInclude::authorize(Attendance::class, $include))->find($att->id);
 
         return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($dbAtt)], $code);
     }
@@ -95,7 +93,7 @@ class AttendanceController extends Controller
     {
         $include = $request->input('include');
         $user = $request->user();
-        $att = Attendance::with($this->authorizeInclude(Attendance::class, $include))->find($attendance->id);
+        $att = Attendance::with(AuthorizeInclude::authorize(Attendance::class, $include))->find($attendance->id);
         if ($att !== null && ($att->gtid === $user->gtid || $user->can('read-attendance'))) {
             return response()->json(['status' => 'success', 'attendance' => new AttendanceResource($att)]);
         }
@@ -113,7 +111,7 @@ class AttendanceController extends Controller
         $att = Attendance::where('attendable_type', '=', $request->input('attendable_type'))
             ->where('attendable_id', '=', $request->input('attendable_id'))
             ->start($request->input('start_date'))->end($request->input('end_date'))
-            ->with($this->authorizeInclude(Attendance::class, $include))->get();
+            ->with(AuthorizeInclude::authorize(Attendance::class, $include))->get();
 
         return response()->json(['status' => 'success', 'attendance' => AttendanceResource::collection($att)]);
     }

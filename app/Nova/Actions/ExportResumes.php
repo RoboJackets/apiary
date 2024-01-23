@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
@@ -64,8 +65,6 @@ class ExportResumes extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     *
-     * @phan-suppress PhanDeprecatedFunction
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -180,7 +179,7 @@ class ExportResumes extends Action
         // Generate signed URL to pass to frontend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::download($url, $filename)
+        return ActionResponse::download($filename, $url)
             ->withMessage('The resumes were successfully exported!');
     }
 

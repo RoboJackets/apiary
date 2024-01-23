@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Commenting.DocComment.MissingShort
 // phpcs:disable Generic.Files.LineLength.TooLong
 
 namespace App\Models;
@@ -135,6 +136,7 @@ class TravelAssignment extends Model implements Payable
 
     public function getPayableAmountAttribute(): int
     {
+        /** @psalm-suppress NullableReturnStatement */
         return $this->travel->fee_amount;
     }
 

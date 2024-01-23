@@ -89,6 +89,8 @@ use Square\SquareClient;
  * @property-read \App\Models\DuesTransaction|null $duesTransaction
  * @property-read \App\Models\User|null $recordedBy
  * @property-read \App\Models\TravelAssignment|null $travelAssignment
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Payment extends Model
 {
@@ -139,6 +141,13 @@ class Payment extends Model
         'square' => 'Square Checkout',
         'waiver' => 'Waiver',
         'unknown' => 'Unknown',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'user' => 'read-users',
+        'payable' => 'read-dues-transactions',
+        'duesTransaction' => 'read-dues-transactions',
+        'travelAssignment' => 'read-travel-assignments',
     ];
 
     /**
@@ -198,21 +207,6 @@ class Payment extends Model
     public function getMethodPresentationAttribute(): string
     {
         return array_key_exists($this->method, self::$methods) ? self::$methods[$this->method] : '';
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'user' => 'read-users',
-            'payable' => 'read-dues-transactions',
-            'duesTransaction' => 'read-dues-transactions',
-            'travelAssignment' => 'read-travel-assignments',
-        ];
     }
 
     /**

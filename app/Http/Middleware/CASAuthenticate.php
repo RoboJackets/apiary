@@ -5,34 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Jobs\SendReminders;
-use App\Traits\CreateOrUpdateCASUser;
+use App\Util\CasUser;
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Subfission\Cas\Facades\Cas;
 
 class CASAuthenticate
 {
-    use CreateOrUpdateCASUser;
-
-    /**
-     * Auth facade.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
-     *
-     * @phan-read-only
-     */
-    protected $auth;
-
-    /**
-     * CAS library interface.
-     *
-     * @var \Subfission\Cas\CasManager
-     *
-     * @phan-read-only
-     */
-    protected $cas;
-
     /**
      * List of attributes that may be set during masquerade.
      *
@@ -51,12 +31,6 @@ class CASAuthenticate
         'authenticationDate',
     ];
 
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-        $this->cas = app('cas');
-    }
-
     /**
      * Handle an incoming request.
      */
@@ -65,27 +39,27 @@ class CASAuthenticate
         //Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {
             // Run the user update only if they don't have an active session
-            if ($this->cas->isAuthenticated() && $request->user() === null) {
-                if ($this->cas->isMasquerading()) {
+            if (Cas::isAuthenticated() && $request->user() === null) {
+                if (Cas::isMasquerading()) {
                     $masq_attrs = [];
                     foreach (self::$attrs as $attr) {
                         $masq_attrs[$attr] = config('cas.cas_masquerade_'.$attr);
                     }
-                    $this->cas->setAttributes($masq_attrs);
+                    Cas::setAttributes($masq_attrs);
                 }
 
                 if (
                     config('features.sandbox-mode') === true &&
-                    ! in_array($this->cas->user(), config('features.sandbox-users'), true)
+                    ! in_array(Cas::user(), config('features.sandbox-users'), true)
                 ) {
                     abort(403);
                 }
 
-                $user = $this->createOrUpdateCASUser();
+                $user = CasUser::createOrUpdate();
 
                 if (
                     config('features.sandbox-mode') === true &&
-                    in_array($this->cas->user(), config('features.sandbox-users'), true)
+                    in_array(Cas::user(), config('features.sandbox-users'), true)
                 ) {
                     $user->syncRoles(['admin']);
                 }
@@ -94,10 +68,10 @@ class CASAuthenticate
 
                 SendReminders::dispatch($user);
 
-                $request->session()->put('authenticationInstant', $this->cas->getAttribute('authenticationDate'));
+                $request->session()->put('authenticationInstant', Cas::getAttribute('authenticationDate'));
             }
 
-            if ($this->cas->isAuthenticated() && $request->user() !== null) {
+            if (Cas::isAuthenticated() && $request->user() !== null) {
                 //User is authenticated and already has an existing session
                 return $next($request);
             }
@@ -106,7 +80,7 @@ class CASAuthenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized', 401);
             }
-            $this->cas->authenticate();
+            Cas::authenticate();
         }
 
         //User is authenticated through the API guard (I guess? Moving this into an else() broke sessions)

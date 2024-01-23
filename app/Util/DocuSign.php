@@ -164,7 +164,7 @@ class DocuSign
     /**
      * Serialize a DocuSign UserInfo object to an array. You'd think this would work out of the box, but no.
      *
-     * @return array<string,string|array<int,string>>
+     * @return array<string,string|array<array<string,string>>>
      */
     public static function serializeUserInfo(UserInfo $userInfo): array
     {

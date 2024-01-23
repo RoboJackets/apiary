@@ -8,14 +8,12 @@ use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\Event as EventResource;
 use App\Models\Event;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware('permission:read-events', ['only' => ['index']]);
@@ -31,7 +29,7 @@ class EventController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $events = Event::with($this->authorizeInclude(Event::class, $include))->get();
+        $events = Event::with(AuthorizeInclude::authorize(Event::class, $include))->get();
 
         return response()->json(['status' => 'success', 'events' => EventResource::collection($events)]);
     }
@@ -52,7 +50,7 @@ class EventController extends Controller
     public function show(Request $request, Event $event): JsonResponse
     {
         $include = $request->input('include');
-        $event = Event::with($this->authorizeInclude(Event::class, $include))->find($event->id);
+        $event = Event::with(AuthorizeInclude::authorize(Event::class, $include))->find($event->id);
 
         if ($event !== null) {
             return response()->json(['status' => 'success', 'event' => new EventResource($event)]);

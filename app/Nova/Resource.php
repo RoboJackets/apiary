@@ -29,6 +29,8 @@ abstract class Resource extends NovaResource
      * Build a Scout search query for the given resource.
      *
      * @param  \Laravel\Scout\Builder  $query
+     *
+     * @phan-suppress PhanUndeclaredConstantOfClass
      */
     public static function scoutQuery(NovaRequest $request, $query): Builder
     {
@@ -37,20 +39,20 @@ abstract class Resource extends NovaResource
             $class = $query->model::class;
 
             if (! array_key_exists('filterableAttributes', config('scout.meilisearch.index-settings.'.$class, []))) {
-                if (property_exists($query->model, 'do_not_filter_on')) {
-                    if (in_array($filter_on_attribute, $query->model->do_not_filter_on, true)) {
+                if (defined($query->model::class.'DO_NOT_FILTER_ON')) {
+                    if (in_array($filter_on_attribute, $query->model::DO_NOT_FILTER_ON, true)) {
                         return $query;
                     }
 
                     throw new ScoutFilterConfigurationError(
                         'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
-                        .', but model does not have filterableAttributes configured and filter not in $do_not_filter_on'
+                        .', but model does not have filterableAttributes configured and filter not in DO_NOT_FILTER_ON'
                     );
                 } else {
                     throw new ScoutFilterConfigurationError(
                         'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
                         .', but model does not have filterableAttributes configured and model does not have '
-                        .'$do_not_filter_on'
+                        .'DO_NOT_FILTER_ON'
                     );
                 }
             }
@@ -62,20 +64,20 @@ abstract class Resource extends NovaResource
                     true
                 )
             ) {
-                if (property_exists($query->model, 'do_not_filter_on')) {
-                    if (in_array($filter_on_attribute, $query->model->do_not_filter_on, true)) {
+                if (defined($query->model::class.'DO_NOT_FILTER_ON')) {
+                    if (in_array($filter_on_attribute, $query->model::DO_NOT_FILTER_ON, true)) {
                         return $query;
                     }
 
                     throw new ScoutFilterConfigurationError(
                         'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
-                        .', but filter not in filterableAttributes nor $do_not_filter_on'
+                        .', but filter not in filterableAttributes nor DO_NOT_FILTER_ON'
                     );
                 }
 
                 throw new ScoutFilterConfigurationError(
                     'Attempted to query Scout model '.$class.' with filter '.$filter_on_attribute
-                    .', but filter not in filterableAttributes and model does not have $do_not_filter_on'
+                    .', but filter not in filterableAttributes and model does not have DO_NOT_FILTER_ON'
                 );
             }
 

@@ -11,14 +11,12 @@ use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
 use App\Models\Team;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware('permission:read-teams', ['only' => ['index', 'indexWeb', 'show', 'showMembers']]);
@@ -34,7 +32,7 @@ class TeamController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $teamsQ = Team::with($this->authorizeInclude(Team::class, $include));
+        $teamsQ = Team::with(AuthorizeInclude::authorize(Team::class, $include));
         $teams = $request->user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
 
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
@@ -79,7 +77,7 @@ class TeamController extends Controller
     public function show(Request $request, string $id): JsonResponse
     {
         $include = $request->input('include');
-        $team = Team::with($this->authorizeInclude(Team::class, $include))
+        $team = Team::with(AuthorizeInclude::authorize(Team::class, $include))
             ->where('id', $id)
             ->orWhere('slug', $id)
             ->first();

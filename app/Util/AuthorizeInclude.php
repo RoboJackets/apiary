@@ -2,23 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace App\Util;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-trait AuthorizeInclude
+class AuthorizeInclude
 {
     /**
      * Given an array or comma-separated string of requested relationships to be included,
      * return an array of those allowed based on the requester's permissions.
      *
-     * @return array<string> relationships to include
+     * @param  class-string  $class  the class to check for permissions
+     * @param  string|null  $requestedRelationships  the relationships that were requested
+     * @return array<string> authorized relationships to include
      */
-    public function authorizeInclude(string $class, ?string $requestedInclude = null): array
+    public static function authorize(string $class, ?string $requestedRelationships = null): array
     {
         // If the user doesn't request anything, we don't need to authorize anything
-        if ($requestedInclude === null) {
+        if ($requestedRelationships === null) {
             return [];
         }
 
@@ -29,23 +31,23 @@ trait AuthorizeInclude
         // Get permission mapping from the target model class
         $model = new $class();
 
-        if (method_exists($model, 'getRelationshipPermissionMap')) {
-            $relationPermMap = $model->getRelationshipPermissionMap();
+        if (defined($class.'::RELATIONSHIP_PERMISSIONS')) {
+            $relationPermMap = $model::RELATIONSHIP_PERMISSIONS;
         } else {
             Log::notice(__METHOD__.': No relationship permission map for '.$class.', assuming default naming');
             $relationPermMap = [];
         }
 
         // Convert comma-separated string to an array
-        $requestedInclude = explode(',', $requestedInclude);
+        $requestedRelationships = explode(',', $requestedRelationships);
 
         // If the user asks for it and has permission to read it, give it to them.
-        foreach ($requestedInclude as $include) {
+        foreach ($requestedRelationships as $include) {
             // Use either the predefined permission name or assume default naming convention
             $permission = array_key_exists(
                 $include,
                 $relationPermMap
-            ) ? $relationPermMap[$include] : 'read-'.$this->camelToDashed($include);
+            ) ? $relationPermMap[$include] : 'read-'.self::camelToDashed($include);
 
             if (Auth::user()->cant($permission)) {
                 Log::debug('User is missing permission: '.$permission);
@@ -69,7 +71,7 @@ trait AuthorizeInclude
      * @param  string  $string  string to convert
      * @return string result
      */
-    private function camelToDashed(string $string): string
+    private static function camelToDashed(string $string): string
     {
         return strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $string));
     }

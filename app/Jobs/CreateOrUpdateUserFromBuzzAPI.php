@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Exceptions\MissingAttribute;
 use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
@@ -154,7 +155,9 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
         foreach (self::EXPECTED_ATTRIBUTES as $attr) {
             if (! property_exists($account, $attr)) {
-                throw new Exception('Selected account for '.$searchValue.' is missing expected attribute '.$attr);
+                throw new MissingAttribute(
+                    'Selected account for '.$searchValue.' is missing expected attribute '.$attr
+                );
             }
         }
 

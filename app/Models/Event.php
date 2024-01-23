@@ -52,6 +52,8 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Event withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Event extends Model
 {
@@ -90,6 +92,12 @@ class Event extends Model
         'start_time' => 'datetime',
         'end_time' => 'datetime',
         'allow_anonymous_rsvp' => 'boolean',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'organizer' => 'read-users',
+        'rsvps' => 'read-rsvps',
+        'attendance' => 'read-attendance',
     ];
 
     /**
@@ -138,20 +146,6 @@ class Event extends Model
     public function getOrganizerNameAttribute(): string
     {
         return $this->organizer->name;
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string, string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'organizer' => 'read-users',
-            'rsvps' => 'read-rsvps',
-            'attendance' => 'read-attendance',
-        ];
     }
 
     /**

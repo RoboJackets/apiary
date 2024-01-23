@@ -74,6 +74,8 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class DuesPackage extends Model
 {
@@ -111,6 +113,11 @@ class DuesPackage extends Model
         'cost' => 'float',
         'available_for_purchase' => 'boolean',
         'restricted_to_students' => 'boolean',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'transactions' => 'read-dues-transactions',
+        'merchandise' => 'read-merchandise',
     ];
 
     /**
@@ -266,18 +273,5 @@ class DuesPackage extends Model
         $end = $this->access_end;
 
         return ($start <= $now) && ($end >= $now);
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'transactions' => 'read-dues-transactions',
-            'merchandise' => 'read-merchandise',
-        ];
     }
 }

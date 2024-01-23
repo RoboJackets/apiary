@@ -42,11 +42,14 @@ class RecordCashPayment extends RecordPayment
 
         return [
             Currency::make('Amount')
-                ->rules('required', static function ($attribute, $value, $fail) use ($payable_amount): void {
-                    if (round(floatval($value), 2) !== floatval($payable_amount)) {
-                        $fail('The amount must be exactly $'.$payable_amount.'.00.');
+                ->rules(
+                    'required',
+                    static function (string $attribute, string $value, callable $fail) use ($payable_amount): void {
+                        if (round(floatval($value), 2) !== floatval($payable_amount)) {
+                            $fail('The amount must be exactly $'.$payable_amount.'.00.');
+                        }
                     }
-                }),
+                ),
         ];
     }
 

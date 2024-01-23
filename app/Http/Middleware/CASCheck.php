@@ -5,37 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Jobs\SendReminders;
-use App\Traits\CreateOrUpdateCASUser;
+use App\Util\CasUser;
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpCAS;
+use Subfission\Cas\Facades\Cas;
 
 class CASCheck
 {
-    use CreateOrUpdateCASUser;
-
-    /**
-     * Auth facade.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
-     */
-    protected $auth;
-
-    /**
-     * CAS library interface.
-     *
-     * @var \Subfission\Cas\CasManager
-     */
-    protected $cas;
-
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-        $this->cas = app('cas');
-    }
-
     /**
      * Handle an incoming request.
      */
@@ -43,14 +21,14 @@ class CASCheck
     {
         phpCAS::checkAuthentication();
         if ($request->user() === null) {
-            if ($this->cas->isAuthenticated()) {
-                $user = $this->createOrUpdateCASUser();
+            if (Cas::isAuthenticated()) {
+                $user = CasUser::createOrUpdate();
 
                 Auth::login($user);
 
                 SendReminders::dispatch($user);
 
-                $request->session()->put('authenticationInstant', $this->cas->getAttribute('authenticationDate'));
+                $request->session()->put('authenticationInstant', Cas::getAttribute('authenticationDate'));
             }
 
             if ($request->ajax() || $request->wantsJson()) {

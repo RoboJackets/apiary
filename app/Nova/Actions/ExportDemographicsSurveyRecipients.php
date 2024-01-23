@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -49,7 +50,6 @@ class ExportDemographicsSurveyRecipients extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      *
      * @phan-suppress PhanTypeMismatchArgument
-     * @phan-suppress PhanDeprecatedFunction
      */
     public function handle(ActionFields $fields, Collection $models)
     {
@@ -74,7 +74,7 @@ class ExportDemographicsSurveyRecipients extends Action
         // Generate signed URL to pass to backend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::download($url, $filename)
+        return ActionResponse::download($filename, $url)
             ->withMessage('The demographics survey recipient list was successfully exported!');
     }
 

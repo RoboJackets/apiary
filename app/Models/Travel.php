@@ -104,6 +104,8 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Travel extends Model
 {
@@ -145,10 +147,8 @@ class Travel extends Model
 
     /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
-     *
-     * @var array<string>
      */
-    public $do_not_filter_on = [
+    public const DO_NOT_FILTER_ON = [
         'user_id',
     ];
 

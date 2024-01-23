@@ -200,6 +200,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $parent_guardian_name
  * @property string|null $parent_guardian_email
  * @property-read bool $needs_parent_or_guardian_signature
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class User extends Authenticatable
 {
@@ -307,10 +309,8 @@ class User extends Authenticatable
 
     /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
-     *
-     * @var array<string>
      */
-    public array $do_not_filter_on = [
+    public const DO_NOT_FILTER_ON = [
         'dues_package_id',
         'travel_id',
         'merchandise_id',
@@ -349,6 +349,18 @@ class User extends Authenticatable
     ];
 
     protected string $guard_name = 'web';
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'teams' => 'read-teams-membership',
+        'dues' => 'read-dues-transactions',
+        'events' => 'read-events',
+        'rsvps' => 'read-rsvps',
+        'roles' => 'read-roles-and-permissions',
+        'permissions' => 'read-roles-and-permissions',
+        'assignments.travel' => 'manage-travel',
+        'merchandise.merchandise' => 'read-merchandise',
+        'merchandise.providedBy' => 'read-users',
+    ];
 
     /**
      * Get the attendance records associated with this user.
@@ -600,26 +612,6 @@ class User extends Authenticatable
         }
 
         return $season.$year;
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'teams' => 'read-teams-membership',
-            'dues' => 'read-dues-transactions',
-            'events' => 'read-events',
-            'rsvps' => 'read-rsvps',
-            'roles' => 'read-roles-and-permissions',
-            'permissions' => 'read-roles-and-permissions',
-            'assignments.travel' => 'manage-travel',
-            'merchandise.merchandise' => 'read-merchandise',
-            'merchandise.providedBy' => 'read-users',
-        ];
     }
 
     /**

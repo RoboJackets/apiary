@@ -4,32 +4,21 @@ declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
-namespace App\Traits;
+namespace App\Util;
 
+use App\Exceptions\MissingAttribute;
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
+use Subfission\Cas\Facades\Cas;
 
-trait CreateOrUpdateCASUser
+class CasUser
 {
-    /**
-     * CAS library interface.
-     *
-     * @var \Subfission\Cas\CasManager
-     */
-    protected $cas;
-
-    public function __construct()
-    {
-        $this->cas = app('cas');
-    }
-
     /**
      * Creates the logged in CAS user if they don't already exist, or update attributes if they do.
      */
-    public function createOrUpdateCASUser(): User
+    public static function createOrUpdate(): User
     {
         $attrs = [
             'gtGTID',
@@ -40,25 +29,25 @@ trait CreateOrUpdateCASUser
             'eduPersonScopedAffiliation',
             'authenticationDate',
         ];
-        if ($this->cas->isMasquerading()) {
+        if (Cas::isMasquerading()) {
             $masq_attrs = [];
             foreach ($attrs as $attr) {
                 $masq_attrs[$attr] = config('cas.cas_masquerade_'.$attr);
             }
-            $this->cas->setAttributes($masq_attrs);
+            Cas::setAttributes($masq_attrs);
         }
 
         if (config('features.sandbox-mode') !== true) {
             foreach ($attrs as $attr) {
-                if (! $this->cas->hasAttribute($attr) || $this->cas->getAttribute($attr) === null) {
-                    throw new Exception('Missing attribute '.$attr.' from CAS');
+                if (! Cas::hasAttribute($attr) || Cas::getAttribute($attr) === null) {
+                    throw new MissingAttribute('Missing attribute '.$attr.' from CAS for user '.Cas::user());
                 }
             }
         }
 
         //User is starting a new session, so let's update data from CAS
         //Sadly we can't use updateOrCreate here because of $guarded in the User model
-        $user = User::where('uid', $this->cas->user())->first();
+        $user = User::where('uid', Cas::user())->first();
         if ($user === null) {
             $user = new User();
             $user->create_reason = 'cas_login';
@@ -67,21 +56,21 @@ trait CreateOrUpdateCASUser
         if ($user->is_service_account) {
             abort(403);
         }
-        $user->uid = $this->cas->user();
-        if (config('features.sandbox-mode') === true && $this->cas->getAttribute('gtGTID') === null) {
+        $user->uid = Cas::user();
+        if (config('features.sandbox-mode') === true && Cas::getAttribute('gtGTID') === null) {
             $user->gtid = 999999999;
         } else {
-            $user->gtid = $this->cas->getAttribute('gtGTID');
+            $user->gtid = Cas::getAttribute('gtGTID');
         }
-        $user->gt_email = $this->cas->getAttribute('email_primary');
-        $user->first_name = $this->cas->getAttribute('givenName');
-        $user->last_name = $this->cas->getAttribute('sn');
-        $user->primary_affiliation = $this->cas->getAttribute('eduPersonPrimaryAffiliation');
+        $user->gt_email = Cas::getAttribute('email_primary');
+        $user->first_name = Cas::getAttribute('givenName');
+        $user->last_name = Cas::getAttribute('sn');
+        $user->primary_affiliation = Cas::getAttribute('eduPersonPrimaryAffiliation');
         $user->has_ever_logged_in = true;
         $user->save();
 
         $standing_count = $user->syncClassStandingFromEduPersonScopedAffiliation(
-            $this->cas->getAttribute('eduPersonScopedAffiliation')
+            Cas::getAttribute('eduPersonScopedAffiliation')
         );
 
         if ($user->primary_affiliation === 'student' && $standing_count !== 1) {
@@ -91,13 +80,13 @@ trait CreateOrUpdateCASUser
             );
         }
 
-        if (! $this->cas->hasAttribute('gtCurriculum') || $this->cas->getAttribute('gtCurriculum') === null) {
+        if (! Cas::hasAttribute('gtCurriculum') || Cas::getAttribute('gtCurriculum') === null) {
             $user->syncMajorsFromGtCurriculum([]);
         } else {
-            if (is_array($this->cas->getAttribute('gtCurriculum'))) {
-                $major_count = $user->syncMajorsFromGtCurriculum($this->cas->getAttribute('gtCurriculum'));
+            if (is_array(Cas::getAttribute('gtCurriculum'))) {
+                $major_count = $user->syncMajorsFromGtCurriculum(Cas::getAttribute('gtCurriculum'));
             } else {
-                $major_count = $user->syncMajorsFromGtCurriculum([$this->cas->getAttribute('gtCurriculum')]);
+                $major_count = $user->syncMajorsFromGtCurriculum([Cas::getAttribute('gtCurriculum')]);
             }
 
             if ($user->primary_affiliation === 'student' && $major_count !== 1) {
@@ -130,7 +119,7 @@ trait CreateOrUpdateCASUser
             }
         }
 
-        if (config('features.sandbox-mode') !== true && ! $this->cas->isMasquerading()) {
+        if (config('features.sandbox-mode') !== true && ! Cas::isMasquerading()) {
             CreateOrUpdateUserFromBuzzAPI::dispatch(CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER, $user, 'cas_login');
         }
 

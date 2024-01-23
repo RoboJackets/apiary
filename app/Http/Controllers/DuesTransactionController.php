@@ -11,7 +11,7 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Merchandise;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -19,8 +19,6 @@ use Illuminate\Support\Str;
 
 class DuesTransactionController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware(
@@ -42,7 +40,7 @@ class DuesTransactionController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransaction::with(AuthorizeInclude::authorize(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
 
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
@@ -54,7 +52,7 @@ class DuesTransactionController extends Controller
     public function indexPaid(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $transact = DuesTransaction::paid()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransaction::paid()->with(AuthorizeInclude::authorize(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
 
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
@@ -66,7 +64,9 @@ class DuesTransactionController extends Controller
     public function indexPending(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $transact = DuesTransaction::pending()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransaction::pending()->with(
+            AuthorizeInclude::authorize(DuesTransaction::class, $include)
+        )->get();
         $transact = DuesTransactionResource::collection($transact);
 
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
@@ -197,7 +197,7 @@ class DuesTransactionController extends Controller
         $requestingUser = $request->user();
         $include = $request->input('include');
         $transact = DuesTransaction::with(
-            $this->authorizeInclude(DuesTransaction::class, $include)
+            AuthorizeInclude::authorize(DuesTransaction::class, $include)
         )->find($transaction->id);
         if ($transact === null) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);

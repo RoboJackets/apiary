@@ -13,7 +13,7 @@ use App\Http\Resources\Manager;
 use App\Http\Resources\User as UserResource;
 use App\Jobs\PushToJedi;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,8 +22,6 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware('permission:read-users', ['only' => ['index', 'indexManagers', 'search']]);
@@ -39,7 +37,7 @@ class UserController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $users = User::with($this->authorizeInclude(User::class, $include))->get();
+        $users = User::with(AuthorizeInclude::authorize(User::class, $include))->get();
 
         return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
     }
@@ -88,14 +86,14 @@ class UserController extends Controller
         $keyword = $request->input('keyword');
         $include = $request->input('include');
         if (is_numeric($keyword)) {
-            $results = User::where('gtid', $keyword)->with($this->authorizeInclude(User::class, $include))->get();
+            $results = User::where('gtid', $keyword)->with(AuthorizeInclude::authorize(User::class, $include))->get();
         } else {
             $keyword = '%'.$request->input('keyword').'%';
             $results = User::where('uid', 'LIKE', $keyword)
                 ->orWhere('first_name', 'LIKE', $keyword)
                 ->orWhere('preferred_name', 'LIKE', $keyword)
                 ->orWhere('github_username', 'LIKE', $keyword)
-                ->with($this->authorizeInclude(User::class, $include))
+                ->with(AuthorizeInclude::authorize(User::class, $include))
                 ->get();
         }
 
@@ -133,7 +131,7 @@ class UserController extends Controller
     public function show(string $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
+        $user = User::findByIdentifier($id)->with(AuthorizeInclude::authorize(User::class, $include))->first();
         if ($user !== null) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
@@ -156,7 +154,7 @@ class UserController extends Controller
     {
         $include = $request->input('include');
         $id = $request->user()->id;
-        $allowedIncludes = $this->authorizeInclude(User::class, $include);
+        $allowedIncludes = AuthorizeInclude::authorize(User::class, $include);
         $allowedIncludes[] = 'permissions';
         $allowedIncludes[] = 'roles';
         $user = User::findByIdentifier($id)->with($allowedIncludes)->first();
