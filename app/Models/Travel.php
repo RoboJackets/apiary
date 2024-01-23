@@ -206,6 +206,7 @@ class Travel extends Model
 
     private function getNeedsFormAttribute(string $form): bool
     {
+        // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
         return $this->forms !== null && array_key_exists($form, $this->forms) && $this->forms[$form] === true;
     }
 
