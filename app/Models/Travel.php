@@ -55,6 +55,7 @@ use Laravel\Scout\Searchable;
  * @property int|null $car_rental_cost
  * @property string|null $hotel_name
  * @property string|null $department_number
+ * @property array|null $forms
  * @property-read bool $needs_airfare_form
  * @property-read bool $needs_travel_information_form
  * @property-read bool $needs_docusign

@@ -312,6 +312,9 @@
         </InvalidReturnType>
         <InvalidArgument>
             <errorLevel type="suppress">
+                <file name="app/Http/Controllers/ResumeController.php"/>
+                <file name="app/Nova/Actions/CreateDuesPackages.php"/>
+                <file name="app/Nova/TravelAssignment.php"/>
                 <file name="app/Util/DocuSign.php"/>
                 <referencedFunction name="Laravel\Nova\Fields\BelongsTo::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\BelongsToMany::hideFromDetail"/>
@@ -324,10 +327,8 @@
                 <referencedFunction name="Laravel\Nova\Fields\Number::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Select::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Text::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
-                <file name="app/Http/Controllers/ResumeController.php"/>
-                <file name="app/Nova/Actions/CreateDuesPackages.php"/>
-                <file name="app/Nova/TravelAssignment.php"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidOperand>
