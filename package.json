@@ -26,7 +26,7 @@
         "vue-loader": "15.11.1"
     },
     "dependencies": {
-        "@sentry/vue": "7.94.1",
+        "@sentry/vue": "7.95.0",
         "axios": "1.6.6",
         "caniuse-lite": "1.0.30001579",
         "chartist": "0.11.4",
