@@ -9,7 +9,6 @@ use App\Util\CasUser;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use phpCAS;
 use Subfission\Cas\Facades\Cas;
 
 class CasCheck
