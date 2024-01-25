@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Subfission\Cas\Facades\Cas;
 
-class CASAuthenticate
+class CasAuthenticate
 {
     /**
      * List of attributes that may be set during masquerade.

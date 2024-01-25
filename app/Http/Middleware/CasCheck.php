@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Auth;
 use phpCAS;
 use Subfission\Cas\Facades\Cas;
 
-class CASCheck
+class CasCheck
 {
     /**
      * Handle an incoming request.
      */
     public function handle(Request $request, Closure $next)
     {
-        phpCAS::checkAuthentication();
+        Cas::checkAuthentication();
         if ($request->user() === null) {
             if (Cas::isAuthenticated()) {
                 $user = CasUser::createOrUpdate();

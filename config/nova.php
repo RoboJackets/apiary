@@ -102,7 +102,7 @@ return [
 
     'middleware' => [
         'web',
-        \App\Http\Middleware\CASAuthenticate::class,
+        \App\Http\Middleware\CasAuthenticate::class,
         HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
