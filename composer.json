@@ -32,7 +32,7 @@
         "barryvdh/laravel-dompdf": "2.0.1",
         "calebporzio/sushi": "2.4.5",
         "chelout/laravel-relationship-events": "2.0.0",
-        "doctrine/dbal": "3.7.3",
+        "doctrine/dbal": "3.8.0",
         "docusign/esign-client": "6.18.0",
         "enlightn/enlightn": "2.7.0",
         "fakerphp/faker": "1.23.1",
