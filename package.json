@@ -28,7 +28,7 @@
     "dependencies": {
         "@sentry/vue": "7.99.0",
         "axios": "1.6.7",
-        "caniuse-lite": "1.0.30001582",
+        "caniuse-lite": "1.0.30001583",
         "chartist": "0.11.4",
         "chartist-plugin-legend": "0.6.2",
         "chartist-plugin-pointlabels": "0.0.6",
