@@ -258,14 +258,16 @@ class Travel extends Resource
                     )),
 
                 Text::make('Hotel Name')
-                    ->required()
                     ->dependsOn(
-                        ['forms'],
+                        ['forms', 'tar_lodging'],
                         static function (Text $field, NovaRequest $request, FormData $formData): void {
                             if (self::showFieldOnForms($formData, \App\Models\Travel::TRAVEL_INFORMATION_FORM_KEY)) {
                                 $field->show()
-                                    ->required()
                                     ->rules('max:30');
+                            }
+
+                            if ($formData->integer('tar_lodging') > 0) {
+                                $field->required();
                             }
                         }
                     )
