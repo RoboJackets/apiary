@@ -296,8 +296,8 @@ class User extends Resource
                             ['user' => $user]
                         )->render()
                     )
-                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                         ->asHtml(),
                 ]
             ),
