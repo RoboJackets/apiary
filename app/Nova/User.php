@@ -392,7 +392,8 @@ class User extends Resource
                 ),
 
             MorphMany::make('Notifications', 'novaNotifications', Notification::class)
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             new Panel('Employment', [
                 Number::make('Employee ID (OneUSG)', 'employee_id')
