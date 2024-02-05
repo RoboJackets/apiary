@@ -112,7 +112,9 @@ class Travel extends Resource
                 ->help(view('nova.help.travel.tripname')->render())
                 ->sortable()
                 ->required()
-                ->rules('required', 'min:5', 'max:255')
+                ->rules('required', 'min:5', 'max:70')
+                ->maxlength(70)
+                ->enforceMaxlength()
                 ->creationRules('unique:travel,name')
                 ->updateRules('unique:travel,name,{{resourceId}}'),
 
