@@ -44,6 +44,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Sentry\SentrySdk;
 use Sentry\Tracing\SpanContext;
+use Spatie\Permission\Models\Role;
 
 /**
  * A Nova resource for users.
@@ -287,6 +288,17 @@ class User extends Resource
                             'This flag is set by JEDI and should not be modified unless you know what you are doing.'
                             .' It only controls UX elements.'
                         ),
+
+                    Text::make(
+                        'DocuSign',
+                        static fn (\App\Models\User $user): string => view(
+                            'nova.partials.user.docusignstatus',
+                            ['user' => $user]
+                        )->render()
+                    )
+                        ->onlyOnDetail()
+                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
+                        ->asHtml(),
                 ]
             ),
 
@@ -380,7 +392,8 @@ class User extends Resource
                 ),
 
             MorphMany::make('Notifications', 'novaNotifications', Notification::class)
-                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
+                ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             new Panel('Employment', [
                 Number::make('Employee ID (OneUSG)', 'employee_id')
@@ -812,5 +825,26 @@ class User extends Resource
     private static function adminCanRun(NovaRequest $request): bool
     {
         return $request->user()->hasRole('admin');
+    }
+
+    /**
+     * Build a Scout search query for the given resource.
+     *
+     * @param  \Laravel\Scout\Builder  $query
+     */
+    public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
+    {
+        if ($request->field === 'projectManager' || $request->field === 'primaryContact') {
+            return $query->whereIn(
+                'role_id',
+                [
+                    Role::where('name', '=', 'team-lead')->sole()->id,
+                    Role::where('name', '=', 'project-manager')->sole()->id,
+                    Role::where('name', '=', 'officer')->sole()->id,
+                ]
+            );
+        }
+
+        return parent::scoutQuery($request, $query);
     }
 }

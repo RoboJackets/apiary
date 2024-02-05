@@ -14,6 +14,7 @@ use App\Models\DocuSignEnvelope;
 use App\Models\MembershipAgreementTemplate;
 use App\Models\Signature;
 use App\Models\TravelAssignment;
+use App\Notifications\Nova\LinkDocuSignAccount;
 use App\Util\DocuSign;
 use Carbon\CarbonImmutable;
 use DocuSign\eSign\Api\EnvelopesApi;
@@ -167,6 +168,16 @@ class DocuSignController extends Controller
         return self::redirectToOAuthConsent(request: $request, next: 'getUserToken', impersonation: false);
     }
 
+    public function redirectUserToProviderDeepLink(Request $request, string $resource, string $resourceId)
+    {
+        $request->session()->put('deepLinkResource', $resource);
+        $request->session()->put('deepLinkResourceId', $resourceId);
+
+        ray($request->session()->all());
+
+        return self::redirectToOAuthConsent(request: $request, next: 'getUserTokenDeepLink', impersonation: false);
+    }
+
     /**
      * Handle the OAuth consent response from DocuSign.
      */
@@ -213,6 +224,12 @@ class DocuSignController extends Controller
             abort(401);
         }
 
+        $request
+            ->user()
+            ->novaNotifications()
+            ->where('type', LinkDocuSignAccount::class)
+            ->delete();
+
         switch ($request->session()->get('next')) {
             case 'getGlobalToken':
                 // In this case, we just need to output the user ID so that it can be stored in the environment.
@@ -233,6 +250,23 @@ class DocuSignController extends Controller
                 self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
 
                 return redirect(route('nova.pages.dashboard.custom', ['name' => 'main']));
+            case 'getUserTokenDeepLink':
+                // In this case, a user has just authenticated with DocuSign from a trip detail page.
+                // We need to store the credentials in their user model, then send them back to their trip detail page.
+
+                self::storeUserDocuSignCredentials($request, $userinfo, $tokens);
+
+                ray($request->session()->all());
+
+                return redirect(
+                    route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => $request->session()->get('deepLinkResource'),
+                            'resourceId' => $request->session()->get('deepLinkResourceId'),
+                        ]
+                    )
+                );
             case 'signAgreement':
                 // In this case, a user has just authenticated with DocuSign after starting the signing flow.
                 // We need to store the credentials in their user model, then continue with signing.

@@ -39,7 +39,7 @@ abstract class Resource extends NovaResource
             $class = $query->model::class;
 
             if (! array_key_exists('filterableAttributes', config('scout.meilisearch.index-settings.'.$class, []))) {
-                if (defined($query->model::class.'DO_NOT_FILTER_ON')) {
+                if (defined($query->model::class.'::DO_NOT_FILTER_ON')) {
                     if (in_array($filter_on_attribute, $query->model::DO_NOT_FILTER_ON, true)) {
                         return $query;
                     }
@@ -64,7 +64,7 @@ abstract class Resource extends NovaResource
                     true
                 )
             ) {
-                if (defined($query->model::class.'DO_NOT_FILTER_ON')) {
+                if (defined($query->model::class.'::DO_NOT_FILTER_ON')) {
                     if (in_array($filter_on_attribute, $query->model::DO_NOT_FILTER_ON, true)) {
                         return $query;
                     }

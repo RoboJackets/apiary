@@ -30,8 +30,6 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
  * @property-read int|null $assignments_count
- * @property bool|null $tar_required
- * @property array|null $tar_transportation_mode
  * @property string|null $tar_itinerary
  * @property string|null $tar_purpose
  * @property int|null $tar_airfare
@@ -57,7 +55,10 @@ use Laravel\Scout\Searchable;
  * @property int|null $car_rental_cost
  * @property string|null $hotel_name
  * @property string|null $department_number
+ * @property array|null $forms
  * @property-read bool $needs_airfare_form
+ * @property-read bool $needs_travel_information_form
+ * @property-read bool $needs_docusign
  * @property-read bool $assignments_need_forms
  * @property-read bool $assignments_need_payment
  *
@@ -85,8 +86,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereTarProjectNumber($value)
  * @method static Builder|Travel whereTarPurpose($value)
  * @method static Builder|Travel whereTarRegistration($value)
- * @method static Builder|Travel whereTarRequired($value)
- * @method static Builder|Travel whereTarTransportationMode($value)
  * @method static Builder|Travel whereUpdatedAt($value)
  * @method static Builder|Travel whereBiologicalMaterials($value)
  * @method static Builder|Travel whereBiologicalMaterialsDescription($value)
@@ -113,6 +112,15 @@ class Travel extends Model
     use Searchable;
     use SoftDeletes;
 
+    public const TRAVEL_INFORMATION_FORM_KEY = 'travel_information';
+
+    public const AIRFARE_REQUEST_FORM_KEY = 'airfare_request';
+
+    public const FORM_LABELS = [
+        self::TRAVEL_INFORMATION_FORM_KEY => 'Travel Information Form',
+        self::AIRFARE_REQUEST_FORM_KEY => 'Airfare Request Form',
+    ];
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -133,8 +141,6 @@ class Travel extends Model
     protected $casts = [
         'departure_date' => 'date',
         'return_date' => 'date',
-        'tar_transportation_mode' => 'array',
-        'tar_required' => 'boolean',
         'payment_completion_email_sent' => 'boolean',
         'form_completion_email_sent' => 'boolean',
         'is_international' => 'boolean',
@@ -143,6 +149,7 @@ class Travel extends Model
         'biological_materials' => 'boolean',
         'equipment' => 'boolean',
         'airfare_policy' => 'array',
+        'forms' => 'array',
     ];
 
     /**
@@ -182,14 +189,25 @@ class Travel extends Model
         return $this->assignments()->needDocuSign()->exists();
     }
 
+    public function getNeedsDocusignAttribute(): bool
+    {
+        return $this->needs_travel_information_form || $this->needs_airfare_form;
+    }
+
+    public function getNeedsTravelInformationFormAttribute(): bool
+    {
+        return $this->getNeedsFormAttribute(self::TRAVEL_INFORMATION_FORM_KEY);
+    }
+
     public function getNeedsAirfareFormAttribute(): bool
     {
-        return ($this->tar_transportation_mode ?? [
-            'state_contract_airline' => false,
-        ])['state_contract_airline'] === true ||
-            true === ($this->tar_transportation_mode ?? [
-                'non_contract_airline' => false,
-            ])['non_contract_airline'];
+        return $this->getNeedsFormAttribute(self::AIRFARE_REQUEST_FORM_KEY);
+    }
+
+    private function getNeedsFormAttribute(string $form): bool
+    {
+        // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
+        return $this->forms !== null && array_key_exists($form, $this->forms) && $this->forms[$form] === true;
     }
 
     /**

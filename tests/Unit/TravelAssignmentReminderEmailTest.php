@@ -18,7 +18,9 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         $contact = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'fee_amount' => 10,
             'primary_contact_user_id' => $contact->id,
         ]);
@@ -51,7 +53,9 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         $contact = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'fee_amount' => 10,
             'primary_contact_user_id' => $contact->id,
         ]);
@@ -85,7 +89,6 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         $contact = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => false,
             'fee_amount' => 10,
             'primary_contact_user_id' => $contact->id,
         ]);

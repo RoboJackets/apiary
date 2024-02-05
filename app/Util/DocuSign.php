@@ -420,7 +420,6 @@ class DocuSign
     /**
      * Build recipients for travel assignment envelope.
      *
-     * @phan-suppress PhanPluginNonBoolBranch
      * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     private static function travelAssignmentRecipients(TravelAssignment $assignment): Recipients
@@ -431,7 +430,7 @@ class DocuSign
         $textTabs = [];
         $dateTabs = [];
 
-        if ($assignment->travel->tar_required) {
+        if ($assignment->travel->needs_travel_information_form) {
             $fullNameTabs[] = (new FullName())
                 ->setTabType('fullName')
                 ->setDocumentId(1)
@@ -767,20 +766,23 @@ class DocuSign
                                                 ))
                                         )
                                     ),
-                                ...($assignment->travel->hotel_name === null ? [] : [
-                                    (new Text())
-                                        ->setTabType('text')
-                                        ->setDocumentId(1)
-                                        ->setPageNumber(1)
-                                        ->setFont('CourierNew')
-                                        ->setFontColor('Black')
-                                        ->setFontSize('Size12')
-                                        ->setHeight(20)
-                                        ->setWidth(247)
-                                        ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
-                                        ->setYPosition(359)
-                                        ->setValue($assignment->travel->hotel_name),
-                                ]),
+                                ...(
+                                    $assignment->travel->hotel_name === null ||
+                                    $assignment->travel->tar_lodging === null ||
+                                    $assignment->travel->tar_lodging === 0 ? [] : [
+                                        (new Text())
+                                            ->setTabType('text')
+                                            ->setDocumentId(1)
+                                            ->setPageNumber(1)
+                                            ->setFont('CourierNew')
+                                            ->setFontColor('Black')
+                                            ->setFontSize('Size12')
+                                            ->setHeight(20)
+                                            ->setWidth(247)
+                                            ->setXPosition(self::TIF_X_ALIGN_BOTTOM)
+                                            ->setYPosition(359)
+                                            ->setValue($assignment->travel->hotel_name),
+                                    ]),
                                 (new Text())
                                     ->setTabType('text')
                                     ->setDocumentId(1)
@@ -1105,7 +1107,7 @@ class DocuSign
     {
         $documents = [];
 
-        if ($assignment->travel->tar_required === true) {
+        if ($assignment->travel->needs_travel_information_form) {
             $documents[] = self::travelInformationFormDocument($assignment);
         }
 

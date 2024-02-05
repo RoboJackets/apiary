@@ -71,6 +71,13 @@ Route::middleware('auth.cas.force')->group(static function (): void {
             ->middleware('can:access-nova')
             ->name('docusign.auth.user');
 
+        Route::get(
+            '/auth/deeplink/{resource}/{resourceId}',
+            [DocuSignController::class, 'redirectUserToProviderDeepLink']
+        )
+            ->middleware('can:access-nova')
+            ->name('docusign.auth.deeplink');
+
         Route::get('/auth/complete', [DocuSignController::class, 'handleProviderCallback'])
             ->name('docusign.auth.complete');
     });

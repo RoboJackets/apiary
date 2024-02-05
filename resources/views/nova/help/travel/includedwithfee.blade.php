@@ -1,0 +1,1 @@
+Describe what costs will be covered by RoboJackets. Typically, this is limited to registration fees, plane tickets, rental vehicles, fuel, and lodging. Other costs may be covered at the discretion of the president and treasurer.

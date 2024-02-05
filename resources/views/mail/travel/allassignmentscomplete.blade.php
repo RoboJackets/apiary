@@ -1,8 +1,8 @@
 Hi {!! $travel->primaryContact->preferred_first_name !!},
 {{-- all assignments paid and documented --}}
 @if(! $travel->assignments_need_payment && ! $travel->assignments_need_forms)
-All travelers have paid the travel fee{{ $travel->tar_required ? ' and submitted travel forms' : '' }} for {{ $travel->name }}. Contact the treasurer to book travel.
-@if($travel->tar_required)
+All travelers have paid the travel fee{{ $travel->needs_docusign ? ' and submitted travel forms' : '' }} for {{ $travel->name }}. Contact the treasurer to book travel.
+@if($travel->needs_docusign)
 
 You can download all submitted forms from {{ config('app.name') }} at {{ route('nova.pages.detail', ['resource' => \App\Nova\Travel::uriKey(), 'resourceId' => $travel->id]) }}, under the action menu (three dots in top right).
 @endif

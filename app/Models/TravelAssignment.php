@@ -183,7 +183,8 @@ class TravelAssignment extends Model implements Payable
     public function scopeNeedDocuSign(Builder $query): Builder
     {
         return $query->whereHas('travel', static function (Builder $q): void {
-            $q->where('tar_required', true);
+            $q->where('forms->'.Travel::AIRFARE_REQUEST_FORM_KEY, '=', true)
+                ->orWhere('forms->'.Travel::TRAVEL_INFORMATION_FORM_KEY, '=', true);
         })
             ->where('tar_received', false);
     }
@@ -223,7 +224,7 @@ class TravelAssignment extends Model implements Payable
     public function getIsCompleteAttribute(): bool
     {
         return $this->is_paid &&
-            ($this->tar_received || ! $this->travel->tar_required) &&
+            ($this->tar_received || ! $this->travel->needs_docusign) &&
             ($this->user->has_emergency_contact_information || $this->travel->return_date < Carbon::now());
     }
 }

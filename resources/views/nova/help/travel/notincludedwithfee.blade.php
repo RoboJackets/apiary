@@ -1,0 +1,1 @@
+Describe what costs are anticipated to be covered by travelers out of pocket. Typically, this includes any meals not provided by the event, entertainment or leisure activities, lodging in excess of the minimum for the event, visa or passport fees, and personal luggage fees.

@@ -1,0 +1,1 @@
+The trip fee must be at least {{ (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100) }}% of the per-person cost for this trip. The per-person cost is ${{ number_format($totalCost) }}, so the minimum trip fee is ${{ number_format(ceil($totalCost * config('travelpolicy.minimum_trip_fee_cost_ratio'))) }}.

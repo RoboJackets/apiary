@@ -27,7 +27,6 @@ class Travel extends JsonResource
             'fee_amount' => $this->fee_amount,
             'included_with_fee' => $this->included_with_fee,
             'not_included_with_fee' => $this->not_included_with_fee,
-            'tar_required' => $this->tar_required,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,

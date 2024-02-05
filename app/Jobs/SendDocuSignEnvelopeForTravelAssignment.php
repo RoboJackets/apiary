@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+
 namespace App\Jobs;
 
 use App\Models\DocuSignEnvelope;
 use App\Models\TravelAssignment;
+use App\Notifications\Nova\LinkDocuSignAccount;
 use App\Util\DocuSign;
 use DocuSign\eSign\Api\EnvelopesApi;
 use Illuminate\Bus\Queueable;
@@ -41,6 +44,17 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
         $senderApiClient = DocuSign::getApiClientForUser($this->assignment->travel->primaryContact);
 
         if ($senderApiClient === null) {
+            if (
+                $this->assignment->travel->primaryContact
+                    ->novaNotifications()
+                    ->where('type', '=', LinkDocuSignAccount::class)
+                    ->doesntExist()
+            ) {
+                $this->assignment->travel->primaryContact->notifyNow(
+                    new LinkDocuSignAccount($this->assignment->travel->name)
+                );
+            }
+
             $this->fail('Could not send envelope because primary contact does not have valid DocuSign credentials');
 
             return;

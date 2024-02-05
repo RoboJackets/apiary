@@ -58,11 +58,14 @@ class Main extends Dashboard
             foreach (Travel::all() as $travel) {
                 $should_include = false;
 
-                if ($travel->return_date > Carbon::now()) {
+                if ($travel->return_date > Carbon::now() && $travel->assignments()->exists()) {
                     $should_include = true;
                 }
 
-                if ($travel->tar_required === true && $travel->assignments()->where('tar_received', false)->exists()) {
+                if (
+                    $travel->needs_docusign === true &&
+                    $travel->assignments()->where('tar_received', false)->exists()
+                ) {
                     $should_include = true;
                 }
 
@@ -83,7 +86,7 @@ class Main extends Dashboard
                     continue;
                 }
 
-                if ($travel->tar_required === true) {
+                if ($travel->needs_docusign === true) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
@@ -101,7 +104,7 @@ class Main extends Dashboard
             $id = intval($parts->last());
 
             switch ($type) {
-                case 'tar':
+                case 'forms':
                     return [new TravelAuthorityRequestReceivedForTravel($id)];
                 case 'payment':
                     return [
