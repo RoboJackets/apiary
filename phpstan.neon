@@ -204,7 +204,7 @@ parameters:
     - '#Parameter \#1 \$travel of class App\\Notifications\\Travel\\AllTravelAssignmentsComplete constructor expects App\\Models\\Travel, mixed given\.#'
     - '#Parameter \#1 \$travel of job class App\\Jobs\\CheckAllTravelAssignmentsComplete constructor expects App\\Models\\Travel in App\\Jobs\\CheckAllTravelAssignmentsComplete::dispatch\(\), App\\Models\\Travel\|null given\.#'
     - '#Parameter \#1 \$trend of method Laravel\\Nova\\Metrics\\TrendResult::trend\(\) expects array<string, float\|int\|numeric-string\|null>, array given\.#'
-    - '#Parameter \#1 \$trip_id of static method App\\Nova\\TravelAssignment::showItineraryOnForms\(\) expects string\|null, mixed given\.#'
+    - '#Parameter \#1 \$trip_id of static method App\\Nova\\TravelAssignment::showItineraryOnForms\(\) expects int\|string\|null, mixed given\.#'
     - '#Parameter \#1 \$tripName of class App\\Notifications\\Nova\\LinkDocuSignAccount constructor expects string, mixed given\.#'
     - '#Parameter \#1 \$url of function parse_url expects string, mixed given\.#'
     - '#Parameter \#1 \$url of method Subfission\\Cas\\CasManager::logout\(\) expects string, mixed given\.#'
