@@ -107,11 +107,7 @@ class TravelAssignment extends Resource
                 ->withoutTrashed()
                 ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user)
                 ->readonly(static fn (NovaRequest $request): bool => $request->editMode === 'update')
-                ->help(
-                    $request->current === null && $request->viaResource !== Travel::uriKey() ?
-                        view('nova.help.travel.assignment.trip')->render() :
-                        null
-                ),
+                ->help(view('nova.help.travel.assignment.trip')->render()),
 
             Code::make('Matrix Itinerary')
                 ->json()

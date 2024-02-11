@@ -699,7 +699,7 @@ class Travel extends Resource
             return $query->where('id', '=', $request->current)->orWhereDate('departure_date', '>=', Carbon::now());
         }
 
-        if ($request->is('nova-api/travel-assignments/*')) {
+        if ($request->is('nova-api/'.TravelAssignment::uriKey().'/*')) {
             return $query->whereDate('departure_date', '>=', Carbon::now());
         }
 
