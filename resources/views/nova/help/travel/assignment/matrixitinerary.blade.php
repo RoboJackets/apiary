@@ -1,0 +1,1 @@
+Because this trip includes airfare, you must provide an itinerary in Matrix JSON format. Search for flights at <a href="https://matrix.itasoftware.com">Matrix</a>, select the flights from the results, click <strong>Copy itinerary as JSON</strong>, then paste into the text box above.

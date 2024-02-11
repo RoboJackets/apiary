@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -75,6 +76,22 @@ class TravelAssignment extends Resource
     ];
 
     /**
+     * Get the displayable label of the resource.
+     */
+    public static function label(): string
+    {
+        return 'Trip Assignments';
+    }
+
+    /**
+     * Get the URI key for the resource.
+     */
+    public static function uriKey(): string
+    {
+        return 'trip-assignments';
+    }
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array
@@ -85,51 +102,63 @@ class TravelAssignment extends Resource
                 ->searchable()
                 ->rules('required', 'unique:travel_assignments,user_id,NULL,id,travel_id,'.$request->travel),
 
-            BelongsTo::make('Travel', 'travel', Travel::class)
+            BelongsTo::make('Trip', 'travel', Travel::class)
                 ->withoutTrashed()
                 ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user)
                 ->help(
                     $request->current === null && $request->viaResource !== Travel::uriKey() ?
-                    'Only upcoming trips are shown here. If you need to create an assignment for a past trip, go to '.
-                    'the trip details page and click <strong>Create Travel Assignment</strong> there.' :
-                    null
+                        view('nova.help.travel.assignment.trip')->render() :
+                        null
                 ),
 
             Code::make('Matrix Itinerary')
                 ->json()
-                ->rules('nullable', 'json', new MatrixItineraryDataStructure())
+                ->dependsOn(
+                    ['travel'],
+                    static function (Code $field, NovaRequest $request, FormData $formData): void {
+                        if (
+                            self::showItineraryOnForms($formData->travel) ||
+                            (
+                                $request->viaResource === Travel::uriKey() &&
+                                self::showItineraryOnForms($request->viaResourceId)
+                            )
+                        ) {
+                            $field->show()
+                                ->rules('nullable', 'json', new MatrixItineraryDataStructure());
+                        }
+                    }
+                )
                 ->required()
-                ->help(
-                    'If this trip includes airfare, you must provide an itinerary in Matrix JSON format. Search '.
-                    'for flights at <a href="https://matrix.itasoftware.com">Matrix</a>, select the flights from the '.
-                    'results, click <strong>Copy itinerary '.
-                    'as JSON</strong>, then paste into the text box above.'
-                ),
+                ->hide()
+                ->showOnDetail(fn (): bool => $this->showItineraryOnDetail())
+                ->help(view('nova.help.travel.assignment.matrixitinerary')->render()),
 
             Text::make(
                 'Matrix Itinerary Preview',
                 static fn (
                     \App\Models\TravelAssignment $assignment
                 ): ?string => $assignment->matrix_itinerary === null ?
-                        null :
-                        view(
-                            'travel.matrixitinerarypreview',
-                            [
-                                'itinerary' => $assignment->matrix_itinerary,
-                            ]
-                        )->render()
+                    null :
+                    view(
+                        'travel.matrixitinerarypreview',
+                        [
+                            'itinerary' => $assignment->matrix_itinerary,
+                        ]
+                    )->render()
             )
                 ->asHtml()
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->showOnDetail(fn (): bool => $this->showItineraryOnDetail()),
 
             Currency::make(
                 'Airfare Cost',
                 static fn (\App\Models\TravelAssignment $assignment): ?float => Matrix::getHighestDisplayPrice(
                     $assignment->matrix_itinerary
                 )
-            ),
+            )
+                ->showOnDetail(fn (): bool => $this->showItineraryOnDetail()),
 
-            Boolean::make('Travel Authority Request Received', 'tar_received')
+            Boolean::make('Forms Received', 'tar_received')
                 ->sortable()
                 ->hideWhenCreating(),
 
@@ -151,7 +180,8 @@ class TravelAssignment extends Resource
                 ->onlyOnIndex(),
 
             MorphMany::make('DocuSign Envelopes', 'envelope', DocuSignEnvelope::class)
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->showOnDetail(fn (): bool => $this->showDocuSignEnvelopesOnDetail()),
 
             MorphMany::make('Payments', 'payment', Payment::class)
                 ->onlyOnDetail(),
@@ -198,10 +228,7 @@ class TravelAssignment extends Resource
             if ($trip->fee_amount / $total_cost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
                 $validator->errors()->add(
                     'matrix_itinerary',
-                    'The airfare cost exceeds the amount allowed for this trip. Increase the trip fee to at '.
-                    'least '.
-                    (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100).
-                    '% of the per-person total cost for this trip.'
+                    trim(view('nova.help.travel.assignment.feevalidation', ['totalCost' => $total_cost])->render())
                 );
             }
         }
@@ -213,5 +240,38 @@ class TravelAssignment extends Resource
     public function subtitle(): ?string
     {
         return $this->user->full_name.' | '.$this->travel->name.' | '.($this->is_paid ? 'Paid' : 'Unpaid');
+    }
+
+    private static function showItineraryOnForms(?string $trip_id): bool
+    {
+        if ($trip_id === null) {
+            return false;
+        }
+
+        $trip = \App\Models\Travel::where('id', '=', $trip_id)->sole();
+
+        if ($trip->forms === null || ! array_key_exists(\App\Models\Travel::AIRFARE_REQUEST_FORM_KEY, $trip->forms)) {
+            return false;
+        }
+
+        return $trip->forms[\App\Models\Travel::AIRFARE_REQUEST_FORM_KEY];
+    }
+
+    private function showItineraryOnDetail(): bool
+    {
+        if (
+            $this->travel->forms === null ||
+            ! array_key_exists(\App\Models\Travel::AIRFARE_REQUEST_FORM_KEY, $this->travel->forms)
+        ) {
+            return false;
+        }
+
+        return $this->travel->forms[\App\Models\Travel::AIRFARE_REQUEST_FORM_KEY];
+    }
+
+    private function showDocuSignEnvelopesOnDetail(): bool
+    {
+        return $this->travel->forms !== null &&
+            in_array(true, $this->travel->forms, true);
     }
 }
