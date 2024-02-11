@@ -194,7 +194,6 @@ parameters:
     - '#Parameter \#1 \$string of function ucfirst expects string, mixed given\.#'
     - '#Parameter \#1 \$string of static method Illuminate\\Support\\Str::of\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$template_id of method DocuSign\\eSign\\Model\\EnvelopeDefinition::setTemplateId\(\) expects string\|null, mixed given\.#'
-    - '#Parameter \#1 \$text of method Laravel\\Nova\\Fields\\Field::help\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$time of class Carbon\\Carbon constructor expects DateTimeInterface\|string\|null, mixed given\.#'
     - '#Parameter \#1 \$time of class Illuminate\\Support\\Carbon constructor expects DateTimeInterface\|string\|null, mixed given\.#'
     - '#Parameter \#1 \$timestamp of static method Carbon\\Carbon::createFromTimestamp\(\) expects float\|int\|string, int\|false given\.#'
