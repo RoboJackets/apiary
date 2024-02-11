@@ -100,11 +100,13 @@ class TravelAssignment extends Resource
             BelongsTo::make('Member', 'user', User::class)
                 ->withoutTrashed()
                 ->searchable()
-                ->rules('required', 'unique:travel_assignments,user_id,NULL,id,travel_id,'.$request->travel),
+                ->rules('required', 'unique:travel_assignments,user_id,NULL,id,travel_id,'.$request->travel)
+                ->readonly(static fn (NovaRequest $request): bool => $request->editMode === 'update'),
 
             BelongsTo::make('Trip', 'travel', Travel::class)
                 ->withoutTrashed()
                 ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user)
+                ->readonly(static fn (NovaRequest $request): bool => $request->editMode === 'update')
                 ->help(
                     $request->current === null && $request->viaResource !== Travel::uriKey() ?
                         view('nova.help.travel.assignment.trip')->render() :
@@ -160,7 +162,8 @@ class TravelAssignment extends Resource
 
             Boolean::make('Forms Received', 'tar_received')
                 ->sortable()
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
 
             Currency::make('Payment Due', function (): ?int {
                 // @phan-suppress-next-line PhanPluginNonBoolBranch
@@ -242,7 +245,7 @@ class TravelAssignment extends Resource
         return $this->user->full_name.' | '.$this->travel->name.' | '.($this->is_paid ? 'Paid' : 'Unpaid');
     }
 
-    private static function showItineraryOnForms(?string $trip_id): bool
+    private static function showItineraryOnForms(string|int|null $trip_id): bool
     {
         if ($trip_id === null) {
             return false;

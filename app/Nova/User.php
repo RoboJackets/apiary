@@ -729,7 +729,7 @@ class User extends Resource
         }
 
         if ($request->is('nova-api/'.TravelAssignment::uriKey().'/*')) {
-            return $query->accessActive()->orWhere('users.id', '=', $request->viaResourceId);
+            return $query->accessActive()->orWhere('users.id', '=', $request->viaResourceId ?? $request->current);
         }
 
         return $query;
