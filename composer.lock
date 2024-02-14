@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c4a657f95a24d8cf87268ed4f900796",
+    "content-hash": "f7c6c095199627d52e201e53a7825599",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3513,17 +3513,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.32.11",
+            "version": "4.32.12",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "d3587d9155095b391b4007daddb1d9541d5c1158"
+                "reference": "27b811e9d30420f6e9e78bfd587f0295932da42c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d3587d9155095b391b4007daddb1d9541d5c1158-zip-1acf6c.zip",
-                "reference": "d3587d9155095b391b4007daddb1d9541d5c1158",
-                "shasum": "823e555e08ac73e4484cf9ef5e9bcd52709050a4"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-27b811e9d30420f6e9e78bfd587f0295932da42c-zip-13edbd.zip",
+                "reference": "27b811e9d30420f6e9e78bfd587f0295932da42c",
+                "shasum": "7912ac99c7eef2e15069fcd9f63f447dc1681e89"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -3542,12 +3542,12 @@
                 "symfony/process": "^5.4|^6.0"
             },
             "require-dev": {
+                "larastan/larastan": "^1.0.1|^2.5.1",
                 "laravel/nova-dusk-suite": "8.4.x-dev|9.4.x-dev|10.4.x-dev",
                 "laravel/pint": "^1.6",
                 "laravel/scout": "^9.8|^10.0",
                 "mockery/mockery": "^1.4.4",
-                "nunomaduro/larastan": "^1.0.1|^2.5.1",
-                "orchestra/testbench-dusk": "^6.24|^7.21|^8.0",
+                "orchestra/testbench-dusk": "^6.44|^7.40|^8.22",
                 "phpunit/phpunit": "^9.6|^10.1",
                 "predis/predis": "^1.1.9|^2.0"
             },
@@ -3633,9 +3633,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.32.11"
+                "source": "https://github.com/laravel/nova/tree/v4.32.12"
             },
-            "time": "2023-12-19T18:17:55+00:00"
+            "time": "2024-02-14T17:25:19+00:00"
         },
         {
             "name": "laravel/passport",
