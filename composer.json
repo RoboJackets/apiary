@@ -137,8 +137,8 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
-            "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/ResolvedMail.php",
-            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/ResolvedMail.php",
+            "sed -i 's/getHtmlBody/getTextBody/' vendor/xammie/mailbook/src/Data/ResolvedMail.php",
+            "sed -i \"s/return \\$html;/return \\'<pre>\\'.\\$html.\\'<\\/pre>\\';/\" vendor/xammie/mailbook/src/Data/ResolvedMail.php",
             "sed -i 's/@template/@nothing/' vendor/laravel/nova/src/PerformsValidation.php"
         ],
         "post-update-cmd": [
