@@ -49,7 +49,7 @@
         "laravel/socialite": "5.12.1",
         "laravel/tinker": "2.9.0",
         "madewithlove/laravel-nova-uuid-support": "1.5",
-        "meilisearch/meilisearch-php": "1.6.0",
+        "meilisearch/meilisearch-php": "1.6.1",
         "mrclay/jsmin-php": "2.4.3",
         "mwgg/airports": "1.0",
         "realrashid/sweet-alert": "7.1.0",
