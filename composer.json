@@ -67,7 +67,7 @@
         "xammie/mailbook": "1.8.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "2.15.0",
+        "barryvdh/laravel-ide-helper": "2.15.1",
         "beyondcode/laravel-dump-server": "1.9.0",
         "filp/whoops": "2.15.4",
         "laravel/pint": "1.13.11",
