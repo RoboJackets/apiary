@@ -57,6 +57,8 @@ class PushToJedi implements ShouldBeUnique, ShouldQueue
         }
 
         $lastAttendance = $this->user->attendance()->where('attendable_type', Team::getMorphClassStatic())
+            ->whereNull('remote_attendance_link_id')
+            ->whereNull('people_counter_id')
             ->orderByDesc('created_at')->first();
 
         $send = [
