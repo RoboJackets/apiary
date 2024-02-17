@@ -41,12 +41,18 @@ class TravelPolicy
      */
     public function update(User $user, Travel $travel): bool
     {
-        return $user->hasRole('admin') || (
+        // admins can always update trips
+        return $user->hasRole('admin') ||
             (
-                $user->can('manage-travel') ||
-                $travel->primaryContact === $user
-            ) && $travel->status === 'draft'
-        );
+                // if the trip is in draft status...
+                $travel->status === 'draft' &&
+                (
+                    // then users with the manage-travel permission can also update the trip
+                    $user->can('manage-travel') ||
+                    // or the primary contact can update the trip
+                    $travel->primary_contact_user_id === $user->id
+                )
+            );
     }
 
     /**
@@ -54,12 +60,18 @@ class TravelPolicy
      */
     public function delete(User $user, Travel $travel): bool
     {
-        return $user->hasRole('admin') || (
+        // admins can always delete trips
+        return $user->hasRole('admin') ||
             (
-                $user->can('manage-travel') ||
-                $travel->primaryContact === $user
-            ) && $travel->status !== 'complete'
-        );
+                // if the trip is not complete...
+                $travel->status !== 'complete' &&
+                (
+                    // then users with the manage-travel permission can also delete the trip
+                    $user->can('manage-travel') ||
+                    // or the primary contact can delete the trip
+                    $travel->primary_contact_user_id === $user->id
+                )
+            );
     }
 
     /**
@@ -85,12 +97,6 @@ class TravelPolicy
 
     public function addTravelAssignment(User $user, Travel $travel): bool
     {
-        return $user->hasRole('admin') || (
-            $travel->status === 'draft' &&
-            (
-                $user->can('manage-travel') ||
-                $travel->primaryContact === $user
-            )
-        );
+        return $this->update($user, $travel);
     }
 }
