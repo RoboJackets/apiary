@@ -601,9 +601,11 @@ class Travel extends Resource
             ) &&
             $trip->status === 'complete' &&
             $trip->assignments->reduce(
+                // ensure every assignment has an envelope
                 static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
                     $assignment->envelope_count > 0 &&
                     $assignment->envelope->reduce(
+                        // ensure every envelope has a summary PDF on disk
                         static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
                             $envelope->summary_filename !== null &&
                             // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
