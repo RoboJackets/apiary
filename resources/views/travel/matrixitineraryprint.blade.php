@@ -4,17 +4,21 @@
 </head>
 <body>
 <h1>Itinerary Request for {{ $assignment->user->full_name }}</h1>
+<p>
+    <strong>Students should not book their own flights.</strong>
+    Travel Inc will book flights and bill directly to Georgia Tech.
+</p>
 @if($assignment->travel->airfare_policy['delta'] === true && ($assignment->travel->airfare_policy['coach'] === true || $assignment->travel->airfare_policy['fare_class'] === true))
     <p>
-        Please book the lowest-cost available tickets for the flights below in Delta Main Cabin economy class, excluding basic economy.
+        <strong>Instructions for Travel Inc agent:</strong> Please book the lowest-cost available tickets for the flights below in Delta Main Cabin economy class, excluding basic economy.
     </p>
 @elseif($assignment->travel->airfare_policy['delta'] === true && $assignment->travel->airfare_policy['coach'] === true)
     <p>
-        Please book the lowest-cost available tickets for the flights below in Delta Main Cabin economy class.
+        <strong>Instructions for Travel Inc agent:</strong> Please book the lowest-cost available tickets for the flights below in Delta Main Cabin economy class.
     </p>
 @elseif($assignment->travel->airfare_policy['coach'] === true)
     <p>
-        Please book the lowest-cost available tickets for the flights below in economy class.
+        <strong>Instructions for Travel Inc agent:</strong> Please book the lowest-cost available tickets for the flights below in economy class.
     </p>
 @endif
 <table style="width: 100%">
