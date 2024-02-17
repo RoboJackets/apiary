@@ -10,7 +10,6 @@ use App\Exceptions\MissingAttribute;
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Models\Role;
 use Subfission\Cas\Facades\Cas;
 
 class CasUser
