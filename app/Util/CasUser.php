@@ -97,26 +97,11 @@ class CasUser
             }
         }
 
-        //Initial Role Assignment
-        if ($user->wasRecentlyCreated || $user->roles->count() === 0) {
-            $role = Role::where('name', 'non-member')->first();
-            if ($role !== null) {
-                $user->assignRole($role);
-            } else {
-                Log::error(self::class.": Role 'non-member' not found for assignment to ".$user->uid);
-            }
-        }
-
-        //Role update based on active status (in case it didn't happen elsewhere)
-        if ($user->is_active === true) {
-            Log::info(self::class.': Updating role membership for '.$user->uid);
+        if ($user->roles_count === 0 && $user->is_active === false) {
+            $user->assignRole('non-member');
+        } elseif ($user->is_active) {
             $user->removeRole('non-member');
-            $role_member = Role::where('name', 'member')->first();
-            if ($role_member !== null && ! $user->hasRole('member')) {
-                $user->assignRole($role_member);
-            } else {
-                Log::error(self::class.": Role 'member' not found for assignment to ".$user->uid);
-            }
+            $user->assignRole('member');
         }
 
         if (config('features.sandbox-mode') !== true && ! Cas::isMasquerading()) {
