@@ -6,6 +6,7 @@ namespace App\Console;
 
 use App\Jobs\DailyDuesSummary;
 use App\Jobs\NoAttendanceJediPush;
+use App\Jobs\PruneAccessFromAccessInactiveUsers;
 use App\Jobs\SendExpiringPersonalAccessTokenNotifications;
 use App\Jobs\WeeklyAttendanceSlack;
 use Illuminate\Console\Scheduling\Schedule;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new SendExpiringPersonalAccessTokenNotifications())->weekly()->mondays()->at('08:00');
         $schedule->job(new DailyDuesSummary())->daily()->at('00:00');
         $schedule->job(new NoAttendanceJediPush())->daily()->at('10:00');
+        $schedule->job(new PruneAccessFromAccessInactiveUsers())->daily()->at('04:00');
     }
 
     /**

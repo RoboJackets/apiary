@@ -103,12 +103,12 @@ class CasUser
             if ($role !== null) {
                 $user->assignRole($role);
             } else {
-                Log::error(self::class."Role 'non-member' not found for assignment to ".$user->uid);
+                Log::error(self::class.": Role 'non-member' not found for assignment to ".$user->uid);
             }
         }
 
         //Role update based on active status (in case it didn't happen elsewhere)
-        if ($user->is_active === true && $user->hasRole('non-member')) {
+        if ($user->is_active === true) {
             Log::info(self::class.': Updating role membership for '.$user->uid);
             $user->removeRole('non-member');
             $role_member = Role::where('name', 'member')->first();
