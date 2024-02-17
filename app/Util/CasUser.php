@@ -96,11 +96,11 @@ class CasUser
             }
         }
 
-        if ($user->roles_count === 0 && $user->is_active === false) {
-            $user->assignRole('non-member');
-        } elseif ($user->is_active) {
+        if ($user->is_active) {
             $user->removeRole('non-member');
             $user->assignRole('member');
+        } else {
+            $user->assignRole('non-member');
         }
 
         if (config('features.sandbox-mode') !== true && ! Cas::isMasquerading()) {
