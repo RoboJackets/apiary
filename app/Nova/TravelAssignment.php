@@ -10,6 +10,7 @@ use App\Nova\Actions\Payments\RecordPaymentActions;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Rules\MatrixItineraryDataStructure;
 use App\Util\Matrix;
+use Closure;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
@@ -112,7 +113,17 @@ class TravelAssignment extends Resource
 
             BelongsTo::make('Trip', 'travel', Travel::class)
                 ->withoutTrashed()
-                ->rules('required', 'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user)
+                ->rules(
+                    'required',
+                    'unique:travel_assignments,travel_id,NULL,id,user_id,'.$request->user,
+                    static function (string $attribute, mixed $value, Closure $fail): void {
+                        $trip = \App\Models\Travel::where('id', '=', $value)->sole();
+
+                        if ($trip->status !== 'draft') {
+                            $fail('Assignments cannot be created for this trip because it is not in draft status.');
+                        }
+                    }
+                )
                 ->readonly(static fn (NovaRequest $request): bool => $request->editMode === 'update')
                 ->help(view('nova.help.travel.assignment.trip')->render()),
 

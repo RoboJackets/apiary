@@ -15,7 +15,7 @@ class TravelPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): true
     {
         return true;
     }
@@ -23,7 +23,7 @@ class TravelPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Travel $travel): bool
+    public function view(User $user, Travel $travel): true
     {
         return true;
     }
@@ -41,7 +41,12 @@ class TravelPolicy
      */
     public function update(User $user, Travel $travel): bool
     {
-        return $user->can('manage-travel') || $travel->primaryContact === $user;
+        return $user->hasRole('admin') || (
+            (
+                $user->can('manage-travel') ||
+                $travel->primaryContact === $user
+            ) && $travel->status === 'draft'
+        );
     }
 
     /**
@@ -49,7 +54,12 @@ class TravelPolicy
      */
     public function delete(User $user, Travel $travel): bool
     {
-        return $user->can('manage-travel');
+        return $user->hasRole('admin') || (
+            (
+                $user->can('manage-travel') ||
+                $travel->primaryContact === $user
+            ) && $travel->status !== 'complete'
+        );
     }
 
     /**
@@ -57,19 +67,30 @@ class TravelPolicy
      */
     public function restore(User $user, Travel $travel): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Travel $travel): bool
+    public function forceDelete(User $user, Travel $travel): false
     {
         return false;
     }
 
-    public function replicate(User $user, Travel $travel): bool
+    public function replicate(User $user, Travel $travel): false
     {
         return false;
+    }
+
+    public function addTravelAssignment(User $user, Travel $travel): bool
+    {
+        return $user->hasRole('admin') || (
+            $travel->status === 'draft' &&
+            (
+                $user->can('manage-travel') ||
+                $travel->primaryContact === $user
+            )
+        );
     }
 }

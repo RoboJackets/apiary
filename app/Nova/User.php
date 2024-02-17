@@ -848,7 +848,12 @@ class User extends Resource
      */
     public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
     {
-        if ($request->field === 'projectManager' || $request->field === 'primaryContact') {
+        if (
+            config('scout.driver') === 'meilisearch' && (
+                $request->field === 'projectManager' ||
+                $request->field === 'primaryContact'
+            )
+        ) {
             return $query->whereIn(
                 'role_id',
                 [

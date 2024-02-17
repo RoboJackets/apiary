@@ -1,0 +1,1 @@
+This is the amount that will be <strong>deducted</strong> from the trip fee for each traveler that pays online. RoboJackets will receive <strong>${{ number_format($fee_amount - (\App\Models\Payment::calculateProcessingFee($fee_amount * 100) / 100), 2) }}</strong> from each online payment.

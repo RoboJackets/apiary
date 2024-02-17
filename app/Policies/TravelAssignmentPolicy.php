@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -33,7 +34,10 @@ class TravelAssignmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('manage-travel');
+        return $user->can('manage-travel') ||
+            Travel::where('primary_contact_user_id', '=', $user->id)
+                ->where('status', '=', 'draft')
+                ->exists();
     }
 
     /**
@@ -41,7 +45,15 @@ class TravelAssignmentPolicy
      */
     public function update(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
+        return $assignment->travel->needs_airfare_form && (
+            $user->hasRole('admin') || (
+                $assignment->travel->status === 'draft' &&
+                (
+                    $user->can('manage-travel') ||
+                    $assignment->travel->primaryContact === $user
+                )
+            )
+        );
     }
 
     /**
@@ -49,7 +61,13 @@ class TravelAssignmentPolicy
      */
     public function delete(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
+        return $user->hasRole('admin') || (
+            $assignment->travel->status === 'draft' &&
+            (
+                $user->can('manage-travel') ||
+                $assignment->travel->primaryContact === $user
+            )
+        );
     }
 
     /**
@@ -57,7 +75,13 @@ class TravelAssignmentPolicy
      */
     public function restore(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
+        return $user->hasRole('admin') || (
+            $assignment->travel->status === 'draft' &&
+            (
+                $user->can('manage-travel') ||
+                $assignment->travel->primaryContact === $user
+            )
+        );
     }
 
     /**
