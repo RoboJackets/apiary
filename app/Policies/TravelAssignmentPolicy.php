@@ -45,12 +45,18 @@ class TravelAssignmentPolicy
      */
     public function update(User $user, TravelAssignment $assignment): bool
     {
+        // only trips requiring airfare forms can be edited, otherwise there's nothing to edit
         return $assignment->travel->needs_airfare_form && (
-            $user->hasRole('admin') || (
+            // admins can always update assignments
+            $user->hasRole('admin') ||
+            (
+                // if the trip is in draft status...
                 $assignment->travel->status === 'draft' &&
                 (
+                    // then users with the manage-travel permission can also update the assignment
                     $user->can('manage-travel') ||
-                    $assignment->travel->primaryContact === $user
+                    // or the primary contact can update the assignment
+                    $assignment->travel->primary_contact_user_id === $user->id
                 )
             )
         );
@@ -61,13 +67,18 @@ class TravelAssignmentPolicy
      */
     public function delete(User $user, TravelAssignment $assignment): bool
     {
-        return $user->hasRole('admin') || (
-            $assignment->travel->status === 'draft' &&
+        // admins can always delete assignments
+        return $user->hasRole('admin') ||
             (
-                $user->can('manage-travel') ||
-                $assignment->travel->primaryContact === $user
-            )
-        );
+                // if the trip is in draft status...
+                $assignment->travel->status === 'draft' &&
+                (
+                    // then users with the manage-travel permission can also delete the assignment
+                    $user->can('manage-travel') ||
+                    // or the primary contact can delete the assignment
+                    $assignment->travel->primary_contact_user_id === $user->id
+                )
+            );
     }
 
     /**
@@ -75,13 +86,7 @@ class TravelAssignmentPolicy
      */
     public function restore(User $user, TravelAssignment $assignment): bool
     {
-        return $user->hasRole('admin') || (
-            $assignment->travel->status === 'draft' &&
-            (
-                $user->can('manage-travel') ||
-                $assignment->travel->primaryContact === $user
-            )
-        );
+        return $this->delete($user, $assignment);
     }
 
     /**
