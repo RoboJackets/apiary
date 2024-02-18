@@ -9,6 +9,7 @@ namespace App\Nova;
 use App\Models\Travel as AppModelsTravel;
 use App\Notifications\Nova\LinkDocuSignAccount;
 use App\Nova\Actions\MatrixAirfareSearch;
+use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
@@ -561,6 +562,8 @@ class Travel extends Resource
         if ($requires_tar) {
             $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();
         }
+
+        $cards[] = EmergencyContactInformationForTravel::make()->onlyOnDetail();
 
         return $cards;
     }

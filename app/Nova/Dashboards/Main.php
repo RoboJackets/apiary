@@ -12,6 +12,7 @@ use App\Models\TravelAssignment;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\DuesRevenueByFiscalYear;
+use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\MembersByFiscalYear;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\PaymentsPerDay;
@@ -86,13 +87,15 @@ class Main extends Dashboard
                     continue;
                 }
 
+                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
+                    static fn (Request $request): bool => $request->user()->can('read-payments')
+                );
+
                 if ($travel->needs_docusign === true) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
-                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-payments')
-                );
+                $cards[] = new EmergencyContactInformationForTravel($travel->id);
             }
 
             return $cards;
@@ -113,6 +116,15 @@ class Main extends Dashboard
                         ),
                     ];
             }
+        }
+
+        if (request()->is('nova-api/metrics/emergency-contact-*')) {
+            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
+            $id = intval($parts->last());
+
+            return [
+                new EmergencyContactInformationForTravel($id),
+            ];
         }
 
         return $cards;
