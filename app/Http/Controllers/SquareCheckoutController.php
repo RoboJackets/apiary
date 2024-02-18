@@ -169,7 +169,7 @@ class SquareCheckoutController extends Controller
                     return redirect($payment->url);
                 }
 
-                return self::redirect($amount, $payment, $user, 'Travel Fee', $assignment->travel->name);
+                return self::redirect($amount, $payment, $user, 'Trip Fee', $assignment->travel->name);
             }
         );
     }
