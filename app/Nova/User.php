@@ -93,6 +93,20 @@ class User extends Resource
     ];
 
     /**
+     * The number of results to display in the global search.
+     *
+     * @var int
+     */
+    public static $globalSearchResults = 5;
+
+    /**
+     * The number of results to display when searching the resource using Scout.
+     *
+     * @var int
+     */
+    public static $scoutSearchResults = 5;
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array

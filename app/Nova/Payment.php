@@ -266,11 +266,6 @@ class Payment extends Resource
             ->canRun(static fn (): bool => true);
     }
 
-    public static function searchable(): bool
-    {
-        return false;
-    }
-
     /**
      * Determine if this resource is available for navigation.
      */

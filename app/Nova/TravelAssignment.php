@@ -66,6 +66,13 @@ class TravelAssignment extends Resource
     public static $globalSearchResults = 2;
 
     /**
+     * The number of results to display when searching the resource using Scout.
+     *
+     * @var int
+     */
+    public static $scoutSearchResults = 2;
+
+    /**
      * The relationships that should be eager loaded on index queries.
      *
      * @var array<string>

@@ -69,6 +69,13 @@ class Event extends Resource
     public static $globalSearchResults = 2;
 
     /**
+     * The number of results to display when searching the resource using Scout.
+     *
+     * @var int
+     */
+    public static $scoutSearchResults = 2;
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array
