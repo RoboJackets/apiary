@@ -3,12 +3,15 @@
 declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
 namespace App\Nova;
 
 use App\Models\Payment;
 use App\Models\Travel as AppModelsTravel;
 use App\Notifications\Nova\LinkDocuSignAccount;
+use App\Nova\Actions\DownloadDocuSignForms;
+use App\Nova\Actions\DownloadInstituteApprovedAbsenceRequest;
 use App\Nova\Actions\MatrixAirfareSearch;
 use App\Nova\Actions\ReviewTrip;
 use App\Nova\Metrics\EmergencyContactInformationForTravel;
@@ -595,34 +598,74 @@ class Travel extends Resource
         $actions = [];
 
         if (
+            $trip->status !== 'draft' &&
+            $trip->needs_docusign &&
             (
                 $request->user()->can('view-docusign-envelopes') ||
                 $request->user()->id === $trip->primary_contact_user_id
-            ) &&
-            $trip->assignments->reduce(
-                // ensure every assignment has an envelope
-                static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
-                    $assignment->envelope_count > 0 &&
-                    $assignment->envelope->reduce(
-                        // ensure every envelope has a summary PDF on disk
-                        static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
-                            $envelope->summary_filename !== null &&
-                            // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
-                            file_exists($envelope->summary_filename),
-                        true
-                    ),
-                true
             )
         ) {
-            $actions[] = Actions\DownloadDocuSignForms::make()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('view-docusign-envelopes') ||
-                    \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsTravel $travel): bool => $request->user()->can(
-                        'view-docusign-envelopes'
-                    ) ||
-                        $travel->primaryContact->id === $request->user()->id
-                );
+            if (
+                $trip->assignments->reduce(
+                    // ensure every assignment has an envelope
+                    static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
+                        $assignment->envelope_count > 0 &&
+                        $assignment->envelope->reduce(
+                            // ensure every envelope has a summary PDF on disk
+                            static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
+                                $envelope->summary_filename !== null &&
+                                // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
+                                file_exists($envelope->summary_filename),
+                            true
+                        ),
+                    true
+                )
+            ) {
+                $actions[] = DownloadDocuSignForms::make()
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('view-docusign-envelopes') ||
+                        \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
+                    ->canRun(
+                        static fn (NovaRequest $request, AppModelsTravel $travel): bool => $request->user()->can(
+                            'view-docusign-envelopes'
+                        ) ||
+                            $travel->primaryContact->id === $request->user()->id
+                    );
+            } else {
+                $actions[] = Action::danger(
+                    DownloadDocuSignForms::make()->name(),
+                    'Some forms have not been submitted yet!'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            }
+        }
+
+        if (
+            $trip->status !== 'draft' &&
+            (
+                $request->user()->can('read-users-gtid') ||
+                $request->user()->id === $trip->primary_contact_user_id
+            )
+        ) {
+            if (
+                $trip->assignments->reduce(
+                    // ensure every assignment's user has emergency contact information
+                    static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
+                        $assignment->user->has_emergency_contact_information,
+                    true
+                )
+            ) {
+                $actions[] = DownloadInstituteApprovedAbsenceRequest::make();
+            } else {
+                $actions[] = Action::danger(
+                    DownloadInstituteApprovedAbsenceRequest::make()->name(),
+                    'Some travelers are missing emergency contact information!'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            }
         }
 
         if ($trip->status === 'draft' && $trip->needs_airfare_form) {
