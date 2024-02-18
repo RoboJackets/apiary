@@ -660,10 +660,10 @@ class Travel extends Resource
                     ->canSee(static fn (Request $request): bool => $request->user()->can('read-users-gtid') ||
                         \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
                     ->canRun(
-                        static fn (NovaRequest $request, AppModelsTravel $trip): bool => $request->user()->can(
-                            'read-users-gtid'
-                        ) ||
-                            $trip->primary_contact_user_id === $request->user()->id
+                        static fn (NovaRequest $request, AppModelsTravel $trip): bool => (
+                            $request->user()->can('read-users-gtid') &&
+                            $request->user()->can('read-users-emergency_contact')
+                        ) || $trip->primary_contact_user_id === $request->user()->id
                     );
             } else {
                 $actions[] = Action::danger(
