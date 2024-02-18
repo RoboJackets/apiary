@@ -123,7 +123,7 @@ class Main extends Dashboard
             $id = intval($parts->last());
 
             return [
-                (new EmergencyContactInformationForTravel($id)),
+                new EmergencyContactInformationForTravel($id),
             ];
         }
 
