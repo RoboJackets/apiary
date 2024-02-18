@@ -599,7 +599,6 @@ class Travel extends Resource
                 $request->user()->can('view-docusign-envelopes') ||
                 $request->user()->id === $trip->primary_contact_user_id
             ) &&
-            $trip->status === 'complete' &&
             $trip->assignments->reduce(
                 // ensure every assignment has an envelope
                 static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
