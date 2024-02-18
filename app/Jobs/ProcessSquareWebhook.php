@@ -6,6 +6,8 @@ namespace App\Jobs;
 
 use App\Events\PaymentReceived;
 use App\Models\Payment;
+use App\Models\User;
+use App\Notifications\Nova\PaymentDeclined;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
@@ -39,6 +41,19 @@ class ProcessSquareWebhook extends ProcessWebhookJob
 
         if (! array_key_exists('status', $details)) {
             throw new Exception('data.object.payment.status field not present');
+        }
+
+        if ($details['status'] === 'FAILED') {
+            $payment = Payment::where('order_id', $details['order_id'])->first();
+
+            if ($payment !== null) {
+                $webhookCall = $this->webhookCall;
+
+                User::role('admin')
+                    ->each(static function (User $user) use ($payment, $webhookCall): void {
+                        $user->notify(new PaymentDeclined($payment, $webhookCall));
+                    });
+            }
         }
 
         if ($details['status'] !== 'COMPLETED' && $details['status'] !== 'APPROVED') {

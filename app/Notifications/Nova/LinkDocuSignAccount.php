@@ -33,7 +33,7 @@ class LinkDocuSignAccount extends NovaNotification
      *
      * @var string
      */
-    public $actionText = 'Link DocuSign Account';
+    public $actionText = 'Link DocuSign account';
 
     /**
      * Determine if URL should be open in new tab.
