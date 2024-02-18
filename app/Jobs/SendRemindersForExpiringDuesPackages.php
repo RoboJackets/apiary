@@ -43,7 +43,7 @@ class SendRemindersForExpiringDuesPackages implements ShouldQueue
                 ->whereDate('access_end', '<', Carbon::now()->addDays(7))
                 ->exists()
         ) {
-            Mail::send(new PackageExpirationReminder());
+            Mail::queue((new PackageExpirationReminder())->onQueue('email'));
         }
     }
 }
