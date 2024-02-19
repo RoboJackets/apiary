@@ -6,7 +6,7 @@ The following dues {{ count($packages) === 1 ? 'package has an' : 'packages have
 
 {{ $userCount }} {{ \Illuminate\Support\Str::plural('member', $userCount) }} will lose access to RoboJackets systems.
 
-You may update the "Access End Date" for {{ count($packages) === 1 ? 'this package' : 'these packages' }} at {{ count($packages) === 1 ? route('nova.pages.detail', ['resource' => \App\Nova\DuesPackage::uriKey(), 'resourceId' => $packages->sole()->id]) : route('nova.pages.index', ['resource' => \App\Nova\DuesPackage::uriKey()]) }}.
+You may update the "Access End Date" for {{ count($packages) === 1 ? 'this package' : 'these packages' }} at {{ count($packages) === 1 ? route('nova.pages.detail', ['resource' => \App\Nova\DuesPackage::uriKey(), 'resourceId' => $packages->sole()->id]) : route('nova.pages.index', ['resource' => \App\Nova\DuesPackage::uriKey()]) }}. If the {{ count($packages) === 1 ? 'date is' : 'dates are' }} correct, you may ignore this email.
 
 Read more about configuring dues at {{ config('app.url') }}/docs/officers/dues/.
 
