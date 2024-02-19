@@ -644,7 +644,10 @@ class Travel extends Resource
         if (
             $trip->status !== 'draft' &&
             (
-                $request->user()->can('read-users-gtid') ||
+                (
+                    $request->user()->can('read-users-gtid') &&
+                    $request->user()->can('read-users-emergency_contact')
+                ) ||
                 $request->user()->id === $trip->primary_contact_user_id
             )
         ) {
