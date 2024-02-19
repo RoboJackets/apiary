@@ -604,6 +604,7 @@ class Travel extends Resource
         if (
             $trip->status !== 'draft' &&
             $trip->needs_docusign &&
+            $trip->assignments_count > 0 &&
             (
                 $request->user()->can('view-docusign-envelopes') ||
                 $request->user()->id === $trip->primary_contact_user_id
@@ -647,6 +648,7 @@ class Travel extends Resource
 
         if (
             $trip->status !== 'draft' &&
+            $trip->assignments_count > 0 &&
             (
                 (
                     $request->user()->can('read-users-gtid') &&
