@@ -34,6 +34,7 @@ class TravelFactory extends Factory
             'embargoed_destination' => $this->faker->boolean(),
             'biological_materials' => $this->faker->boolean(),
             'equipment' => $this->faker->boolean(),
+            'status' => 'draft',
         ];
     }
 }

@@ -15,7 +15,7 @@ class TravelPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): true
     {
         return true;
     }
@@ -23,7 +23,7 @@ class TravelPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Travel $travel): bool
+    public function view(User $user, Travel $travel): true
     {
         return true;
     }
@@ -41,7 +41,18 @@ class TravelPolicy
      */
     public function update(User $user, Travel $travel): bool
     {
-        return $user->can('manage-travel') || $travel->primaryContact === $user;
+        // admins can always update trips
+        return $user->hasRole('admin') ||
+            (
+                // if the trip is in draft status...
+                $travel->status === 'draft' &&
+                (
+                    // then users with the manage-travel permission can also update the trip
+                    $user->can('manage-travel') ||
+                    // or the primary contact can update the trip
+                    $travel->primary_contact_user_id === $user->id
+                )
+            );
     }
 
     /**
@@ -49,7 +60,18 @@ class TravelPolicy
      */
     public function delete(User $user, Travel $travel): bool
     {
-        return $user->can('manage-travel');
+        // admins can always delete trips
+        return $user->hasRole('admin') ||
+            (
+                // if the trip is not complete...
+                $travel->status !== 'complete' &&
+                (
+                    // then users with the manage-travel permission can also delete the trip
+                    $user->can('manage-travel') ||
+                    // or the primary contact can delete the trip
+                    $travel->primary_contact_user_id === $user->id
+                )
+            );
     }
 
     /**
@@ -57,19 +79,24 @@ class TravelPolicy
      */
     public function restore(User $user, Travel $travel): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Travel $travel): bool
+    public function forceDelete(User $user, Travel $travel): false
     {
         return false;
     }
 
-    public function replicate(User $user, Travel $travel): bool
+    public function replicate(User $user, Travel $travel): false
     {
         return false;
+    }
+
+    public function addTravelAssignment(User $user, Travel $travel): bool
+    {
+        return $this->update($user, $travel);
     }
 }

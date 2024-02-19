@@ -100,6 +100,7 @@
         <UndefinedMagicMethod>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <directory name="database" />
             </errorLevel>
         </UndefinedMagicMethod>
         <InvalidTemplateParam>

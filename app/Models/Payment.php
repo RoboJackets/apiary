@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -232,6 +234,19 @@ class Payment extends Model
             0,
             PHP_ROUND_HALF_UP
         );
+    }
+
+    /**
+     * Calculates the processing fee for a given amount.
+     *
+     * Fees are listed at https://squareup.com/us/en/payments/our-fees.
+     *
+     * @param  int  $amount  charge amount, in cents
+     * @return int processing fee, in cents
+     */
+    public static function calculateProcessingFee(int $amount): int
+    {
+        return (int) round(self::PER_TRANSACTION_FEE + ((self::PERCENTAGE_FEE / 100) * $amount));
     }
 
     public function getSquareOrderState(): ?string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -33,7 +34,10 @@ class TravelAssignmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('manage-travel');
+        return $user->can('manage-travel') ||
+            Travel::where('primary_contact_user_id', '=', $user->id)
+                ->where('status', '=', 'draft')
+                ->exists();
     }
 
     /**
@@ -41,7 +45,21 @@ class TravelAssignmentPolicy
      */
     public function update(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
+        // only trips requiring airfare forms can be edited, otherwise there's nothing to edit
+        return $assignment->travel->needs_airfare_form && (
+            // admins can always update assignments
+            $user->hasRole('admin') ||
+            (
+                // if the trip is in draft status...
+                $assignment->travel->status === 'draft' &&
+                (
+                    // then users with the manage-travel permission can also update the assignment
+                    $user->can('manage-travel') ||
+                    // or the primary contact can update the assignment
+                    $assignment->travel->primary_contact_user_id === $user->id
+                )
+            )
+        );
     }
 
     /**
@@ -49,7 +67,18 @@ class TravelAssignmentPolicy
      */
     public function delete(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
+        // admins can always delete assignments
+        return $user->hasRole('admin') ||
+            (
+                // if the trip is in draft status...
+                $assignment->travel->status === 'draft' &&
+                (
+                    // then users with the manage-travel permission can also delete the assignment
+                    $user->can('manage-travel') ||
+                    // or the primary contact can delete the assignment
+                    $assignment->travel->primary_contact_user_id === $user->id
+                )
+            );
     }
 
     /**
@@ -57,7 +86,7 @@ class TravelAssignmentPolicy
      */
     public function restore(User $user, TravelAssignment $assignment): bool
     {
-        return $user->can('manage-travel') || $assignment->travel->primaryContact === $user;
+        return $this->delete($user, $assignment);
     }
 
     /**
