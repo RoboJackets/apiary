@@ -661,9 +661,9 @@ class Travel extends Resource
             ) {
                 $actions[] = DownloadInstituteApprovedAbsenceRequest::make()
                     ->canSee(static fn (Request $request): bool => (
-                            $request->user()->can('read-users-gtid') &&
-                            $request->user()->can('read-users-emergency_contact')
-                        ) ||
+                        $request->user()->can('read-users-gtid') &&
+                        $request->user()->can('read-users-emergency_contact')
+                    ) ||
                         \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
                     ->canRun(
                         static fn (NovaRequest $request, AppModelsTravel $trip): bool => (
