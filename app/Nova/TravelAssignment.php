@@ -177,7 +177,8 @@ class TravelAssignment extends Resource
             Boolean::make('Forms Received', 'tar_received')
                 ->sortable()
                 ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->hideWhenUpdating()
+                ->showOnDetail(fn (): bool => $this->showDocuSignEnvelopesOnDetail()),
 
             Currency::make('Payment Due', function (): ?int {
                 // @phan-suppress-next-line PhanPluginNonBoolBranch
