@@ -11,6 +11,7 @@ use App\Jobs\SendDocuSignEnvelopeForTravelAssignment;
 use App\Jobs\SendTravelAssignmentCreatedNotification;
 use App\Models\Payment;
 use App\Models\TravelAssignment;
+use App\Notifications\Nova\TravelApproved;
 use App\Rules\AllCriteriaMustBeSelected;
 use App\Util\Matrix;
 use Illuminate\Support\Collection;
@@ -83,6 +84,8 @@ class ReviewTrip extends Action
                     ]);
             });
         }
+
+        $trip->primaryContact->notify(new TravelApproved($trip));
 
         return ActionResponse::message('The trip has been approved!');
     }
