@@ -593,7 +593,12 @@ class Travel extends Resource
             return [];
         }
 
-        $trip = \App\Models\Travel::where('id', '=', $tripId)->sole();
+        $trip = \App\Models\Travel::with(
+            'assignments.user',
+            'assignments.envelope',
+        )
+            ->where('id', '=', $tripId)
+            ->sole();
 
         $actions = [];
 
