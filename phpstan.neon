@@ -21,6 +21,7 @@ parameters:
     - '#Access to an undefined property App\\Models\\DuesTransaction::\$effective_start\.#'
     - '#Access to an undefined property App\\Models\\DuesTransaction::\$merchandise_name\.#'
     - '#Access to an undefined property App\\Models\\DuesTransaction\|App\\Models\\TravelAssignment\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\DuesTransaction>\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\TravelAssignment>::\$is_paid\.#'
+    - '#Access to an undefined property App\\Models\\DuesTransaction\|App\\Models\\TravelAssignment\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\DuesTransaction>\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\TravelAssignment>::\$trip\.#'
     - '#Access to an undefined property App\\Models\\DuesTransaction\|App\\Models\\TravelAssignment\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\DuesTransaction>\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\TravelAssignment>::\$user\.#'
     - '#Access to an undefined property App\\Models\\DuesTransaction\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\DuesTransaction>::\$package\.#'
     - '#Access to an undefined property App\\Models\\Payable::\$id\.#'
