@@ -707,14 +707,6 @@ class Travel extends Resource
                     ->withoutConfirmation()
                     ->withoutActionEvents()
                     ->canRun(static fn (): bool => true);
-            } elseif ($trip->actions()->where('user_id', '=', $request->user()->id)->exists()) {
-                $actions[] = Action::danger(
-                    ReviewTrip::make()->name(),
-                    'You can\'t review this trip because you have made changes to it.'
-                )
-                    ->withoutConfirmation()
-                    ->withoutActionEvents()
-                    ->canRun(static fn (): bool => true);
             } else {
                 $actions[] = ReviewTrip::make();
             }
