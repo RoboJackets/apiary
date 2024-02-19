@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Jobs\CheckAllTravelAssignmentsComplete;
+use App\Jobs\PrefetchSquareCheckoutLinkForTravelAssignment;
 use App\Jobs\PruneTravelAssignmentNotificationsInNova;
 use App\Jobs\SendDocuSignEnvelopeForTravelAssignment;
 use App\Jobs\SendTravelAssignmentCreatedNotification;
@@ -18,12 +19,16 @@ class TravelAssignmentObserver
     {
         if ($assignment->travel->status !== 'draft') {
             if ($assignment->travel->needs_docusign === true) {
-                SendDocuSignEnvelopeForTravelAssignment::dispatch($assignment, true)
+                PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
                     ->chain([
+                        new SendDocuSignEnvelopeForTravelAssignment($assignment, true),
                         new SendTravelAssignmentCreatedNotification($assignment),
                     ]);
             } else {
-                $assignment->user->notify(new TravelAssignmentCreated($assignment));
+                PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
+                    ->chain([
+                        new SendTravelAssignmentCreatedNotification($assignment),
+                    ]);
             }
 
             SendTravelAssignmentReminder::dispatch($assignment);
