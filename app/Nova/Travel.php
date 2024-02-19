@@ -691,7 +691,15 @@ class Travel extends Resource
         }
 
         if ($trip->status === 'draft' && $request->user()->can('approve-travel')) {
-            if ($request->user()->id === $trip->primary_contact_user_id) {
+            if ($trip->assignments_count === 0) {
+                $actions[] = Action::danger(
+                    ReviewTrip::make()->name(),
+                    'You can\'t review this trip because there are no assignments yet.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn(): bool => true);
+            } elseif ($request->user()->id === $trip->primary_contact_user_id) {
                 $actions[] = Action::danger(
                     ReviewTrip::make()->name(),
                     'You can\'t review this trip because you are the primary contact.'
