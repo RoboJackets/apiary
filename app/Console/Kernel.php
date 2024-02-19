@@ -28,7 +28,10 @@ class Kernel extends ConsoleKernel
         $schedule->job(new SendExpiringPersonalAccessTokenNotifications())->weekly()->mondays()->at('08:00');
         $schedule->job(new DailyDuesSummary())->daily()->at('00:00');
         $schedule->job(new NoAttendanceJediPush())->daily()->at('10:00');
-        $schedule->job(new PruneAccessFromAccessInactiveUsers())->daily()->at('04:00');
+
+        if (config('features.prune-access') === true) {
+            $schedule->job(new PruneAccessFromAccessInactiveUsers())->daily()->at('04:00');
+        }
     }
 
     /**
