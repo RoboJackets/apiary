@@ -3,12 +3,17 @@
 declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 
 namespace App\Nova;
 
+use App\Models\Payment;
 use App\Models\Travel as AppModelsTravel;
 use App\Notifications\Nova\LinkDocuSignAccount;
+use App\Nova\Actions\DownloadDocuSignForms;
+use App\Nova\Actions\DownloadInstituteApprovedAbsenceRequest;
 use App\Nova\Actions\MatrixAirfareSearch;
+use App\Nova\Actions\ReviewTrip;
 use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
@@ -22,14 +27,18 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
@@ -123,6 +132,29 @@ class Travel extends Resource
     public function fields(Request $request): array
     {
         return [
+            Badge::make('Status')
+                ->map([
+                    'draft' => 'info',
+                    'approved' => 'success',
+                    'complete' => 'success',
+                ])
+                ->onlyOnDetail(),
+
+            Select::make('Status')
+                ->options([
+                    'draft' => 'Draft',
+                    'approved' => 'Approved',
+                    'complete' => 'Complete',
+                ])
+                ->required()
+                ->onlyOnForms()
+                ->hideWhenCreating()
+                ->showOnUpdating(
+                    static fn (
+                        NovaRequest $request, \App\Models\Travel $trip
+                    ): bool => $request->user()->hasRole('admin')
+                ),
+
             Text::make('Trip Name', 'name')
                 ->help(view('nova.help.travel.tripname')->render())
                 ->sortable()
@@ -208,6 +240,14 @@ class Travel extends Resource
                     )
                     ->min(config('travelpolicy.minimum_trip_fee'))
                     ->max(config('travelpolicy.maximum_trip_fee')),
+
+                Currency::make(
+                    'Square Processing Fee',
+                    static fn (
+                        \App\Models\Travel $trip
+                    ): float => Payment::calculateProcessingFee($trip->fee_amount * 100) / 100
+                )
+                    ->onlyOnDetail(),
 
                 Text::make('Costs Paid by RoboJackets', 'included_with_fee')
                     ->required()
@@ -516,7 +556,27 @@ class Travel extends Resource
 
             HasMany::make('Assignments', 'assignments', TravelAssignment::class),
 
-            self::metadataPanel(),
+            new Panel(
+                'Metadata',
+                [
+                    DateTime::make('Created At', 'created_at')
+                        ->onlyOnDetail(),
+
+                    BelongsTo::make('Created By', 'createdBy', User::class)
+                        ->onlyOnDetail(),
+
+                    DateTime::make('Last Updated', 'updated_at')
+                        ->onlyOnDetail(),
+                ]
+            ),
+
+            Hidden::make('Created By', 'created_by_user_id')
+                ->default(static fn (NovaRequest $request): int => $request->user()->id),
+
+            Hidden::make('Status', 'status')
+                ->default('draft')
+                ->onlyOnForms()
+                ->hideWhenUpdating(),
         ];
     }
 
@@ -527,19 +587,136 @@ class Travel extends Resource
      */
     public function actions(Request $request): array
     {
-        return [
-            (new Actions\DownloadDocuSignForms())
-                ->canSee(static fn (Request $request): bool => $request->user()->can('view-docusign-envelopes') ||
-                        \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
-                ->canRun(
-                    static fn (NovaRequest $request, AppModelsTravel $travel): bool => $request->user()->can(
-                        'view-docusign-envelopes'
-                    ) ||
-                            $travel->primaryContact->id === $request->user()->id
-                ),
+        $tripId = $request->resourceId ?? $request->resources;
 
-            MatrixAirfareSearch::make(),
-        ];
+        if ($tripId === null) {
+            return [];
+        }
+
+        $trip = \App\Models\Travel::where('id', '=', $tripId)->sole();
+
+        $actions = [];
+
+        if (
+            $trip->status !== 'draft' &&
+            $trip->needs_docusign &&
+            (
+                $request->user()->can('view-docusign-envelopes') ||
+                $request->user()->id === $trip->primary_contact_user_id
+            )
+        ) {
+            if (
+                $trip->assignments->reduce(
+                    // ensure every assignment has an envelope
+                    static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
+                        $assignment->envelope_count > 0 &&
+                        $assignment->envelope->reduce(
+                            // ensure every envelope has a summary PDF on disk
+                            static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
+                                $envelope->summary_filename !== null &&
+                                // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
+                                file_exists($envelope->summary_filename),
+                            true
+                        ),
+                    true
+                )
+            ) {
+                $actions[] = DownloadDocuSignForms::make()
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('view-docusign-envelopes') ||
+                        \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
+                    ->canRun(
+                        static fn (NovaRequest $request, AppModelsTravel $travel): bool => $request->user()->can(
+                            'view-docusign-envelopes'
+                        ) ||
+                            $travel->primaryContact->id === $request->user()->id
+                    );
+            } else {
+                $actions[] = Action::danger(
+                    DownloadDocuSignForms::make()->name(),
+                    'Some forms have not been submitted yet!'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            }
+        }
+
+        if (
+            $trip->status !== 'draft' &&
+            (
+                (
+                    $request->user()->can('read-users-gtid') &&
+                    $request->user()->can('read-users-emergency_contact')
+                ) ||
+                $request->user()->id === $trip->primary_contact_user_id
+            )
+        ) {
+            if (
+                $trip->assignments->reduce(
+                    // ensure every assignment's user has emergency contact information
+                    static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
+                        $assignment->user->has_emergency_contact_information,
+                    true
+                )
+            ) {
+                $actions[] = DownloadInstituteApprovedAbsenceRequest::make()
+                    ->canSee(static fn (Request $request): bool => (
+                        $request->user()->can('read-users-gtid') &&
+                        $request->user()->can('read-users-emergency_contact')
+                    ) ||
+                        \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
+                    ->canRun(
+                        static fn (NovaRequest $request, AppModelsTravel $trip): bool => (
+                            $request->user()->can('read-users-gtid') &&
+                            $request->user()->can('read-users-emergency_contact')
+                        ) || $trip->primary_contact_user_id === $request->user()->id
+                    );
+            } else {
+                $actions[] = Action::danger(
+                    DownloadInstituteApprovedAbsenceRequest::make()->name(),
+                    'Some travelers are missing emergency contact information!'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            }
+        }
+
+        if ($trip->status === 'draft' && $trip->needs_airfare_form) {
+            $actions[] = MatrixAirfareSearch::make();
+        }
+
+        if ($trip->status === 'draft' && $request->user()->can('approve-travel')) {
+            if ($request->user()->id === $trip->primary_contact_user_id) {
+                $actions[] = Action::danger(
+                    ReviewTrip::make()->name(),
+                    'You can\'t review this trip because you are the primary contact.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            } elseif ($request->user()->id === $trip->created_by_user_id) {
+                $actions[] = Action::danger(
+                    ReviewTrip::make()->name(),
+                    'You can\'t review this trip because you created it.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            } elseif ($trip->actions()->where('user_id', '=', $request->user()->id)->exists()) {
+                $actions[] = Action::danger(
+                    ReviewTrip::make()->name(),
+                    'You can\'t review this trip because you have made changes to it.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            } else {
+                $actions[] = ReviewTrip::make();
+            }
+        }
+
+        return $actions;
     }
 
     /**
@@ -663,10 +840,10 @@ class Travel extends Resource
             }
         }
 
-        // deliberately not including meal per diem rate because that seems weird
         $totalCost = intval($request->tar_lodging) +
             intval($request->tar_registration) +
-            intval($request->car_rental_cost);
+            intval($request->car_rental_cost) +
+            intval($request->meal_per_diem);
 
         if ($request->resourceId !== null) {
             $trip = \App\Models\Travel::where('id', '=', $request->resourceId)->sole();

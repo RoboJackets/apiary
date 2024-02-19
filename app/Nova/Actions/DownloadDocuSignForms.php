@@ -46,7 +46,7 @@ class DownloadDocuSignForms extends Action
     {
         $travel = $models->first()->load('assignments.envelope.signable.user');
 
-        $filename = $travel->name.'.zip';
+        $filename = $travel->name.' Forms.zip';
 
         $path = Storage::disk('local')->path('nova-exports/'.$filename);
 
@@ -58,7 +58,7 @@ class DownloadDocuSignForms extends Action
                 if ($envelope->travel_authority_filename !== null) {
                     $zip->addFile(
                         Storage::disk('local')->path($envelope->travel_authority_filename),
-                        $envelope->signable->user->full_name.' - Travel Authority Request.pdf'
+                        $envelope->signable->user->full_name.' - Travel Information Form.pdf'
                     );
                 }
 

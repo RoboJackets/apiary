@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Nova\Actions\Actionable;
 use Laravel\Scout\Searchable;
 
 /**
@@ -56,6 +57,7 @@ use Laravel\Scout\Searchable;
  * @property string|null $hotel_name
  * @property string|null $department_number
  * @property array|null $forms
+ * @property string|null $status
  * @property-read bool $needs_airfare_form
  * @property-read bool $needs_travel_information_form
  * @property-read bool $needs_docusign
@@ -108,6 +110,7 @@ use Laravel\Scout\Searchable;
  */
 class Travel extends Model
 {
+    use Actionable;
     use HasFactory;
     use Searchable;
     use SoftDeletes;
@@ -167,6 +170,16 @@ class Travel extends Model
     public function primaryContact(): BelongsTo
     {
         return $this->belongsTo(User::class, 'primary_contact_user_id');
+    }
+
+    /**
+     * Get the creating user for this travel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Travel>
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
     }
 
     /**
