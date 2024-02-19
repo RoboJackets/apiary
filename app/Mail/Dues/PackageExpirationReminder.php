@@ -62,7 +62,7 @@ class PackageExpirationReminder extends Mailable implements ShouldQueue
             ->whereDate('access_end', '<', Carbon::now()->addDays(7))
             ->get();
 
-        $userCount = User::active()->accessInactive()->count();
+        $userCount = User::inactive()->accessActive()->count();
 
         return new Content(
             text: 'mail.dues.packageexpirationreminder',
