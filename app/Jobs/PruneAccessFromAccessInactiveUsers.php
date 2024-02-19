@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\User;
+use Carbon\CarbonImmutable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,13 +33,14 @@ class PruneAccessFromAccessInactiveUsers implements ShouldQueue
      */
     public function handle(): void
     {
-        User::accessInactive()
+        User::accessInactive(CarbonImmutable::now()->subDay())
             ->where('is_service_account', '=', false)
             ->where(static function (Builder $query): void {
                 $query->whereHas('roles')
                     ->orWhereHas('permissions');
             })
             ->get()
+            ->filter(static fn (User $user): bool => ! $user->is_access_active)
             ->each(static function (User $user): void {
                 $user->roles()->detach();
                 $user->permissions()->detach();

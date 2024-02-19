@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\GetMorphClassStatic;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -263,10 +264,10 @@ class DuesTransaction extends Model implements Payable
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
-    public function scopeAccessCurrent(Builder $query): Builder
+    public function scopeAccessCurrent(Builder $query, ?CarbonImmutable $asOfTimestamp = null): Builder
     {
-        return $query->whereHas('package', static function (Builder $q): void {
-            $q->accessActive();
+        return $query->whereHas('package', static function (Builder $q) use ($asOfTimestamp): void {
+            $q->accessActive($asOfTimestamp);
         });
     }
 
