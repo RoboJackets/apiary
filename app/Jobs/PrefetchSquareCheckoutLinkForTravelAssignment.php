@@ -38,6 +38,10 @@ class PrefetchSquareCheckoutLinkForTravelAssignment implements ShouldQueue
     {
         $assignment = $this->assignment;
 
+        if ($assignment->is_paid) {
+            return;
+        }
+
         Cache::lock(name: $assignment->user->uid.'_payment', seconds: 120)->block(
             seconds: 60,
             callback: static function () use ($assignment): void {
@@ -52,17 +56,18 @@ class PrefetchSquareCheckoutLinkForTravelAssignment implements ShouldQueue
 
                     $assignment->payment()->save($payment);
                 } else {
-                    $payment = $assignment->payment()->sole();
+                    $payment = $assignment
+                        ->payment()
+                        ->where('method', '=', 'square')
+                        ->sole();
                 }
-
-                $amount = $assignment->travel->fee_amount * 100;
 
                 if ($payment->url !== null) {
                     return;
                 }
 
                 SquareCheckout::redirectToSquare(
-                    $amount,
+                    $assignment->travel->fee_amount * 100,
                     $payment,
                     $assignment->user,
                     'Trip Fee',
