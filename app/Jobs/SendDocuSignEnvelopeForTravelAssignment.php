@@ -31,8 +31,10 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
     /**
      * Create a new job instance.
      */
-    public function __construct(public readonly TravelAssignment $assignment)
-    {
+    public function __construct(
+        public readonly TravelAssignment $assignment,
+        public readonly bool $sendCreateNotificationOnFailure = false
+    ) {
         $this->queue = 'docusign';
     }
 
@@ -41,18 +43,24 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
      */
     public function handle(): void
     {
-        $senderApiClient = DocuSign::getApiClientForUser($this->assignment->travel->primaryContact);
+        $assignment = $this->assignment;
+
+        $senderApiClient = DocuSign::getApiClientForUser($assignment->travel->primaryContact);
 
         if ($senderApiClient === null) {
             if (
-                $this->assignment->travel->primaryContact
+                $assignment->travel->primaryContact
                     ->novaNotifications()
                     ->where('type', '=', LinkDocuSignAccount::class)
                     ->doesntExist()
             ) {
-                $this->assignment->travel->primaryContact->notifyNow(
-                    new LinkDocuSignAccount($this->assignment->travel->name)
+                $assignment->travel->primaryContact->notifyNow(
+                    new LinkDocuSignAccount($assignment->travel->name)
                 );
+            }
+
+            if ($this->sendCreateNotificationOnFailure) {
+                SendTravelAssignmentCreatedNotification::dispatch($assignment);
             }
 
             $this->fail('Could not send envelope because primary contact does not have valid DocuSign credentials');
@@ -60,21 +68,37 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
             return;
         }
 
-        $assignment = $this->assignment;
+        if (
+            ! $assignment->user->has_emergency_contact_information &&
+            $assignment->travel->needs_travel_information_form
+        ) {
+            if ($this->sendCreateNotificationOnFailure) {
+                SendTravelAssignmentCreatedNotification::dispatch($assignment);
+            }
 
-        if (! $assignment->user->has_emergency_contact_information) {
             $this->fail('Could not send envelope because traveler does not have emergency contact information');
 
             return;
         }
 
-        if ($assignment->user->phone === null) {
+        if (
+            $assignment->user->phone === null &&
+            $assignment->travel->needs_airfare_form
+        ) {
+            if ($this->sendCreateNotificationOnFailure) {
+                SendTravelAssignmentCreatedNotification::dispatch($assignment);
+            }
+
             $this->fail('Could not send envelope because traveler does not have phone number');
 
             return;
         }
 
         if ($assignment->user->docusign_access_token === null) {
+            if ($this->sendCreateNotificationOnFailure) {
+                SendTravelAssignmentCreatedNotification::dispatch($assignment);
+            }
+
             $this->fail('Could not send envelope because traveler does not have DocuSign account');
 
             return;
