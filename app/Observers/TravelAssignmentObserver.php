@@ -11,7 +11,6 @@ use App\Jobs\SendDocuSignEnvelopeForTravelAssignment;
 use App\Jobs\SendTravelAssignmentCreatedNotification;
 use App\Jobs\SendTravelAssignmentReminder;
 use App\Models\TravelAssignment;
-use App\Notifications\Travel\TravelAssignmentCreated;
 
 class TravelAssignmentObserver
 {
