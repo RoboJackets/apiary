@@ -213,6 +213,7 @@ parameters:
     - '#Parameter \#1 \$user of class App\\Mail\\DocuSign\\Agreement\\MemberNotification constructor expects App\\Models\\User, mixed given\.#'
     - '#Parameter \#1 \$user of class App\\Mail\\DocuSign\\Agreement\\ParentNotification constructor expects App\\Models\\User, mixed given\.#'
     - '#Parameter \#1 \$user of job class App\\Jobs\\PushToJedi constructor expects App\\Models\\User in App\\Jobs\\PushToJedi::dispatch\(\), App\\Models\\User\|null given\.#'
+    - '#Parameter \#1 \$user of method App\\Policies\\DocuSignEnvelopePolicy::delete\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$user of method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\DuesPackage>::userCanPurchase\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$user of static method App\\Util\\DocuSign::getApiClientForUser\(\) expects App\\Models\\User, App\\Models\\User\|null given\.#'
     - '#Parameter \#1 \$username of method Illuminate\\Notifications\\Messages\\SlackMessage::from\(\) expects string, mixed given\.#'
