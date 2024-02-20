@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -245,10 +246,10 @@ class DuesPackage extends Model
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
-    public function scopeAccessActive(Builder $query): Builder
+    public function scopeAccessActive(Builder $query, ?CarbonImmutable $asOfTimestamp = null): Builder
     {
-        return $query->where('access_start', '<', now())
-            ->where('access_end', '>', now());
+        return $query->where('access_start', '<', $asOfTimestamp ?? CarbonImmutable::now())
+            ->where('access_end', '>', $asOfTimestamp ?? CarbonImmutable::now());
     }
 
     /**

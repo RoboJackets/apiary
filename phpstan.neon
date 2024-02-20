@@ -107,6 +107,7 @@ parameters:
     - '#Offset ''revenue'' does not exist on App\\Models\\Payment\|null\.#'
     - '#Only booleans are allowed in &&, Illuminate\\Support\\Carbon\|null given on the (right|left) side\.#'
     - '#Only booleans are allowed in a negated boolean, Illuminate\\Support\\Carbon\|null given\.#'
+    - '#Only booleans are allowed in a negated boolean, mixed given\.#'
     - '#Only booleans are allowed in a ternary operator condition, Illuminate\\Support\\Carbon\|null given\.#'
     - '#Only numeric types are allowed in \+, float\|null given on the right side\.#'
     - '#Only numeric types are allowed in \+, int\|null given on the left side\.#'
