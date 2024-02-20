@@ -131,7 +131,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read bool $has_emergency_contact_information
  *
  * @method static Builder|User accessActive()
- * @method static Builder|User accessInactive()
+ * @method static Builder|User accessInactive(\Carbon\CarbonImmutable|null $asOfTimestamp)
  * @method static Builder|User active()
  * @method static Builder|User buzzCardAccessEligible()
  * @method static \Database\Factories\UserFactory factory(...$parameters)
@@ -712,12 +712,16 @@ class User extends Authenticatable
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public function scopeAccessInactive(Builder $query): Builder
+    public function scopeAccessInactive(Builder $query, ?CarbonImmutable $asOfTimestamp = null): Builder
     {
-        return $query->whereDoesntHave('dues', static function (Builder $q): void {
-            $q->paid()->accessCurrent();
-        })->where(static function (Builder $query): void {
-            $query->where('access_override_until', '<=', now())->orWhereNull('access_override_until');
+        return $query->whereDoesntHave('dues', static function (Builder $q) use ($asOfTimestamp): void {
+            $q->paid()->accessCurrent($asOfTimestamp);
+        })->where(static function (Builder $query) use ($asOfTimestamp): void {
+            $query->where(
+                'access_override_until',
+                '<=',
+                $asOfTimestamp ?? CarbonImmutable::now()
+            )->orWhereNull('access_override_until');
         });
     }
 
