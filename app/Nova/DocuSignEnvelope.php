@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\VoidDocuSignEnvelope;
+use App\Policies\DocuSignEnvelopePolicy;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -203,15 +204,18 @@ class DocuSignEnvelope extends Resource
                             ->withTrashed()
                             ->sole();
 
-                        return $request->user()->hasRole('admin') &&
+                        return (new DocuSignEnvelopePolicy())->delete($request->user(), $envelope) &&
                             ! $envelope->complete &&
                             $envelope->envelope_id !== null;
                     }
                 )
                 ->canRun(
-                    static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
-                        ->user()
-                        ->hasRole('admin')
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\DocuSignEnvelope $envelope
+                    ): bool => (new DocuSignEnvelopePolicy())->delete($request->user(), $envelope) &&
+                        ! $envelope->complete &&
+                        $envelope->envelope_id !== null
                 ),
         ];
     }

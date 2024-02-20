@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
+use App\Models\Payment;
 use App\Nova\Metrics\MerchandiseSelections;
 use App\Nova\Metrics\PaymentMethodBreakdown;
 use App\Nova\Metrics\TotalCollections;
@@ -153,6 +154,14 @@ class DuesPackage extends Resource
             Currency::make('Cost')
                 ->sortable()
                 ->rules('required', 'integer'),
+
+            Currency::make(
+                'Square Processing Fee',
+                static fn (
+                    \App\Models\DuesPackage $package
+                ): float => Payment::calculateProcessingFee(intval($package->cost * 100)) / 100
+            )
+                ->onlyOnDetail(),
 
             Boolean::make('Available for Purchase')
                 ->sortable(),
