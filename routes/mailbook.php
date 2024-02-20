@@ -16,6 +16,7 @@ use App\Models\Signature;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use App\Notifications\Dues\PackageExpirationReminder;
 use App\Notifications\Dues\PaymentReminder;
 use App\Notifications\Dues\TransactionReminder;
 use App\Notifications\ExpiringPersonalAccessTokenNotification;
@@ -2231,5 +2232,39 @@ Mailbook::category('Personal Access Tokens')->group(static function () use ($use
             $token->save();
 
             return new ExpiringPersonalAccessTokenNotification($token);
+        });
+});
+
+Mailbook::category('Dues Packages')->group(static function () use ($user): void {
+    Mailbook::to($user)
+        ->add(PackageExpirationReminder::class)
+        ->label('Dues Package Expiration Reminder')
+        ->variant('One Package', static function () use ($user): PackageExpirationReminder {
+            $user->givePermissionTo('update-dues-packages');
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Spring 2023',
+                'cost' => 55,
+                'access_end' => Carbon::now()->addDays(3),
+            ]));
+
+            return new PackageExpirationReminder();
+        })
+        ->variant('Two Packages', static function () use ($user): PackageExpirationReminder {
+            $user->givePermissionTo('update-dues-packages');
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Spring 2023',
+                'cost' => 55,
+                'access_end' => Carbon::now()->addDays(3),
+            ]));
+
+            DuesPackage::withoutEvents(static fn (): DuesPackage => DuesPackage::firstOrCreate([
+                'name' => 'Full Year (2022-2023)',
+                'cost' => 100,
+                'access_end' => Carbon::now()->addDays(3),
+            ]));
+
+            return new PackageExpirationReminder();
         });
 });
