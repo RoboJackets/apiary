@@ -70,6 +70,17 @@ class CheckAllTravelAssignmentsComplete implements ShouldBeUnique, ShouldQueue
                 }
             }
         );
+
+        if (
+            $travel->payment_completion_email_sent &&
+            (
+                $travel->form_completion_email_sent ||
+                ! $travel->needs_docusign
+            )
+        ) {
+            $travel->status = 'complete';
+            $travel->save();
+        }
     }
 
     /**

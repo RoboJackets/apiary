@@ -1081,6 +1081,12 @@ class User extends Authenticatable
     {
         $needPayment = $this->assignments()
             ->select('travel_assignments.*')
+            ->whereHas(
+                'travel',
+                static function (Builder $query): void {
+                    $query->whereIn('status', ['approved', 'complete']);
+                }
+            )
             ->unpaid()
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
@@ -1092,6 +1098,12 @@ class User extends Authenticatable
 
         $needDocuSign = $this->assignments()
             ->select('travel_assignments.*')
+            ->whereHas(
+                'travel',
+                static function (Builder $query): void {
+                    $query->whereIn('status', ['approved', 'complete']);
+                }
+            )
             ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->needDocuSign()
             ->oldest('travel.departure_date')
@@ -1105,6 +1117,12 @@ class User extends Authenticatable
         // this might be null, but that's fine
         return $this->assignments()
             ->select('travel_assignments.*')
+            ->whereHas(
+                'travel',
+                static function (Builder $query): void {
+                    $query->whereIn('status', ['approved', 'complete']);
+                }
+            )
             ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')

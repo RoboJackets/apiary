@@ -6,7 +6,12 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Jobs\PrefetchSquareCheckoutLinkForTravelAssignment;
+use App\Jobs\SendDocuSignEnvelopeForTravelAssignment;
+use App\Jobs\SendTravelAssignmentCreatedNotification;
 use App\Models\Payment;
+use App\Models\TravelAssignment;
+use App\Notifications\Nova\TravelApproved;
 use App\Rules\AllCriteriaMustBeSelected;
 use App\Util\Matrix;
 use Illuminate\Support\Collection;
@@ -62,6 +67,25 @@ class ReviewTrip extends Action
 
         $trip->status = 'approved';
         $trip->save();
+
+        if ($trip->needs_docusign) {
+            $trip->assignments->each(static function (TravelAssignment $assignment): void {
+                PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
+                    ->chain([
+                        new SendDocuSignEnvelopeForTravelAssignment($assignment, true),
+                        new SendTravelAssignmentCreatedNotification($assignment),
+                    ]);
+            });
+        } else {
+            $trip->assignments->each(static function (TravelAssignment $assignment): void {
+                PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
+                    ->chain([
+                        new SendTravelAssignmentCreatedNotification($assignment),
+                    ]);
+            });
+        }
+
+        $trip->primaryContact->notify(new TravelApproved($trip));
 
         return ActionResponse::message('The trip has been approved!');
     }

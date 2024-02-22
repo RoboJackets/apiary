@@ -23,6 +23,8 @@ use DocuSign\eSign\Client\Auth\OAuthToken;
 use DocuSign\eSign\Client\Auth\UserInfo;
 use DocuSign\eSign\Model\RecipientViewRequest;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -44,6 +46,12 @@ class DocuSignController extends Controller
         if (! $assignment->needs_docusign) {
             $any_assignment_needs_docusign = $user->assignments()
                 ->select('travel_assignments.*')
+                ->whereHas(
+                    'travel',
+                    static function (Builder $query): void {
+                        $query->whereIn('status', ['approved', 'complete']);
+                    }
+                )
                 ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
                 ->needDocuSign()
                 ->oldest('travel.departure_date')
@@ -87,11 +95,38 @@ class DocuSignController extends Controller
 
         SendDocuSignEnvelopeForTravelAssignment::dispatchSync($assignment);
 
-        return self::redirectToRecipientView(
-            $request,
-            $recipientApiClient,
-            $assignment->envelope()->whereNotNull('envelope_id')->sole()
-        );
+        try {
+            return self::redirectToRecipientView(
+                $request,
+                $recipientApiClient,
+                $assignment->envelope()->whereNotNull('envelope_id')->sole()
+            );
+        } catch (ModelNotFoundException) {
+            if (
+                ! $assignment->user->has_emergency_contact_information &&
+                $assignment->travel->needs_travel_information_form
+            ) {
+                return view(
+                    'travel.actionrequired',
+                    [
+                        'name' => $assignment->travel->name,
+                        'action' => 'provide emergency contact information on your profile',
+                    ]
+                );
+            }
+
+            if ($assignment->user->phone === null && $assignment->travel->needs_airfare_form) {
+                return view(
+                    'travel.actionrequired',
+                    [
+                        'name' => $assignment->travel->name,
+                        'action' => 'provide your phone number on your profile',
+                    ]
+                );
+            }
+
+            return response(status: 500);
+        }
     }
 
     /**

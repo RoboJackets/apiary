@@ -604,6 +604,7 @@ class Travel extends Resource
         if (
             $trip->status !== 'draft' &&
             $trip->needs_docusign &&
+            $trip->assignments_count > 0 &&
             (
                 $request->user()->can('view-docusign-envelopes') ||
                 $request->user()->id === $trip->primary_contact_user_id
@@ -647,6 +648,7 @@ class Travel extends Resource
 
         if (
             $trip->status !== 'draft' &&
+            $trip->assignments_count > 0 &&
             (
                 (
                     $request->user()->can('read-users-gtid') &&
@@ -691,7 +693,15 @@ class Travel extends Resource
         }
 
         if ($trip->status === 'draft' && $request->user()->can('approve-travel')) {
-            if ($request->user()->id === $trip->primary_contact_user_id) {
+            if ($trip->assignments_count === 0) {
+                $actions[] = Action::danger(
+                    ReviewTrip::make()->name(),
+                    'You can\'t review this trip because there are no assignments yet.'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            } elseif ($request->user()->id === $trip->primary_contact_user_id) {
                 $actions[] = Action::danger(
                     ReviewTrip::make()->name(),
                     'You can\'t review this trip because you are the primary contact.'
@@ -703,14 +713,6 @@ class Travel extends Resource
                 $actions[] = Action::danger(
                     ReviewTrip::make()->name(),
                     'You can\'t review this trip because you created it.'
-                )
-                    ->withoutConfirmation()
-                    ->withoutActionEvents()
-                    ->canRun(static fn (): bool => true);
-            } elseif ($trip->actions()->where('user_id', '=', $request->user()->id)->exists()) {
-                $actions[] = Action::danger(
-                    ReviewTrip::make()->name(),
-                    'You can\'t review this trip because you have made changes to it.'
                 )
                     ->withoutConfirmation()
                     ->withoutActionEvents()

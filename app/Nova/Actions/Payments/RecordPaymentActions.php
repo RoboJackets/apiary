@@ -57,6 +57,12 @@ trait RecordPaymentActions
             return [];
         }
 
+        if ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
+            if ($payable->trip->status === 'draft') {
+                return [];
+            }
+        }
+
         $actions = [];
 
         foreach (self::OFFLINE_PAYMENT_METHODS as $method => $class) {
