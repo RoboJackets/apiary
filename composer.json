@@ -59,7 +59,7 @@
         "spatie/laravel-csp": "2.8.4",
         "spatie/laravel-failed-job-monitor": "4.2.1",
         "spatie/laravel-permission": "6.3.0",
-        "spatie/laravel-webhook-client": "3.2.0",
+        "spatie/laravel-webhook-client": "3.3.0",
         "square/square": "34.0.1.20240118",
         "subfission/cas": "4.4.0",
         "symfony/http-client": "6.4.3",
