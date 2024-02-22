@@ -170,6 +170,7 @@ class DuesPackage extends Resource
                 ->sortable(),
 
             BelongsTo::make('Cannot Be Purchased After', 'conflictsWith', self::class)
+                ->withoutTrashed()
                 ->nullable()
                 ->hideFromIndex(),
 
@@ -245,5 +246,17 @@ class DuesPackage extends Resource
                 ->onlyOnDetail()
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-payments')),
         ];
+    }
+
+    /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     */
+    protected static function afterValidation(NovaRequest $request, $validator): void
+    {
+        if ($request->resourceId !== null && $request->resourceId === $request->conflictsWith) {
+            $validator->errors()->add('conflictsWith', 'Packages can\'t be configured to conflict with themselves');
+        }
     }
 }
