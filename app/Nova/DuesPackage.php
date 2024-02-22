@@ -255,7 +255,7 @@ class DuesPackage extends Resource
      */
     protected static function afterValidation(NovaRequest $request, $validator): void
     {
-        if ($request->resourceId === $request->conflictsWith) {
+        if ($request->resourceId !== null && $request->resourceId === $request->conflictsWith) {
             $validator->errors()->add('conflictsWith', 'Packages can\'t be configured to conflict with themselves');
         }
     }
