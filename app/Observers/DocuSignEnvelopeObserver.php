@@ -82,7 +82,7 @@ class DocuSignEnvelopeObserver
                         $envelope->complete &&
                         $envelope->envelope_id !== null &&
                         $envelope->signable_type === Signature::getMorphClassStatic() &&
-                        ! $envelope->acknowledgement_sent // @phpstan-ignore-line
+                        ! $envelope->acknowledgement_sent
                     ) {
                         $envelope->acknowledgement_sent = true;
                         $envelope->save();
@@ -92,7 +92,7 @@ class DocuSignEnvelopeObserver
                         $envelope->complete &&
                         $envelope->envelope_id !== null &&
                         $envelope->signable_type === TravelAssignment::getMorphClassStatic() &&
-                        ! $envelope->acknowledgement_sent // @phpstan-ignore-line
+                        ! $envelope->acknowledgement_sent
                     ) {
                         $envelope->acknowledgement_sent = true;
                         $envelope->save();

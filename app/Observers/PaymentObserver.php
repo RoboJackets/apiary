@@ -50,7 +50,7 @@ class PaymentObserver
                 callback: static function () use ($payment): void {
                     // double-check that a receipt was not sent in a different thread
                     $payment->refresh();
-                    if (! $payment->receipt_sent && // @phpstan-ignore-line
+                    if (! $payment->receipt_sent &&
                         intval($payment->amount) > 0 &&
                         $payment->method !== 'waiver' &&
                         (
