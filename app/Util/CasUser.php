@@ -100,6 +100,7 @@ class CasUser
             $user->removeRole('non-member');
             $user->assignRole('member');
         } else {
+            $user->removeRole('member');
             $user->assignRole('non-member');
         }
 
