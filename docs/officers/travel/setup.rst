@@ -67,6 +67,9 @@ Once all assignments have been created, the trip must be approved by an officer.
    #. If all criteria are met, click :guilabel:`Approve` at the bottom of the popup.
 #. Once the trip is approved, travelers will receive email notifications with instructions to pay and submit forms, if needed.
 
+.. important::
+   Approving a trip is final -- trips can't be moved back to :guilabel:`Draft` status after approval.
+
 Collect payments
 ----------------
 

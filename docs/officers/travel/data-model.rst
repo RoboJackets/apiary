@@ -16,7 +16,7 @@ Trips have a few key attributes:
 
 .. vale write-good.E-Prime = NO
 
-- The **status** which determines whether a trip is visible to travelers
+- The **status** determines whether a trip is visible to travelers
 - The **primary contact** person responsible for organizing the trip
 - The **trip fee amount** to collect from each traveler
 - The **forms to collect** via DocuSign
@@ -42,7 +42,9 @@ A trip can be in one of three statuses:
 - :guilabel:`Complete` trips are locked and can no longer be modified.
 
 A trip always start in :guilabel:`Draft` status.
-When an officer approves a trip, it moves to :guilabel:`Approved` status.
+
+When an officer approves a trip, it moves to :guilabel:`Approved` status. **Approving a trip is final -- trips can't be moved back to** :guilabel:`Draft` **status after approval**.
+
 Once all payments and forms are received, the trip moves to :guilabel:`Complete` status.
 
 Trip assignment
