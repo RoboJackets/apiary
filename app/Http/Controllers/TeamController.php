@@ -79,7 +79,6 @@ class TeamController extends Controller
         $include = $request->input('include');
         $team = Team::with(AuthorizeInclude::authorize(Team::class, $include))
             ->where('id', $id)
-            ->orWhere('slug', $id)
             ->first();
 
         if ($team !== null && $team->visible === false && $request->user()->cant('read-teams-hidden')) {
@@ -98,7 +97,7 @@ class TeamController extends Controller
      */
     public function showMembers(Request $request, string $id): JsonResponse
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
@@ -115,7 +114,7 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
@@ -132,7 +131,7 @@ class TeamController extends Controller
     {
         $requestingUser = $request->user();
 
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
@@ -161,7 +160,7 @@ class TeamController extends Controller
             $team->members()->detach($user);
         }
 
-        $team = new TeamResource(Team::where('id', $id)->orWhere('slug', $id)->first());
+        $team = new TeamResource(Team::where('id', $id)->first());
 
         return response()->json(['status' => 'success', 'team' => $team, 'member' => $user->name], 201);
     }
@@ -171,7 +170,7 @@ class TeamController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null) {
             return response()->json(
                 [

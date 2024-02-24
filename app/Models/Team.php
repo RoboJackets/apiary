@@ -31,7 +31,6 @@ use Laravel\Scout\Searchable;
  * @property bool $visible
  * @property bool $visible_on_kiosk
  * @property bool $attendable
- * @property string|null $slug
  * @property string|null $description
  * @property string|null $mailing_list_name
  * @property string|null $slack_channel_id
@@ -74,7 +73,6 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Team whereSlackChannelId($value)
  * @method static Builder|Team whereSlackChannelName($value)
  * @method static Builder|Team whereSlackPrivateChannelId($value)
- * @method static Builder|Team whereSlug($value)
  * @method static Builder|Team whereUpdatedAt($value)
  * @method static Builder|Team whereVisible($value)
  * @method static Builder|Team whereVisibleOnKiosk($value)

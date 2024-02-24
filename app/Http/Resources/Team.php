@@ -26,7 +26,6 @@ class Team extends JsonResource
             'visible' => $this->visible,
             'visible_on_kiosk' => $this->visible_on_kiosk,
             'attendable' => $this->attendable,
-            'slug' => $this->slug,
             'description' => $this->description,
             'mailing_list_name' => $this->mailing_list_name,
             'slack_channel_id' => $this->slack_channel_id,
