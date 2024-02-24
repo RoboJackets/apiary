@@ -47,7 +47,7 @@ class DashboardController extends Controller
             })
             ->count() === 0
         );
-        $needsTransaction = $needsTransaction && (DuesPackage::userCanPurchase($user)->count() > 0);
+        $needsTransaction = $needsTransaction && (DuesPackage::userCanPurchase($user)->count() > 0) && ! $status;
 
         //User needs a payment if they don't have enough payments to cover their pending dues transaction
         //Don't change this to use ->count(). It won't work - trust me.
