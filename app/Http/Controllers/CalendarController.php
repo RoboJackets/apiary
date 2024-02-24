@@ -28,6 +28,8 @@ class CalendarController extends Controller
     public function __invoke(Request $request)
     {
         $events = Event::with('organizer')
+            ->whereNotNull('start_time')
+            ->whereNotNull('end_time')
             ->get()
             ->map(
                 static fn (Event $event): CalendarEvent => (new CalendarEvent(
