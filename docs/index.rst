@@ -18,6 +18,7 @@ Apiary
    officers/events
    officers/merchandise
    officers/payments/index
+   officers/travel/index
    officers/users
 
 .. toctree::

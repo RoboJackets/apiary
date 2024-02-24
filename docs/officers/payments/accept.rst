@@ -12,7 +12,7 @@ While most members choose to pay online, cash and checks must be recorded in Api
 Officers also have the ability to apply waivers.
 
 .. hint::
-   To record cash or check payments, you must have a :ref:`officer` or :ref:`project-manager` role.
+   To record cash or check payments, you must have an :ref:`officer` or :ref:`project-manager` role.
    To apply waivers, you must have the :ref:`officer` role.
    If you need access, ask in :slack:`it-helpdesk`.
 
@@ -41,16 +41,16 @@ To record a cash payment, check, or waiver, follow the steps below.
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
 #. Search for the member using the search box under the :guilabel:`Users` header, then select the user from the results.
 #. To record a payment for dues, scroll to the :guilabel:`Dues Transactions` heading.
-   To record a payment for travel, scroll to the :guilabel:`Travel Assignments` heading.
-#. Select an existing dues transaction or travel assignment from the list.
-   **Don't click** :guilabel:`Create Dues Transaction` or :guilabel:`Create Travel Assignment`.
+   To record a payment for a trip fee, scroll to the :guilabel:`Trip Assignments` heading.
+#. Select an existing :ref:`dues transaction <Dues transaction>` or :ref:`trip assignment <Trip assignment>` from the list.
+   **Don't click** :guilabel:`Create Dues Transaction` or :guilabel:`Create Trip Assignment`.
 
    .. vale Google.Parens = NO
 
    #. If the member doesn't have an existing **dues transaction** for the dues package they want to pay for, they need to update their selected dues package (labeled :guilabel:`Dues Term`) in the member-facing UI.
-   #. If the member doesn't have an existing **travel assignment** for the travel they want to pay for, the primary contact for the travel must create the assignment.
+   #. If the member doesn't have an existing **trip assignment** for the trip they want to pay for, the primary contact for the trip must create the assignment.
 
-#. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Travel Assignment Details` or :guilabel:`Dues Transaction Details` header, then choose the option for the payment method you want to record.
+#. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Trip Assignment Details` or :guilabel:`Dues Transaction Details` header, then choose the option for the payment method you want to record.
 #. Depending on the payment method, you will see a popup to provide information about the payment.
 #. When you're done, click the blue button at the bottom of the popup to record the payment.
 #. For cash and check payments, Apiary will send a receipt to the member's Georgia Tech email address.

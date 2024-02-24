@@ -283,7 +283,7 @@ class Travel extends Resource
                                 )
                             ) {
                                 $field->show()
-                                    ->rules('required', 'min:20', 'max:60');
+                                    ->rules('required', 'max:60');
                             }
                         }
                     )
@@ -604,7 +604,7 @@ class Travel extends Resource
         if (
             $trip->status !== 'draft' &&
             $trip->needs_docusign &&
-            $trip->assignments_count > 0 &&
+            $trip->assignments->count() > 0 &&
             (
                 $request->user()->can('view-docusign-envelopes') ||
                 $request->user()->id === $trip->primary_contact_user_id
@@ -614,7 +614,7 @@ class Travel extends Resource
                 $trip->assignments->reduce(
                     // ensure every assignment has an envelope
                     static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
-                        $assignment->envelope_count > 0 &&
+                        $assignment->envelope->count() > 0 &&
                         $assignment->envelope->reduce(
                             // ensure every envelope has a summary PDF on disk
                             static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
@@ -648,7 +648,7 @@ class Travel extends Resource
 
         if (
             $trip->status !== 'draft' &&
-            $trip->assignments_count > 0 &&
+            $trip->assignments->count() > 0 &&
             (
                 (
                     $request->user()->can('read-users-gtid') &&
@@ -693,7 +693,7 @@ class Travel extends Resource
         }
 
         if ($trip->status === 'draft' && $request->user()->can('approve-travel')) {
-            if ($trip->assignments_count === 0) {
+            if ($trip->assignments->count() === 0) {
                 $actions[] = Action::danger(
                     ReviewTrip::make()->name(),
                     'You can\'t review this trip because there are no assignments yet.'

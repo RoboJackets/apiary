@@ -159,7 +159,7 @@ class ReviewTrip extends Action
                 ->default(
                     static fn (): string => $totalCost === 0 ?
                         'Not Applicable' :
-                        (($trip->fee_amount / $totalCost) * 100).'%'
+                        intval(ceil(($trip->fee_amount / $totalCost) * 100)).'%'
                 )
                 ->readonly()
                 ->help('This is the percentage of costs that are paid by travelers via the trip fee.'),

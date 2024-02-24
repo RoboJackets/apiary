@@ -14,6 +14,8 @@ Users can be assigned any combination of roles and permissions, and their effect
 
 To attach or detach a role or permission, open a user's detail page, then scroll to the :guilabel:`Roles` or :guilabel:`Permissions` section.
 
+Roles and permissions are automatically detached once a user becomes access inactive.
+
 Role descriptions
 -----------------
 
@@ -39,7 +41,7 @@ This role grants access to almost all functions and should only be assigned to s
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash, check, or waiver payments <Recording an Offline Payment>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
-- Manage travel
+- :ref:`Approve <Approve a trip>` and :doc:`manage trips </officers/travel/index>`
 
 .. _project-manager:
 
@@ -50,14 +52,14 @@ This role grants access to almost all functions and should only be assigned to s
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Record cash or check payments <Recording an Offline Payment>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
-- Manage travel
+- :doc:`Manage trips </officers/travel/index>`
 
 .. _team-lead:
 
 ``team-lead``
 ~~~~~~~~~~~~~
 
-- View :doc:`users </officers/users>`, :ref:`dues transactions <Dues Transaction>`, and :doc:`payments </officers/payments/index>`
+- View :doc:`users </officers/users>` and :ref:`dues transactions <Dues Transaction>`
 - :doc:`Take attendance for any team or event </officers/attendance>`
 - :ref:`Distribute merchandise <Recording Merchandise Distribution>`
 
@@ -97,7 +99,9 @@ This permission enables `impersonation within Laravel Nova <https://nova.laravel
 
 This permission enables a convenience URL (``/sign/auth/global``) to configure `DocuSign impersonation <https://developers.docusign.com/platform/auth/jwt/>`__. It should only be attached to system administrators that are configuring DocuSign.
 
+.. _update-airfare-policy:
+
 ``update-airfare-policy``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This permission allows users to update the airfare policies on trips.
+This permission allows users to :ref:`update the airfare policies on trips <Configure airfare policy>`.

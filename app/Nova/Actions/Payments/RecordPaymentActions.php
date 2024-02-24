@@ -58,7 +58,7 @@ trait RecordPaymentActions
         }
 
         if ($resourceType === \App\Nova\TravelAssignment::uriKey()) {
-            if ($payable->trip->status === 'draft') {
+            if ($payable->travel->status === 'draft') {
                 return [];
             }
         }
