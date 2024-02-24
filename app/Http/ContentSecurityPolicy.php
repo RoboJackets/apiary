@@ -58,6 +58,7 @@ class ContentSecurityPolicy extends Policy
         $this->addDirective(Directive::IMG, [
             Keyword::SELF,
             'https://www.gstatic.com',
+            '*.googleusercontent.com',
             'data: w3.org/svg/2000',
         ]);
         $this->addDirective(Directive::OBJECT, Keyword::NONE);
