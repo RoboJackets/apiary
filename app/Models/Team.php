@@ -29,7 +29,7 @@ use Laravel\Scout\Searchable;
  * @property string $name
  * @property bool $self_serviceable
  * @property bool $visible
- * @property int $visible_on_kiosk
+ * @property bool $visible_on_kiosk
  * @property bool $attendable
  * @property string|null $slug
  * @property string|null $description
@@ -117,6 +117,7 @@ class Team extends Model
         'attendable' => 'boolean',
         'self_serviceable' => 'boolean',
         'visible' => 'boolean',
+        'visible_on_kiosk' => 'boolean',
         'self_service_override_eligible' => 'boolean',
     ];
 
