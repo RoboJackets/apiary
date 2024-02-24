@@ -51,7 +51,7 @@ Trip assignment
 A **trip assignment** links a specific traveler to a specific trip.
 
 If the trip includes air travel, you'll need to provide a flight itinerary for each assignment in :doc:`Matrix JSON format </officers/travel/matrix>`.
-Assignments can have different itineraries, if needed.
+Assignments can have different itineraries if needed.
 
 An assignment may have zero or more :ref:`payments <Payments>` or :ref:`DocuSign envelopes <DocuSign envelope>` associated.
 
