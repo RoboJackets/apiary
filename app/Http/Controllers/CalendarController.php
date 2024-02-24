@@ -27,55 +27,63 @@ class CalendarController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $events = Event::all()->map(static fn (Event $event): CalendarEvent => (new CalendarEvent(
-            new UniqueIdentifier('event-'.$event->id.'@'.$request->getHost())
-        ))
-            ->setSummary($event->name)
-            ->setUrl(new Uri(
-                route(
-                    'nova.pages.detail',
-                    [
-                        'resource' => \App\Nova\Event::uriKey(),
-                        'resourceId' => $event->id,
-                    ]
-                )
-            ))
-            ->setOccurrence(new TimeSpan(
-                begin: new DateTime($event->start_time, applyTimeZone: true),
-                end: new DateTime($event->end_time, applyTimeZone: true)
-            ))
-            ->setLocation($event->location === null ? null : new Location($event->location))
-            ->setOrganizer(
-                new Organizer(
-                    new EmailAddress($event->organizer->gt_email),
-                    $event->organizer->name
-                )
-            ));
+        $events = Event::with('organizer')
+            ->get()
+            ->map(
+                static fn (Event $event): CalendarEvent => (new CalendarEvent(
+                    new UniqueIdentifier('event-'.$event->id.'@'.$request->getHost())
+                ))
+                    ->setSummary($event->name)
+                    ->setUrl(new Uri(
+                        route(
+                            'nova.pages.detail',
+                            [
+                                'resource' => \App\Nova\Event::uriKey(),
+                                'resourceId' => $event->id,
+                            ]
+                        )
+                    ))
+                    ->setOccurrence(new TimeSpan(
+                        begin: new DateTime($event->start_time, applyTimeZone: true),
+                        end: new DateTime($event->end_time, applyTimeZone: true)
+                    ))
+                    ->setLocation($event->location === null ? null : new Location($event->location))
+                    ->setOrganizer(
+                        new Organizer(
+                            new EmailAddress($event->organizer->gt_email),
+                            $event->organizer->name
+                        )
+                    )
+            );
 
-        $trips = Travel::all()->map(static fn (Travel $trip): CalendarEvent => (new CalendarEvent(
-            new UniqueIdentifier('trip-'.$trip->id.'@'.$request->getHost())
-        ))
-            ->setSummary($trip->name)
-            ->setUrl(new Uri(
-                route(
-                    'nova.pages.detail',
-                    [
-                        'resource' => \App\Nova\Travel::uriKey(),
-                        'resourceId' => $trip->id,
-                    ]
-                )
-            ))
-            ->setOccurrence(new MultiDay(
-                firstDay: new Date($trip->departure_date),
-                lastDay: new Date($trip->return_date)
-            ))
-            ->setLocation(new Location($trip->destination))
-            ->setOrganizer(
-                new Organizer(
-                    new EmailAddress($trip->primaryContact->gt_email),
-                    $trip->primaryContact->name
-                )
-            ));
+        $trips = Travel::with('primaryContact')
+            ->get()
+            ->map(
+                static fn (Travel $trip): CalendarEvent => (new CalendarEvent(
+                    new UniqueIdentifier('trip-'.$trip->id.'@'.$request->getHost())
+                ))
+                    ->setSummary($trip->name)
+                    ->setUrl(new Uri(
+                        route(
+                            'nova.pages.detail',
+                            [
+                                'resource' => \App\Nova\Travel::uriKey(),
+                                'resourceId' => $trip->id,
+                            ]
+                        )
+                    ))
+                    ->setOccurrence(new MultiDay(
+                        firstDay: new Date($trip->departure_date),
+                        lastDay: new Date($trip->return_date)
+                    ))
+                    ->setLocation(new Location($trip->destination))
+                    ->setOrganizer(
+                        new Organizer(
+                            new EmailAddress($trip->primaryContact->gt_email),
+                            $trip->primaryContact->name
+                        )
+                    )
+            );
 
         return response(
             content: (new CalendarFactory())->createCalendar(new Calendar([...$events, ...$trips]))->__toString(),
