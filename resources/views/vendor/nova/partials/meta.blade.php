@@ -4,3 +4,4 @@
 {!! \Sentry\Laravel\Integration::sentryTracingMeta() !!}
 <meta name="sentry-user-id" content="{{ auth()->user()->id }}">
 <meta name="sentry-username" content="{{ auth()->user()->uid }}">
+<link rel="manifest" href="/manifest.json" />
