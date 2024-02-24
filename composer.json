@@ -34,6 +34,7 @@
         "chelout/laravel-relationship-events": "2.0.0",
         "doctrine/dbal": "3.8.2",
         "docusign/esign-client": "6.18.0",
+        "eluceo/ical": "^2.13",
         "enlightn/enlightn": "2.7.0",
         "fakerphp/faker": "1.23.1",
         "guzzlehttp/guzzle": "7.8.1",
