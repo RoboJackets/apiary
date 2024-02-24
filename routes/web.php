@@ -93,6 +93,7 @@ Route::middleware('auth.cas.force')->group(static function (): void {
     Route::get('travel', [TravelAssignmentController::class, 'index'])->name('travel.index');
 
     Route::redirect('admin', '/nova');
+    Route::redirect('nova/login', '/nova');
 
     Route::get('login/cas', [AuthController::class, 'forceCasAuth'])
         ->name('login.cas');
