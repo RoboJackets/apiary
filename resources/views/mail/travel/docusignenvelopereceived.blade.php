@@ -5,7 +5,7 @@ We received your {{ $envelope->signable->travel->needs_airfare_form ? ($envelope
 You can view your completed {{ $envelope->signable->travel->needs_airfare_form ? ($envelope->signable->travel->needs_travel_information_form ? 'forms' : 'form') : ($envelope->signable->travel->needs_travel_information_form ? 'form' : '') }} within DocuSign at {{ $envelope->sender_view_url }}, or attached to a separate email from DocuSign.
 
 @if(!$envelope->signable->is_paid)
-You still need to make a ${{ intval($envelope->signable->travel->fee_amount) }} payment for the travel fee. You can pay online with a credit or debit card at {{ route('pay.travel') }}.
+You still need to make a ${{ intval($envelope->signable->travel->fee_amount) }} payment for the trip fee. You can pay online with a credit or debit card at {{ route('pay.travel') }}.
 
 If you would prefer to pay by cash or check, make arrangements with {!! $envelope->signable->travel->primaryContact->full_name !!}. Write checks to Georgia Tech, with RoboJackets on the memo line. Don't forget to sign it!
 
