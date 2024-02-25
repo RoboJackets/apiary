@@ -122,7 +122,7 @@ class CalendarController extends Controller
                         ]
                     )
                 ))
-                ->setOccurrence(new SingleDay(new Date($package->effective_end)))
+                ->setOccurrence(new SingleDay(new Date($package->access_end)))
         );
 
         return response(
