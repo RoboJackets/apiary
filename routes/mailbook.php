@@ -360,6 +360,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -425,6 +427,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -490,6 +494,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -549,7 +555,137 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
 
             return new PaymentReceipt($payment);
         })
-        ->variant('Trip Fee - Square - Don\'t Need Forms', static function (): PaymentReceipt {
+        ->variant('Trip Fee - Square - Need Forms and Emergency Contact', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 100,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 103.30;
+                $payment->method = 'square';
+                $payment->receipt_url = 'https://example.com/'.Str::random(8);
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Square - All Items Complete', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 100,
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 56.95;
+                $payment->method = 'square';
+                $payment->receipt_url = 'https://example.com/'.Str::random(8);
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Square - Don\'t Need Forms - Need Emergency Contact', static function (): PaymentReceipt {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -618,6 +754,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -683,6 +821,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -748,6 +888,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -814,6 +956,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
