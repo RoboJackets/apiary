@@ -685,7 +685,7 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
 
             return new PaymentReceipt($payment);
         })
-        ->variant('Trip Fee - Square - Don\'t Need Forms - Need Emergency Contact', static function (): PaymentReceipt {
+        ->variant('Trip Fee - Square - Need Emergency Contact', static function (): PaymentReceipt {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
