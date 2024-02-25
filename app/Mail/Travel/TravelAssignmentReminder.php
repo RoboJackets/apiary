@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Mail\Travel;
 
 use App\Models\TravelAssignment;
@@ -32,7 +34,7 @@ class TravelAssignmentReminder extends Mailable implements ShouldQueue
             ->to($this->assignment->user->gt_email, $this->assignment->user->name)
             ->subject(
                 'Reminder: '.$this->subjectLineCallToAction()
-                .' required for '.$this->assignment->travel->name.' travel'
+                .' required for '.$this->assignment->travel->name
             )
             ->text('mail.travel.assignmentreminder')
             ->withSymfonyMessage(function (Email $email): void {
@@ -52,7 +54,19 @@ class TravelAssignmentReminder extends Mailable implements ShouldQueue
             $this->assignment->is_paid &&
             $this->assignment->user->has_emergency_contact_information
         ) {
-            return 'documents';
+            if ($this->assignment->travel->needs_airfare_form) {
+                if ($this->assignment->travel->needs_travel_information_form) {
+                    return 'forms';
+                } else {
+                    return 'airfare request form';
+                }
+            } else {
+                if ($this->assignment->travel->needs_travel_information_form) {
+                    return 'travel information form';
+                } else {
+                    return 'form';
+                }
+            }
         } elseif (
             ! $this->assignment->needs_docusign &&
             $this->assignment->is_paid &&

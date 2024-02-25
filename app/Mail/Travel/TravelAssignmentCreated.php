@@ -34,7 +34,7 @@ class TravelAssignmentCreated extends Mailable implements ShouldQueue
             ->to($this->assignment->user->gt_email, $this->assignment->user->name)
             ->subject(
                 $this->subjectLineCallToAction().
-                ' required for '.$this->assignment->travel->name.' travel'
+                ' required for '.$this->assignment->travel->name
             )
             ->text('mail.travel.assignmentcreated')
             ->withSymfonyMessage(function (Email $email): void {

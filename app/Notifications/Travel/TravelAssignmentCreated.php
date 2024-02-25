@@ -49,7 +49,7 @@ class TravelAssignmentCreated extends Notification implements ShouldQueue
     public function toNova(): NovaNotification
     {
         return (new NovaNotification())
-            ->message('Action required for '.$this->assignment->travel->name.' travel')
+            ->message('Action required for '.$this->assignment->travel->name)
             ->action('View action items', URL::remote(route('travel.index')))
             ->icon('globe')
             ->type('info');

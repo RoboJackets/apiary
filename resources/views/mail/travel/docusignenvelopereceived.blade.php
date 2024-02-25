@@ -1,8 +1,8 @@
 Hi {!! $envelope->signedBy->preferred_first_name !!},
 
-We received your Travel Authority Request for {{ $envelope->signable->travel->name }}. Once everyone has submitted their documents, we'll forward all of them to Georgia Tech for review and approval.
+We received your {{ $envelope->signable->travel->needs_airfare_form ? ($envelope->signable->travel->needs_travel_information_form ? 'forms' : 'airfare request form') : ($envelope->signable->travel->needs_travel_information_form ? 'travel information form' : '') }} for {{ $envelope->signable->travel->name }}. Once everyone has submitted their forms, we'll forward all of them to Georgia Tech for review and approval.
 
-You can view your completed form within DocuSign at {{ $envelope->sender_view_url }}, or attached to a separate email from DocuSign.
+You can view your completed {{ $envelope->signable->travel->needs_airfare_form ? ($envelope->signable->travel->needs_travel_information_form ? 'forms' : 'form') : ($envelope->signable->travel->needs_travel_information_form ? 'form' : '') }} within DocuSign at {{ $envelope->sender_view_url }}, or attached to a separate email from DocuSign.
 
 @if(!$envelope->signable->is_paid)
 You still need to make a ${{ intval($envelope->signable->travel->fee_amount) }} payment for the travel fee. You can pay online with a credit or debit card at {{ route('pay.travel') }}.
