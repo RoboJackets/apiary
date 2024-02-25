@@ -585,7 +585,7 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
             ], [
                 'destination' => 'mailbook',
                 'departure_date' => '2022-02-18',
-                'return_date' => '2022-02-21',
+                'return_date' => Carbon::now()->addDay(),
                 'fee_amount' => 100,
                 'forms' => [
                     Travel::TRAVEL_INFORMATION_FORM_KEY => true,
@@ -1219,7 +1219,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
             ], [
                 'destination' => 'mailbook',
                 'departure_date' => '2022-02-18',
-                'return_date' => '2022-02-21',
+                'return_date' => Carbon::now()->addDay(),
                 'fee_amount' => 20,
                 'forms' => [
                     Travel::TRAVEL_INFORMATION_FORM_KEY => true,
