@@ -21,7 +21,7 @@ You can download all submitted forms from {{ config('app.name') }} at {{ route('
 {{-- all assignments paid, not documented --}}
 @elseif(! $travel->assignments_need_payment && $travel->assignments_need_forms)
 All travelers have paid the trip fee for {{ $travel->name }}. @if($travel->assignments()->needDocuSign()->count() === 1)
-1 traveler still needs to submit forms.
+1 traveler still needs to submit {{ $travel->needs_airfare_form ? ($travel->needs_travel_information_form ? 'forms' : 'an airfare request form') : ($travel->needs_travel_information_form ? 'a travel information form' : '') }}.
 @else{{ $travel->assignments()->needDocuSign()->count() }} travelers still need to submit forms.
 @endif
 
