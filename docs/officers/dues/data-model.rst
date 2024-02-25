@@ -60,7 +60,7 @@ Dues transaction
 A **dues transaction** represents a request from a member to purchase a specific :ref:`dues package <Dues package>`.
 It may include :ref:`merchandise <Merchandise>` selections, if the package has associated options.
 
-A transaction may have zero or more :ref:`payments <Payments>` associated.
+A transaction may have zero or more :doc:`payments </officers/payments/index>` associated.
 
 .. attention::
    Officers **shouldn't** create transactions manually -- they're created automatically through the member-facing interface when a member begins the dues workflow.

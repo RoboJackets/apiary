@@ -9,7 +9,7 @@ Membership agreements
 Apiary requires prospective members to review and sign a membership agreement before paying dues. This feature is currently implemented using `DocuSign Embedded Signing <https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/embedding/>`_.
 
 Parent or legal guardian signatures
------------------------------
+-----------------------------------
 
 By default, the agreement only collects a signature from the member themselves.
 For members considered a minor by the State of Georgia, a parent or legal guardian must co-sign the agreement.

@@ -1,10 +1,10 @@
-:og:description: Apiary supports several payment methods for both dues and travel.
+:og:description: Apiary supports several payment methods for both dues and trips.
 :nosearch:
 
 Payments
 ========
 
-Apiary supports several payment methods for both :doc:`dues </officers/dues/index>` and travel.
+Apiary supports several payment methods for both :doc:`dues </officers/dues/index>` and :doc:`trips </officers/travel/index>`.
 
 .. toctree::
    accept

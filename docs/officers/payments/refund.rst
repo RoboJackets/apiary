@@ -25,8 +25,8 @@ In either case, the steps within Apiary are the same:
 #. Under the :guilabel:`Other` header in the left sidebar, click :guilabel:`Users`.
 #. Search for the member using the search box under the :guilabel:`Users` header, then select the user from the results.
 #. To refund a payment for dues, scroll to the :guilabel:`Dues Transactions` heading.
-   To refund a payment for travel, scroll to the :guilabel:`Travel Assignments` heading.
-#. Select the dues transaction or travel assignment from the list.
+   To refund a payment for a trip fee, scroll to the :guilabel:`Trip Assignments` heading.
+#. Select the dues transaction or trip assignment from the list.
 #. Scroll to the :guilabel:`Payments` heading.
 #. Select the payment from the list.
 #. Click the Actions menu (three dots |actionsmenu|) to the right of the :guilabel:`Payment Details` header.
