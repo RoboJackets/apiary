@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\DuesPackage;
 use App\Models\Event;
 use App\Models\Travel;
 use Eluceo\iCal\Domain\Entity\Calendar;
@@ -14,6 +15,7 @@ use Eluceo\iCal\Domain\ValueObject\EmailAddress;
 use Eluceo\iCal\Domain\ValueObject\Location;
 use Eluceo\iCal\Domain\ValueObject\MultiDay;
 use Eluceo\iCal\Domain\ValueObject\Organizer;
+use Eluceo\iCal\Domain\ValueObject\SingleDay;
 use Eluceo\iCal\Domain\ValueObject\TimeSpan;
 use Eluceo\iCal\Domain\ValueObject\UniqueIdentifier;
 use Eluceo\iCal\Domain\ValueObject\Uri;
@@ -87,8 +89,49 @@ class CalendarController extends Controller
                     )
             );
 
+        $packages = DuesPackage::all();
+
+        $membershipEndDates = $packages->map(
+            static fn (DuesPackage $package): CalendarEvent => (new CalendarEvent(
+                new UniqueIdentifier('package-'.$package->id.'-membership@'.$request->getHost())
+            ))
+                ->setSummary($package->name.' Membership Ends')
+                ->setUrl(new Uri(
+                    route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => \App\Nova\DuesPackage::uriKey(),
+                            'resourceId' => $package->id,
+                        ]
+                    )
+                ))
+                ->setOccurrence(new SingleDay(new Date($package->effective_end)))
+        );
+
+        $accessEndDates = $packages->map(
+            static fn (DuesPackage $package): CalendarEvent => (new CalendarEvent(
+                new UniqueIdentifier('package-'.$package->id.'-access@'.$request->getHost())
+            ))
+                ->setSummary($package->name.' Access Ends')
+                ->setUrl(new Uri(
+                    route(
+                        'nova.pages.detail',
+                        [
+                            'resource' => \App\Nova\DuesPackage::uriKey(),
+                            'resourceId' => $package->id,
+                        ]
+                    )
+                ))
+                ->setOccurrence(new SingleDay(new Date($package->effective_end)))
+        );
+
         return response(
-            content: (new CalendarFactory())->createCalendar(new Calendar([...$events, ...$trips]))->__toString(),
+            content: (new CalendarFactory())->createCalendar(new Calendar([
+                ...$events,
+                ...$trips,
+                ...$membershipEndDates,
+                ...$accessEndDates,
+            ]))->__toString(),
             headers: ['Content-Type' => 'text/calendar; charset=utf-8']
         );
     }
