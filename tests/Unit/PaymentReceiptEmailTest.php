@@ -118,7 +118,7 @@ final class PaymentReceiptEmailTest extends TestCase
         $mailable->assertSeeInText('online payment');
         $mailable->assertSeeInText($payment->receipt_url);
         $mailable->assertSeeInText(number_format($payment->amount, 2));
-        $mailable->assertSeeInText('submit a Travel Authority Request');
+        $mailable->assertSeeInText('submit a travel information form');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }
