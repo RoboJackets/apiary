@@ -81,7 +81,7 @@
         "phpstan/phpstan": "1.10.59",
         "phpstan/phpstan-deprecation-rules": "1.1.4",
         "phpstan/phpstan-strict-rules": "1.5.2",
-        "phpunit/phpunit": "10.5.10",
+        "phpunit/phpunit": "10.5.11",
         "psalm/plugin-laravel": "2.8.0",
         "slevomat/coding-standard": "8.14.1",
         "spatie/laravel-ignition": "2.4.2",
