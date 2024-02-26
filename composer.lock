@@ -290,16 +290,16 @@
         },
         {
             "name": "apimatic/core",
-            "version": "0.3.5",
+            "version": "0.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apimatic/core-lib-php.git",
-                "reference": "0ccfb70c2b01bde35c30b451546ab6510193a992"
+                "reference": "2236fa751f265397d97ab2cb8a5c72641cf9480f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/0ccfb70c2b01bde35c30b451546ab6510193a992",
-                "reference": "0ccfb70c2b01bde35c30b451546ab6510193a992",
+                "url": "https://api.github.com/repos/apimatic/core-lib-php/zipball/2236fa751f265397d97ab2cb8a5c72641cf9480f",
+                "reference": "2236fa751f265397d97ab2cb8a5c72641cf9480f",
                 "shasum": ""
             },
             "require": {
@@ -337,9 +337,9 @@
             ],
             "support": {
                 "issues": "https://github.com/apimatic/core-lib-php/issues",
-                "source": "https://github.com/apimatic/core-lib-php/tree/0.3.5"
+                "source": "https://github.com/apimatic/core-lib-php/tree/0.3.6"
             },
-            "time": "2024-01-17T13:46:44+00:00"
+            "time": "2024-02-26T04:16:28+00:00"
         },
         {
             "name": "apimatic/core-interfaces",
@@ -6960,16 +6960,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.35",
+            "version": "3.0.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "4b1827beabce71953ca479485c0ae9c51287f2fe"
+                "reference": "c2fb5136162d4be18fdd4da9980696f3aee96d7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/4b1827beabce71953ca479485c0ae9c51287f2fe",
-                "reference": "4b1827beabce71953ca479485c0ae9c51287f2fe",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/c2fb5136162d4be18fdd4da9980696f3aee96d7b",
+                "reference": "c2fb5136162d4be18fdd4da9980696f3aee96d7b",
                 "shasum": ""
             },
             "require": {
@@ -7050,7 +7050,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.35"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.36"
             },
             "funding": [
                 {
@@ -7066,7 +7066,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-29T01:59:53+00:00"
+            "time": "2024-02-26T05:13:14+00:00"
         },
         {
             "name": "phpstan/phpstan",
