@@ -87,7 +87,7 @@
         "spatie/laravel-ignition": "2.4.2",
         "spatie/ray": "1.41.1",
         "squizlabs/php_codesniffer": "3.9.0",
-        "vimeo/psalm": "5.22.1"
+        "vimeo/psalm": "5.22.2"
     },
     "replace": {
         "symfony/polyfill-apcu": "*",
