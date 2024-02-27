@@ -1,7 +1,7 @@
 Hi {!! $assignment->user->preferred_first_name !!},
 
 @if(!$assignment->tar_received && $assignment->travel->needs_docusign)
-You still need to submit a Travel Authority Request for {{ $assignment->travel->name }}. Please visit {{ route('docusign.travel') }} to fill out and sign it.
+You still need to submit {{ $assignment->travel->needs_airfare_form ? ($assignment->travel->needs_travel_information_form ? 'forms' : 'an airfare request form') : ($assignment->travel->needs_travel_information_form ? 'a travel information form' : '') }} for {{ $assignment->travel->name }}. Please visit {{ route('docusign.travel') }} to fill out and sign {{ ($assignment->travel->needs_airfare_form && $assignment->travel->needs_travel_information_form) ? 'them' : 'it' }}.
 
 @endif
 @if(!$assignment->is_paid)

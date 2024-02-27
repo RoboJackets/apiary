@@ -41,7 +41,7 @@ final class TravelAssignmentReminderEmailTest extends TestCase
         $mailable->assertSeeInText($member->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText($contact->full_name);
-        $mailable->assertSeeInText('You still need to submit a Travel Authority Request');
+        $mailable->assertSeeInText('You still need to submit a travel information form');
         $mailable->assertSeeInText('You also still need to make a $10 payment');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");

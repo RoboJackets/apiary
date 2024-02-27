@@ -353,13 +353,15 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
 
             return new PaymentReceipt($payment);
         })
-        ->variant('Travel - Square - Need Forms', static function (): PaymentReceipt {
+        ->variant('Trip Fee - Square - Need Travel Information Form', static function (): PaymentReceipt {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -391,6 +393,7 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -417,7 +420,272 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
 
             return new PaymentReceipt($payment);
         })
-        ->variant('Travel - Square - Don\'t Need Forms', static function (): PaymentReceipt {
+        ->variant('Trip Fee - Square - Need Airfare Request Form', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 100,
+                'forms' => [
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 103.30;
+                $payment->method = 'square';
+                $payment->receipt_url = 'https://example.com/'.Str::random(8);
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Square - Need Both Forms', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 100,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 103.30;
+                $payment->method = 'square';
+                $payment->receipt_url = 'https://example.com/'.Str::random(8);
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Square - Need Forms and Emergency Contact', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => Carbon::now()->addDay(),
+                'fee_amount' => 100,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 103.30;
+                $payment->method = 'square';
+                $payment->receipt_url = 'https://example.com/'.Str::random(8);
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Square - All Items Complete', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 100,
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 56.95;
+                $payment->method = 'square';
+                $payment->receipt_url = 'https://example.com/'.Str::random(8);
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Square - Need Emergency Contact', static function (): PaymentReceipt {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -452,6 +720,7 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -478,13 +747,15 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
 
             return new PaymentReceipt($payment);
         })
-        ->variant('Travel - Cash - Need Forms', static function (): PaymentReceipt {
+        ->variant('Trip Fee - Cash - Need Travel Information Form', static function (): PaymentReceipt {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -516,6 +787,7 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -542,13 +814,150 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
 
             return new PaymentReceipt($payment);
         })
-        ->variant('Travel - Cash - Don\'t Need Forms', static function (): PaymentReceipt {
+        ->variant('Trip Fee - Cash - Need Airfare Request Form', static function (): PaymentReceipt {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
                     'preferred_name' => null,
                     'last_name' => 'Burdell',
                     'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 100,
+                'forms' => [
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 100;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Cash - Need Both Forms', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 100,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $payment = Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 100;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new PaymentReceipt($payment);
+        })
+        ->variant('Trip Fee - Cash - Don\'t Need Forms', static function (): PaymentReceipt {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
                 ]);
                 $user->save();
 
@@ -577,6 +986,7 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -608,7 +1018,8 @@ Mailbook::category('Payments')->group(static function () use ($user): void {
 Mailbook::category('Trip Assignments')->group(static function () use ($user): void {
     Mailbook::to($user)
         ->add(TravelAssignmentCreated::class)
-        ->variant('Need Forms', static function (): TravelAssignmentCreated {
+        ->label('Trip Assignment Created')
+        ->variant('Need Travel Information Form', static function (): TravelAssignmentCreated {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -649,6 +1060,120 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            return new TravelAssignmentCreated($assignment);
+        })
+        ->variant('Need Airfare Request Form', static function (): TravelAssignmentCreated {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            return new TravelAssignmentCreated($assignment);
+        })
+        ->variant('Need Both Forms', static function (): TravelAssignmentCreated {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -694,7 +1219,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
             ], [
                 'destination' => 'mailbook',
                 'departure_date' => '2022-02-18',
-                'return_date' => '2022-02-21',
+                'return_date' => Carbon::now()->addDay(),
                 'fee_amount' => 20,
                 'forms' => [
                     Travel::TRAVEL_INFORMATION_FORM_KEY => true,
@@ -702,6 +1227,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -747,11 +1273,12 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
             ], [
                 'destination' => 'mailbook',
                 'departure_date' => '2022-02-18',
-                'return_date' => '2022-02-21',
+                'return_date' => Carbon::now()->addDay(),
                 'fee_amount' => 20,
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -766,7 +1293,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
 
             return new TravelAssignmentCreated($assignment);
         })
-        ->variant('Need Payment', static function (): TravelAssignmentCreated {
+        ->variant('Need Payment - Future Trip', static function (): TravelAssignmentCreated {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -799,11 +1326,65 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
             ], [
                 'destination' => 'mailbook',
                 'departure_date' => '2022-02-18',
-                'return_date' => '2022-02-21',
+                'return_date' => Carbon::now()->addDay(),
                 'fee_amount' => 20,
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            return new TravelAssignmentCreated($assignment);
+        })
+        ->variant('Need Payment - Past Trip', static function (): TravelAssignmentCreated {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => Carbon::now()->subDay(),
+                'fee_amount' => 20,
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -821,7 +1402,8 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
 
     Mailbook::to($user)
         ->add(TravelAssignmentReminder::class)
-        ->variant('Need Forms', static function (): TravelAssignmentReminder {
+        ->label('Trip Assignment Reminder')
+        ->variant('Need Travel Information Form', static function (): TravelAssignmentReminder {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -862,6 +1444,144 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 100;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new TravelAssignmentReminder($assignment);
+        })
+        ->variant('Need Airfare Request Form', static function (): TravelAssignmentReminder {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 100;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new TravelAssignmentReminder($assignment);
+        })
+        ->variant('Need Both Forms', static function (): TravelAssignmentReminder {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -927,6 +1647,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -994,6 +1715,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1048,6 +1770,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1100,6 +1823,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1150,6 +1874,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1212,6 +1937,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1229,8 +1955,8 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
 
     Mailbook::to($user)
         ->add(DocuSignEnvelopeReceived::class)
-        ->label('Travel Forms Received')
-        ->variant('Need Payment', static function (): DocuSignEnvelopeReceived {
+        ->label('Trip Forms Received')
+        ->variant('Travel Information Form - Need Payment', static function (): DocuSignEnvelopeReceived {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -1265,9 +1991,150 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'departure_date' => '2022-02-18',
                 'return_date' => '2022-02-21',
                 'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                ],
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $envelope = DocuSignEnvelope::withoutEvents(static function () use ($assignment): DocuSignEnvelope {
+                $envelope = new DocuSignEnvelope();
+                $envelope->signable_type = $assignment->getMorphClass();
+                $envelope->signable_id = $assignment->id;
+                $envelope->signer_ip_address = '127.0.0.1';
+                $envelope->signed_by = $assignment->user->id;
+                $envelope->envelope_id = bin2hex(openssl_random_pseudo_bytes(16));
+                $envelope->save();
+
+                return $envelope;
+            });
+
+            return new DocuSignEnvelopeReceived($envelope);
+        })
+        ->variant('Airfare Request Form - Need Payment', static function (): DocuSignEnvelopeReceived {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $envelope = DocuSignEnvelope::withoutEvents(static function () use ($assignment): DocuSignEnvelope {
+                $envelope = new DocuSignEnvelope();
+                $envelope->signable_type = $assignment->getMorphClass();
+                $envelope->signable_id = $assignment->id;
+                $envelope->signer_ip_address = '127.0.0.1';
+                $envelope->signed_by = $assignment->user->id;
+                $envelope->envelope_id = bin2hex(openssl_random_pseudo_bytes(16));
+                $envelope->save();
+
+                return $envelope;
+            });
+
+            return new DocuSignEnvelopeReceived($envelope);
+        })
+        ->variant('Both Forms - Need Payment', static function (): DocuSignEnvelopeReceived {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                    'emergency_contact_name' => 'asdf',
+                    'emergency_contact_phone' => 'asdf',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1327,9 +2194,14 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'departure_date' => '2022-02-18',
                 'return_date' => '2022-02-21',
                 'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1389,9 +2261,14 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'departure_date' => '2022-02-18',
                 'return_date' => '2022-02-21',
                 'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1465,9 +2342,14 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'departure_date' => '2022-02-18',
                 'return_date' => '2022-02-21',
                 'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1509,7 +2391,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
 
     Mailbook::to(null)
         ->add(TravelMail::class)
-        ->label('DocuSign Travel Forms')
+        ->label('DocuSign Trip Forms')
         ->variant('Only Travel Information Form', static function (): TravelMail {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
@@ -1551,6 +2433,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1606,6 +2489,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'forms' => [
                     Travel::AIRFARE_REQUEST_FORM_KEY => true,
                 ],
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1662,6 +2546,7 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1681,8 +2566,8 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
 Mailbook::category('Trips')->group(static function () use ($user): void {
     Mailbook::to($user)
         ->add(AllTravelAssignmentsComplete::class)
-        ->label('Travel Assignments Complete')
-        ->variant('Forms and Payments', static function (): AllTravelAssignmentsComplete {
+        ->label('Trip Assignments Complete')
+        ->variant('Forms and Payments - Past Trip', static function (): AllTravelAssignmentsComplete {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -1712,7 +2597,7 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
                 'name' => 'Motorama 2022',
             ], [
                 'destination' => 'mailbook',
-                'departure_date' => '2022-02-18',
+                'departure_date' => Carbon::now()->subDay(),
                 'return_date' => '2022-02-21',
                 'fee_amount' => 20,
                 'forms' => [
@@ -1721,6 +2606,74 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                    'tar_received' => true,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 20;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new AllTravelAssignmentsComplete($travel);
+        })
+        ->variant('Forms and Payments - Future Trip', static function (): AllTravelAssignmentsComplete {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => Carbon::now()->addDay(),
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1787,6 +2740,7 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1854,6 +2808,7 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -1880,7 +2835,7 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
 
             return new AllTravelAssignmentsComplete($travel);
         })
-        ->variant('Payments Only - Need One Form', static function (): AllTravelAssignmentsComplete {
+        ->variant('Payments Only - Need One Travel Information', static function (): AllTravelAssignmentsComplete {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -1932,6 +2887,218 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                    'tar_received' => true,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $otherAssignment = TravelAssignment::withoutEvents(
+                static function () use ($otherUser, $travel): TravelAssignment {
+                    $assignment = TravelAssignment::factory()->make([
+                        'user_id' => $otherUser->id,
+                        'travel_id' => $travel->id,
+                        'tar_received' => false,
+                    ]);
+                    $assignment->save();
+
+                    return $assignment;
+                }
+            );
+
+            Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 20;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            Payment::withoutEvents(static function () use ($otherAssignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $otherAssignment->getMorphClass();
+                $payment->payable_id = $otherAssignment->id;
+                $payment->amount = 20;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new AllTravelAssignmentsComplete($travel);
+        })
+        ->variant('Payments Only - Need One Airfare Request Form', static function (): AllTravelAssignmentsComplete {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $otherUser = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'Georgia',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'georgia.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                    'tar_received' => true,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $otherAssignment = TravelAssignment::withoutEvents(
+                static function () use ($otherUser, $travel): TravelAssignment {
+                    $assignment = TravelAssignment::factory()->make([
+                        'user_id' => $otherUser->id,
+                        'travel_id' => $travel->id,
+                        'tar_received' => false,
+                    ]);
+                    $assignment->save();
+
+                    return $assignment;
+                }
+            );
+
+            Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 20;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            Payment::withoutEvents(static function () use ($otherAssignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $otherAssignment->getMorphClass();
+                $payment->payable_id = $otherAssignment->id;
+                $payment->amount = 20;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new AllTravelAssignmentsComplete($travel);
+        })
+        ->variant('Payments Only - Need One Both Forms', static function (): AllTravelAssignmentsComplete {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $otherUser = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'Georgia',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'georgia.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => '2022-02-18',
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'forms' => [
+                    Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+                    Travel::AIRFARE_REQUEST_FORM_KEY => true,
+                ],
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -2036,6 +3203,7 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
@@ -2088,7 +3256,7 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
 
             return new AllTravelAssignmentsComplete($travel);
         })
-        ->variant('Payments Only - Don\'t Need Forms', static function (): AllTravelAssignmentsComplete {
+        ->variant('Payments Only - Don\'t Need Forms - Past Trip', static function (): AllTravelAssignmentsComplete {
             $user = User::withoutEvents(static function (): User {
                 $user = User::factory()->make([
                     'first_name' => 'George',
@@ -2131,12 +3299,115 @@ Mailbook::category('Trips')->group(static function () use ($user): void {
                 'name' => 'Motorama 2022',
             ], [
                 'destination' => 'mailbook',
-                'departure_date' => '2022-02-18',
+                'departure_date' => Carbon::now()->subDay(),
                 'return_date' => '2022-02-21',
                 'fee_amount' => 20,
                 'primary_contact_user_id' => $officer->id,
                 'included_with_fee' => 'mailbook',
                 'is_international' => false,
+                'status' => 'draft',
+            ]));
+
+            $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
+                $assignment = TravelAssignment::factory()->make([
+                    'user_id' => $user->id,
+                    'travel_id' => $travel->id,
+                    'tar_received' => false,
+                ]);
+                $assignment->save();
+
+                return $assignment;
+            });
+
+            $otherAssignment = TravelAssignment::withoutEvents(
+                static function () use ($otherUser, $travel): TravelAssignment {
+                    $assignment = TravelAssignment::factory()->make([
+                        'user_id' => $otherUser->id,
+                        'travel_id' => $travel->id,
+                        'tar_received' => false,
+                    ]);
+                    $assignment->save();
+
+                    return $assignment;
+                }
+            );
+
+            Payment::withoutEvents(static function () use ($assignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $assignment->getMorphClass();
+                $payment->payable_id = $assignment->id;
+                $payment->amount = 20;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            Payment::withoutEvents(static function () use ($otherAssignment, $officer): Payment {
+                $payment = new Payment();
+                $payment->payable_type = $otherAssignment->getMorphClass();
+                $payment->payable_id = $otherAssignment->id;
+                $payment->amount = 20;
+                $payment->method = 'cash';
+                $payment->recorded_by = $officer->id;
+                $payment->save();
+
+                return $payment;
+            });
+
+            return new AllTravelAssignmentsComplete($travel);
+        })
+        ->variant('Payments Only - Don\'t Need Forms - Future Trip', static function (): AllTravelAssignmentsComplete {
+            $user = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'George',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'george.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $otherUser = User::withoutEvents(static function (): User {
+                $user = User::factory()->make([
+                    'first_name' => 'Georgia',
+                    'preferred_name' => null,
+                    'last_name' => 'Burdell',
+                    'gt_email' => 'georgia.burdell@gatech.edu',
+                    'primary_affiliation' => 'student',
+                ]);
+                $user->save();
+
+                return $user;
+            });
+
+            $officer = User::withoutEvents(static function (): User {
+                $officer = User::factory()->make([
+                    'first_name' => 'Robo',
+                    'preferred_name' => null,
+                    'last_name' => 'Buzz',
+                    'gt_email' => 'robo.buzz@gatech.edu',
+                ]);
+                $officer->save();
+
+                return $officer;
+            });
+
+            $travel = Travel::withoutEvents(static fn (): Travel => Travel::firstOrCreate([
+                'name' => 'Motorama 2022',
+            ], [
+                'destination' => 'mailbook',
+                'departure_date' => Carbon::now()->addDay(),
+                'return_date' => '2022-02-21',
+                'fee_amount' => 20,
+                'primary_contact_user_id' => $officer->id,
+                'included_with_fee' => 'mailbook',
+                'is_international' => false,
+                'status' => 'draft',
             ]));
 
             $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
