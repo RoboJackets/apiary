@@ -267,6 +267,7 @@ parameters:
     - '#Parameter \$rsa_private_key of method DocuSign\\eSign\\Client\\ApiClient::requestJWTUserToken\(\) expects string, mixed given\.#'
     - '#Parameter \$user_id of method DocuSign\\eSign\\Client\\ApiClient::requestJWTUserToken\(\) expects string, mixed given\.#'
     - '#PHPDoc type array<string> of property App\\Models\\[a-zA-Z]+::\$appends is not covariant with PHPDoc type array<int, string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$appends\.#'
+    - '#PHPDoc type array<string> of property App\\Models\\[a-zA-Z]+::\$fillable is not covariant with PHPDoc type array<int, string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$fillable\.#'
     - '#PHPDoc type array<string> of property App\\Models\\[a-zA-Z]+::\$hidden is not covariant with PHPDoc type array<int, string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$hidden\.#'
     - '#Property App\\Models\\[a-zA-Z]+::\$[a-z_]+ \(string\) does not accept \(float\|int\)\.#'
     - '#Property App\\Models\\[a-zA-Z]+::\$[a-z_]+ \(string\|null\) does not accept \(float\|int\)\.#'
