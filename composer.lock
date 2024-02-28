@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c5dca5428504ba486aa5606862d422a",
+    "content-hash": "1c5bcdbf2a45bceda3bdbe143dddaff9",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -505,32 +505,32 @@
         },
         {
             "name": "ashallendesign/laravel-config-validator",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ash-jc-allen/laravel-config-validator.git",
-                "reference": "1559ac40acd2da1b519d627ff0cd77744f8b346a"
+                "reference": "20a1c8d73406558f37e46959fd4cbfe6db404622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/1559ac40acd2da1b519d627ff0cd77744f8b346a",
-                "reference": "1559ac40acd2da1b519d627ff0cd77744f8b346a",
+                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/20a1c8d73406558f37e46959fd4cbfe6db404622",
+                "reference": "20a1c8d73406558f37e46959fd4cbfe6db404622",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/console": "^8.0|^9.0|^10.0",
-                "illuminate/container": "^8.0|^9.0|^10.0",
-                "illuminate/validation": "^8.0|^9.0|^10.0",
-                "illuminate/view": "^8.0|^9.0|^10.0",
-                "nunomaduro/termwind": "^1.6",
+                "illuminate/console": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/container": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/validation": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/view": "^8.0|^9.0|^10.0|^11.0",
+                "nunomaduro/termwind": "^1.6|^2.0",
                 "php": "^8.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
                 "nunomaduro/larastan": "^1.0.0||^2.0.0",
-                "orchestra/testbench": "^6.0|^7.0|^8.0",
-                "phpunit/phpunit": "^9.0"
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.0|^10.5"
             },
             "type": "library",
             "extra": {
@@ -568,7 +568,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ash-jc-allen/laravel-config-validator/issues",
-                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.4.0"
+                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.5.0"
             },
             "funding": [
                 {
@@ -576,7 +576,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-12T01:18:06+00:00"
+            "time": "2024-02-27T20:58:22+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
