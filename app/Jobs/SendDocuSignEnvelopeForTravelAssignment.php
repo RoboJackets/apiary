@@ -104,6 +104,16 @@ class SendDocuSignEnvelopeForTravelAssignment implements ShouldBeUnique, ShouldQ
             return;
         }
 
+        if (! $assignment->user->is_active) {
+            if ($this->sendCreateNotificationOnFailure) {
+                SendTravelAssignmentCreatedNotification::dispatch($assignment);
+            }
+
+            $this->fail('Could not send envelope because traveler is not active');
+
+            return;
+        }
+
         Cache::lock(name: $this->assignment->user->uid.'_docusign', seconds: 120)->block(
             seconds: 60,
             callback: static function () use ($senderApiClient, $assignment) {
