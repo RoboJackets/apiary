@@ -197,6 +197,13 @@ class TravelAssignment extends Resource
             Boolean::make('Paid', 'is_paid')
                 ->onlyOnIndex(),
 
+            Boolean::make(
+                'Emergency Contact',
+                static fn (
+                    \App\Models\TravelAssignment $assignment
+                ): bool => $assignment->user->has_emergency_contact_information
+            ),
+
             MorphMany::make('DocuSign Envelopes', 'envelope', DocuSignEnvelope::class)
                 ->onlyOnDetail()
                 ->showOnDetail(fn (): bool => $this->showDocuSignEnvelopesOnDetail()),
