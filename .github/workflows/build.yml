@@ -43,7 +43,7 @@ jobs:
         run: vendor/bin/phpcs .
 
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyze --level=max --configuration=phpstan.neon --error-format=github .
+        run: vendor/bin/phpstan analyze --level=max --configuration=phpstan.neon --error-format=github --no-progress .
 
       - name: Run Phan
         run: vendor/bin/phan --no-progress-bar --analyze-twice
