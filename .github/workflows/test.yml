@@ -46,8 +46,8 @@ jobs:
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate application key
         run: php artisan key:generate
-      - Generate Passort keys
-      - php artisan key:generate
+      - name: Generate Passort keys
+        run: php artisan passport:keys
       - name: Run tests
         run: php artisan test
         env:
