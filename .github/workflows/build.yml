@@ -2,7 +2,7 @@ name: Build
 on:
   - push
 jobs:
-  backend:
+  lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -106,3 +106,32 @@ jobs:
 
       - name: Run tests
         run: php artisan test
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Vale
+        uses: errata-ai/vale-action@reviewdog
+        working-directory: ./docs/
+        with:
+          fail_on_error: true
+          token: ${{ github.token }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: poetry
+
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2
+
+      - name: Install Poetry dependencies
+        run: poetry install
+
+      - name: Build Sphinx docs
+        run: poetry run sphinx-build -M dirhtml . _build
