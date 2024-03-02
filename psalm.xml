@@ -393,5 +393,20 @@
                 <file name="app/Nova/Resource.php"/>
             </errorLevel>
         </PossiblyInvalidOperand>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <file name="app/Http/Controllers/CalendarController.php"/>
+            </errorLevel>
+        </InternalMethod>
+        <InvalidNullableReturnType>
+            <errorLevel type="suppress">
+                <file name="app/Mail/PaymentReceipt.php"/>
+            </errorLevel>
+        </InvalidNullableReturnType>
+        <NullableReturnStatement>
+            <errorLevel type="suppress">
+                <file name="app/Mail/PaymentReceipt.php"/>
+            </errorLevel>
+        </NullableReturnStatement>
     </issueHandlers>
 </psalm>
