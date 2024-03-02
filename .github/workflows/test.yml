@@ -3,21 +3,15 @@ on:
   - push
 jobs:
   test:
-    strategy:
-      matrix:
-        operating-system:
-          - ubuntu-latest
-        php-version:
-          - '8.2'
-    name: php ${{ matrix.php-version }} on ${{ matrix.operating-system }}
-    runs-on: ${{ matrix.operating-system }}
+    name: Test
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: '8.2'
           extensions: bcmath, ctype, curl, fileinfo, gd, intl, json, ldap, mbstring, mysqli, openssl, pdo, redis, sqlite3, tokenizer, uuid, xml, zip
           coverage: none
       - name: Prepare the environment
@@ -33,7 +27,8 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install composer dependencies
         env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+          COMPOSER_AUTH: >-
+            {"github-oauth":{"github.com":"${{ github.token }}"},"http-basic":{"nova.laravel.com":{"username":"${{ secrets.LARAVEL_NOVA_USERNAME }}","password":"${{ secrets.LARAVEL_NOVA_PASSWORD }}"}}}
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate application key
         run: php artisan key:generate
