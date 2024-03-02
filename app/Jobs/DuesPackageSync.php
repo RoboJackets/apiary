@@ -31,6 +31,8 @@ class DuesPackageSync implements ShouldQueue
      */
     public function handle(): void
     {
+        $this->package->load('transactions.user');
+
         foreach ($this->package->transactions as $transaction) {
             PushToJedi::dispatch($transaction->user, DuesPackage::class, $this->package->id, 'sync');
         }
