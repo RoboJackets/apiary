@@ -52,7 +52,11 @@ jobs:
         run: vendor/bin/psalm --output-format=github --no-progress
 
       - name: Run Enlightn
-        run: php artisan enlightn --ci --details --show-exceptions --no-interaction --verbose
+        run: >-
+          cp --verbose .env.example .env &&
+          php artisan key:generate --no-interaction --verbose &&
+          php artisan passport:keys --no-interaction --verbose &&
+          php artisan enlightn --ci --details --show-exceptions --no-interaction --verbose
 
   test:
     name: Test
