@@ -12,6 +12,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+          extensions: bcmath, ctype, curl, fileinfo, gd, intl, json, ldap, mbstring, mysqli, openssl, pdo, redis, sqlite3, tokenizer, uuid, xml, zip
       - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
