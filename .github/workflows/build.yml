@@ -142,3 +142,24 @@ jobs:
           poetry add vale
           poetry run vale sync
           poetry run vale .
+
+  docker:
+    name: Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Write Composer auth file
+        run: |
+          echo `{"github-oauth":{"github.com":"${{ github.token }}"},"http-basic":{"nova.laravel.com":{"username":"${{ secrets.LARAVEL_NOVA_USERNAME }}","password":"${{ secrets.LARAVEL_NOVA_PASSWORD }}"}}}` > auth.json
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          tags: registry.bcdc.robojackets.net/apiary:latest
+          github-token: ${{ github.token }}
+          network: host
+          pull: true
+          secret-files:
+          - key=filename, composer_auth=./auth.json
