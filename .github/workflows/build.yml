@@ -144,6 +144,6 @@ jobs:
 
       - name: Install and run Vale
         run: |
-          pipx install vale
-          vale sync
-          vale .
+          poetry add vale
+          poetry run vale sync
+          poetry run vale .
