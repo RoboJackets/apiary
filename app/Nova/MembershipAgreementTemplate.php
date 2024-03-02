@@ -83,10 +83,6 @@ class MembershipAgreementTemplate extends Resource
                 ->exceptOnForms(),
 
             Markdown::make('Text')
-                ->help(
-                    'Please only use h2\'s or smaller in this field. You can use {{ $full_name }} to have the user\'s '.
-                    'name field substituted, and {{ $is_electronic }} to selectively render text on different versions.'
-                )
                 ->alwaysShow(),
 
             HasMany::make('Signatures'),

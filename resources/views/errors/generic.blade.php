@@ -12,8 +12,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            Something went wrong. Please try your request again later. If you continue to receive this error,
-            please contact #it-helpdesk on <a href="https://robojackets.slack.com">Slack</a>.
+            Something went wrong. Try your request again later. If you continue to receive this error,
+            contact #it-helpdesk on <a href="https://robojackets.slack.com">Slack</a>.
         </div>
     </div>
     <hr>

@@ -43,7 +43,7 @@ Nova.booting((Vue, router) => {
                     buttonLabel: 'Feedback',
                     submitButtonLabel: 'Send Feedback',
                     formTitle: 'Feedback',
-                    messagePlaceholder: 'Please describe what you were trying to do, what you expected, and what actually happened.',
+                    messagePlaceholder: 'Describe what you were trying to do, what you expected, and what actually happened.',
                     successMessageText: 'Thank you for your feedback!',
                 }),
             ],

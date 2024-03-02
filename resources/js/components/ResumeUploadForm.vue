@@ -3,7 +3,7 @@
     <div class="col-12" v-if="loaded && user.is_active && user.is_student">
       <div class="alert alert-danger" role="alert" v-if="message" v-html="messageText"></div>
       <p v-if="hasResume && viewUrl">You last uploaded your resume on {{ resumeDate }}. You can view it <a
-        :href="viewUrl">here</a>. If you would like to delete it, please ask in #it-helpdesk in Slack.</p>
+        :href="viewUrl">here</a>. If you would like to delete it, ask in #it-helpdesk in Slack.</p>
       <p v-else>You do not have a resume on file. You may have uploaded one previously, but they are deleted semesterly
         to ensure they're always accurate.</p>
       <p>Your resume must be a one page PDF. The maximum file size is 1MB.</p>
@@ -33,7 +33,7 @@
     <div class="col-12" v-else-if="loaded">
       <strong>Resume upload unavailable</strong>
       <p>Only students are eligible for the RoboJackets resume book. If you believe you are seeing this message in
-        error, please ask in #it-helpdesk.
+        error, ask in #it-helpdesk.
       </p>
     </div>
     <loading-spinner :active="!loaded" />

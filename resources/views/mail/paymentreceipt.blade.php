@@ -9,7 +9,7 @@ You can view more details about your payment at {{ $payment->receipt_url }}.
 @endif
 @if($payment->payable_type === \App\Models\TravelAssignment::getMorphClassStatic() && !$payment->payable->tar_received && $payment->payable->travel->needs_docusign)
 
-You still need to submit {{ $payment->payable->travel->needs_airfare_form ? ($payment->payable->travel->needs_travel_information_form ? 'forms' : 'an airfare request form') : ($payment->payable->travel->needs_travel_information_form ? 'a travel information form' : '') }} for your trip. Please visit {{ route('docusign.travel') }} to fill out and sign {{ ($payment->payable->travel->needs_airfare_form && $payment->payable->travel->needs_travel_information_form) ? 'them' : 'it' }}.
+You still need to submit {{ $payment->payable->travel->needs_airfare_form ? ($payment->payable->travel->needs_travel_information_form ? 'forms' : 'an airfare request form') : ($payment->payable->travel->needs_travel_information_form ? 'a travel information form' : '') }} for your trip. Visit {{ route('docusign.travel') }} to fill out and sign {{ ($payment->payable->travel->needs_airfare_form && $payment->payable->travel->needs_travel_information_form) ? 'them' : 'it' }}.
 @endif
 @if($payment->payable_type === \App\Models\TravelAssignment::getMorphClassStatic() && !$payment->payable->user->has_emergency_contact_information)
 

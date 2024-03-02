@@ -37,7 +37,7 @@ To record attendance using the app:
 #. A new screen will appear that says :guilabel:`Tap a BuzzCard`.
    You can now hold a physical BuzzCard to the back of your phone until you feel your phone vibrate, and the screen in the app changes to :guilabel:`Processing`.
 #. You can manually enter a GTID using the :guilabel:`Enter GTID manually` button if someone forgot their BuzzCard.
-   If a valid BuzzCard consistently displays an error message, please post in :slack:`apiary-mobile`.
+   If a valid BuzzCard consistently displays an error message, post in :slack:`apiary-mobile`.
 
 The app uses the NFC radio in your phone to read data from BuzzCards. Below are some tips for consistent, successful reads:
 
@@ -48,7 +48,7 @@ The app uses the NFC radio in your phone to read data from BuzzCards. Below are 
   Generally, cards will read more reliably when centered on the antenna.
 - Remove the card for a few seconds, then try again.
 
-If you need help, please post in :slack:`apiary-mobile`.
+If you need help, post in :slack:`apiary-mobile`.
 
 Online meetings
 ---------------

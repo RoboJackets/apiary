@@ -8,7 +8,7 @@ Your {{ config('app.name') }} personal access token called "{{ $token->name }}" 
 
 Token expiration dates cannot be extended. If you're still using this token, you must create a new token to continue accessing the {{ config('app.name') }} API. You can create a new token by accessing your user page in the {{ config('app.name') }} admin interface and running the "Create Personal Access Token" action.
 
-If you need any assistance, please ask in #it-helpdesk in Slack.
+If you need any assistance, ask in #it-helpdesk in Slack.
 
 ----
 

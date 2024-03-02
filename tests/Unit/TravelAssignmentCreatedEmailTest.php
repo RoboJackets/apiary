@@ -37,7 +37,7 @@ final class TravelAssignmentCreatedEmailTest extends TestCase
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
-        $mailable->assertSeeInText('Please complete the following tasks');
+        $mailable->assertSeeInText('Complete the following tasks');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }
@@ -65,7 +65,7 @@ final class TravelAssignmentCreatedEmailTest extends TestCase
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
-        $mailable->assertSeeInText('Please pay the $10 trip fee');
+        $mailable->assertSeeInText('Pay the $10 trip fee');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }

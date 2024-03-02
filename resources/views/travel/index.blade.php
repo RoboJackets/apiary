@@ -53,31 +53,31 @@ Travel | {{ config('app.name') }}
             </table>
             <h2>Action Items</h2>
         @if($needs_agreement)
-            <p>Please <a href="{{ route('docusign.agreement') }}">click here</a> to sign the latest membership agreement.</p>
+            <p><a href="{{ route('docusign.agreement') }}">Click here</a> to sign the latest membership agreement.</p>
         @endif
         @if($needs_dues)
             @if($needs_agreement)
                 <hr>
             @endif
-            <p>Please <a href="{{ route('home') }}">click here</a> to pay dues.</p>
+            <p><a href="{{ route('home') }}">Click here</a> to pay dues.</p>
         @endif
         @if($travel->needs_docusign && !$tar_received)
             @if($needs_dues || $needs_agreement)
                 <hr>
             @endif
-            <p>Please <a href="{{ route('docusign.travel') }}">click here</a> to submit {{ $travel->needs_airfare_form ? ($travel->needs_travel_information_form ? 'forms' : 'an airfare request form') : ($travel->needs_travel_information_form ? 'a travel information form' : '') }}. Georgia Tech requires {{ ($travel->needs_airfare_form && $travel->needs_travel_information_form) ? 'these forms' : 'this form' }} to be submitted for all official travel.
+            <p><a href="{{ route('docusign.travel') }}">Click here</a> to submit {{ $travel->needs_airfare_form ? ($travel->needs_travel_information_form ? 'forms' : 'an airfare request form') : ($travel->needs_travel_information_form ? 'a travel information form' : '') }}. Georgia Tech requires {{ ($travel->needs_airfare_form && $travel->needs_travel_information_form) ? 'these forms' : 'this form' }} to be submitted for all official travel.
         @endif
         @if(!$paid)
         @if(($travel->needs_docusign && !$tar_received) || $needs_dues || $needs_agreement)
         <hr>
         @endif
-            <p>Please pay the trip fee. You can <a href="{{ route('pay.travel') }}">click here</a> to pay with a credit or debit card online, or make arrangements with {{ $travel->primaryContact->full_name }} to pay with cash or check in person. Please write checks to Georgia Tech, and put RoboJackets on the memo line.</p>
+            <p>Pay the trip fee. You can <a href="{{ route('pay.travel') }}">click here</a> to pay with a credit or debit card online, or make arrangements with {{ $travel->primaryContact->full_name }} to pay with cash or check in person. Write checks to Georgia Tech, and put RoboJackets on the memo line.</p>
         @endif
         @if(!$has_emergency_contact)
         @if(($travel->needs_docusign && !$tar_received) || !$paid || $needs_dues || $needs_agreement)
             <hr>
         @endif
-            <p>Please add emergency contact information to your <a href="{{ route ('profile') }}">{{ config('app.name') }} profile</a>.</p>
+            <p>Add emergency contact information to your <a href="{{ route ('profile') }}">{{ config('app.name') }} profile</a>.</p>
         @endif
         @if($paid && (!$travel->needs_docusign || $tar_received) && $has_emergency_contact && ! $needs_agreement && !$needs_dues)
         <p>You're all set! Contact {{ $travel->primaryContact->full_name }} if you have any questions.</p>

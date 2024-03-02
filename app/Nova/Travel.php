@@ -269,7 +269,7 @@ class Travel extends Resource
                     ->rules('required', 'json')
                     ->showOnDetail(fn (): bool => $this->forms !== null && in_array(true, $this->forms, true))
                     ->hideFromIndex()
-                    ->help('If you\'re not sure which forms you need to collect, please check with the treasurer.'),
+                    ->help('If you\'re not sure which forms you need to collect, check with the treasurer.'),
 
                 Text::make('Trip Purpose', 'tar_purpose')
                     ->dependsOn(

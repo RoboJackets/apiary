@@ -46,8 +46,7 @@ class ReviewTrip extends Action
      *
      * @var string
      */
-    public $confirmText = 'Please carefully review the fields below. Changes can\'t be made after the trip is '.
-        'approved.';
+    public $confirmText = 'Carefully review the fields below. Changes can\'t be made after the trip is approved.';
 
     /**
      * The size of the modal. Can be "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl".

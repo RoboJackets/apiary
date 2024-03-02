@@ -10,11 +10,11 @@ Membership Agreement | {{ config('app.name') }}
 @endcomponent
 
 <p>
-{{ $message }} Please try again.
+{{ $message }} Try again.
 </p>
 
 <p>
-If you believe this is a system error, please post in <a href="slack://open?team=T033JPZLT&id=C29Q3D8K0">#it-helpdesk</a> for assistance.
+If you believe this is a system error, post in <a href="slack://open?team=T033JPZLT&id=C29Q3D8K0">#it-helpdesk</a> for assistance.
 </p>
 
 <a href="/">Go back to the dashboard</a>

@@ -64,7 +64,7 @@ class SUMSController extends Controller
             return view(
                 'sums',
                 [
-                    'message' => 'You already have access to SUMS. If you are not able to use equipment, please ask in'
+                    'message' => 'You already have access to SUMS. If you are not able to use equipment, ask in'
                     .' #it-helpdesk in Slack.',
                 ]
             );

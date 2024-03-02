@@ -14,7 +14,7 @@ If you would prefer to pay by cash or check, make arrangements with {!! $envelop
 You {{ (! $envelope->signable->is_paid) ? "also" : "still" }} need to add emergency contact information to your {{ config('app.name') }} profile at {{ route ('profile') }}.
 
 @endif
-For more information, visit {{ route('travel.index') }}. If you have any questions, please contact {!! $envelope->signable->travel->primaryContact->full_name !!}.
+For more information, visit {{ route('travel.index') }}. If you have any questions, contact {!! $envelope->signable->travel->primaryContact->full_name !!}.
 
 ----
 

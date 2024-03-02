@@ -24,7 +24,7 @@ class RemoteAttendanceController extends Controller
             return view(
                 'attendance.remote',
                 [
-                    'message' => 'That link is invalid. Please ask your project manager for a new one.',
+                    'message' => 'That link is invalid. Ask your project manager for a new one.',
                 ]
             );
         }
@@ -42,8 +42,8 @@ class RemoteAttendanceController extends Controller
                 return view(
                     'attendance.remote',
                     [
-                        'message' => 'That link is no longer valid so your attendance has not been recorded. Please '.
-                            'ask your project manager for a new one. However, you can still continue to the meeting:',
+                        'message' => 'That link is no longer valid, so your attendance has not been recorded. '.
+                            'Ask your project manager for a new one. However, you can still continue to the meeting:',
                         'linkDestination' => $link->redirect_url,
                     ]
                 );
@@ -52,8 +52,8 @@ class RemoteAttendanceController extends Controller
             return view(
                 'attendance.remote',
                 [
-                    'message' => 'That link is no longer valid so your attendance has not been recorded. Please '.
-                        'ask your project manager for a new one.',
+                    'message' => 'That link is no longer valid, so your attendance has not been recorded. '.
+                        'Ask your project manager for a new one.',
                 ]
             );
         }

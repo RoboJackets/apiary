@@ -113,7 +113,7 @@ class SquareCheckout
             return view(
                 'square.error',
                 [
-                    'message' => 'We could not contact Square to begin your payment. Please post in #it-helpdesk '
+                    'message' => 'We could not contact Square to begin your payment. Post in #it-helpdesk '
                         .'with the trace ID shown at the bottom of this page.',
                 ]
             );

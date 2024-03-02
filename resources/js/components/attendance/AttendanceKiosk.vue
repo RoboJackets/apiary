@@ -114,7 +114,7 @@
 
                 Swal.fire({
                     title: 'Authentication',
-                    text: 'Please provide an API token to process data',
+                    text: 'Provide an API token to process data',
                     input: 'text',
                 }).then(result => {
                     if (result === false) return false;
@@ -254,7 +254,7 @@
                     cardData = null;
                     Swal.fire({
                         title: 'Hmm...',
-                        text: 'There was an error reading your card. Please try again.',
+                        text: 'There was an error reading your card. Try again.',
                         showConfirmButton: false,
                         icon: 'warning',
                         timer: 3000,
@@ -303,7 +303,7 @@
                                 console.log('Error checking permissions via API');
                                 Swal.fire(
                                     'Error',
-                                    'Unable to validate permissions. Please contact #it-helpdesk for assistance.',
+                                    'Unable to validate permissions. Contact #it-helpdesk for assistance.',
                                     'error'
                                 );
                                 return false;
@@ -356,7 +356,7 @@
                                 new Audio(this.sounds.dohs[this.randomIntFromInterval(0, this.sounds.dohs.length - 1)]).play()
                                 Swal.fire({
                                     title: "D'oh!",
-                                    text: 'Please select a team before tapping your BuzzCard',
+                                    text: 'Select a team before tapping your BuzzCard',
                                     icon: 'warning',
                                     timer: 2500,
                                     timerProgressBar: true,
@@ -375,7 +375,7 @@
                                 // User not known, but API call succeeded
                                 Swal.fire({
                                     title: 'Whoops!',
-                                    text: 'Please select a team before tapping your BuzzCard',
+                                    text: 'Select a team before tapping your BuzzCard',
                                     icon: 'warning',
                                     timer: 2500,
                                     timerProgressBar: true,

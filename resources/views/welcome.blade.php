@@ -42,14 +42,14 @@
                                 Start Here
                             </h4>
                             <p class="card-text">
-                                Please review and sign the RoboJackets membership agreement. It describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
+                                Review and sign the RoboJackets membership agreement. It describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
                             </p>
                         @else
                             <h4 class="card-title">
                                 Updated Membership Agreement
                             </h4>
                             <p class="card-text">
-                                The RoboJackets membership agreement has changed since the last time you signed it.  Please review and sign the updated version to continue your membership.
+                                The RoboJackets membership agreement has changed since the last time you signed it. Review and sign the updated version to continue your membership.
                             </p>
                         @endif
                         <a href="{{ route('docusign.agreement') }}">Sign Electronically</a>
@@ -101,7 +101,7 @@
                         </h4>
                         <p class="card-text">
                             While you have not paid dues for this semester, you have temporary access to RoboJackets
-                            systems until {{ $overrideDate }}. If you have questions or need an extension, please ask
+                            systems until {{ $overrideDate }}. If you have questions or need an extension, ask
                             in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
                         </p>
                     </div>
@@ -116,7 +116,7 @@
                             Access Override
                         </h4>
                         <p class="card-text">
-                            Your temporary access to RoboJackets systems expired on {{ $overrideDate }}. If you have questions or need an extension, please ask in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
+                            Your temporary access to RoboJackets systems expired on {{ $overrideDate }}. If you have questions or need an extension, ask in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
                         </p>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                             Upload Your Resume
                         </h4>
                         <p class="card-text">
-                            A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors. Please make sure it is always up to date.
+                            A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors. Make sure it is always up to date.
                         </p>
                         <a href="/resume">Upload Your Resume</a>
                     </div>
@@ -174,7 +174,7 @@
                             Action Required for Travel
                         </h4>
                         <p class="card-text">
-                            You have been assigned to {{ $travelAssignment->travel->name }}. Please complete the tasks on the Travel tab so that we can book travel for you.
+                            You have been assigned to {{ $travelAssignment->travel->name }}. Complete the tasks on the Travel tab so that we can book travel for you.
                         </p>
                         <a href="{{ route('travel.index') }}">View Travel</a>
                     </div>
