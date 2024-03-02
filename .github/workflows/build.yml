@@ -162,3 +162,4 @@ jobs:
           network: host
           pull: true
           secret-files: composer_auth=./auth.json
+          target: backend-uncompressed
