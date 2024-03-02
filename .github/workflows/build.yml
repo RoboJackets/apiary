@@ -161,5 +161,4 @@ jobs:
           github-token: ${{ github.token }}
           network: host
           pull: true
-          secret-files:
-          - key=filename, composer_auth=./auth.json
+          secret-files: composer_auth=./auth.json
