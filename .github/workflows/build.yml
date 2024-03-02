@@ -117,12 +117,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run Vale
-        uses: errata-ai/vale-action@reviewdog
-        with:
-          fail_on_error: true
-          token: ${{ github.token }}
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -137,3 +131,9 @@ jobs:
 
       - name: Build Sphinx docs
         run: poetry run sphinx-build -M dirhtml . _build
+
+      - name: Install and run Vale
+        run: >-
+          pipx install vale &&
+          vale sync &&
+          vale .
