@@ -14,6 +14,8 @@ jobs:
           php-version: '8.2'
           extensions: bcmath, ctype, curl, fileinfo, gd, intl, json, ldap, mbstring, mysqli, openssl, pdo, redis, sqlite3, tokenizer, uuid, xml, zip
           coverage: none
+      - name: Install exiftool
+        run: sudo apt-get install --assume-yes libimage-exiftool-perl
       - name: Prepare the environment
         run: cp .env.example .env
       - name: Get composer cache directory
