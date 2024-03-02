@@ -12,7 +12,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          tools: phpstan, psalm
       - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
@@ -28,6 +27,6 @@ jobs:
             ${{ toJSON({"github-oauth":{"github.com": github.token },"http-basic":{"nova.laravel.com":{"username": secrets.LARAVEL_NOVA_USERNAME, "password": secrets.LARAVEL_NOVA_PASSWORD}}}) }}
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Run Psalm
-        run: psalm
+        run: ./vendor/bin/psalm
       - name: Run PHPStan
-        run: phpstan analyze
+        run: ./vendor/bin/phpstan analyze
