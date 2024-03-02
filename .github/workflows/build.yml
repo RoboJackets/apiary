@@ -49,7 +49,7 @@ jobs:
         run: vendor/bin/phan --no-progress-bar --analyze-twice
 
       - name: Run Psalm
-        run: vendor/bin/psalm --output-format=github
+        run: vendor/bin/psalm --output-format=github --no-progress
 
       - name: Run Enlightn
         run: php artisan enlightn --ci --details --show-exceptions --no-interaction --verbose
