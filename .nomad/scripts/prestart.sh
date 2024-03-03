@@ -13,11 +13,6 @@ php artisan route:cache --no-interaction --verbose
 php artisan cache:clear --no-interaction --verbose
 php artisan migrate --no-interaction --force --verbose
 
-if [ ${APP_ENV} = "production" ]
-then
-    export SKIP_DEPENDENCY_ANALYZER=true
-fi
-
 if [ ${APP_ENV} != "sandbox" ]
 then
     export SKIP_PHPSTAN_CHECKS=true
