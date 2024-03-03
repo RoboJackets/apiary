@@ -44,7 +44,6 @@ jobs:
         working-directory: ./.nomad/
         run: |
           sed -i '/job "apiary" {/c\job "apiary-${{ inputs.environment }}" {' apiary.nomad
-          cat apiary.nomad
 
       - name: Exchange GitHub JWT for Nomad token
         uses: mikenomitch/nomad-jwt-auth@v0.1.0
