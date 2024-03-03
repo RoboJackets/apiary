@@ -114,6 +114,8 @@ class CreateDuesPackages extends Action
                     ->where('name', 'like', 'Full Year (%)')
                     ->sole()
                     ->cost;
+
+                $nonStudentFullYearCost = $studentFullYearCost * 2;
             } catch (MultipleRecordsFoundException|ModelNotFoundException) {
                 // do nothing
             }
