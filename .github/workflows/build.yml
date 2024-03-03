@@ -191,3 +191,33 @@ jobs:
       image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: test
       precompressed-assets: true
+
+  deploy-sandbox:
+    name: Deploy
+    needs: [lint, test, docs, docker, deploy-test]
+    uses: ./.github/workflows/deploy.yml
+    if: ${{ github.ref == 'refs/heads/main' }}
+    concurrency:
+      group: deploy-sandbox
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      image-digest: ${{ needs.docker.outputs.image-digest }}
+      environment: sandbox
+      precompressed-assets: true
+
+  deploy-production:
+    name: Deploy
+    needs: [lint, test, docs, docker, deploy-test, deploy-sandbox]
+    uses: ./.github/workflows/deploy.yml
+    if: ${{ github.ref == 'refs/heads/main' }}
+    concurrency:
+      group: deploy-production
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      image-digest: ${{ needs.docker.outputs.image-digest }}
+      environment: production
+      precompressed-assets: true
