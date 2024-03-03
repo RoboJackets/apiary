@@ -161,6 +161,10 @@ jobs:
         run: |
           echo '{"github-oauth":{"github.com":"${{ github.token }}"},"http-basic":{"nova.laravel.com":{"username":"${{ secrets.LARAVEL_NOVA_USERNAME }}","password":"${{ secrets.LARAVEL_NOVA_PASSWORD }}"}}}' > auth.json
 
+      - name: Print github.ref
+        run: |
+          echo ${{ github.ref }}
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
