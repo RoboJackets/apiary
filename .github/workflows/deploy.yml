@@ -57,4 +57,4 @@ jobs:
           NOMAD_ADDR: https://nomad.bcdc.robojackets.net
         working-directory: ./.nomad/
         run: |
-          nomad run -var image=registry.bcdc.robojackets.net/robojackets/apiary@${{ inputs.image-digest }} -var precompressed_assets=${{ inputs.precompressed-assets }} -var-file var-files/${{ inputs.environment }}.hcl apiary.nomad
+          nomad run -var image=registry.bcdc.robojackets.net/apiary@${{ inputs.image-digest }} -var precompressed_assets=${{ inputs.precompressed-assets }} -var-file var-files/${{ inputs.environment }}.hcl apiary.nomad
