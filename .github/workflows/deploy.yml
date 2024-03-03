@@ -3,7 +3,7 @@ name: Deploy
 on:
   workflow_call:
     inputs:
-      image-ref:
+      image-digest:
         required: true
         type: string
       environment:
@@ -14,7 +14,7 @@ on:
         type: boolean
   workflow_dispatch:
     inputs:
-      image-ref:
+      image-digest:
         required: true
         type: string
       environment:
@@ -40,6 +40,12 @@ jobs:
       - name: Setup Nomad
         uses: lucasmelin/setup-nomad@v2.0.0
 
+      - name: Set job name
+        working-directory: ./.nomad/
+        run: |
+          sed -i '/job "apiary" {/c\job "apiary-${{ inputs.environment }}" {' apiary.nomad
+          cat apiary.nomad
+
       - name: Exchange GitHub JWT for Nomad token
         uses: mikenomitch/nomad-jwt-auth@v0.1.0
         with:
@@ -47,8 +53,9 @@ jobs:
           jwtGithubAudience: https://nomad.bcdc.robojackets.net
           methodName: GitHub
 
-      - name: Run Nomad
+      - name: Run Nomad job
         env:
           NOMAD_ADDR: https://nomad.bcdc.robojackets.net
+        working-directory: ./.nomad/
         run: |
-          nomad job status
+          nomad run -var image=registry.bcdc.robojackets.net/robojackets/apiary@${{ inputs.image-digest }} -var precompressed_assets=${{ inputs.precompressed-assets }} -var-file var-files/${{ inputs.environment }}.hcl apiary.nomad

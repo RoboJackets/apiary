@@ -188,6 +188,6 @@ jobs:
       id-token: write
       contents: read
     with:
-      image-ref: ${{ needs.docker.outputs.image-digest }}
+      image-digest: ${{ needs.docker.outputs.image-digest }}
       environment: test
       precompressed-assets: true
