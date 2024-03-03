@@ -48,5 +48,7 @@ jobs:
           methodName: GitHub
 
       - name: Run Nomad
+        env:
+          NOMAD_ADDR: https://nomad.bcdc.robojackets.net
         run: |
           nomad job status
