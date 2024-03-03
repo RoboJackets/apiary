@@ -178,7 +178,7 @@ jobs:
       image-digest: ${{ steps.build.outputs.digest }}
 
   deploy-test:
-    name: Deploy Test
+    name: Deploy
     needs: [lint, test, docs, docker]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
