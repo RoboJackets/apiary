@@ -169,6 +169,6 @@ jobs:
           pull: true
           push: true
           secret-files: composer_auth=./auth.json
-          target: ${{ backend-uncompressed }}
+          target: ${{ github.ref == 'main' && 'backend-compressed' || 'backend-uncompressed' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
