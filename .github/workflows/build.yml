@@ -161,10 +161,6 @@ jobs:
         run: |
           echo '{"github-oauth":{"github.com":"${{ github.token }}"},"http-basic":{"nova.laravel.com":{"username":"${{ secrets.LARAVEL_NOVA_USERNAME }}","password":"${{ secrets.LARAVEL_NOVA_PASSWORD }}"}}}' > auth.json
 
-      - name: Print github.ref
-        run: |
-          echo ${{ github.ref }}
-
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -173,6 +169,6 @@ jobs:
           pull: true
           push: true
           secret-files: composer_auth=./auth.json
-          target: ${{ github.ref == 'main' && 'backend-compressed' || 'backend-uncompressed' }}
+          target: ${{ github.ref == 'refs/heads/main' && 'backend-compressed' || 'backend-uncompressed' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
