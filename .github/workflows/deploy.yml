@@ -1,0 +1,66 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      image-ref:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      precompressed-assets:
+        required: true
+        type: boolean
+  workflow_dispatch:
+    inputs:
+      image-ref:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: environment
+      precompressed-assets:
+        required: true
+        type: boolean
+
+jobs:
+  deploy:
+    name: ${{ inputs.environment }}
+    environment:
+      name: ${{ inputs.environment }}
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Nomad
+        uses: lucasmelin/setup-nomad@v2.0.0
+
+      - name: Get JWT endpoint
+        id: script
+        uses: actions/github-script@v6
+        timeout-minutes: 1
+        with:
+          script: |
+            const token = process.env['ACTIONS_RUNTIME_TOKEN']
+            const runtimeUrl = process.env['ACTIONS_ID_TOKEN_REQUEST_URL']
+            core.setOutput('TOKEN', token.trim())
+            core.setOutput('IDTOKENURL', runtimeUrl.trim())
+
+      - name: Exchange GitHub token for JWT
+        id: jwt
+        run: |
+          IDTOKEN=$(curl -H "Authorization: bearer  ${{steps.script.outputs.TOKEN}}" ${{steps.script.outputs.IDTOKENURL}}  -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json" -d "{}" | jq -r '.value')
+          echo $IDTOKEN
+          jwtd() {
+              if [[ -x $(command -v jq) ]]; then
+                  jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
+                  echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
+              fi
+          }
+          jwtd $IDTOKEN
+          echo "${IDTOKEN}" >> $GITHUB_OUTPUT

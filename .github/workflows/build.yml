@@ -162,6 +162,7 @@ jobs:
           echo '{"github-oauth":{"github.com":"${{ github.token }}"},"http-basic":{"nova.laravel.com":{"username":"${{ secrets.LARAVEL_NOVA_USERNAME }}","password":"${{ secrets.LARAVEL_NOVA_PASSWORD }}"}}}' > auth.json
 
       - name: Build and push
+        id: build
         uses: docker/build-push-action@v5
         with:
           tags: registry.bcdc.robojackets.net/apiary:latest
@@ -172,3 +173,18 @@ jobs:
           target: ${{ github.ref == 'refs/heads/main' && 'backend-compressed' || 'backend-uncompressed' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+    outputs:
+      image-digest: ${{ steps.build.outputs.digest }}
+
+  deploy-test:
+    name: Deploy Test
+    needs: [lint, test, docs, docker]
+    uses: ./.github/workflows/deploy.yml
+    if: ${{ github.ref == 'refs/heads/main' }}
+    concurrency:
+      group: deploy-test
+    with:
+      image-ref: ${{ needs.docker.outputs.image-digest }}
+      environment: test
+      precompressed-assets: true
