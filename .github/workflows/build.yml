@@ -159,7 +159,7 @@ jobs:
 
   deploy-sandbox:
     name: Deploy
-    needs: [deploy-test]
+    needs: [docker, deploy-test]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
@@ -175,7 +175,7 @@ jobs:
 
   deploy-production:
     name: Deploy
-    needs: [deploy-sandbox]
+    needs: [docker, deploy-sandbox]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
