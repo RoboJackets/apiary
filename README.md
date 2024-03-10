@@ -17,11 +17,8 @@ This project has been tailored to support the specific workflow of RoboJackets a
 
 ## Getting Started with Local Development - Docker
 
----
-
-While this repository itself is open-source, we use several **confidential and proprietary** components which are packed into Docker images produced by this process. Images should **never** be pushed to a public registry.
-
----
+> [!WARNING]
+> While this repository itself is open-source, we use several **confidential and proprietary** components which are packed into Docker images produced by this process. Images should **never** be pushed to a public registry.
 
 Install Docker and Docker Compose.
 
