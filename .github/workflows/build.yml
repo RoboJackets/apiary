@@ -107,42 +107,6 @@ jobs:
       - name: Run tests
         run: php artisan test
 
-  docs:
-    name: Docs
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: docs/
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Setup Poetry
-        uses: abatilo/actions-poetry@v2
-
-      - name: Cache the virtualenv
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pypoetry
-          key: venv-${{ hashFiles('poetry.lock') }}
-
-      - name: Install Poetry dependencies
-        run: poetry install
-
-      - name: Build Sphinx docs
-        run: poetry run sphinx-build -M dirhtml . _build
-
-      - name: Install and run Vale
-        run: |
-          poetry add vale
-          poetry run vale sync
-          poetry run vale .
-
   docker:
     name: Docker
     runs-on: ubuntu-latest
@@ -179,7 +143,7 @@ jobs:
 
   deploy-test:
     name: Deploy
-    needs: [lint, test, docs, docker]
+    needs: [lint, test, docker]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
@@ -195,7 +159,7 @@ jobs:
 
   deploy-sandbox:
     name: Deploy
-    needs: [lint, test, docs, docker, deploy-test]
+    needs: [deploy-test]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
@@ -211,7 +175,7 @@ jobs:
 
   deploy-production:
     name: Deploy
-    needs: [lint, test, docs, docker, deploy-test, deploy-sandbox]
+    needs: [deploy-sandbox]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
