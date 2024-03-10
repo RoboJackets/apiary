@@ -1,4 +1,4 @@
-name: Deactivate Test
+name: Deactivate Environments
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Deactivate Test
+    name: Deactivate Environments
     permissions:
       id-token: write
       contents: read
