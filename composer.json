@@ -29,7 +29,7 @@
         "ans-group/laravel-health-check": "1.14.0",
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.5.0",
-        "barryvdh/laravel-dompdf": "2.0.1",
+        "barryvdh/laravel-dompdf": "2.1.0",
         "calebporzio/sushi": "2.5.1",
         "chelout/laravel-relationship-events": "2.0.0",
         "doctrine/dbal": "3.8.3",
