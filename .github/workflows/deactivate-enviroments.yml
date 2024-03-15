@@ -19,7 +19,7 @@ jobs:
         uses: lucasmelin/setup-nomad@v2.0.0
 
       - name: Exchange GitHub JWT for Nomad token
-        uses: mikenomitch/nomad-jwt-auth@v0.1.0
+        uses: RoboJackets/nomad-jwt-auth@main
         with:
           url: https://nomad.bcdc.robojackets.net
           jwtGithubAudience: https://nomad.bcdc.robojackets.net
