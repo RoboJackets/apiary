@@ -126,7 +126,7 @@ RUN set -eux && \
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 
-COPY --link --from=backend-source --chown=33:33 /app/ /app/
+COPY --link --from=backend-source --chown=33:33 --chmod=700 /app/ /app/
 
 WORKDIR /app/
 
