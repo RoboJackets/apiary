@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15dc4248614e29e90290846e784f238e",
+    "content-hash": "c3140f3efe91487ca67070f52e43db63",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -12831,7 +12831,7 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.6.7",
+            "version": "1.6.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
