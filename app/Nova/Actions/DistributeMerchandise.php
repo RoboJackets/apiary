@@ -132,9 +132,9 @@ class DistributeMerchandise extends Action
                     )
                         ->get()
                         ->mapWithKeys(static fn (User $user): array => [strval($user->id) => $user->name])
+                        ->sort()
                         ->toArray()
                 )
-                ->searchable()
                 ->required()
                 ->rules('required'),
         ];
