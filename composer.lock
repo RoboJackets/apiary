@@ -8634,16 +8634,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.16.3",
+            "version": "1.16.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "59db18c2e20d49a0b6d447bb1c654f6c123beb9e"
+                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/59db18c2e20d49a0b6d447bb1c654f6c123beb9e",
-                "reference": "59db18c2e20d49a0b6d447bb1c654f6c123beb9e",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
+                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
                 "shasum": ""
             },
             "require": {
@@ -8682,7 +8682,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.3"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.4"
             },
             "funding": [
                 {
@@ -8690,7 +8690,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-07T07:35:57+00:00"
+            "time": "2024-03-20T07:29:11+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -13178,25 +13178,25 @@
         },
         {
             "name": "orchestra/canvas",
-            "version": "v8.11.7",
+            "version": "v8.11.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/canvas.git",
-                "reference": "e4a0157f522222725f1559bde0da1091a91542fb"
+                "reference": "31b1f338fb9d2f3c97ccbc62b27d3e5bf86a02e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/canvas/zipball/e4a0157f522222725f1559bde0da1091a91542fb",
-                "reference": "e4a0157f522222725f1559bde0da1091a91542fb",
+                "url": "https://api.github.com/repos/orchestral/canvas/zipball/31b1f338fb9d2f3c97ccbc62b27d3e5bf86a02e5",
+                "reference": "31b1f338fb9d2f3c97ccbc62b27d3e5bf86a02e5",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2",
                 "composer/semver": "^3.0",
-                "illuminate/console": "^10.39",
-                "illuminate/database": "^10.39",
-                "illuminate/filesystem": "^10.39",
-                "illuminate/support": "^10.39",
+                "illuminate/console": "^10.48.4",
+                "illuminate/database": "^10.48.4",
+                "illuminate/filesystem": "^10.48.4",
+                "illuminate/support": "^10.48.4",
                 "orchestra/canvas-core": "^8.10.2",
                 "orchestra/testbench-core": "^8.19",
                 "php": "^8.1",
@@ -13204,12 +13204,12 @@
                 "symfony/yaml": "^6.2"
             },
             "require-dev": {
-                "laravel/framework": "^10.39",
+                "laravel/framework": "^10.48.4",
                 "laravel/pint": "^1.6",
                 "mockery/mockery": "^1.5.1",
-                "phpstan/phpstan": "^1.10.5",
-                "phpunit/phpunit": "^10.1",
-                "spatie/laravel-ray": "^1.32.4"
+                "phpstan/phpstan": "^1.10.56",
+                "phpunit/phpunit": "^10.5",
+                "spatie/laravel-ray": "^1.33"
             },
             "bin": [
                 "canvas"
@@ -13247,9 +13247,9 @@
             "description": "Code Generators for Laravel Applications and Packages",
             "support": {
                 "issues": "https://github.com/orchestral/canvas/issues",
-                "source": "https://github.com/orchestral/canvas/tree/v8.11.7"
+                "source": "https://github.com/orchestral/canvas/tree/v8.11.8"
             },
-            "time": "2024-02-07T10:29:23+00:00"
+            "time": "2024-03-21T14:41:18+00:00"
         },
         {
             "name": "orchestra/canvas-core",
@@ -13952,16 +13952,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.26.0",
+            "version": "1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227"
+                "reference": "86e4d5a4b036f8f0be1464522f4c6b584c452757"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/231e3186624c03d7e7c890ec662b81e6b0405227",
-                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/86e4d5a4b036f8f0be1464522f4c6b584c452757",
+                "reference": "86e4d5a4b036f8f0be1464522f4c6b584c452757",
                 "shasum": ""
             },
             "require": {
@@ -13993,9 +13993,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.26.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.27.0"
             },
-            "time": "2024-02-23T16:05:55+00:00"
+            "time": "2024-03-21T13:14:53+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
