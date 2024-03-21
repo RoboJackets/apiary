@@ -230,33 +230,13 @@ class TravelAssignment extends Resource
 
         $businessPolicy = new MatrixItineraryBusinessPolicy($trip->airfare_policy);
 
-        $businessPolicyPassed = true;
-
         $businessPolicy->validate(
             'matrix_itinerary',
             $request->matrix_itinerary,
-            static function (string $message) use ($validator, &$businessPolicyPassed): void {
-                $businessPolicyPassed = false;
+            static function (string $message) use ($validator): void {
                 $validator->errors()->add('matrix_itinerary', $message);
             }
         );
-
-        if ($businessPolicyPassed) {
-            $airfare_cost = Matrix::getHighestDisplayPrice($request->matrix_itinerary);
-
-            if ($airfare_cost === null) {
-                $validator->errors()->add('matrix_itinerary', 'Internal error determining price for itinerary');
-            }
-
-            $total_cost = $trip->tar_lodging + $trip->tar_registration + $airfare_cost;
-
-            if ($trip->fee_amount / $total_cost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
-                $validator->errors()->add(
-                    'matrix_itinerary',
-                    trim(view('nova.help.travel.assignment.feevalidation', ['totalCost' => $total_cost])->render())
-                );
-            }
-        }
     }
 
     /**

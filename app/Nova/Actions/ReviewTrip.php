@@ -68,20 +68,35 @@ class ReviewTrip extends Action
         $trip->save();
 
         if ($trip->needs_docusign) {
-            $trip->assignments->each(static function (TravelAssignment $assignment): void {
-                PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
-                    ->chain([
-                        new SendDocuSignEnvelopeForTravelAssignment($assignment, true),
-                        new SendTravelAssignmentCreatedNotification($assignment),
-                    ]);
-            });
+            if ($trip->fee_amount > 0) {
+                $trip->assignments->each(static function (TravelAssignment $assignment): void {
+                    PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
+                        ->chain([
+                            new SendDocuSignEnvelopeForTravelAssignment($assignment, true),
+                            new SendTravelAssignmentCreatedNotification($assignment),
+                        ]);
+                });
+            } else {
+                $trip->assignments->each(static function (TravelAssignment $assignment): void {
+                    SendDocuSignEnvelopeForTravelAssignment::dispatch($assignment, true)
+                        ->chain([
+                            new SendTravelAssignmentCreatedNotification($assignment),
+                        ]);
+                });
+            }
         } else {
-            $trip->assignments->each(static function (TravelAssignment $assignment): void {
-                PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
-                    ->chain([
-                        new SendTravelAssignmentCreatedNotification($assignment),
-                    ]);
-            });
+            if ($trip->fee_amount > 0) {
+                $trip->assignments->each(static function (TravelAssignment $assignment): void {
+                    PrefetchSquareCheckoutLinkForTravelAssignment::dispatch($assignment)
+                        ->chain([
+                            new SendTravelAssignmentCreatedNotification($assignment),
+                        ]);
+                });
+            } else {
+                $trip->assignments->each(static function (TravelAssignment $assignment): void {
+                    SendTravelAssignmentCreatedNotification::dispatch($assignment);
+                });
+            }
         }
 
         $trip->primaryContact->notify(new TravelApproved($trip));
