@@ -1084,7 +1084,8 @@ class User extends Authenticatable
             ->whereHas(
                 'travel',
                 static function (Builder $query): void {
-                    $query->whereIn('status', ['approved', 'complete']);
+                    $query->whereIn('status', ['approved', 'complete'])
+                        ->where('fee_amount', '>', 0);
                 }
             )
             ->unpaid()

@@ -21,7 +21,6 @@ use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Util\DepartmentNumbers;
 use App\Util\DocuSign;
-use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -235,10 +234,10 @@ class Travel extends Resource
                     ->rules(
                         'required',
                         'integer',
-                        'min:'.config('travelpolicy.minimum_trip_fee'),
+                        'min:0',
                         'max:'.config('travelpolicy.maximum_trip_fee')
                     )
-                    ->min(config('travelpolicy.minimum_trip_fee'))
+                    ->min(0)
                     ->max(config('travelpolicy.maximum_trip_fee')),
 
                 Currency::make(
@@ -844,46 +843,6 @@ class Travel extends Resource
                     'The selected department and Workday account numbers do not match.'
                 );
             }
-        }
-
-        $totalCost = intval($request->tar_lodging) +
-            intval($request->tar_registration) +
-            intval($request->car_rental_cost) +
-            intval($request->meal_per_diem);
-
-        if ($request->resourceId !== null) {
-            $trip = \App\Models\Travel::where('id', '=', $request->resourceId)->sole();
-
-            $airfareCost = $trip->assignments->reduce(
-                static function (?float $carry, \App\Models\TravelAssignment $assignment): ?float {
-                    $thisAirfareCost = Matrix::getHighestDisplayPrice($assignment->matrix_itinerary);
-
-                    if ($thisAirfareCost !== null && $carry !== null && $thisAirfareCost > $carry) {
-                        return $thisAirfareCost;
-                    } elseif ($thisAirfareCost !== null && $carry === null) {
-                        return $thisAirfareCost;
-                    } else {
-                        return $carry;
-                    }
-                }
-            );
-
-            if ($airfareCost !== null && $airfareCost > 0) {
-                $totalCost += $airfareCost;
-            }
-        }
-
-        $feeAmount = intval($request->fee_amount);
-
-        if ($totalCost === 0) {
-            return;
-        }
-
-        if ($feeAmount / $totalCost < config('travelpolicy.minimum_trip_fee_cost_ratio')) {
-            $validator->errors()->add(
-                'fee_amount',
-                trim(view('nova.help.travel.feevalidation', ['totalCost' => $totalCost])->render())
-            );
         }
     }
 
