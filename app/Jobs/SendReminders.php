@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\DuesPackage;
+use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -66,7 +67,7 @@ class SendReminders implements ShouldBeUnique, ShouldQueue
             DuesPackage::whereDate('effective_end', '<', Carbon::now())
                 ->whereDate('access_end', '>', Carbon::now())
                 ->doesntExist() &&
-            $this->user->attendance()->exists()
+            $this->user->attendance()->where('attendable_type', '=', Team::getMorphClassStatic())->exists()
         ) {
             SendDuesTransactionReminder::dispatch($this->user);
 
