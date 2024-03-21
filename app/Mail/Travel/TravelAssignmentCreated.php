@@ -49,7 +49,25 @@ class TravelAssignmentCreated extends Mailable implements ShouldQueue
 
     private function subjectLineCallToAction(): string
     {
-        if ($this->assignment->needs_docusign || ! $this->assignment->user->has_emergency_contact_information) {
+        if (
+            $this->assignment->needs_docusign &&
+            $this->assignment->user->has_emergency_contact_information &&
+            $this->assignment->travel->fee_amount === 0
+        ) {
+            if ($this->assignment->travel->needs_airfare_form) {
+                if ($this->assignment->travel->needs_travel_information_form) {
+                    return 'Forms';
+                } else {
+                    return 'Airfare request form';
+                }
+            } else {
+                if ($this->assignment->travel->needs_travel_information_form) {
+                    return 'Travel information form';
+                } else {
+                    return 'Form';
+                }
+            }
+        } elseif ($this->assignment->needs_docusign || ! $this->assignment->user->has_emergency_contact_information) {
             return 'Action';
         } else {
             return 'Payment';
