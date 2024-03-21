@@ -1,1 +1,1 @@
-This is the amount that will be collected from <strong>each</strong> traveler. The trip fee must be at least {{ (config('travelpolicy.minimum_trip_fee_cost_ratio') * 100) }}% of the per-person cost for this trip. Online payments incur a <a href="https://squareup.com/us/en/payments/our-fees">~4% processing fee</a> paid by RoboJackets.
+This is the amount that will be collected from <strong>each</strong> traveler. Online payments incur a <a href="https://squareup.com/us/en/payments/our-fees">~4% processing fee</a> paid by RoboJackets.
