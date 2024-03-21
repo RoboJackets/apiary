@@ -21,7 +21,6 @@ use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Util\DepartmentNumbers;
 use App\Util\DocuSign;
-use App\Util\Matrix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
