@@ -209,12 +209,12 @@ class Travel extends Resource
             Date::make('Departure Date')
                 ->sortable()
                 ->required()
-                ->rules('required', 'date', 'before:return_date'),
+                ->rules('required', 'date'),
 
             Date::make('Return Date')
                 ->sortable()
                 ->required()
-                ->rules('required', 'date', 'after:departure_date'),
+                ->rules('required', 'date'),
 
             Boolean::make('Payment Completion Email Sent')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
