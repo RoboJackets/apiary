@@ -11,6 +11,7 @@ use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Rules\MatrixItineraryDataStructure;
 use App\Util\Matrix;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
@@ -119,7 +120,7 @@ class TravelAssignment extends Resource
                     static function (string $attribute, mixed $value, Closure $fail): void {
                         $trip = \App\Models\Travel::where('id', '=', $value)->sole();
 
-                        if ($trip->status !== 'draft') {
+                        if ($trip->status !== 'draft' && ! Auth::user()->hasRole('admin')) {
                             $fail('Assignments cannot be created for this trip because it is not in draft status.');
                         }
                     }
