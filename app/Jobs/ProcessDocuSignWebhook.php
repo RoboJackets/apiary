@@ -130,22 +130,42 @@ class ProcessDocuSignWebhook extends ProcessWebhookJob
                 case 'signed':
                 case 'completed':
                     $envelope->complete = true;
-                    $envelope->save();
+                    if ($this->webhookCall->payload['event'] === 'envelope-purge') {
+                        // to avoid triggering reminders
+                        $envelope->saveQuietly();
+                    } else {
+                        $envelope->save();
+                    }
 
                     break;
                 case 'declined':
                 case 'voided':
-                    $envelope->save();
+                    if ($this->webhookCall->payload['event'] === 'envelope-purge') {
+                        // to avoid triggering reminders
+                        $envelope->saveQuietly();
+                    } else {
+                        $envelope->save();
+                    }
 
                     if ($envelope->deleted_at === null) {
-                        $envelope->delete();
+                        if ($this->webhookCall->payload['event'] === 'envelope-purge') {
+                            // to avoid triggering reminders
+                            $envelope->deleteQuietly();
+                        } else {
+                            $envelope->delete();
+                        }
                     }
 
                     break;
                 case 'created':
                 case 'delivered':
                 case 'sent':
-                    $envelope->save();
+                    if ($this->webhookCall->payload['event'] === 'envelope-purge') {
+                        // to avoid triggering reminders
+                        $envelope->saveQuietly();
+                    } else {
+                        $envelope->save();
+                    }
 
                     break;
                 default:
