@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RsvpSourceBreakdown extends Partition
 {
@@ -17,15 +18,31 @@ class RsvpSourceBreakdown extends Partition
      *
      * @var string
      */
-    public $name = 'RSVP Sources';
+    public function name(): string
+    {
+        return $this->resourceId === -1 ? 'RSVP Sources' : 'RSVP Sources For '.Rsvp::where(
+                'id',
+                $this->resourceId
+            )->sole()->name;
+    }
 
     /**
      * Calculate the value of the metric.
      */
-    public function calculate(Request $request): PartitionResult
+
+    protected int $resourceId;
+
+    public function __construct(int $resourceId = -1)
     {
+        parent::__construct();
+        $this->resourceId = $resourceId;
+    }
+
+    public function calculate(NovaRequest $request): PartitionResult
+    {
+        $resourceId = $request->resourceId ?? $this->resourceId;
         return $this->result(
-            Rsvp::where('event_id', $request->resourceId)
+            Rsvp::where('event_id', $resourceId)
                 ->leftJoin('recruiting_visits', 'source', '=', 'visit_token')
                 ->when(
                     config('database.default') === 'mysql',
@@ -53,6 +70,6 @@ class RsvpSourceBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return 'rsvp-source-breakdown';
+        return $this->resourceId === -1 ? 'rsvp-source-breakdown' : 'rsvp-source-breakdown-'.$this->resourceId;
     }
 }

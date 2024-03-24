@@ -73,7 +73,10 @@ class Event extends Resource
      */
     public function fields(Request $request): array
     {
+
         return [
+            Text::make('Event ID', 'id')
+                ->onlyOnDetail(),
             Text::make('Event Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255')
