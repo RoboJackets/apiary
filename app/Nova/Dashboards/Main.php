@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Dashboards;
 
+use App\Models\Event;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
@@ -16,6 +17,7 @@ use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\MembersByFiscalYear;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\PaymentsPerDay;
+use App\Nova\Metrics\RsvpSourceBreakdown;
 use App\Nova\Metrics\TransactionsByDuesPackage;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use Carbon\Carbon;
@@ -96,6 +98,19 @@ class Main extends Dashboard
                 }
 
                 $cards[] = new EmergencyContactInformationForTravel($travel->id);
+            }
+
+            foreach (Event::all() as $event) {
+                $should_include = false;
+
+                if ($event->rsvps()->count() > 0) {
+                    $should_include = true;
+                }
+                if (!$should_include) {
+                    continue;
+                }
+                $cards[] = (new RsvpSourceBreakdown($event->id))
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('read-rsvps'));
             }
 
             return $cards;
