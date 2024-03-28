@@ -41,7 +41,7 @@ class RefundSquarePayment extends Action
      * @var string
      */
     public $confirmText = 'Provide a reason for refunding this payment. This will be visible to the member on the '.
-    'updated Square receipt.';
+        'updated Square receipt.';
 
     /**
      * Indicates if this action is only available on the resource detail view.
