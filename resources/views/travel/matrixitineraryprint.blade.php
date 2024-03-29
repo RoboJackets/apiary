@@ -8,7 +8,7 @@
     <strong>Students should not book their own flights.</strong>
     Travel Inc will book flights and bill directly to Georgia Tech.
 </p>
-@if($assignment->travel->airfare_policy['delta'] === true && ($assignment->travel->airfare_policy['coach'] === true || $assignment->travel->airfare_policy['fare_class'] === true))
+@if($assignment->travel->airfare_policy['delta'] === true && $assignment->travel->airfare_policy['coach'] === true && $assignment->travel->airfare_policy['fare_class'] === true)
     <p>
         <strong>Instructions for Travel Inc agent:</strong> Please book the lowest-cost available tickets for the flights below in Delta Main Cabin economy class, excluding basic economy.
     </p>
