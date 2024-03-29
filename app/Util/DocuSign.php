@@ -521,7 +521,7 @@ class DocuSign
                 ->setTooltip(
                     'If you have a Known Traveler '.
                     'Number, PASS ID, Redress Control Number, SkyMiles number, or other identifier '.
-                    'relevant to air travel, enter it here.'
+                    'relevant to air travel, enter it here. Specify what kind of number it is!'
                 );
         }
 
