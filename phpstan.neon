@@ -172,6 +172,7 @@ parameters:
     - '#Parameter \#1 \$options of method Laravel\\Nova\\Fields\\Select::options\(\) expects \(callable\(\): iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>\)\|iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>, array<string, mixed> given\.#'
     - '#Parameter \#1 \$options of method Laravel\\Nova\\Fields\\Select::options\(\) expects \(callable\(\): iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>\)\|iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>, Closure\(\): array given\.#'
     - '#Parameter \#1 \$orderId of method Square\\Apis\\OrdersApi::retrieveOrder\(\) expects string, string\|null given\.#'
+    - '#Parameter \#1 \$path of method Illuminate\\Filesystem\\FilesystemAdapter::exists\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$path of method Illuminate\\Routing\\Redirector::away\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$payment of class App\\Notifications\\PaymentReceipt constructor expects App\\Models\\Payment, mixed given\.#'
     - '#Parameter \#1 \$permission of method Spatie\\Permission\\Contracts\\Role::givePermissionTo\(\) expects string, mixed given\.#'

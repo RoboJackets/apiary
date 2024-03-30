@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -618,8 +619,7 @@ class Travel extends Resource
                             // ensure every envelope has a summary PDF on disk
                             static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
                                 $envelope->summary_filename !== null &&
-                                // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
-                                file_exists($envelope->summary_filename),
+                                Storage::disk('local')->exists($envelope->itinerary_request_filename),
                             true
                         ),
                     true
