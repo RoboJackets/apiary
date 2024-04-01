@@ -108,16 +108,16 @@ class Main extends Dashboard
                     if ($attributes['start_time'] === null || $attributes['start_time'] < Carbon::now()) {
                         $should_include = false;
                     }
-                } else if ($attributes['end_time'] < Carbon::now()) {
+                } elseif ($attributes['end_time'] < Carbon::now()) {
                     $should_include = false;
                 }
-                if (!$should_include) {
+                if (! $should_include) {
                     continue;
                 }
 
                 $cards[] = (new RsvpSourceBreakdown($event->id))
                     ->canSee(static fn (Request $request): bool => $request->user()->can('read-rsvps'));
-                $cards[] = (new ActiveAttendanceBreakdown(true, $event->id, "event"))
+                $cards[] = (new ActiveAttendanceBreakdown(true, $event->id, 'event'))
                     ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance'));
             }
 
@@ -144,6 +144,7 @@ class Main extends Dashboard
         if (request()->is('nova-api/metrics/rsvp-source-breakdown-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $id = intval($parts->last());
+
             return [
                 (new RsvpSourceBreakdown($id))->canSee(
                     static fn (Request $request): bool => $request->user()->can('read-rsvps')
@@ -154,10 +155,11 @@ class Main extends Dashboard
         if (request()->is('nova-api/metrics/active-attendance-breakdown-event-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $id = intval($parts->last());
+
             return [
                 (new ActiveAttendanceBreakdown(true, 1, "event"))->canSee(
                     static fn (Request $request): bool => $request->user()->can('read-attendance')
-                )
+                ),
             ];
         }
 

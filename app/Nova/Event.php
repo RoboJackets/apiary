@@ -73,7 +73,6 @@ class Event extends Resource
      */
     public function fields(Request $request): array
     {
-
         return [
             Text::make('Event ID', 'id')
                 ->onlyOnDetail(),
