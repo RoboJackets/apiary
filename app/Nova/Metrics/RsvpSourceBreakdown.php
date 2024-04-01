@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Models\Event;
 use App\Models\Rsvp;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class RsvpSourceBreakdown extends Partition
      */
     public function name(): string
     {
-        return $this->resourceId === -1 ? 'RSVP Sources' : 'RSVP Sources For '.Rsvp::where(
+        return $this->resourceId === -1 ? 'RSVP Sources' : 'RSVP Sources for '.Event::where(
                 'id',
                 $this->resourceId
             )->sole()->name;
