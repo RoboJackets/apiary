@@ -203,7 +203,7 @@ class Main extends Dashboard
             $id = intval($parts->last());
 
             return [
-                (new ActiveAttendanceBreakdown(true, 1, "event"))->canSee(
+                (new ActiveAttendanceBreakdown(true, 1, 'event'))->canSee(
                     static fn (Request $request): bool => $request->user()->can('read-attendance')
                 ),
             ];
