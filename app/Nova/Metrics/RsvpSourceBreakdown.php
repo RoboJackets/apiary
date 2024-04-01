@@ -46,7 +46,7 @@ class RsvpSourceBreakdown extends Partition
     public function calculate(NovaRequest $request): PartitionResult
     {
         $resourceId = $request->resourceId ?? $this->resourceId;
-        
+
         return $this->result(
             Rsvp::where('event_id', $resourceId)
                 ->leftJoin('recruiting_visits', 'source', '=', 'visit_token')
