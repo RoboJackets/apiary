@@ -156,48 +156,6 @@ class Main extends Dashboard
             ];
         }
 
-        if (request()->is('nova-api/metrics/rsvp-source-breakdown-*')) {
-            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
-            $id = intval($parts->last());
-            return [
-                (new RsvpSourceBreakdown($id))->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-rsvps')
-                ),
-            ];
-        }
-
-        if (request()->is('nova-api/metrics/active-attendance-breakdown-event-*')) {
-            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
-            $id = intval($parts->last());
-            return [
-                (new ActiveAttendanceBreakdown(true, 1, "event"))->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-attendance')
-                )
-            ];
-        }
-
-
-        if (request()->is('nova-api/metrics/emergency-contact-*')) {
-            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
-            $id = intval($parts->last());
-
-            return [
-                new EmergencyContactInformationForTravel($id),
-            ];
-        }
-
-
-        if (request()->is('nova-api/metrics/rsvp-source-breakdown-*')) {
-            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
-            $id = intval($parts->last());
-
-            return [
-                (new RsvpSourceBreakdown($id))->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-rsvps')
-                ),
-            ];
-        }
-
         if (request()->is('nova-api/metrics/active-attendance-breakdown-event-*')) {
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $id = intval($parts->last());
@@ -208,6 +166,19 @@ class Main extends Dashboard
                 ),
             ];
         }
+
+        if (request()->is('nova-api/metrics/rsvp-source-breakdown-*')) {
+            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
+            $id = intval($parts->last());
+
+            return [
+                (new RsvpSourceBreakdown($id))->canSee(
+                    static fn (Request $request): bool => $request->user()->can('read-rsvps')
+                ),
+            ];
+        }
+
+
 
         return $cards;
     }
