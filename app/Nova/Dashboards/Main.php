@@ -178,8 +178,6 @@ class Main extends Dashboard
             ];
         }
 
-
-
         return $cards;
     }
 }
