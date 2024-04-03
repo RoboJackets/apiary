@@ -35,16 +35,12 @@ class ActiveAttendanceBreakdown extends Partition
 
     /**
      * If displaying on the main dashboard, this indicates the event to get attendance from.
-     *
-     * @var int
      */
     private int $resourceId;
 
     /**
      * If displaying on a page different from the type of attendable you are showing.
      * This indicates the morphClass of the attendable (for example, an event).
-     *
-     * @var string
      */
     private string $attendableType;
 

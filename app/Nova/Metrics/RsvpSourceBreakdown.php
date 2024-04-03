@@ -15,8 +15,6 @@ class RsvpSourceBreakdown extends Partition
 {
     /**
      * The displayable name of the metric.
-     *
-     * @var string
      */
     public function name(): string
     {
