@@ -27,8 +27,6 @@ class RsvpSourceBreakdown extends Partition
     /**
      * The resource ID attached to this metric.
      * Used when the resource ID cannot be inferred from the Nova page.
-     *
-     * @var int
      */
     protected int $resourceId;
 
