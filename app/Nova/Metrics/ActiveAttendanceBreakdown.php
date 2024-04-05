@@ -82,7 +82,7 @@ class ActiveAttendanceBreakdown extends Partition
                 ->where('attendable_id', $resourceId)
                 ->where(
                     'attendable_type',
-                    $this->attendableType != '' ? $this->attendableType :
+                    $this->attendableType !== '' ? $this->attendableType :
                     $request->model()->getMorphClass()
                 );
         }
