@@ -60,6 +60,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
+        $resourceId = -1;
         $attach_to_resource_id = false;
         if ($this->resourceId !== -1) {
             $resourceId = $this->resourceId;
