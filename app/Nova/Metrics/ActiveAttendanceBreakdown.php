@@ -36,7 +36,7 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * If displaying on the main dashboard, this indicates the event to get attendance from.
      */
-    private int $resourceId;
+    private int $resourceId = -1;
 
     /**
      * If displaying on a page different from the type of attendable you are showing.
