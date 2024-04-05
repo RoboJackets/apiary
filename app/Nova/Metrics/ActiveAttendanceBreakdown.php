@@ -19,7 +19,7 @@ class ActiveAttendanceBreakdown extends Partition
     public function name(): string
     {
         $ret = $this->showAllTime ? 'Active Attendees' : 'Attendees Last 4 Weeks';
-        if ($this->resourceId != -1) {
+        if ($this->resourceId !== -1) {
             $ret .= ' for '.Event::where('id', $this->resourceId)->sole()->name;
         }
 
@@ -61,7 +61,7 @@ class ActiveAttendanceBreakdown extends Partition
     public function calculate(Request $request): PartitionResult
     {
         $attach_to_resource_id = false;
-        if ($this->resourceId != -1) {
+        if ($this->resourceId !== -1) {
             $resourceId = $this->resourceId;
             $attach_to_resource_id = true;
         } elseif (isset($request->resourceId)) {
@@ -80,9 +80,11 @@ class ActiveAttendanceBreakdown extends Partition
         if ($attach_to_resource_id) {
             $query = $query
                 ->where('attendable_id', $resourceId)
-                ->where('attendable_type',
-                    $this->attendableType != '' ? $this->attendableType
-                    : $request->model()->getMorphClass());
+                ->where(
+                    'attendable_type',
+                    $this->attendableType != '' ? $this->attendableType :
+                    $request->model()->getMorphClass()
+                );
         }
 
         if (! $this->showAllTime) {
@@ -110,7 +112,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return $this->resourceId === -1 ? 'active-attendance-breakdown'
-            : 'active-attendance-breakdown-'.$this->attendableType.'-'.$this->resourceId;
+        return $this->resourceId === -1 ? 'active-attendance-breakdown' :
+            'active-attendance-breakdown-'.$this->attendableType.'-'.$this->resourceId;
     }
 }
