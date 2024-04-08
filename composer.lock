@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b00e465ef5f8345e4f3206ad99f0d667",
+    "content-hash": "a010a5a5fd3cf026639bd8fe74504fea",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1988,37 +1988,37 @@
         },
         {
             "name": "enlightn/enlightn",
-            "version": "v2.7.0",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/enlightn/enlightn.git",
-                "reference": "a13b1ea0dcd1e3b73174d3ad6d707b7816444258"
+                "reference": "983ce84674609be77a1723475f8d2bd205575af2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/a13b1ea0dcd1e3b73174d3ad6d707b7816444258",
-                "reference": "a13b1ea0dcd1e3b73174d3ad6d707b7816444258",
+                "url": "https://api.github.com/repos/enlightn/enlightn/zipball/983ce84674609be77a1723475f8d2bd205575af2",
+                "reference": "983ce84674609be77a1723475f8d2bd205575af2",
                 "shasum": ""
             },
             "require": {
-                "enlightn/security-checker": "^1.1",
+                "enlightn/security-checker": "^1.1|^2.0",
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^7.0",
                 "larastan/larastan": "^2.0",
-                "laravel/framework": "^9.0|^10.0",
-                "nikic/php-parser": "^4.0",
+                "laravel/framework": "^9.0|^10.0|^11.0",
+                "nikic/php-parser": "^4.0|^5.0",
                 "php": "^8.0",
                 "phpstan/phpstan": ">=1.10.48",
                 "phpstan/phpstan-deprecation-rules": "^1.1",
-                "symfony/finder": "^4.0|^5.0|^6.0"
+                "symfony/finder": "^4.0|^5.0|^6.0|^7.0"
             },
             "require-dev": {
-                "barryvdh/laravel-ide-helper": "^2.8",
-                "brianium/paratest": "^6.1",
+                "barryvdh/laravel-ide-helper": "^2.8|^3.0",
+                "brianium/paratest": "^6.1|^7.0",
                 "friendsofphp/php-cs-fixer": "^2.18|^3.0",
                 "mockery/mockery": "^1.3",
-                "orchestra/testbench": "^7.0|^8.0",
-                "phpunit/phpunit": "^9.0",
+                "orchestra/testbench": "^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.0|^10.0",
                 "predis/predis": "*"
             },
             "type": "library",
@@ -2069,9 +2069,9 @@
             "support": {
                 "docs": "https://www.laravel-enlightn.com/docs/",
                 "issues": "https://github.com/enlightn/enlightn/issues",
-                "source": "https://github.com/enlightn/enlightn/tree/v2.7.0"
+                "source": "https://github.com/enlightn/enlightn/tree/v2.10.0"
             },
-            "time": "2023-12-10T05:51:03+00:00"
+            "time": "2024-04-05T10:49:23+00:00"
         },
         {
             "name": "enlightn/security-checker",
