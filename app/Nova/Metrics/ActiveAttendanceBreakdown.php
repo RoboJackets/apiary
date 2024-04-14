@@ -60,15 +60,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $resourceId = -1;
-        $attach_to_resource_id = false;
-        if ($this->resourceId !== -1) {
-            $resourceId = $this->resourceId;
-            $attach_to_resource_id = true;
-        } elseif (isset($request->resourceId)) {
-            $resourceId = $request->resourceId;
-            $attach_to_resource_id = true;
-        }
+        $resourceId = $request->resourceId ?? $this->resourceId;
         // If a user is found, this will give "Active" in the active column, otherwise the column will be null
         $query = Attendance::selectRaw('count(distinct gtid) as aggregate')
             ->selectSub(
