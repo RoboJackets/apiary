@@ -45,6 +45,8 @@ Search for flights
 Copy itineraries to trip assignments
 ------------------------------------
 
+.. vale write-good.E-Prime = NO
+
 1. On the :guilabel:`Itinerary Details` page in Matrix, click the :guilabel:`Copy itinerary as JSON` option in the right sidebar.
 2. You can then paste the JSON into the :guilabel:`Matrix Itinierary` field on a trip assignment in Apiary.
    Note that you need to remove the ``null`` value that's in the field by default.
