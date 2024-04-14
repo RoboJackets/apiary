@@ -44,4 +44,4 @@ jobs:
         uses: docker://jdkato/vale
         with:
           entrypoint: /bin/sh
-          args: -euxc ""cd docs && vale sync && vale .""
+          args: -euxc "cd docs && vale sync && vale ."
