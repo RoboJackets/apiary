@@ -28,9 +28,9 @@ class RsvpSourceBreakdown extends Partition
      * The resource ID attached to this metric.
      * Used when the resource ID cannot be inferred from the Nova page.
      */
-    protected int $resourceId;
+    protected ?int $resourceId;
 
-    public function __construct(int $resourceId = -1)
+    public function __construct(?int $resourceId = null)
     {
         parent::__construct();
         $this->resourceId = $resourceId;

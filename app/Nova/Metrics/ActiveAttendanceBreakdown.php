@@ -42,12 +42,12 @@ class ActiveAttendanceBreakdown extends Partition
      * If displaying on a page different from the type of attendable you are showing.
      * This indicates the morphClass of the attendable (for example, an event).
      */
-    private string $attendableType;
+    private ?string $attendableType;
 
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      */
-    public function __construct(bool $showAllTime = false, int $resourceId, string $attendableType = '')
+    public function __construct(bool $showAllTime = false, ?int $resourceId = null, ?string $attendableType = null)
     {
         parent::__construct();
     }
