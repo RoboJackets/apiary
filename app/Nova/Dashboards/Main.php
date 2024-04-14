@@ -110,11 +110,11 @@ class Main extends Dashboard
                 if ($event->attendance()->count() > 0) {
                     $should_include = true;
                 }
-                if ($attributes['end_time'] === null) {
-                    if ($attributes['start_time'] === null || $attributes['start_time'] < Carbon::now()) {
+                if ($event->end_time === null) {
+                    if ($event->start_time === null || $event->start_time < Carbon::now()) {
                         $should_include = false;
                     }
-                } elseif ($attributes['end_time'] < Carbon::now()) {
+                } elseif ($event->end_time < Carbon::now()) {
                     $should_include = false;
                 }
                 if (! $should_include) {
