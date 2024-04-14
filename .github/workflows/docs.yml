@@ -40,8 +40,10 @@ jobs:
       - name: Build Sphinx docs
         run: poetry run sphinx-build -M dirhtml . _build
 
+      - name: Download Vale rules
+        uses: docker://jdkato/vale
+        args: sync
+
       - name: Run Vale
         uses: docker://jdkato/vale
-        run: |
-          vale sync
-          vale .
+        args: .
