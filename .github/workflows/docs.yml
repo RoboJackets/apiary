@@ -2,10 +2,10 @@ name: Docs
 on:
   push:
     paths:
-    - 'docs/'
+    - 'docs/**'
   pull_request:
     paths:
-    - 'docs/'
+    - 'docs/**'
 
 jobs:
   docs:
