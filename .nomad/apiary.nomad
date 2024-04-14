@@ -73,7 +73,7 @@ locals {
     )
   )
 
-  # remove gzip_static directive if/when image does not contain compressed assets (handled at Concourse/operator level)
+  # remove gzip_static directive if/when image does not contain compressed assets (handled at GitHub Actions/operator level)
   compressed_nginx_configuration_without_gzip_static = regex_replace(local.compressed_nginx_configuration,"gzip_static\\s\\S+;","")
 }
 
