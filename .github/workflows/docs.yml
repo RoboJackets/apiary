@@ -1,13 +1,11 @@
 name: Docs
 on:
-  - push
-# on:
-#   push:
-#     paths:
-#     - 'docs/**'
-#   pull_request:
-#     paths:
-#     - 'docs/**'
+  push:
+    paths:
+    - 'docs/**'
+  pull_request:
+    paths:
+    - 'docs/**'
 
 jobs:
   docs:
