@@ -43,7 +43,7 @@ jobs:
       - name: Run Vale
         uses: docker://jdkato/vale
         with:
-          entrypoint: /bin/bash
+          entrypoint: /bin/sh
           args: |
             -euxo pipefail
             -c cd docs && vale sync && vale .
