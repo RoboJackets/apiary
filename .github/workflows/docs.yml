@@ -40,14 +40,10 @@ jobs:
       - name: Build Sphinx docs
         run: poetry run sphinx-build -M dirhtml . _build
 
-      - name: Download Vale rules
-        uses: docker://jdkato/vale
-        working-directory: docs/
-        with:
-          args: sync
-
       - name: Run Vale
         uses: docker://jdkato/vale
-        working-directory: docs/
         with:
-          args: .
+          entrypoint: /bin/bash
+          args: |
+            -euxo pipefail
+            -c cd docs && vale sync && vale .
