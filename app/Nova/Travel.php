@@ -619,7 +619,7 @@ class Travel extends Resource
                             // ensure every envelope has a summary PDF on disk
                             static fn (bool $carry, \App\Models\DocuSignEnvelope $envelope): bool => $carry &&
                                 $envelope->summary_filename !== null &&
-                                Storage::disk('local')->exists($envelope->itinerary_request_filename),
+                                Storage::disk('local')->exists($envelope->summary_filename),
                             true
                         ),
                     true
