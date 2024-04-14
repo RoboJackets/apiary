@@ -102,7 +102,6 @@ class Main extends Dashboard
 
             foreach (Event::all() as $event) {
                 $should_include = false;
-                $attributes = $event->getAttributes();
 
                 if ($event->rsvps()->count() > 0) {
                     $should_include = true;
