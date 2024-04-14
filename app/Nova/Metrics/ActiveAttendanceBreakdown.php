@@ -114,6 +114,6 @@ class ActiveAttendanceBreakdown extends Partition
     public function uriKey(): string
     {
         return $this->resourceId === -1 ? 'active-attendance-breakdown' :
-            'active-attendance-breakdown-'.$this->attendableType.'-'.$this->resourceId;
+            '../'.$this->attendableType.'/'.$this->resourceId.'/metrics/active-attendance-breakdown';
     }
 }
