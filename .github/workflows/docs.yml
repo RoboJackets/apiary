@@ -42,8 +42,10 @@ jobs:
 
       - name: Download Vale rules
         uses: docker://jdkato/vale
-        args: sync
+        with:
+          args: sync
 
       - name: Run Vale
         uses: docker://jdkato/vale
-        args: .
+        with:
+          args: .
