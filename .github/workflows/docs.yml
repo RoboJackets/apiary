@@ -1,11 +1,13 @@
 name: Docs
 on:
-  push:
-    paths:
-    - 'docs/**'
-  pull_request:
-    paths:
-    - 'docs/**'
+  - push
+# on:
+#   push:
+#     paths:
+#     - 'docs/**'
+#   pull_request:
+#     paths:
+#     - 'docs/**'
 
 jobs:
   docs:
@@ -38,8 +40,8 @@ jobs:
       - name: Build Sphinx docs
         run: poetry run sphinx-build -M dirhtml . _build
 
-      - name: Install and run Vale
+      - name: Run Vale
+        uses: docker://jdkato/vale
         run: |
-          poetry add vale
-          poetry run vale sync
-          poetry run vale .
+          vale sync
+          vale .
