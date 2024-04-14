@@ -36,7 +36,7 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * If displaying on the main dashboard, this indicates the event to get attendance from.
      */
-    private int $resourceId = -1;
+    private ?int $resourceId;
 
     /**
      * If displaying on a page different from the type of attendable you are showing.
@@ -47,12 +47,9 @@ class ActiveAttendanceBreakdown extends Partition
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      */
-    public function __construct(bool $showAllTime = false, int $resourceId = -1, string $attendableType = '')
+    public function __construct(bool $showAllTime = false, int $resourceId, string $attendableType = '')
     {
         parent::__construct();
-        $this->resourceId = $resourceId;
-        $this->showAllTime = $showAllTime;
-        $this->attendableType = $attendableType;
     }
 
     /**
