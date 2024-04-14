@@ -135,6 +135,11 @@
             "enabled": true
         }
     },
+    "github-actions": {
+        "major": {
+            "enabled": true
+        }
+    },
     "rangeStrategy": "pin",
     "timezone": "America/New_York",
     "schedule": [
