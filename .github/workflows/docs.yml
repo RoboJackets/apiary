@@ -45,5 +45,5 @@ jobs:
         with:
           entrypoint: /bin/sh
           args: |
-            -euxo pipefail
+            -eux
             -c cd docs && vale sync && vale .
