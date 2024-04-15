@@ -65,7 +65,7 @@
         "subfission/cas": "4.4.0",
         "symfony/http-client": "6.4.6",
         "symfony/postmark-mailer": "6.4.4",
-        "xammie/mailbook": "1.8.0"
+        "xammie/mailbook": "1.8.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.15.1",
