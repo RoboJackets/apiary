@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "582cc2afabe7c641b91162285fe73e9f",
+    "content-hash": "e28965bb432d5b062bc61fae11f95a73",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -11574,16 +11574,16 @@
         },
         {
             "name": "xammie/mailbook",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Xammie/mailbook.git",
-                "reference": "0b243ab8a7cc6be64c00dee0d0687cfea5bd8f1a"
+                "reference": "f35689be0f5e7257fcd1c38f5e0269d6043841b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/0b243ab8a7cc6be64c00dee0d0687cfea5bd8f1a",
-                "reference": "0b243ab8a7cc6be64c00dee0d0687cfea5bd8f1a",
+                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/f35689be0f5e7257fcd1c38f5e0269d6043841b3",
+                "reference": "f35689be0f5e7257fcd1c38f5e0269d6043841b3",
                 "shasum": ""
             },
             "require": {
@@ -11643,7 +11643,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Xammie/mailbook/issues",
-                "source": "https://github.com/Xammie/mailbook/tree/1.8.0"
+                "source": "https://github.com/Xammie/mailbook/tree/1.8.1"
             },
             "funding": [
                 {
@@ -11651,7 +11651,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-14T16:37:59+00:00"
+            "time": "2024-04-10T17:15:49+00:00"
         }
     ],
     "packages-dev": [
