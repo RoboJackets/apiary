@@ -47,7 +47,7 @@
         "laravel/passport": "11.10.6",
         "laravel/scout": "10.8.6",
         "laravel/slack-notification-channel": "3.2.0",
-        "laravel/socialite": "5.12.1",
+        "laravel/socialite": "5.13.0",
         "laravel/tinker": "2.9.0",
         "madewithlove/laravel-nova-uuid-support": "1.5",
         "meilisearch/meilisearch-php": "1.7.0",
