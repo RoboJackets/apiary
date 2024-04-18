@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19369aae2d16e2444bb5e38fdf02ac78",
+    "content-hash": "cc5d2682fb9212f24d66de696f0db07b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3583,20 +3583,20 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.33.2",
+            "version": "4.33.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "6bf02a695cf687f2b3562d48fd1e262b36cd7cb9"
+                "reference": "0f308ea895bb202cced2493722b40ec172e0c108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-6bf02a695cf687f2b3562d48fd1e262b36cd7cb9-zip-da57d3.zip",
-                "reference": "6bf02a695cf687f2b3562d48fd1e262b36cd7cb9",
-                "shasum": "74b282fc4b188f28e1f013e5d138ddc93767de5b"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-0f308ea895bb202cced2493722b40ec172e0c108-zip-e38c97.zip",
+                "reference": "0f308ea895bb202cced2493722b40ec172e0c108",
+                "shasum": "2ec5564e35e52cac368274b063880d9068a1e345"
             },
             "require": {
-                "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
+                "brick/money": "^0.5|^0.6|^0.7|^0.8|^0.9",
                 "doctrine/dbal": "^2.13.3|^3.1.2|^4.0",
                 "ext-json": "*",
                 "illuminate/support": "^8.83.4|^9.3.1|^10.0|^11.0",
@@ -3703,9 +3703,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.33.2"
+                "source": "https://github.com/laravel/nova/tree/v4.33.3"
             },
-            "time": "2024-04-03T15:41:39+00:00"
+            "time": "2024-04-18T00:44:42+00:00"
         },
         {
             "name": "laravel/passport",
