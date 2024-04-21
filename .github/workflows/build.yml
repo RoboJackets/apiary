@@ -9,6 +9,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Register problem matchers
+        run: echo "::add-matcher::.github/matchers.json"
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:

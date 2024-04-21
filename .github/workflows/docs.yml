@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Add problem matchers
+      - name: Register problem matchers
         run: echo "::add-matcher::.github/matchers.json"
 
       - name: Setup Python
