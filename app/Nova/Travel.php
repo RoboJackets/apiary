@@ -12,6 +12,7 @@ use App\Models\Travel as AppModelsTravel;
 use App\Notifications\Nova\LinkDocuSignAccount;
 use App\Nova\Actions\DownloadDocuSignForms;
 use App\Nova\Actions\DownloadInstituteApprovedAbsenceRequest;
+use App\Nova\Actions\DownloadPassengerNameList;
 use App\Nova\Actions\MatrixAirfareSearch;
 use App\Nova\Actions\ReviewTrip;
 use App\Nova\Metrics\EmergencyContactInformationForTravel;
@@ -680,6 +681,43 @@ class Travel extends Resource
                 $actions[] = Action::danger(
                     DownloadInstituteApprovedAbsenceRequest::make()->name(),
                     'Some travelers are missing emergency contact information!'
+                )
+                    ->withoutConfirmation()
+                    ->withoutActionEvents()
+                    ->canRun(static fn (): bool => true);
+            }
+        }
+
+        if (
+            $trip->status !== 'draft' &&
+            $trip->assignments->count() > 0 &&
+            $trip->needs_airfare_form &&
+            (
+                $request->user()->hasRole('admin') ||
+                $request->user()->id === $trip->primary_contact_user_id
+            )
+        ) {
+            if (
+                $trip->assignments->reduce(
+                    // ensure every assignment's user has legal gender and date of birth
+                    static fn (bool $carry, \App\Models\TravelAssignment $assignment): bool => $carry &&
+                        $assignment->user->legal_gender !== null && $assignment->user->date_of_birth !== null,
+                    true
+                )
+            ) {
+                $actions[] = DownloadPassengerNameList::make()
+                    ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin') ||
+                        \App\Models\Travel::where('primary_contact_user_id', $request->user()->id)->exists())
+                    ->canRun(
+                        static fn (NovaRequest $request, AppModelsTravel $trip): bool => $request->user()->hasRole(
+                            'admin'
+                        ) ||
+                            $trip->primary_contact_user_id === $request->user()->id
+                    );
+            } else {
+                $actions[] = Action::danger(
+                    DownloadPassengerNameList::make()->name(),
+                    'Some travelers are missing legal gender or date of birth!'
                 )
                     ->withoutConfirmation()
                     ->withoutActionEvents()

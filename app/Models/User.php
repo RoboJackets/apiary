@@ -276,6 +276,10 @@ class User extends Authenticatable
         'clickup_id',
         'exists_in_sums',
         'github_invite_pending',
+        'legal_gender',
+        'date_of_birth',
+        'delta_skymiles_number',
+        'legal_middle_name',
     ];
 
     /**
@@ -305,6 +309,7 @@ class User extends Authenticatable
         'buzzcard_access_opt_out' => 'boolean',
         'docusign_access_token_expires_at' => 'datetime',
         'docusign_refresh_token_expires_at' => 'datetime',
+        'date_of_birth' => 'date',
     ];
 
     /**
