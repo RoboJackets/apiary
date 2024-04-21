@@ -100,6 +100,7 @@
           </div>
 
           <h3>Emergency Contact</h3>
+          <p>Emergency contact information is required for all trips off campus.</p>
 
           <div class="form-group row">
             <label for="user-emergencyname" class="col-sm-2 col-form-label">Contact Name</label>
