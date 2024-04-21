@@ -969,7 +969,7 @@ class DocuSign
                 ->setFontSize('Size12')
                 ->setHeight(20)
                 ->setWidth(100)
-                ->setXPosition(477)
+                ->setXPosition(492)
                 ->setYPosition(self::DBA_Y_ALIGN_NAME)
                 ->setValue($assignment->user->legal_middle_name),
             (new Text())
