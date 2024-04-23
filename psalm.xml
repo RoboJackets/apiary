@@ -319,6 +319,7 @@
                 <referencedFunction name="Laravel\Nova\Fields\BelongsToMany::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Boolean::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\BooleanGroup::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Fields\Date::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\DateTime::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Email::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\File::hideFromDetail"/>

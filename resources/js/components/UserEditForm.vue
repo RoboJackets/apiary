@@ -100,6 +100,7 @@
           </div>
 
           <h3>Emergency Contact</h3>
+          <p>Emergency contact information is required for all trips off campus.</p>
 
           <div class="form-group row">
             <label for="user-emergencyname" class="col-sm-2 col-form-label">Contact Name</label>
@@ -131,6 +132,56 @@
               <div class="invalid-feedback">
                 Must be a valid phone number with no punctuation
               </div>
+            </div>
+          </div>
+
+          <h3>Air Travel Information</h3>
+          <p>Legal name, legal gender, and date of birth are required for booking air travel for you to attend competitions and will not be used for any other purpose. This information must exactly match your government-issued identification to comply with TSA Secure Flight requirements. Please see <a href="https://pro.delta.com/content/agency/us/en/news/news-archive/2022/october-2022/non-binary-gender-identifiers-now-available.html">Delta Air Lines guidance on gender identifiers</a> if needed.</p>
+
+          <div class="form-group row">
+            <label for="legal-first-name" class="col-sm-2 col-form-label">Legal First Name</label>
+            <div class="col-sm-10 col-lg-4">
+              <input id="legal-first-name" type="text" v-model="user.first_name" class="form-control" readonly>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="legal-middle-name" class="col-sm-2 col-form-label">Legal Middle Name</label>
+            <div class="col-sm-10 col-lg-4">
+              <input id="legal-middle-name" type="text" v-model="user.legal_middle_name" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="legal-last-name" class="col-sm-2 col-form-label">Legal Last Name</label>
+            <div class="col-sm-10 col-lg-4">
+              <input id="legal-last-name" type="text" v-model="user.last_name" class="form-control" readonly>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="legal-gender" class="col-sm-2 col-form-label">Legal Gender</label>
+            <div class="col-sm-10 col-lg-4">
+              <select id="legal-gender" v-model="user.legal_gender" class="custom-select">
+                <option value="M">Male (M)</option>
+                <option value="F">Female (F)</option>
+                <option value="X">Unspecified (X)</option>
+                <option value="U">Undisclosed (U)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="date-of-birth" class="col-sm-2 col-form-label">Date of Birth</label>
+            <div id="date-of-birth" class="col-sm-10 col-lg-4">
+              <input id="date-of-birth" type="date" v-model="user.date_of_birth" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="delta-skymiles-number" class="col-sm-2 col-form-label">Delta SkyMiles Number</label>
+            <div id="delta-skymiles-number" class="col-sm-10 col-lg-4">
+              <input id="delta-skymiles-number" type="text" v-model="user.delta_skymiles_number" class="form-control">
             </div>
           </div>
 

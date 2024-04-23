@@ -174,6 +174,7 @@ return [
                 'searchableAttributes' => [
                     'user_first_name',
                     'user_preferred_name',
+                    'user_legal_middle_name',
                     'user_last_name',
                     'user_uid',
                     'user_gt_email',
@@ -259,6 +260,7 @@ return [
                 'searchableAttributes' => [
                     'user_first_name',
                     'user_preferred_name',
+                    'user_legal_middle_name',
                     'user_last_name',
                     'user_uid',
                     'user_gt_email',
@@ -296,6 +298,7 @@ return [
                 'searchableAttributes' => [
                     'first_name',
                     'preferred_name',
+                    'legal_middle_name',
                     'last_name',
                     'uid',
                     'gt_email',
