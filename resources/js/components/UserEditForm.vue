@@ -136,7 +136,7 @@
           </div>
 
           <h3>Air Travel Information</h3>
-          <p>Legal name, legal gender, and date of birth are required for booking air travel for you through Georgia Tech. This information must exactly match your government-issued identification to comply with TSA Secure Flight requirements. Please see <a href="https://pro.delta.com/content/agency/us/en/news/news-archive/2022/october-2022/non-binary-gender-identifiers-now-available.html">Delta Air Lines guidance on gender identifiers</a> if needed.</p>
+          <p>Legal name, legal gender, and date of birth are required for booking air travel for you to attend competitions and will not be used for any other purpose. This information must exactly match your government-issued identification to comply with TSA Secure Flight requirements. Please see <a href="https://pro.delta.com/content/agency/us/en/news/news-archive/2022/october-2022/non-binary-gender-identifiers-now-available.html">Delta Air Lines guidance on gender identifiers</a> if needed.</p>
 
           <div class="form-group row">
             <label for="legal-first-name" class="col-sm-2 col-form-label">Legal First Name</label>
