@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87aa0056e7a5ef1502b81716e5a94f5e",
+    "content-hash": "bd6ae6fd37369195a9c58c183095ef24",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -770,19 +770,20 @@
         },
         {
             "name": "calebporzio/sushi",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/calebporzio/sushi.git",
-                "reference": "20aad4e9d9ea74df64a86f6d327e55bdfc92d204"
+                "reference": "01dd34fe3374f5fb7ce63756c0419385e31cd532"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/calebporzio/sushi/zipball/20aad4e9d9ea74df64a86f6d327e55bdfc92d204",
-                "reference": "20aad4e9d9ea74df64a86f6d327e55bdfc92d204",
+                "url": "https://api.github.com/repos/calebporzio/sushi/zipball/01dd34fe3374f5fb7ce63756c0419385e31cd532",
+                "reference": "01dd34fe3374f5fb7ce63756c0419385e31cd532",
                 "shasum": ""
             },
             "require": {
+                "ext-pdo_sqlite": "*",
                 "ext-sqlite3": "*",
                 "illuminate/database": "^5.8 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
                 "illuminate/support": "^5.8 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
@@ -811,7 +812,7 @@
             ],
             "description": "Eloquent's missing \"array\" driver.",
             "support": {
-                "source": "https://github.com/calebporzio/sushi/tree/v2.5.1"
+                "source": "https://github.com/calebporzio/sushi/tree/v2.5.2"
             },
             "funding": [
                 {
@@ -819,7 +820,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-05T14:40:50+00:00"
+            "time": "2024-04-24T15:23:03+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
