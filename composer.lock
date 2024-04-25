@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd6ae6fd37369195a9c58c183095ef24",
+    "content-hash": "29215362838346d40491095448b43828",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -4048,16 +4048,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.13.0",
+            "version": "v5.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "a03e9b2f63d8125f61952fe4f5b75d70fd7c8286"
+                "reference": "feed1c1ccfd991bc12af59de4aa24f657d9c5cbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/a03e9b2f63d8125f61952fe4f5b75d70fd7c8286",
-                "reference": "a03e9b2f63d8125f61952fe4f5b75d70fd7c8286",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/feed1c1ccfd991bc12af59de4aa24f657d9c5cbe",
+                "reference": "feed1c1ccfd991bc12af59de4aa24f657d9c5cbe",
                 "shasum": ""
             },
             "require": {
@@ -4116,7 +4116,7 @@
                 "issues": "https://github.com/laravel/socialite/issues",
                 "source": "https://github.com/laravel/socialite"
             },
-            "time": "2024-04-15T18:09:46+00:00"
+            "time": "2024-04-24T20:36:50+00:00"
         },
         {
             "name": "laravel/tinker",
