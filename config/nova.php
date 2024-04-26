@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Laravel\Nova\Actions\ActionResource;
+use App\Nova\ActionResource;
 use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Http\Middleware\Authorize;
 use Laravel\Nova\Http\Middleware\BootTools;
@@ -188,6 +188,7 @@ return [
     */
 
     'actions' => [
+        // https://github.com/laravel/nova-issues/issues/141#issuecomment-755358308
         'resource' => ActionResource::class,
     ],
 ];

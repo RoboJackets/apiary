@@ -223,6 +223,7 @@
         <MoreSpecificImplementedParamType>
             <errorLevel type="suppress">
                 <directory name="app/Nova/Filters" />
+                <file name="app/Models/ActionEvent.php"/>
             </errorLevel>
         </MoreSpecificImplementedParamType>
         <UndefinedPropertyAssignment>
@@ -330,6 +331,7 @@
                 <referencedFunction name="Laravel\Nova\Fields\Text::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Actions\ActionEvent::prune"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidOperand>
