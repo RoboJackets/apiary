@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "799897bf96f657383af03270d6d2f038",
+    "content-hash": "dd086069d45292c52f6699e0219a1a2b",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -505,16 +505,16 @@
         },
         {
             "name": "ashallendesign/laravel-config-validator",
-            "version": "v2.5.0",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ash-jc-allen/laravel-config-validator.git",
-                "reference": "20a1c8d73406558f37e46959fd4cbfe6db404622"
+                "reference": "3da15efe04a4b95c16bad56596bd5295634d899e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/20a1c8d73406558f37e46959fd4cbfe6db404622",
-                "reference": "20a1c8d73406558f37e46959fd4cbfe6db404622",
+                "url": "https://api.github.com/repos/ash-jc-allen/laravel-config-validator/zipball/3da15efe04a4b95c16bad56596bd5295634d899e",
+                "reference": "3da15efe04a4b95c16bad56596bd5295634d899e",
                 "shasum": ""
             },
             "require": {
@@ -568,7 +568,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ash-jc-allen/laravel-config-validator/issues",
-                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.5.0"
+                "source": "https://github.com/ash-jc-allen/laravel-config-validator/tree/v2.6.1"
             },
             "funding": [
                 {
@@ -576,7 +576,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-27T20:58:22+00:00"
+            "time": "2024-04-26T16:16:42+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
