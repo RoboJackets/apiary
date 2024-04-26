@@ -18,12 +18,12 @@ class ActionEvent extends BaseActionEvent
     /**
      * Prune the action events for the given types.
      *
-     * @param  \Illuminate\Support\Collection<int,\App\Models\ActionEvent>  $models
+     * @param  \Illuminate\Support\Collection<int,array>  $models
      * @param  int  $limit
      */
     public static function prune($models, $limit = 25): void
     {
-        $models = $models->map(static function (ActionEvent $model): ActionEvent {
+        $models = $models->map(static function (array $model): array {
             $model['actionable_id'] = (string) $model['actionable_id'];
             $model['target_id'] = (string) $model['target_id'];
             $model['model_id'] = (string) $model['model_id'];
