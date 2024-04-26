@@ -18,7 +18,7 @@ class ActionEvent extends BaseActionEvent
     /**
      * Prune the action events for the given types.
      *
-     * @param  \Illuminate\Support\Collection<int,array>  $models
+     * @param  \Illuminate\Support\Collection<int,array<string,int>>  $models
      * @param  int  $limit
      */
     public static function prune($models, $limit = 25): void
