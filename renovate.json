@@ -10,7 +10,8 @@
     ],
     "reviewers": [],
     "ignoreDeps": [
-        "mwgg/airports"
+        "mwgg/airports",
+        "ubuntu"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
