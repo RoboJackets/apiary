@@ -54,5 +54,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->reportable(function (Throwable $e): void {
+            if ($this->shouldReport($e) && app()->bound('sentry')) {
+                app('sentry')->captureException($e);
+            }
+        });
     })->create();
