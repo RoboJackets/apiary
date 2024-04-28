@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0646ac9e7a9a899a42d5748adbeb4c7c",
+    "content-hash": "dd6f80c1b06dceab38ca99ef5cc5ae8e",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
