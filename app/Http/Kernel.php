@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'auth.cas.check' => \App\Http\Middleware\CasCheck::class,
         'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
     ];
 
