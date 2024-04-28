@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use Symfony\Component\HttpFoundation\Response;
 use Closure;
 use Illuminate\Http\Request;
 use Sentry\Event;
 use Sentry\EventHint;
 use Sentry\State\Scope;
+use Symfony\Component\HttpFoundation\Response;
 
 class Sentry
 {

@@ -1,6 +1,7 @@
 <?php
 
-use App\Providers\AppServiceProvider;
+declare(strict_types=1);
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,11 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         channels: __DIR__.'/../routes/channels.php',
-        health: '/up',
+        health: '/up'
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->redirectGuestsTo(static fn () => route('login.cas',['next'=>url()->full()]));
-        $middleware->redirectUsersTo(AppServiceProvider::HOME);
+    ->withMiddleware(static function (Middleware $middleware): void {
+        $middleware->redirectGuestsTo(static fn () => route('login.cas', ['next' => url()->full()]));
 
         $middleware->validateCsrfTokens(except: [
             'apiv3/*',
@@ -46,7 +46,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->priority([
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\Authenticate::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,

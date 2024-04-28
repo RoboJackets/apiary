@@ -23,7 +23,6 @@ use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
 |
 */
 
-
 Schedule::command('horizon:snapshot')->everyFiveMinutes();
 Schedule::command(CacheSchedulerRunning::class)->everyMinute();
 Schedule::command('passport:purge')->twiceDaily();

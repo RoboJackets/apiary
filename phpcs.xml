@@ -20,6 +20,7 @@
     <exclude-pattern>/public/</exclude-pattern>
     <exclude-pattern>/storage/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
+    <exclude-pattern>/bootstrap/providers.php</exclude-pattern>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
         <exclude-pattern>/database/migrations/</exclude-pattern>

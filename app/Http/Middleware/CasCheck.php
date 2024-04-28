@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Jobs\SendReminders;
 use App\Util\CasUser;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Subfission\Cas\Facades\Cas;
+use Symfony\Component\HttpFoundation\Response;
 
 class CasCheck
 {

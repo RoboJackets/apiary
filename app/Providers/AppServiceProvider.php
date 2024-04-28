@@ -47,15 +47,6 @@ use Laravel\Passport\Passport;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * The path to your application's "home" route.
-     *
-     * Typically, users are redirected here after authentication.
-     *
-     * @var string
-     */
-    public const HOME = '/home';
-
-    /**
      * Bootstrap any application services.
      */
     public function boot(): void
@@ -143,7 +134,5 @@ class AppServiceProvider extends ServiceProvider
 
         // @phan-suppress-next-line PhanTypeMismatchReturn
         Route::bind('gtid', static fn (string $value): User => User::whereGtid($value)->firstOrFail());
-
-
     }
 }
