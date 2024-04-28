@@ -25,8 +25,7 @@
         "ext-uuid": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "adldap2/adldap2-laravel": "6.1.7",
-        "ans-group/laravel-health-check": "1.14.0",
+        "ans-group/laravel-health-check": "dev-l11-compatibility",
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.6.1",
         "barryvdh/laravel-dompdf": "2.1.1",
@@ -49,7 +48,7 @@
         "laravel/slack-notification-channel": "3.2.0",
         "laravel/socialite": "5.13.1",
         "laravel/tinker": "2.9.0",
-        "madewithlove/laravel-nova-uuid-support": "1.5",
+        "madewithlove/laravel-nova-uuid-support": "dev-l11-compatibility",
         "meilisearch/meilisearch-php": "1.7.0",
         "mrclay/jsmin-php": "2.4.3",
         "mwgg/airports": "1.0",
@@ -205,6 +204,18 @@
                     "type": "zip"
                 }
             }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/RoboJackets/Laravel-HTMLMin.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-health-check.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-nova-uuid-support.git"
         }
     ]
 }
