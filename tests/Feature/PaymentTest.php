@@ -20,7 +20,7 @@ class PaymentTest extends TestCase
 
     private string $TRAVEL_ASSIGNMENT;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->DUES_PAYMENT = DuesTransaction::getMorphClassStatic();

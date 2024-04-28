@@ -7,6 +7,12 @@ namespace App\Console\Commands;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
+/**
+ * Calls the /ping endpoint on this app to see if it is working.
+ * Used during deployments to determine if Enlightn HTTP-based checks should be run.
+ *
+ * @phan-suppress PhanUnreferencedClass
+ */
 class Ping extends Command
 {
     /**

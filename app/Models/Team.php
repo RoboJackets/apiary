@@ -107,17 +107,20 @@ class Team extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'attendable' => 'boolean',
-        'self_serviceable' => 'boolean',
-        'visible' => 'boolean',
-        'visible_on_kiosk' => 'boolean',
-        'self_service_override_eligible' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'attendable' => 'boolean',
+            'self_serviceable' => 'boolean',
+            'visible' => 'boolean',
+            'visible_on_kiosk' => 'boolean',
+            'self_service_override_eligible' => 'boolean',
+        ];
+    }
 
     public const RELATIONSHIP_PERMISSIONS = [
         'members' => 'read-teams-membership',

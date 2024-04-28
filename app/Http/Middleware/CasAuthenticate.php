@@ -10,6 +10,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Subfission\Cas\Facades\Cas;
+use Symfony\Component\HttpFoundation\Response;
 
 class CasAuthenticate
 {
@@ -34,7 +35,7 @@ class CasAuthenticate
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         //Check to ensure the request isn't already authenticated through the API guard
         if (! Auth::guard('api')->check()) {

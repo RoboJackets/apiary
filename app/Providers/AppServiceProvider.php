@@ -17,6 +17,8 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
 use App\Models\MembershipAgreementTemplate;
+use App\Models\OAuth2AccessToken;
+use App\Models\OAuth2Client;
 use App\Models\Payment;
 use App\Models\Signature;
 use App\Models\Team;
@@ -30,9 +32,13 @@ use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
@@ -95,6 +101,9 @@ class AppServiceProvider extends ServiceProvider
             'team' => Team::class,
             'travel-assignment' => TravelAssignment::class,
         ]);
+
+        $this->bootAuth();
+        $this->bootRoute();
     }
 
     /**
@@ -102,7 +111,28 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Passport::ignoreMigrations();
-        Passport::$passwordGrantEnabled = false;
+        // nothing to do here
+    }
+
+    public function bootAuth(): void
+    {
+        Passport::useClientModel(OAuth2Client::class);
+        Passport::useTokenModel(OAuth2AccessToken::class);
+        Passport::hashClientSecrets();
+        Passport::tokensExpireIn(now()->addDay());
+        Passport::refreshTokensExpireIn(now()->addMonth());
+        Passport::personalAccessTokensExpireIn(now()->addYear());
+        Passport::cookie(config('passport.cookie_name'));
+    }
+
+    public function bootRoute(): void
+    {
+        RateLimiter::for(
+            'api',
+            static fn (Request $request): Limit => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip())
+        );
+
+        // @phan-suppress-next-line PhanTypeMismatchReturn
+        Route::bind('gtid', static fn (string $value): User => User::whereGtid($value)->firstOrFail());
     }
 }

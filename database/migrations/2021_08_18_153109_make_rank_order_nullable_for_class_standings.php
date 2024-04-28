@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (config('database.default') !== 'mysql') {
+            return;
+        }
+
         Schema::table('class_standings', static function (Blueprint $table): void {
             $table->integer('rank_order')->nullable()->change();
         });

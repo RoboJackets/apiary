@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Adldap\Laravel\Facades\Adldap;
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
 use App\Models\User as AppModelsUser;
 use App\Nova\Actions\CreatePersonalAccessToken;
@@ -24,7 +23,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -43,8 +41,6 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Sentry\SentrySdk;
-use Sentry\Tracing\SpanContext;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -457,46 +453,6 @@ class User extends Resource
                     ->onlyOnDetail()
                     ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
                     ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
-
-                ...(config('features.whitepages') === true ? [
-                    Text::make('Home Department (Whitepages)', static function (AppModelsUser $user): ?string {
-                        $uid = $user->uid;
-
-                        return Cache::remember(
-                            'home_department_'.$uid,
-                            now()->addDay(),
-                            static function () use ($uid): ?string {
-                                $parentSpan = SentrySdk::getCurrentHub()->getSpan();
-
-                                if ($parentSpan !== null) {
-                                    $context = new SpanContext();
-                                    $context->setOp('ldap.get_home_department');
-                                    $span = $parentSpan->startChild($context);
-                                    SentrySdk::getCurrentHub()->setSpan($span);
-                                }
-
-                                $result = Adldap::search()
-                                    ->where('uid', '=', $uid)
-                                    ->where('employeeType', '=', 'employee')
-                                    ->select('ou')
-                                    ->get()
-                                    ->pluck('ou')
-                                    ->toArray();
-
-                                if ($parentSpan !== null) {
-                                    // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                                    $span->finish();
-                                    SentrySdk::getCurrentHub()->setSpan($parentSpan);
-                                }
-
-                                return $result === [] ? null : $result[0][0];
-                            }
-                        );
-                    })
-                        ->onlyOnDetail()
-                        ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account)
-                        ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
-                ] : []),
             ]),
 
             new Panel('Metadata', $this->metaFields()),

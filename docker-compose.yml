@@ -13,8 +13,8 @@ services:
       LOG_CHANNEL: stderr
       DB_CONNECTION: sqlite
       DB_SQLITE_LOCATION: /app/storage/quickstart.sqlite
-      BROADCAST_DRIVER: log
-      CACHE_DRIVER: array
+      BROADCAST_CONNECTION: log
+      CACHE_STORE: array
       SESSION_DRIVER: file
       QUEUE_DRIVER: sync
       CAS_MASQUERADE: atesting3
