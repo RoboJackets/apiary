@@ -18,11 +18,9 @@ return new class extends Migration
         app()['cache']->forget('spatie.permission.cache');
         Permission::where('name', 'read-users-api_token')->delete();
 
-        if (Schema::hasColumn('users', 'api_token')) {
-            Schema::table('users', static function (Blueprint $table): void {
-                $table->dropColumn('api_token');
-            });
-        }
+        Schema::table('users', static function (Blueprint $table): void {
+            $table->dropColumn('api_token');
+        });
     }
 
     /**
