@@ -66,7 +66,7 @@ class RemoteAttendanceLink extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<string>
+     * @var array<int,string>
      */
     protected $with = ['attendable'];
 
