@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use Symfony\Component\HttpFoundation\Response;
 use App\Jobs\SendReminders;
 use App\Util\CasUser;
 use Closure;
@@ -16,7 +17,7 @@ class CasCheck
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         Cas::checkAuthentication();
         if ($request->user() === null) {
