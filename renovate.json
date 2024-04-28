@@ -35,13 +35,13 @@
         },
         "packageRules": [
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "php"
                 ],
                 "rangeStrategy": "replace"
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "square/square"
                 ],
                 "major": {
@@ -50,7 +50,7 @@
                 "versioning": "loose"
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "oitnetworkservices/buzzapiclient"
                 ],
                 "registryUrls": [
@@ -58,7 +58,7 @@
                 ]
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "laravel/nova"
                 ],
                 "registryUrls": [
@@ -84,7 +84,7 @@
                 "prPriority": 1
             },
             {
-                "matchPackageNames": [
+                "matchDepNames": [
                     "laravel/framework"
                 ],
                 "prPriority": 2
@@ -116,7 +116,7 @@
         "prPriority": -8,
         "packageRules": [
             {
-                "matchPackageNames": ["python"],
+                "matchDepNames": ["python"],
                 "rangeStrategy": "replace"
             }
         ],
