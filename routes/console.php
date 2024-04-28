@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Jobs\DailyDuesSummary;
 use App\Jobs\NoAttendanceJediPush;
 use App\Jobs\PruneAccessFromAccessInactiveUsers;
@@ -9,8 +11,6 @@ use App\Jobs\SendRemindersForExpiringDuesPackages;
 use App\Jobs\WeeklyAttendanceSlack;
 use Illuminate\Support\Facades\Schedule;
 use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
-
-declare(strict_types=1);
 
 /*
 |--------------------------------------------------------------------------

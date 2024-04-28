@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->redirectGuestsTo(fn () => route('login.cas',['next'=>url()->full()]));
+        $middleware->redirectGuestsTo(static fn () => route('login.cas',['next'=>url()->full()]));
         $middleware->redirectUsersTo(AppServiceProvider::HOME);
 
         $middleware->validateCsrfTokens(except: [
@@ -53,9 +53,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Auth\Middleware\Authorize::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->reportable(function (Throwable $e): void {
-            if ($this->shouldReport($e) && app()->bound('sentry')) {
+    ->withExceptions(static function (Exceptions $exceptions): void {
+        $exceptions->reportable(static function (Throwable $e): void {
+            if (app()->bound('sentry')) {
                 app('sentry')->captureException($e);
             }
         });

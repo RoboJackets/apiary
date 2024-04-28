@@ -120,8 +120,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Passport::ignoreMigrations();
-        Passport::$passwordGrantEnabled = false;
+        // nothing to do here
     }
 
     public function bootAuth(): void
