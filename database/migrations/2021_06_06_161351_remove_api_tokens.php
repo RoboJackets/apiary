@@ -18,6 +18,10 @@ return new class extends Migration
         app()['cache']->forget('spatie.permission.cache');
         Permission::where('name', 'read-users-api_token')->delete();
 
+        if (config('database.default') !== 'mysql') {
+            return;
+        }
+
         Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('api_token');
         });

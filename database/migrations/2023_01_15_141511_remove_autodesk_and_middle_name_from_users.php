@@ -15,6 +15,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (config('database.default') !== 'mysql') {
+            return;
+        }
+
         Schema::table('users', static function (Blueprint $table): void {
             $table->dropUnique('users_autodesk_email_unique');
             $table->dropColumn(['autodesk_email', 'autodesk_invite_pending', 'middle_name']);
