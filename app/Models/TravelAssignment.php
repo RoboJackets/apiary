@@ -80,14 +80,17 @@ class TravelAssignment extends Model implements Payable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'tar_received' => 'boolean',
-        'matrix_itinerary' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'tar_received' => 'boolean',
+            'matrix_itinerary' => 'array',
+        ];
+    }
 
     /**
      * Get the User assigned to Travel.

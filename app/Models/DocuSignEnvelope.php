@@ -88,18 +88,21 @@ class DocuSignEnvelope extends Model
     protected $table = 'docusign_envelopes';
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'complete' => 'boolean',
-        'sent_at' => 'datetime',
-        'viewed_at' => 'datetime',
-        'signed_at' => 'datetime',
-        'completed_at' => 'datetime',
-        'acknowledgement_sent' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'complete' => 'boolean',
+            'sent_at' => 'datetime',
+            'viewed_at' => 'datetime',
+            'signed_at' => 'datetime',
+            'completed_at' => 'datetime',
+            'acknowledgement_sent' => 'boolean',
+        ];
+    }
 
     /**
      * Get the owning model.

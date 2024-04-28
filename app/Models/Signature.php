@@ -81,18 +81,21 @@ class Signature extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'render_timestamp' => 'datetime',
-        'redirect_to_cas_timestamp' => 'datetime',
-        'cas_ticket_redeemed_timestamp' => 'datetime',
-        'ip_address_location_estimate' => 'json',
-        'electronic' => 'boolean',
-        'complete' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'render_timestamp' => 'datetime',
+            'redirect_to_cas_timestamp' => 'datetime',
+            'cas_ticket_redeemed_timestamp' => 'datetime',
+            'ip_address_location_estimate' => 'json',
+            'electronic' => 'boolean',
+            'complete' => 'boolean',
+        ];
+    }
 
     /**
      * Get the template for this signature.

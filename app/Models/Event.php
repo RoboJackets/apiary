@@ -84,15 +84,18 @@ class Event extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
-        'allow_anonymous_rsvp' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_time' => 'datetime',
+            'end_time' => 'datetime',
+            'allow_anonymous_rsvp' => 'boolean',
+        ];
+    }
 
     public const RELATIONSHIP_PERMISSIONS = [
         'organizer' => 'read-users',

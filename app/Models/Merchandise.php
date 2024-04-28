@@ -59,15 +59,6 @@ class Merchandise extends Model
     protected $table = 'merchandise';
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'distributable' => 'boolean',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<string>
@@ -76,6 +67,18 @@ class Merchandise extends Model
         'name',
         'fiscal_year_id',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'distributable' => 'boolean',
+        ];
+    }
 
     public const RELATIONSHIP_PERMISSIONS = [
         'packages' => 'read-dues-packages',

@@ -71,15 +71,6 @@ class RemoteAttendanceLink extends Model
     protected $with = ['attendable'];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'expires_at' => 'datetime',
-    ];
-
-    /**
      * A regular expression for acceptable redirect URLs for normal users to enter.
      * The regex will match any of the following, with the https, http, or no schema, and optional query strings:
      * https://meet.google.com/<alpha and dashes>
@@ -91,6 +82,18 @@ class RemoteAttendanceLink extends Model
      */
     public static string $redirectRegex = '/^(https?:\/\/)?(meet\.google\.com\/[-a-z]+|teams\.microsoft\.com\/l\/'
         .'meetup-join\/[-a-zA-Z0-9%\._]+\/[0-9]+|gatech\.zoom\.us\/j\/[0-9]+)(\?[^@]*)?$/';
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'expires_at' => 'datetime',
+        ];
+    }
 
     /**
      * Given a user-submitted URL matching $redirectRegex, return a normalized URL that can be used for redirects.
