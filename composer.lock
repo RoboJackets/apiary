@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9308abea676ce241944ac6ffcf1dfc5d",
+    "content-hash": "a4cda9c3228a330f57a35c5fe3f339b7",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -1371,23 +1371,23 @@
         },
         {
             "name": "docusign/esign-client",
-            "version": "v6.18.0",
+            "version": "v6.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/docusign/docusign-esign-php-client.git",
-                "reference": "f056cf2b7ebe671b95421e335de24b78d80a259a"
+                "reference": "855615f859dfc3d4035fe7ff8b554dda3dbef1cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/f056cf2b7ebe671b95421e335de24b78d80a259a",
-                "reference": "f056cf2b7ebe671b95421e335de24b78d80a259a",
+                "url": "https://api.github.com/repos/docusign/docusign-esign-php-client/zipball/855615f859dfc3d4035fe7ff8b554dda3dbef1cb",
+                "reference": "855615f859dfc3d4035fe7ff8b554dda3dbef1cb",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "firebase/php-jwt": "^5.0 || ^6.0",
+                "firebase/php-jwt": "^6.0",
                 "php": ">=7.4"
             },
             "require-dev": {
@@ -1412,7 +1412,7 @@
                     "homepage": "https://developers.docusign.com"
                 }
             ],
-            "description": "The DocuSign PHP library makes integrating DocuSign into your websites a super fast and painless process. The library is open sourced on GitHub, look for the docusign-php-client repository. Join the eSign revolution!",
+            "description": "The DocuSign PHP library makes integrating DocuSign into your apps and websites a super fast and painless process. The library is open sourced on GitHub, look for the docusign-esign-php-client repository. Join the eSign revolution!",
             "homepage": "https://developers.docusign.com",
             "keywords": [
                 "agreement",
@@ -1424,9 +1424,9 @@
             ],
             "support": {
                 "issues": "https://github.com/docusign/docusign-esign-php-client/issues",
-                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v6.18.0"
+                "source": "https://github.com/docusign/docusign-esign-php-client/tree/v6.19.0"
             },
-            "time": "2023-11-22T17:42:56+00:00"
+            "time": "2024-04-30T10:27:14+00:00"
         },
         {
             "name": "dompdf/dompdf",
