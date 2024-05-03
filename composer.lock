@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "426f799912a1500a1cfc0546cf48fc65",
+    "content-hash": "fb0a11b35888ba633942b04ef588993a",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8256,16 +8256,16 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "4.3.0",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "f4722c5f26ba870c92790795900a2f22523d0466"
+                "reference": "ff7f0906a200768c23207bbd38e264f7fb52c6ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/f4722c5f26ba870c92790795900a2f22523d0466",
-                "reference": "f4722c5f26ba870c92790795900a2f22523d0466",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/ff7f0906a200768c23207bbd38e264f7fb52c6ef",
+                "reference": "ff7f0906a200768c23207bbd38e264f7fb52c6ef",
                 "shasum": ""
             },
             "require": {
@@ -8319,7 +8319,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.0"
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.1"
             },
             "funding": [
                 {
@@ -8327,7 +8327,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-28T10:04:53+00:00"
+            "time": "2024-05-02T10:07:57+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
