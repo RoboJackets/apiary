@@ -407,6 +407,9 @@ class User extends Resource
                 })
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
+            HasMany::make('Access Cards')
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
+
             HasMany::make('Attendance')
                 ->canSee(static function (Request $request): bool {
                     if ($request->resourceId === $request->user()->id) {

@@ -176,15 +176,16 @@ return [
     | This should only be used for developmental purposes. Attributes that would
     | normally be sent by CAS can be set manually in .env as needed.
      */
-    'cas_masquerade' => env('CAS_MASQUERADE', null),
-    'cas_masquerade_gtGTID' => env('CAS_MASQUERADE_gtGTID', null),
-    'cas_masquerade_email_primary' => env('CAS_MASQUERADE_email_primary', null),
-    'cas_masquerade_eduPersonPrimaryAffiliation' => env('CAS_MASQUERADE_eduPersonPrimaryAffiliation', null),
-    'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName', null),
-    'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null),
-    'cas_masquerade_authnContextClass' => env('CAS_MASQUERADE_authnContextClass', null),
-    'cas_masquerade_authenticationDate' => env('CAS_MASQUERADE_authenticationDate', null),
-    'cas_masquerade_eduPersonScopedAffiliation' => [env('CAS_MASQUERADE_eduPersonScopedAffiliation', null)],
+    'cas_masquerade' => env('CAS_MASQUERADE'),
+    'cas_masquerade_gtGTID' => env('CAS_MASQUERADE_gtGTID'),
+    'cas_masquerade_email_primary' => env('CAS_MASQUERADE_email_primary'),
+    'cas_masquerade_eduPersonPrimaryAffiliation' => env('CAS_MASQUERADE_eduPersonPrimaryAffiliation'),
+    'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName'),
+    'cas_masquerade_sn' => env('CAS_MASQUERADE_sn'),
+    'cas_masquerade_authnContextClass' => env('CAS_MASQUERADE_authnContextClass'),
+    'cas_masquerade_authenticationDate' => env('CAS_MASQUERADE_authenticationDate'),
+    'cas_masquerade_eduPersonScopedAffiliation' => [env('CAS_MASQUERADE_eduPersonScopedAffiliation')],
+    'cas_masquerade_gtAccessCardNumber' => env('CAS_MASQUERADE_gtAccessCardNumber'),
 
     /*
     |--------------------------------------------------------------------------
