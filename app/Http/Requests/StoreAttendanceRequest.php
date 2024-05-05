@@ -35,6 +35,7 @@ class StoreAttendanceRequest extends FormRequest
             'gtid' => [
                 'required_without:access_card_number',
                 'numeric',
+                'digits:9',
             ],
             'access_card_number' => [
                 'string',
