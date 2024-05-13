@@ -28,7 +28,7 @@
         "ans-group/laravel-health-check": "dev-l11-compatibility",
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.6.1",
-        "barryvdh/laravel-dompdf": "2.1.1",
+        "barryvdh/laravel-dompdf": "2.2.0",
         "calebporzio/sushi": "2.5.2",
         "chelout/laravel-relationship-events": "3.0.0",
         "docusign/esign-client": "6.19.0",
