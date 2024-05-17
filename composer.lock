@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "607a23b2cd169a44d70d2281a0f47bdb",
+    "content-hash": "432b9b6d086ff3606694d887f344e1db",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2844,16 +2844,16 @@
         },
         {
             "name": "kiritokatklian/nova-permission",
-            "version": "4.0.7",
+            "version": "4.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kiritokatklian/nova-permission.git",
-                "reference": "d2c8a5b78ed8cb591af1b70e6adebff7eb738846"
+                "reference": "d4135f48368856dcb8d918a7da1aa61f03691a48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/d2c8a5b78ed8cb591af1b70e6adebff7eb738846",
-                "reference": "d2c8a5b78ed8cb591af1b70e6adebff7eb738846",
+                "url": "https://api.github.com/repos/kiritokatklian/nova-permission/zipball/d4135f48368856dcb8d918a7da1aa61f03691a48",
+                "reference": "d4135f48368856dcb8d918a7da1aa61f03691a48",
                 "shasum": ""
             },
             "require": {
@@ -2889,9 +2889,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kiritokatklian/nova-permission/issues",
-                "source": "https://github.com/kiritokatklian/nova-permission/tree/4.0.7"
+                "source": "https://github.com/kiritokatklian/nova-permission/tree/4.0.8"
             },
-            "time": "2023-11-15T16:30:29+00:00"
+            "time": "2024-05-17T12:56:38+00:00"
         },
         {
             "name": "larastan/larastan",
