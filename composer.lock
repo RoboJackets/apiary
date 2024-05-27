@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0eda878ca01823f8753641d55c04d709",
+    "content-hash": "ddfd20038ea6bc6e00cb72b556e815c7",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8458,16 +8458,16 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "3.3.2",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "1b994473be2832cd56e284178d5b2cb4373b5cf4"
+                "reference": "14c7f77012c8649009be52f6adc1efcfe812ff03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/1b994473be2832cd56e284178d5b2cb4373b5cf4",
-                "reference": "1b994473be2832cd56e284178d5b2cb4373b5cf4",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/14c7f77012c8649009be52f6adc1efcfe812ff03",
+                "reference": "14c7f77012c8649009be52f6adc1efcfe812ff03",
                 "shasum": ""
             },
             "require": {
@@ -8522,7 +8522,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.3.2"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.0"
             },
             "funding": [
                 {
@@ -8530,7 +8530,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-04-25T14:09:05+00:00"
+            "time": "2024-05-21T12:49:49+00:00"
         },
         {
             "name": "square/square",
