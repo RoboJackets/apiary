@@ -70,7 +70,7 @@
         "beyondcode/laravel-dump-server": "2.0.0",
         "filp/whoops": "2.15.4",
         "laravel/pint": "1.16.0",
-        "mockery/mockery": "1.6.9",
+        "mockery/mockery": "1.6.12",
         "mxl/laravel-job": "1.6.0",
         "nunomaduro/collision": "8.1.1",
         "larastan/larastan": "2.9.7",
