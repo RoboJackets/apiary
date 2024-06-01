@@ -10,6 +10,7 @@ use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Http\Resources\Attendance as AttendanceResource;
 use App\Jobs\PushToJedi;
+use App\Models\AccessCard;
 use App\Models\Attendance;
 use App\Models\Team;
 use App\Models\User;
@@ -53,6 +54,16 @@ class AttendanceController extends Controller
         // Variables for comparison below
         $date = $request->input('created_at', date('Y-m-d'));
         $gtid = $request->input('gtid');
+
+        // if an access card number is provided without a GTID, try to find the matching GTID
+        if ($request->input('gtid') === null && $request->input('access_card_number') !== null) {
+            if (AccessCard::where('access_card_number', '=', $request->input('access_card_number'))->exists()) {
+                $card = AccessCard::where('access_card_number', '=', $request->input('access_card_number'))->sole();
+
+                $gtid = $card->user->gtid;
+            }
+        }
+
         $user = User::where('gtid', '=', $gtid)->first();
 
         $attExistingQ = Attendance::where($request->only(['attendable_type', 'attendable_id', 'gtid']))
@@ -73,6 +84,7 @@ class AttendanceController extends Controller
                     $request->validated(),
                     [
                         'recorded_by' => $request->user()->id,
+                        'gtid' => $gtid,
                     ]
                 )
             );

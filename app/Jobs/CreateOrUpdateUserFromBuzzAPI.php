@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Exceptions\MissingAttribute;
+use App\Models\AccessCard;
 use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
@@ -14,7 +15,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Models\Role;
 
 class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 {
@@ -116,6 +116,7 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
                         'gtEmployeeHomeDepartmentName',
                         'eduPersonScopedAffiliation',
                         'gtCurriculum',
+                        'gtAccessCardNumber',
                     ],
                 ],
             ]
@@ -196,19 +197,14 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
             );
         }
 
-        // Initial role assignment
-        if (! $userIsNew && $user->roles->count() !== 0) {
-            return;
+        if (property_exists($account, 'gtAccessCardNumber')) {
+            if (AccessCard::where('access_card_number', '=', $account->gtAccessCardNumber)->doesntExist()) {
+                $card = new AccessCard();
+                $card->access_card_number = $account->gtAccessCardNumber;
+                $card->user_id = $user->id;
+                $card->save();
+            }
         }
-
-        $role = Role::where('name', 'non-member')->first();
-        if ($role !== null) {
-            $user->assignRole($role);
-
-            return;
-        }
-
-        Log::error(self::class.": Role 'non-member' not found for assignment to ".$user->uid);
     }
 
     /**

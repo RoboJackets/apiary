@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\AccessCard;
 use App\Models\Attendance;
 use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
@@ -24,6 +25,7 @@ use App\Models\Signature;
 use App\Models\Team;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use App\Observers\AccessCardObserver;
 use App\Observers\AttendanceObserver;
 use App\Observers\DocuSignEnvelopeObserver;
 use App\Observers\DuesPackageObserver;
@@ -85,6 +87,7 @@ class AppServiceProvider extends ServiceProvider
             });
         }
 
+        AccessCard::observe(AccessCardObserver::class);
         Attendance::observe(AttendanceObserver::class);
         DocuSignEnvelope::observe(DocuSignEnvelopeObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
