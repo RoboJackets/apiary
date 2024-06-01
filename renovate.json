@@ -30,8 +30,7 @@
             "enabled": true,
             "schedule": [
                 "before 4pm every weekday except before 9am every weekday"
-            ],
-            "prPriority": -7
+            ]
         },
         "packageRules": [
             {
@@ -97,8 +96,7 @@
             "enabled": true,
             "schedule": [
                 "before 4pm every weekday except before 9am every weekday"
-            ],
-            "prPriority": -6
+            ]
         },
         "packageRules": [
             {
@@ -124,8 +122,7 @@
             "enabled": true,
             "schedule": [
                 "before 4pm every weekday except before 9am every weekday"
-            ],
-            "prPriority": -9
+            ]
         }
     },
     "docker-compose": {
