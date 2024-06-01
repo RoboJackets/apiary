@@ -22,6 +22,7 @@ return [
         ...(env('APP_ENV') === 'sandbox' ? [] : [
             UKFast\HealthCheck\Checks\RedisHealthCheck::class,
             UKFast\HealthCheck\Checks\SchedulerHealthCheck::class,
+            App\HorizonHealthCheck::class,
         ]),
     ],
 
