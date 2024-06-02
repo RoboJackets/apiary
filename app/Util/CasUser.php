@@ -10,6 +10,7 @@ use App\Exceptions\MissingAttribute;
 use App\Jobs\CreateOrUpdateUserFromBuzzAPI;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Subfission\Cas\Facades\Cas;
 
 class CasUser
@@ -61,7 +62,9 @@ class CasUser
         } else {
             $user->gtid = Cas::getAttribute('gtGTID');
         }
-        $user->gt_email = Cas::getAttribute('email_primary');
+        if ($user->gt_email === null || ! Str::endsWith($user->gt_email, 'robojackets.org')) {
+            $user->gt_email = Cas::getAttribute('email_primary');
+        }
         $user->first_name = Cas::getAttribute('givenName');
         $user->last_name = Cas::getAttribute('sn');
         $user->primary_affiliation = Cas::getAttribute('eduPersonPrimaryAffiliation');
