@@ -243,10 +243,12 @@
         </FalsableReturnStatement>
         <DocblockTypeContradiction>
             <errorLevel type="suppress">
-                <file name="app/Nova/Metrics/EthnicityBreakdown.php" />
-                <file name="app/Http/Controllers/MerchandiseController.php"/>
-                <file name="app/Nova/Actions/OverrideAccess.php"/>
                 <directory name="app/Policies" />
+                <file name="app/Http/Controllers/MerchandiseController.php"/>
+                <file name="app/Jobs/CreateOrUpdateUserFromBuzzAPI.php"/>
+                <file name="app/Nova/Actions/OverrideAccess.php"/>
+                <file name="app/Nova/Metrics/EthnicityBreakdown.php" />
+                <file name="app/Util/CasUser.php"/>
             </errorLevel>
         </DocblockTypeContradiction>
         <UndefinedMagicPropertyAssignment>

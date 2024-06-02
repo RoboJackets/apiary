@@ -14,6 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
@@ -163,7 +164,9 @@ class CreateOrUpdateUserFromBuzzAPI implements ShouldQueue
 
         $user->uid = $account->uid;
         $user->gtid = $account->gtGTID;
-        $user->gt_email = $account->mail;
+        if ($user->gt_email === null || ! Str::endsWith($user->gt_email, 'robojackets.org')) {
+            $user->gt_email = $account->mail;
+        }
         $user->first_name = $account->givenName;
         $user->last_name = $account->sn;
         $user->primary_affiliation = $account->eduPersonPrimaryAffiliation;
