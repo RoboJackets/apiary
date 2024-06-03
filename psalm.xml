@@ -313,6 +313,9 @@
                 <file name="app/Nova/Actions/CreateDuesPackages.php"/>
                 <file name="app/Nova/TravelAssignment.php"/>
                 <file name="app/Util/DocuSign.php"/>
+                <referencedFunction name="Illuminate\Support\Facades\Route::get"/>
+                <referencedFunction name="Illuminate\Support\Facades\Route::post"/>
+                <referencedFunction name="Laravel\Nova\Actions\ActionEvent::prune"/>
                 <referencedFunction name="Laravel\Nova\Fields\BelongsTo::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\BelongsToMany::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Boolean::hideFromDetail"/>
@@ -328,7 +331,6 @@
                 <referencedFunction name="Laravel\Nova\Fields\Text::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
-                <referencedFunction name="Laravel\Nova\Actions\ActionEvent::prune"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidOperand>
@@ -397,5 +399,11 @@
                 <file name="app/Mail/PaymentReceipt.php"/>
             </errorLevel>
         </NullableReturnStatement>
+        <InvalidStaticInvocation>
+            <errorLevel type="suppress">
+                <file name="app/Http/Middleware/CasAuthenticate.php"/>
+                <file name="app/Util/CasUser.php"/>
+            </errorLevel>
+        </InvalidStaticInvocation>
     </issueHandlers>
 </psalm>
