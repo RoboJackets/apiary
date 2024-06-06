@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2bce1356c0188250d274ed162d0dd99b",
+    "content-hash": "959a10b8d9ba44d59e2d9d337dd57218",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -8158,16 +8158,16 @@
         },
         {
             "name": "spatie/laravel-csp",
-            "version": "2.9.0",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-csp.git",
-                "reference": "41165322b0017b1f121969cd91055a5f20bc7c47"
+                "reference": "116caa57ece29969aebb5fd64e6f5500169218c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/41165322b0017b1f121969cd91055a5f20bc7c47",
-                "reference": "41165322b0017b1f121969cd91055a5f20bc7c47",
+                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/116caa57ece29969aebb5fd64e6f5500169218c6",
+                "reference": "116caa57ece29969aebb5fd64e6f5500169218c6",
                 "shasum": ""
             },
             "require": {
@@ -8228,7 +8228,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-csp/tree/2.9.0"
+                "source": "https://github.com/spatie/laravel-csp/tree/2.10.0"
             },
             "funding": [
                 {
@@ -8236,7 +8236,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-02-27T12:13:22+00:00"
+            "time": "2024-06-04T11:27:13+00:00"
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
