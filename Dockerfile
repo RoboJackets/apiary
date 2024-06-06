@@ -67,7 +67,7 @@ RUN set -eux && \
     npm install --no-progress && \
     npm run production --no-progress
 
-FROM node:20.13.1 as frontend
+FROM node:20.14.0 as frontend
 
 COPY --link --from=frontend-source /app/ /app/
 
