@@ -210,16 +210,6 @@ sphinx = ">=6.0,<8.0"
 sphinx-basic-ng = "*"
 
 [[package]]
-name = "future"
-version = "0.18.3"
-description = "Clean single-source support for Python 3 and 2"
-optional = false
-python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-files = [
-    {file = "future-0.18.3.tar.gz", hash = "sha256:34a17436ed1e96697a86f9de3d15a3b0be01d8bc8de9c1dffd59fb8234ed5307"},
-]
-
-[[package]]
 name = "idna"
 version = "3.7"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -355,19 +345,17 @@ files = [
 
 [[package]]
 name = "proselint"
-version = "0.13.0"
+version = "0.14.0"
 description = "A linter for prose."
 optional = false
-python-versions = ">=3.6.1,<4.0.0"
+python-versions = "<4.0.0,>=3.8.1"
 files = [
-    {file = "proselint-0.13.0-py3-none-any.whl", hash = "sha256:5799a26c79e52aed18a1b7671f74381c035b3f62a565b478306298fb134c80c4"},
-    {file = "proselint-0.13.0.tar.gz", hash = "sha256:7dd2b63cc2aa390877c4144fcd3c80706817e860b017f04882fbcd2ab0852a58"},
+    {file = "proselint-0.14.0-py3-none-any.whl", hash = "sha256:f003f5558af7034d1fd39157afd1bf22509d2ccb48ce1aaad1fa58959c15679f"},
+    {file = "proselint-0.14.0.tar.gz", hash = "sha256:624964272bea14767e5df2561d87dd30767938c8cb52fb23585bc37580680e86"},
 ]
 
 [package.dependencies]
 click = ">=8.0.0,<9.0.0"
-future = ">=0.18.2,<0.19.0"
-six = ">=1.15.0,<2.0.0"
 
 [[package]]
 name = "pygments"
@@ -682,4 +670,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "6993afe5c128c89c813ae065830c9599dc301e7e1deb613181fdef9ccb6384f3"
+content-hash = "5e5b12d8e2aea50c21775fe8dd4e336128b5fb400e6362a4fae556df00bb399e"
