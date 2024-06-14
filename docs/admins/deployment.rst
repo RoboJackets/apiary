@@ -71,6 +71,7 @@ Add configuration to Consul
 ---------------------------
 
 .. vale Google.Headings = YES
+.. vale write-good.Weasel = NO
 
 All environment-specific configuration options are stored in the Consul Key/Value Store and retrieved by Nomad when starting containers.
 Apiary requires several keys to be configured.

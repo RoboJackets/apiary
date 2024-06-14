@@ -3,6 +3,8 @@
 External services
 =================
 
+.. vale write-good.Weasel = NO
+
 Apiary integrates with several external services that require configuration outside of the app itself.
 
 .. vale Google.Headings = NO
