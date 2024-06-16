@@ -123,6 +123,9 @@
             "schedule": [
                 "before 4pm every weekday except before 9am every weekday"
             ]
+        },
+        "major": {
+            "enabled": true
         }
     },
     "docker-compose": {
