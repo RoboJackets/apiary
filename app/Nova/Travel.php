@@ -18,6 +18,7 @@ use App\Nova\Actions\ReviewTrip;
 use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
+use App\Rules\DisallowNumericValues;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
 use App\Util\DepartmentNumbers;
@@ -252,13 +253,13 @@ class Travel extends Resource
 
                 Text::make('Costs Paid by RoboJackets', 'included_with_fee')
                     ->required()
-                    ->rules('required')
+                    ->rules('required', new DisallowNumericValues())
                     ->help(view('nova.help.travel.includedwithfee')->render())
                     ->hideFromIndex(),
 
                 Text::make('Costs Paid by Travelers', 'not_included_with_fee')
                     ->required()
-                    ->rules('required')
+                    ->rules('required', new DisallowNumericValues())
                     ->help(view('nova.help.travel.notincludedwithfee')->render())
                     ->hideFromIndex(),
             ]),
