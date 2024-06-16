@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.8
 
-FROM python:3.12-bookworm as docs-source
+FROM python:3.12-bookworm AS docs-source
 
 COPY --link docs/ /docs/
 
@@ -11,16 +11,9 @@ SHELL ["/bin/bash", "-c"]
 RUN set -euxo pipefail && \
     curl -sSL https://install.python-poetry.org | python3 - && \
     /root/.local/bin/poetry install --no-interaction && \
-    /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build" && \
-    find /docs/_build/dirhtml/ -type f -size +0 | while read file; do \
-        filename=$(basename -- "$file"); \
-        extension="${filename##*.}"; \
-        if [ "$extension" = "html" ]; then \
-            python3 /docs/fix-canonical-links.py "$file"; \
-        fi; \
-    done;
+    /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build"
 
-FROM node:21.7.3 as docs-minification
+FROM node:21.7.3 AS docs-minification
 
 COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
@@ -41,7 +34,7 @@ RUN set -eux && \
         fi; \
     done;
 
-FROM scratch as frontend-source
+FROM scratch AS frontend-source
 
 # artisan is not strictly required for JS builds but it triggers some behavior inside Laravel Mix
 # https://github.com/laravel-mix/laravel-mix/issues/1326#issuecomment-363975710
@@ -49,7 +42,7 @@ COPY --link package.json package-lock.json webpack.mix.js artisan /app/
 COPY --link resources/ /app/resources/
 COPY --link public/ /app/public/
 
-FROM node:21.7.3 as nova-components
+FROM node:21.7.3 AS nova-components
 
 COPY --link /nova-components/ /nova-components/
 
@@ -67,7 +60,7 @@ RUN set -eux && \
     npm install --no-progress && \
     npm run production --no-progress
 
-FROM node:20.14.0 as frontend
+FROM node:20.14.0 AS frontend
 
 COPY --link --from=frontend-source /app/ /app/
 
@@ -78,7 +71,7 @@ RUN set -eux && \
     npm ci --no-progress && \
     npm run production --no-progress
 
-FROM scratch as backend-source
+FROM scratch AS backend-source
 
 COPY --link app/ /app/app/
 COPY --link bootstrap/ /app/bootstrap/
@@ -96,7 +89,7 @@ COPY --link --from=nova-components /nova-components/ClientIdAndSecretModal/dist/
 COPY --link --from=nova-components /nova-components/PersonalAccessTokenModal/dist/ /app/nova-components/PersonalAccessTokenModal/dist/
 COPY --link --from=docs-minification /docs/ /app/public/docs/
 
-FROM ubuntu:noble as backend-uncompressed
+FROM ubuntu:noble AS backend-uncompressed
 
 LABEL maintainer="developers@robojackets.org"
 
@@ -143,7 +136,7 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,requir
 
 # This target is the default, but skipped during pull request builds and in our recommended local build invocation
 # precompressed_assets var on the Nomad job must match whether this stage ran or not
-FROM backend-uncompressed as backend-compressed
+FROM backend-uncompressed AS backend-compressed
 
 RUN set -eux && \
     cd /app/public/ && \
