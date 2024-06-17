@@ -51,7 +51,7 @@
         "meilisearch/meilisearch-php": "1.8.0",
         "mrclay/jsmin-php": "2.4.3",
         "mwgg/airports": "1.0",
-        "realrashid/sweet-alert": "7.1.1",
+        "realrashid/sweet-alert": "7.2.0",
         "robojackets/client-id-and-secret-modal": "@dev",
         "robojackets/personal-access-token-modal": "@dev",
         "sentry/sentry-laravel": "4.6.0",
