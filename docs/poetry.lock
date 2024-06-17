@@ -234,8 +234,9 @@ version = "2024.5.6.dev1"
 description = "A clean customisable Sphinx documentation theme."
 optional = false
 python-versions = ">=3.8"
-files = []
-develop = false
+files = [
+    {file = "main.zip", hash = "sha256:e5c6aa4418971133348e0227aea5205402f089123fce8b0d2e8fe6db76f2f54b"},
+]
 
 [package.dependencies]
 beautifulsoup4 = "*"
@@ -244,10 +245,8 @@ sphinx = ">=6.0,<8.0"
 sphinx-basic-ng = ">=1.0.0.beta2"
 
 [package.source]
-type = "git"
-url = "https://github.com/kberzinch/furo.git"
-reference = "patch-1"
-resolved_reference = "082ff72be40bc2cf1b30db514e536e840c7d7e19"
+type = "url"
+url = "https://github.com/pradyunsg/furo/archive/refs/heads/main.zip"
 
 [[package]]
 name = "h11"
@@ -901,4 +900,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4c819c9f722a6d6297834660c5f2ed6da380492cafd916a1d7d35aa45332fd78"
+content-hash = "c62c5566f0c36f3107b30a2b8e8efca25f7166c1ffce0836678dca5d75e88ab4"
