@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26dce8f1b7425c7c9df9871aaa8d5e3f",
+    "content-hash": "4292a32af3fe439c395a811bba12b257",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -3745,16 +3745,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.14.0",
+            "version": "v5.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "c7b0193a3753a29aff8ce80aa2f511917e6ed68a"
+                "reference": "c8234bfb286a8210df8d62f94562c71bfda4a446"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/c7b0193a3753a29aff8ce80aa2f511917e6ed68a",
-                "reference": "c7b0193a3753a29aff8ce80aa2f511917e6ed68a",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/c8234bfb286a8210df8d62f94562c71bfda4a446",
+                "reference": "c8234bfb286a8210df8d62f94562c71bfda4a446",
                 "shasum": ""
             },
             "require": {
@@ -3813,7 +3813,7 @@
                 "issues": "https://github.com/laravel/socialite/issues",
                 "source": "https://github.com/laravel/socialite"
             },
-            "time": "2024-05-03T20:31:38+00:00"
+            "time": "2024-06-11T13:33:20+00:00"
         },
         {
             "name": "laravel/tinker",
