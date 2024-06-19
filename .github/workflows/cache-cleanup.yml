@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Cleanup
         run: |
+          set -x
           gh extension install actions/gh-actions-cache
 
           echo "Fetching list of cache keys"
