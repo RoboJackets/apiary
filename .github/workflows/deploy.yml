@@ -53,13 +53,13 @@ jobs:
       - name: Exchange GitHub JWT for Nomad token
         uses: RoboJackets/nomad-jwt-auth@main
         with:
-          url: https://nomad2.bcdc.robojackets.net
+          url: https://nomad.bcdc.robojackets.net
           jwtGithubAudience: https://nomad.bcdc.robojackets.net
           methodName: GitHub
 
       - name: Run Nomad job
         env:
-          NOMAD_ADDR: https://nomad2.bcdc.robojackets.net
+          NOMAD_ADDR: https://nomad.bcdc.robojackets.net
         working-directory: ./.nomad/
         run: |
           nomad run -var image=registry.bcdc.robojackets.net/apiary@${{ inputs.image-digest }} -var precompressed_assets=${{ inputs.precompressed-assets }} -var-file var-files/${{ inputs.environment }}.hcl apiary.nomad
