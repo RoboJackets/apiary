@@ -278,6 +278,16 @@ EOF
         mode = "fail"
       }
 
+      action "index-all-models" {
+        command = "/usr/bin/php"
+
+        args = [
+          "-f",
+          "/app/artisan",
+          "scout:import-all",
+        ]
+      }
+
       shutdown_delay = var.web_shutdown_delay
     }
 
