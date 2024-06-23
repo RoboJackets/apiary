@@ -3,6 +3,8 @@
 Data model
 ==========
 
+.. vale write-good.Weasel = NO
+
 Apiary tracks dues using several interrelated objects.
 
 Fiscal year
@@ -17,7 +19,6 @@ Dues package
 .. vale Google.Passive = NO
 .. vale write-good.E-Prime = NO
 .. vale write-good.Passive = NO
-.. vale write-good.Weasel = NO
 
 A **dues package** represents an option for paying dues.
 In the member-facing interface, packages are labeled "Dues Terms."

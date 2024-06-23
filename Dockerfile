@@ -80,7 +80,6 @@ COPY --link config-validation/ /app/config-validation/
 COPY --link database/ /app/database/
 COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
-COPY --link storage/ /app/storage/
 COPY --link lang/ /app/lang/
 COPY --link artisan composer.json composer.lock /app/
 COPY --link --from=frontend /app/public/ /app/public/
@@ -127,6 +126,7 @@ USER www-data
 
 RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,required=true \
     set -eux && \
+    mkdir --parents /app/storage/app/ /app/storage/framework/cache/ /app/storage/framework/sessions/ /app/storage/framework/testing/ /app/storage/framework/views/ /app/storage/logs/ && \
     composer check-platform-reqs --lock --no-dev && \
     composer install --no-interaction --no-progress --no-dev --optimize-autoloader --classmap-authoritative --no-cache && \
     php artisan nova:publish && \

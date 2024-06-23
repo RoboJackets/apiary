@@ -205,7 +205,6 @@ return [
         'apimatic/core',
         'apimatic/core-interfaces',
         'enlightn/enlightnpro',
-        'oitnetworkservices/buzzapiclient',
         'phpmyadmin/sql-parser',
         'mwgg/airports',
     ],

@@ -1,3 +1,4 @@
+rm --force /var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock
 if [ ${APP_ENV} = "sandbox" ]
 then
     php artisan passport:keys --no-interaction --verbose
