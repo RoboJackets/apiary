@@ -1,5 +1,5 @@
 ---
-name: Remove cache for closed PR
+name: Remove Caches
 on:
   pull_request:
     types:
@@ -9,7 +9,7 @@ jobs:
   cleanup:
     runs-on: ubuntu-24.04
     steps:
-      - name: Cleanup
+      - name: Remove Caches
         run: |
           set -x
           gh extension install actions/gh-actions-cache
