@@ -148,7 +148,7 @@ jobs:
     name: Deploy
     needs: [lint, test, docker]
     uses: ./.github/workflows/deploy.yml
-    if: ${{ github.ref == 'refs/heads/main' }}
+    #if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
       group: deploy-test
       cancel-in-progress: true
