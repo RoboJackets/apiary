@@ -23,7 +23,7 @@ jobs:
         with:
           url: https://nomad.bcdc.robojackets.net
           jwtGithubAudience: https://nomad.bcdc.robojackets.net
-          methodName: GitHub
+          methodName: GitHubActions
 
       - name: Stop test
         env:
