@@ -235,7 +235,7 @@ description = "A clean customisable Sphinx documentation theme."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "main.zip", hash = "sha256:e5c6aa4418971133348e0227aea5205402f089123fce8b0d2e8fe6db76f2f54b"},
+    {file = "main.zip", hash = "sha256:ad99a8731561f9830480277f1f70b752d4fa9cb100889872ec9773b9b10805fd"},
 ]
 
 [package.dependencies]
