@@ -47,6 +47,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         Nova::report(static function (\Throwable $exception): void {
             if (app()->bound('sentry')) {
+                // @phan-suppress-next-line PhanUndeclaredClassReference
                 app('sentry')->captureException($exception);
             }
         });

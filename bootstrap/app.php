@@ -54,6 +54,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(static function (Exceptions $exceptions): void {
         $exceptions->reportable(static function (Throwable $e): void {
             if (app()->bound('sentry')) {
+                // @phan-suppress-next-line PhanUndeclaredClassReference
                 app('sentry')->captureException($e);
             }
         });
