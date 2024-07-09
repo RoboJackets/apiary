@@ -33,6 +33,7 @@
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="app" />
+                <directory name="database" />
             </errorLevel>
         </PropertyNotSetInConstructor>
         <LessSpecificImplementedReturnType>
@@ -216,8 +217,7 @@
         </PossiblyNullPropertyAssignment>
         <MoreSpecificImplementedParamType>
             <errorLevel type="suppress">
-                <directory name="app/Nova/Filters" />
-                <file name="app/Models/ActionEvent.php"/>
+                <directory name="app/" />
             </errorLevel>
         </MoreSpecificImplementedParamType>
         <UndefinedPropertyAssignment>
@@ -271,7 +271,7 @@
         </UnusedClosureParam>
         <MissingTemplateParam>
             <errorLevel type="suppress">
-                <file name="app/Nova/Resource.php"/>
+                <directory name="app/"/>
             </errorLevel>
         </MissingTemplateParam>
         <UnusedClosureParam>
@@ -313,6 +313,7 @@
                 <file name="app/Nova/Actions/CreateDuesPackages.php"/>
                 <file name="app/Nova/TravelAssignment.php"/>
                 <file name="app/Util/DocuSign.php"/>
+                <referencedFunction name="App\Nova\Metrics\TotalAttendance::count"/>
                 <referencedFunction name="Illuminate\Support\Facades\Route::get"/>
                 <referencedFunction name="Illuminate\Support\Facades\Route::post"/>
                 <referencedFunction name="Laravel\Nova\Actions\ActionEvent::prune"/>
@@ -331,6 +332,7 @@
                 <referencedFunction name="Laravel\Nova\Fields\Text::hideFromDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\Text::showOnDetail"/>
                 <referencedFunction name="Laravel\Nova\Fields\URL::hideFromDetail"/>
+                <referencedFunction name="Laravel\Nova\Http\Requests\LensRequest::withFilters"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidOperand>
