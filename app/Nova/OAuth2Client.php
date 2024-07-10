@@ -91,6 +91,7 @@ class OAuth2Client extends Resource
 
             BelongsTo::make('User')
                 ->searchable()
+                ->withoutTrashed()
                 ->help(
                     'This should be null for the personal access client, and otherwise populated with the user '
                     .'responsible for this client.'
