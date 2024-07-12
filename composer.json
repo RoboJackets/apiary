@@ -32,7 +32,7 @@
         "calebporzio/sushi": "2.5.2",
         "chelout/laravel-relationship-events": "3.0.0",
         "docusign/esign-client": "6.19.0",
-        "eluceo/ical": "2.13.0",
+        "eluceo/ical": "2.14.0",
         "enlightn/enlightn": "2.10.0",
         "fakerphp/faker": "1.23.1",
         "guzzlehttp/guzzle": "7.8.1",
