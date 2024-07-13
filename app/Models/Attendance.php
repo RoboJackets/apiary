@@ -20,7 +20,7 @@ use Laravel\Scout\Searchable;
  * @property int $id
  * @property string $attendable_type
  * @property int $attendable_id
- * @property int $gtid
+ * @property int|null $gtid
  * @property string|null $source
  * @property int|null $recorded_by
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -106,6 +106,16 @@ class Attendance extends Model
     public function attendee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'gtid', 'gtid');
+    }
+
+    /**
+     * Get the access card associated with the Attendance model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\AccessCard, \App\Models\Attendance>
+     */
+    public function accessCard(): BelongsTo
+    {
+        return $this->belongsTo(AccessCard::class, 'access_card_number', 'access_card_number');
     }
 
     /**
