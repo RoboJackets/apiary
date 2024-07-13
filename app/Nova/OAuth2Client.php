@@ -106,7 +106,7 @@ class OAuth2Client extends Resource
                 ->rules('required')
                 ->hideFromIndex(),
 
-            Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret !== null)
+            Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret === null)
                 ->hideFromIndex(),
 
             HasMany::make('Tokens', 'tokens', OAuth2AccessToken::class),
