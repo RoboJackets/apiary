@@ -59,7 +59,7 @@
         "spatie/laravel-failed-job-monitor": "4.3.2",
         "spatie/laravel-permission": "6.9.0",
         "spatie/laravel-webhook-client": "3.4.1",
-        "square/square": "37.1.0.20240604",
+        "square/square": "37.1.1.20240717",
         "subfission/cas": "5.0.0",
         "symfony/http-client": "7.1.2",
         "symfony/postmark-mailer": "7.1.1",
