@@ -33,3 +33,6 @@ CAS_CLIENT_SERVICE="https://{{- with (key "nginx/hostnames" | parseJSON) -}}{{- 
 CAS_VALIDATION="ca"
 CAS_CERT="/etc/ssl/certs/USERTrust_RSA_Certification_Authority.pem"
 HOME="/secrets/"
+RESPONSE_CACHE_HEADER_NAME="x-cache-time"
+RESPONSE_CACHE_AGE_HEADER_NAME="x-cache-age"
+RESPONSE_CACHE_AGE_HEADER=true

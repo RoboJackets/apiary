@@ -40,6 +40,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.cas.force' => \App\Http\Middleware\CasAuthenticate::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'cache' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         ]);
 
         $middleware->priority([
