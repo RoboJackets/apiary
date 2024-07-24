@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\User;
-use App\Nova\Dashboards\Demographics;
-use App\Nova\Dashboards\JEDI;
 use App\Nova\Dashboards\Main;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -132,8 +130,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new Main(),
-            (new JEDI())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
-            (new Demographics())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
         ];
     }
 }
