@@ -34,17 +34,20 @@ use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
+use App\Policies\WebhookCallPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
 use Laravel\Passport\Passport;
+use Spatie\WebhookClient\Models\WebhookCall;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -107,6 +110,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->bootAuth();
         $this->bootRoute();
+
+        Gate::policy(WebhookCall::class, WebhookCallPolicy::class);
     }
 
     /**

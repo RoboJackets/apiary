@@ -7,7 +7,7 @@ namespace App\Policies;
 use App\Models\User;
 use Laravel\Nova\Notifications\Notification;
 
-class NovaNotificationPolicy
+class NotificationPolicy
 {
     /**
      * Determine whether the user can view any models.
