@@ -34,6 +34,7 @@ use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
+use App\Policies\NotificationPolicy;
 use App\Policies\WebhookCallPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +47,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
+use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\Passport;
 use Spatie\WebhookClient\Models\WebhookCall;
 
@@ -112,6 +114,7 @@ class AppServiceProvider extends ServiceProvider
         $this->bootRoute();
 
         Gate::policy(WebhookCall::class, WebhookCallPolicy::class);
+        Gate::policy(Notification::class, NotificationPolicy::class);
     }
 
     /**
