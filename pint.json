@@ -1,6 +1,10 @@
 {
     "preset": "laravel",
     "rules": {
-        "single_line_empty_body": false
+        "single_line_empty_body": false,
+        "new_with_parentheses": {
+            "anonymous_class": false,
+            "named_class": true
+        }
     }
 }
