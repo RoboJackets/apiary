@@ -772,17 +772,19 @@ class Travel extends Resource
      */
     public function cards(Request $request): array
     {
-        $cards = [
-            (new PaymentReceivedForTravel())->onlyOnDetail(),
-        ];
-
         if ($request->resourceId === null) {
             return [];
         }
 
-        $requires_tar = AppModelsTravel::where('id', $request->resourceId)->sole()->needs_docusign;
+        $cards = [];
 
-        if ($requires_tar) {
+        $trip = AppModelsTravel::where('id', $request->resourceId)->sole();
+
+        if ($trip->fee_amount > 0) {
+            $cards[] = (new PaymentReceivedForTravel())->onlyOnDetail();
+        }
+
+        if ($trip->needs_docusign) {
             $cards[] = (new TravelAuthorityRequestReceivedForTravel())->onlyOnDetail();
         }
 
