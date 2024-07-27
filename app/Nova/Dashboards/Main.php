@@ -95,9 +95,11 @@ class Main extends Dashboard
                     continue;
                 }
 
-                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-payments')
-                );
+                if ($travel->fee_amount > 0) {
+                    $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
+                        static fn (Request $request): bool => $request->user()->can('read-payments')
+                    );
+                }
 
                 if ($travel->needs_docusign === true) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
