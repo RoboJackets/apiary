@@ -1,0 +1,54 @@
+name: One-Click Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: environment
+
+concurrency:
+  group: ${{ inputs.environment }}
+  cancel-in-progress: true
+
+jobs:
+  find-image-digest:
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+
+    outputs:
+      image_digest: ${{ steps.get-image-digest.outputs.image_digest }}
+
+    steps:
+      - name: Setup Nomad
+        uses: lucasmelin/setup-nomad@v2.0.0
+
+      - name: Exchange GitHub JWT for Nomad token
+        uses: RoboJackets/nomad-jwt-auth@main
+        with:
+          url: https://nomad.bcdc.robojackets.net
+          jwtGithubAudience: https://nomad.bcdc.robojackets.net
+          methodName: GitHubActions
+
+      - name: Get production image digest
+        id: get-image-digest
+        env:
+          NOMAD_ADDR: https://nomad.bcdc.robojackets.net
+        run: >-
+          echo "image_digest=$(nomad job inspect apiary-production | jq --raw-output .Job.TaskGroups[0].Tasks[0].Config.image | cut -d "@" -f 2)" >> $GITHUB_OUTPUT
+
+  deploy:
+    name: Deploy
+    needs: [find-image-digest]
+    uses: ./.github/workflows/deploy.yml
+    concurrency:
+      group: deploy-${{ inputs.environment }}
+      cancel-in-progress: true
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      image-digest: ${{ needs.find-image-digest.outputs.image_digest }}
+      environment: ${{ inputs.environment }}
+      precompressed-assets: true
