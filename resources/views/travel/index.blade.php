@@ -37,7 +37,7 @@ Travel | {{ config('app.name') }}
                 </tr>
                 <tr>
                   <th scope="row">Fee</th>
-                  <td>${{ $travel->fee_amount }}</td>
+                  <td>{{ $travel->fee_amount === 0 ? "Free" : "$" . $travel->fee_amount }}</td>
                 </tr>
                 <tr>
                   <th scope="row">Costs Included</th>
