@@ -7,10 +7,6 @@ on:
         required: true
         type: environment
 
-concurrency:
-  group: ${{ inputs.environment }}
-  cancel-in-progress: true
-
 jobs:
   find-image-digest:
     permissions:
