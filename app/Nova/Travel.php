@@ -21,6 +21,7 @@ use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use App\Rules\DisallowNumericValues;
 use App\Rules\FareClassPolicyRequiresMarketingCarrierPolicy;
 use App\Rules\MatrixItineraryBusinessPolicy;
+use App\Rules\TripFeeMinimumNonZeroValue;
 use App\Util\DepartmentNumbers;
 use App\Util\DocuSign;
 use Carbon\Carbon;
@@ -238,7 +239,8 @@ class Travel extends Resource
                         'required',
                         'integer',
                         'min:0',
-                        'max:'.config('travelpolicy.maximum_trip_fee')
+                        'max:'.config('travelpolicy.maximum_trip_fee'),
+                        new TripFeeMinimumNonZeroValue()
                     )
                     ->min(0)
                     ->max(config('travelpolicy.maximum_trip_fee')),
