@@ -164,7 +164,9 @@ class ReviewTrip extends Action
                 Currency::make('Square Processing Fee')
                     ->default(static fn (): float => Payment::calculateProcessingFee($trip->fee_amount * 100) / 100)
                     ->readonly()
-                    ->help(view('nova.help.travel.review.processingfee', ['fee_amount' => $trip->fee_amount])->render()),
+                    ->help(
+                        view('nova.help.travel.review.processingfee', ['fee_amount' => $trip->fee_amount])->render()
+                    ),
 
                 Currency::make('Total Cost per Traveler')
                     ->default(static fn (): float => $totalCost)
