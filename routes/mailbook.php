@@ -1065,15 +1065,17 @@ Mailbook::category('Trip Assignments')->group(static function () use ($user): vo
                     'status' => 'draft',
                 ]));
 
-                $assignment = TravelAssignment::withoutEvents(static function () use ($user, $travel): TravelAssignment {
-                    $assignment = TravelAssignment::factory()->make([
-                        'user_id' => $user->id,
-                        'travel_id' => $travel->id,
-                    ]);
-                    $assignment->save();
+                $assignment = TravelAssignment::withoutEvents(
+                    static function () use ($user, $travel): TravelAssignment {
+                        $assignment = TravelAssignment::factory()->make([
+                            'user_id' => $user->id,
+                            'travel_id' => $travel->id,
+                        ]);
+                        $assignment->save();
 
-                    return $assignment;
-                });
+                        return $assignment;
+                    }
+                );
 
                 return new TravelAssignmentCreated($assignment);
             }

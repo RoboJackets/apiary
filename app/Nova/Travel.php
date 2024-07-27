@@ -249,7 +249,7 @@ class Travel extends Resource
                     'Square Processing Fee',
                     static fn (
                         \App\Models\Travel $trip
-                    ): ?float => $trip->fee_amount === null || $trip->fee_amount === 0 ?
+                    ): ?float => $trip->fee_amount === 0 ?
                         null :
                         Payment::calculateProcessingFee($trip->fee_amount * 100) / 100
                 )
