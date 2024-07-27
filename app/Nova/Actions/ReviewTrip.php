@@ -155,23 +155,27 @@ class ReviewTrip extends Action
 
             Heading::make('Review Financials'),
 
-            ...($trip->fee_amount > 0 ? [
-                Currency::make('Trip Fee')
-                    ->default(static fn (): float => $trip->fee_amount)
-                    ->readonly()
-                    ->help('This is the amount that will be collected from each traveler.'),
+            Currency::make('Trip Fee')
+                ->default(static fn (): float => $trip->fee_amount)
+                ->readonly()
+                ->help('This is the amount that will be collected from each traveler.'),
 
+            ...($trip->fee_amount > 0 ? [
                 Currency::make('Square Processing Fee')
                     ->default(static fn (): float => Payment::calculateProcessingFee($trip->fee_amount * 100) / 100)
                     ->readonly()
                     ->help(
                         view('nova.help.travel.review.processingfee', ['fee_amount' => $trip->fee_amount])->render()
                     ),
+            ] : []),
 
+            ...($trip->needs_docusign ? [
                 Currency::make('Total Cost per Traveler')
                     ->default(static fn (): float => $totalCost)
                     ->readonly(),
+            ] : []),
 
+            ...($trip->fee_amount > 0 ? [
                 Text::make('Fee-to-Cost Ratio')
                     ->default(
                         static fn (): string => $totalCost === 0 ?
@@ -190,8 +194,8 @@ class ReviewTrip extends Action
 
             BooleanGroup::make('Review Criteria')
                 ->options([
+                    'fee_reasonable' => 'Trip fee is reasonable',
                     ...($trip->fee_amount > 0 ? [
-                        'fee_reasonable' => 'Trip fee is reasonable',
                         'ratio_reasonable' => 'Ratio of trip fee to cost is reasonable',
                     ] : []),
                     ...($trip->needs_docusign ? [
