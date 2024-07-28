@@ -17,7 +17,7 @@ class TripFeeMinimumNonZeroValue implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if ($value > 0 && $value < config('travelpolicy.minimum_trip_fee')) {
-            $fail('Trip fee must be either $0 or at least $'.config('travelpolicy.minimum_trip_fee'));
+            $fail('Trip fee must be either $0 or at least $'.config('travelpolicy.minimum_trip_fee').'.');
         }
     }
 }

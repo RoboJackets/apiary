@@ -887,6 +887,12 @@ class Travel extends Resource
                 );
             }
         }
+
+        // require at least one of trip fee or form collection to be enabled
+        if (intval($request->fee_amount) === 0 && ! in_array(true, json_decode($request->forms, true), true)) {
+            $validator->errors()->add('fee_amount', 'Either trip fee or form collection must be enabled.');
+            $validator->errors()->add('forms', 'Either trip fee or form collection must be enabled.');
+        }
     }
 
     /**
