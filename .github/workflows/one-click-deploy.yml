@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
+        description: The image currently running in production will be deployed to the selected environment. Branch picker determines which Nomad job definition is used.
         required: true
         type: environment
 
