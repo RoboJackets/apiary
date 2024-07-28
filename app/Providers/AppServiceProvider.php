@@ -43,7 +43,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
@@ -142,7 +141,5 @@ class AppServiceProvider extends ServiceProvider
             'api',
             static fn (Request $request): Limit => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip())
         );
-
-        Route::bind('gtid', static fn (string $value): User => User::whereGtid($value)->firstOrFail());
     }
 }
