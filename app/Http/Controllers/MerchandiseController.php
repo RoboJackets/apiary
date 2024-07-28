@@ -146,7 +146,8 @@ class MerchandiseController extends Controller
             'dues_transaction_merchandise.provided_at',
             'dues_transaction_merchandise.provided_by',
             'dues_transaction_merchandise.provided_via',
-            'dues_transaction_merchandise.merchandise_id'
+            'dues_transaction_merchandise.merchandise_id',
+            'dues_transaction_merchandise.dues_transaction_id'
         )
             ->whereHas('transaction', static function (Builder $query) use ($user) {
                 $query->where('user_id', $user->id)
