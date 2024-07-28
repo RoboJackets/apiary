@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DistributeMerchandiseRequest;
 use App\Http\Resources\DuesTransactionMerchandise as DuesTransactionMerchandiseResource;
 use App\Http\Resources\Merchandise as MerchandiseResource;
 use App\Http\Resources\User as UserResource;
@@ -15,7 +16,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MerchandiseController extends Controller
@@ -69,7 +69,7 @@ class MerchandiseController extends Controller
                     'status' => 'error',
                     'message' => self::NO_DTM,
                 ],
-                status: 400
+                status: 404
             );
         }
 
@@ -84,8 +84,11 @@ class MerchandiseController extends Controller
         );
     }
 
-    public function distribute(Request $request, Merchandise $merchandise, User $user): JsonResponse
-    {
+    public function distribute(
+        DistributeMerchandiseRequest $request,
+        Merchandise $merchandise,
+        User $user
+    ): JsonResponse {
         if (! $merchandise->distributable) {
             return response()->json(
                 data: [
@@ -104,7 +107,7 @@ class MerchandiseController extends Controller
                     'status' => 'error',
                     'message' => self::NO_DTM,
                 ],
-                status: 400
+                status: 404
             );
         }
 
@@ -114,12 +117,13 @@ class MerchandiseController extends Controller
                     'status' => 'error',
                     'message' => self::ALREADY_DISTRIBUTED,
                 ],
-                status: 400
+                status: 409
             );
         }
 
         $dtm->provided_at = Carbon::now();
         $dtm->provided_by = $request->user()->id;
+        $dtm->provided_via = $request->provided_via;
         $dtm->save();
 
         return response()->json(
@@ -141,6 +145,7 @@ class MerchandiseController extends Controller
             'dues_transaction_merchandise.id',
             'dues_transaction_merchandise.provided_at',
             'dues_transaction_merchandise.provided_by',
+            'dues_transaction_merchandise.provided_via',
             'dues_transaction_merchandise.merchandise_id'
         )
             ->whereHas('transaction', static function (Builder $query) use ($user) {

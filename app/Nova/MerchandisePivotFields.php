@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Text;
 
 class MerchandisePivotFields
 {
@@ -16,10 +17,15 @@ class MerchandisePivotFields
     {
         return [
             DateTime::make('Provided At')
-                ->onlyOnIndex(),
+                ->onlyOnIndex()
+                ->sortable(),
 
             BelongsTo::make('Provided By', 'providedBy', User::class)
                 ->onlyOnIndex(),
+
+            Text::make('Provided Via')
+                ->onlyOnIndex()
+                ->sortable(),
         ];
     }
 }
