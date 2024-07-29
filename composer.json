@@ -35,7 +35,7 @@
         "eluceo/ical": "2.14.0",
         "enlightn/enlightn": "2.10.0",
         "fakerphp/faker": "1.23.1",
-        "guzzlehttp/guzzle": "7.9.1",
+        "guzzlehttp/guzzle": "7.9.2",
         "htmlmin/htmlmin": "dev-master",
         "http-interop/http-factory-guzzle": "1.2.0",
         "kiritokatklian/nova-permission": "4.0.10",
