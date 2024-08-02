@@ -81,6 +81,7 @@
             <errorLevel type="suppress">
                 <directory name="app" />
                 <file name="database/seeders/DuesTransactionsSeeder.php" />
+                <file name="routes/api.php"/>
             </errorLevel>
         </ArgumentTypeCoercion>
         <PossiblyInvalidArgument>

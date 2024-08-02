@@ -16,15 +16,16 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MerchandiseController extends Controller
 {
-    private const NOT_DISTRIBUTABLE = 'This item cannot be distributed.';
+    private const NOT_DISTRIBUTABLE = 'This item cannot be distributed';
 
-    private const NO_DTM = 'This person doesn\'t have a paid transaction for this item.';
+    private const NO_DTM = 'This person doesn\'t have a paid transaction for this item';
 
-    private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person.';
+    private const ALREADY_DISTRIBUTED = 'This item was already distributed to this person';
 
     public function __construct()
     {
@@ -155,5 +156,34 @@ class MerchandiseController extends Controller
             })
             ->where('merchandise_id', $merchandise->id)
             ->sole();
+    }
+
+    public static function handleMissingModel(Request $request, ModelNotFoundException $exception): JsonResponse
+    {
+        if ($exception->getModel() === \App\Models\User::class) {
+            return response()->json(
+                data: [
+                    'status' => 'error',
+                    'message' => 'That isn\'t a valid GTID',
+                ],
+                status: 404
+            );
+        } elseif ($exception->getModel() === \App\Models\Merchandise::class) {
+            return response()->json(
+                data: [
+                    'status' => 'error',
+                    'message' => 'That isn\'t a valid merchandise ID',
+                ],
+                status: 404
+            );
+        } else {
+            return response()->json(
+                data: [
+                    'status' => 'error',
+                    'message' => 'Unexpected missing model',
+                ],
+                status: 500
+            );
+        }
     }
 }

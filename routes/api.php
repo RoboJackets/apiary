@@ -77,11 +77,15 @@ Route::prefix('v1/')->name('api.v1.')->middleware(['auth:api'])->group(
         Route::get(
             'merchandise/{merchandise}/distribute/{user:gtid}',
             [MerchandiseController::class, 'getDistribution']
-        )->withoutScopedBindings();
+        )
+            ->withoutScopedBindings()
+            ->missing([MerchandiseController::class, 'handleMissingModel']);
         Route::post(
             'merchandise/{merchandise}/distribute/{user:gtid}',
             [MerchandiseController::class, 'distribute']
-        )->withoutScopedBindings();
+        )
+            ->withoutScopedBindings()
+            ->missing([MerchandiseController::class, 'handleMissingModel']);
     }
 );
 
