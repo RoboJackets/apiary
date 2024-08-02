@@ -37,7 +37,7 @@ trait RecordPaymentActions
         $resourceId = $request->resourceId ?? $request->resources;
         $user = $request->user();
 
-        if ($resourceType === null || $resourceId === null || $user === null) {
+        if ($resourceType === null || $resourceId === null || $user === null || is_array($resourceId)) {
             return [];
         }
 
