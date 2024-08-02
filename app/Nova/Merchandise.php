@@ -122,7 +122,7 @@ class Merchandise extends Resource
     {
         $resourceId = $request->resourceId ?? $request->resources;
 
-        if ($resourceId === null) {
+        if ($resourceId === null || is_array($resourceId)) {
             return [];
         }
 
