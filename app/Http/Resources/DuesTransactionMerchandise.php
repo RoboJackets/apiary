@@ -29,9 +29,9 @@ class DuesTransactionMerchandise extends JsonResource
             'provided_at' => $this->provided_at,
             'provided_by' => Manager::make($this->providedBy),
             'provided_via' => $this->provided_via,
-            'size' => [
+            'size' => $this->size === null ? null : [
                 'short' => $this->size,
-                'display_name' => $this->size === null ? null : \App\Models\User::$shirt_sizes[$this->size],
+                'display_name' => \App\Models\User::$shirt_sizes[$this->size],
             ],
             'merchandise' => $this->when($this->withMerchandise, $this->merchandise),
         ];
