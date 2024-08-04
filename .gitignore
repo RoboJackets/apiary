@@ -19,8 +19,6 @@ npm-debug.log
 /resources/views/vendor/nova/*
 !/resources/views/vendor/nova/partials
 /resources/views/vendor/nova/partials/*
-!/resources/views/vendor/nova/partials/user.blade.php
-!/resources/views/vendor/nova/partials/footer.blade.php
 !/resources/views/vendor/nova/partials/meta.blade.php
 /public/vendor/nova/
 /public/nova-assets
@@ -37,10 +35,11 @@ resume-monitoring.sh
 .vapor/
 .env.production
 /storage/framework/laravel-excel/
-/.phpunit.result.cache
+/.phpunit.cache
 /storage/*.sqlite
 !/storage/db-clean.sqlite
 !/storage/quickstart.sqlite
 *.map
-
 .envault.json
+.phpunit.result.cache
+/docs/_build/

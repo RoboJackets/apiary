@@ -15,7 +15,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PushToJedi implements ShouldQueue, ShouldBeUnique
+class PushToJedi implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -30,49 +30,19 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
     public $tries = 1;
 
     /**
-     * The user that will be sent to JEDI.
-     *
-     * @var \App\Models\User
-     */
-    private $user;
-
-    /**
-     * The name of the class that caused the push to be run.
-     *
-     * @var string
-     */
-    private $model_class;
-
-    /**
-     * The ID of the model that caused the push to be run.
-     *
-     * @var int
-     */
-    private $model_id;
-
-    /**
-     * A description of the event that caused the push to be run.
-     *
-     * @var string
-     */
-    private $model_event;
-
-    /**
      * Create a new job instance.
      */
-    public function __construct(User $user, string $model_class, int $model_id, string $model_event)
-    {
-        $this->user = $user;
-        $this->model_class = $model_class;
-        $this->model_id = $model_id;
-        $this->model_event = $model_event;
+    public function __construct(
+        private readonly User $user,
+        private readonly string $model_class,
+        private readonly int $model_id,
+        private readonly string $model_event
+    ) {
         $this->queue = 'jedi';
     }
 
     /**
      * Execute the job.
-     *
-     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
      */
     public function handle(): void
     {
@@ -87,15 +57,17 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
         }
 
         $lastAttendance = $this->user->attendance()->where('attendable_type', Team::getMorphClassStatic())
+            ->whereNull('remote_attendance_link_id')
+            ->whereNull('people_counter_id')
             ->orderByDesc('created_at')->first();
 
         $send = [
-            'uid' => strtolower($this->user->uid),
+            'username' => strtolower($this->user->uid),
             'first_name' => $this->user->preferred_first_name,
             'last_name' => $this->user->last_name,
             'is_access_active' => $this->user->is_access_active,
             'github_username' => $this->user->github_username,
-            'google_accounts' => [],
+            'google_account' => $this->user->gmail_address,
             'model_class' => $this->model_class,
             'model_id' => $this->model_id,
             'model_event' => $this->model_event,
@@ -107,8 +79,6 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
             'clickup_email' => $this->user->clickup_email,
             'clickup_id' => $this->user->clickup_id,
             'clickup_invite_pending' => $this->user->clickup_invite_pending,
-            'autodesk_email' => $this->user->autodesk_email,
-            'autodesk_invite_pending' => $this->user->autodesk_invite_pending,
             'signed_latest_agreement' => $this->user->signed_latest_agreement,
         ];
 
@@ -119,27 +89,6 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
         foreach ($this->user->manages as $team) {
             $send['project_manager_of_teams'][] = $team->name;
         }
-
-        $gmail_address = $this->user->gmail_address;
-        if ($gmail_address !== null) {
-            $send['google_accounts'][] = strtolower($gmail_address);
-        }
-
-        if (in_array('G Suite', $send['teams'], true)) {
-            $send['google_accounts'][] = strtolower(
-                preg_replace(
-                    '/[^[:alnum:]-]/u',
-                    '',
-                    $this->user->preferred_first_name
-                ).'.'.preg_replace(
-                    '/[^[:alnum:]-]/u',
-                    '',
-                    $this->user->last_name
-                )
-            ).'@robojackets.org';
-        }
-
-        $send['google_accounts'] = array_unique($send['google_accounts'], SORT_STRING);
 
         $client = new Client(
             [
@@ -167,5 +116,17 @@ class PushToJedi implements ShouldQueue, ShouldBeUnique
     public function uniqueId(): string
     {
         return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }

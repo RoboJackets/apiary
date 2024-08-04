@@ -11,7 +11,7 @@ use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Merchandise;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -19,8 +19,6 @@ use Illuminate\Support\Str;
 
 class DuesTransactionController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware(
@@ -42,7 +40,7 @@ class DuesTransactionController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $transact = DuesTransaction::with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransaction::with(AuthorizeInclude::authorize(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
 
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
@@ -54,7 +52,7 @@ class DuesTransactionController extends Controller
     public function indexPaid(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $transact = DuesTransaction::paid()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransaction::paid()->with(AuthorizeInclude::authorize(DuesTransaction::class, $include))->get();
         $transact = DuesTransactionResource::collection($transact);
 
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
@@ -66,7 +64,9 @@ class DuesTransactionController extends Controller
     public function indexPending(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $transact = DuesTransaction::pending()->with($this->authorizeInclude(DuesTransaction::class, $include))->get();
+        $transact = DuesTransaction::pending()->with(
+            AuthorizeInclude::authorize(DuesTransaction::class, $include)
+        )->get();
         $transact = DuesTransactionResource::collection($transact);
 
         return response()->json(['status' => 'success', 'dues_transactions' => $transact]);
@@ -137,7 +137,6 @@ class DuesTransactionController extends Controller
                     );
 
                     if ($polo !== null) {
-                        // @phan-suppress-next-line PhanTypeExpectedObjectPropAccess
                         return $selectedMerch->contains($polo->id);
                     }
 
@@ -155,7 +154,7 @@ class DuesTransactionController extends Controller
         // If there's an existing active transaction that hasn't been paid, delete it
         // and replace it with the one currently being requested
         if ($user->dues->count() > 0) {
-            $existingTransaction = $user->dues->last();
+            $existingTransaction = $user->dues()->latest()->first();
             $pkgIsActive = $existingTransaction->package->is_active;
             if ($pkgIsActive) {
                 $hasPayment = $existingTransaction->payment()->exists();
@@ -170,14 +169,10 @@ class DuesTransactionController extends Controller
             }
         }
 
-        $transact = DuesTransaction::create(
-            array_merge(
-                $request->validated(),
-                [
-                    'user_id' => $request->user()->id,
-                ]
-            )
-        );
+        $transact = DuesTransaction::create([
+            'user_id' => $request->user()->id,
+            'dues_package_id' => $request->validated('dues_package_id'),
+        ]);
 
         $dbTransact = DuesTransaction::findOrFail($transact->id);
 
@@ -201,7 +196,7 @@ class DuesTransactionController extends Controller
         $requestingUser = $request->user();
         $include = $request->input('include');
         $transact = DuesTransaction::with(
-            $this->authorizeInclude(DuesTransaction::class, $include)
+            AuthorizeInclude::authorize(DuesTransaction::class, $include)
         )->find($transaction->id);
         if ($transact === null) {
             return response()->json(['status' => 'error', 'message' => 'DuesTransaction not found.'], 404);

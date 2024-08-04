@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Nova\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class DuesTransactionPaymentStatus extends BooleanFilter
 {
@@ -19,11 +21,11 @@ class DuesTransactionPaymentStatus extends BooleanFilter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @param  array<string,bool>  $value
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>|\Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DuesTransaction>
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $value['pending'] === true ? $query->pending() : $query;
     }

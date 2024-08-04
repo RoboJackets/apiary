@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RemoveApiTokens extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,6 +17,10 @@ class RemoveApiTokens extends Migration
     {
         app()['cache']->forget('spatie.permission.cache');
         Permission::where('name', 'read-users-api_token')->delete();
+
+        if (config('database.default') !== 'mysql') {
+            return;
+        }
 
         Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('api_token');
@@ -38,4 +42,4 @@ class RemoveApiTokens extends Migration
             $table->string('api_token', 32);
         });
     }
-}
+};

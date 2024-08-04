@@ -20,7 +20,7 @@ use Laravel\Scout\Searchable;
  * @property int $id
  * @property string $attendable_type
  * @property int $attendable_id
- * @property int $gtid
+ * @property int|null $gtid
  * @property string|null $source
  * @property int|null $recorded_by
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -52,12 +52,15 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Attendance whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Attendance withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attendance withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Attendance extends Model
 {
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The name of the database table for this model.
@@ -76,32 +79,17 @@ class Attendance extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<string>
+     * @var array<int,string>
      */
     protected $with = ['attendable'];
 
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'updated_at_unix:desc',
+    public const RELATIONSHIP_PERMISSIONS = [
+        'attendee' => 'read-users',
+        'recorded' => 'read-users',
     ];
 
     /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-        'team_id',
-        'event_id',
-        'user_id',
-    ];
-
-    /**
-     * Get all of the owning attendable models.
+     * Get all the owning attendable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\Team|\App\Models\Event,\App\Models\Attendance>
      */
@@ -118,6 +106,16 @@ class Attendance extends Model
     public function attendee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'gtid', 'gtid');
+    }
+
+    /**
+     * Get the access card associated with the Attendance model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\AccessCard, \App\Models\Attendance>
+     */
+    public function accessCard(): BelongsTo
+    {
+        return $this->belongsTo(AccessCard::class, 'access_card_number', 'access_card_number');
     }
 
     /**
@@ -160,19 +158,6 @@ class Attendance extends Model
     public function scopeEnd(Builder $query, string $date): Builder
     {
         return $query->whereDate('created_at', '<=', $date);
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string, string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'attendee' => 'users',
-            'recorded' => 'users',
-        ];
     }
 
     /**
@@ -251,7 +236,7 @@ class Attendance extends Model
     /**
      * Get the indexable data array for the model.
      *
-     * @return array<string,int|string>
+     * @return array<string,int|string|null>
      */
     public function toSearchableArray(): array
     {
@@ -278,7 +263,7 @@ class Attendance extends Model
         unset($array['attendable']['organizer']);
         unset($array['attendable']['organizer_name']);
 
-        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+        $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
         return $array;
     }

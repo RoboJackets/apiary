@@ -75,7 +75,7 @@ class UserPolicy
      */
     public function attachTeam(User $user, User $userResource, Team $team): bool
     {
-        if ($team->members->contains('id', $userResource->id)) {
+        if ($team->members()->where('user_id', $userResource->id)->exists()) {
             return false;
         }
 
@@ -170,6 +170,11 @@ class UserPolicy
     }
 
     public function addClient(User $user, User $userResource): bool
+    {
+        return false;
+    }
+
+    public function replicate(User $user, User $userResource): bool
     {
         return false;
     }

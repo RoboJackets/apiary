@@ -10,28 +10,34 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class TravelAssignmentCreatedEmailTest extends TestCase
+final class TravelAssignmentCreatedEmailTest extends TestCase
 {
     public function testTarRequired(): void
     {
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $mailable = new TravelAssignmentCreated($assignment);
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
-        $mailable->assertSeeInText('Please complete the following items');
+        $mailable->assertSeeInText('Complete the following tasks');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }
@@ -41,22 +47,25 @@ class TravelAssignmentCreatedEmailTest extends TestCase
         $user = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => false,
             'fee_amount' => 10,
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $mailable = new TravelAssignmentCreated($assignment);
 
         $mailable->assertSeeInText($user->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
-        $mailable->assertSeeInText('Please pay the $10 travel fee');
+        $mailable->assertSeeInText('Pay the $10 trip fee');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
     }

@@ -24,12 +24,12 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Scout\Searchable;
-use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -44,11 +44,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $clickup_email
  * @property int|null $clickup_id
  * @property bool $clickup_invite_pending
- * @property string|null $autodesk_email
- * @property bool $autodesk_invite_pending
  * @property string $gt_email
  * @property string $first_name
- * @property string|null $middle_name
  * @property string $last_name
  * @property string|null $preferred_name
  * @property string|null $phone
@@ -130,9 +127,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $clients_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\OAuth2AccessToken> $tokens
  * @property-read int|null $tokens_count
+ * @property-read \App\Models\User|null $manager
+ * @property-read bool $has_emergency_contact_information
  *
  * @method static Builder|User accessActive()
- * @method static Builder|User accessInactive()
+ * @method static Builder|User accessInactive(\Carbon\CarbonImmutable|null $asOfTimestamp)
  * @method static Builder|User active()
  * @method static Builder|User buzzCardAccessEligible()
  * @method static \Database\Factories\UserFactory factory(...$parameters)
@@ -147,8 +146,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User role($roles, $guard = null)
  * @method static Builder|User whereAccessOverrideById($value)
  * @method static Builder|User whereAccessOverrideUntil($value)
- * @method static Builder|User whereAutodeskEmail($value)
- * @method static Builder|User whereAutodeskInvitePending($value)
  * @method static Builder|User whereBuzzcardAccessOptOut($value)
  * @method static Builder|User whereClickupEmail($value)
  * @method static Builder|User whereClickupId($value)
@@ -177,7 +174,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereIsServiceAccount($value)
  * @method static Builder|User whereJoinSemester($value)
  * @method static Builder|User whereLastName($value)
- * @method static Builder|User whereMiddleName($value)
  * @method static Builder|User wherePhone($value)
  * @method static Builder|User wherePoloSize($value)
  * @method static Builder|User wherePreferredName($value)
@@ -188,22 +184,38 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereUpdatedAt($value)
  * @method static QueryBuilder|User withTrashed()
  * @method static QueryBuilder|User withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property string|null $docusign_access_token
+ * @property Carbon|null $docusign_access_token_expires_at
+ * @property string|null $docusign_refresh_token
+ * @property Carbon|null $docusign_refresh_token_expires_at
+ *
+ * @method static Builder|User whereDocusignAccessToken($value)
+ * @method static Builder|User whereDocusignAccessTokenExpiresAt($value)
+ * @method static Builder|User whereDocusignRefreshToken($value)
+ * @method static Builder|User whereDocusignRefreshTokenExpiresAt($value)
+ *
+ * @property string|null $parent_guardian_name
+ * @property string|null $parent_guardian_email
+ * @property-read bool $needs_parent_or_guardian_signature
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class User extends Authenticatable
 {
     use Actionable;
+    use HasApiTokens;
     use HasBelongsToManyEvents;
     use HasFactory;
+    use HasPermissions;
     use HasRelationshipObservables;
     use HasRoles;
-    use HasPermissions;
-    use Notifiable;
-    use SoftDeletes;
-    use HasApiTokens;
-    use FirstNameSynonyms;
-    use Searchable;
     use Impersonatable;
+    use Notifiable;
+    use Searchable;
+    use SoftDeletes;
 
     private const MAJOR_REGEX = '/(?P<college>[A-Z])\/(?P<school>[A-Z0-9]+)\/(?P<major>[A-Z]+)/';
 
@@ -245,6 +257,32 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'emergency_contact_name',
+        'emergency_contact_phone',
+        'phone',
+        'preferred_first_name',
+        'shirt_size',
+        'polo_size',
+        'graduation_semester',
+        'clickup_email',
+        'ethnicity',
+        'gender',
+        'clickup_invite_pending',
+        'clickup_id',
+        'exists_in_sums',
+        'github_invite_pending',
+        'legal_gender',
+        'date_of_birth',
+        'delta_skymiles_number',
+        'legal_middle_name',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array<string>
@@ -256,75 +294,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'access_override_until' => 'datetime',
-        'resume_date' => 'datetime',
-        'github_invite_pending' => 'boolean',
-        'clickup_invite_pending' => 'boolean',
-        'autodesk_invite_pending' => 'boolean',
-        'exists_in_sums' => 'boolean',
-        'has_ever_logged_in' => 'boolean',
-        'is_service_account' => 'boolean',
-        'buzzcard_access_opt_out' => 'boolean',
-    ];
-
-    /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'first_name',
-        'preferred_name',
-        'last_name',
-        'uid',
-        'gt_email',
-        'gmail_address',
-        'clickup_email',
-        'autodesk_email',
-        'github_username',
-        'gtid',
-        'phone',
-        'gtDirGUID',
-    ];
-
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $ranking_rules = [
-        'revenue_total:desc',
-        'attendance_count:desc',
-        'signatures_count:desc',
-        'gtid:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $filterable_attributes = [
-        'class_standing_id',
-        'major_id',
-        'team_id',
-        'permission_id',
-        'role_id',
-    ];
-
-    /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
-     *
-     * @var array<string>
      */
-    public array $do_not_filter_on = [
+    public const DO_NOT_FILTER_ON = [
         'dues_package_id',
-        'travel_id',
+        'trip_id',
         'merchandise_id',
         'user_id',
     ];
@@ -363,6 +337,40 @@ class User extends Authenticatable
     protected string $guard_name = 'web';
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'access_override_until' => 'datetime',
+            'resume_date' => 'datetime',
+            'github_invite_pending' => 'boolean',
+            'clickup_invite_pending' => 'boolean',
+            'exists_in_sums' => 'boolean',
+            'has_ever_logged_in' => 'boolean',
+            'is_service_account' => 'boolean',
+            'buzzcard_access_opt_out' => 'boolean',
+            'docusign_access_token_expires_at' => 'datetime',
+            'docusign_refresh_token_expires_at' => 'datetime',
+            'date_of_birth' => 'date',
+        ];
+    }
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'teams' => 'read-teams-membership',
+        'dues' => 'read-dues-transactions',
+        'events' => 'read-events',
+        'rsvps' => 'read-rsvps',
+        'roles' => 'read-roles-and-permissions',
+        'permissions' => 'read-roles-and-permissions',
+        'assignments.travel' => 'manage-travel',
+        'merchandise.merchandise' => 'read-merchandise',
+        'merchandise.providedBy' => 'read-users',
+    ];
+
+    /**
      * Get the attendance records associated with this user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Attendance>
@@ -370,6 +378,16 @@ class User extends Authenticatable
     public function attendance(): HasMany
     {
         return $this->hasMany(Attendance::class, 'gtid', 'gtid');
+    }
+
+    /**
+     * Get the access cards associated with this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\AccessCard>
+     */
+    public function accessCards(): HasMany
+    {
+        return $this->hasMany(AccessCard::class);
     }
 
     /**
@@ -434,7 +452,7 @@ class User extends Authenticatable
      */
     public function getFullNameAttribute(): string
     {
-        return implode(' ', array_filter([$this->first_name, $this->middle_name, $this->last_name]));
+        return implode(' ', array_filter([$this->first_name, $this->last_name]));
     }
 
     /**
@@ -583,20 +601,35 @@ class User extends Authenticatable
     }
 
     /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
+     * Graduation Semester is a 6-digit code by default.
+     * To retrieve a more readable form, this method obtains the
+     * code for this User and translates it to the format "[season] yyyy".
      */
-    public function getRelationshipPermissionMap(): array
+    public function getHumanReadableGraduationSemesterAttribute(): string
     {
-        return [
-            'teams' => 'teams-membership',
-            'dues' => 'dues-transactions',
-            'events' => 'events',
-            'rsvps' => 'rsvps',
-            'roles' => 'roles-and-permissions',
-            'permissions' => 'roles-and-permissions',
-        ];
+        $semester = $this->graduation_semester;
+        if ($semester === null || preg_match('/^[0-9]{4}0[258]$/', $semester) === 0) {
+            return '';
+        }
+
+        $semcode = substr($semester, 4);
+        $year = substr($semester, 0, 4);
+        $season = '';
+        switch ($semcode) {
+            case '08':
+                $season .= 'Fall ';
+                break;
+            case '02':
+                $season .= 'Spring ';
+                break;
+            case '05':
+                $season .= 'Summer ';
+                break;
+            default:
+                return '';
+        }
+
+        return $season.$year;
     }
 
     /**
@@ -697,12 +730,16 @@ class User extends Authenticatable
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
      */
-    public function scopeAccessInactive(Builder $query): Builder
+    public function scopeAccessInactive(Builder $query, ?CarbonImmutable $asOfTimestamp = null): Builder
     {
-        return $query->whereDoesntHave('dues', static function (Builder $q): void {
-            $q->paid()->accessCurrent();
-        })->where(static function (Builder $query): void {
-            $query->where('access_override_until', '<=', now())->orWhereNull('access_override_until');
+        return $query->whereDoesntHave('dues', static function (Builder $q) use ($asOfTimestamp): void {
+            $q->paid()->accessCurrent($asOfTimestamp);
+        })->where(static function (Builder $query) use ($asOfTimestamp): void {
+            $query->where(
+                'access_override_until',
+                '<=',
+                $asOfTimestamp ?? CarbonImmutable::now()
+            )->orWhereNull('access_override_until');
         });
     }
 
@@ -856,13 +893,9 @@ class User extends Authenticatable
                         ->orderByDesc('updated_at')
                         ->limit(1);
                 }
-            );
-
-        if (config('features.docusign-membership-agreement') === true) {
-            $query->whereHas('envelope', static function (Builder $query): void {
+            )->whereHas('envelope', static function (Builder $query): void {
                 $query->where('complete', true);
             });
-        }
 
         return $query->exists();
     }
@@ -901,6 +934,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Determine if the user can be impersonated.
+     */
+    public function canBeImpersonated(): bool
+    {
+        return ! $this->is_service_account;
+    }
+
+    /**
      * Modify the query used to retrieve models when making all of the models searchable.
      *
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\User>  $query
@@ -908,7 +949,15 @@ class User extends Authenticatable
      */
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
-        return $query->withCount('attendance')->withCount('signatures');
+        return $query
+            ->withCount('attendance')
+            ->withCount('envelopes')
+            ->withCount('signatures')
+            ->with('classStanding')
+            ->with('majors')
+            ->with('teams')
+            ->with('permissions')
+            ->with('roles');
     }
 
     /**
@@ -924,22 +973,26 @@ class User extends Authenticatable
             '(coalesce(sum(payments.amount),0) - coalesce(sum(payments.processing_fee),0)) as revenue'
         )->leftJoin('dues_transactions', static function (JoinClause $join): void {
             $join->on('dues_transactions.id', '=', 'payable_id')
-                 ->where('payments.amount', '>', 0)
-                 ->where('payments.method', '!=', 'waiver')
-                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                 ->whereNull('payments.deleted_at');
+                ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'waiver')
+                ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                ->whereNull('payments.deleted_at');
         })->leftJoin('travel_assignments', static function (JoinClause $join): void {
             $join->on('travel_assignments.id', '=', 'payable_id')
-                 ->where('payments.amount', '>', 0)
-                 ->where('payments.method', '!=', 'waiver')
-                 ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                 ->whereNull('payments.deleted_at');
+                ->where('payments.amount', '>', 0)
+                ->where('payments.method', '!=', 'waiver')
+                ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                ->whereNull('payments.deleted_at');
         })->where('travel_assignments.user_id', '=', $this->id)
-        ->orWhere('dues_transactions.user_id', '=', $this->id)
-        ->get()[0]['revenue']);
+            ->orWhere('dues_transactions.user_id', '=', $this->id)
+            ->get()[0]['revenue']);
 
         if (! array_key_exists('attendance_count', $array)) {
             $array['attendance_count'] = $this->attendance()->count();
+        }
+
+        if (! array_key_exists('envelopes_count', $array)) {
+            $array['envelopes_count'] = $this->envelopes()->count();
         }
 
         if (! array_key_exists('signatures_count', $array)) {
@@ -1045,6 +1098,14 @@ class User extends Authenticatable
     public function getCurrentTravelAssignmentAttribute(): ?TravelAssignment
     {
         $needPayment = $this->assignments()
+            ->select('travel_assignments.*')
+            ->whereHas(
+                'travel',
+                static function (Builder $query): void {
+                    $query->whereIn('status', ['approved', 'complete'])
+                        ->where('fee_amount', '>', 0);
+                }
+            )
             ->unpaid()
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
@@ -1055,7 +1116,14 @@ class User extends Authenticatable
         }
 
         $needDocuSign = $this->assignments()
-            ->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+            ->select('travel_assignments.*')
+            ->whereHas(
+                'travel',
+                static function (Builder $query): void {
+                    $query->whereIn('status', ['approved', 'complete']);
+                }
+            )
+            ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->needDocuSign()
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
@@ -1067,10 +1135,65 @@ class User extends Authenticatable
 
         // this might be null, but that's fine
         return $this->assignments()
-            ->join('travel', 'travel.id', '=', 'travel_assignments.travel_id')
+            ->select('travel_assignments.*')
+            ->whereHas(
+                'travel',
+                static function (Builder $query): void {
+                    $query->whereIn('status', ['approved', 'complete']);
+                }
+            )
+            ->leftJoin('travel', 'travel.id', '=', 'travel_assignments.travel_id')
             ->oldest('travel.departure_date')
             ->oldest('travel.return_date')
             ->where('travel.return_date', '>=', now())
             ->first();
+    }
+
+    public function getManagerAttribute(): ?User
+    {
+        $teams = Attendance::where('gtid', $this->gtid)
+            ->where('attendable_type', Team::getMorphClassStatic())
+            ->leftJoin('teams', function (JoinClause $join): void {
+                $join->on('teams.id', '=', 'attendance.attendable_id')
+                    ->whereNotNull('teams.project_manager_id')
+                    ->where('teams.project_manager_id', '!=', $this->id);
+            })
+            ->whereNotNull('teams.project_manager_id')
+            ->groupBy('attendable_id')
+            ->select('attendable_id', DB::raw('count(*) as count'), DB::raw('\'team\' as attendable_type'))
+            ->orderByDesc('count')
+            ->get()
+            ->toArray();
+
+        return count($teams) === 0 ? null : Team::whereId($teams[0])->sole()->projectManager;
+    }
+
+    public function getHasEmergencyContactInformationAttribute(): bool
+    {
+        return $this->emergency_contact_name !== null &&
+            $this->emergency_contact_phone !== null &&
+            $this->phone !== $this->emergency_contact_phone;
+    }
+
+    public function getNeedsParentOrGuardianSignatureAttribute(): bool
+    {
+        return $this->parent_guardian_name !== null && $this->parent_guardian_email !== null;
+    }
+
+    /**
+     * Get the DuesTransactionMerchandise objects for this user.
+     *
+     * @return HasManyThrough<DuesTransactionMerchandise>
+     */
+    public function merchandise(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            DuesTransactionMerchandise::class,
+            DuesTransaction::class,
+            'user_id',
+            'dues_transaction_id',
+            'id',
+            'id'
+        );
     }
 }

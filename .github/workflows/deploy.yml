@@ -1,0 +1,65 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      image-digest:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      precompressed-assets:
+        required: true
+        type: boolean
+  workflow_dispatch:
+    inputs:
+      image-digest:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: environment
+      precompressed-assets:
+        required: true
+        type: boolean
+
+concurrency:
+  group: ${{ inputs.environment }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: ${{ inputs.environment }}
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.environment == 'test' && 'https://apiary-test.robojackets.org' || (inputs.environment == 'sandbox' && 'https://apiary-sandbox.robojackets.org' || (inputs.environment == 'production' && 'https://my.robojackets.org' || 'https://robojackets.org')) }}
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Nomad
+        uses: lucasmelin/setup-nomad@v2.0.0
+
+      - name: Set job name
+        working-directory: ./.nomad/
+        run: |
+          sed -i '/job "apiary" {/c\job "apiary-${{ inputs.environment }}" {' apiary.nomad
+
+      - name: Exchange GitHub JWT for Nomad token
+        uses: RoboJackets/nomad-jwt-auth@main
+        with:
+          url: https://nomad.bcdc.robojackets.net
+          jwtGithubAudience: https://nomad.bcdc.robojackets.net
+          methodName: GitHubActions
+
+      - name: Run Nomad job
+        env:
+          NOMAD_ADDR: https://nomad.bcdc.robojackets.net
+        working-directory: ./.nomad/
+        run: |
+          nomad run -var image=registry.bcdc.robojackets.net/apiary@${{ inputs.image-digest }} -var precompressed_assets=${{ inputs.precompressed-assets }} -var-file var-files/${{ inputs.environment }}.hcl apiary.nomad

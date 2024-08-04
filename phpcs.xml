@@ -8,12 +8,19 @@
 
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>*.mix.js</exclude-pattern>
     <exclude-pattern>/_ide_helper.php</exclude-pattern>
     <exclude-pattern>/bootstrap/cache/</exclude-pattern>
+    <exclude-pattern>/docs/</exclude-pattern>
     <exclude-pattern>/node_modules/</exclude-pattern>
+    <exclude-pattern>/nova-components/ClientIdAndSecretModal/dist/</exclude-pattern>
+    <exclude-pattern>/nova-components/ClientIdAndSecretModal/resources/</exclude-pattern>
+    <exclude-pattern>/nova-components/PersonalAccessTokenModal/dist/</exclude-pattern>
+    <exclude-pattern>/nova-components/PersonalAccessTokenModal/resources/</exclude-pattern>
     <exclude-pattern>/public/</exclude-pattern>
     <exclude-pattern>/storage/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
+    <exclude-pattern>/bootstrap/providers.php</exclude-pattern>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
         <exclude-pattern>/database/migrations/</exclude-pattern>
@@ -27,6 +34,7 @@
     <rule ref="PSR12">
         <exclude name="PSR12.Operators.OperatorSpacing"/>
         <exclude name="PSR12.ControlStructures.ControlStructureSpacing"/>
+
     </rule>
 
     <rule ref="Generic.Arrays.ArrayIndent"/>
@@ -43,6 +51,7 @@
         <exclude-pattern>/app/Notifications/</exclude-pattern>
         <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Policies/</exclude-pattern>
+        <exclude-pattern>/app/Rules/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
@@ -81,13 +90,10 @@
     <rule ref="Generic.Functions.CallTimePassByReference"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
 
-    <rule ref="Generic.NamingConventions.InterfaceNameSuffix.Missing">
-        <exclude-pattern>/stubs/</exclude-pattern>
-    </rule>
-
     <rule ref="Generic.NamingConventions">
         <exclude name="Generic.NamingConventions.TraitNameSuffix.Missing"/>
         <exclude name="Generic.NamingConventions.AbstractClassNamePrefix.Missing"/>
+        <exclude name="Generic.NamingConventions.InterfaceNameSuffix.Missing"/>
     </rule>
 
     <rule ref="Generic.PHP.BacktickOperator"/>
@@ -128,7 +134,9 @@
 
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
-    <rule ref="SlevomatCodingStandard.Arrays"/>
+    <rule ref="SlevomatCodingStandard.Arrays">
+        <exclude name="SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys"/>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
@@ -160,6 +168,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowTrailingMultiLineTernaryOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
@@ -201,6 +210,7 @@
         <exclude-pattern>/app/Notifications/</exclude-pattern>
         <exclude-pattern>/app/Nova/</exclude-pattern>
         <exclude-pattern>/app/Policies/</exclude-pattern>
+        <exclude-pattern>/app/Rules/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
@@ -212,9 +222,11 @@
 
     <rule ref="SlevomatCodingStandard.Functions">
         <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
+        <exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments"/>
         <exclude name="SlevomatCodingStandard.Functions.FunctionLength"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+        <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
@@ -256,8 +268,6 @@
 
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
         <properties>
-            <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
-            <property name="newlinesCountAfterDeclare" value="2"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
     </rule>
@@ -271,6 +281,7 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
         <exclude-pattern>/app/Http/Controllers/</exclude-pattern>
         <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
+        <exclude-pattern>/app/Nova/Actions/</exclude-pattern>
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
@@ -284,6 +295,7 @@
 
     <rule ref="SlevomatCodingStandard.TypeHints">
         <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">

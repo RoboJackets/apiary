@@ -29,9 +29,8 @@ use Laravel\Scout\Searchable;
  * @property string $name
  * @property bool $self_serviceable
  * @property bool $visible
- * @property int $visible_on_kiosk
+ * @property bool $visible_on_kiosk
  * @property bool $attendable
- * @property string|null $slug
  * @property string|null $description
  * @property string|null $mailing_list_name
  * @property string|null $slack_channel_id
@@ -74,13 +73,15 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Team whereSlackChannelId($value)
  * @method static Builder|Team whereSlackChannelName($value)
  * @method static Builder|Team whereSlackPrivateChannelId($value)
- * @method static Builder|Team whereSlug($value)
  * @method static Builder|Team whereUpdatedAt($value)
  * @method static Builder|Team whereVisible($value)
  * @method static Builder|Team whereVisibleOnKiosk($value)
  * @method static \Illuminate\Database\Query\Builder|Team withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Team withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Team extends Model
 {
@@ -90,8 +91,8 @@ class Team extends Model
     use HasManyEvents;
     use HasRelationshipObservables;
     use Notifiable;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.
@@ -106,33 +107,24 @@ class Team extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'attendable' => 'boolean',
-        'self_serviceable' => 'boolean',
-        'visible' => 'boolean',
-        'self_service_override_eligible' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'attendable' => 'boolean',
+            'self_serviceable' => 'boolean',
+            'visible' => 'boolean',
+            'visible_on_kiosk' => 'boolean',
+            'self_service_override_eligible' => 'boolean',
+        ];
+    }
 
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'attendance_count:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-        'user_id',
+    public const RELATIONSHIP_PERMISSIONS = [
+        'members' => 'read-teams-membership',
+        'attendance' => 'read-attendance',
     ];
 
     /**
@@ -196,19 +188,6 @@ class Team extends Model
     public function scopeSelfServiceable(Builder $query): Builder
     {
         return $query->where('self_serviceable', true);
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'members' => 'teams-membership',
-            'attendance' => 'attendance',
-        ];
     }
 
     /**

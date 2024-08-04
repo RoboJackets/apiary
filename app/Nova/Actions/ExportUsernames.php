@@ -44,13 +44,11 @@ class ExportUsernames extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string,string>
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $output = $models->pluck('uid')->reduce(
             static fn (?string $carry, string $username): string => ($carry ?? '').$username."\n"
@@ -65,6 +63,6 @@ class ExportUsernames extends Action
         // Generate signed URL to pass to backend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::download($url, $filename);
+        return Action::downloadURL($url, $filename);
     }
 }

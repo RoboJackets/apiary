@@ -20,7 +20,6 @@ import moment from 'moment';
 import Toast from "./mixins/Toast";
 import FileUploader from "./mixins/FileUploader";
 import * as Sentry from "@sentry/vue";
-import {Integrations} from "@sentry/tracing";
 
 var sentryDsn = document.head.querySelector('meta[name="sentry-dsn"]').content;
 var sentryAppEnv = document.head.querySelector('meta[name="sentry-app-env"]').content;
@@ -46,11 +45,29 @@ if (sentryDsn !== null) {
         initialScope: initialScope,
         attachProps: true,
         logErrors: true,
-        integrations: [new Integrations.BrowserTracing()],
         tracesSampleRate: 1.0,
         tracingOptions: {
             trackComponents: true,
         },
+        integrations: [
+            new Sentry.BrowserTracing(),
+            new Sentry.Feedback({
+                colorScheme: "light",
+                showName: false,
+                showEmail: false,
+                isNameRequired: false,
+                isEmailRequired: false,
+                useSentryUser: {
+                    name: 'username',
+                },
+                buttonLabel: 'Feedback',
+                submitButtonLabel: 'Send Feedback',
+                formTitle: 'Feedback',
+                messagePlaceholder: 'Describe what you were trying to do, what you expected, and what actually happened.',
+                successMessageText: 'Thank you for your feedback!',
+                autoInject: window.location.pathname !== '/attendance/kiosk',
+            }),
+        ],
     });
     window.Sentry = Sentry;
 } else {
@@ -113,6 +130,11 @@ Vue.component('dues-required-info', require('./components/dues/DuesRequiredInfo.
 Vue.component('dues-additional-info', require('./components/dues/DuesAdditionalInfo.vue').default);
 Vue.component('demographics', require('./components/dues/Demographics.vue').default);
 Vue.component('self-service-access-override', require('./components/dues/SelfServiceAccessOverride.vue').default);
+
+// Payments
+Vue.component('payment-history', require('./components/payments/PaymentHistory.vue').default);
+Vue.component('payment-method-details', require('./components/payments/PaymentMethodDetails.vue').default);
+Vue.component('payment-card-icon', require('./components/payments/PaymentCardIcon.vue').default);
 
 // Teams
 Vue.component('team-card', require('./components/teams/TeamCard.vue').default);

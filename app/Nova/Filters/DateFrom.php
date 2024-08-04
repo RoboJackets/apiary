@@ -6,9 +6,10 @@ declare(strict_types=1);
 
 namespace App\Nova\Filters;
 
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Filters\DateFilter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class DateFrom extends DateFilter
 {
@@ -18,7 +19,7 @@ class DateFrom extends DateFilter
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $value
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         return $query->whereDate('created_at', '>=', Carbon::parse($value));
     }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Events\PaymentSuccess;
+use App\Events\PaymentReceived;
 use App\Models\Payment;
+use App\Models\User;
+use App\Notifications\Nova\PaymentDeclined;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
@@ -41,6 +43,19 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             throw new Exception('data.object.payment.status field not present');
         }
 
+        if ($details['status'] === 'FAILED') {
+            $payment = Payment::where('order_id', $details['order_id'])->first();
+
+            if ($payment !== null) {
+                $webhookCall = $this->webhookCall;
+
+                User::role('admin')
+                    ->each(static function (User $user) use ($payment, $webhookCall): void {
+                        $user->notify(new PaymentDeclined($payment, $webhookCall));
+                    });
+            }
+        }
+
         if ($details['status'] !== 'COMPLETED' && $details['status'] !== 'APPROVED') {
             Log::warning('Payment for Order ID '.$details['order_id'].' was pushed as '.$details['status']);
 
@@ -61,7 +76,6 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             }
 
             $payment->amount = ($details['amount_money']['amount'] - $details['refunded_money']['amount']) / 100;
-            $payment->processing_fee = 0;
         } else {
             $payment->amount = $details['amount_money']['amount'] / 100;
 
@@ -112,7 +126,7 @@ class ProcessSquareWebhook extends ProcessWebhookJob
             return;
         }
 
-        event(new PaymentSuccess($payment));
+        event(new PaymentReceived($payment));
 
         FulfillSquareOrder::dispatch($details['order_id']);
     }

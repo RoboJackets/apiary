@@ -19,7 +19,7 @@ class MembershipAgreementDocuSignEnvelopeReceived extends Mailable implements Sh
     /**
      * Create a new message instance.
      */
-    public function __construct(public DocuSignEnvelope $envelope)
+    public function __construct(public readonly DocuSignEnvelope $envelope)
     {
     }
 
@@ -29,14 +29,13 @@ class MembershipAgreementDocuSignEnvelopeReceived extends Mailable implements Sh
     public function build(): self
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->to($this->envelope->signedBy->gt_email, $this->envelope->signedBy->name)
-                    ->cc(config('services.membership_agreement_archive_email'), 'Membership Agreement Archives')
-                    ->subject('Membership agreement signed')
-                    ->text('mail.agreement.docusignenvelopereceived')
-                    ->withSymfonyMessage(static function (Email $email): void {
-                        $email->replyTo('RoboJackets <hello@robojackets.org>');
-                    })
-                    ->tag('agreement-docusign-received')
-                    ->metadata('envelope-id', strval($this->envelope->id));
+            ->to($this->envelope->signedBy->gt_email, $this->envelope->signedBy->name)
+            ->subject('Membership agreement signed')
+            ->text('mail.agreement.docusignenvelopereceived')
+            ->withSymfonyMessage(static function (Email $email): void {
+                $email->replyTo('RoboJackets <hello@robojackets.org>');
+            })
+            ->tag('agreement-docusign-received')
+            ->metadata('envelope-id', strval($this->envelope->id));
     }
 }

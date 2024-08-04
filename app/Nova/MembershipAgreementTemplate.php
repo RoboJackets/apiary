@@ -54,7 +54,7 @@ class MembershipAgreementTemplate extends Resource
     public static $group = 'Agreements';
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
@@ -62,7 +62,7 @@ class MembershipAgreementTemplate extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {
@@ -83,13 +83,14 @@ class MembershipAgreementTemplate extends Resource
                 ->exceptOnForms(),
 
             Markdown::make('Text')
-                ->help(
-                    'Please only use h2\'s or smaller in this field. You can use {{ $full_name }} to have the user\'s '.
-                    'name field substituted, and {{ $is_electronic }} to selectively render text on different versions.'
-                )
                 ->alwaysShow(),
 
             HasMany::make('Signatures'),
         ];
+    }
+
+    public static function searchable(): bool
+    {
+        return false;
     }
 }

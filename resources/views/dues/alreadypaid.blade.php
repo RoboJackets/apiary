@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-12">
             We have you on record as having already paid dues for this semester. You do not need to pay again. If you
-            believe you haven't paid, please email
+            believe you haven't paid, email
                 <a href="mailto:treasurer@robojackets.org">treasurer@robojackets.org</a>.
         </div>
     </div>

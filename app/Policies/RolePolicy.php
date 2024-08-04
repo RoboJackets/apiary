@@ -67,4 +67,9 @@ class RolePolicy
     {
         return false;
     }
+
+    public function replicate(User $user, Role $role): bool
+    {
+        return false;
+    }
 }

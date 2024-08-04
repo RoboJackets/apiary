@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\User;
-use App\Notifications\DuesPaymentReminder;
+use App\Notifications\Dues\PaymentReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
+class SendDuesPaymentReminder implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -25,16 +25,10 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public User $user)
+    public function __construct(public readonly User $user, int $delay = 48)
     {
         $this->queue = 'email';
-        $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
-
-        if ($this->delay->dayOfWeek === 5) {
-            // do not send reminders on thursdays to reduce the chance of user
-            // trying to use the app during a maintenance window
-            $this->delay = $this->delay->addHours(24);
-        }
+        $this->delay = now()->addHours($delay)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
     }
 
     /**
@@ -48,7 +42,7 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
             return;
         }
 
-        $this->user->notify(new DuesPaymentReminder($transaction));
+        $this->user->notify(new PaymentReminder($transaction));
     }
 
     /**
@@ -57,5 +51,17 @@ class SendDuesPaymentReminder implements ShouldQueue, ShouldBeUnique
     public function uniqueId(): string
     {
         return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }

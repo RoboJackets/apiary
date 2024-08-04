@@ -91,4 +91,9 @@ class ClassStandingPolicy
     {
         return $user->hasRole('admin');
     }
+
+    public function replicate(User $user, ClassStanding $classStanding): bool
+    {
+        return false;
+    }
 }

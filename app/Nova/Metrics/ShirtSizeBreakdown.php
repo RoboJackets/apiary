@@ -36,10 +36,8 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Get the displayable name of the metric.
-     *
-     * @return string
      */
-    public function name()
+    public function name(): string
     {
         return Str::ucfirst($this->type).' Size Breakdown';
     }
@@ -58,9 +56,9 @@ class ShirtSizeBreakdown extends Partition
                 ->selectRaw('count(distinct users.id) as count')
                 ->leftJoin('payments', static function (JoinClause $join): void {
                     $join->on('dues_transactions.id', '=', 'payable_id')
-                         ->where('payments.amount', '>', 0)
-                         ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                         ->whereNull('payments.deleted_at');
+                        ->where('payments.amount', '>', 0)
+                        ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                        ->whereNull('payments.deleted_at');
                 })->leftJoin(
                     'users',
                     'dues_transactions.user_id',
@@ -86,7 +84,6 @@ class ShirtSizeBreakdown extends Partition
 
                     return [User::$shirt_sizes[$row->$column_name] => $row->count];
                 })
-                // @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
                 ->sortBy(static function (string $count, string $shirt_size): int {
                     if ($shirt_size === 'Unknown') {
                         return -1;
@@ -110,10 +107,8 @@ class ShirtSizeBreakdown extends Partition
 
     /**
      * Get the URI key for the metric.
-     *
-     * @return string
      */
-    public function uriKey()
+    public function uriKey(): string
     {
         return 'shirt-size-breakdown';
     }

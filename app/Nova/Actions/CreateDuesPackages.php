@@ -2,11 +2,18 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore
+
 namespace App\Nova\Actions;
 
 use App\Models\DuesPackage;
+use App\Models\FiscalYear;
 use App\Models\Merchandise;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\MultipleRecordsFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
@@ -27,11 +34,8 @@ class CreateDuesPackages extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\FiscalYear>  $models
-     * @return array<string,string>
-     *
-     * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         if (count($models) !== 1) {
             return Action::danger('This action can only be run on a single fiscal year at a time.');
@@ -62,18 +66,68 @@ class CreateDuesPackages extends Action
         ]);
 
         $fallPackageName = 'Fall '.$startingYear;
+        $fallPackageCost = 55;
         $springPackageName = 'Spring '.$endingYear;
+        $springPackageCost = 55;
         $studentFullYear = 'Full Year ('.$startingYear.'-'.$endingYear.')';
+        $studentFullYearCost = 100;
         $nonStudentFullYear = 'Full Year ('.$startingYear.'-'.$endingYear.') - Non-Student';
+        $nonStudentFullYearCost = 200;
 
-        $fallEffectiveStart = Carbon::create($startingYear, 8, 1, 12, 0, 0, config('app.timezone'));
-        $fallEffectiveEnd = Carbon::create($startingYear, 12, 31, 12, 0, 0, config('app.timezone'));
-        $fallAccessStart = Carbon::create($startingYear, 8, 1, 12, 0, 0, config('app.timezone'));
+        $fallEffectiveStart = Carbon::create($startingYear, 7, 1, 12, 0, 0, config('app.timezone'));
+        $fallEffectiveEnd = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
+        $fallAccessStart = Carbon::create($startingYear, 7, 1, 12, 0, 0, config('app.timezone'));
         $fallAccessEnd = Carbon::create($endingYear, 1, 31, 12, 0, 0, config('app.timezone'));
         $springEffectiveStart = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
         $springEffectiveEnd = Carbon::create($endingYear, 8, 1, 12, 0, 0, config('app.timezone'));
         $springAccessStart = Carbon::create($endingYear, 1, 1, 12, 0, 0, config('app.timezone'));
         $springAccessEnd = Carbon::create($endingYear, 9, 31, 12, 0, 0, config('app.timezone'));
+
+        $previousFiscalYear = FiscalYear::whereEndingYear($startingYear)->first();
+
+        if ($previousFiscalYear !== null) {
+            try {
+                $fallPackageCost = $previousFiscalYear
+                    ->packages()
+                    ->where('name', 'like', 'Fall%')
+                    ->sole()
+                    ->cost;
+            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+                // do nothing
+            }
+
+            try {
+                $springPackageCost = $previousFiscalYear
+                    ->packages()
+                    ->where('name', 'like', 'Spring%')
+                    ->sole()
+                    ->cost;
+            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+                // do nothing
+            }
+
+            try {
+                $studentFullYearCost = $previousFiscalYear
+                    ->packages()
+                    ->where('name', 'like', 'Full Year (%)')
+                    ->sole()
+                    ->cost;
+
+                $nonStudentFullYearCost = $studentFullYearCost * 2;
+            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+                // do nothing
+            }
+
+            try {
+                $nonStudentFullYearCost = $previousFiscalYear
+                    ->packages()
+                    ->where('name', 'like', 'Full Year (%) - Non-Student')
+                    ->sole()
+                    ->cost;
+            } catch (MultipleRecordsFoundException|ModelNotFoundException) {
+                // do nothing
+            }
+        }
 
         if (DuesPackage::where('name', $fallPackageName)->doesntExist()) {
             $duesPackage = new DuesPackage();
@@ -82,7 +136,7 @@ class CreateDuesPackages extends Action
             $duesPackage->effective_end = $fallEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
             $duesPackage->access_end = $fallAccessEnd;
-            $duesPackage->cost = 55;
+            $duesPackage->cost = $fallPackageCost;
             $duesPackage->available_for_purchase = false;
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
@@ -100,7 +154,7 @@ class CreateDuesPackages extends Action
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $springAccessStart;
             $duesPackage->access_end = $springAccessEnd;
-            $duesPackage->cost = 55;
+            $duesPackage->cost = $springPackageCost;
             $duesPackage->available_for_purchase = false;
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
@@ -118,7 +172,7 @@ class CreateDuesPackages extends Action
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
             $duesPackage->access_end = $springAccessEnd;
-            $duesPackage->cost = 100;
+            $duesPackage->cost = $studentFullYearCost;
             $duesPackage->available_for_purchase = false;
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = true;
@@ -139,8 +193,8 @@ class CreateDuesPackages extends Action
             $duesPackage->effective_end = $springEffectiveEnd;
             $duesPackage->access_start = $fallAccessStart;
             $duesPackage->access_end = $springAccessEnd;
-            $duesPackage->cost = 200;
-            $duesPackage->available_for_purchase = true;
+            $duesPackage->cost = $nonStudentFullYearCost;
+            $duesPackage->available_for_purchase = false;
             $duesPackage->fiscal_year_id = $fiscalYear->id;
             $duesPackage->restricted_to_students = false;
             $duesPackage->save();

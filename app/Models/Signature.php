@@ -60,6 +60,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUploadedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Signature whereUserId($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Signature extends Model
@@ -76,21 +77,25 @@ class Signature extends Model
         'membership_agreement_template_id',
         'user_id',
         'electronic',
+        'complete',
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'render_timestamp' => 'datetime',
-        'redirect_to_cas_timestamp' => 'datetime',
-        'cas_ticket_redeemed_timestamp' => 'datetime',
-        'ip_address_location_estimate' => 'json',
-        'electronic' => 'boolean',
-        'complete' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'render_timestamp' => 'datetime',
+            'redirect_to_cas_timestamp' => 'datetime',
+            'cas_ticket_redeemed_timestamp' => 'datetime',
+            'ip_address_location_estimate' => 'json',
+            'electronic' => 'boolean',
+            'complete' => 'boolean',
+        ];
+    }
 
     /**
      * Get the template for this signature.

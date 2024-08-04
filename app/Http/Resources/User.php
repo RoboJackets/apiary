@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed.DisallowedPartiallyKeyed
+
 namespace App\Http\Resources;
 
 use App\Http\Resources\Attendance as AttendanceResource;
@@ -12,17 +14,24 @@ use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\Team as TeamResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Support\Facades\Auth;
 
 class User extends JsonResource
 {
+    public function __construct(
+        \App\Models\User|MissingValue|null $resource,
+        private readonly bool $withManager = false
+    ) {
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array<int|string,mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             // Attributes
@@ -30,8 +39,8 @@ class User extends JsonResource
             'uid' => $this->uid,
             'gtid' => $this->when(Auth::user()->can('read-users-gtid'), $this->gtid),
             'gt_email' => $this->gt_email,
+            'email_suppression_reason' => $this->email_suppression_reason,
             'first_name' => $this->first_name,
-            'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
             'preferred_first_name' => $this->preferred_first_name,
             'full_name' => $this->full_name,
@@ -61,12 +70,14 @@ class User extends JsonResource
             'clickup_email' => $this->clickup_email,
             'clickup_id' => $this->clickup_id,
             'clickup_invite_pending' => $this->clickup_invite_pending,
-            'autodesk_email' => $this->autodesk_email,
-            'autodesk_invite_pending' => $this->autodesk_invite_pending,
             'exists_in_sums' => $this->exists_in_sums,
             $this->mergeWhen($this->requestingSelf($request) || Auth::user()->can('read-dues-transactions'), [
                 'has_ordered_polo' => $this->has_ordered_polo,
             ]),
+            'manager' => $this->when(
+                Auth::user()->can('read-users') && $this->withManager,
+                fn (): ?Manager => $this->manager === null ? null : new Manager($this->manager)
+            ),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
@@ -81,9 +92,18 @@ class User extends JsonResource
             $this->mergeWhen(
                 $this->resource->relationLoaded('permissions') && $this->resource->relationLoaded('roles'),
                 [
-                    'allPermissions' => $this->getAllPermissions()->pluck('name'),
+                    'allPermissions' => $this->resource->relationLoaded('permissions') &&
+                    $this->resource->relationLoaded('roles') ? $this->getAllPermissions()->pluck('name') : [],
                 ]
             ),
+            'travel' => TravelAssignment::collection($this->whenLoaded('assignments')),
+            'merchandise' => DuesTransactionMerchandise::collection($this->whenLoaded('merchandise')),
+            $this->mergeWhen($this->requestingSelf($request), [
+                'legal_middle_name' => $this->legal_middle_name,
+                'legal_gender' => $this->legal_gender,
+                'date_of_birth' => $this->date_of_birth?->format('Y-m-d'),
+                'delta_skymiles_number' => $this->delta_skymiles_number,
+            ]),
         ];
     }
 

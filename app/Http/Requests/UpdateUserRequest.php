@@ -25,15 +25,6 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => [
-                'max:127',
-            ],
-            'last_name' => [
-                'max:127',
-            ],
-            'middle_name' => [
-                'max:127',
-            ],
             'preferred_first_name' => [
                 'max:127',
                 'regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
@@ -54,11 +45,9 @@ class UpdateUserRequest extends FormRequest
                 'different:phone',
                 'nullable',
             ],
-            'join_semester' => [
-                'max:6',
-            ],
             'graduation_semester' => [
-                'max:6',
+                'regex:/^[0-9]{4}0[258]$/',
+                'nullable',
             ],
             'shirt_size' => [
                 'in:'.implode(',', array_keys(User::$shirt_sizes)),
@@ -97,13 +86,22 @@ class UpdateUserRequest extends FormRequest
             'clickup_invite_pending' => [
                 'boolean',
             ],
-            'autodesk_email' => [
+            'legal_gender' => [
+                'in:M,F,X,U',
+                'nullable',
+            ],
+            'date_of_birth' => [
+                'date_format:Y-m-d',
+                'nullable',
+            ],
+            'delta_skymiles_number' => [
+                'integer',
+                'digits:10',
+                'nullable',
+            ],
+            'legal_middle_name' => [
                 'string',
                 'nullable',
-                'email:rfc,strict,dns,spoof',
-            ],
-            'autodesk_invite_pending' => [
-                'boolean',
             ],
         ];
     }

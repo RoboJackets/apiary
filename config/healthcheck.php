@@ -19,12 +19,10 @@ return [
         UKFast\HealthCheck\Checks\LogHealthCheck::class,
         UKFast\HealthCheck\Checks\MigrationUpToDateHealthCheck::class,
         UKFast\HealthCheck\Checks\StorageHealthCheck::class,
-        ...(env('APP_ENV') === 'google-play-review' ? [
-            OITNetworkServices\BuzzAPI\HealthChecks\CredentialsAreValid::class,
-            OITNetworkServices\BuzzAPI\HealthChecks\ServiceIsAvailable::class,
-        ] : [
+        ...(env('APP_ENV') === 'sandbox' ? [] : [
             UKFast\HealthCheck\Checks\RedisHealthCheck::class,
             UKFast\HealthCheck\Checks\SchedulerHealthCheck::class,
+            App\HorizonHealthCheck::class,
         ]),
     ],
 
@@ -98,7 +96,7 @@ return [
      */
     'cache' => [
         'stores' => [
-            env('CACHE_DRIVER'),
+            env('CACHE_STORE'),
         ],
     ],
 

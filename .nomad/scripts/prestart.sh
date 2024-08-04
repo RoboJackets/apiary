@@ -1,16 +1,20 @@
+if [ ${APP_ENV} = "sandbox" ]
+then
+    php artisan passport:keys --no-interaction --verbose
+    export APP_KEY=$(php artisan key:generate --show --verbose)
+    php artisan migrate --no-interaction --force --verbose
+    php artisan tinker --no-interaction --verbose --execute "\App\Models\OAuth2Client::create(['id' => '95158a03-4ce9-489d-9550-05655f9f27eb', 'redirect' => 'org.robojackets.apiary://oauth', 'name' => 'Android App', 'personal_access_client' => false, 'password_client' => false, 'revoked' => false]);"
+fi
+php artisan config:validate --no-interaction --verbose
 php artisan config:cache --no-interaction --verbose
 php artisan view:cache --no-interaction --verbose
 php artisan event:cache --no-interaction --verbose
 php artisan route:cache --no-interaction --verbose
 php artisan cache:clear --no-interaction --verbose
+php artisan responsecache:clear --no-interaction --verbose
 php artisan migrate --no-interaction --force --verbose
 
-if [ ${APP_ENV} = "production" ]
-then
-    export SKIP_DEPENDENCY_ANALYZER=true
-fi
-
-if [ ${APP_ENV} != "google-play-review" ]
+if [ ${APP_ENV} != "sandbox" ]
 then
     export SKIP_PHPSTAN_CHECKS=true
     if ! php artisan ping --no-interaction --verbose
@@ -24,12 +28,7 @@ fi
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
 cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
 
-if [ ${PERSIST_RESUMES} = "false" ] && [ ${DB_CONNECTION} = "mysql" ]
-then
-    mysql --execute="update users set resume_date=null"
-fi
-
 if [ ${SCOUT_DRIVER} = "meilisearch" ]
 then
-    php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true
+    php artisan scout:sync-index-settings --no-interaction --verbose || true
 fi

@@ -3,20 +3,29 @@
 declare(strict_types=1);
 
 // @phan-file-suppress PhanPluginAlwaysReturnFunction
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
+// phpcs:disable SlevomatCodingStandard.Functions.DisallowNamedArguments.DisallowedNamedArgument
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 
 namespace App\Providers;
 
+use App\Models\AccessCard;
 use App\Models\Attendance;
 use App\Models\DocuSignEnvelope;
 use App\Models\DuesPackage;
 use App\Models\DuesTransaction;
 use App\Models\Event;
 use App\Models\MembershipAgreementTemplate;
+use App\Models\OAuth2AccessToken;
+use App\Models\OAuth2Client;
 use App\Models\Payment;
 use App\Models\Signature;
 use App\Models\Team;
 use App\Models\TravelAssignment;
 use App\Models\User;
+use App\Observers\AccessCardObserver;
 use App\Observers\AttendanceObserver;
 use App\Observers\DocuSignEnvelopeObserver;
 use App\Observers\DuesPackageObserver;
@@ -25,12 +34,21 @@ use App\Observers\MembershipAgreementTemplateObserver;
 use App\Observers\PaymentObserver;
 use App\Observers\TravelAssignmentObserver;
 use App\Observers\UserObserver;
+use App\Policies\NotificationPolicy;
+use App\Policies\WebhookCallPolicy;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\MasterSupervisor;
+use Laravel\Nova\Notifications\Notification;
 use Laravel\Passport\Passport;
+use Spatie\WebhookClient\Models\WebhookCall;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -60,6 +78,20 @@ class AppServiceProvider extends ServiceProvider
             MasterSupervisor::determineNameUsing(static fn (): string => config('horizon.master_supervisor_name'));
         }
 
+        Model::shouldBeStrict();
+
+        // Lazy-loading needs to be allowed for console commands due to https://github.com/laravel/scout/issues/462
+        if ($this->app->runningInConsole()) {
+            Model::preventLazyLoading(false);
+        }
+
+        if ($this->app->isProduction()) {
+            Model::handleLazyLoadingViolationUsing(static function (Model $model, string $relation): void {
+                \Sentry\captureMessage('Attempted to lazy-load '.$relation.' on '.$model::class);
+            });
+        }
+
+        AccessCard::observe(AccessCardObserver::class);
         Attendance::observe(AttendanceObserver::class);
         DocuSignEnvelope::observe(DocuSignEnvelopeObserver::class);
         DuesPackage::observe(DuesPackageObserver::class);
@@ -76,6 +108,12 @@ class AppServiceProvider extends ServiceProvider
             'team' => Team::class,
             'travel-assignment' => TravelAssignment::class,
         ]);
+
+        $this->bootAuth();
+        $this->bootRoute();
+
+        Gate::policy(WebhookCall::class, WebhookCallPolicy::class);
+        Gate::policy(Notification::class, NotificationPolicy::class);
     }
 
     /**
@@ -83,6 +121,25 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Passport::ignoreMigrations();
+        // nothing to do here
+    }
+
+    public function bootAuth(): void
+    {
+        Passport::useClientModel(OAuth2Client::class);
+        Passport::useTokenModel(OAuth2AccessToken::class);
+        Passport::hashClientSecrets();
+        Passport::tokensExpireIn(now()->addDay());
+        Passport::refreshTokensExpireIn(now()->addMonth());
+        Passport::personalAccessTokensExpireIn(now()->addYear());
+        Passport::cookie(config('passport.cookie_name'));
+    }
+
+    public function bootRoute(): void
+    {
+        RateLimiter::for(
+            'api',
+            static fn (Request $request): Limit => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip())
+        );
     }
 }

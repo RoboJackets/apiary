@@ -9,9 +9,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SelfServiceAccessOverrideRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\Manager;
 use App\Http\Resources\User as UserResource;
+use App\Jobs\PushToJedi;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -19,11 +22,9 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
-        $this->middleware('permission:read-users', ['only' => ['index', 'search']]);
+        $this->middleware('permission:read-users', ['only' => ['index', 'indexManagers', 'search']]);
         $this->middleware('permission:create-users', ['only' => ['store']]);
         $this->middleware('permission:read-users|read-users-own', ['only' => ['show']]);
         $this->middleware('permission:update-users|update-users-own', ['only' => ['update', 'applySelfOverride']]);
@@ -36,9 +37,40 @@ class UserController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $users = User::with($this->authorizeInclude(User::class, $include))->get();
+        $users = User::with(AuthorizeInclude::authorize(User::class, $include))->get();
 
         return response()->json(['status' => 'success', 'users' => UserResource::collection($users)]);
+    }
+
+    public function indexManagers(Request $request): JsonResponse
+    {
+        return response()
+            ->json(
+                [
+                    'status' => 'success',
+                    'users' => Manager::collection(
+                        User::where(static function (Builder $query): void {
+                            $query->whereHas('manages')
+                                ->orWhereHas('roles', static function (Builder $query): void {
+                                    $query->whereIn('name', ['project-manager', 'officer']);
+                                });
+                        })
+                            ->whereHas('classStanding')
+                            ->whereHas('majors')
+                            ->whereHas('attendance')
+                            ->whereHas('teams')
+                            ->whereHas('paidDues')
+                            ->accessActive()
+                            ->whereDoesntHave('duesPackages', static function (Builder $query): void {
+                                $query->where('restricted_to_students', false);
+                            })
+                            ->where('primary_affiliation', '=', 'student')
+                            ->where('has_ever_logged_in', '=', true)
+                            ->where('is_service_account', '=', false)
+                            ->get()
+                    ),
+                ]
+            );
     }
 
     /**
@@ -54,14 +86,14 @@ class UserController extends Controller
         $keyword = $request->input('keyword');
         $include = $request->input('include');
         if (is_numeric($keyword)) {
-            $results = User::where('gtid', $keyword)->with($this->authorizeInclude(User::class, $include))->get();
+            $results = User::where('gtid', $keyword)->with(AuthorizeInclude::authorize(User::class, $include))->get();
         } else {
             $keyword = '%'.$request->input('keyword').'%';
             $results = User::where('uid', 'LIKE', $keyword)
                 ->orWhere('first_name', 'LIKE', $keyword)
                 ->orWhere('preferred_name', 'LIKE', $keyword)
                 ->orWhere('github_username', 'LIKE', $keyword)
-                ->with($this->authorizeInclude(User::class, $include))
+                ->with(AuthorizeInclude::authorize(User::class, $include))
                 ->get();
         }
 
@@ -99,7 +131,7 @@ class UserController extends Controller
     public function show(string $id, Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $user = User::findByIdentifier($id)->with($this->authorizeInclude(User::class, $include))->first();
+        $user = User::findByIdentifier($id)->with(AuthorizeInclude::authorize(User::class, $include))->first();
         if ($user !== null) {
             $requestingUser = $request->user();
             //Enforce users only viewing themselves (read-users-own)
@@ -109,7 +141,7 @@ class UserController extends Controller
                 ], 403);
             }
 
-            return response()->json(['status' => 'success', 'user' => new UserResource($user)]);
+            return response()->json(['status' => 'success', 'user' => new UserResource($user, true)]);
         }
 
         return response()->json(['status' => 'error', 'message' => 'User not found.'], 404);
@@ -122,7 +154,7 @@ class UserController extends Controller
     {
         $include = $request->input('include');
         $id = $request->user()->id;
-        $allowedIncludes = $this->authorizeInclude(User::class, $include);
+        $allowedIncludes = AuthorizeInclude::authorize(User::class, $include);
         $allowedIncludes[] = 'permissions';
         $allowedIncludes[] = 'roles';
         $user = User::findByIdentifier($id)->with($allowedIncludes)->first();
@@ -170,24 +202,6 @@ class UserController extends Controller
             )) {
                 return response()->json(['status' => 'error',
                     'message' => 'requested clickup_email value has not been verified',
-                ], 422);
-            }
-        }
-
-        if ($request->filled('autodesk_email')) {
-            // Check that this is one of their verified emails
-            // gmail_address can be null and autodesk_email can't be empty here so fall back to an empty string.
-            if (! in_array(
-                $request->input('autodesk_email'),
-                [
-                    strtolower($user->uid).'@gatech.edu',
-                    strtolower($user->gt_email),
-                    strtolower($user->gmail_address ?? ''),
-                ],
-                true
-            )) {
-                return response()->json(['status' => 'error',
-                    'message' => 'requested autodesk_email value has not been verified',
                 ], 422);
             }
         }
@@ -258,6 +272,8 @@ class UserController extends Controller
             $requestingUser->access_override_by_id = $request->user()->id;
             $requestingUser->save();
         }
+
+        PushToJedi::dispatch($requestingUser, $requestingUser::class, $requestingUser->id, 'self_service_override');
 
         return response()->json([
             'status' => 'success',

@@ -1,42 +1,46 @@
 {
-  "private": true,
-  "scripts": {
-    "dev": "npm run development",
-    "development": "mix",
-    "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "hot": "mix watch --hot",
-    "prod": "npm run production",
-    "production": "mix --production"
-  },
-  "devDependencies": {
-    "@sentry/webpack-plugin": "1.19.1",
-    "bootstrap": "4.6.2",
-    "cross-env": "5.2.1",
-    "laravel-mix": "6.0.49",
-    "lodash": "4.17.21",
-    "resolve-url-loader": "3.1.4",
-    "sass": "1.55.0",
-    "sass-loader": "7.3.1",
-    "vue-loader": "15.10.0"
-  },
-  "dependencies": {
-    "@sentry/tracing": "6.19.7",
-    "@sentry/vue": "6.19.7",
-    "axios": "0.27.2",
-    "caniuse-lite": "1.0.30001422",
-    "chartist": "0.11.4",
-    "chartist-plugin-legend": "0.6.2",
-    "chartist-plugin-pointlabels": "0.0.6",
-    "jquery": "3.6.1",
-    "moment": "2.29.4",
-    "popper.js": "1.16.1",
-    "sweetalert2": "11.5.2",
-    "vue": "2.7.13",
-    "vue-flatpickr-component": "8.1.7",
-    "vue-moment": "4.1.0",
-    "vue-select": "3.20.0",
-    "vue-template-compiler": "2.7.13",
-    "vuelidate": "0.7.7"
-  }
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production",
+        "build-personal-access-token-modal": "cd nova-components/PersonalAccessTokenModal && npm run dev",
+        "build-personal-access-token-modal-prod": "cd nova-components/PersonalAccessTokenModal && npm run prod",
+        "build-client-id-and-secret-modal": "cd nova-components/ClientIdAndSecretModal && npm run dev",
+        "build-client-id-and-secret-modal-prod": "cd nova-components/ClientIdAndSecretModal && npm run prod"
+    },
+    "devDependencies": {
+        "@sentry/webpack-plugin": "1.21.0",
+        "alex": "11.0.1",
+        "bootstrap": "4.6.2",
+        "cross-env": "5.2.1",
+        "laravel-mix": "6.0.49",
+        "lodash": "4.17.21",
+        "resolve-url-loader": "5.0.0",
+        "sass": "1.71.1",
+        "sass-loader": "13.3.3",
+        "vue-loader": "15.11.1"
+    },
+    "dependencies": {
+        "@sentry/vue": "7.118.0",
+        "axios": "1.7.2",
+        "caniuse-lite": "1.0.30001645",
+        "chartist": "0.11.4",
+        "chartist-plugin-legend": "0.6.2",
+        "chartist-plugin-pointlabels": "0.0.6",
+        "jquery": "3.7.1",
+        "moment": "2.30.1",
+        "popper.js": "1.16.1",
+        "sweetalert2": "11.12.3",
+        "vue": "2.7.16",
+        "vue-flatpickr-component": "8.1.8",
+        "vue-moment": "4.1.0",
+        "vue-select": "3.20.3",
+        "vue-template-compiler": "2.7.16",
+        "vuelidate": "0.7.7"
+    }
 }

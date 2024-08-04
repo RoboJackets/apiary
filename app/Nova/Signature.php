@@ -31,6 +31,22 @@ class Signature extends Resource
     public static $model = \App\Models\Signature::class;
 
     /**
+     * Get the displayable label of the resource.
+     */
+    public static function label(): string
+    {
+        return 'Membership Agreements';
+    }
+
+    /**
+     * Get the displayable singular label of the resource.
+     */
+    public static function singularLabel(): string
+    {
+        return 'Membership Agreement';
+    }
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
@@ -60,6 +76,15 @@ class Signature extends Resource
     public static $group = 'Agreements';
 
     /**
+     * Fields to eager load on index.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'user',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array
@@ -74,44 +99,61 @@ class Signature extends Resource
             BelongsTo::make('Template', 'membershipAgreementTemplate', MembershipAgreementTemplate::class)
                 ->readonly(),
 
-            Boolean::make('Complete')
-                ->exceptOnForms(),
+            Boolean::make('Complete'),
 
             Text::make('Type', 'electronic')
                 ->resolveUsing(static fn (bool $electronic): string => $electronic ? 'Electronic' : 'Paper')
                 ->exceptOnForms(),
 
-            DateTime::make('Rendered', 'render_timestamp')
-                ->onlyOnDetail(),
+            ...($this->render_timestamp === null ? [] : [
+                DateTime::make('Rendered', 'render_timestamp')
+                    ->onlyOnDetail(),
+            ]),
 
             ...($this->electronic ? [
                 new Panel(
                     'Electronic Signature',
                     [
-                        Text::make('CAS Host')
-                            ->onlyOnDetail(),
+                        ...($this->cas_host === null ? [] : [
+                            Text::make('CAS Host')
+                                ->onlyOnDetail(),
+                        ]),
 
-                        Text::make('CAS Service URL Hash')
-                            ->onlyOnDetail(),
+                        ...($this->cas_service_url_hash === null ? [] : [
+                            Text::make('CAS Service URL Hash')
+                                ->onlyOnDetail(),
+                        ]),
 
-                        Text::make('CAS Ticket')
-                            ->onlyOnDetail(),
+                        ...($this->cas_ticket === null ? [] : [
+                            Text::make('CAS Ticket')
+                                ->onlyOnDetail(),
+                        ]),
 
-                        Text::make('IP Address')
-                            ->onlyOnDetail(),
+                        ...($this->ip_address === null ? [] : [
+                            Text::make('IP Address')
+                                ->onlyOnDetail(),
+                        ]),
 
-                        Code::make('IP Address Location Estimate')
-                            ->json()
-                            ->onlyOnDetail(),
+                        ...($this->ip_address_location_estimate === null ? [] : [
+                            Code::make('IP Address Location Estimate')
+                                ->json()
+                                ->onlyOnDetail(),
+                        ]),
 
-                        Text::make('User Agent')
-                            ->onlyOnDetail(),
+                        ...($this->user_agent === null ? [] : [
+                            Text::make('User Agent')
+                                ->onlyOnDetail(),
+                        ]),
 
-                        DateTime::make('Redirected to CAS', 'redirect_to_cas_timestamp')
-                            ->onlyOnDetail(),
+                        ...($this->redirect_to_cas_timestamp === null ? [] : [
+                            DateTime::make('Redirected to CAS', 'redirect_to_cas_timestamp')
+                                ->onlyOnDetail(),
+                        ]),
 
-                        DateTime::make('CAS Ticket Redeemed', 'cas_ticket_redeemed_timestamp')
-                            ->onlyOnDetail(),
+                        ...($this->cas_ticket_redeemed_timestamp === null ? [] : [
+                            DateTime::make('CAS Ticket Redeemed', 'cas_ticket_redeemed_timestamp')
+                                ->onlyOnDetail(),
+                        ]),
                     ]
                 ),
             ] : [
@@ -145,5 +187,10 @@ class Signature extends Resource
 
             self::metadataPanel(),
         ];
+    }
+
+    public static function searchable(): bool
+    {
+        return false;
     }
 }

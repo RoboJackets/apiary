@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -72,7 +73,10 @@ use Laravel\Nova\Actions\Actionable;
  * @method static Builder|DuesPackage whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|DuesPackage withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DuesPackage withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class DuesPackage extends Model
 {
@@ -98,18 +102,26 @@ class DuesPackage extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'effective_start' => 'datetime',
-        'effective_end' => 'datetime',
-        'access_start' => 'datetime',
-        'access_end' => 'datetime',
-        'cost' => 'float',
-        'available_for_purchase' => 'boolean',
-        'restricted_to_students' => 'boolean',
+    protected function casts(): array
+    {
+        return [
+            'effective_start' => 'datetime',
+            'effective_end' => 'datetime',
+            'access_start' => 'datetime',
+            'access_end' => 'datetime',
+            'cost' => 'float',
+            'available_for_purchase' => 'boolean',
+            'restricted_to_students' => 'boolean',
+        ];
+    }
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'transactions' => 'read-dues-transactions',
+        'merchandise' => 'read-merchandise',
     ];
 
     /**
@@ -198,14 +210,15 @@ class DuesPackage extends Model
                 'dues_transactions as dues_transactions_ucp',
                 static function (JoinClause $join) use ($user): void {
                     $join->on('dues_packages.conflicts_with_package_id', '=', 'dues_transactions_ucp.dues_package_id')
-                         ->where('dues_transactions_ucp.user_id', $user->id);
+                        ->where('dues_transactions_ucp.user_id', $user->id)
+                        ->whereNull('dues_transactions_ucp.deleted_at');
                 }
             )
             ->leftJoin('payments as payments_ucp', static function (JoinClause $join): void {
                 $join->on('payments_ucp.payable_id', '=', 'dues_transactions_ucp.id')
-                        ->where('payments_ucp.payable_type', '=', DuesTransaction::getMorphClassStatic())
-                        ->where('payments_ucp.deleted_at', '=', null)
-                        ->where('payments_ucp.amount', '>', 0);
+                    ->where('payments_ucp.payable_type', '=', DuesTransaction::getMorphClassStatic())
+                    ->where('payments_ucp.deleted_at', '=', null)
+                    ->where('payments_ucp.amount', '>', 0);
             })
             ->where('available_for_purchase', true)
             ->where('dues_packages.effective_end', '>=', now())
@@ -236,10 +249,10 @@ class DuesPackage extends Model
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesPackage>
      */
-    public function scopeAccessActive(Builder $query): Builder
+    public function scopeAccessActive(Builder $query, ?CarbonImmutable $asOfTimestamp = null): Builder
     {
-        return $query->where('access_start', '<', now())
-            ->where('access_end', '>', now());
+        return $query->where('access_start', '<', $asOfTimestamp ?? CarbonImmutable::now())
+            ->where('access_end', '>', $asOfTimestamp ?? CarbonImmutable::now());
     }
 
     /**
@@ -264,18 +277,5 @@ class DuesPackage extends Model
         $end = $this->access_end;
 
         return ($start <= $now) && ($end >= $now);
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'transactions' => 'dues-transactions',
-            'merchandise' => 'merchandise',
-        ];
     }
 }

@@ -1,7 +1,7 @@
 Apiary
 =======
 
-[![GitHub license](https://img.shields.io/github/license/robojackets/apiary.svg?style=flat-square)](https://raw.githubusercontent.com/robojackets/apiary/master/LICENSE) [![CI](https://concourse.sandbox.aws.robojackets.net/api/v1/teams/information-technology/pipelines/apiary/jobs/build-main/badge)](https://concourse.sandbox.aws.robojackets.net/teams/information-technology/pipelines/apiary)
+[![GitHub license](https://img.shields.io/github/license/robojackets/apiary.svg?style=flat-square)](https://raw.githubusercontent.com/robojackets/apiary/master/LICENSE) [![Build](https://github.com/RoboJackets/apiary/actions/workflows/build.yml/badge.svg)](https://github.com/RoboJackets/apiary/actions/workflows/build.yml) [![StyleCI](https://github.styleci.io/repos/92999743/shield?branch=main)](https://github.styleci.io/repos/92999743?branch=main)
 
 Apiary is a tool for managing the membership and operations of RoboJackets, a student organization at Georgia Tech.
 
@@ -17,11 +17,8 @@ This project has been tailored to support the specific workflow of RoboJackets a
 
 ## Getting Started with Local Development - Docker
 
----
-
-While this repository itself is open-source, we use several **confidential and proprietary** components which are packed into Docker images produced by this process. Images should **never** be pushed to a public registry.
-
----
+> [!WARNING]
+> While this repository itself is open-source, we use several **confidential and proprietary** components which are packed into Docker images produced by this process. Images should **never** be pushed to a public registry.
 
 Install Docker and Docker Compose.
 
@@ -100,21 +97,22 @@ $ cp .env.example .env
 
 For a basic development environment, you'll need to modify the following settings:
 
-| Key                          | Value                                                                                                                                                                          |
-|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| APP_URL                      | Set to the hostname of your local dev environment, ex. `apiary.test`.                                                                                                          |
-| DB_*                         | Set appropriately for your database.                                                                                                                                           |
-| MAIL_*                       | Mailgun is the suggested mail driver, but you can easily configure Mailtrap or a local mail server referencing the [Laravel documentation](https://laravel.com/docs/5.4/mail). |
-| CAS_HOSTNAME                 | FQDN of the CAS server to use, ex. login.gatech.edu                                                                                                                            |
-| CAS_REAL_HOSTS               | Should match CAS_HOSTNAME                                                                                                                                                      |
-| CAS_LOGOUT_URL               | CAS logout URL, ex. https://login.gatech.edu/cas/logout                                                                                                                |
-| CAS_MASQUERADE               | If set, bypasses the CAS authentication flow and authenticates as the specified username.                                                                                      |
-| CAS_MASQUERADE_gtGTID        | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
-| CAS_MASQUERADE_email_primary | Primary email address for the masquerading user                                                                                                                                |
-| CAS_MASQUERADE_givenName     | Given Name (First Name) for the masquerading user                                                                                                                              |
-| CAS_MASQUERADE_sn            | SN (Second/Last Name) for the masquerading user
-| PASSPORT_PERSONAL_ACCESS_CLIENT_ID | Client ID from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
-| PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET | Client secret from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens |
+| Key                                    | Value                                                                                                                                                                          |
+|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| APP_URL                                | Set to the hostname of your local dev environment, ex. `apiary.test`.                                                                                                          |
+| DB_*                                   | Set appropriately for your database.                                                                                                                                           |
+| MAIL_*                                 | Mailgun is the suggested mail driver, but you can easily configure Mailtrap or a local mail server referencing the [Laravel documentation](https://laravel.com/docs/5.4/mail). |
+| CAS_HOSTNAME                           | FQDN of the CAS server to use, ex. login.gatech.edu                                                                                                                            |
+| CAS_REAL_HOSTS                         | Should match CAS_HOSTNAME                                                                                                                                                      |
+| CAS_LOGOUT_URL                         | CAS logout URL, ex. https://login.gatech.edu/cas/logout                                                                                                                        |
+| CAS_CLIENT_SERVICE                     | Base URL for your local instance, e.g., localhost:PORT or possibly something like https://apiary-local.robojackets.org, depending on your local configuration                  |
+| CAS_MASQUERADE                         | If set, bypasses the CAS authentication flow and authenticates as the specified username.                                                                                      |
+| CAS_MASQUERADE_gtGTID                  | GTID number for the masquerading user (90xxxxxxx)                                                                                                                              |
+| CAS_MASQUERADE_email_primary           | Primary email address for the masquerading user                                                                                                                                |
+| CAS_MASQUERADE_givenName               | Given Name (First Name) for the masquerading user                                                                                                                              |
+| CAS_MASQUERADE_sn                      | SN (Second/Last Name) for the masquerading user                                                                                                                                |
+| PASSPORT_PERSONAL_ACCESS_CLIENT_ID     | Client ID from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens                                                                 |
+| PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET | Client secret from running `php artisan passport:client --personal` used to generate OAuth2 Personal Access Tokens                                                             |
 
 #### Installing dependencies
 
@@ -193,6 +191,18 @@ migrations again if the tests take too long, but simply dumping the schema is in
 
 If you try to run PHPUnit directly, you may get various "file not found" errors since the `composer run test` command
 runs extra steps before the tests are run.
+
+### Running style checks locally
+
+(If you're using Homestead, run these commands inside the VM in your `apiary` directory.)
+
+`vendor/bin/phpcs <file>`
+
+Run CodeSniffer style checks locally.
+
+`vendor/bin/pint <file>`
+
+Runs Pint style checks locally and applies fixes.
 
 ## Moving to Production
 

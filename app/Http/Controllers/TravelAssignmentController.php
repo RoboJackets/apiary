@@ -18,30 +18,16 @@ class TravelAssignmentController extends Controller
             return view('travel.noassignment');
         }
 
-        if (! $user->is_active) {
-            return view(
-                'travel.actionrequired',
-                [
-                    'name' => $assignment->travel->name,
-                    'action' => 'pay dues',
-                ]
-            );
-        }
-
-        if (! $user->signed_latest_agreement) {
-            return view(
-                'travel.actionrequired',
-                [
-                    'name' => $assignment->travel->name,
-                    'action' => 'sign the latest membership agreement',
-                ]
-            );
-        }
-
         return view(
             'travel.index',
             [
                 'travel' => $assignment->travel,
+                'needs_profile_information' => ! $user->has_emergency_contact_information ||
+                    ($assignment->travel->needs_airfare_form &&
+                        ($user->legal_gender === null || $user->date_of_birth === null)
+                    ),
+                'needs_agreement' => ! $user->signed_latest_agreement,
+                'needs_dues' => ! $user->is_active,
                 'tar_received' => $assignment->tar_received,
                 'paid' => $assignment->is_paid,
             ]

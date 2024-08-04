@@ -59,4 +59,9 @@ class RsvpPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, Rsvp $rsvp): bool
+    {
+        return false;
+    }
 }

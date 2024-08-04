@@ -99,7 +99,8 @@
             </div>
           </div>
 
-          <h3>Emergency Contacts</h3>
+          <h3>Emergency Contact</h3>
+          <p>Emergency contact information is required for all trips off campus.</p>
 
           <div class="form-group row">
             <label for="user-emergencyname" class="col-sm-2 col-form-label">Contact Name</label>
@@ -131,6 +132,56 @@
               <div class="invalid-feedback">
                 Must be a valid phone number with no punctuation
               </div>
+            </div>
+          </div>
+
+          <h3>Air Travel Information</h3>
+          <p>Legal name, legal gender, and date of birth are required for booking air travel for you to attend competitions and will not be used for any other purpose. This information must exactly match your government-issued identification to comply with TSA Secure Flight requirements. Please see <a href="https://pro.delta.com/content/agency/us/en/news/news-archive/2022/october-2022/non-binary-gender-identifiers-now-available.html">Delta Air Lines guidance on gender identifiers</a> if needed.</p>
+
+          <div class="form-group row">
+            <label for="legal-first-name" class="col-sm-2 col-form-label">Legal First Name</label>
+            <div class="col-sm-10 col-lg-4">
+              <input id="legal-first-name" type="text" v-model="user.first_name" class="form-control" readonly>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="legal-middle-name" class="col-sm-2 col-form-label">Legal Middle Name</label>
+            <div class="col-sm-10 col-lg-4">
+              <input id="legal-middle-name" type="text" v-model="user.legal_middle_name" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="legal-last-name" class="col-sm-2 col-form-label">Legal Last Name</label>
+            <div class="col-sm-10 col-lg-4">
+              <input id="legal-last-name" type="text" v-model="user.last_name" class="form-control" readonly>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="legal-gender" class="col-sm-2 col-form-label">Legal Gender</label>
+            <div class="col-sm-10 col-lg-4">
+              <select id="legal-gender" v-model="user.legal_gender" class="custom-select">
+                <option value="M">Male (M)</option>
+                <option value="F">Female (F)</option>
+                <option value="X">Unspecified (X)</option>
+                <option value="U">Undisclosed (U)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="date-of-birth" class="col-sm-2 col-form-label">Date of Birth</label>
+            <div id="date-of-birth" class="col-sm-10 col-lg-4">
+              <input id="date-of-birth" type="date" v-model="user.date_of_birth" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="delta-skymiles-number" class="col-sm-2 col-form-label">Delta SkyMiles Number</label>
+            <div id="delta-skymiles-number" class="col-sm-10 col-lg-4">
+              <input id="delta-skymiles-number" type="text" v-model="user.delta_skymiles_number" class="form-control">
             </div>
           </div>
 
@@ -199,31 +250,16 @@
             </div>
           </div>
 
-          <div class="form-group row">
-            <label for="user-autodesk" class="col-sm-2 col-form-label">Autodesk</label>
-            <div class="col-sm-10 col-lg-4">
-              <div class="input-group">
-              <template v-if="user.autodesk_email && user.autodesk_email === autodeskEmailInDatabase">
-                <input v-model="user.autodesk_email" type="text" readonly class="form-control" id="user-autodesk">
-                <div class="input-group-append" v-if="user.autodesk_invite_pending === true">
-                  <a href="/autodesk" class="btn btn-secondary">Resend Invitation</a>
-                </div>
-              </template>
-              <template v-if="!user.autodesk_email || user.autodesk_email !== autodeskEmailInDatabase">
-                <select class="form-control" id="user-autodesk" v-model="user.autodesk_email">
-                  <option v-for="option in autodeskEmailOptions" :value="option">{{ option }}</option>
-                </select>
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-secondary">Send Invitation</button>
-                </div>
-              </template>
-              </div>
-            </div>
-          </div>
-
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Save Changes</button>
             <em><span v-bind:class="{ 'text-danger': hasError}"> {{feedback}} </span></em>
+          </div>
+
+          <h3>Payment History</h3>
+          <div class="row">
+            <div class="col-12">
+              <payment-history :user-uid="userUid" />
+            </div>
           </div>
 
           <h3>Authorized Applications</h3>
@@ -245,8 +281,7 @@
 </template>
 
 <script>
-import { email, maxLength, minLength, required, helpers } from 'vuelidate/lib/validators';
-import notGTEmail from '../customValidators/notGTEmail';
+import { maxLength, minLength, required, helpers } from 'vuelidate/lib/validators';
 
 const alphaSpace = helpers.regex('alphaSpace', /^([a-zA-Z]+\s)*[a-zA-Z]+$/);
 
@@ -269,8 +304,6 @@ export default {
       ],
       clickUpEmailOptions: [],
       clickUpEmailInDatabase: null,
-      autodeskEmailOptions: [],
-      autodeskEmailInDatabase: null,
     };
   },
   mounted() {
@@ -283,12 +316,6 @@ export default {
           ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
         ];
         this.clickUpEmailInDatabase = this.user.clickup_email;
-
-        this.autodeskEmailOptions = [
-          ...new Set([this.user.gt_email.toLowerCase(), this.user.uid.toLowerCase() + '@gatech.edu', this.user.gmail_address || this.user.gt_email.toLowerCase()])
-        ];
-        this.autodeskEmailInDatabase = this.user.autodesk_email;
-
       })
       .catch(response => {
         console.log(response);
@@ -312,17 +339,9 @@ export default {
         .put(this.dataUrl, this.user)
         .then(response => {
           this.hasError = false;
-          if ((this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0)
-          && (this.user.autodesk_email !== this.autodeskEmailInDatabase && this.user.autodesk_email && this.user.autodesk_email.length > 0)) {
-            this.clickUpEmailInDatabase = this.user.clickup_email;
-            this.autodeskEmailInDatabase = this.user.autodesk_email;
-            this.feedback = 'Saved! Look out for emails from ClickUp and Autodesk in the next few minutes.'
-          } else if (this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0) {
+          if (this.user.clickup_email !== this.clickUpEmailInDatabase && this.user.clickup_email && this.user.clickup_email.length > 0) {
             this.clickUpEmailInDatabase = this.user.clickup_email;
             this.feedback = 'Saved! Look out for an email from ClickUp in the next few minutes.'
-          } else if (this.user.autodesk_email !== this.autodeskEmailInDatabase && this.user.autodesk_email && this.user.autodesk_email.length > 0) {
-            this.autodeskEmailInDatabase = this.user.autodesk_email;
-            this.feedback = 'Saved! Look out for an email from Autodesk in the next few minutes.'
           } else {
             this.feedback = 'Saved!';
           }

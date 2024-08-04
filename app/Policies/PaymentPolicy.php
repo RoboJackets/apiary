@@ -12,7 +12,7 @@ class PaymentPolicy
 {
     use HandlesAuthorization;
 
-    public function view(User $user, Payment $resource): bool
+    public function view(User $user, Payment $payment): bool
     {
         return $user->can('read-payments');
     }
@@ -27,22 +27,27 @@ class PaymentPolicy
         return false; // not manually
     }
 
-    public function update(User $user, Payment $resource): bool
+    public function update(User $user, Payment $payment): bool
     {
         return false; // not manually
     }
 
-    public function delete(User $user, Payment $resource): bool
+    public function delete(User $user, Payment $payment): bool
     {
         return $user->can('delete-payments');
     }
 
-    public function restore(User $user, Payment $resource): bool
+    public function restore(User $user, Payment $payment): bool
     {
         return $user->can('delete-payments');
     }
 
-    public function forceDelete(User $user, Payment $resource): bool
+    public function forceDelete(User $user, Payment $payment): bool
+    {
+        return false;
+    }
+
+    public function replicate(User $user, Payment $payment): bool
     {
         return false;
     }

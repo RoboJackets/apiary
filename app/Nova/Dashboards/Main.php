@@ -12,6 +12,7 @@ use App\Models\TravelAssignment;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\DuesRevenueByFiscalYear;
+use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\MembersByFiscalYear;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\PaymentsPerDay;
@@ -25,6 +26,14 @@ use Laravel\Nova\Dashboards\Main as Dashboard;
 
 class Main extends Dashboard
 {
+    /**
+     * Get the displayable name of the dashboard.
+     */
+    public function name(): string
+    {
+        return 'Home';
+    }
+
     /**
      * Get the cards for the dashboard.
      *
@@ -58,22 +67,27 @@ class Main extends Dashboard
             foreach (Travel::all() as $travel) {
                 $should_include = false;
 
-                if ($travel->return_date > Carbon::now()) {
+                if ($travel->return_date > Carbon::now() && $travel->assignments()->exists()) {
                     $should_include = true;
                 }
 
-                if ($travel->tar_required !== null && $travel->assignments()->where('tar_received', false)->exists()) {
+                if (
+                    $travel->needs_docusign === true &&
+                    $travel->assignments()->where('tar_received', false)->exists()
+                ) {
                     $should_include = true;
                 }
 
-                if ($travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
-                    $join->on('travel_assignments.id', '=', 'payable_id')
-                         ->where('payments.amount', '>', 0)
-                         ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
-                         ->whereNull('payments.deleted_at');
-                })->whereNull(
-                    'payments.id'
-                )->exists()) {
+                if (
+                    $travel->assignments()->leftJoin('payments', static function (JoinClause $join): void {
+                        $join->on('travel_assignments.id', '=', 'payable_id')
+                            ->where('payments.amount', '>', 0)
+                            ->where('payments.payable_type', TravelAssignment::getMorphClassStatic())
+                            ->whereNull('payments.deleted_at');
+                    })->whereNull(
+                        'payments.id'
+                    )->exists()
+                ) {
                     $should_include = true;
                 }
 
@@ -81,26 +95,29 @@ class Main extends Dashboard
                     continue;
                 }
 
-                if ($travel->tar_required !== null) {
+                if ($travel->fee_amount > 0) {
+                    $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
+                        static fn (Request $request): bool => $request->user()->can('read-payments')
+                    );
+                }
+
+                if ($travel->needs_docusign === true) {
                     $cards[] = new TravelAuthorityRequestReceivedForTravel($travel->id);
                 }
 
-                $cards[] = (new PaymentReceivedForTravel($travel->id))->canSee(
-                    static fn (Request $request): bool => $request->user()->can('read-payments')
-                );
+                $cards[] = new EmergencyContactInformationForTravel($travel->id);
             }
 
             return $cards;
         }
 
         if (request()->is('nova-api/metrics/*-received-*')) {
-            // @phan-suppress-next-line PhanTypeMismatchArgument
             $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
             $type = $parts->first();
             $id = intval($parts->last());
 
             switch ($type) {
-                case 'tar':
+                case 'forms':
                     return [new TravelAuthorityRequestReceivedForTravel($id)];
                 case 'payment':
                     return [
@@ -109,6 +126,15 @@ class Main extends Dashboard
                         ),
                     ];
             }
+        }
+
+        if (request()->is('nova-api/metrics/emergency-contact-*')) {
+            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
+            $id = intval($parts->last());
+
+            return [
+                new EmergencyContactInformationForTravel($id),
+            ];
         }
 
         return $cards;

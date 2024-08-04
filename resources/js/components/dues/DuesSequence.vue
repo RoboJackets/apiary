@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <p>This is the list of teams we know you're on. If this isn't accurate, please update it here. You can update this at any point by visiting the teams page linked above.</p>
+          <p>This is the list of teams we know you're on. If this isn't accurate, update it here. You can update this at any point by visiting the teams page linked above.</p>
         </div>
       </div>
       <div class="row">
@@ -40,7 +40,7 @@
     <div v-show="currentStepName == 'dues-payment-instructions'">
       <payment-instructions>
         <p>
-          To complete your registration, please make a payment using one of the following methods.
+          To complete your registration, make a payment using one of the following methods.
         </p>
       </payment-instructions>
     </div>

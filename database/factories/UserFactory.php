@@ -28,7 +28,6 @@ class UserFactory extends Factory
             'gtid' => $this->faker->numerify('#########'),
             'gt_email' => $uid.'@gatech.edu',
             'first_name' => $this->faker->firstName(),
-            'middle_name' => $this->faker->optional()->lastName(),
             'last_name' => $lastName,
             'preferred_name' => $this->faker->optional()->firstName(),
             'phone' => $this->faker->numerify('##########'),

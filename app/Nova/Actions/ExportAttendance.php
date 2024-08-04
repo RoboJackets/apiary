@@ -45,9 +45,8 @@ class ExportAttendance extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Attendance>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $hash = hash('sha256', random_bytes(64));
 
@@ -59,6 +58,6 @@ class ExportAttendance extends Action
         // Generate signed URL to pass to backend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $hash.'.csv'], now()->addMinutes(5));
 
-        return Action::download($url, 'RoboJacketsAttendance.csv');
+        return Action::downloadURL($url, 'RoboJacketsAttendance.csv');
     }
 }

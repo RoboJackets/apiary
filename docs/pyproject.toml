@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "apiary-docs"
+version = "0"
+description = "Documentation for Apiary"
+authors = ["Kristaps Berzinch <kristapsberzinch@gmail.com>"]
+license = "MIT"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sphinx = "7.4.7"
+sphinx-autobuild = "2024.4.16"
+sphinxext-opengraph = "0.9.1"
+sphinxcontrib-httpdomain = "1.8.1"
+furo = {url = "https://github.com/pradyunsg/furo/archive/refs/heads/main.zip"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

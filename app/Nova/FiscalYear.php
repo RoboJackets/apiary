@@ -53,9 +53,14 @@ class FiscalYear extends Resource
     ];
 
     /**
-     * Get the fields displayed by the resource.
+     * Indicates if the resource should be globally searchable.
      *
-     * @return array<\Laravel\Nova\Fields\Field>
+     * @var bool
+     */
+    public static $globallySearchable = false;
+
+    /**
+     * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array
     {

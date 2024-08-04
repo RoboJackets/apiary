@@ -9,12 +9,12 @@ use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\ActiveMembers;
 use App\Nova\Metrics\AttendancePerWeek;
 use App\Nova\Metrics\TotalTeamMembers;
-use App\Nova\ResourceTools\CollectAttendance;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
@@ -50,6 +50,15 @@ class Team extends Resource
     public static $group = 'Meetings';
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'projectManager',
+    ];
+
+    /**
      * The columns that should be searched.
      *
      * @var array<string>
@@ -60,6 +69,20 @@ class Team extends Resource
     ];
 
     /**
+     * The number of results to display in the global search.
+     *
+     * @var int
+     */
+    public static $globalSearchResults = 5;
+
+    /**
+     * The number of results to display when searching the resource using Scout.
+     *
+     * @var int
+     */
+    public static $scoutSearchResults = 5;
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(Request $request): array
@@ -67,7 +90,9 @@ class Team extends Resource
         return [
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->creationRules('unique:teams,name')
+                ->updateRules('unique:teams,name,{{resourceId}}'),
 
             Textarea::make('Description')
                 ->hideFromIndex()
@@ -76,7 +101,8 @@ class Team extends Resource
 
             BelongsTo::make('Project Manager', 'projectManager', User::class)
                 ->searchable()
-                ->nullable(),
+                ->nullable()
+                ->withoutTrashed(),
 
             new Panel('Communications', $this->commFields()),
 
@@ -89,8 +115,7 @@ class Team extends Resource
                     ) && $request->user()->can(
                         'read-users'
                     )
-                )
-                ->required(true),
+                ),
 
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static function (Request $request): bool {
@@ -106,19 +131,6 @@ class Team extends Resource
 
             MorphMany::make('Attendance')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
-
-            CollectAttendance::make()
-                ->canSee(static function (Request $request): bool {
-                    if (isset($request->resourceId)) {
-                        $resource = AppModelsTeam::find($request->resourceId);
-                        if ($resource !== null && is_a($resource, AppModelsTeam::class)
-                            && $resource->attendable === false) {
-                            return false;
-                        }
-                    }
-
-                    return $request->user()->can('create-attendance');
-                }),
 
             self::metadataPanel(),
         ];
@@ -139,22 +151,26 @@ class Team extends Resource
 
             Text::make('Slack Channel Name')
                 ->hideFromIndex()
-                ->rules('max:255'),
+                ->rules('max:255')
+                ->copyable(),
 
             Text::make('Slack Channel ID')
                 ->hideFromIndex()
-                ->rules('max:255'),
+                ->rules('max:255')
+                ->copyable(),
 
             Text::make('Slack Private Channel ID')
                 ->hideFromIndex()
-                ->rules('max:255'),
+                ->rules('max:255')
+                ->copyable(),
 
-            Text::make('Google Group')
+            Email::make('Google Group', 'google_group')
                 ->hideFromIndex()
                 ->help('The full email address for the Google Group.')
-                ->rules('max:255', 'nullable')
+                ->rules('max:255', 'nullable', 'email:rfc,strict,dns,spoof')
                 ->creationRules('unique:teams,google_group')
-                ->updateRules('unique:teams,google_group,{{resourceId}}'),
+                ->updateRules('unique:teams,google_group,{{resourceId}}')
+                ->copyable(),
         ];
     }
 
@@ -166,11 +182,11 @@ class Team extends Resource
     protected function controlFields(): array
     {
         return [
-            Boolean::make('Visible')
+            Boolean::make('Visible to Members', 'visible')
                 ->sortable(),
 
-            Boolean::make('Visible On Kiosk')
-                ->hideFromIndex(),
+            Boolean::make('Visible on Kiosk', 'visible_on_kiosk')
+                ->sortable(),
 
             Boolean::make('Attendable')
                 ->sortable(),
@@ -179,7 +195,7 @@ class Team extends Resource
                 ->sortable(),
 
             Boolean::make('Self-Service Override Eligible', 'self_service_override_eligible')
-                ->hideFromIndex(),
+                ->sortable(),
         ];
     }
 

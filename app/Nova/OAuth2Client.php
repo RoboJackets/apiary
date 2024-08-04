@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\CreateOAuth2Client;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * A Nova resource for OAuth clients.
@@ -50,6 +52,15 @@ class OAuth2Client extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'user',
+    ];
+
+    /**
      * Indicates if the resource should be globally searchable.
      *
      * @var bool
@@ -62,14 +73,6 @@ class OAuth2Client extends Resource
     public static function label(): string
     {
         return 'Clients';
-    }
-
-    /**
-     * Get the displayble singular label of the resource.
-     */
-    public static function singularLabel(): string
-    {
-        return 'Client';
     }
 
     /**
@@ -88,6 +91,7 @@ class OAuth2Client extends Resource
 
             BelongsTo::make('User')
                 ->searchable()
+                ->withoutTrashed()
                 ->help(
                     'This should be null for the personal access client, and otherwise populated with the user '
                     .'responsible for this client.'
@@ -102,12 +106,38 @@ class OAuth2Client extends Resource
                 ->rules('required')
                 ->hideFromIndex(),
 
-            Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret !== null)
+            Boolean::make('Public (PKCE-Enabled Client)', fn (): bool => $this->secret === null)
                 ->hideFromIndex(),
 
             HasMany::make('Tokens', 'tokens', OAuth2AccessToken::class),
 
             self::metadataPanel(),
         ];
+    }
+
+    public static function searchable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array<\Laravel\Nova\Actions\Action>
+     */
+    public function actions(NovaRequest $request): array
+    {
+        return [
+            resolve(CreateOAuth2Client::class)
+                ->canSee(static fn (Request $r): bool => $request->user()->hasRole('admin')),
+        ];
+    }
+
+    /**
+     * Get the URI key for the resource.
+     */
+    public static function uriKey(): string
+    {
+        return 'oauth-clients';
     }
 }

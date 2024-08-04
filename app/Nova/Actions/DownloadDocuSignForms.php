@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use ZipArchive;
 
@@ -39,15 +40,13 @@ class DownloadDocuSignForms extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\Travel>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
-        $travel = $models->first();
+        $travel = $models->first()->load('assignments.envelope.signable.user');
 
-        $filename = $travel->name.'.zip';
+        $filename = $travel->name.' Forms.zip';
 
         $path = Storage::disk('local')->path('nova-exports/'.$filename);
 
@@ -59,7 +58,7 @@ class DownloadDocuSignForms extends Action
                 if ($envelope->travel_authority_filename !== null) {
                     $zip->addFile(
                         Storage::disk('local')->path($envelope->travel_authority_filename),
-                        $envelope->signable->user->full_name.' - Travel Authority Request.pdf'
+                        $envelope->signable->user->full_name.' - Travel Information Form.pdf'
                     );
                 }
 
@@ -76,6 +75,13 @@ class DownloadDocuSignForms extends Action
                         $envelope->signable->user->full_name.' - Direct Bill Airfare Request.pdf'
                     );
                 }
+
+                if ($envelope->itinerary_request_filename !== null) {
+                    $zip->addFile(
+                        Storage::disk('local')->path($envelope->itinerary_request_filename),
+                        $envelope->signable->user->full_name.' - Itinerary Request.pdf'
+                    );
+                }
             });
         });
 
@@ -88,6 +94,7 @@ class DownloadDocuSignForms extends Action
         // Generate signed URL to pass to frontend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::download($url, $filename);
+        return ActionResponse::download($filename, $url)
+            ->withMessage('The forms were successfully downloaded!');
     }
 }

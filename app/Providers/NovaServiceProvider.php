@@ -8,12 +8,11 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\User;
-use App\Nova\Dashboards\Demographics;
-use App\Nova\Dashboards\JEDI;
 use App\Nova\Dashboards\Main;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Actions\ActionResource;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Menu\Menu;
 use Laravel\Nova\Menu\MenuItem;
@@ -31,7 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         Nova::serving(static function (ServingNova $event): void {
-            Nova::script('apiary-custom', asset('js/nova.js'));
+            Nova::script('sentry', asset('js/nova.js'));
         });
 
         Nova::footer(static fn (Request $request): string => '
@@ -39,11 +38,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/apiary">Made with ♥ by RoboJackets</a>
     <span class="px-1">&middot;</span>
     <a class="text-primary dim no-underline" class="text-muted" href="/privacy">Privacy Policy</a>
+    <span class="px-1">&middot;</span>
+    <a class="text-primary dim no-underline" class="text-muted" href="/docs/">Documentation</a>
 </p>
 ');
 
         Nova::report(static function (\Throwable $exception): void {
             if (app()->bound('sentry')) {
+                // @phan-suppress-next-line PhanUndeclaredClassReference
                 app('sentry')->captureException($exception);
             }
         });
@@ -65,6 +67,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             $menu->append(
                 MenuItem::externalLink(
+                    'Link DocuSign Account',
+                    route('docusign.auth.user')
+                )
+            );
+
+            $menu->append(
+                MenuItem::externalLink(
                     'Logout',
                     route('logout')
                 )
@@ -72,6 +81,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             return $menu;
         });
+
+        ActionResource::$polling = false;
     }
 
     /**
@@ -119,8 +130,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new Main(),
-            (new JEDI())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
-            (new Demographics())->canSee(static fn (Request $request): bool => $request->user()->can('read-users')),
         ];
     }
 }

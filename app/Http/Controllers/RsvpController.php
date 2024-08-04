@@ -9,7 +9,7 @@ use App\Http\Resources\Rsvp as RsvpResource;
 use App\Models\Event;
 use App\Models\Rsvp;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,8 +17,6 @@ use Illuminate\Support\Str;
 
 class RsvpController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware('permission:read-rsvps', ['only' => ['index']]);
@@ -34,7 +32,7 @@ class RsvpController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $rsvps = Rsvp::with($this->authorizeInclude(Rsvp::class, $include))->get();
+        $rsvps = Rsvp::with(AuthorizeInclude::authorize(Rsvp::class, $include))->get();
 
         return response()->json(['status' => 'success', 'rsvps' => RsvpResource::collection($rsvps)]);
     }
@@ -58,10 +56,6 @@ class RsvpController extends Controller
 
     /**
      * Stores a user-submitted RSVP resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     *
-     * @throws \Throwable
      */
     public function storeUser(Event $event, Request $request)
     {

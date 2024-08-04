@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\Date;
@@ -26,14 +27,47 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class ExportResumes extends Action
 {
     /**
+     * Indicates if this action is only available on the resource index view.
+     *
+     * @var bool
+     */
+    public $onlyOnIndex = true;
+
+    /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = true;
+
+    /**
+     * The text to be used for the action's confirm button.
+     *
+     * @var string
+     */
+    public $confirmButtonText = 'Export';
+
+    /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'Note that any filters selected outside of this popup are ignored.';
+
+    /**
+     * Disables action log events for this action.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = true;
+
+    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
-        // Check this here because canSee was removed from App\Nova\User as this is a standalone action.
         if (! Auth::user()->can('read-users-resume')) {
             return Action::danger('Sorry! You are not authorized to perform this action.');
         }
@@ -71,12 +105,12 @@ class ExportResumes extends Action
             })
             ->leftJoin('major_user', static function (JoinClause $join): void {
                 $join->on('users.id', '=', 'major_user.user_id')
-                     ->whereNull('major_user.deleted_at');
+                    ->whereNull('major_user.deleted_at');
             })
             ->leftJoin('majors', 'major_user.major_id', '=', 'majors.id')
             ->leftJoin('class_standing_user', static function (JoinClause $join): void {
                 $join->on('users.id', '=', 'class_standing_user.user_id')
-                     ->whereNull('class_standing_user.deleted_at');
+                    ->whereNull('class_standing_user.deleted_at');
             })
             ->leftJoin('class_standings', 'class_standing_user.class_standing_id', '=', 'class_standings.id')
             ->whereIn('majors.display_name', $majors)
@@ -86,7 +120,7 @@ class ExportResumes extends Action
             ->pluck('uid');
 
         if ($users->count() === 0) {
-            return Action::danger('No resumes matched the criteria!');
+            return Action::danger('No resumes matched the provided criteria!');
         }
 
         $filenames = $users->uniqueStrict()->map(
@@ -145,7 +179,8 @@ class ExportResumes extends Action
         // Generate signed URL to pass to frontend to facilitate file download
         $url = URL::signedRoute('api.v1.nova.export', ['file' => $filename], now()->addMinutes(5));
 
-        return Action::download($url, $filename);
+        return ActionResponse::download($filename, $url)
+            ->withMessage('The resumes were successfully exported!');
     }
 
     /**
@@ -161,53 +196,55 @@ class ExportResumes extends Action
             'majors_with_resumes',
             30,
             static fn (): array => User::selectRaw('distinct(majors.display_name) as distinct_display_names')
-                    ->active()
-                    ->whereNotNull('resume_date')
-                    ->where('primary_affiliation', 'student')
-                    ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                        $q->where('restricted_to_students', false);
-                    })
-                    ->leftJoin('major_user', static function (JoinClause $join): void {
-                        $join->on('users.id', '=', 'major_user.user_id')
-                             ->whereNull('major_user.deleted_at');
-                    })
-                    ->leftJoin(
-                        'majors',
-                        'major_user.major_id',
-                        '=',
-                        'majors.id'
-                    )
-                    ->orderBy('distinct_display_names')
-                    ->pluck('distinct_display_names')
-                    ->mapWithKeys(
-                        static fn (?string $name): array => $name === null ? [] : [$name => $name]
-                    )
-                    ->toArray()
+                ->active()
+                ->whereNotNull('resume_date')
+                ->where('primary_affiliation', 'student')
+                ->where('is_service_account', '=', false)
+                ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                    $q->where('restricted_to_students', false);
+                })
+                ->leftJoin('major_user', static function (JoinClause $join): void {
+                    $join->on('users.id', '=', 'major_user.user_id')
+                        ->whereNull('major_user.deleted_at');
+                })
+                ->leftJoin(
+                    'majors',
+                    'major_user.major_id',
+                    '=',
+                    'majors.id'
+                )
+                ->orderBy('distinct_display_names')
+                ->pluck('distinct_display_names')
+                ->mapWithKeys(
+                    static fn (?string $name): array => $name === null ? [] : [$name => $name]
+                )
+                ->toArray()
         );
 
         $classStandings = Cache::remember('class_standings_with_resumes', 30, static fn (): array => User::selectRaw(
             'distinct(class_standings.name) as distinct_class_standings, class_standings.rank_order'
         )
-                ->active()
-                ->whereNotNull('resume_date')
-                ->where('primary_affiliation', 'student')
-                ->whereDoesntHave('duesPackages', static function (Builder $q): void {
-                    $q->where('restricted_to_students', false);
-                })
-                ->leftJoin('class_standing_user', static function (JoinClause $join): void {
-                    $join->on('users.id', '=', 'class_standing_user.user_id')
-                         ->whereNull('class_standing_user.deleted_at');
-                })
-                ->leftJoin(
-                    'class_standings',
-                    'class_standing_user.class_standing_id',
-                    '=',
-                    'class_standings.id'
-                )
-                ->orderBy('class_standings.rank_order')
-                ->pluck('distinct_class_standings')
-                ->mapWithKeys(static fn (?string $name): array => $name === null ? [] : [$name => ucfirst($name)])
-                ->toArray());
+            ->active()
+            ->whereNotNull('resume_date')
+            ->where('primary_affiliation', 'student')
+            ->where('is_service_account', '=', false)
+            ->whereDoesntHave('duesPackages', static function (Builder $q): void {
+                $q->where('restricted_to_students', false);
+            })
+            ->leftJoin('class_standing_user', static function (JoinClause $join): void {
+                $join->on('users.id', '=', 'class_standing_user.user_id')
+                    ->whereNull('class_standing_user.deleted_at');
+            })
+            ->leftJoin(
+                'class_standings',
+                'class_standing_user.class_standing_id',
+                '=',
+                'class_standings.id'
+            )
+            ->orderBy('class_standings.rank_order')
+            ->pluck('distinct_class_standings')
+            ->mapWithKeys(static fn (?string $name): array => $name === null ? [] : [$name => ucfirst($name)])
+            ->toArray());
 
         $now = Carbon::now();
         $year = $now->year;
@@ -222,18 +259,16 @@ class ExportResumes extends Action
         return [
             BooleanGroup::make('Majors')
                 ->options($majors)
-                ->help('Only include resumes for these majors. Note that filters not selected in this dialog do not'.
-                    ' apply to the export.')
+                ->help('Only include resumes for these majors.')
                 ->required(),
 
             BooleanGroup::make('Class Standings')
                 ->options($classStandings)
-                ->help('Only include resumes for these class standings. Note that filters not selected in this dialog'.
-                    ' do not apply to the export.')
+                ->help('Only include resumes for these class standings.')
                 ->required(),
 
             // "before:yesterday" stops users from putting in a date that doesn't make sense that will generate an
-            // empty output. "yesterday" is either 7PM or 8PM yesterdady, depending on timezones (EST vs EDT).
+            // empty output. "yesterday" is either 7PM or 8PM yesterday, depending on timezones (EST vs EDT).
             Date::make('Resume Date Cutoff')
                 ->help('Only include resumes uploaded after this date. This should generally be the start date of the'.
                     ' fall semester. When users upload a resume, all older resumes are deleted.')

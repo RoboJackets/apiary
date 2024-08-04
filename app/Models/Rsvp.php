@@ -42,7 +42,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Rsvp whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|Rsvp withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Rsvp withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Rsvp extends Model
 {
@@ -54,7 +57,14 @@ class Rsvp extends Model
      * @var array<string>
      */
     protected $guarded = [
-        'id', 'created_at', 'updated_at',
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'user' => 'read-users',
+        'event' => 'read-events',
     ];
 
     /**
@@ -75,18 +85,5 @@ class Rsvp extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'user' => 'users',
-            'event' => 'events',
-        ];
     }
 }

@@ -21,14 +21,13 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(private Travel $travel)
+    public function __construct(private readonly Travel $travel)
     {
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  User  $user
      * @return array<string>
      */
     public function via(User $user): array
@@ -38,9 +37,6 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  User  $user
-     * @return \App\Mail\Travel\AllTravelAssignmentsComplete
      */
     public function toMail(User $user): AllTravelAssignmentsCompleteMailable
     {
@@ -49,8 +45,6 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
 
     /**
      * Get the Nova representation of the notification.
-     *
-     * @return \Laravel\Nova\Notifications\NovaNotification
      */
     public function toNova(): NovaNotification
     {
@@ -69,10 +63,6 @@ class AllTravelAssignmentsComplete extends Notification implements ShouldQueue
 
     /**
      * Determine if the notification should be sent.
-     *
-     * @param  User  $user
-     * @param  string  $channel
-     * @return bool
      */
     public function shouldSend(User $user, string $channel): bool
     {

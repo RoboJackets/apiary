@@ -7,7 +7,7 @@ namespace Tests\Unit;
 use App\Models\RemoteAttendanceLink;
 use PHPUnit\Framework\TestCase;
 
-class RemoteAttendanceLinkTest extends TestCase
+final class RemoteAttendanceLinkTest extends TestCase
 {
     /**
      * Test random links.

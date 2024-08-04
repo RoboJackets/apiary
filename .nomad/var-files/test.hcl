@@ -1,3 +1,2 @@
-persist_resumes = false
 run_background_containers = true
-environment_name = "test"
+web_shutdown_delay = "0s"

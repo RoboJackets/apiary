@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div v-if="loading" class="spinner-border mb-4" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div v-else-if="error" class="alert alert-danger" role="alert">
+    <loading-spinner :active="loading" />
+    <div v-if="!loading && error" class="alert alert-danger" role="alert">
       {{ error }}
     </div>
-    <div v-else-if="!tokens.length">
+    <div v-else-if="!loading && !tokens.length">
       <p>You haven't granted any applications access to your MyRoboJackets account.</p>
     </div>
-    <div v-else>
+    <div v-else-if="!loading">
       <p>You have granted the following applications access to your MyRoboJackets account.</p>
       <div class="alert alert-warning">
         Applications may be listed multiple times if you have provided multiple authorizations, such as by signing in
@@ -27,7 +25,7 @@
         <tr v-for="token in tokens" :key="token.id">
           <td class="align-middle" v-if="token.client && token.client.name">{{ token.client.name }}</td>
           <td class="align-middle" v-else>Unnamed Client Application</td>
-          <td class="align-middle">{{ token.created_at | moment("MMMM D, YYYY") }}</td>
+          <td class="align-middle">{{ token.created_at | moment("MMM D, YYYY") }}</td>
           <td class="align-middle">
             <button type="button" class="btn btn-sm btn-outline-danger"
                     :disabled="deleting"
@@ -55,7 +53,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     async fetchData() {

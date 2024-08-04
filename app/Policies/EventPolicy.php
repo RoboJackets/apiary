@@ -68,4 +68,9 @@ class EventPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, Event $event): bool
+    {
+        return false;
+    }
 }

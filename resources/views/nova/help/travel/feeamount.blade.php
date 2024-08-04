@@ -1,0 +1,1 @@
+This is the amount that will be collected from <strong>each</strong> traveler. Online payments incur a <a href="https://squareup.com/us/en/payments/our-fees">~4% processing fee</a> paid by RoboJackets.

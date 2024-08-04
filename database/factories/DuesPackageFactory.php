@@ -21,7 +21,7 @@ class DuesPackageFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => bin2hex(openssl_random_pseudo_bytes(16)),
             'effective_start' => $this->faker->dateTimeBetween('-5 years', '-1 year'),
             'effective_end' => $this->faker->dateTimeBetween('-11 months', 'now'),
             'cost' => (string) $this->faker->randomFloat(2, 0, 1000),

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Actions\ExportAttendance;
 use App\Nova\Filters\Attendable;
 use App\Nova\Filters\DateFrom;
 use App\Nova\Filters\DateTo;
@@ -34,7 +33,7 @@ class Attendance extends Resource
     public static $model = \App\Models\Attendance::class;
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
@@ -42,7 +41,7 @@ class Attendance extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {
@@ -62,7 +61,7 @@ class Attendance extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The logical group associated with the resource.
@@ -99,7 +98,12 @@ class Attendance extends Resource
                 ->hideFromIndex()
                 ->rules('required', 'max:255')
                 ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin'))
-                ->resolveUsing(fn (string $gtid): string => $this->attendee !== null ? '—' : $gtid),
+                ->resolveUsing(fn (?string $gtid): ?string => $this->attendee !== null ? null : $gtid)
+                ->copyable(),
+
+            BelongsTo::make('Access Card')
+                ->hideFromIndex()
+                ->canSee(static fn (Request $request): bool => $request->user()->hasRole('admin')),
 
             BelongsTo::make('User', 'attendee')
                 ->searchable(),
@@ -177,13 +181,7 @@ class Attendance extends Resource
      */
     public function actions(Request $request): array
     {
-        return [
-            (new ExportAttendance())->canSee(
-                static fn (Request $request): bool => $request->user()->can('read-attendance')
-            )->canRun(
-                static fn (Request $request): bool => $request->user()->can('read-attendance')
-            )->confirmButtonText('Export Attendance'),
-        ];
+        return [];
     }
 
     /**

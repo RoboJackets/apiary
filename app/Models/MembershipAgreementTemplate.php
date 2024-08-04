@@ -37,6 +37,7 @@ use Throwable;
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipAgreementTemplate whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|MembershipAgreementTemplate withTrashed()
  * @method static \Illuminate\Database\Query\Builder|MembershipAgreementTemplate withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class MembershipAgreementTemplate extends Model

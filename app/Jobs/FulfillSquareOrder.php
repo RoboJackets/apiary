@@ -12,14 +12,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Square\Models\Fulfillment;
 use Square\Models\Order;
-use Square\Models\OrderFulfillment;
 use Square\Models\OrderFulfillmentState;
 use Square\Models\OrderState;
 use Square\Models\UpdateOrderRequest;
 use Square\SquareClient;
 
-class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
+class FulfillSquareOrder implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -31,12 +31,12 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
      *
      * @var int
      */
-    public $tries = 1;
+    public $tries = 2;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(private string $order_id)
+    public function __construct(private readonly string $order_id)
     {
         $this->queue = 'square';
     }
@@ -63,7 +63,7 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
 
         $retrievedOrder = $retrieveOrderResponse->getResult()->getOrder();
 
-        $updateFulfillment = new OrderFulfillment();
+        $updateFulfillment = new Fulfillment();
         $updateFulfillment->setUid($retrievedOrder->getFulfillments()[0]->getUid());
         $updateFulfillment->setState(OrderFulfillmentState::COMPLETED);
 
@@ -90,6 +90,16 @@ class FulfillSquareOrder implements ShouldQueue, ShouldBeUnique
      */
     public function uniqueId(): string
     {
-        return strval($this->order_id);
+        return $this->order_id;
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return ['order:'.$this->order_id];
     }
 }

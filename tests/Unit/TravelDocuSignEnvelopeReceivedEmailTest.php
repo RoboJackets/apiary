@@ -12,7 +12,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
+final class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
 {
     public function testPaid(): void
     {
@@ -26,19 +26,27 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
 
-        $payment = new Payment();
-        $payment->payable_type = TravelAssignment::getMorphClassStatic();
-        $payment->payable_id = $assignment->id;
-        $payment->amount = 10;
-        $payment->method = 'square';
-        $payment->receipt_url = 'https://example.com';
-        $payment->save();
+            return $assignment;
+        });
+
+        Payment::withoutEvents(static function () use ($assignment): Payment {
+            $payment = new Payment();
+            $payment->payable_type = TravelAssignment::getMorphClassStatic();
+            $payment->payable_id = $assignment->id;
+            $payment->amount = 10;
+            $payment->method = 'square';
+            $payment->receipt_url = 'https://example.com';
+            $payment->save();
+
+            return $payment;
+        });
 
         $envelope = new DocuSignEnvelope();
         $envelope->signable_type = $assignment->getMorphClass();
@@ -70,11 +78,15 @@ class TravelDocuSignEnvelopeReceivedEmailTest extends TestCase
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $user->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $user): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $user->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $envelope = new DocuSignEnvelope();
         $envelope->signable_type = $assignment->getMorphClass();

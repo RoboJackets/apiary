@@ -11,12 +11,6 @@ return [
     'host' => env('BUZZAPI_HOST', 'api.gatech.edu'),
 
     /*
-     * BuzzAPI Version
-     * The only one that works [exists?] is 3, so don't change this unless you're doing something special
-     */
-    'version' => env('BUZZAPI_VERSION', 3),
-
-    /*
      * BuzzAPI Application ID
      * *MANDATORY* You must specify this in .env
      *

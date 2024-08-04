@@ -67,4 +67,9 @@ class OAuth2ClientPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, OAuth2Client $client): bool
+    {
+        return false;
+    }
 }

@@ -42,21 +42,17 @@
                                 Start Here
                             </h4>
                             <p class="card-text">
-                                Please review and sign the RoboJackets membership agreement. It describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
+                                Review and sign the RoboJackets membership agreement. It describes our expectations for your behavior in our facility, when traveling, and when representing RoboJackets.
                             </p>
                         @else
                             <h4 class="card-title">
                                 Updated Membership Agreement
                             </h4>
                             <p class="card-text">
-                                The RoboJackets membership agreement has changed since the last time you signed it.  Please review and sign the updated version to continue your membership.
+                                The RoboJackets membership agreement has changed since the last time you signed it. Review and sign the updated version to continue your membership.
                             </p>
                         @endif
-                        @if(config('features.docusign-membership-agreement'))
-                            <a href="{{ route('docusign.agreement') }}">Sign Electronically</a>
-                        @else
-                            <a href="{{ route('agreement.render') }}">Sign Electronically</a> or <a href="{{ route('agreement.print') }}">Print</a>
-                        @endif
+                        <a href="{{ route('docusign.agreement') }}">Sign Electronically</a>
                     </div>
                 </div>
             </div>
@@ -105,7 +101,7 @@
                         </h4>
                         <p class="card-text">
                             While you have not paid dues for this semester, you have temporary access to RoboJackets
-                            systems until {{ $overrideDate }}. If you have questions or need an extension, please ask
+                            systems until {{ $overrideDate }}. If you have questions or need an extension, ask
                             in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
                         </p>
                     </div>
@@ -120,7 +116,7 @@
                             Access Override
                         </h4>
                         <p class="card-text">
-                            Your temporary access to RoboJackets systems expired on {{ $overrideDate }}. If you have questions or need an extension, please ask in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
+                            Your temporary access to RoboJackets systems expired on {{ $overrideDate }}. If you have questions or need an extension, ask in <a href="https://slack.com/app_redirect?team=T033JPZLT&channel=C29Q3D8K0">#it-helpdesk</a>.
                         </p>
                     </div>
                 </div>
@@ -134,7 +130,7 @@
                             Upload Your Resume
                         </h4>
                         <p class="card-text">
-                            A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors. Please make sure it is always up to date.
+                            A benefit of being an active member of RoboJackets is being a part of our resume book we provide to sponsors. Make sure it is always up to date.
                         </p>
                         <a href="/resume">Upload Your Resume</a>
                     </div>
@@ -170,7 +166,7 @@
                 </div>
             </div>
         @endif
-        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid)))
+        @if($travelAssignment && (!$signedLatestAgreement || (!$status && $needsTransaction) || (!$status && $needsPayment) || ($travelAssignment->needs_docusign) || (!$travelAssignment->is_paid) || (!$hasEmergencyContactInformation)))
             <div class="col-sm-6 com-md-3 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -178,25 +174,8 @@
                             Action Required for Travel
                         </h4>
                         <p class="card-text">
-                            You have been assigned to {{ $travelAssignment->travel->name }}. Please complete the following action items so that we can book travel for you.
+                            You have been assigned to {{ $travelAssignment->travel->name }}. Complete the tasks on the Travel tab so that we can book travel for you.
                         </p>
-                        <ul>
-                            @if(!$signedLatestAgreement)
-                            <li><a href="{{ config('features.docusign-membership-agreement') ? route('docusign.agreement') : route('agreement.render') }}">Sign the latest membership agreement</a></li>
-                            @endif
-                            @if(!$status && $needsTransaction)
-                            <li><a href="{{ route('showDuesFlow') }}">Pay dues</a></li>
-                            @endif
-                            @if(!$status && $needsPayment)
-                            <li><a href="{{ route('pay.dues') }}">Pay dues</a></li>
-                            @endif
-                            @if($travelAssignment->needs_docusign)
-                            <li><a href="{{ route('docusign.travel') }}">Submit a Travel Authority Request</a></li>
-                            @endif
-                            @if(!$travelAssignment->is_paid)
-                            <li><a href="{{ route('pay.travel') }}">Pay the travel fee</a></li>
-                            @endif
-                        </ul>
                         <a href="{{ route('travel.index') }}">View Travel</a>
                     </div>
                 </div>

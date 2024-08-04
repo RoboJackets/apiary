@@ -45,6 +45,8 @@ class SUMSController extends Controller
         }
 
         $lastAttendance = $user->attendance()->where('attendable_type', Team::getMorphClassStatic())
+            ->whereNull('remote_attendance_link_id')
+            ->whereNull('people_counter_id')
             ->orderByDesc('created_at')->first();
 
         if ($lastAttendance !== null
@@ -62,7 +64,7 @@ class SUMSController extends Controller
             return view(
                 'sums',
                 [
-                    'message' => 'You already have access to SUMS. If you are not able to use equipment, please ask in'
+                    'message' => 'You already have access to SUMS. If you are not able to use equipment, ask in'
                     .' #it-helpdesk in Slack.',
                 ]
             );

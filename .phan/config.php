@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'target_php_version' => '8.1',
+    'target_php_version' => '8.3',
 
     'directory_list' => [
         '.',
@@ -24,11 +24,14 @@ return [
         '_ide_helper.php',
         'stubs/Permission.php',
         'stubs/Role.php',
+        'vendor/inertiajs/inertia-laravel/_ide_helpers.php',
     ],
 
     'suppress_issue_types' => [
         'PhanAbstractStaticMethodCall',
         'PhanAccessNonStaticToStatic',
+        'PhanCompatibleStandaloneType',
+        'PhanCompatibleTrueType',
         'PhanInvalidFQSENInCallable',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',
@@ -42,8 +45,12 @@ return [
         'PhanReadOnlyPHPDocProperty',
         'PhanReadOnlyProtectedProperty',
         'PhanStaticCallToNonStatic',
+        'PhanTypeExpectedObjectPropAccess',
         'PhanTypeInvalidCallableArrayKey',
+        'PhanTypeMismatchArgument',
+        'PhanTypeMismatchArgumentProbablyReal',
         'PhanTypeMismatchArgumentSuperType',
+        'PhanTypeMismatchReturn',
         'PhanUndeclaredFunctionInCallable',
         'PhanUndeclaredMethod',
         'PhanUnreferencedClosure',

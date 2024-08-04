@@ -1,3 +1,2 @@
-persist_resumes = true
 run_background_containers = true
-environment_name = "production"
+web_shutdown_delay = "30s"

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\GetMorphClassStatic;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\DuesPackage $for
  * @property-read bool $is_paid
+ * @property-read int $payable_amount
  * @property-read string $status
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Merchandise> $merchandise
  * @property-read int|null $merchandise_count
@@ -56,14 +58,17 @@ use Laravel\Scout\Searchable;
  * @method static Builder|DuesTransaction whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DuesTransaction withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
-class DuesTransaction extends Model
+class DuesTransaction extends Model implements Payable
 {
     use GetMorphClassStatic;
     use HasFactory;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The accessors to append to the model's array form.
@@ -83,49 +88,21 @@ class DuesTransaction extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
+     * The attributes that are mass assignable.
      *
      * @var array<string>
      */
-    public $searchable_attributes = [
-        'user_first_name',
-        'user_preferred_name',
-        'user_last_name',
-        'user_uid',
-        'user_gt_email',
-        'user_gmail_address',
-        'user_clickup_email',
-        'user_autodesk_email',
-        'user_github_username',
-        'package_name',
-        'package_effective_start',
-        'package_effective_end',
-        'status',
-        'payable_type',
-    ];
-
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'user_revenue_total:desc',
-        'user_attendance_count:desc',
-        'user_signatures_count:desc',
-        'user_gtid:desc',
-        'updated_at_unix:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-        'dues_package_id',
+    protected $fillable = [
         'user_id',
-        'merchandise_id',
+        'dues_package_id',
+    ];
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'user' => 'read-users',
+        'package' => 'read-dues-packages',
+        'payment' => 'read-payments',
+        'user.teams' => 'read-teams-membership',
+        'merchandise' => 'read-merchandise',
     ];
 
     /**
@@ -201,28 +178,12 @@ class DuesTransaction extends Model
         }
 
         if ($this->payment->count() === 0
-            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmount())
+            || floatval($this->payment->sum('amount')) < floatval($this->getPayableAmountAttribute())
         ) {
             return 'pending';
         }
 
         return 'paid';
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'user' => 'users',
-            'package' => 'dues-packages',
-            'payment' => 'payments',
-            'user.teams' => 'teams-membership',
-            'merchandise' => 'merchandise',
-        ];
     }
 
     /**
@@ -249,8 +210,8 @@ class DuesTransaction extends Model
     {
         return $query->select('dues_transactions.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) >= dues_packages.cost');
@@ -275,8 +236,8 @@ class DuesTransaction extends Model
     {
         return $query->select('dues_transactions.*')->leftJoin('payments', function (JoinClause $j): void {
             $j->on('payments.payable_id', '=', 'dues_transactions.id')
-                    ->where('payments.payable_type', '=', $this->getMorphClass())
-                    ->where('payments.deleted_at', '=', null);
+                ->where('payments.payable_type', '=', $this->getMorphClass())
+                ->where('payments.deleted_at', '=', null);
         })->join('dues_packages', 'dues_packages.id', '=', 'dues_transactions.dues_package_id')
             ->groupBy('dues_transactions.id', 'dues_transactions.dues_package_id', 'dues_packages.cost')
             ->havingRaw('COALESCE(SUM(payments.amount),0.00) < dues_packages.cost');
@@ -303,19 +264,19 @@ class DuesTransaction extends Model
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DuesTransaction>
      */
-    public function scopeAccessCurrent(Builder $query): Builder
+    public function scopeAccessCurrent(Builder $query, ?CarbonImmutable $asOfTimestamp = null): Builder
     {
-        return $query->whereHas('package', static function (Builder $q): void {
-            $q->accessActive();
+        return $query->whereHas('package', static function (Builder $q) use ($asOfTimestamp): void {
+            $q->accessActive($asOfTimestamp);
         });
     }
 
     /**
      * Get the Payable amount.
      */
-    public function getPayableAmount(): float
+    public function getPayableAmountAttribute(): int
     {
-        return $this->package->cost;
+        return intval($this->package->cost);
     }
 
     /**
@@ -344,7 +305,7 @@ class DuesTransaction extends Model
 
         $array['user_id'] = $this->user->id;
 
-        $array['updated_at_unix'] = $this->updated_at->getTimestamp();
+        $array['updated_at_unix'] = $this->updated_at?->getTimestamp();
 
         $array['merchandise_id'] = $this->merchandise->modelKeys();
 

@@ -21,7 +21,7 @@ class PaymentReceipt extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public Payment $payment)
+    public function __construct(public readonly Payment $payment)
     {
     }
 
@@ -31,32 +31,48 @@ class PaymentReceipt extends Mailable implements ShouldQueue
     public function build(): self
     {
         return $this->from('noreply@my.robojackets.org', 'RoboJackets')
-                    ->to($this->payment->payable->user->gt_email, $this->payment->payable->user->name)
-                    ->subject('Receipt for your '.$this->getPayableDisplayName().' payment')
-                    ->text(
-                        'mail.paymentreceipt',
-                        [
-                            'payable_name' => $this->getPayableDisplayName(),
-                        ]
-                    )
-                    ->withSymfonyMessage(static function (Email $email): void {
-                        $email->replyTo('RoboJackets <treasurer@robojackets.org>');
-                    })
-                    ->tag('payment-receipt')
-                    ->metadata('payment-id', strval($this->payment->id));
+            ->to($this->payment->payable->user->gt_email, $this->payment->payable->user->name)
+            ->subject('Receipt for your '.$this->getPayableDisplayNameSubject().' payment')
+            ->text(
+                'mail.paymentreceipt',
+                [
+                    'payable_name' => $this->getPayableDisplayNameBody(),
+                ]
+            )
+            ->withSymfonyMessage(static function (Email $email): void {
+                $email->replyTo('RoboJackets <treasurer@robojackets.org>');
+            })
+            ->tag('payment-receipt')
+            ->metadata('payment-id', strval($this->payment->id));
     }
 
     /**
      * Get the display name for the payable object.
      */
-    private function getPayableDisplayName(): string
+    private function getPayableDisplayNameSubject(): string
     {
         if ($this->payment->payable_type === DuesTransaction::getMorphClassStatic()) {
             return $this->payment->payable->package->name.' dues';
         }
 
         if ($this->payment->payable_type === TravelAssignment::getMorphClassStatic()) {
-            return $this->payment->payable->travel->name.' travel';
+            return $this->payment->payable->travel->name.' trip fee';
+        }
+
+        throw new \Exception('Unrecognized payable_type '.$this->payment->payable_type);
+    }
+
+    /**
+     * Get the display name for the payable object.
+     */
+    private function getPayableDisplayNameBody(): string
+    {
+        if ($this->payment->payable_type === DuesTransaction::getMorphClassStatic()) {
+            return $this->payment->payable->package->name.' dues';
+        }
+
+        if ($this->payment->payable_type === TravelAssignment::getMorphClassStatic()) {
+            return $this->payment->payable->travel->name;
         }
 
         throw new \Exception('Unrecognized payable_type '.$this->payment->payable_type);

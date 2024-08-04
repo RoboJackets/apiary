@@ -10,7 +10,7 @@ use App\Models\TravelAssignment;
 use App\Models\User;
 use Tests\TestCase;
 
-class TravelAssignmentReminderEmailTest extends TestCase
+final class TravelAssignmentReminderEmailTest extends TestCase
 {
     public function testTarRequiredAndNotCompletedAndNotPaid(): void
     {
@@ -18,24 +18,30 @@ class TravelAssignmentReminderEmailTest extends TestCase
         $contact = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'fee_amount' => 10,
             'primary_contact_user_id' => $contact->id,
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $member->id,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $member): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $member->id,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $mailable = new TravelAssignmentReminder($assignment);
 
         $mailable->assertSeeInText($member->preferred_first_name);
         $mailable->assertSeeInText($travel->name);
         $mailable->assertSeeInText($contact->full_name);
-        $mailable->assertSeeInText('You still need to submit a Travel Authority Request');
+        $mailable->assertSeeInText('You still need to submit a travel information form');
         $mailable->assertSeeInText('You also still need to make a $10 payment');
         $mailable->assertSeeInText('{{{ pm:unsubscribe }}}');
         $mailable->assertDontSeeInText("\n\n\n");
@@ -47,18 +53,24 @@ class TravelAssignmentReminderEmailTest extends TestCase
         $contact = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => true,
+            'forms' => [
+                Travel::TRAVEL_INFORMATION_FORM_KEY => true,
+            ],
             'fee_amount' => 10,
             'primary_contact_user_id' => $contact->id,
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $member->id,
-            'tar_received' => true,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $member): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $member->id,
+                'tar_received' => true,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $mailable = new TravelAssignmentReminder($assignment);
 
@@ -77,18 +89,21 @@ class TravelAssignmentReminderEmailTest extends TestCase
         $contact = User::factory()->create();
 
         $travel = Travel::factory()->make([
-            'tar_required' => false,
             'fee_amount' => 10,
             'primary_contact_user_id' => $contact->id,
         ]);
         $travel->save();
 
-        $assignment = TravelAssignment::factory()->make([
-            'travel_id' => $travel->id,
-            'user_id' => $member->id,
-            'tar_received' => false,
-        ]);
-        $assignment->save();
+        $assignment = TravelAssignment::withoutEvents(static function () use ($travel, $member): TravelAssignment {
+            $assignment = TravelAssignment::factory()->make([
+                'travel_id' => $travel->id,
+                'user_id' => $member->id,
+                'tar_received' => false,
+            ]);
+            $assignment->save();
+
+            return $assignment;
+        });
 
         $mailable = new TravelAssignmentReminder($assignment);
 

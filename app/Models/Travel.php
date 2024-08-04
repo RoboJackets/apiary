@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Nova\Actions\Actionable;
 use Laravel\Scout\Searchable;
 
 /**
@@ -19,6 +20,7 @@ use Laravel\Scout\Searchable;
  * @property string $name
  * @property string $destination
  * @property int $primary_contact_user_id
+ * @property-read \App\Models\User $primaryContact
  * @property \Illuminate\Support\Carbon $departure_date
  * @property \Illuminate\Support\Carbon $return_date
  * @property int $fee_amount
@@ -28,8 +30,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\TravelAssignment> $assignments
- * @property bool|null $tar_required
- * @property array|null $tar_transportation_mode
+ * @property-read int|null $assignments_count
  * @property string|null $tar_itinerary
  * @property string|null $tar_purpose
  * @property int|null $tar_airfare
@@ -38,16 +39,36 @@ use Laravel\Scout\Searchable;
  * @property int|null $tar_registration
  * @property string|null $tar_project_number
  * @property string|null $tar_account_code
- * @property bool $completion_email_sent
- * @property-read int|null $assignments_count
- * @property-read \App\Models\User $primaryContact
+ * @property bool $is_international
+ * @property bool $export_controlled_technology
+ * @property string $export_controlled_technology_description
+ * @property bool $embargoed_destination
+ * @property string $embargoed_countries
+ * @property bool $biological_materials
+ * @property string $biological_materials_description
+ * @property bool $equipment
+ * @property string $equipment_description
+ * @property string $international_travel_justification
+ * @property bool $payment_completion_email_sent
+ * @property bool $form_completion_email_sent
+ * @property array|null $airfare_policy
+ * @property int|null $meal_per_diem
+ * @property int|null $car_rental_cost
+ * @property string|null $hotel_name
+ * @property string|null $department_number
+ * @property array|null $forms
+ * @property string|null $status
+ * @property-read bool $needs_airfare_form
+ * @property-read bool $needs_travel_information_form
+ * @property-read bool $needs_docusign
+ * @property-read bool $assignments_need_forms
+ * @property-read bool $assignments_need_payment
  *
  * @method static \Database\Factories\TravelFactory factory(...$parameters)
  * @method static Builder|Travel newModelQuery()
  * @method static Builder|Travel newQuery()
  * @method static \Illuminate\Database\Query\Builder|Travel onlyTrashed()
  * @method static Builder|Travel query()
- * @method static Builder|Travel whereCompletionEmailSent($value)
  * @method static Builder|Travel whereCreatedAt($value)
  * @method static Builder|Travel whereDeletedAt($value)
  * @method static Builder|Travel whereDepartureDate($value)
@@ -67,18 +88,41 @@ use Laravel\Scout\Searchable;
  * @method static Builder|Travel whereTarProjectNumber($value)
  * @method static Builder|Travel whereTarPurpose($value)
  * @method static Builder|Travel whereTarRegistration($value)
- * @method static Builder|Travel whereTarRequired($value)
- * @method static Builder|Travel whereTarTransportationMode($value)
  * @method static Builder|Travel whereUpdatedAt($value)
+ * @method static Builder|Travel whereBiologicalMaterials($value)
+ * @method static Builder|Travel whereBiologicalMaterialsDescription($value)
+ * @method static Builder|Travel whereEmbargoedCountries($value)
+ * @method static Builder|Travel whereEmbargoedDestination($value)
+ * @method static Builder|Travel whereEquipment($value)
+ * @method static Builder|Travel whereEquipmentDescription($value)
+ * @method static Builder|Travel whereExportControlledTechnology($value)
+ * @method static Builder|Travel whereExportControlledTechnologyDescription($value)
+ * @method static Builder|Travel whereInternationalTravelJustification($value)
+ * @method static Builder|Travel whereIsInternational($value)
+ * @method static Builder|Travel whereFormCompletionEmailSent($value)
+ * @method static Builder|Travel wherePaymentCompletionEmailSent($value)
  * @method static \Illuminate\Database\Query\Builder|Travel withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Travel withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Travel extends Model
 {
-    use SoftDeletes;
-    use Searchable;
+    use Actionable;
     use HasFactory;
+    use Searchable;
+    use SoftDeletes;
+
+    public const TRAVEL_INFORMATION_FORM_KEY = 'travel_information';
+
+    public const AIRFARE_REQUEST_FORM_KEY = 'airfare_request';
+
+    public const FORM_LABELS = [
+        self::TRAVEL_INFORMATION_FORM_KEY => 'Travel Information Form',
+        self::AIRFARE_REQUEST_FORM_KEY => 'Airfare Request Form',
+    ];
 
     /**
      * The attributes that are not mass assignable.
@@ -93,42 +137,31 @@ class Travel extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'departure_date' => 'date',
-        'return_date' => 'date',
-        'tar_transportation_mode' => 'array',
-        'tar_required' => 'boolean',
-        'completion_email_sent' => 'boolean',
-    ];
-
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'departure_date_unix:desc',
-        'return_date_unix:desc',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $filterable_attributes = [
-    ];
+    protected function casts(): array
+    {
+        return [
+            'departure_date' => 'date',
+            'return_date' => 'date',
+            'payment_completion_email_sent' => 'boolean',
+            'form_completion_email_sent' => 'boolean',
+            'is_international' => 'boolean',
+            'export_controlled_technology' => 'boolean',
+            'embargoed_destination' => 'boolean',
+            'biological_materials' => 'boolean',
+            'equipment' => 'boolean',
+            'airfare_policy' => 'array',
+            'forms' => 'array',
+        ];
+    }
 
     /**
      * The attributes that Nova might think can be used for filtering, but actually can't.
-     *
-     * @var array<string>
      */
-    public $do_not_filter_on = [
+    public const DO_NOT_FILTER_ON = [
         'user_id',
     ];
 
@@ -143,6 +176,16 @@ class Travel extends Model
     }
 
     /**
+     * Get the creating user for this travel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Travel>
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    /**
      * Get the assignments for this travel.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TravelAssignment>
@@ -150,6 +193,37 @@ class Travel extends Model
     public function assignments(): HasMany
     {
         return $this->hasMany(TravelAssignment::class);
+    }
+
+    public function getAssignmentsNeedPaymentAttribute(): bool
+    {
+        return $this->assignments()->unpaid()->exists();
+    }
+
+    public function getAssignmentsNeedFormsAttribute(): bool
+    {
+        return $this->assignments()->needDocuSign()->exists();
+    }
+
+    public function getNeedsDocusignAttribute(): bool
+    {
+        return $this->needs_travel_information_form || $this->needs_airfare_form;
+    }
+
+    public function getNeedsTravelInformationFormAttribute(): bool
+    {
+        return $this->getNeedsFormAttribute(self::TRAVEL_INFORMATION_FORM_KEY);
+    }
+
+    public function getNeedsAirfareFormAttribute(): bool
+    {
+        return $this->getNeedsFormAttribute(self::AIRFARE_REQUEST_FORM_KEY);
+    }
+
+    private function getNeedsFormAttribute(string $form): bool
+    {
+        // @phan-suppress-next-line PhanTypeArraySuspiciousNullable
+        return $this->forms !== null && array_key_exists($form, $this->forms) && $this->forms[$form] === true;
     }
 
     /**

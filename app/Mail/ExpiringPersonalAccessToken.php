@@ -17,21 +17,15 @@ class ExpiringPersonalAccessToken extends Mailable
     use SerializesModels;
 
     /**
-     * The Personal Access Token that is expiring.
-     */
-    public Token $token;
-
-    /**
      * Indicates whether or not the token has already expired.
      */
-    public bool $already_expired;
+    public readonly bool $already_expired;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Token $token)
+    public function __construct(public readonly Token $token)
     {
-        $this->token = $token;
         $this->already_expired = Carbon::now() > $token->expires_at;
     }
 

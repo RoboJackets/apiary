@@ -11,16 +11,17 @@ CAS_ENABLE_SAML="false"
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
-REDIS_CLIENT="predis"
-REDIS_SCHEME="unix"
+REDIS_CLIENT="phpredis"
+REDIS_SCHEME="null"
+REDIS_PORT="-1"
 {{- range service "redis" }}
-REDIS_PATH="{{- index .ServiceMeta "socket" | trimSpace -}}"
+REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
-{{- range service "meilisearch-v0-29" }}
+{{- range service "meilisearch-v1-9" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
-MEILISEARCH_KEY="{{- key "meilisearch/v0-29-admin-key" | trimSpace -}}"
+MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.9" | trimSpace -}}"
 SESSION_SECURE_COOKIE="true"
 SESSION_COOKIE="__Host-apiary_session"
 {{ range $key, $value := (key (printf "apiary/%s" (slice (env "NOMAD_JOB_NAME") 7)) | parseJSON) -}}
@@ -28,4 +29,10 @@ SESSION_COOKIE="__Host-apiary_session"
 {{ end -}}
 APP_ENV="{{ slice (env "NOMAD_JOB_NAME") 7 }}"
 APP_URL="https://{{- with (key "nginx/hostnames" | parseJSON) -}}{{- index . (env "NOMAD_JOB_NAME") -}}{{- end -}}"
+CAS_CLIENT_SERVICE="https://{{- with (key "nginx/hostnames" | parseJSON) -}}{{- index . (env "NOMAD_JOB_NAME") -}}{{- end -}}"
+CAS_VALIDATION="ca"
+CAS_CERT="/etc/ssl/certs/USERTrust_RSA_Certification_Authority.pem"
 HOME="/secrets/"
+RESPONSE_CACHE_HEADER_NAME="x-cache-time"
+RESPONSE_CACHE_AGE_HEADER_NAME="x-cache-age"
+RESPONSE_CACHE_AGE_HEADER=true

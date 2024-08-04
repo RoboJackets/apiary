@@ -9,7 +9,7 @@ return [
     |--------------------------------------------------------------------------
     | Example: 'cas.myuniv.edu'.
     */
-    'cas_hostname' => env('CAS_HOSTNAME', 'cas.myuniv.edu'),
+    'cas_hostname' => env('CAS_HOSTNAME', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -19,7 +19,7 @@ return [
     | recommended for protecting against DOS attacks.  If using load
     | balanced hosts, then separate each with a comma.
     */
-    'cas_real_hosts' => env('CAS_REAL_HOSTS', 'cas.myuniv.edu'),
+    'cas_real_hosts' => env('CAS_REAL_HOSTS', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -60,6 +60,14 @@ return [
     | Sometimes is /cas
     */
     'cas_uri' => env('CAS_URI', '/cas'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Client service: host, port, protocol.
+    |--------------------------------------------------------------------------
+    | Example: 'http://localhost', 'https://example.com:8888'
+    */
+    'cas_client_service' => env('CAS_CLIENT_SERVICE', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -104,7 +112,7 @@ return [
     | CAS Logout URI
     |--------------------------------------------------------------------------
     */
-    'cas_logout_url' => env('CAS_LOGOUT_URL', 'https://cas.myuniv.edu/cas/logout'),
+    'cas_logout_url' => env('CAS_LOGOUT_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,7 +140,7 @@ return [
     | this feature, you may be able to retrieve user meta data.
     |--------------------------------------------------------------------------
     */
-    'cas_enable_saml' => env('CAS_ENABLE_SAML', true),
+    'cas_enable_saml' => env('CAS_ENABLE_SAML', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,12 +176,26 @@ return [
     | This should only be used for developmental purposes. Attributes that would
     | normally be sent by CAS can be set manually in .env as needed.
      */
-    'cas_masquerade' => env('CAS_MASQUERADE', null),
-    'cas_masquerade_gtGTID' => env('CAS_MASQUERADE_gtGTID', null),
-    'cas_masquerade_email_primary' => env('CAS_MASQUERADE_email_primary', null),
-    'cas_masquerade_eduPersonPrimaryAffiliation' => env('CAS_MASQUERADE_eduPersonPrimaryAffiliation', null),
-    'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName', null),
-    'cas_masquerade_sn' => env('CAS_MASQUERADE_sn', null),
-    'cas_masquerade_authnContextClass' => env('CAS_MASQUERADE_authnContextClass', null),
-    'cas_masquerade_eduPersonScopedAffiliation' => [env('CAS_MASQUERADE_eduPersonScopedAffiliation', null)],
+    'cas_masquerade' => env('CAS_MASQUERADE'),
+    'cas_masquerade_gtGTID' => env('CAS_MASQUERADE_gtGTID'),
+    'cas_masquerade_email_primary' => env('CAS_MASQUERADE_email_primary'),
+    'cas_masquerade_eduPersonPrimaryAffiliation' => env('CAS_MASQUERADE_eduPersonPrimaryAffiliation'),
+    'cas_masquerade_givenName' => env('CAS_MASQUERADE_givenName'),
+    'cas_masquerade_sn' => env('CAS_MASQUERADE_sn'),
+    'cas_masquerade_authnContextClass' => env('CAS_MASQUERADE_authnContextClass'),
+    'cas_masquerade_authenticationDate' => env('CAS_MASQUERADE_authenticationDate'),
+    'cas_masquerade_eduPersonScopedAffiliation' => [env('CAS_MASQUERADE_eduPersonScopedAffiliation')],
+    'cas_masquerade_gtAccessCardNumber' => env('CAS_MASQUERADE_gtAccessCardNumber'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | The value to set in the Domain field on cookies.
+     */
+    'cas_session_domain' => env('APP_DOMAIN', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Whether to add the Secure flag to cookies.
+     */
+    'cas_session_secure' => env('HTTPS_ONLY_COOKIES', false),
 ];

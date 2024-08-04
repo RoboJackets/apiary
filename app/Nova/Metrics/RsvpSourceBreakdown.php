@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\Rsvp;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
@@ -26,7 +27,12 @@ class RsvpSourceBreakdown extends Partition
         return $this->result(
             Rsvp::where('event_id', $request->resourceId)
                 ->leftJoin('recruiting_visits', 'source', '=', 'visit_token')
-                ->selectRaw('if(recruiting_visits.id, "Recruiting Email", source) as rsvpsource')
+                ->when(
+                    config('database.default') === 'mysql',
+                    static function (Builder $query): void {
+                        $query->selectRaw('if(recruiting_visits.id, "Recruiting Email", source) as rsvpsource');
+                    }
+                )
                 ->selectRaw('count(rsvps.id) as aggregate')
                 ->groupBy('rsvpsource')
                 ->orderByDesc('aggregate')

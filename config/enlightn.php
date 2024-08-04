@@ -19,16 +19,19 @@ return [
     // If you wish to skip running some analyzers, list the classes in the array below.
     'exclude_analyzers' => [
         \Enlightn\Enlightn\Analyzers\Performance\DebugLogAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Performance\MinificationAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\CustomErrorPageAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\EnvFileAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\ForeachIterableAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidMethodCallAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Security\UpToDateDependencyAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
         ...(env('SKIP_PHPSTAN_CHECKS', false) === true ? [
             \Enlightn\Enlightn\Analyzers\Performance\CollectionCallAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\DeadCodeAnalyzer::class,
+            \Enlightn\Enlightn\Analyzers\Reliability\DeprecatedCodeAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\ForeachIterableAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidFunctionCallAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidImportAnalyzer::class,
@@ -37,6 +40,7 @@ return [
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidOffsetAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer::class,
+            \Enlightn\Enlightn\Analyzers\Reliability\MissingModelRelationAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\MissingReturnStatementAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\UndefinedConstantAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\UndefinedVariableAnalyzer::class,
@@ -127,9 +131,9 @@ return [
             \Enlightn\Enlightn\Analyzers\Performance\CacheHeaderAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Security\HSTSHeaderAnalyzer::class,
         ] : []),
-        ...(env('SKIP_DEPENDENCY_ANALYZER') === true ? [
-            \Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
-        ] : []),
+        \Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Security\VulnerableDependencyAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Performance\UnusedGlobalMiddlewareAnalyzer::class,
     ],
 
     /*
@@ -198,9 +202,11 @@ return [
     // List your commercial packages (licensed by you) below, so that they are not
     // flagged by the License Analyzer.
     'commercial_packages' => [
+        'apimatic/core',
+        'apimatic/core-interfaces',
         'enlightn/enlightnpro',
-        'oitnetworkservices/buzzapiclient',
         'phpmyadmin/sql-parser',
+        'mwgg/airports',
     ],
 
     'allowed_permissions' => [

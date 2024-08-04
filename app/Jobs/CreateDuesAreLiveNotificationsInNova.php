@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 
-class CreateDuesAreLiveNotificationsInNova implements ShouldQueue, ShouldBeUnique
+class CreateDuesAreLiveNotificationsInNova implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -22,16 +22,14 @@ class CreateDuesAreLiveNotificationsInNova implements ShouldQueue, ShouldBeUniqu
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         User::permission('access-nova')
             ->inactive()
             ->whereDoesntHave('novaNotifications', static function (Builder $query): void {
                 $query->where('type', DuesAreLive::class)
-                      ->where('created_at', '>', now()->subMonths(3));
+                    ->where('created_at', '>', now()->subMonths(3));
             })
             ->get()
             ->each(static function (User $user): void {

@@ -94,7 +94,7 @@ export default {
               Swal.fire({
                 icon: 'error',
                 title: 'Unable to Grant Access',
-                html: `Please post in #it-helpdesk for assistance. <br /><br />
+                html: `Post in #it-helpdesk for assistance. <br /><br />
                          <small><strong>Reason:</strong> ${response.data.reason}</small><br />
                          <small><strong>Unmet conditions:</strong> ${this.unmetConditions.join(', ') || 'None' }</small><br />
                          <small><strong>Unfinished tasks:</strong> ${this.unfinishedTasks.join(', ') || 'None' }</small>
@@ -105,7 +105,7 @@ export default {
             Swal.fire({
               icon: 'error',
               title: 'Unable to Grant Access',
-              text: 'An unknown error occurred while requesting access. Please post in #it-helpdesk for assistance.'
+              text: 'An unknown error occurred while requesting access. Post in #it-helpdesk for assistance.'
             })
           }
         })

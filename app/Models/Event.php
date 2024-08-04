@@ -50,13 +50,16 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Event withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Event withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Event extends Model
 {
     use GetMorphClassStatic;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.
@@ -81,24 +84,23 @@ class Event extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
-        'allow_anonymous_rsvp' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start_time' => 'datetime',
+            'end_time' => 'datetime',
+            'allow_anonymous_rsvp' => 'boolean',
+        ];
+    }
 
-    /**
-     * The rules to use for ranking results in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public $ranking_rules = [
-        'start_time_unix:desc',
-        'end_time_unix:desc',
+    public const RELATIONSHIP_PERMISSIONS = [
+        'organizer' => 'read-users',
+        'rsvps' => 'read-rsvps',
+        'attendance' => 'read-attendance',
     ];
 
     /**
@@ -150,20 +152,6 @@ class Event extends Model
     }
 
     /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string, string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'organizer' => 'users',
-            'rsvps' => 'rsvps',
-            'attendance' => 'attendance',
-        ];
-    }
-
-    /**
      * Get the indexable data array for the model.
      *
      * @return array<string,int|string>
@@ -172,13 +160,8 @@ class Event extends Model
     {
         $array = $this->toArray();
 
-        if ($this->start_time !== null) {
-            $array['start_time_unix'] = $this->start_time->getTimestamp();
-        }
-
-        if ($this->end_time !== null) {
-            $array['end_time_unix'] = $this->end_time->getTimestamp();
-        }
+        $array['start_time_unix'] = $this->start_time?->getTimestamp();
+        $array['end_time_unix'] = $this->end_time?->getTimestamp();
 
         return $array;
     }

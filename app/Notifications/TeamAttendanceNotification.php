@@ -30,8 +30,6 @@ class TeamAttendanceNotification extends Notification
 
     /**
      * Get the Slack representation of the notification.
-     *
-     * @phan-suppress PhanTypeExpectedObjectPropAccess
      */
     public function toSlack(Team $team): SlackMessage
     {
@@ -41,10 +39,16 @@ class TeamAttendanceNotification extends Notification
         $endDay = now()->subDays(1)->endOfDay();
 
         $total = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])
-            ->selectRaw('count(distinct attendance.gtid) as aggregate')
+            ->selectRaw(
+                'count(distinct attendance.gtid) as aggregate, \'team\' as attendable_type, '.$team->id
+                .' as attendable_id'
+            )
             ->get()[0]->aggregate;
         $unknown = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->doesntHave('attendee')
-            ->selectRaw('count(distinct attendance.gtid) as aggregate')
+            ->selectRaw(
+                'count(distinct attendance.gtid) as aggregate, \'team\' as attendable_type, '.$team->id
+                .' as attendable_id'
+            )
             ->get()[0]->aggregate;
         $unknown = intval($unknown); // Silences Phan warnings
         $knownAttendance = $team->attendance()->whereBetween('created_at', [$startDay, $endDay])->has('attendee')

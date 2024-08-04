@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
@@ -20,15 +21,30 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class DistributeMerchandise extends Action
 {
     /**
-     * The Merchandise model that will be distributed. This is used to build the list of users.
+     * The text to be used for the action's confirm button.
      *
-     * @var ?\App\Models\Merchandise
+     * @var string
      */
-    private $resource;
+    public $confirmButtonText = 'Mark as Picked Up';
+
+    /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'Select the member to whom you are distributing merchandise. Only members that are '.
+        'currently eligible to pick up this item are shown in the list.';
+
+    /**
+     * The Merchandise model that will be distributed. This is used to build the list of users.
+     */
+    private readonly ?Merchandise $resource;
 
     public function __construct(?string $resourceId)
     {
         if ($resourceId === null) {
+            $this->resource = null;
+
             return;
         }
 
@@ -39,38 +55,33 @@ class DistributeMerchandise extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Merchandise>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
-        if (count($models) !== 1) {
-            return Action::danger('This action requires exactly one model.');
-        }
-
-        $merchandise = $models->first();
-        $provided_by = User::where('id', $fields->provided_by)->sole();
-        $provided_to = User::where('id', $fields->provided_to)->sole();
+        $merchandise = $models->sole();
+        $provided_by = Auth::user();
+        $provided_to = User::where('id', $fields->member)->sole();
 
         $dtm = DuesTransactionMerchandise::select(
             'dues_transaction_merchandise.id',
             'dues_transaction_merchandise.provided_at'
         )
-        ->leftJoin(
-            'dues_transactions',
-            static function (JoinClause $join) use ($provided_to): void {
-                $join->on('dues_transactions.id', '=', 'dues_transaction_id')
-                     ->where('user_id', '=', $provided_to->id);
-            }
-        )
-        ->leftJoin('payments', static function (JoinClause $join): void {
-            $join->on('dues_transactions.id', '=', 'payable_id')
-                 ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
-                 ->where('payments.amount', '>', 0);
-        })
-        ->whereNotNull('payments.id')
-        ->where('merchandise_id', $merchandise->id)
-        ->where('user_id', $provided_to->id)
-        ->first();
+            ->leftJoin(
+                'dues_transactions',
+                static function (JoinClause $join) use ($provided_to): void {
+                    $join->on('dues_transactions.id', '=', 'dues_transaction_id')
+                        ->where('user_id', '=', $provided_to->id);
+                }
+            )
+            ->leftJoin('payments', static function (JoinClause $join): void {
+                $join->on('dues_transactions.id', '=', 'payable_id')
+                    ->where('payments.payable_type', DuesTransaction::getMorphClassStatic())
+                    ->where('payments.amount', '>', 0);
+            })
+            ->whereNotNull('payments.id')
+            ->where('merchandise_id', $merchandise->id)
+            ->where('user_id', $provided_to->id)
+            ->first();
 
         if ($dtm === null) {
             return Action::danger('This user is not eligible for this merchandise.');
@@ -82,6 +93,7 @@ class DistributeMerchandise extends Action
 
         $dtm->provided_at = Carbon::now();
         $dtm->provided_by = $provided_by->id;
+        $dtm->provided_via = 'Nova';
         $dtm->save();
 
         return Action::message('Marked as picked up!');
@@ -91,15 +103,13 @@ class DistributeMerchandise extends Action
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
-     *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {
         $resource = $this->resource;
 
         return [
-            Select::make('Distributed To', 'provided_to')
+            Select::make('Member', 'member')
                 ->options(
                     static fn (): array => User::whereHas(
                         'duesTransactions',
@@ -113,28 +123,22 @@ class DistributeMerchandise extends Action
                                             $query->where('merchandise.id', $resource->id);
                                         }
                                     )
-                                    ->whereNull('dues_transaction_merchandise.provided_at');
+                                        ->whereNull('dues_transaction_merchandise.provided_at');
                                 }
                             )
-                            ->whereHas('payment', static function (Builder $query): void {
-                                $query->where('amount', '>', 0);
-                            });
+                                ->whereHas('payment', static function (Builder $query): void {
+                                    $query->where('amount', '>', 0);
+                                });
                         }
                     )
                         ->get()
                         ->mapWithKeys(static fn (User $user): array => [strval($user->id) => $user->name])
+                        ->sort()
                         ->toArray()
                 )
+                ->required()
                 ->searchable()
-                ->required()
                 ->rules('required'),
-
-            Select::make('Distributed By', 'provided_by')
-                ->options([strval($request->user()->id) => $request->user()->name])
-                ->default(strval($request->user()->id))
-                ->required()
-                ->rules('required')
-                ->readonly(),
         ];
     }
 }

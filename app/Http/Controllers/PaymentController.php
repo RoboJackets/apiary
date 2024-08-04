@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Events\PaymentSuccess;
+use App\Events\PaymentReceived;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Http\Resources\Payment as PaymentResource;
+use App\Models\DuesTransaction;
 use App\Models\Payment;
+use App\Models\TravelAssignment;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -16,7 +22,7 @@ class PaymentController extends Controller
     {
         $this->middleware('permission:read-payments', ['only' => ['index']]);
         $this->middleware('permission:create-payments|create-payments-own', ['only' => ['store']]);
-        $this->middleware('permission:read-payments|read-payments-own', ['only' => ['show']]);
+        $this->middleware('permission:read-payments|read-payments-own', ['only' => ['show', 'indexForUser']]);
         $this->middleware('permission:update-payments', ['only' => ['update']]);
         $this->middleware('permission:delete-payments', ['only' => ['destroy']]);
     }
@@ -29,6 +35,57 @@ class PaymentController extends Controller
         $payments = Payment::all();
 
         return response()->json(['status' => 'success', 'payments' => $payments]);
+    }
+
+    /**
+     * Display a list of payments for a given user.
+     */
+    public function indexForUser(Request $request, User $user): JsonResponse
+    {
+        $requestingUser = $request->user();
+
+        $userId = $user->id;
+
+        if ($userId !== $requestingUser->id && $requestingUser->cannot('read-payments')) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Forbidden - you do not have permission to view payments for other users',
+                ],
+                403
+            );
+        }
+
+        $duesTransactions = Payment::wherePayableType(DuesTransaction::getMorphClassStatic())
+            ->with('duesTransaction', 'duesTransaction.package', 'recordedBy')
+            ->whereHas('duesTransaction.user', static function (Builder $q) use ($userId) {
+                $q->whereId($userId);
+            })
+            ->where(static function (Builder $q) {
+                $q->where('amount', '>', 0)
+                    ->orWhereNotNull('card_brand');
+            })
+            ->orderBy('updated_at')
+            ->get();
+
+        $travelAssignments = Payment::wherePayableType(TravelAssignment::getMorphClassStatic())
+            ->with('travelAssignment', 'travelAssignment.travel', 'recordedBy')
+            ->whereHas('travelAssignment.user', static function (Builder $q) use ($userId) {
+                $q->whereId($userId);
+            })
+            ->where(static function (Builder $q) {
+                $q->where('amount', '>', 0)
+                    ->orWhereNotNull('card_brand');
+            })
+            ->orderBy('updated_at')
+            ->get();
+
+        $combined = $duesTransactions->concat($travelAssignments)->sortBy('updated_at', descending: true);
+
+        return response()->json([
+            'status' => 'success',
+            'payments' => PaymentResource::collection($combined),
+        ]);
     }
 
     /**
@@ -50,7 +107,7 @@ class PaymentController extends Controller
 
         $dbPayment = Payment::findOrFail($payment->id);
 
-        event(new PaymentSuccess($dbPayment));
+        event(new PaymentReceived($dbPayment));
 
         return response()->json(['status' => 'success', 'payment' => $dbPayment], 201);
     }

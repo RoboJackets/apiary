@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +26,7 @@ use Illuminate\Support\Str;
  * @property string|null $travel_authority_filename
  * @property string|null $direct_bill_airfare_filename
  * @property string|null $covid_risk_filename
+ * @property string|null $itinerary_request_filename
  * @property string|null $summary_filename
  * @property string|null $signer_ip_address
  * @property \Illuminate\Support\Carbon|null $sent_at
@@ -66,7 +69,12 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereViewedAt($value)
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property bool $acknowledgement_sent
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereAcknowledgementSent($value)
  */
 class DocuSignEnvelope extends Model
 {
@@ -80,17 +88,21 @@ class DocuSignEnvelope extends Model
     protected $table = 'docusign_envelopes';
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'complete' => 'boolean',
-        'sent_at' => 'datetime',
-        'viewed_at' => 'datetime',
-        'signed_at' => 'datetime',
-        'completed_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'complete' => 'boolean',
+            'sent_at' => 'datetime',
+            'viewed_at' => 'datetime',
+            'signed_at' => 'datetime',
+            'completed_at' => 'datetime',
+            'acknowledgement_sent' => 'boolean',
+        ];
+    }
 
     /**
      * Get the owning model.
@@ -128,13 +140,23 @@ class DocuSignEnvelope extends Model
             return null;
         }
 
-        return Str::lower(
-            'https://app.docusign.com/documents/details/'.
+        if (config('docusign.api_base_path') === 'https://demo.docusign.net/restapi') {
+            $hostname = 'https://appdemo.docusign.com';
+        } else {
+            $hostname = 'https://app.docusign.com';
+        }
+
+        if (Str::contains($this->envelope_id, '-')) {
+            return $hostname.'/documents/details/'.$this->envelope_id;
+        } else {
+            return Str::lower(
+                $hostname.'/documents/details/'.
                 Str::substr($this->envelope_id, 0, 8).'-'.
                 Str::substr($this->envelope_id, 8, 4).'-'.
                 Str::substr($this->envelope_id, 12, 4).'-'.
                 Str::substr($this->envelope_id, 16, 4).'-'.
                 Str::substr($this->envelope_id, 20, 12)
-        );
+            );
+        }
     }
 }

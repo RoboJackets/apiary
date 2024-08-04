@@ -53,7 +53,9 @@ class RemoteAttendanceLink extends Resource
      *
      * @var array<string>
      */
-    public static $with = ['attendable'];
+    public static $with = [
+        'attendable',
+    ];
 
     /**
      * Indicates if the resource should be globally searchable.
@@ -105,12 +107,14 @@ class RemoteAttendanceLink extends Resource
 
                     return false;
                 })
-                ->readonly(static fn (Request $request): bool => true),
+                ->readonly(static fn (Request $request): bool => true)
+                ->copyable(),
 
             Text::make('Non-redirecting Link', 'secret')
                 ->onlyOnDetail()
                 ->resolveUsing(static fn (string $secret): string => route('attendance.remote', ['secret' => $secret]))
-                ->readonly(static fn (Request $request): bool => true),
+                ->readonly(static fn (Request $request): bool => true)
+                ->copyable(),
 
             Text::make('Secret')
                 ->onlyOnForms()
@@ -132,7 +136,8 @@ class RemoteAttendanceLink extends Resource
                 ->help('If you put a link here, everyone who clicks the attendance link will be redirected to that '.
                     'meeting after their attendance is recorded. If you add a redirect URL, do not share that URL '.
                     'directly. Only Google Meet, Zoom, and Microsoft Teams calls are supported currently in the '.
-                    'user-facing action.'),
+                    'user-facing action.')
+                ->copyable(),
 
             // SelectOrCustom only works on forms, so use this instead on detail
             Text::make('Note')
@@ -149,5 +154,10 @@ class RemoteAttendanceLink extends Resource
 
             self::metadataPanel(),
         ];
+    }
+
+    public static function searchable(): bool
+    {
+        return false;
     }
 }

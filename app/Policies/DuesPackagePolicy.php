@@ -15,7 +15,7 @@ class DuesPackagePolicy
     /**
      * Determine whether the user can view the dues package.
      */
-    public function view(User $user, DuesPackage $duesPackage): bool
+    public function view(User $user, DuesPackage $package): bool
     {
         // Normal users have this, but Nova in general is limited by access-nova
         return $user->can('read-dues-packages');
@@ -34,13 +34,13 @@ class DuesPackagePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-dues-packages');
+        return $user->can('create-dues-packages-manually');
     }
 
     /**
      * Determine whether the user can update the dues package.
      */
-    public function update(User $user, DuesPackage $duesPackage): bool
+    public function update(User $user, DuesPackage $package): bool
     {
         return $user->can('update-dues-packages');
     }
@@ -48,7 +48,7 @@ class DuesPackagePolicy
     /**
      * Determine whether the user can delete the dues package.
      */
-    public function delete(User $user, DuesPackage $duesPackage): bool
+    public function delete(User $user, DuesPackage $package): bool
     {
         return $user->can('delete-dues-packages');
     }
@@ -56,7 +56,7 @@ class DuesPackagePolicy
     /**
      * Determine whether the user can restore the dues package.
      */
-    public function restore(User $user, DuesPackage $duesPackage): bool
+    public function restore(User $user, DuesPackage $package): bool
     {
         return $user->can('create-dues-packages');
     }
@@ -64,23 +64,28 @@ class DuesPackagePolicy
     /**
      * Determine whether the user can permanently delete the dues package.
      */
-    public function forceDelete(User $user, DuesPackage $duesPackage): bool
+    public function forceDelete(User $user, DuesPackage $package): bool
     {
         return false;
     }
 
-    public function attachMerchandise(User $user, DuesPackage $merch): bool
+    public function attachMerchandise(User $user, DuesPackage $package): bool
     {
         return $user->can('create-merchandise');
     }
 
-    public function attachAnyMerchandise(User $user, DuesPackage $merch): bool
+    public function attachAnyMerchandise(User $user, DuesPackage $package): bool
     {
         return $user->can('create-merchandise');
     }
 
-    public function detachMerchandise(User $user, DuesPackage $merch): bool
+    public function detachMerchandise(User $user, DuesPackage $package): bool
     {
         return $user->can('create-merchandise');
+    }
+
+    public function replicate(User $user, DuesPackage $package): bool
+    {
+        return false;
     }
 }

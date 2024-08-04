@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\SignatureValidators;
 
-use Exception;
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookConfig;
@@ -20,7 +19,7 @@ class Postmark implements SignatureValidator
         $secret = $config->signingSecret;
 
         if (! is_string($sentToken)) {
-            throw new Exception('Header is not a string, possibly missing');
+            return false;
         }
 
         return $sentToken === $secret;

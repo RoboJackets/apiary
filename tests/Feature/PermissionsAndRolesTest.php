@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class PermissionsAndRolesTest extends TestCase
+final class PermissionsAndRolesTest extends TestCase
 {
     public function testPermissionsLoadedInDatabase(): void
     {
@@ -31,6 +31,8 @@ class PermissionsAndRolesTest extends TestCase
         $permissions = Role::where('name', 'admin')->first()->permissions;
         $allPermissions = Permission::where('name', '!=', 'refund-payments')
             ->where('name', '!=', 'impersonate-users')
+            ->where('name', '!=', 'authenticate-with-docusign')
+            ->where('name', '!=', 'update-airfare-policy')
             ->get();
         $this->assertCount(0, $permissions->diff($allPermissions));
         $this->assertCount(0, $allPermissions->diff($permissions));

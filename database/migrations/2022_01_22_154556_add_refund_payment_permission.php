@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Spatie\Permission\Models\Permission;
 
-class AddRefundPaymentPermission extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -25,4 +25,4 @@ class AddRefundPaymentPermission extends Migration
         app()['cache']->forget('spatie.permission.cache');
         Permission::where('name', 'refund-payments')->delete();
     }
-}
+};

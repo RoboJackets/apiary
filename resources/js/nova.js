@@ -1,6 +1,4 @@
-import Vuelidate from 'vuelidate'
 import * as Sentry from "@sentry/vue";
-import { Integrations } from "@sentry/tracing";
 
 Nova.booting((Vue, router) => {
     var sentryDsn = document.head.querySelector('meta[name="sentry-dsn"]').content;
@@ -27,11 +25,28 @@ Nova.booting((Vue, router) => {
             initialScope: initialScope,
             attachProps: true,
             logErrors: true,
-            integrations: [new Integrations.BrowserTracing()],
             tracesSampleRate: 1.0,
             tracingOptions: {
                 trackComponents: true,
             },
+            integrations: [
+                new Sentry.BrowserTracing(),
+                new Sentry.Feedback({
+                    colorScheme: "system",
+                    showName: false,
+                    showEmail: false,
+                    isNameRequired: false,
+                    isEmailRequired: false,
+                    useSentryUser: {
+                        name: 'username',
+                    },
+                    buttonLabel: 'Feedback',
+                    submitButtonLabel: 'Send Feedback',
+                    formTitle: 'Feedback',
+                    messagePlaceholder: 'Describe what you were trying to do, what you expected, and what actually happened.',
+                    successMessageText: 'Thank you for your feedback!',
+                }),
+            ],
         });
         window.Sentry = Sentry;
     } else {

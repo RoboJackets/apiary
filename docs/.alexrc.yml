@@ -1,0 +1,5 @@
+---
+noBinary: true
+allow:
+  - tinker
+  - invalid

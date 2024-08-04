@@ -20,12 +20,37 @@ class RefreshFromGTED extends Action
     public $name = 'Refresh from GTED';
 
     /**
+     * Determine where the action redirection should be without confirmation.
+     *
+     * @var bool
+     */
+    public $withoutConfirmation = true;
+
+    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): void
+    public function handle(ActionFields $fields, Collection $models)
     {
+        if ($models->count() === 1) {
+            $user = $models->sole();
+
+            if ($user->is_service_account) {
+                return Action::danger('Service accounts cannot be refreshed from GTED.');
+            }
+
+            CreateOrUpdateUserFromBuzzAPI::dispatchSync(
+                CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER,
+                $user,
+                'nova_action'
+            );
+
+            return Action::message('The user was refreshed successfully!');
+        }
+
+        $counter = 0;
+
         foreach ($models as $user) {
             if ($user->is_service_account) {
                 continue;
@@ -35,9 +60,13 @@ class RefreshFromGTED extends Action
             CreateOrUpdateUserFromBuzzAPI::dispatch(
                 CreateOrUpdateUserFromBuzzAPI::IDENTIFIER_USER,
                 $user,
-                'nova_action'
+                'nova_action_batch'
             );
+
+            $counter++;
         }
+
+        return Action::message('Refresh jobs have been queued for '.$counter.' users!');
     }
 
     /**

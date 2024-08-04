@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Models\DuesTransaction;
 use App\Models\Event;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -33,7 +34,7 @@ class PaymentFactory extends Factory
             ),
             'amount' => (string) $this->faker->randomFloat(2, 0, 1000),
             'processing_fee' => (string) $this->faker->randomFloat(2, 0, 1000),
-            'method' => 'square',
+            'method' => $this->faker->randomElement(array_keys(Payment::$methods)),
             'recorded_by' => User::all()->random()->id,
             'checkout_id' => null,
             'client_txn_id' => null,

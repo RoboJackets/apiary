@@ -8,14 +8,12 @@ use App\Http\Requests\StoreDuesPackageRequest;
 use App\Http\Requests\UpdateDuesPackageRequest;
 use App\Http\Resources\DuesPackage as DuesPackageResource;
 use App\Models\DuesPackage;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class DuesPackageController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware(
@@ -40,7 +38,7 @@ class DuesPackageController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->get();
+        $packages = DuesPackage::with(AuthorizeInclude::authorize(DuesPackage::class, $include))->get();
 
         return response()->json(['status' => 'success', 'dues_packages' => DuesPackageResource::collection($packages)]);
     }
@@ -51,7 +49,7 @@ class DuesPackageController extends Controller
     public function indexActive(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->active()->get();
+        $packages = DuesPackage::with(AuthorizeInclude::authorize(DuesPackage::class, $include))->active()->get();
 
         return response()->json(['status' => 'success', 'dues_packages' => DuesPackageResource::collection($packages)]);
     }
@@ -62,7 +60,7 @@ class DuesPackageController extends Controller
     public function indexAvailable(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))
+        $packages = DuesPackage::with(AuthorizeInclude::authorize(DuesPackage::class, $include))
             ->availableForPurchase()
             ->get();
 
@@ -75,7 +73,7 @@ class DuesPackageController extends Controller
     public function indexUserCanPurchase(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $packages = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))
+        $packages = DuesPackage::with(AuthorizeInclude::authorize(DuesPackage::class, $include))
             ->userCanPurchase($request->user())
             ->get();
 
@@ -100,7 +98,7 @@ class DuesPackageController extends Controller
     public function show(Request $request, DuesPackage $package): JsonResponse
     {
         $include = $request->input('include');
-        $package = DuesPackage::with($this->authorizeInclude(DuesPackage::class, $include))->find($package->id);
+        $package = DuesPackage::with(AuthorizeInclude::authorize(DuesPackage::class, $include))->find($package->id);
         if ($package !== null) {
             return response()->json(['status' => 'success', 'dues_package' => new DuesPackageResource($package)]);
         }

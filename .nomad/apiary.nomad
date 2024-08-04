@@ -3,11 +3,6 @@ variable "image" {
   description = "The image to use for running the service"
 }
 
-variable "persist_resumes" {
-  type = bool
-  description = "Whether to store resumes on a host volume, or just inside the container"
-}
-
 variable "run_background_containers" {
   type = bool
   description = "Whether to start containers for horizon and scheduled tasks, or only the web task"
@@ -18,9 +13,9 @@ variable "precompressed_assets" {
   description = "Whether assets in the image are pre-compressed"
 }
 
-variable "environment_name" {
+variable "web_shutdown_delay" {
   type = string
-  description = "The name of the environment being deployed"
+  description = "How long to delay shutting down the web task after the allocation is stopped"
 }
 
 locals {
@@ -68,7 +63,7 @@ locals {
     )
   )
 
-  # remove gzip_static directive if/when image does not contain compressed assets (handled at Concourse/operator level)
+  # remove gzip_static directive if/when image does not contain compressed assets (handled at GitHub Actions/operator level)
   compressed_nginx_configuration_without_gzip_static = regex_replace(local.compressed_nginx_configuration,"gzip_static\\s\\S+;","")
 }
 
@@ -80,30 +75,9 @@ job "apiary" {
   type = "service"
 
   group "apiary" {
-    volume "assets" {
-      type = "host"
-      source = "assets"
-    }
-
     volume "run" {
       type = "host"
       source = "run"
-    }
-
-    dynamic "volume" {
-      for_each = var.persist_resumes ? ["resumes"] : []
-
-      labels = ["resumes"]
-
-      content {
-        type = "host"
-        source = "apiary_production_resumes"
-      }
-    }
-
-    volume "docusign" {
-      type = "host"
-      source = "apiary_${var.environment_name}_docusign"
     }
 
     task "prestart" {
@@ -116,8 +90,6 @@ job "apiary" {
       config {
         image = var.image
 
-        force_pull = true
-
         network_mode = "host"
 
         entrypoint = [
@@ -127,17 +99,23 @@ job "apiary" {
           "-c",
           trimspace(file("scripts/prestart.sh"))
         ]
+
+        mount {
+          type = "volume"
+          target = "/assets/"
+          source = "assets"
+          readonly = false
+
+          volume_options {
+            no_copy = true
+          }
+        }
       }
 
       resources {
         cpu = 100
         memory = 128
         memory_max = 2048
-      }
-
-      volume_mount {
-        volume = "assets"
-        destination = "/assets/"
       }
 
       volume_mount {
@@ -149,17 +127,22 @@ job "apiary" {
         data = trimspace(file("conf/.env.tpl"))
 
         destination = "/secrets/.env"
+
         env = true
+
+        change_mode = "noop"
       }
 
       template {
         data = <<EOF
 DOCKER_IMAGE_DIGEST="${split("@", var.image)[1]}"
-PERSIST_RESUMES="${var.persist_resumes}"
 EOF
 
         destination = "/secrets/.docker_image_digest"
+
         env = true
+
+        change_mode = "noop"
       }
 
       template {
@@ -177,14 +160,23 @@ EOF
       config {
         image = var.image
 
-        force_pull = true
-
         network_mode = "host"
 
         mount {
           type   = "bind"
-          source = "local/fpm/"
-          target = "/etc/php/8.1/fpm/pool.d/"
+          source = "local/"
+          target = "/etc/php/8.3/fpm/pool.d/"
+        }
+
+        mount {
+          type = "volume"
+          target = "/app/storage/app/"
+          source = "${NOMAD_JOB_NAME}"
+          readonly = false
+
+          volume_options {
+            no_copy = false
+          }
         }
 
         entrypoint = [
@@ -207,31 +199,22 @@ EOF
         destination = "/var/opt/nomad/run/"
       }
 
-      dynamic "volume_mount" {
-        for_each = var.persist_resumes ? ["resumes"] : []
-
-        content {
-          volume = "resumes"
-          destination = "/app/storage/app/resumes/"
-        }
-      }
-
-      volume_mount {
-        volume = "docusign"
-        destination = "/app/storage/app/docusign/"
-      }
-
       template {
         data = trimspace(file("conf/www.conf"))
 
-        destination = "local/fpm/www.conf"
+        destination = "local/www.conf"
+
+        change_mode = "restart"
       }
 
       template {
         data = trimspace(file("conf/.env.tpl"))
 
         destination = "/secrets/.env"
+
         env = true
+
+        change_mode = "restart"
       }
 
       template {
@@ -283,6 +266,8 @@ EOF
           nginx-config = var.precompressed_assets ? local.compressed_nginx_configuration : local.compressed_nginx_configuration_without_gzip_static
           socket = "/var/opt/nomad/run/${NOMAD_JOB_NAME}-${NOMAD_ALLOC_ID}.sock"
           firewall-rules = jsonencode(["internet"])
+          referrer-policy = "same-origin"
+          x-frame-options = "SAMEORIGIN"
         }
       }
 
@@ -293,9 +278,18 @@ EOF
         mode = "fail"
       }
 
-      shutdown_delay = var.environment_name == "production" ? "30s" : "0s"
-    }
+      action "index-all-models" {
+        command = "/usr/bin/php"
 
+        args = [
+          "-f",
+          "/app/artisan",
+          "scout:import-all",
+        ]
+      }
+
+      shutdown_delay = var.web_shutdown_delay
+    }
 
     dynamic "task" {
       for_each = var.run_background_containers ? ["scheduler", "worker"] : []
@@ -305,10 +299,14 @@ EOF
       content {
         driver = "docker"
 
+        lifecycle {
+          hook = "poststart"
+
+          sidecar = true
+        }
+
         config {
           image = var.image
-
-          force_pull = true
 
           network_mode = "host"
 
@@ -319,6 +317,17 @@ EOF
             "-c",
             trimspace(file("scripts/${task.value}.sh"))
           ]
+
+          mount {
+            type = "volume"
+            target = "/app/storage/app/"
+            source = "${NOMAD_JOB_NAME}"
+            readonly = false
+
+            volume_options {
+              no_copy = false
+            }
+          }
         }
 
         resources {
@@ -332,16 +341,13 @@ EOF
           destination = "/var/opt/nomad/run/"
         }
 
-        volume_mount {
-          volume = "docusign"
-          destination = "/app/storage/app/docusign/"
-        }
-
         template {
           data = trimspace(file("conf/.env.tpl"))
 
           destination = "/secrets/.env"
           env = true
+
+          change_mode = "restart"
         }
 
         template {
@@ -349,6 +355,8 @@ EOF
 
           destination = "/secrets/.docker_image_digest"
           env = true
+
+          change_mode = "noop"
         }
 
         template {
@@ -360,31 +368,13 @@ EOF
         }
       }
     }
+  }
 
-    task "set-restart-policy" {
-      driver = "raw_exec"
-
-      config {
-        command = "/usr/bin/bash"
-        args    = [
-          "-xue",
-          "-o",
-          "pipefail",
-          "-c",
-          join("; ", [for task in var.run_background_containers ? ["web", "scheduler", "worker"] : ["web"] : "docker update --restart=always ${task}-${NOMAD_ALLOC_ID}"])
-        ]
-      }
-
-      resources {
-        cpu = 100
-        memory = 128
-        memory_max = 2048
-      }
-
-      lifecycle {
-        hook = "poststart"
-      }
-    }
+  reschedule {
+    delay = "10s"
+    delay_function = "fibonacci"
+    max_delay = "60s"
+    unlimited = true
   }
 
   update {

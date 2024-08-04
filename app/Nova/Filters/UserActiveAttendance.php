@@ -7,6 +7,7 @@ namespace App\Nova\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class UserActiveAttendance extends Filter
 {
@@ -20,11 +21,11 @@ class UserActiveAttendance extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>  $query
      * @param  string  $value
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\User>
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Attendance>
      */
-    public function apply(Request $request, $query, $value): Builder
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         if ($value === 'yes') {
             return $query->whereHas('attendee', static function (Builder $q): void {

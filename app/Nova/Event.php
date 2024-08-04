@@ -6,7 +6,7 @@ namespace App\Nova;
 
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
 use App\Nova\Metrics\RsvpSourceBreakdown;
-use App\Nova\ResourceTools\CollectAttendance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -53,11 +53,27 @@ class Event extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'organizer',
+    ];
+
+    /**
      * The number of results to display in the global search.
      *
      * @var int
      */
     public static $globalSearchResults = 2;
+
+    /**
+     * The number of results to display when searching the resource using Scout.
+     *
+     * @var int
+     */
+    public static $scoutSearchResults = 2;
 
     /**
      * Get the fields displayed by the resource.
@@ -67,32 +83,40 @@ class Event extends Resource
         return [
             Text::make('Event Name', 'name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->creationRules('unique:events,name')
+                ->updateRules('unique:events,name,{{resourceId}}'),
 
-            (new BelongsTo('Organizer', 'organizer', User::class))
+            BelongsTo::make('Organizer', 'organizer', User::class)
                 ->searchable()
                 ->rules('required')
-                ->help('The organizer of the event'),
+                ->withoutTrashed(),
 
             DateTime::make('Start Time')
-                ->hideFromIndex(),
+                ->required()
+                ->rules('required', 'date', 'before:end_time'),
 
             DateTime::make('End Time')
-                ->hideFromIndex(),
+                ->required()
+                ->rules('required', 'date', 'after:start_time'),
 
             Text::make('Location')
                 ->hideFromIndex()
                 ->rules('max:255'),
 
-            Boolean::make('Anonymous RSVP', 'allow_anonymous_rsvp')
+            Boolean::make('Allow Anonymous RSVPs', 'allow_anonymous_rsvp')
+                ->help(
+                    'Selecting this option allows members to RSVP to this event without logging in to '.
+                    config('app.name').'. Deselecting it requires everyone to log in to record their RSVP.'
+                )
                 ->hideFromIndex(),
 
-            Text::make('RSVP URL', fn (): string => route('events.rsvp', ['event' => $this->id]))->onlyOnDetail(),
+            Text::make('RSVP URL', fn (): string => route('events.rsvp', ['event' => $this->id]))
+                ->onlyOnDetail()
+                ->copyable(),
 
             MorphMany::make('Remote Attendance Links', 'remoteAttendanceLinks')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-remote-attendance-links')),
-
-            self::metadataPanel(),
 
             HasMany::make('RSVPs')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-rsvps')),
@@ -100,8 +124,7 @@ class Event extends Resource
             MorphMany::make('Attendance')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance')),
 
-            CollectAttendance::make()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('create-attendance')),
+            self::metadataPanel(),
         ];
     }
 
@@ -129,6 +152,10 @@ class Event extends Resource
      */
     public function actions(Request $request): array
     {
+        if ($this->end_time < Carbon::now()) {
+            return [];
+        }
+
         return [
             (new Actions\CreateRemoteAttendanceLink())
                 ->canSee(static fn (Request $request): bool => $request->user()->can('create-remote-attendance-links'))

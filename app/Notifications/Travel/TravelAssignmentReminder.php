@@ -18,14 +18,13 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(private TravelAssignment $assignment)
+    public function __construct(private readonly TravelAssignment $assignment)
     {
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  User  $user
      * @return array<string>
      */
     public function via(User $user): array
@@ -35,9 +34,6 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  User  $user
-     * @return \App\Mail\Travel\TravelAssignmentReminder
      */
     public function toMail(User $user): TravelAssignmentReminderMailable
     {
@@ -46,14 +42,12 @@ class TravelAssignmentReminder extends Notification implements ShouldQueue
 
     /**
      * Determine if the notification should be sent.
-     *
-     * @param  User  $user
-     * @param  string  $channel
-     * @return bool
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return $user->should_receive_email && ! $this->assignment->is_complete;
+        return $user->should_receive_email &&
+            ! $this->assignment->is_complete &&
+            $this->assignment->deleted_at === null;
     }
 
     /**

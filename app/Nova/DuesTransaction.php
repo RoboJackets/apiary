@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Models\DuesTransaction as AppModelsDuesTransaction;
-use Illuminate\Http\Request;
+use App\Nova\Actions\Payments\RecordPaymentActions;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
@@ -21,6 +22,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 class DuesTransaction extends Resource
 {
+    use RecordPaymentActions;
+
     /**
      * The model the resource corresponds to.
      *
@@ -33,10 +36,14 @@ class DuesTransaction extends Resource
      *
      * @var array<string>
      */
-    public static $with = ['payment', 'package', 'user'];
+    public static $with = [
+        'payment',
+        'package',
+        'user',
+    ];
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
     public static function label(): string
     {
@@ -44,7 +51,7 @@ class DuesTransaction extends Resource
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
     public static function singularLabel(): string
     {
@@ -66,17 +73,37 @@ class DuesTransaction extends Resource
     public static $globalSearchResults = 2;
 
     /**
+     * The number of results to display when searching the resource using Scout.
+     *
+     * @var int
+     */
+    public static $scoutSearchResults = 2;
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array
     {
         return [
+            Heading::make(
+                '<strong>In general, dues transactions should not be created manually.</strong> '.
+                'Dues transactions are created as part of the dues workflow in the member-facing UI.'
+            )
+                ->asHtml()
+                ->showOnCreating(true)
+                ->showOnUpdating(false)
+                ->showOnDetail(false),
+
             ID::make(),
 
             BelongsTo::make('Paid By', 'user', User::class)
-                ->searchable(),
+                ->searchable()
+                ->rules('required', 'unique:dues_transactions,user_id,NULL,id,dues_package_id,'.$request->package)
+                ->withoutTrashed(),
 
-            BelongsTo::make('Dues Package', 'package', DuesPackage::class),
+            BelongsTo::make('Dues Package', 'package', DuesPackage::class)
+                ->rules('required', 'unique:dues_transactions,dues_package_id,NULL,id,user_id,'.$request->user)
+                ->withoutTrashed(),
 
             Text::make('Status')
                 ->resolveUsing(static fn (string $str): string => ucfirst($str))
@@ -126,47 +153,11 @@ class DuesTransaction extends Resource
     }
 
     /**
-     * Get the actions available for the resource.
-     *
-     * @return array<\Laravel\Nova\Actions\Action>
+     * Hide the edit button from indexes, in particular on merchandise pivots.
      */
-    public function actions(NovaRequest $request): array
-    {
-        return [
-            (new Actions\AddPayment())->canSee(static function (Request $request): bool {
-                $transaction = AppModelsDuesTransaction::find($request->resourceId);
-
-                if ($transaction !== null && is_a($transaction, AppModelsDuesTransaction::class)) {
-                    if ($transaction->user->id === $request->user()->id) {
-                        return false;
-                    }
-
-                    if ($transaction->is_paid) {
-                        return false;
-                    }
-
-                    if (! $transaction->package->is_active) {
-                        return false;
-                    }
-
-                    if (! $transaction->user->signed_latest_agreement) {
-                        return false;
-                    }
-                }
-
-                return $request->user()->can('create-payments');
-            })->canRun(
-                static fn (NovaRequest $r, AppModelsDuesTransaction $t): bool => $r->user()->can(
-                    'create-payments'
-                ) && ($t->user()->first()->id !== $r->user()->id)
-            )->confirmButtonText('Add Payment'),
-        ];
-    }
-
-    // This hides the edit button from indexes. This is here to hide the edit button on the merchandise pivot.
     public function authorizedToUpdateForSerialization(NovaRequest $request): bool
     {
-        return $request->user()->can('update-dues-transactions') && $request->viaResource !== 'merchandise';
+        return false;
     }
 
     /**

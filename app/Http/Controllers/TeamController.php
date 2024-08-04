@@ -11,14 +11,12 @@ use App\Http\Resources\Team as TeamResource;
 use App\Http\Resources\User as UserResource;
 use App\Models\Team;
 use App\Models\User;
-use App\Traits\AuthorizeInclude;
+use App\Util\AuthorizeInclude;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    use AuthorizeInclude;
-
     public function __construct()
     {
         $this->middleware('permission:read-teams', ['only' => ['index', 'indexWeb', 'show', 'showMembers']]);
@@ -34,7 +32,7 @@ class TeamController extends Controller
     public function index(Request $request): JsonResponse
     {
         $include = $request->input('include');
-        $teamsQ = Team::with($this->authorizeInclude(Team::class, $include));
+        $teamsQ = Team::with(AuthorizeInclude::authorize(Team::class, $include));
         $teams = $request->user()->can('read-teams-hidden') ? $teamsQ->get() : $teamsQ->visible()->get();
 
         return response()->json(['status' => 'success', 'teams' => TeamResource::collection($teams)]);
@@ -42,8 +40,6 @@ class TeamController extends Controller
 
     /**
      * Displays the teams page for users.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function indexWeb(Request $request)
     {
@@ -81,9 +77,8 @@ class TeamController extends Controller
     public function show(Request $request, string $id): JsonResponse
     {
         $include = $request->input('include');
-        $team = Team::with($this->authorizeInclude(Team::class, $include))
+        $team = Team::with(AuthorizeInclude::authorize(Team::class, $include))
             ->where('id', $id)
-            ->orWhere('slug', $id)
             ->first();
 
         if ($team !== null && $team->visible === false && $request->user()->cant('read-teams-hidden')) {
@@ -102,7 +97,7 @@ class TeamController extends Controller
      */
     public function showMembers(Request $request, string $id): JsonResponse
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
@@ -119,7 +114,7 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, string $id): JsonResponse
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
@@ -136,7 +131,7 @@ class TeamController extends Controller
     {
         $requestingUser = $request->user();
 
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null || ($team->visible === false && $request->user()->cant('update-teams-hidden'))) {
             return response()->json(['status' => 'error', 'message' => 'team_not_found'], 404);
         }
@@ -165,7 +160,7 @@ class TeamController extends Controller
             $team->members()->detach($user);
         }
 
-        $team = new TeamResource(Team::where('id', $id)->orWhere('slug', $id)->first());
+        $team = new TeamResource(Team::where('id', $id)->first());
 
         return response()->json(['status' => 'success', 'team' => $team, 'member' => $user->name], 201);
     }
@@ -175,7 +170,7 @@ class TeamController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-        $team = Team::where('id', $id)->orWhere('slug', $id)->first();
+        $team = Team::where('id', $id)->first();
         if ($team === null) {
             return response()->json(
                 [

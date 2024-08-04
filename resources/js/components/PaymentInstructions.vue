@@ -10,7 +10,7 @@
               Credit/Debit Card
             </h4>
             <p class="card-text">
-              Pay with your credit/debit card online. There is an additional surcharge to cover payment processing fees.
+              Pay with your credit/debit card online.
                 <b><a href="/pay/dues">Pay Online Now</a></b>
             </p>
           </div>

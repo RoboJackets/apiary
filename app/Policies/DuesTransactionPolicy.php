@@ -12,7 +12,7 @@ class DuesTransactionPolicy
 {
     use HandlesAuthorization;
 
-    public function view(User $user, DuesTransaction $resource): bool
+    public function view(User $user, DuesTransaction $transaction): bool
     {
         return $user->can('read-dues-transactions');
     }
@@ -27,38 +27,43 @@ class DuesTransactionPolicy
         return $user->can('create-dues-transactions');
     }
 
-    public function update(User $user, DuesTransaction $resource): bool
-    {
-        return $user->can('update-dues-transactions');
-    }
-
-    public function delete(User $user, DuesTransaction $resource): bool
+    public function update(User $user, DuesTransaction $transaction): bool
     {
         return false;
     }
 
-    public function restore(User $user, DuesTransaction $resource): bool
+    public function delete(User $user, DuesTransaction $transaction): bool
     {
         return false;
     }
 
-    public function forceDelete(User $user, DuesTransaction $resource): bool
+    public function restore(User $user, DuesTransaction $transaction): bool
     {
         return false;
     }
 
-    public function attachMerchandise(User $user, DuesTransaction $merch): bool
+    public function forceDelete(User $user, DuesTransaction $transaction): bool
+    {
+        return false;
+    }
+
+    public function attachMerchandise(User $user, DuesTransaction $transaction): bool
     {
         return $user->hasRole('admin');
     }
 
-    public function attachAnyMerchandise(User $user, DuesTransaction $merch): bool
+    public function attachAnyMerchandise(User $user, DuesTransaction $transaction): bool
     {
         return $user->hasRole('admin');
     }
 
-    public function detachMerchandise(User $user, DuesTransaction $merch): bool
+    public function detachMerchandise(User $user, DuesTransaction $transaction): bool
     {
         return $user->hasRole('admin');
+    }
+
+    public function replicate(User $user, DuesTransaction $transaction): bool
+    {
+        return false;
     }
 }

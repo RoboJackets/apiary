@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUnique
+class CreateDuesPaymentDueNotificationInNova implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -22,26 +22,22 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
-    public function __construct(private User $user)
+    public function __construct(private readonly User $user)
     {
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->user->dues()->pending()->count() > 0 &&
             $this->user->hasPermissionTo('access-nova') &&
             $this->user->novaNotifications()
-                             ->where('type', DuesPaymentDue::class)
-                             ->where('created_at', '>', now()->subMonths(3))
-                             ->count() === 0
+                ->where('type', DuesPaymentDue::class)
+                ->where('created_at', '>', now()->subMonths(3))
+                ->count() === 0
         ) {
             $this->user->notify(new DuesPaymentDue());
         }
@@ -49,11 +45,21 @@ class CreateDuesPaymentDueNotificationInNova implements ShouldQueue, ShouldBeUni
 
     /**
      * The unique ID of the job.
-     *
-     * @return string
      */
     public function uniqueId(): string
     {
         return strval($this->user->id);
+    }
+
+    /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array<string>
+     */
+    public function tags(): array
+    {
+        return [
+            'user:'.$this->user->uid,
+        ];
     }
 }

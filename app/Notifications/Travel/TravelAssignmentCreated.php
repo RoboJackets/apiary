@@ -21,14 +21,13 @@ class TravelAssignmentCreated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(private TravelAssignment $assignment)
+    public function __construct(private readonly TravelAssignment $assignment)
     {
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  User  $user
      * @return array<string>
      */
     public function via(User $user): array
@@ -38,9 +37,6 @@ class TravelAssignmentCreated extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  User  $user
-     * @return \App\Mail\Travel\TravelAssignmentCreated
      */
     public function toMail(User $user): TravelAssignmentCreatedMailable
     {
@@ -49,13 +45,11 @@ class TravelAssignmentCreated extends Notification implements ShouldQueue
 
     /**
      * Get the Nova representation of the notification.
-     *
-     * @return \Laravel\Nova\Notifications\NovaNotification
      */
     public function toNova(): NovaNotification
     {
         return (new NovaNotification())
-            ->message('Action required for '.$this->assignment->travel->name.' travel')
+            ->message('Action required for '.$this->assignment->travel->name)
             ->action('View action items', URL::remote(route('travel.index')))
             ->icon('globe')
             ->type('info');
@@ -63,14 +57,10 @@ class TravelAssignmentCreated extends Notification implements ShouldQueue
 
     /**
      * Determine if the notification should be sent.
-     *
-     * @param  User  $user
-     * @param  string  $channel
-     * @return bool
      */
     public function shouldSend(User $user, string $channel): bool
     {
-        return $user->should_receive_email;
+        return $user->should_receive_email || $channel === NovaChannel::class;
     }
 
     /**

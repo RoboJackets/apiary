@@ -67,4 +67,9 @@ class OAuth2AccessTokenPolicy
     {
         return false;
     }
+
+    public function replicate(User $user, OAuth2AccessToken $token): bool
+    {
+        return false;
+    }
 }

@@ -1,0 +1,40 @@
+name: Deactivate Environments
+
+on:
+  schedule:
+    - cron:  '0 20 * * *'
+
+jobs:
+  deactivate-environments:
+    name: Deactivate Environments
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Nomad
+        uses: lucasmelin/setup-nomad@v2.0.0
+
+      - name: Exchange GitHub JWT for Nomad token
+        uses: RoboJackets/nomad-jwt-auth@main
+        with:
+          url: https://nomad.bcdc.robojackets.net
+          jwtGithubAudience: https://nomad.bcdc.robojackets.net
+          methodName: GitHubActions
+
+      - name: Stop test
+        env:
+          NOMAD_ADDR: https://nomad.bcdc.robojackets.net
+        continue-on-error: true
+        run: |
+          nomad stop apiary-test
+
+      - name: Stop sandbox
+        env:
+          NOMAD_ADDR: https://nomad.bcdc.robojackets.net
+        continue-on-error: true
+        run: |
+          nomad stop apiary-sandbox

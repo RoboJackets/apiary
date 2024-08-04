@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
+class SendTravelAssignmentReminder implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -25,16 +25,10 @@ class SendTravelAssignmentReminder implements ShouldQueue, ShouldBeUnique
     /**
      * Create a new job instance.
      */
-    public function __construct(public TravelAssignment $assignment)
+    public function __construct(private readonly TravelAssignment $assignment, int $delay = 48)
     {
         $this->queue = 'email';
-        $this->delay = now()->addHours(48)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
-
-        if ($this->delay->dayOfWeek === 5) {
-            // do not send reminders on thursdays to reduce the chance of user
-            // trying to use the app during a maintenance window
-            $this->delay = $this->delay->addHours(24);
-        }
+        $this->delay = now()->addHours($delay)->hour(10)->startOfHour()->addMinutes(random_int(10, 50));
     }
 
     /**

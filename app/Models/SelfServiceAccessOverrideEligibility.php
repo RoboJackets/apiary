@@ -53,7 +53,6 @@ class SelfServiceAccessOverrideEligibility
      * Replace the value of the required conditions array.
      *
      * @param  array<string, bool>  $required_conditions
-     * @return SelfServiceAccessOverrideEligibility
      */
     public function setRequiredConditions(array $required_conditions): SelfServiceAccessOverrideEligibility
     {
@@ -66,7 +65,6 @@ class SelfServiceAccessOverrideEligibility
      * Replace the value of the required tasks array.
      *
      * @param  array<string, bool>  $required_tasks
-     * @return SelfServiceAccessOverrideEligibility
      */
     public function setRequiredTasks(array $required_tasks): SelfServiceAccessOverrideEligibility
     {
@@ -77,8 +75,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Indicates whether the user can become eligible for a self-service override.
-     *
-     * @return bool
      */
     public function isUserRectifiable(): bool
     {
@@ -87,9 +83,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set whether the user can become eligible for a self-service override.
-     *
-     * @param  bool  $user_rectifiable
-     * @return SelfServiceAccessOverrideEligibility
      */
     public function setUserRectifiable(bool $user_rectifiable): SelfServiceAccessOverrideEligibility
     {
@@ -100,8 +93,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Get the date on which the self-service override would/will expire.
-     *
-     * @return CarbonImmutable|null
      */
     public function getOverrideUntil(): ?CarbonImmutable
     {
@@ -110,9 +101,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set the date on which the self-service override would/will expire.
-     *
-     * @param  CarbonImmutable|null  $override_until
-     * @return SelfServiceAccessOverrideEligibility
      */
     public function setOverrideUntil(?CarbonImmutable $override_until): SelfServiceAccessOverrideEligibility
     {
@@ -123,8 +111,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Indicates whether the user is eligible for a self-service override right now.
-     *
-     * @return bool
      */
     public function isEligible(): bool
     {
@@ -133,9 +119,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set whether the user is eligible for a self-service override right now.
-     *
-     * @param  bool  $is_eligible
-     * @return SelfServiceAccessOverrideEligibility
      */
     public function setEligibility(bool $is_eligible): SelfServiceAccessOverrideEligibility
     {
@@ -146,8 +129,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Returns a simple explanation of why the user is currently ineligible for a self-service override.
-     *
-     * @return string
      */
     public function getIneligibleReason(): string
     {
@@ -156,9 +137,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Set a simple explanation of why the user is currently ineligible for a self-service override.
-     *
-     * @param  string  $ineligible_reason
-     * @return SelfServiceAccessOverrideEligibility
      */
     public function setIneligibleReason(string $ineligible_reason): SelfServiceAccessOverrideEligibility
     {
@@ -214,8 +192,6 @@ class SelfServiceAccessOverrideEligibility
 
     /**
      * Returns a string representation of the current status of this user's eligibility for a self-service override.
-     *
-     * @return string
      */
     public function __toString(): string
     {

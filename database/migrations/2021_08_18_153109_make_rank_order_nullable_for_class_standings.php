@@ -6,13 +6,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MakeRankOrderNullableForClassStandings extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
+        if (config('database.default') !== 'mysql') {
+            return;
+        }
+
         Schema::table('class_standings', static function (Blueprint $table): void {
             $table->integer('rank_order')->nullable()->change();
         });
@@ -27,4 +31,4 @@ class MakeRankOrderNullableForClassStandings extends Migration
             $table->integer('rank_order')->nullable(false)->change();
         });
     }
-}
+};

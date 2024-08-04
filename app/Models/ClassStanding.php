@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereRankOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ClassStanding whereUpdatedAt($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ClassStanding extends Model

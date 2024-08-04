@@ -12,13 +12,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class DuesPaymentReminderJobTest extends TestCase
+final class DuesPaymentReminderJobTest extends TestCase
 {
     private int $jobCounter;
 
     private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

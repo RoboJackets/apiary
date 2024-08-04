@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Actionable;
+use Square\SquareClient;
 
 /**
  * Represents a payment made from a member to RoboJackets against a Payable.
@@ -81,7 +85,14 @@ use Laravel\Nova\Actions\Actionable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUrl($value)
  * @method static \Illuminate\Database\Query\Builder|Payment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Payment withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ *
+ * @property-read \App\Models\DuesTransaction|null $duesTransaction
+ * @property-read \App\Models\User|null $recordedBy
+ * @property-read \App\Models\TravelAssignment|null $travelAssignment
+ *
+ * @phan-suppress PhanUnreferencedPublicClassConstant
  */
 class Payment extends Model
 {
@@ -108,15 +119,6 @@ class Payment extends Model
     protected $guarded = ['id'];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'receipt_sent' => 'boolean',
-    ];
-
-    /**
      * All payment methods. Note that you probably want to also create a permission in the database for any
      * new methods added here.
      *
@@ -135,7 +137,26 @@ class Payment extends Model
     ];
 
     /**
-     * Get all of the owning payable models.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'receipt_sent' => 'boolean',
+        ];
+    }
+
+    public const RELATIONSHIP_PERMISSIONS = [
+        'user' => 'read-users',
+        'payable' => 'read-dues-transactions',
+        'duesTransaction' => 'read-dues-transactions',
+        'travelAssignment' => 'read-travel-assignments',
+    ];
+
+    /**
+     * Get all the owning payable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\DuesTransaction|\App\Models\TravelAssignment,\App\Models\Payment>
      */
@@ -145,7 +166,38 @@ class Payment extends Model
     }
 
     /**
+     * Get the owning payable model as a DuesTransaction.
+     *
+     * @return BelongsTo<DuesTransaction, Payment>
+     */
+    public function duesTransaction(): BelongsTo
+    {
+        return $this->belongsTo(DuesTransaction::class, 'payable_id', 'id');
+    }
+
+    /**
+     * Get the owning payable model as a TravelAssignment.
+     *
+     * @return BelongsTo<TravelAssignment, Payment>
+     */
+    public function travelAssignment(): BelongsTo
+    {
+        return $this->belongsTo(TravelAssignment::class, 'payable_id', 'id');
+    }
+
+    /**
      * Get the User associated with the Payment model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Payment>
+     */
+    public function recordedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'recorded_by');
+    }
+
+    /**
+     * Get the User associated with the Payment model. This is only used by Nova to show a list of Payments
+     * associated with a payable resource (DuesTransaction or Travel Assignment).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Payment>
      */
@@ -160,19 +212,6 @@ class Payment extends Model
     public function getMethodPresentationAttribute(): string
     {
         return array_key_exists($this->method, self::$methods) ? self::$methods[$this->method] : '';
-    }
-
-    /**
-     * Map of relationships to permissions for dynamic inclusion.
-     *
-     * @return array<string,string>
-     */
-    public function getRelationshipPermissionMap(): array
-    {
-        return [
-            'user' => 'users',
-            'payable' => 'dues-transactions',
-        ];
     }
 
     /**
@@ -197,6 +236,41 @@ class Payment extends Model
             (($amount + self::PER_TRANSACTION_FEE) / ((100 - self::PERCENTAGE_FEE) / 100)) - $amount,
             0,
             PHP_ROUND_HALF_UP
+        );
+    }
+
+    /**
+     * Calculates the processing fee for a given amount.
+     *
+     * Fees are listed at https://squareup.com/us/en/payments/our-fees.
+     *
+     * @param  int  $amount  charge amount, in cents
+     * @return int processing fee, in cents
+     */
+    public static function calculateProcessingFee(int $amount): int
+    {
+        return (int) round(self::PER_TRANSACTION_FEE + ((self::PERCENTAGE_FEE / 100) * $amount));
+    }
+
+    public function getSquareOrderState(): ?string
+    {
+        if ($this->order_id === null) {
+            return null;
+        }
+
+        return Cache::remember(
+            'square_payment_status_'.$this->order_id,
+            10,
+            fn (): string => (new SquareClient(
+                [
+                    'accessToken' => config('square.access_token'),
+                    'environment' => config('square.environment'),
+                ]
+            ))->getOrdersApi()
+                ->retrieveOrder($this->order_id)
+                ->getResult()
+                ->getOrder()
+                ->getState()
         );
     }
 }
