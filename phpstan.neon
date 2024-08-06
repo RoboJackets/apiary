@@ -171,6 +171,7 @@ parameters:
     - '#Parameter \#1 \$missing of method Illuminate\\Routing\\Route::missing\(\) expects Closure, array{''App\\\\Http\\\\Controllers\\\\MerchandiseController'', ''handleMissingModel''} given\.#'
     - '#Parameter \#1 \$models \(Illuminate\\Support\\Collection<int, array<string, int>>\) of method App\\Models\\ActionEvent::prune\(\) should be contravariant with parameter \$models \(Illuminate\\Support\\Collection\) of method Laravel\\Nova\\Actions\\ActionEvent::prune\(\)#'
     - '#Parameter \#1 \$object_or_class of function property_exists expects object\|string, mixed given\.#'
+    - '#Parameter \#1 \$options of method Laravel\\Nova\\Fields\\BooleanGroup::options\(\) expects array\|\(Closure\(\): \(array\|Illuminate\\Support\\Collection\)\)\|Illuminate\\Support\\Collection, mixed given\.#'
     - '#Parameter \#1 \$orderId of method Square\\Apis\\OrdersApi::retrieveOrder\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$path of method Illuminate\\Routing\\Redirector::away\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$payment of class App\\Notifications\\PaymentReceipt constructor expects App\\Models\\Payment, mixed given\.#'
