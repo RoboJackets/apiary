@@ -19,10 +19,8 @@ class HorizonHealthCheck extends HealthCheck
 {
     /**
      * The name for this health check.
-     *
-     * @var string
      */
-    protected $name = 'horizon';
+    protected string $name = 'horizon';
 
     public function __construct(private readonly MasterSupervisorRepository $supervisorRepository)
     {

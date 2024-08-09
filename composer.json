@@ -25,7 +25,7 @@
         "ext-uuid": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "ans-group/laravel-health-check": "dev-l11-compatibility",
+        "ans-group/laravel-health-check": "2.0.0",
         "apereo/phpcas": "1.6.1",
         "ashallendesign/laravel-config-validator": "2.6.1",
         "barryvdh/laravel-dompdf": "2.2.0",
@@ -34,6 +34,7 @@
         "docusign/esign-client": "6.19.0",
         "eluceo/ical": "2.14.0",
         "enlightn/enlightn": "2.10.0",
+        "enlightn/security-checker": "^2.0",
         "fakerphp/faker": "1.23.1",
         "guzzlehttp/guzzle": "7.9.2",
         "htmlmin/htmlmin": "dev-master",
@@ -209,10 +210,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/Laravel-HTMLMin.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-health-check.git"
         },
         {
             "type": "vcs",
