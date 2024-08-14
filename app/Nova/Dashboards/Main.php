@@ -102,7 +102,6 @@ class Main extends Dashboard
 
             foreach (Event::all() as $event) {
                 $should_include = false;
-                $attributes = $event->getAttributes();
 
                 if ($event->rsvps()->count() > 0) {
                     $should_include = true;
@@ -110,11 +109,11 @@ class Main extends Dashboard
                 if ($event->attendance()->count() > 0) {
                     $should_include = true;
                 }
-                if ($attributes['end_time'] === null) {
-                    if ($attributes['start_time'] === null || $attributes['start_time'] < Carbon::now()) {
+                if ($event->end_time === null) {
+                    if ($event->start_time === null || $event->start_time < Carbon::now()) {
                         $should_include = false;
                     }
-                } else if ($attributes['end_time'] < Carbon::now()) {
+                } else if ($event->end_time < Carbon::now()) {
                     $should_include = false;
                 }
                 if (!$should_include) {

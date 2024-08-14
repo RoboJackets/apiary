@@ -21,22 +21,16 @@ class RsvpSourceBreakdown extends Partition
      */
     public function name(): string
     {
-        return $this->resourceId === -1 ? 'RSVP Sources' : 'RSVP Sources for '.Event::where(
+        return $this->resourceId === null ? 'RSVP Sources' : 'RSVP Sources for '.Event::where(
                 'id',
                 $this->resourceId
             )->sole()->name;
     }
 
-    /**
-     * Calculate the value of the metric.
-     */
 
-    protected int $resourceId;
-
-    public function __construct(int $resourceId = -1)
+    public function __construct(public ?int $resourceId = null)
     {
         parent::__construct();
-        $this->resourceId = $resourceId;
     }
 
     public function calculate(NovaRequest $request): PartitionResult
@@ -71,6 +65,6 @@ class RsvpSourceBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return $this->resourceId === -1 ? 'rsvp-source-breakdown' : 'rsvp-source-breakdown-'.$this->resourceId;
+        return $this->resourceId === null ? 'rsvp-source-breakdown' : 'rsvp-source-breakdown-'.$this->resourceId;
     }
 }

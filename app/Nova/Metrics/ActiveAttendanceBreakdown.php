@@ -26,37 +26,16 @@ class ActiveAttendanceBreakdown extends Partition
         return $ret;
     }
 
-    /**
-     * Whether to show based on all attendance records or only those from the last two weeks.
-     *
-     * @var bool
-     */
-    protected $showAllTime = false;
-
-    /**
-     * If displaying on the main dashboard, this indicates the event to get attendance from.
-     * 
-     * @var int
-     */
-    private int $resourceId;
-
-    /**
-     * If displaying on a page different from the type of attendable you are showing.
-     * This indicates the morphClass of the attendable (for example, an event).
-     * 
-     * @var string
-     */
-    private string $attendableType;
 
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      */
-    public function __construct(bool $showAllTime = false, int $resourceId = -1, string $attendableType = "")
+    public function __construct(public bool $showAllTime = false, public int $resourceId = -1, public ?string $attendableType = null)
     {
         parent::__construct();
-        $this->resourceId = $resourceId;
-        $this->showAllTime = $showAllTime;
-        $this->attendableType = $attendableType;
+        // $this->resourceId = $resourceId;
+        // $this->showAllTime = $showAllTime;
+        // $this->attendableType = $attendableType;
     }
 
     /**
@@ -64,7 +43,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
-        $resourceId;
+        $resourceId ;//= $request->resourceId ?? $this->resourceId;
         if ($this->resourceId != -1) {
             $resourceId = $this->resourceId;
         } else if (isset($request->resourceId)) {
@@ -83,8 +62,9 @@ class ActiveAttendanceBreakdown extends Partition
             $query = $query
                 ->where('attendable_id', $resourceId)
                 ->where('attendable_type',
-                    $this->attendableType != "" ? $this->attendableType
-                    : $request->model()->getMorphClass());
+                $this->attendableType ?? $request?->model()?->getMorphClass());
+                    // $this->attendableType != "" ? $this->attendableType
+                    // : $request->model()->getMorphClass());
         }
 
         if (! $this->showAllTime) {
@@ -114,5 +94,6 @@ class ActiveAttendanceBreakdown extends Partition
     {
         return $this->resourceId === -1 ? 'active-attendance-breakdown'
             : 'active-attendance-breakdown-'.$this->attendableType.'-'.$this->resourceId;
+            //'../'.$this->attendableType.'/'.$this->resourceId.'/metrics/active-attendance-breakdown';
     }
 }

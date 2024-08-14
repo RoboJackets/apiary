@@ -82,8 +82,6 @@ class Event extends Resource
     {
 
         return [
-            Text::make('Event ID', 'id')
-                ->onlyOnDetail(),
             Text::make('Event Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255')
