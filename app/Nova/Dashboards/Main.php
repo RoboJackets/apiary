@@ -113,7 +113,7 @@ class Main extends Dashboard
                     if ($event->start_time === null || $event->start_time < Carbon::now()) {
                         $should_include = false;
                     }
-                } elseif ($event->end_time < Carbon::now()) {
+                } else if ($event->end_time < Carbon::now()) {
                     $should_include = false;
                 }
                 if (! $should_include) {

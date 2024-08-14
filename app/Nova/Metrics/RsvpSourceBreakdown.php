@@ -18,22 +18,16 @@ class RsvpSourceBreakdown extends Partition
      */
     public function name(): string
     {
-        return $this->resourceId === -1 ? 'RSVP Sources' : 'RSVP Sources for '.Event::where(
-            'id',
-            $this->resourceId
-        )->sole()->name;
+        return $this->resourceId === null ? 'RSVP Sources' : 'RSVP Sources for '.Event::where(
+                'id',
+                $this->resourceId
+            )->sole()->name;
     }
 
-    /**
-     * The resource ID attached to this metric.
-     * Used when the resource ID cannot be inferred from the Nova page.
-     */
-    protected $resourceId;
 
-    public function __construct(?int $resourceId = null)
+    public function __construct(public ?int $resourceId = null)
     {
         parent::__construct();
-        $this->resourceId = $resourceId;
     }
 
     /**
@@ -72,6 +66,6 @@ class RsvpSourceBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return $this->resourceId === -1 ? 'rsvp-source-breakdown' : 'rsvp-source-breakdown-'.$this->resourceId;
+        return $this->resourceId === null ? 'rsvp-source-breakdown' : 'rsvp-source-breakdown-'.$this->resourceId;
     }
 }
