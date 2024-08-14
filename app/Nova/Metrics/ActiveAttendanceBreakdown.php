@@ -58,7 +58,7 @@ class ActiveAttendanceBreakdown extends Partition
                 'active'
             );
 
-        if ($resourceId !== null) {
+        if (isset($resourceId)) {
             $query = $query
                 ->where('attendable_id', $resourceId)
                 ->where('attendable_type',
