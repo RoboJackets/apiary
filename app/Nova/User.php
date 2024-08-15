@@ -391,7 +391,7 @@ class User extends Resource
                 })
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
-            HasMany::make('Travel Assignments', 'assignments', TravelAssignment::class)
+            HasMany::make('Trip Assignments', 'assignments', TravelAssignment::class)
                 ->hideFromDetail(static fn (NovaRequest $r, AppModelsUser $u): bool => $u->is_service_account),
 
             HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class)
