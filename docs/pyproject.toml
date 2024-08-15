@@ -8,7 +8,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
-sphinx = "7.4.7"
+sphinx = "8.0.2"
 sphinx-autobuild = "2024.4.16"
 sphinxext-opengraph = "0.9.1"
 sphinxcontrib-httpdomain = "1.8.1"
