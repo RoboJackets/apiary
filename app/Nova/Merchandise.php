@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Models\DuesTransactionMerchandise;
 use App\Models\Merchandise as AppModelsMerchandise;
 use App\Nova\Metrics\MerchandisePickupRate;
 use App\Nova\Metrics\ShirtSizeBreakdown;
@@ -175,7 +176,12 @@ class Merchandise extends Resource
 
         $merch_item = AppModelsMerchandise::where('id', $request->resourceId)->sole();
 
-        if (! $merch_item->distributable) {
+        if (
+            ! $merch_item->distributable &&
+            DuesTransactionMerchandise::where('merchandise_id', '=', $merch_item->id)
+                ->whereNull('provided_at')
+                ->doesntExist()
+        ) {
             return [];
         }
 
