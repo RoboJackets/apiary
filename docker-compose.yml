@@ -28,6 +28,7 @@ services:
       CAS_HOSTNAME: sso-test.gatech.edu
       CAS_REAL_HOSTS: sso-test.gatech.edu
       CAS_CLIENT_SERVICE: http://127.0.0.1:8000
+      CAS_LOGOUT_URL: http://127.0.0.1:8000
       JEDI_HOST: null
       JEDI_TOKEN: null
       PASSPORT_PERSONAL_ACCESS_CLIENT_ID: 95b2031a-5593-4d67-909a-ef32ae06a86a
