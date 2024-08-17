@@ -33,6 +33,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Number;
@@ -111,6 +112,10 @@ class User extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
+            Hidden::make('Has Ever Logged In')
+                ->showOnCreating()
+                ->default(static fn (Request $r): bool => false),
+
             Text::make('Username', 'uid')
                 ->sortable()
                 ->rules('required', 'max:127')

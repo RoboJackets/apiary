@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova\Metrics;
 
 use App\Models\Attendance;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Partition;
@@ -17,23 +18,23 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function name(): string
     {
-        return $this->showAllTime ? 'Active Attendees' : 'Attendees Last 4 Weeks';
-    }
+        $ret = $this->showAllTime ? 'Active Attendees' : 'Attendees Last 4 Weeks';
+        if ($this->resourceId !== null) {
+            $ret .= ' for '.Event::where('id', $this->resourceId)->sole()->name;
+        }
 
-    /**
-     * Whether to show based on all attendance records or only those from the last two weeks.
-     *
-     * @var bool
-     */
-    protected $showAllTime = false;
+        return $ret;
+    }
 
     /**
      * Create a new ActiveAttendanceBreakdown metric.
      */
-    public function __construct(bool $showAllTime = false)
-    {
+    public function __construct(
+        public bool $showAllTime = false,
+        public ?int $resourceId = null,
+        public ?string $attendableType = null
+    ) {
         parent::__construct();
-        $this->showAllTime = $showAllTime;
     }
 
     /**
@@ -41,6 +42,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function calculate(Request $request): PartitionResult
     {
+        $resourceId = $this->resourceId ?? $request->resourceId;
         // If a user is found, this will give "Active" in the active column, otherwise the column will be null
         $query = Attendance::selectRaw('count(distinct gtid) as aggregate')
             ->selectSub(
@@ -50,10 +52,13 @@ class ActiveAttendanceBreakdown extends Partition
                 'active'
             );
 
-        if (isset($request->resourceId)) {
+        if ($resourceId !== null) {
             $query = $query
-                ->where('attendable_id', $request->resourceId)
-                ->where('attendable_type', $request->model()->getMorphClass());
+                ->where('attendable_id', $resourceId)
+                ->where(
+                    'attendable_type',
+                    $this->attendableType ?? $request->model()?->getMorphClass()
+                );
         }
 
         if (! $this->showAllTime) {
@@ -81,6 +86,7 @@ class ActiveAttendanceBreakdown extends Partition
      */
     public function uriKey(): string
     {
-        return 'active-attendance-breakdown';
+        return $this->resourceId === null ? 'active-attendance-breakdown' :
+            '../'.$this->attendableType.'s/'.$this->resourceId.'/metrics/active-attendance-breakdown';
     }
 }

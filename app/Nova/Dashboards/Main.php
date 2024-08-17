@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Dashboards;
 
+use App\Models\Event;
 use App\Models\Travel;
 use App\Models\TravelAssignment;
 use App\Nova\Metrics\ActiveAttendanceBreakdown;
@@ -16,6 +17,7 @@ use App\Nova\Metrics\EmergencyContactInformationForTravel;
 use App\Nova\Metrics\MembersByFiscalYear;
 use App\Nova\Metrics\PaymentReceivedForTravel;
 use App\Nova\Metrics\PaymentsPerDay;
+use App\Nova\Metrics\RsvpSourceBreakdown;
 use App\Nova\Metrics\TransactionsByDuesPackage;
 use App\Nova\Metrics\TravelAuthorityRequestReceivedForTravel;
 use Carbon\Carbon;
@@ -108,6 +110,32 @@ class Main extends Dashboard
                 $cards[] = new EmergencyContactInformationForTravel($travel->id);
             }
 
+            foreach (Event::all() as $event) {
+                $should_include = false;
+
+                if ($event->rsvps()->count() > 0) {
+                    $should_include = true;
+                }
+                if ($event->attendance()->count() > 0) {
+                    $should_include = true;
+                }
+                if ($event->end_time === null) {
+                    if ($event->start_time === null || $event->start_time < Carbon::now()) {
+                        $should_include = false;
+                    }
+                } elseif ($event->end_time < Carbon::now()) {
+                    $should_include = false;
+                }
+                if (! $should_include) {
+                    continue;
+                }
+
+                $cards[] = (new RsvpSourceBreakdown($event->id))
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('read-rsvps'));
+                $cards[] = (new ActiveAttendanceBreakdown(true, $event->id, 'event'))
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('read-attendance'));
+            }
+
             return $cards;
         }
 
@@ -134,6 +162,28 @@ class Main extends Dashboard
 
             return [
                 new EmergencyContactInformationForTravel($id),
+            ];
+        }
+
+        if (request()->is('nova-api/metrics/active-attendance-breakdown-event-*')) {
+            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
+            $id = intval($parts->last());
+
+            return [
+                (new ActiveAttendanceBreakdown(true, $id, 'event'))->canSee(
+                    static fn (Request $request): bool => $request->user()->can('read-attendance')
+                ),
+            ];
+        }
+
+        if (request()->is('nova-api/metrics/rsvp-source-breakdown-*')) {
+            $parts = Str::of(Str::of(request()->path())->explode('/')->last())->explode('-');
+            $id = intval($parts->last());
+
+            return [
+                (new RsvpSourceBreakdown($id))->canSee(
+                    static fn (Request $request): bool => $request->user()->can('read-rsvps')
+                ),
             ];
         }
 
