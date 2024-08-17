@@ -33,8 +33,7 @@ class ActiveAttendanceBreakdown extends Partition
         public bool $showAllTime = false,
         public ?int $resourceId = null,
         public ?string $attendableType = null
-    )
-    {
+    ) {
         parent::__construct();
     }
 
